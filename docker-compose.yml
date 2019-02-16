@@ -10,6 +10,9 @@ services:
     networks:
       - 3ab3
     command: yarn start
+    environment:
+      - ACCESS_TOKEN_SECRET
+      - ACCESS_TOKEN_EXPIRATION
 
   prisma:
     container_name: prisma
@@ -24,9 +27,9 @@ services:
           default:
             connector: postgres
             host: postgres
-            port: 5432
-            user: prisma
-            password: prisma
+            port: $POSTGRES_PORT
+            user: $POSTGRES_USER
+            password: $POSTGRES_PASSWORD
             migrations: true
     networks:
       - 3ab3
@@ -36,10 +39,10 @@ services:
     image: postgres:10.5
     restart: unless-stopped
     environment:
-      POSTGRES_USER: prisma
-      POSTGRES_PASSWORD: prisma
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - /var/local/3ab3net:/var/lib/postgresql/data
     networks:
       - 3ab3
 
