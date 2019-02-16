@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Philipp Gerber",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.17.4",
+    "prisma-client-lib": "^1.26.6"
+  }
+}
