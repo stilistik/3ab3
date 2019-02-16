@@ -11,5 +11,10 @@
   "dependencies": {
     "graphql-yoga": "^1.17.4",
     "prisma-client-lib": "^1.26.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^3.0.1"
   }
 }

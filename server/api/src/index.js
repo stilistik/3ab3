@@ -39,29 +39,31 @@ const resolvers = {
         where: { id: args.postId },
         data: { published: true },
       });
-    }
+    },
   },
   User: {
     posts(root, args, context) {
       return context.prisma.user({ id: root.id }).posts();
-    }
+    },
   },
   Post: {
     author(root, args, context) {
       return context.prisma.post({ id: root.id }).author();
-    }
-  }
-}
+    },
+  },
+};
 
 const prisma = new Prisma({
-  endpoint: "http://prisma:4466",
-})
+  endpoint: 'http://prisma:4466',
+});
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
   context: {
-    prisma
+    prisma,
   },
-})
+});
+
+// eslint-disable-next-line no-console
 server.start(() => console.log('Server is running on http://localhost:4000'));
