@@ -2,7 +2,7 @@ const { Prisma } = require('./generated/prisma-client');
 const { GraphQLServer } = require('graphql-yoga');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server-core');
-const resolvers = require('./resolvers');
+const schema = require('./schema');
 
 const prisma = new Prisma({
   endpoint: 'http://prisma:4466',
@@ -23,8 +23,8 @@ const authenticate = async (resolve, root, args, context, info) => {
 };
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
-  resolvers,
+  typeDefs: schema.typeDefs,
+  resolvers: schema.resolvers,
   context: ({ request }) => ({
     request: request,
     prisma: prisma,
