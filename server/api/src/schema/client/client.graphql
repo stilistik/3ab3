@@ -1,0 +1,11 @@
+type Client {
+  id: ID!
+  name: String!
+  trusted: Boolean!
+  secret: String!
+}
+
+extend type Query {
+  clients: [Client!]!
+  client(clientId: ID!): Client!
+}

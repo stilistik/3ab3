@@ -9,6 +9,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Client",
+    embedded: false
+  },
+  {
     name: "Post",
     embedded: false
   }

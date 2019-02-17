@@ -2,12 +2,14 @@ type User {
   id: ID!
   email: String!
   name: String!
+  password: String!
   posts: [Post!]!
 }
 
 input CreateUserInput {
   name: String!
   email: String!
+  password: String!
 }
 
 extend type Query {

@@ -2,3 +2,5 @@
 .env
 .env.dev
 .env.prod
+
+seed.graphql

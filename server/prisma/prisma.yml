@@ -3,6 +3,9 @@ datamodel: datamodel.prisma
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/
+seed:
+  import: seed.graphql
 hooks:
   post-deploy:
+    - prisma seed
     - prisma generate

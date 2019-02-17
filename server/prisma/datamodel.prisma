@@ -2,7 +2,15 @@ type User {
   id: ID! @unique
   name: String!
   email: String! @unique
+  password: String!
   posts: [Post!]!
+}
+
+type Client {
+  id: ID! @unique
+  name: String!
+  secret: String!
+  trusted: Boolean! @default(value: "false")
 }
 
 type Post {

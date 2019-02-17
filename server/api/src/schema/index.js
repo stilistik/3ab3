@@ -2,6 +2,7 @@ const { merge } = require('lodash');
 
 const user = require('./user');
 const post = require('./post');
+const client = require('./client');
 
 const Query = `
   type Query {
@@ -18,6 +19,6 @@ const Mutation = `
 const resolvers = {};
 
 module.exports = {
-  typeDefs: [Query, Mutation, user.typeDef, post.typeDef],
-  resolvers: merge(resolvers, user.resolvers, post.resolvers),
+  typeDefs: [Query, Mutation, user.typeDef, post.typeDef, client.typeDef],
+  resolvers: merge(resolvers, user.resolvers, post.resolvers, client.resolvers),
 };
