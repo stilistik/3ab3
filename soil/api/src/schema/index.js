@@ -1,5 +1,5 @@
 const { merge } = require('lodash');
-
+const { makeExecutableSchema } = require('apollo-server-express');
 const user = require('./user');
 const post = require('./post');
 const client = require('./client');
@@ -18,7 +18,7 @@ const Mutation = `
 // Default resolvers
 const resolvers = {};
 
-module.exports = {
+module.exports = makeExecutableSchema({
   typeDefs: [Query, Mutation, user.typeDef, post.typeDef, client.typeDef],
   resolvers: merge(resolvers, user.resolvers, post.resolvers, client.resolvers),
-};
+});

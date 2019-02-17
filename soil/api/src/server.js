@@ -1,23 +1,44 @@
 const { Prisma } = require('./generated/prisma-client');
-const { GraphQLServer } = require('graphql-yoga');
+const express = require('express');
+const passport = require('passport');
+const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
-const { authenticate, token } = require('./auth');
+const auth = require('./auth');
+
+const API_PATH = '/api';
 
 const prisma = new Prisma({
   endpoint: 'http://prisma:4466',
 });
 
-const server = new GraphQLServer({
-  typeDefs: schema.typeDefs,
-  resolvers: schema.resolvers,
-  context: ({ request }) => ({
-    request: request,
-    prisma: prisma,
-  }),
-  middlewares: [authenticate],
+const app = express();
+
+// Authentication Endpoints
+app.use(passport.initialize());
+app.get('/oauth/verify', auth.oauth2.verify);
+app.post('/oauth/token', auth.oauth2.token);
+
+// The GraphQL endpoint for API using Apollo Server
+app.use(API_PATH, passport.authenticate('bearer', { session: false }));
+
+// Reject any unimplemented requests
+app.use('/', (req, res) => {
+  res.sendStatus(404);
 });
 
-server.express.post('/oauth/token', token);
+const apollo = new ApolloServer({
+  schema: schema,
+  introspection: true,
+  context: ({ req }) => {
+    return {
+      request: req,
+      prisma: prisma,
+    };
+  },
+});
+apollo.applyMiddleware({ cors: false, app, path: API_PATH });
 
-// eslint-disable-next-line no-console
-server.start(() => console.log('Server is running on http://localhost:4000'));
+app.listen({ port: 4000 }, () =>
+  // eslint-disable-next-line no-console
+  console.log(`🚀 Server ready at http://localhost:4000`)
+);
