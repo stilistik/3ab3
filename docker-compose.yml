@@ -1,12 +1,12 @@
 version: '3.6'
 services:
   api:
-    container_name: api
-    build: ./server/api/
+    container_name: soil-api
+    build: ./soil/api/
     ports:
       - "4000:4000"
     volumes:
-      - ./server/prisma/generated:/usr/src/app/src/generated
+      - ./soil/prisma/generated:/usr/src/app/src/generated
     networks:
       - 3ab3
     command: yarn start
@@ -15,7 +15,7 @@ services:
       - ACCESS_TOKEN_EXPIRATION
 
   prisma:
-    container_name: prisma
+    container_name: soil-prisma
     image: prismagraphql/prisma:1.26
     restart: unless-stopped
     ports:
@@ -35,7 +35,7 @@ services:
       - 3ab3
 
   postgres:
-    container_name: postgres
+    container_name: soil-data
     image: postgres:10.5
     restart: unless-stopped
     environment:
