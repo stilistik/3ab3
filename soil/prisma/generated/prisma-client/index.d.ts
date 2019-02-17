@@ -1060,11 +1060,11 @@ export type String = string;
 
 export const models: Model[] = [
   {
-    name: "User",
+    name: "Client",
     embedded: false
   },
   {
-    name: "Client",
+    name: "User",
     embedded: false
   },
   {
