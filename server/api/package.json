@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "apollo-server-core": "^2.4.2",
+    "bcryptjs": "^2.4.3",
     "fs": "^0.0.1-security",
     "graphql-middleware": "^3.0.2",
     "graphql-yoga": "^1.17.4",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
+    "oauth2orize": "^1.11.0",
+    "passport": "^0.4.0",
     "path": "^0.12.7",
     "prisma-client-lib": "^1.26.6"
   },
