@@ -180,10 +180,12 @@ export interface ClientConstructor<T> {
 export type ClientOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
+  | "identity_ASC"
+  | "identity_DESC"
   | "secret_ASC"
   | "secret_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "trusted_ASC"
   | "trusted_DESC"
   | "createdAt_ASC"
@@ -256,6 +258,7 @@ export interface PostSubscriptionWhereInput {
 
 export type ClientWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  identity?: String;
 }>;
 
 export interface PostCreateWithoutAuthorInput {
@@ -371,8 +374,9 @@ export interface PostWhereInput {
 }
 
 export interface ClientCreateInput {
-  name: String;
+  identity: String;
   secret: String;
+  name: String;
   trusted?: Boolean;
 }
 
@@ -391,20 +395,20 @@ export interface ClientWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
+  identity?: String;
+  identity_not?: String;
+  identity_in?: String[] | String;
+  identity_not_in?: String[] | String;
+  identity_lt?: String;
+  identity_lte?: String;
+  identity_gt?: String;
+  identity_gte?: String;
+  identity_contains?: String;
+  identity_not_contains?: String;
+  identity_starts_with?: String;
+  identity_not_starts_with?: String;
+  identity_ends_with?: String;
+  identity_not_ends_with?: String;
   secret?: String;
   secret_not?: String;
   secret_in?: String[] | String;
@@ -419,6 +423,20 @@ export interface ClientWhereInput {
   secret_not_starts_with?: String;
   secret_ends_with?: String;
   secret_not_ends_with?: String;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
   trusted?: Boolean;
   trusted_not?: Boolean;
   AND?: ClientWhereInput[] | ClientWhereInput;
@@ -427,8 +445,9 @@ export interface ClientWhereInput {
 }
 
 export interface ClientUpdateInput {
-  name?: String;
+  identity?: String;
   secret?: String;
+  name?: String;
   trusted?: Boolean;
 }
 
@@ -444,8 +463,9 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface ClientUpdateManyMutationInput {
-  name?: String;
+  identity?: String;
   secret?: String;
+  name?: String;
   trusted?: Boolean;
 }
 
@@ -841,32 +861,37 @@ export interface PostSubscription
   author: <T = UserSubscription>() => T;
 }
 
-export interface PostPreviousValues {
+export interface Client {
   id: ID_Output;
-  title: String;
-  published: Boolean;
+  identity: String;
+  secret: String;
+  name: String;
+  trusted: Boolean;
 }
 
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
+export interface ClientPromise extends Promise<Client>, Fragmentable {
   id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  published: () => Promise<Boolean>;
+  identity: () => Promise<String>;
+  secret: () => Promise<String>;
+  name: () => Promise<String>;
+  trusted: () => Promise<Boolean>;
 }
 
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
+export interface ClientSubscription
+  extends Promise<AsyncIterator<Client>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
+  identity: () => Promise<AsyncIterator<String>>;
+  secret: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  trusted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ClientPreviousValues {
   id: ID_Output;
-  name: String;
+  identity: String;
   secret: String;
+  name: String;
   trusted: Boolean;
 }
 
@@ -874,8 +899,9 @@ export interface ClientPreviousValuesPromise
   extends Promise<ClientPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  identity: () => Promise<String>;
   secret: () => Promise<String>;
+  name: () => Promise<String>;
   trusted: () => Promise<Boolean>;
 }
 
@@ -883,8 +909,9 @@ export interface ClientPreviousValuesSubscription
   extends Promise<AsyncIterator<ClientPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  identity: () => Promise<AsyncIterator<String>>;
   secret: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
   trusted: () => Promise<AsyncIterator<Boolean>>;
 }
 
@@ -913,27 +940,26 @@ export interface ClientSubscriptionPayloadSubscription
   previousValues: <T = ClientPreviousValuesSubscription>() => T;
 }
 
-export interface Client {
+export interface PostPreviousValues {
   id: ID_Output;
-  name: String;
-  secret: String;
-  trusted: Boolean;
+  title: String;
+  published: Boolean;
 }
 
-export interface ClientPromise extends Promise<Client>, Fragmentable {
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  secret: () => Promise<String>;
-  trusted: () => Promise<Boolean>;
+  title: () => Promise<String>;
+  published: () => Promise<Boolean>;
 }
 
-export interface ClientSubscription
-  extends Promise<AsyncIterator<Client>>,
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  secret: () => Promise<AsyncIterator<String>>;
-  trusted: () => Promise<AsyncIterator<Boolean>>;
+  title: () => Promise<AsyncIterator<String>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface AggregateUser {
@@ -1045,14 +1071,14 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /**
  * Model Metadata

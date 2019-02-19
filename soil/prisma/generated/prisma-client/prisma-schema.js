@@ -21,8 +21,9 @@ type BatchPayload {
 
 type Client {
   id: ID!
-  name: String!
+  identity: String!
   secret: String!
+  name: String!
   trusted: Boolean!
 }
 
@@ -33,8 +34,9 @@ type ClientConnection {
 }
 
 input ClientCreateInput {
-  name: String!
+  identity: String!
   secret: String!
+  name: String!
   trusted: Boolean
 }
 
@@ -46,10 +48,12 @@ type ClientEdge {
 enum ClientOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  identity_ASC
+  identity_DESC
   secret_ASC
   secret_DESC
+  name_ASC
+  name_DESC
   trusted_ASC
   trusted_DESC
   createdAt_ASC
@@ -60,8 +64,9 @@ enum ClientOrderByInput {
 
 type ClientPreviousValues {
   id: ID!
-  name: String!
+  identity: String!
   secret: String!
+  name: String!
   trusted: Boolean!
 }
 
@@ -84,14 +89,16 @@ input ClientSubscriptionWhereInput {
 }
 
 input ClientUpdateInput {
-  name: String
+  identity: String
   secret: String
+  name: String
   trusted: Boolean
 }
 
 input ClientUpdateManyMutationInput {
-  name: String
+  identity: String
   secret: String
+  name: String
   trusted: Boolean
 }
 
@@ -110,20 +117,20 @@ input ClientWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  identity: String
+  identity_not: String
+  identity_in: [String!]
+  identity_not_in: [String!]
+  identity_lt: String
+  identity_lte: String
+  identity_gt: String
+  identity_gte: String
+  identity_contains: String
+  identity_not_contains: String
+  identity_starts_with: String
+  identity_not_starts_with: String
+  identity_ends_with: String
+  identity_not_ends_with: String
   secret: String
   secret_not: String
   secret_in: [String!]
@@ -138,6 +145,20 @@ input ClientWhereInput {
   secret_not_starts_with: String
   secret_ends_with: String
   secret_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   trusted: Boolean
   trusted_not: Boolean
   AND: [ClientWhereInput!]
@@ -147,6 +168,7 @@ input ClientWhereInput {
 
 input ClientWhereUniqueInput {
   id: ID
+  identity: String
 }
 
 scalar Long
