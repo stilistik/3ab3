@@ -1,5 +1,7 @@
 const { Prisma } = require('./generated/prisma-client');
 const express = require('express');
+const bodyParser = require('body-parser');
+const compression = require('compression');
 const passport = require('passport');
 const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
@@ -13,18 +15,22 @@ const prisma = new Prisma({
 
 const app = express();
 
+// Compress all requests
+app.use(compression());
+
+// Enable body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // Authentication Endpoints
 app.use(passport.initialize());
+auth.init;
+
 app.get('/oauth/verify', auth.oauth2.verify);
 app.post('/oauth/token', auth.oauth2.token);
 
 // The GraphQL endpoint for API using Apollo Server
 app.use(API_PATH, passport.authenticate('bearer', { session: false }));
-
-// Reject any unimplemented requests
-app.use('/', (req, res) => {
-  res.sendStatus(404);
-});
 
 const apollo = new ApolloServer({
   schema: schema,
@@ -37,6 +43,11 @@ const apollo = new ApolloServer({
   },
 });
 apollo.applyMiddleware({ cors: false, app, path: API_PATH });
+
+// Reject any unimplemented requests
+app.use('/', (req, res) => {
+  res.sendStatus(404);
+});
 
 app.listen({ port: 4000 }, () =>
   // eslint-disable-next-line no-console

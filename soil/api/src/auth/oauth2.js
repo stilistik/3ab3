@@ -15,25 +15,18 @@ const server = oauth2orize.createServer();
 server.exchange(
   oauth2orize.exchange.password(
     async (client, username, password, scope, done) => {
-      const registeredClient = await prisma.client({ id: client.id });
       // Client not found
-      if (!registeredClient) {
-        return done(null, false);
-      }
-
-      // Invalid client password
-      if (registeredClient.secret !== client.secret) {
+      if (!client) {
         return done(null, false);
       }
 
       // Invalid client
-      if (!registeredClient.isTrusted) {
-        return done(null, false, 'Untrusted client');
+      if (!client.trusted) {
+        return done(null, false);
       }
 
       // Validate user with email and password
       const registeredUser = await prisma.user({ email: username });
-
       if (!registeredUser) {
         return done(null, false);
       }
@@ -50,7 +43,7 @@ server.exchange(
       // Generate token
       const accessToken = jwt.sign(
         {
-          id: registeredUser.uuid,
+          id: registeredUser.id,
           timestamp: +new Date(),
         },
         ACCESS_TOKEN_SECRET,
@@ -64,7 +57,7 @@ server.exchange(
 
 module.exports = {
   token: [
-    passport.authenticate(['basic'], { session: false }),
+    passport.authenticate('basic', { session: false }),
     server.token(),
     server.errorHandler(),
   ],

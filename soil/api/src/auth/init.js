@@ -9,38 +9,30 @@ const prisma = new Prisma({
   endpoint: 'http://prisma:4466',
 });
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET; // eslint-disable-line prefer-destructuring
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 passport.use(
   new BasicStrategy(async (clientId, clientSecret, done) => {
-    try {
-      console.log('basic authentication attempt');
-      console.log(clientId, clientSecret);
-      const registeredClient = await prisma.client({ id: clientId });
-
-      if (!registeredClient) {
-        return done(null, false);
-      }
-
-      const validateSecret = bcrypt.compareSync(
-        clientSecret,
-        registeredClient.secret
-      );
-      if (!validateSecret) {
-        return done(null, false);
-      }
-
-      return done(null, registeredClient);
-    } catch (err) {
-      return done(err);
+    const registeredClient = await prisma.client({ identity: clientId });
+    if (!registeredClient) {
+      return done(null, false, { message: 'client not found' });
     }
+
+    const validateSecret = bcrypt.compareSync(
+      clientSecret,
+      registeredClient.secret
+    );
+    if (!validateSecret) {
+      return done(null, false, { message: 'bad password' });
+    }
+
+    return done(null, registeredClient, { message: 'authenticated' });
   })
 );
 
 passport.use(
   new BearerStrategy(async (accessToken, done) => {
-    console.log('bearer authentication attempt');
-    console.log(accessToken);
+    console.log('bearer strategy');
     try {
       const token = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
 
