@@ -41,6 +41,11 @@ const apollo = new ApolloServer({
       prisma: prisma,
     };
   },
+  playground: {
+    settings: {
+      'editor.theme': 'dark',
+    },
+  },
 });
 apollo.applyMiddleware({ cors: false, app, path: API_PATH });
 

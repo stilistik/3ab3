@@ -4,6 +4,7 @@ type User {
   name: String!
   password: String!
   posts: [Post!]!
+  consumedItems: [ConsumedItem!]!
 }
 
 input CreateUserInput {

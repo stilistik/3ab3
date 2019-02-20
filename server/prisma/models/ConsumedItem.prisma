@@ -1,0 +1,7 @@
+type ConsumedItem {
+  id: ID! @unique
+  item: Item!
+  consumer: User!
+  price: Float!
+  amount: Int!
+}

@@ -1,0 +1,23 @@
+type ConsumedItem {
+  id: ID!
+  item: Item!
+  consumer: User
+  amount: Int!
+  price: Float!
+}
+
+input CreateConsumedItemInput {
+  itemId: ID!
+  userId: ID!
+  amount: Int!
+}
+
+extend type Query {
+  consumedItems: [ConsumedItem!]!
+  consumedItem(consumedItemId: ID!): ConsumedItem!
+  userConsumed(userId: ID!): [ConsumedItem!]!
+}
+
+extend type Mutation {
+  createConsumedItem(input: CreateConsumedItemInput!): ConsumedItem!
+}

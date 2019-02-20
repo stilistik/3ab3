@@ -7,6 +7,14 @@ module.exports = {
   count: Int!
 }
 
+type AggregateConsumedItem {
+  count: Int!
+}
+
+type AggregateItem {
+  count: Int!
+}
+
 type AggregatePost {
   count: Int!
 }
@@ -171,6 +179,372 @@ input ClientWhereUniqueInput {
   identity: String
 }
 
+type ConsumedItem {
+  id: ID!
+  item: Item!
+  consumer: User!
+  price: Float!
+  amount: Int!
+}
+
+type ConsumedItemConnection {
+  pageInfo: PageInfo!
+  edges: [ConsumedItemEdge]!
+  aggregate: AggregateConsumedItem!
+}
+
+input ConsumedItemCreateInput {
+  item: ItemCreateOneInput!
+  consumer: UserCreateOneWithoutConsumedItemsInput!
+  price: Float!
+  amount: Int!
+}
+
+input ConsumedItemCreateManyWithoutConsumerInput {
+  create: [ConsumedItemCreateWithoutConsumerInput!]
+  connect: [ConsumedItemWhereUniqueInput!]
+}
+
+input ConsumedItemCreateWithoutConsumerInput {
+  item: ItemCreateOneInput!
+  price: Float!
+  amount: Int!
+}
+
+type ConsumedItemEdge {
+  node: ConsumedItem!
+  cursor: String!
+}
+
+enum ConsumedItemOrderByInput {
+  id_ASC
+  id_DESC
+  price_ASC
+  price_DESC
+  amount_ASC
+  amount_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ConsumedItemPreviousValues {
+  id: ID!
+  price: Float!
+  amount: Int!
+}
+
+input ConsumedItemScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  AND: [ConsumedItemScalarWhereInput!]
+  OR: [ConsumedItemScalarWhereInput!]
+  NOT: [ConsumedItemScalarWhereInput!]
+}
+
+type ConsumedItemSubscriptionPayload {
+  mutation: MutationType!
+  node: ConsumedItem
+  updatedFields: [String!]
+  previousValues: ConsumedItemPreviousValues
+}
+
+input ConsumedItemSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ConsumedItemWhereInput
+  AND: [ConsumedItemSubscriptionWhereInput!]
+  OR: [ConsumedItemSubscriptionWhereInput!]
+  NOT: [ConsumedItemSubscriptionWhereInput!]
+}
+
+input ConsumedItemUpdateInput {
+  item: ItemUpdateOneRequiredInput
+  consumer: UserUpdateOneRequiredWithoutConsumedItemsInput
+  price: Float
+  amount: Int
+}
+
+input ConsumedItemUpdateManyDataInput {
+  price: Float
+  amount: Int
+}
+
+input ConsumedItemUpdateManyMutationInput {
+  price: Float
+  amount: Int
+}
+
+input ConsumedItemUpdateManyWithoutConsumerInput {
+  create: [ConsumedItemCreateWithoutConsumerInput!]
+  delete: [ConsumedItemWhereUniqueInput!]
+  connect: [ConsumedItemWhereUniqueInput!]
+  set: [ConsumedItemWhereUniqueInput!]
+  disconnect: [ConsumedItemWhereUniqueInput!]
+  update: [ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput!]
+  upsert: [ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput!]
+  deleteMany: [ConsumedItemScalarWhereInput!]
+  updateMany: [ConsumedItemUpdateManyWithWhereNestedInput!]
+}
+
+input ConsumedItemUpdateManyWithWhereNestedInput {
+  where: ConsumedItemScalarWhereInput!
+  data: ConsumedItemUpdateManyDataInput!
+}
+
+input ConsumedItemUpdateWithoutConsumerDataInput {
+  item: ItemUpdateOneRequiredInput
+  price: Float
+  amount: Int
+}
+
+input ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput {
+  where: ConsumedItemWhereUniqueInput!
+  data: ConsumedItemUpdateWithoutConsumerDataInput!
+}
+
+input ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput {
+  where: ConsumedItemWhereUniqueInput!
+  update: ConsumedItemUpdateWithoutConsumerDataInput!
+  create: ConsumedItemCreateWithoutConsumerInput!
+}
+
+input ConsumedItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  item: ItemWhereInput
+  consumer: UserWhereInput
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  AND: [ConsumedItemWhereInput!]
+  OR: [ConsumedItemWhereInput!]
+  NOT: [ConsumedItemWhereInput!]
+}
+
+input ConsumedItemWhereUniqueInput {
+  id: ID
+}
+
+type Item {
+  id: ID!
+  name: String!
+  price: Float!
+  index: Int!
+  show: Boolean!
+}
+
+type ItemConnection {
+  pageInfo: PageInfo!
+  edges: [ItemEdge]!
+  aggregate: AggregateItem!
+}
+
+input ItemCreateInput {
+  name: String!
+  price: Float!
+  index: Int!
+  show: Boolean
+}
+
+input ItemCreateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
+}
+
+type ItemEdge {
+  node: Item!
+  cursor: String!
+}
+
+enum ItemOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  price_ASC
+  price_DESC
+  index_ASC
+  index_DESC
+  show_ASC
+  show_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ItemPreviousValues {
+  id: ID!
+  name: String!
+  price: Float!
+  index: Int!
+  show: Boolean!
+}
+
+type ItemSubscriptionPayload {
+  mutation: MutationType!
+  node: Item
+  updatedFields: [String!]
+  previousValues: ItemPreviousValues
+}
+
+input ItemSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ItemWhereInput
+  AND: [ItemSubscriptionWhereInput!]
+  OR: [ItemSubscriptionWhereInput!]
+  NOT: [ItemSubscriptionWhereInput!]
+}
+
+input ItemUpdateDataInput {
+  name: String
+  price: Float
+  index: Int
+  show: Boolean
+}
+
+input ItemUpdateInput {
+  name: String
+  price: Float
+  index: Int
+  show: Boolean
+}
+
+input ItemUpdateManyMutationInput {
+  name: String
+  price: Float
+  index: Int
+  show: Boolean
+}
+
+input ItemUpdateOneRequiredInput {
+  create: ItemCreateInput
+  update: ItemUpdateDataInput
+  upsert: ItemUpsertNestedInput
+  connect: ItemWhereUniqueInput
+}
+
+input ItemUpsertNestedInput {
+  update: ItemUpdateDataInput!
+  create: ItemCreateInput!
+}
+
+input ItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  index: Int
+  index_not: Int
+  index_in: [Int!]
+  index_not_in: [Int!]
+  index_lt: Int
+  index_lte: Int
+  index_gt: Int
+  index_gte: Int
+  show: Boolean
+  show_not: Boolean
+  AND: [ItemWhereInput!]
+  OR: [ItemWhereInput!]
+  NOT: [ItemWhereInput!]
+}
+
+input ItemWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -180,6 +554,18 @@ type Mutation {
   upsertClient(where: ClientWhereUniqueInput!, create: ClientCreateInput!, update: ClientUpdateInput!): Client!
   deleteClient(where: ClientWhereUniqueInput!): Client
   deleteManyClients(where: ClientWhereInput): BatchPayload!
+  createConsumedItem(data: ConsumedItemCreateInput!): ConsumedItem!
+  updateConsumedItem(data: ConsumedItemUpdateInput!, where: ConsumedItemWhereUniqueInput!): ConsumedItem
+  updateManyConsumedItems(data: ConsumedItemUpdateManyMutationInput!, where: ConsumedItemWhereInput): BatchPayload!
+  upsertConsumedItem(where: ConsumedItemWhereUniqueInput!, create: ConsumedItemCreateInput!, update: ConsumedItemUpdateInput!): ConsumedItem!
+  deleteConsumedItem(where: ConsumedItemWhereUniqueInput!): ConsumedItem
+  deleteManyConsumedItems(where: ConsumedItemWhereInput): BatchPayload!
+  createItem(data: ItemCreateInput!): Item!
+  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  deleteItem(where: ItemWhereUniqueInput!): Item
+  deleteManyItems(where: ItemWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -412,6 +798,12 @@ type Query {
   client(where: ClientWhereUniqueInput!): Client
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client]!
   clientsConnection(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClientConnection!
+  consumedItem(where: ConsumedItemWhereUniqueInput!): ConsumedItem
+  consumedItems(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumedItem]!
+  consumedItemsConnection(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConsumedItemConnection!
+  item(where: ItemWhereUniqueInput!): Item
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -423,6 +815,8 @@ type Query {
 
 type Subscription {
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
+  consumedItem(where: ConsumedItemSubscriptionWhereInput): ConsumedItemSubscriptionPayload
+  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -433,6 +827,7 @@ type User {
   email: String!
   password: String!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  consumedItems(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumedItem!]
 }
 
 type UserConnection {
@@ -446,6 +841,12 @@ input UserCreateInput {
   email: String!
   password: String!
   posts: PostCreateManyWithoutAuthorInput
+  consumedItems: ConsumedItemCreateManyWithoutConsumerInput
+}
+
+input UserCreateOneWithoutConsumedItemsInput {
+  create: UserCreateWithoutConsumedItemsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPostsInput {
@@ -453,10 +854,18 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutConsumedItemsInput {
+  name: String!
+  email: String!
+  password: String!
+  posts: PostCreateManyWithoutAuthorInput
+}
+
 input UserCreateWithoutPostsInput {
   name: String!
   email: String!
   password: String!
+  consumedItems: ConsumedItemCreateManyWithoutConsumerInput
 }
 
 type UserEdge {
@@ -509,12 +918,20 @@ input UserUpdateInput {
   email: String
   password: String
   posts: PostUpdateManyWithoutAuthorInput
+  consumedItems: ConsumedItemUpdateManyWithoutConsumerInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+}
+
+input UserUpdateOneRequiredWithoutConsumedItemsInput {
+  create: UserCreateWithoutConsumedItemsInput
+  update: UserUpdateWithoutConsumedItemsDataInput
+  upsert: UserUpsertWithoutConsumedItemsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutPostsInput {
@@ -526,10 +943,23 @@ input UserUpdateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutConsumedItemsDataInput {
+  name: String
+  email: String
+  password: String
+  posts: PostUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateWithoutPostsDataInput {
   name: String
   email: String
   password: String
+  consumedItems: ConsumedItemUpdateManyWithoutConsumerInput
+}
+
+input UserUpsertWithoutConsumedItemsInput {
+  update: UserUpdateWithoutConsumedItemsDataInput!
+  create: UserCreateWithoutConsumedItemsInput!
 }
 
 input UserUpsertWithoutPostsInput {
@@ -597,6 +1027,9 @@ input UserWhereInput {
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
+  consumedItems_every: ConsumedItemWhereInput
+  consumedItems_some: ConsumedItemWhereInput
+  consumedItems_none: ConsumedItemWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

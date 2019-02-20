@@ -4,4 +4,5 @@ type User {
   email: String! @unique
   password: String!
   posts: [Post!]!
+  consumedItems: [ConsumedItem!]!
 }
