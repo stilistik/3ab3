@@ -1,0 +1,10 @@
+type Checklist {
+  id: ID! @unique
+  type: ChecklistType!
+  date: DateTime!
+}
+
+enum ChecklistType {
+  CHECKLIST,
+  EVENTLIST,
+}

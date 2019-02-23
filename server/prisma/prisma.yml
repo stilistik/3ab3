@@ -2,6 +2,7 @@ endpoint: http://localhost:4466
 datamodel:
   - models/Client.prisma
   - models/User.prisma
+  - models/Checklist.prisma
   - models/Item.prisma
   - models/ConsumedItem.prisma
 generate:

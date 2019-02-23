@@ -13,11 +13,19 @@ var models = [
     embedded: false
   },
   {
+    name: "Checklist",
+    embedded: false
+  },
+  {
     name: "Item",
     embedded: false
   },
   {
     name: "ConsumedItem",
+    embedded: false
+  },
+  {
+    name: "ChecklistType",
     embedded: false
   }
 ];

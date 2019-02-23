@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateClient {
+/* GraphQL */ `type AggregateChecklist {
+  count: Int!
+}
+
+type AggregateClient {
   count: Int!
 }
 
@@ -21,6 +25,116 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
+}
+
+type Checklist {
+  id: ID!
+  type: ChecklistType!
+  date: DateTime!
+}
+
+type ChecklistConnection {
+  pageInfo: PageInfo!
+  edges: [ChecklistEdge]!
+  aggregate: AggregateChecklist!
+}
+
+input ChecklistCreateInput {
+  type: ChecklistType!
+  date: DateTime!
+}
+
+type ChecklistEdge {
+  node: Checklist!
+  cursor: String!
+}
+
+enum ChecklistOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  date_ASC
+  date_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ChecklistPreviousValues {
+  id: ID!
+  type: ChecklistType!
+  date: DateTime!
+}
+
+type ChecklistSubscriptionPayload {
+  mutation: MutationType!
+  node: Checklist
+  updatedFields: [String!]
+  previousValues: ChecklistPreviousValues
+}
+
+input ChecklistSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChecklistWhereInput
+  AND: [ChecklistSubscriptionWhereInput!]
+  OR: [ChecklistSubscriptionWhereInput!]
+  NOT: [ChecklistSubscriptionWhereInput!]
+}
+
+enum ChecklistType {
+  CHECKLIST
+  EVENTLIST
+}
+
+input ChecklistUpdateInput {
+  type: ChecklistType
+  date: DateTime
+}
+
+input ChecklistUpdateManyMutationInput {
+  type: ChecklistType
+  date: DateTime
+}
+
+input ChecklistWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: ChecklistType
+  type_not: ChecklistType
+  type_in: [ChecklistType!]
+  type_not_in: [ChecklistType!]
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [ChecklistWhereInput!]
+  OR: [ChecklistWhereInput!]
+  NOT: [ChecklistWhereInput!]
+}
+
+input ChecklistWhereUniqueInput {
+  id: ID
 }
 
 type Client {
@@ -378,6 +492,8 @@ input ConsumedItemWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
 type Item {
   id: ID!
   name: String!
@@ -544,6 +660,12 @@ input ItemWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createChecklist(data: ChecklistCreateInput!): Checklist!
+  updateChecklist(data: ChecklistUpdateInput!, where: ChecklistWhereUniqueInput!): Checklist
+  updateManyChecklists(data: ChecklistUpdateManyMutationInput!, where: ChecklistWhereInput): BatchPayload!
+  upsertChecklist(where: ChecklistWhereUniqueInput!, create: ChecklistCreateInput!, update: ChecklistUpdateInput!): Checklist!
+  deleteChecklist(where: ChecklistWhereUniqueInput!): Checklist
+  deleteManyChecklists(where: ChecklistWhereInput): BatchPayload!
   createClient(data: ClientCreateInput!): Client!
   updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
   updateManyClients(data: ClientUpdateManyMutationInput!, where: ClientWhereInput): BatchPayload!
@@ -588,6 +710,9 @@ type PageInfo {
 }
 
 type Query {
+  checklist(where: ChecklistWhereUniqueInput!): Checklist
+  checklists(where: ChecklistWhereInput, orderBy: ChecklistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Checklist]!
+  checklistsConnection(where: ChecklistWhereInput, orderBy: ChecklistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChecklistConnection!
   client(where: ClientWhereUniqueInput!): Client
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client]!
   clientsConnection(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClientConnection!
@@ -604,6 +729,7 @@ type Query {
 }
 
 type Subscription {
+  checklist(where: ChecklistSubscriptionWhereInput): ChecklistSubscriptionPayload
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
   consumedItem(where: ConsumedItemSubscriptionWhereInput): ConsumedItemSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload

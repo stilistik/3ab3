@@ -6,7 +6,7 @@ type ConsumedItem {
   price: Float!
 }
 
-input CreateConsumedItemInput {
+input ConsumedItemInput {
   itemId: ID!
   userId: ID!
   amount: Int!
@@ -19,5 +19,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createConsumedItem(input: CreateConsumedItemInput!): ConsumedItem!
+  createConsumedItem(input: ConsumedItemInput!): ConsumedItem!
+  updateConsumedItem(consumedItemId: ID!, input: ConsumedItemInput!): ConsumedItem!
+  deleteConsumedItem(consumedItemId: ID!): ConsumedItem!
 }

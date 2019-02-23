@@ -14,7 +14,7 @@ module.exports = {
     async createConsumedItem(root, args, context) {
       const { itemId, userId, amount } = args.input;
       const item = await context.prisma.item({ id: itemId });
-      return context.prisma.createConsumedItem({
+      const data = {
         consumer: {
           connect: {
             id: userId,
@@ -27,7 +27,33 @@ module.exports = {
         },
         price: item.price,
         amount: amount,
+      };
+      return context.prisma.createConsumedItem(data);
+    },
+    async updateConsumedItem(root, args, context) {
+      const { itemId, userId, amount } = args.input;
+      const item = await context.prisma.item({ id: itemId });
+      const data = {
+        consumer: {
+          connect: {
+            id: userId,
+          },
+        },
+        item: {
+          connect: {
+            id: itemId,
+          },
+        },
+        price: item.price,
+        amount: amount,
+      };
+      return context.prisma.updateConsumedItem({
+        data: data,
+        where: { id: args.consumedItemId },
       });
+    },
+    deleteConsumedItem(root, args, context) {
+      return context.prisma.deleteConsumedItem({ id: args.consumedItemId });
     },
   },
   ConsumedItem: {
