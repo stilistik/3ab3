@@ -9,10 +9,23 @@ module.exports = {
     userConsumed(root, args, context) {
       return context.prisma.user({ id: args.userId }).consumedItems();
     },
+    checklistConsumed(root, args, context) {
+      return context.prisma.checklist({ id: args.checklistId }).consumedItems();
+    },
+    userChecklistConsumed(root, args, context) {
+      return context.prisma.consumedItems({
+        where: {
+          AND: [
+            { consumer: { id: args.userId } },
+            { checklist: { id: args.checklistId } },
+          ],
+        },
+      });
+    },
   },
   Mutation: {
     async createConsumedItem(root, args, context) {
-      const { itemId, userId, amount } = args.input;
+      const { itemId, userId, checklistId, amount } = args.input;
       const item = await context.prisma.item({ id: itemId });
       const data = {
         consumer: {
@@ -23,6 +36,11 @@ module.exports = {
         item: {
           connect: {
             id: itemId,
+          },
+        },
+        checklist: {
+          connect: {
+            id: checklistId,
           },
         },
         price: item.price,
@@ -31,7 +49,7 @@ module.exports = {
       return context.prisma.createConsumedItem(data);
     },
     async updateConsumedItem(root, args, context) {
-      const { itemId, userId, amount } = args.input;
+      const { itemId, userId, checklistId, amount } = args.input;
       const item = await context.prisma.item({ id: itemId });
       const data = {
         consumer: {
@@ -42,6 +60,11 @@ module.exports = {
         item: {
           connect: {
             id: itemId,
+          },
+        },
+        checklist: {
+          connect: {
+            id: checklistId,
           },
         },
         price: item.price,
@@ -62,6 +85,9 @@ module.exports = {
     },
     item(root, args, context) {
       return context.prisma.consumedItem({ id: root.id }).item();
+    },
+    checklist(root, args, context) {
+      return context.prisma.consumedItem({ id: root.id }).checklist();
     },
   },
 };

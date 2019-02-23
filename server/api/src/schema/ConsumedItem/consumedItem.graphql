@@ -1,7 +1,8 @@
 type ConsumedItem {
   id: ID!
   item: Item!
-  consumer: User
+  consumer: User!
+  checklist: Checklist!
   amount: Int!
   price: Float!
 }
@@ -9,6 +10,7 @@ type ConsumedItem {
 input ConsumedItemInput {
   itemId: ID!
   userId: ID!
+  checklistId: ID!
   amount: Int!
 }
 
@@ -16,6 +18,8 @@ extend type Query {
   consumedItems: [ConsumedItem!]!
   consumedItem(consumedItemId: ID!): ConsumedItem!
   userConsumed(userId: ID!): [ConsumedItem!]!
+  checklistConsumed(checklistId: ID!): [ConsumedItem!]!
+  userChecklistConsumed(userId: ID!, checklistId: ID!): [ConsumedItem!]!
 }
 
 extend type Mutation {

@@ -2,6 +2,7 @@ type ConsumedItem {
   id: ID! @unique
   item: Item!
   consumer: User!
+  checklist: Checklist!
   price: Float!
   amount: Int!
 }

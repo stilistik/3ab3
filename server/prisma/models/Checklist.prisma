@@ -2,6 +2,7 @@ type Checklist {
   id: ID! @unique
   type: ChecklistType!
   date: DateTime!
+  consumedItems: [ConsumedItem!]!
 }
 
 enum ChecklistType {

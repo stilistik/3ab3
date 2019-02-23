@@ -15,4 +15,9 @@ module.exports = {
       });
     },
   },
+  Checklist: {
+    consumedItems(root, args, context) {
+      return context.prisma.checklist({ id: root.id }).consumedItems();
+    },
+  },
 };

@@ -31,6 +31,7 @@ type Checklist {
   id: ID!
   type: ChecklistType!
   date: DateTime!
+  consumedItems(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumedItem!]
 }
 
 type ChecklistConnection {
@@ -40,6 +41,17 @@ type ChecklistConnection {
 }
 
 input ChecklistCreateInput {
+  type: ChecklistType!
+  date: DateTime!
+  consumedItems: ConsumedItemCreateManyWithoutChecklistInput
+}
+
+input ChecklistCreateOneWithoutConsumedItemsInput {
+  create: ChecklistCreateWithoutConsumedItemsInput
+  connect: ChecklistWhereUniqueInput
+}
+
+input ChecklistCreateWithoutConsumedItemsInput {
   type: ChecklistType!
   date: DateTime!
 }
@@ -94,11 +106,29 @@ enum ChecklistType {
 input ChecklistUpdateInput {
   type: ChecklistType
   date: DateTime
+  consumedItems: ConsumedItemUpdateManyWithoutChecklistInput
 }
 
 input ChecklistUpdateManyMutationInput {
   type: ChecklistType
   date: DateTime
+}
+
+input ChecklistUpdateOneRequiredWithoutConsumedItemsInput {
+  create: ChecklistCreateWithoutConsumedItemsInput
+  update: ChecklistUpdateWithoutConsumedItemsDataInput
+  upsert: ChecklistUpsertWithoutConsumedItemsInput
+  connect: ChecklistWhereUniqueInput
+}
+
+input ChecklistUpdateWithoutConsumedItemsDataInput {
+  type: ChecklistType
+  date: DateTime
+}
+
+input ChecklistUpsertWithoutConsumedItemsInput {
+  update: ChecklistUpdateWithoutConsumedItemsDataInput!
+  create: ChecklistCreateWithoutConsumedItemsInput!
 }
 
 input ChecklistWhereInput {
@@ -128,6 +158,9 @@ input ChecklistWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  consumedItems_every: ConsumedItemWhereInput
+  consumedItems_some: ConsumedItemWhereInput
+  consumedItems_none: ConsumedItemWhereInput
   AND: [ChecklistWhereInput!]
   OR: [ChecklistWhereInput!]
   NOT: [ChecklistWhereInput!]
@@ -293,6 +326,7 @@ type ConsumedItem {
   id: ID!
   item: Item!
   consumer: User!
+  checklist: Checklist!
   price: Float!
   amount: Int!
 }
@@ -306,8 +340,14 @@ type ConsumedItemConnection {
 input ConsumedItemCreateInput {
   item: ItemCreateOneInput!
   consumer: UserCreateOneWithoutConsumedItemsInput!
+  checklist: ChecklistCreateOneWithoutConsumedItemsInput!
   price: Float!
   amount: Int!
+}
+
+input ConsumedItemCreateManyWithoutChecklistInput {
+  create: [ConsumedItemCreateWithoutChecklistInput!]
+  connect: [ConsumedItemWhereUniqueInput!]
 }
 
 input ConsumedItemCreateManyWithoutConsumerInput {
@@ -315,8 +355,16 @@ input ConsumedItemCreateManyWithoutConsumerInput {
   connect: [ConsumedItemWhereUniqueInput!]
 }
 
+input ConsumedItemCreateWithoutChecklistInput {
+  item: ItemCreateOneInput!
+  consumer: UserCreateOneWithoutConsumedItemsInput!
+  price: Float!
+  amount: Int!
+}
+
 input ConsumedItemCreateWithoutConsumerInput {
   item: ItemCreateOneInput!
+  checklist: ChecklistCreateOneWithoutConsumedItemsInput!
   price: Float!
   amount: Int!
 }
@@ -402,6 +450,7 @@ input ConsumedItemSubscriptionWhereInput {
 input ConsumedItemUpdateInput {
   item: ItemUpdateOneRequiredInput
   consumer: UserUpdateOneRequiredWithoutConsumedItemsInput
+  checklist: ChecklistUpdateOneRequiredWithoutConsumedItemsInput
   price: Float
   amount: Int
 }
@@ -414,6 +463,18 @@ input ConsumedItemUpdateManyDataInput {
 input ConsumedItemUpdateManyMutationInput {
   price: Float
   amount: Int
+}
+
+input ConsumedItemUpdateManyWithoutChecklistInput {
+  create: [ConsumedItemCreateWithoutChecklistInput!]
+  delete: [ConsumedItemWhereUniqueInput!]
+  connect: [ConsumedItemWhereUniqueInput!]
+  set: [ConsumedItemWhereUniqueInput!]
+  disconnect: [ConsumedItemWhereUniqueInput!]
+  update: [ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput!]
+  upsert: [ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput!]
+  deleteMany: [ConsumedItemScalarWhereInput!]
+  updateMany: [ConsumedItemUpdateManyWithWhereNestedInput!]
 }
 
 input ConsumedItemUpdateManyWithoutConsumerInput {
@@ -433,15 +494,34 @@ input ConsumedItemUpdateManyWithWhereNestedInput {
   data: ConsumedItemUpdateManyDataInput!
 }
 
-input ConsumedItemUpdateWithoutConsumerDataInput {
+input ConsumedItemUpdateWithoutChecklistDataInput {
   item: ItemUpdateOneRequiredInput
+  consumer: UserUpdateOneRequiredWithoutConsumedItemsInput
   price: Float
   amount: Int
+}
+
+input ConsumedItemUpdateWithoutConsumerDataInput {
+  item: ItemUpdateOneRequiredInput
+  checklist: ChecklistUpdateOneRequiredWithoutConsumedItemsInput
+  price: Float
+  amount: Int
+}
+
+input ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput {
+  where: ConsumedItemWhereUniqueInput!
+  data: ConsumedItemUpdateWithoutChecklistDataInput!
 }
 
 input ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput {
   where: ConsumedItemWhereUniqueInput!
   data: ConsumedItemUpdateWithoutConsumerDataInput!
+}
+
+input ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput {
+  where: ConsumedItemWhereUniqueInput!
+  update: ConsumedItemUpdateWithoutChecklistDataInput!
+  create: ConsumedItemCreateWithoutChecklistInput!
 }
 
 input ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput {
@@ -467,6 +547,7 @@ input ConsumedItemWhereInput {
   id_not_ends_with: ID
   item: ItemWhereInput
   consumer: UserWhereInput
+  checklist: ChecklistWhereInput
   price: Float
   price_not: Float
   price_in: [Float!]
