@@ -1,0 +1,7 @@
+type Purchase {
+  id: ID! @unique
+  items: [Item!]!
+  total: Float!
+  user: User!
+  date: DateTime!
+}

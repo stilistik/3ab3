@@ -1,0 +1,29 @@
+type Purchase {
+  id: ID!
+  items: [Item!]!
+  total: Float!
+  user: User!
+  date: DateTime!
+}
+
+input PurchaseInput {
+  userId: ID!
+  date: DateTime!
+  items: [PurchaseItemInput!]!
+}
+
+input PurchaseItemInput {
+  productId: ID!
+  amount: Int!
+}
+
+extend type Query {
+  purchases: [Purchase!]!
+  purchase(purchaseId: ID!): Purchase!
+  userPurchases(userId: ID!): [Purchase!]!
+}
+
+extend type Mutation {
+  createPurchase(input: PurchaseInput!): Purchase!
+  deletePurchase(purchaseId: ID!): Purchase!
+}

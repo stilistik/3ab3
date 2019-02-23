@@ -1,7 +1,7 @@
 type Item {
   id: ID! @unique
-  name: String!
+  product: Product!
+  user: User!
   price: Float!
-  index: Int!
-  show: Boolean! @default(value: "true")
+  amount: Int!
 }

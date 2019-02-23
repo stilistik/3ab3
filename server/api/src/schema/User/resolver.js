@@ -20,8 +20,14 @@ module.exports = {
     },
   },
   User: {
-    consumedItems(root, args, context) {
-      return context.prisma.user({ id: root.id }).consumedItems();
+    purchases(root, args, context) {
+      return context.prisma.user({ id: root.id }).purchases();
+    },
+    items(root, args, context) {
+      return context.prisma.user({ id: root.id }).items();
+    },
+    payments(root, args, context) {
+      return context.prisma.user({ id: root.id }).payments();
     },
   },
 };

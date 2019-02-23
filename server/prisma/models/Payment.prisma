@@ -1,0 +1,6 @@
+type Payment {
+  id: ID! @unique
+  amount: Float!
+  user: User!
+  date: DateTime!
+}

@@ -3,19 +3,23 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateChecklist {
-  count: Int!
-}
-
-type AggregateClient {
-  count: Int!
-}
-
-type AggregateConsumedItem {
+/* GraphQL */ `type AggregateClient {
   count: Int!
 }
 
 type AggregateItem {
+  count: Int!
+}
+
+type AggregatePayment {
+  count: Int!
+}
+
+type AggregateProduct {
+  count: Int!
+}
+
+type AggregatePurchase {
   count: Int!
 }
 
@@ -25,149 +29,6 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
-}
-
-type Checklist {
-  id: ID!
-  type: ChecklistType!
-  date: DateTime!
-  consumedItems(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumedItem!]
-}
-
-type ChecklistConnection {
-  pageInfo: PageInfo!
-  edges: [ChecklistEdge]!
-  aggregate: AggregateChecklist!
-}
-
-input ChecklistCreateInput {
-  type: ChecklistType!
-  date: DateTime!
-  consumedItems: ConsumedItemCreateManyWithoutChecklistInput
-}
-
-input ChecklistCreateOneWithoutConsumedItemsInput {
-  create: ChecklistCreateWithoutConsumedItemsInput
-  connect: ChecklistWhereUniqueInput
-}
-
-input ChecklistCreateWithoutConsumedItemsInput {
-  type: ChecklistType!
-  date: DateTime!
-}
-
-type ChecklistEdge {
-  node: Checklist!
-  cursor: String!
-}
-
-enum ChecklistOrderByInput {
-  id_ASC
-  id_DESC
-  type_ASC
-  type_DESC
-  date_ASC
-  date_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type ChecklistPreviousValues {
-  id: ID!
-  type: ChecklistType!
-  date: DateTime!
-}
-
-type ChecklistSubscriptionPayload {
-  mutation: MutationType!
-  node: Checklist
-  updatedFields: [String!]
-  previousValues: ChecklistPreviousValues
-}
-
-input ChecklistSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ChecklistWhereInput
-  AND: [ChecklistSubscriptionWhereInput!]
-  OR: [ChecklistSubscriptionWhereInput!]
-  NOT: [ChecklistSubscriptionWhereInput!]
-}
-
-enum ChecklistType {
-  CHECKLIST
-  EVENTLIST
-}
-
-input ChecklistUpdateInput {
-  type: ChecklistType
-  date: DateTime
-  consumedItems: ConsumedItemUpdateManyWithoutChecklistInput
-}
-
-input ChecklistUpdateManyMutationInput {
-  type: ChecklistType
-  date: DateTime
-}
-
-input ChecklistUpdateOneRequiredWithoutConsumedItemsInput {
-  create: ChecklistCreateWithoutConsumedItemsInput
-  update: ChecklistUpdateWithoutConsumedItemsDataInput
-  upsert: ChecklistUpsertWithoutConsumedItemsInput
-  connect: ChecklistWhereUniqueInput
-}
-
-input ChecklistUpdateWithoutConsumedItemsDataInput {
-  type: ChecklistType
-  date: DateTime
-}
-
-input ChecklistUpsertWithoutConsumedItemsInput {
-  update: ChecklistUpdateWithoutConsumedItemsDataInput!
-  create: ChecklistCreateWithoutConsumedItemsInput!
-}
-
-input ChecklistWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  type: ChecklistType
-  type_not: ChecklistType
-  type_in: [ChecklistType!]
-  type_not_in: [ChecklistType!]
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime!]
-  date_not_in: [DateTime!]
-  date_lt: DateTime
-  date_lte: DateTime
-  date_gt: DateTime
-  date_gte: DateTime
-  consumedItems_every: ConsumedItemWhereInput
-  consumedItems_some: ConsumedItemWhereInput
-  consumedItems_none: ConsumedItemWhereInput
-  AND: [ChecklistWhereInput!]
-  OR: [ChecklistWhereInput!]
-  NOT: [ChecklistWhereInput!]
-}
-
-input ChecklistWhereUniqueInput {
-  id: ID
 }
 
 type Client {
@@ -322,59 +183,51 @@ input ClientWhereUniqueInput {
   identity: String
 }
 
-type ConsumedItem {
+scalar DateTime
+
+type Item {
   id: ID!
-  item: Item!
-  consumer: User!
-  checklist: Checklist!
+  product: Product!
+  user: User!
   price: Float!
   amount: Int!
 }
 
-type ConsumedItemConnection {
+type ItemConnection {
   pageInfo: PageInfo!
-  edges: [ConsumedItemEdge]!
-  aggregate: AggregateConsumedItem!
+  edges: [ItemEdge]!
+  aggregate: AggregateItem!
 }
 
-input ConsumedItemCreateInput {
-  item: ItemCreateOneInput!
-  consumer: UserCreateOneWithoutConsumedItemsInput!
-  checklist: ChecklistCreateOneWithoutConsumedItemsInput!
+input ItemCreateInput {
+  product: ProductCreateOneInput!
+  user: UserCreateOneWithoutItemsInput!
   price: Float!
   amount: Int!
 }
 
-input ConsumedItemCreateManyWithoutChecklistInput {
-  create: [ConsumedItemCreateWithoutChecklistInput!]
-  connect: [ConsumedItemWhereUniqueInput!]
+input ItemCreateManyInput {
+  create: [ItemCreateInput!]
+  connect: [ItemWhereUniqueInput!]
 }
 
-input ConsumedItemCreateManyWithoutConsumerInput {
-  create: [ConsumedItemCreateWithoutConsumerInput!]
-  connect: [ConsumedItemWhereUniqueInput!]
+input ItemCreateManyWithoutUserInput {
+  create: [ItemCreateWithoutUserInput!]
+  connect: [ItemWhereUniqueInput!]
 }
 
-input ConsumedItemCreateWithoutChecklistInput {
-  item: ItemCreateOneInput!
-  consumer: UserCreateOneWithoutConsumedItemsInput!
+input ItemCreateWithoutUserInput {
+  product: ProductCreateOneInput!
   price: Float!
   amount: Int!
 }
 
-input ConsumedItemCreateWithoutConsumerInput {
-  item: ItemCreateOneInput!
-  checklist: ChecklistCreateOneWithoutConsumedItemsInput!
-  price: Float!
-  amount: Int!
-}
-
-type ConsumedItemEdge {
-  node: ConsumedItem!
+type ItemEdge {
+  node: Item!
   cursor: String!
 }
 
-enum ConsumedItemOrderByInput {
+enum ItemOrderByInput {
   id_ASC
   id_DESC
   price_ASC
@@ -387,13 +240,13 @@ enum ConsumedItemOrderByInput {
   updatedAt_DESC
 }
 
-type ConsumedItemPreviousValues {
+type ItemPreviousValues {
   id: ID!
   price: Float!
   amount: Int!
 }
 
-input ConsumedItemScalarWhereInput {
+input ItemScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -424,211 +277,9 @@ input ConsumedItemScalarWhereInput {
   amount_lte: Int
   amount_gt: Int
   amount_gte: Int
-  AND: [ConsumedItemScalarWhereInput!]
-  OR: [ConsumedItemScalarWhereInput!]
-  NOT: [ConsumedItemScalarWhereInput!]
-}
-
-type ConsumedItemSubscriptionPayload {
-  mutation: MutationType!
-  node: ConsumedItem
-  updatedFields: [String!]
-  previousValues: ConsumedItemPreviousValues
-}
-
-input ConsumedItemSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ConsumedItemWhereInput
-  AND: [ConsumedItemSubscriptionWhereInput!]
-  OR: [ConsumedItemSubscriptionWhereInput!]
-  NOT: [ConsumedItemSubscriptionWhereInput!]
-}
-
-input ConsumedItemUpdateInput {
-  item: ItemUpdateOneRequiredInput
-  consumer: UserUpdateOneRequiredWithoutConsumedItemsInput
-  checklist: ChecklistUpdateOneRequiredWithoutConsumedItemsInput
-  price: Float
-  amount: Int
-}
-
-input ConsumedItemUpdateManyDataInput {
-  price: Float
-  amount: Int
-}
-
-input ConsumedItemUpdateManyMutationInput {
-  price: Float
-  amount: Int
-}
-
-input ConsumedItemUpdateManyWithoutChecklistInput {
-  create: [ConsumedItemCreateWithoutChecklistInput!]
-  delete: [ConsumedItemWhereUniqueInput!]
-  connect: [ConsumedItemWhereUniqueInput!]
-  set: [ConsumedItemWhereUniqueInput!]
-  disconnect: [ConsumedItemWhereUniqueInput!]
-  update: [ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput!]
-  upsert: [ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput!]
-  deleteMany: [ConsumedItemScalarWhereInput!]
-  updateMany: [ConsumedItemUpdateManyWithWhereNestedInput!]
-}
-
-input ConsumedItemUpdateManyWithoutConsumerInput {
-  create: [ConsumedItemCreateWithoutConsumerInput!]
-  delete: [ConsumedItemWhereUniqueInput!]
-  connect: [ConsumedItemWhereUniqueInput!]
-  set: [ConsumedItemWhereUniqueInput!]
-  disconnect: [ConsumedItemWhereUniqueInput!]
-  update: [ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput!]
-  upsert: [ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput!]
-  deleteMany: [ConsumedItemScalarWhereInput!]
-  updateMany: [ConsumedItemUpdateManyWithWhereNestedInput!]
-}
-
-input ConsumedItemUpdateManyWithWhereNestedInput {
-  where: ConsumedItemScalarWhereInput!
-  data: ConsumedItemUpdateManyDataInput!
-}
-
-input ConsumedItemUpdateWithoutChecklistDataInput {
-  item: ItemUpdateOneRequiredInput
-  consumer: UserUpdateOneRequiredWithoutConsumedItemsInput
-  price: Float
-  amount: Int
-}
-
-input ConsumedItemUpdateWithoutConsumerDataInput {
-  item: ItemUpdateOneRequiredInput
-  checklist: ChecklistUpdateOneRequiredWithoutConsumedItemsInput
-  price: Float
-  amount: Int
-}
-
-input ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput {
-  where: ConsumedItemWhereUniqueInput!
-  data: ConsumedItemUpdateWithoutChecklistDataInput!
-}
-
-input ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput {
-  where: ConsumedItemWhereUniqueInput!
-  data: ConsumedItemUpdateWithoutConsumerDataInput!
-}
-
-input ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput {
-  where: ConsumedItemWhereUniqueInput!
-  update: ConsumedItemUpdateWithoutChecklistDataInput!
-  create: ConsumedItemCreateWithoutChecklistInput!
-}
-
-input ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput {
-  where: ConsumedItemWhereUniqueInput!
-  update: ConsumedItemUpdateWithoutConsumerDataInput!
-  create: ConsumedItemCreateWithoutConsumerInput!
-}
-
-input ConsumedItemWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  item: ItemWhereInput
-  consumer: UserWhereInput
-  checklist: ChecklistWhereInput
-  price: Float
-  price_not: Float
-  price_in: [Float!]
-  price_not_in: [Float!]
-  price_lt: Float
-  price_lte: Float
-  price_gt: Float
-  price_gte: Float
-  amount: Int
-  amount_not: Int
-  amount_in: [Int!]
-  amount_not_in: [Int!]
-  amount_lt: Int
-  amount_lte: Int
-  amount_gt: Int
-  amount_gte: Int
-  AND: [ConsumedItemWhereInput!]
-  OR: [ConsumedItemWhereInput!]
-  NOT: [ConsumedItemWhereInput!]
-}
-
-input ConsumedItemWhereUniqueInput {
-  id: ID
-}
-
-scalar DateTime
-
-type Item {
-  id: ID!
-  name: String!
-  price: Float!
-  index: Int!
-  show: Boolean!
-}
-
-type ItemConnection {
-  pageInfo: PageInfo!
-  edges: [ItemEdge]!
-  aggregate: AggregateItem!
-}
-
-input ItemCreateInput {
-  name: String!
-  price: Float!
-  index: Int!
-  show: Boolean
-}
-
-input ItemCreateOneInput {
-  create: ItemCreateInput
-  connect: ItemWhereUniqueInput
-}
-
-type ItemEdge {
-  node: Item!
-  cursor: String!
-}
-
-enum ItemOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  price_ASC
-  price_DESC
-  index_ASC
-  index_DESC
-  show_ASC
-  show_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type ItemPreviousValues {
-  id: ID!
-  name: String!
-  price: Float!
-  index: Int!
-  show: Boolean!
+  AND: [ItemScalarWhereInput!]
+  OR: [ItemScalarWhereInput!]
+  NOT: [ItemScalarWhereInput!]
 }
 
 type ItemSubscriptionPayload {
@@ -650,39 +301,491 @@ input ItemSubscriptionWhereInput {
 }
 
 input ItemUpdateDataInput {
-  name: String
+  product: ProductUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutItemsInput
   price: Float
-  index: Int
-  show: Boolean
+  amount: Int
 }
 
 input ItemUpdateInput {
-  name: String
+  product: ProductUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutItemsInput
   price: Float
-  index: Int
-  show: Boolean
+  amount: Int
+}
+
+input ItemUpdateManyDataInput {
+  price: Float
+  amount: Int
+}
+
+input ItemUpdateManyInput {
+  create: [ItemCreateInput!]
+  update: [ItemUpdateWithWhereUniqueNestedInput!]
+  upsert: [ItemUpsertWithWhereUniqueNestedInput!]
+  delete: [ItemWhereUniqueInput!]
+  connect: [ItemWhereUniqueInput!]
+  set: [ItemWhereUniqueInput!]
+  disconnect: [ItemWhereUniqueInput!]
+  deleteMany: [ItemScalarWhereInput!]
+  updateMany: [ItemUpdateManyWithWhereNestedInput!]
 }
 
 input ItemUpdateManyMutationInput {
-  name: String
   price: Float
-  index: Int
-  show: Boolean
+  amount: Int
 }
 
-input ItemUpdateOneRequiredInput {
-  create: ItemCreateInput
-  update: ItemUpdateDataInput
-  upsert: ItemUpsertNestedInput
-  connect: ItemWhereUniqueInput
+input ItemUpdateManyWithoutUserInput {
+  create: [ItemCreateWithoutUserInput!]
+  delete: [ItemWhereUniqueInput!]
+  connect: [ItemWhereUniqueInput!]
+  set: [ItemWhereUniqueInput!]
+  disconnect: [ItemWhereUniqueInput!]
+  update: [ItemUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ItemUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ItemScalarWhereInput!]
+  updateMany: [ItemUpdateManyWithWhereNestedInput!]
 }
 
-input ItemUpsertNestedInput {
+input ItemUpdateManyWithWhereNestedInput {
+  where: ItemScalarWhereInput!
+  data: ItemUpdateManyDataInput!
+}
+
+input ItemUpdateWithoutUserDataInput {
+  product: ProductUpdateOneRequiredInput
+  price: Float
+  amount: Int
+}
+
+input ItemUpdateWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput!
+  data: ItemUpdateDataInput!
+}
+
+input ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput!
+  data: ItemUpdateWithoutUserDataInput!
+}
+
+input ItemUpsertWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput!
   update: ItemUpdateDataInput!
   create: ItemCreateInput!
 }
 
+input ItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput!
+  update: ItemUpdateWithoutUserDataInput!
+  create: ItemCreateWithoutUserInput!
+}
+
 input ItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  product: ProductWhereInput
+  user: UserWhereInput
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  AND: [ItemWhereInput!]
+  OR: [ItemWhereInput!]
+  NOT: [ItemWhereInput!]
+}
+
+input ItemWhereUniqueInput {
+  id: ID
+}
+
+scalar Long
+
+type Mutation {
+  createClient(data: ClientCreateInput!): Client!
+  updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
+  updateManyClients(data: ClientUpdateManyMutationInput!, where: ClientWhereInput): BatchPayload!
+  upsertClient(where: ClientWhereUniqueInput!, create: ClientCreateInput!, update: ClientUpdateInput!): Client!
+  deleteClient(where: ClientWhereUniqueInput!): Client
+  deleteManyClients(where: ClientWhereInput): BatchPayload!
+  createItem(data: ItemCreateInput!): Item!
+  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  deleteItem(where: ItemWhereUniqueInput!): Item
+  deleteManyItems(where: ItemWhereInput): BatchPayload!
+  createPayment(data: PaymentCreateInput!): Payment!
+  updatePayment(data: PaymentUpdateInput!, where: PaymentWhereUniqueInput!): Payment
+  updateManyPayments(data: PaymentUpdateManyMutationInput!, where: PaymentWhereInput): BatchPayload!
+  upsertPayment(where: PaymentWhereUniqueInput!, create: PaymentCreateInput!, update: PaymentUpdateInput!): Payment!
+  deletePayment(where: PaymentWhereUniqueInput!): Payment
+  deleteManyPayments(where: PaymentWhereInput): BatchPayload!
+  createProduct(data: ProductCreateInput!): Product!
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
+  upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteManyProducts(where: ProductWhereInput): BatchPayload!
+  createPurchase(data: PurchaseCreateInput!): Purchase!
+  updatePurchase(data: PurchaseUpdateInput!, where: PurchaseWhereUniqueInput!): Purchase
+  updateManyPurchases(data: PurchaseUpdateManyMutationInput!, where: PurchaseWhereInput): BatchPayload!
+  upsertPurchase(where: PurchaseWhereUniqueInput!, create: PurchaseCreateInput!, update: PurchaseUpdateInput!): Purchase!
+  deletePurchase(where: PurchaseWhereUniqueInput!): Purchase
+  deleteManyPurchases(where: PurchaseWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Payment {
+  id: ID!
+  amount: Float!
+  user: User!
+  date: DateTime!
+}
+
+type PaymentConnection {
+  pageInfo: PageInfo!
+  edges: [PaymentEdge]!
+  aggregate: AggregatePayment!
+}
+
+input PaymentCreateInput {
+  amount: Float!
+  user: UserCreateOneWithoutPaymentsInput!
+  date: DateTime!
+}
+
+input PaymentCreateManyWithoutUserInput {
+  create: [PaymentCreateWithoutUserInput!]
+  connect: [PaymentWhereUniqueInput!]
+}
+
+input PaymentCreateWithoutUserInput {
+  amount: Float!
+  date: DateTime!
+}
+
+type PaymentEdge {
+  node: Payment!
+  cursor: String!
+}
+
+enum PaymentOrderByInput {
+  id_ASC
+  id_DESC
+  amount_ASC
+  amount_DESC
+  date_ASC
+  date_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PaymentPreviousValues {
+  id: ID!
+  amount: Float!
+  date: DateTime!
+}
+
+input PaymentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  amount: Float
+  amount_not: Float
+  amount_in: [Float!]
+  amount_not_in: [Float!]
+  amount_lt: Float
+  amount_lte: Float
+  amount_gt: Float
+  amount_gte: Float
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [PaymentScalarWhereInput!]
+  OR: [PaymentScalarWhereInput!]
+  NOT: [PaymentScalarWhereInput!]
+}
+
+type PaymentSubscriptionPayload {
+  mutation: MutationType!
+  node: Payment
+  updatedFields: [String!]
+  previousValues: PaymentPreviousValues
+}
+
+input PaymentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PaymentWhereInput
+  AND: [PaymentSubscriptionWhereInput!]
+  OR: [PaymentSubscriptionWhereInput!]
+  NOT: [PaymentSubscriptionWhereInput!]
+}
+
+input PaymentUpdateInput {
+  amount: Float
+  user: UserUpdateOneRequiredWithoutPaymentsInput
+  date: DateTime
+}
+
+input PaymentUpdateManyDataInput {
+  amount: Float
+  date: DateTime
+}
+
+input PaymentUpdateManyMutationInput {
+  amount: Float
+  date: DateTime
+}
+
+input PaymentUpdateManyWithoutUserInput {
+  create: [PaymentCreateWithoutUserInput!]
+  delete: [PaymentWhereUniqueInput!]
+  connect: [PaymentWhereUniqueInput!]
+  set: [PaymentWhereUniqueInput!]
+  disconnect: [PaymentWhereUniqueInput!]
+  update: [PaymentUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [PaymentUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [PaymentScalarWhereInput!]
+  updateMany: [PaymentUpdateManyWithWhereNestedInput!]
+}
+
+input PaymentUpdateManyWithWhereNestedInput {
+  where: PaymentScalarWhereInput!
+  data: PaymentUpdateManyDataInput!
+}
+
+input PaymentUpdateWithoutUserDataInput {
+  amount: Float
+  date: DateTime
+}
+
+input PaymentUpdateWithWhereUniqueWithoutUserInput {
+  where: PaymentWhereUniqueInput!
+  data: PaymentUpdateWithoutUserDataInput!
+}
+
+input PaymentUpsertWithWhereUniqueWithoutUserInput {
+  where: PaymentWhereUniqueInput!
+  update: PaymentUpdateWithoutUserDataInput!
+  create: PaymentCreateWithoutUserInput!
+}
+
+input PaymentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  amount: Float
+  amount_not: Float
+  amount_in: [Float!]
+  amount_not_in: [Float!]
+  amount_lt: Float
+  amount_lte: Float
+  amount_gt: Float
+  amount_gte: Float
+  user: UserWhereInput
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [PaymentWhereInput!]
+  OR: [PaymentWhereInput!]
+  NOT: [PaymentWhereInput!]
+}
+
+input PaymentWhereUniqueInput {
+  id: ID
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  index: Int!
+  show: Boolean!
+}
+
+type ProductConnection {
+  pageInfo: PageInfo!
+  edges: [ProductEdge]!
+  aggregate: AggregateProduct!
+}
+
+input ProductCreateInput {
+  name: String!
+  price: Float!
+  index: Int!
+  show: Boolean
+}
+
+input ProductCreateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+}
+
+type ProductEdge {
+  node: Product!
+  cursor: String!
+}
+
+enum ProductOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  price_ASC
+  price_DESC
+  index_ASC
+  index_DESC
+  show_ASC
+  show_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ProductPreviousValues {
+  id: ID!
+  name: String!
+  price: Float!
+  index: Int!
+  show: Boolean!
+}
+
+type ProductSubscriptionPayload {
+  mutation: MutationType!
+  node: Product
+  updatedFields: [String!]
+  previousValues: ProductPreviousValues
+}
+
+input ProductSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductWhereInput
+  AND: [ProductSubscriptionWhereInput!]
+  OR: [ProductSubscriptionWhereInput!]
+  NOT: [ProductSubscriptionWhereInput!]
+}
+
+input ProductUpdateDataInput {
+  name: String
+  price: Float
+  index: Int
+  show: Boolean
+}
+
+input ProductUpdateInput {
+  name: String
+  price: Float
+  index: Int
+  show: Boolean
+}
+
+input ProductUpdateManyMutationInput {
+  name: String
+  price: Float
+  index: Int
+  show: Boolean
+}
+
+input ProductUpdateOneRequiredInput {
+  create: ProductCreateInput
+  update: ProductUpdateDataInput
+  upsert: ProductUpsertNestedInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductUpsertNestedInput {
+  update: ProductUpdateDataInput!
+  create: ProductCreateInput!
+}
+
+input ProductWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -729,80 +832,236 @@ input ItemWhereInput {
   index_gte: Int
   show: Boolean
   show_not: Boolean
-  AND: [ItemWhereInput!]
-  OR: [ItemWhereInput!]
-  NOT: [ItemWhereInput!]
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  NOT: [ProductWhereInput!]
 }
 
-input ItemWhereUniqueInput {
+input ProductWhereUniqueInput {
   id: ID
 }
 
-scalar Long
-
-type Mutation {
-  createChecklist(data: ChecklistCreateInput!): Checklist!
-  updateChecklist(data: ChecklistUpdateInput!, where: ChecklistWhereUniqueInput!): Checklist
-  updateManyChecklists(data: ChecklistUpdateManyMutationInput!, where: ChecklistWhereInput): BatchPayload!
-  upsertChecklist(where: ChecklistWhereUniqueInput!, create: ChecklistCreateInput!, update: ChecklistUpdateInput!): Checklist!
-  deleteChecklist(where: ChecklistWhereUniqueInput!): Checklist
-  deleteManyChecklists(where: ChecklistWhereInput): BatchPayload!
-  createClient(data: ClientCreateInput!): Client!
-  updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
-  updateManyClients(data: ClientUpdateManyMutationInput!, where: ClientWhereInput): BatchPayload!
-  upsertClient(where: ClientWhereUniqueInput!, create: ClientCreateInput!, update: ClientUpdateInput!): Client!
-  deleteClient(where: ClientWhereUniqueInput!): Client
-  deleteManyClients(where: ClientWhereInput): BatchPayload!
-  createConsumedItem(data: ConsumedItemCreateInput!): ConsumedItem!
-  updateConsumedItem(data: ConsumedItemUpdateInput!, where: ConsumedItemWhereUniqueInput!): ConsumedItem
-  updateManyConsumedItems(data: ConsumedItemUpdateManyMutationInput!, where: ConsumedItemWhereInput): BatchPayload!
-  upsertConsumedItem(where: ConsumedItemWhereUniqueInput!, create: ConsumedItemCreateInput!, update: ConsumedItemUpdateInput!): ConsumedItem!
-  deleteConsumedItem(where: ConsumedItemWhereUniqueInput!): ConsumedItem
-  deleteManyConsumedItems(where: ConsumedItemWhereInput): BatchPayload!
-  createItem(data: ItemCreateInput!): Item!
-  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
-  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
-  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
-  deleteItem(where: ItemWhereUniqueInput!): Item
-  deleteManyItems(where: ItemWhereInput): BatchPayload!
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-}
-
-enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
-}
-
-interface Node {
+type Purchase {
   id: ID!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  total: Float!
+  user: User!
+  date: DateTime!
 }
 
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-  endCursor: String
+type PurchaseConnection {
+  pageInfo: PageInfo!
+  edges: [PurchaseEdge]!
+  aggregate: AggregatePurchase!
+}
+
+input PurchaseCreateInput {
+  items: ItemCreateManyInput
+  total: Float!
+  user: UserCreateOneWithoutPurchasesInput!
+  date: DateTime!
+}
+
+input PurchaseCreateManyWithoutUserInput {
+  create: [PurchaseCreateWithoutUserInput!]
+  connect: [PurchaseWhereUniqueInput!]
+}
+
+input PurchaseCreateWithoutUserInput {
+  items: ItemCreateManyInput
+  total: Float!
+  date: DateTime!
+}
+
+type PurchaseEdge {
+  node: Purchase!
+  cursor: String!
+}
+
+enum PurchaseOrderByInput {
+  id_ASC
+  id_DESC
+  total_ASC
+  total_DESC
+  date_ASC
+  date_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PurchasePreviousValues {
+  id: ID!
+  total: Float!
+  date: DateTime!
+}
+
+input PurchaseScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  total: Float
+  total_not: Float
+  total_in: [Float!]
+  total_not_in: [Float!]
+  total_lt: Float
+  total_lte: Float
+  total_gt: Float
+  total_gte: Float
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [PurchaseScalarWhereInput!]
+  OR: [PurchaseScalarWhereInput!]
+  NOT: [PurchaseScalarWhereInput!]
+}
+
+type PurchaseSubscriptionPayload {
+  mutation: MutationType!
+  node: Purchase
+  updatedFields: [String!]
+  previousValues: PurchasePreviousValues
+}
+
+input PurchaseSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PurchaseWhereInput
+  AND: [PurchaseSubscriptionWhereInput!]
+  OR: [PurchaseSubscriptionWhereInput!]
+  NOT: [PurchaseSubscriptionWhereInput!]
+}
+
+input PurchaseUpdateInput {
+  items: ItemUpdateManyInput
+  total: Float
+  user: UserUpdateOneRequiredWithoutPurchasesInput
+  date: DateTime
+}
+
+input PurchaseUpdateManyDataInput {
+  total: Float
+  date: DateTime
+}
+
+input PurchaseUpdateManyMutationInput {
+  total: Float
+  date: DateTime
+}
+
+input PurchaseUpdateManyWithoutUserInput {
+  create: [PurchaseCreateWithoutUserInput!]
+  delete: [PurchaseWhereUniqueInput!]
+  connect: [PurchaseWhereUniqueInput!]
+  set: [PurchaseWhereUniqueInput!]
+  disconnect: [PurchaseWhereUniqueInput!]
+  update: [PurchaseUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [PurchaseUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [PurchaseScalarWhereInput!]
+  updateMany: [PurchaseUpdateManyWithWhereNestedInput!]
+}
+
+input PurchaseUpdateManyWithWhereNestedInput {
+  where: PurchaseScalarWhereInput!
+  data: PurchaseUpdateManyDataInput!
+}
+
+input PurchaseUpdateWithoutUserDataInput {
+  items: ItemUpdateManyInput
+  total: Float
+  date: DateTime
+}
+
+input PurchaseUpdateWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput!
+  data: PurchaseUpdateWithoutUserDataInput!
+}
+
+input PurchaseUpsertWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput!
+  update: PurchaseUpdateWithoutUserDataInput!
+  create: PurchaseCreateWithoutUserInput!
+}
+
+input PurchaseWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  items_every: ItemWhereInput
+  items_some: ItemWhereInput
+  items_none: ItemWhereInput
+  total: Float
+  total_not: Float
+  total_in: [Float!]
+  total_not_in: [Float!]
+  total_lt: Float
+  total_lte: Float
+  total_gt: Float
+  total_gte: Float
+  user: UserWhereInput
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [PurchaseWhereInput!]
+  OR: [PurchaseWhereInput!]
+  NOT: [PurchaseWhereInput!]
+}
+
+input PurchaseWhereUniqueInput {
+  id: ID
 }
 
 type Query {
-  checklist(where: ChecklistWhereUniqueInput!): Checklist
-  checklists(where: ChecklistWhereInput, orderBy: ChecklistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Checklist]!
-  checklistsConnection(where: ChecklistWhereInput, orderBy: ChecklistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChecklistConnection!
   client(where: ClientWhereUniqueInput!): Client
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client]!
   clientsConnection(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClientConnection!
-  consumedItem(where: ConsumedItemWhereUniqueInput!): ConsumedItem
-  consumedItems(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumedItem]!
-  consumedItemsConnection(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConsumedItemConnection!
   item(where: ItemWhereUniqueInput!): Item
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  payment(where: PaymentWhereUniqueInput!): Payment
+  payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment]!
+  paymentsConnection(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PaymentConnection!
+  product(where: ProductWhereUniqueInput!): Product
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
+  productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
+  purchase(where: PurchaseWhereUniqueInput!): Purchase
+  purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase]!
+  purchasesConnection(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -810,10 +1069,11 @@ type Query {
 }
 
 type Subscription {
-  checklist(where: ChecklistSubscriptionWhereInput): ChecklistSubscriptionPayload
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
-  consumedItem(where: ConsumedItemSubscriptionWhereInput): ConsumedItemSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
+  product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
+  purchase(where: PurchaseSubscriptionWhereInput): PurchaseSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -822,7 +1082,10 @@ type User {
   name: String!
   email: String!
   password: String!
-  consumedItems(where: ConsumedItemWhereInput, orderBy: ConsumedItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumedItem!]
+  purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase!]
+  payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  balance: Float!
 }
 
 type UserConnection {
@@ -835,18 +1098,52 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  consumedItems: ConsumedItemCreateManyWithoutConsumerInput
+  purchases: PurchaseCreateManyWithoutUserInput
+  payments: PaymentCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  balance: Float
 }
 
-input UserCreateOneWithoutConsumedItemsInput {
-  create: UserCreateWithoutConsumedItemsInput
+input UserCreateOneWithoutItemsInput {
+  create: UserCreateWithoutItemsInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutConsumedItemsInput {
+input UserCreateOneWithoutPaymentsInput {
+  create: UserCreateWithoutPaymentsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPurchasesInput {
+  create: UserCreateWithoutPurchasesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutItemsInput {
   name: String!
   email: String!
   password: String!
+  purchases: PurchaseCreateManyWithoutUserInput
+  payments: PaymentCreateManyWithoutUserInput
+  balance: Float
+}
+
+input UserCreateWithoutPaymentsInput {
+  name: String!
+  email: String!
+  password: String!
+  purchases: PurchaseCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  balance: Float
+}
+
+input UserCreateWithoutPurchasesInput {
+  name: String!
+  email: String!
+  password: String!
+  payments: PaymentCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  balance: Float
 }
 
 type UserEdge {
@@ -863,6 +1160,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  balance_ASC
+  balance_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -874,6 +1173,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  balance: Float!
 }
 
 type UserSubscriptionPayload {
@@ -898,31 +1198,80 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  consumedItems: ConsumedItemUpdateManyWithoutConsumerInput
+  purchases: PurchaseUpdateManyWithoutUserInput
+  payments: PaymentUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  balance: Float
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  balance: Float
 }
 
-input UserUpdateOneRequiredWithoutConsumedItemsInput {
-  create: UserCreateWithoutConsumedItemsInput
-  update: UserUpdateWithoutConsumedItemsDataInput
-  upsert: UserUpsertWithoutConsumedItemsInput
+input UserUpdateOneRequiredWithoutItemsInput {
+  create: UserCreateWithoutItemsInput
+  update: UserUpdateWithoutItemsDataInput
+  upsert: UserUpsertWithoutItemsInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutConsumedItemsDataInput {
+input UserUpdateOneRequiredWithoutPaymentsInput {
+  create: UserCreateWithoutPaymentsInput
+  update: UserUpdateWithoutPaymentsDataInput
+  upsert: UserUpsertWithoutPaymentsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutPurchasesInput {
+  create: UserCreateWithoutPurchasesInput
+  update: UserUpdateWithoutPurchasesDataInput
+  upsert: UserUpsertWithoutPurchasesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
   password: String
+  purchases: PurchaseUpdateManyWithoutUserInput
+  payments: PaymentUpdateManyWithoutUserInput
+  balance: Float
 }
 
-input UserUpsertWithoutConsumedItemsInput {
-  update: UserUpdateWithoutConsumedItemsDataInput!
-  create: UserCreateWithoutConsumedItemsInput!
+input UserUpdateWithoutPaymentsDataInput {
+  name: String
+  email: String
+  password: String
+  purchases: PurchaseUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  balance: Float
+}
+
+input UserUpdateWithoutPurchasesDataInput {
+  name: String
+  email: String
+  password: String
+  payments: PaymentUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  balance: Float
+}
+
+input UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput!
+  create: UserCreateWithoutItemsInput!
+}
+
+input UserUpsertWithoutPaymentsInput {
+  update: UserUpdateWithoutPaymentsDataInput!
+  create: UserCreateWithoutPaymentsInput!
+}
+
+input UserUpsertWithoutPurchasesInput {
+  update: UserUpdateWithoutPurchasesDataInput!
+  create: UserCreateWithoutPurchasesInput!
 }
 
 input UserWhereInput {
@@ -982,9 +1331,23 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  consumedItems_every: ConsumedItemWhereInput
-  consumedItems_some: ConsumedItemWhereInput
-  consumedItems_none: ConsumedItemWhereInput
+  purchases_every: PurchaseWhereInput
+  purchases_some: PurchaseWhereInput
+  purchases_none: PurchaseWhereInput
+  payments_every: PaymentWhereInput
+  payments_some: PaymentWhereInput
+  payments_none: PaymentWhereInput
+  items_every: ItemWhereInput
+  items_some: ItemWhereInput
+  items_none: ItemWhereInput
+  balance: Float
+  balance_not: Float
+  balance_in: [Float!]
+  balance_not_in: [Float!]
+  balance_lt: Float
+  balance_lte: Float
+  balance_gt: Float
+  balance_gte: Float
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

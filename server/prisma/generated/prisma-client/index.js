@@ -13,7 +13,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Checklist",
+    name: "Product",
     embedded: false
   },
   {
@@ -21,11 +21,11 @@ var models = [
     embedded: false
   },
   {
-    name: "ConsumedItem",
+    name: "Purchase",
     embedded: false
   },
   {
-    name: "ChecklistType",
+    name: "Payment",
     embedded: false
   }
 ];

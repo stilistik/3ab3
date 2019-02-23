@@ -14,10 +14,11 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
-  checklist: (where?: ChecklistWhereInput) => Promise<boolean>;
   client: (where?: ClientWhereInput) => Promise<boolean>;
-  consumedItem: (where?: ConsumedItemWhereInput) => Promise<boolean>;
   item: (where?: ItemWhereInput) => Promise<boolean>;
+  payment: (where?: PaymentWhereInput) => Promise<boolean>;
+  product: (where?: ProductWhereInput) => Promise<boolean>;
+  purchase: (where?: PurchaseWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -40,29 +41,6 @@ export interface Prisma {
    * Queries
    */
 
-  checklist: (where: ChecklistWhereUniqueInput) => ChecklistPromise;
-  checklists: (
-    args?: {
-      where?: ChecklistWhereInput;
-      orderBy?: ChecklistOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<Checklist>;
-  checklistsConnection: (
-    args?: {
-      where?: ChecklistWhereInput;
-      orderBy?: ChecklistOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => ChecklistConnectionPromise;
   client: (where: ClientWhereUniqueInput) => ClientPromise;
   clients: (
     args?: {
@@ -86,29 +64,6 @@ export interface Prisma {
       last?: Int;
     }
   ) => ClientConnectionPromise;
-  consumedItem: (where: ConsumedItemWhereUniqueInput) => ConsumedItemPromise;
-  consumedItems: (
-    args?: {
-      where?: ConsumedItemWhereInput;
-      orderBy?: ConsumedItemOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<ConsumedItem>;
-  consumedItemsConnection: (
-    args?: {
-      where?: ConsumedItemWhereInput;
-      orderBy?: ConsumedItemOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => ConsumedItemConnectionPromise;
   item: (where: ItemWhereUniqueInput) => ItemPromise;
   items: (
     args?: {
@@ -132,6 +87,75 @@ export interface Prisma {
       last?: Int;
     }
   ) => ItemConnectionPromise;
+  payment: (where: PaymentWhereUniqueInput) => PaymentPromise;
+  payments: (
+    args?: {
+      where?: PaymentWhereInput;
+      orderBy?: PaymentOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Payment>;
+  paymentsConnection: (
+    args?: {
+      where?: PaymentWhereInput;
+      orderBy?: PaymentOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => PaymentConnectionPromise;
+  product: (where: ProductWhereUniqueInput) => ProductPromise;
+  products: (
+    args?: {
+      where?: ProductWhereInput;
+      orderBy?: ProductOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Product>;
+  productsConnection: (
+    args?: {
+      where?: ProductWhereInput;
+      orderBy?: ProductOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => ProductConnectionPromise;
+  purchase: (where: PurchaseWhereUniqueInput) => PurchasePromise;
+  purchases: (
+    args?: {
+      where?: PurchaseWhereInput;
+      orderBy?: PurchaseOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Purchase>;
+  purchasesConnection: (
+    args?: {
+      where?: PurchaseWhereInput;
+      orderBy?: PurchaseOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => PurchaseConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
   users: (
     args?: {
@@ -161,25 +185,6 @@ export interface Prisma {
    * Mutations
    */
 
-  createChecklist: (data: ChecklistCreateInput) => ChecklistPromise;
-  updateChecklist: (
-    args: { data: ChecklistUpdateInput; where: ChecklistWhereUniqueInput }
-  ) => ChecklistPromise;
-  updateManyChecklists: (
-    args: {
-      data: ChecklistUpdateManyMutationInput;
-      where?: ChecklistWhereInput;
-    }
-  ) => BatchPayloadPromise;
-  upsertChecklist: (
-    args: {
-      where: ChecklistWhereUniqueInput;
-      create: ChecklistCreateInput;
-      update: ChecklistUpdateInput;
-    }
-  ) => ChecklistPromise;
-  deleteChecklist: (where: ChecklistWhereUniqueInput) => ChecklistPromise;
-  deleteManyChecklists: (where?: ChecklistWhereInput) => BatchPayloadPromise;
   createClient: (data: ClientCreateInput) => ClientPromise;
   updateClient: (
     args: { data: ClientUpdateInput; where: ClientWhereUniqueInput }
@@ -196,29 +201,6 @@ export interface Prisma {
   ) => ClientPromise;
   deleteClient: (where: ClientWhereUniqueInput) => ClientPromise;
   deleteManyClients: (where?: ClientWhereInput) => BatchPayloadPromise;
-  createConsumedItem: (data: ConsumedItemCreateInput) => ConsumedItemPromise;
-  updateConsumedItem: (
-    args: { data: ConsumedItemUpdateInput; where: ConsumedItemWhereUniqueInput }
-  ) => ConsumedItemPromise;
-  updateManyConsumedItems: (
-    args: {
-      data: ConsumedItemUpdateManyMutationInput;
-      where?: ConsumedItemWhereInput;
-    }
-  ) => BatchPayloadPromise;
-  upsertConsumedItem: (
-    args: {
-      where: ConsumedItemWhereUniqueInput;
-      create: ConsumedItemCreateInput;
-      update: ConsumedItemUpdateInput;
-    }
-  ) => ConsumedItemPromise;
-  deleteConsumedItem: (
-    where: ConsumedItemWhereUniqueInput
-  ) => ConsumedItemPromise;
-  deleteManyConsumedItems: (
-    where?: ConsumedItemWhereInput
-  ) => BatchPayloadPromise;
   createItem: (data: ItemCreateInput) => ItemPromise;
   updateItem: (
     args: { data: ItemUpdateInput; where: ItemWhereUniqueInput }
@@ -235,6 +217,54 @@ export interface Prisma {
   ) => ItemPromise;
   deleteItem: (where: ItemWhereUniqueInput) => ItemPromise;
   deleteManyItems: (where?: ItemWhereInput) => BatchPayloadPromise;
+  createPayment: (data: PaymentCreateInput) => PaymentPromise;
+  updatePayment: (
+    args: { data: PaymentUpdateInput; where: PaymentWhereUniqueInput }
+  ) => PaymentPromise;
+  updateManyPayments: (
+    args: { data: PaymentUpdateManyMutationInput; where?: PaymentWhereInput }
+  ) => BatchPayloadPromise;
+  upsertPayment: (
+    args: {
+      where: PaymentWhereUniqueInput;
+      create: PaymentCreateInput;
+      update: PaymentUpdateInput;
+    }
+  ) => PaymentPromise;
+  deletePayment: (where: PaymentWhereUniqueInput) => PaymentPromise;
+  deleteManyPayments: (where?: PaymentWhereInput) => BatchPayloadPromise;
+  createProduct: (data: ProductCreateInput) => ProductPromise;
+  updateProduct: (
+    args: { data: ProductUpdateInput; where: ProductWhereUniqueInput }
+  ) => ProductPromise;
+  updateManyProducts: (
+    args: { data: ProductUpdateManyMutationInput; where?: ProductWhereInput }
+  ) => BatchPayloadPromise;
+  upsertProduct: (
+    args: {
+      where: ProductWhereUniqueInput;
+      create: ProductCreateInput;
+      update: ProductUpdateInput;
+    }
+  ) => ProductPromise;
+  deleteProduct: (where: ProductWhereUniqueInput) => ProductPromise;
+  deleteManyProducts: (where?: ProductWhereInput) => BatchPayloadPromise;
+  createPurchase: (data: PurchaseCreateInput) => PurchasePromise;
+  updatePurchase: (
+    args: { data: PurchaseUpdateInput; where: PurchaseWhereUniqueInput }
+  ) => PurchasePromise;
+  updateManyPurchases: (
+    args: { data: PurchaseUpdateManyMutationInput; where?: PurchaseWhereInput }
+  ) => BatchPayloadPromise;
+  upsertPurchase: (
+    args: {
+      where: PurchaseWhereUniqueInput;
+      create: PurchaseCreateInput;
+      update: PurchaseUpdateInput;
+    }
+  ) => PurchasePromise;
+  deletePurchase: (where: PurchaseWhereUniqueInput) => PurchasePromise;
+  deleteManyPurchases: (where?: PurchaseWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (
     args: { data: UserUpdateInput; where: UserWhereUniqueInput }
@@ -260,18 +290,21 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  checklist: (
-    where?: ChecklistSubscriptionWhereInput
-  ) => ChecklistSubscriptionPayloadSubscription;
   client: (
     where?: ClientSubscriptionWhereInput
   ) => ClientSubscriptionPayloadSubscription;
-  consumedItem: (
-    where?: ConsumedItemSubscriptionWhereInput
-  ) => ConsumedItemSubscriptionPayloadSubscription;
   item: (
     where?: ItemSubscriptionWhereInput
   ) => ItemSubscriptionPayloadSubscription;
+  payment: (
+    where?: PaymentSubscriptionWhereInput
+  ) => PaymentSubscriptionPayloadSubscription;
+  product: (
+    where?: ProductSubscriptionWhereInput
+  ) => ProductSubscriptionPayloadSubscription;
+  purchase: (
+    where?: PurchaseSubscriptionWhereInput
+  ) => PurchaseSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -285,25 +318,25 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type ConsumedItemOrderByInput =
+export type PurchaseOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "total_ASC"
+  | "total_DESC"
+  | "date_ASC"
+  | "date_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type ItemOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "price_ASC"
   | "price_DESC"
   | "amount_ASC"
   | "amount_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
-export type ChecklistOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "type_ASC"
-  | "type_DESC"
-  | "date_ASC"
-  | "date_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -325,7 +358,19 @@ export type ClientOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type ItemOrderByInput =
+export type PaymentOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "date_ASC"
+  | "date_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type ProductOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
@@ -350,57 +395,115 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
+  | "balance_ASC"
+  | "balance_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type ChecklistType = "CHECKLIST" | "EVENTLIST";
-
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput {
-  where: ConsumedItemWhereUniqueInput;
-  data: ConsumedItemUpdateWithoutChecklistDataInput;
+export interface UserUpdateWithoutItemsDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  balance?: Float;
 }
 
-export type ChecklistWhereUniqueInput = AtLeastOne<{
+export type ClientWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  identity?: String;
+}>;
+
+export interface PaymentUpdateInput {
+  amount?: Float;
+  user?: UserUpdateOneRequiredWithoutPaymentsInput;
+  date?: DateTimeInput;
+}
+
+export interface UserCreateOneWithoutPaymentsInput {
+  create?: UserCreateWithoutPaymentsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface ItemCreateWithoutUserInput {
+  product: ProductCreateOneInput;
+  price: Float;
+  amount: Int;
+}
+
+export interface ItemUpdateManyInput {
+  create?: ItemCreateInput[] | ItemCreateInput;
+  update?:
+    | ItemUpdateWithWhereUniqueNestedInput[]
+    | ItemUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | ItemUpsertWithWhereUniqueNestedInput[]
+    | ItemUpsertWithWhereUniqueNestedInput;
+  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  updateMany?:
+    | ItemUpdateManyWithWhereNestedInput[]
+    | ItemUpdateManyWithWhereNestedInput;
+}
+
+export interface ItemCreateInput {
+  product: ProductCreateOneInput;
+  user: UserCreateOneWithoutItemsInput;
+  price: Float;
+  amount: Int;
+}
+
+export type ItemWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface ChecklistUpdateOneRequiredWithoutConsumedItemsInput {
-  create?: ChecklistCreateWithoutConsumedItemsInput;
-  update?: ChecklistUpdateWithoutConsumedItemsDataInput;
-  upsert?: ChecklistUpsertWithoutConsumedItemsInput;
-  connect?: ChecklistWhereUniqueInput;
+export interface ProductCreateOneInput {
+  create?: ProductCreateInput;
+  connect?: ProductWhereUniqueInput;
 }
 
-export interface ClientCreateInput {
-  identity: String;
-  secret: String;
+export interface ProductSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ProductWhereInput;
+  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+}
+
+export interface ProductCreateInput {
   name: String;
-  trusted?: Boolean;
+  price: Float;
+  index: Int;
+  show?: Boolean;
 }
 
-export interface ConsumedItemUpdateInput {
-  item?: ItemUpdateOneRequiredInput;
-  consumer?: UserUpdateOneRequiredWithoutConsumedItemsInput;
-  checklist?: ChecklistUpdateOneRequiredWithoutConsumedItemsInput;
-  price?: Float;
-  amount?: Int;
+export interface ItemSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ItemWhereInput;
+  AND?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+  OR?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+  NOT?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
 }
 
-export interface ItemUpsertNestedInput {
-  update: ItemUpdateDataInput;
-  create: ItemCreateInput;
+export interface UserCreateOneWithoutItemsInput {
+  create?: UserCreateWithoutItemsInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export interface ChecklistCreateWithoutConsumedItemsInput {
-  type: ChecklistType;
-  date: DateTimeInput;
-}
-
-export interface ChecklistWhereInput {
+export interface ItemWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -415,40 +518,120 @@ export interface ChecklistWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  type?: ChecklistType;
-  type_not?: ChecklistType;
-  type_in?: ChecklistType[] | ChecklistType;
-  type_not_in?: ChecklistType[] | ChecklistType;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  consumedItems_every?: ConsumedItemWhereInput;
-  consumedItems_some?: ConsumedItemWhereInput;
-  consumedItems_none?: ConsumedItemWhereInput;
-  AND?: ChecklistWhereInput[] | ChecklistWhereInput;
-  OR?: ChecklistWhereInput[] | ChecklistWhereInput;
-  NOT?: ChecklistWhereInput[] | ChecklistWhereInput;
+  product?: ProductWhereInput;
+  user?: UserWhereInput;
+  price?: Float;
+  price_not?: Float;
+  price_in?: Float[] | Float;
+  price_not_in?: Float[] | Float;
+  price_lt?: Float;
+  price_lte?: Float;
+  price_gt?: Float;
+  price_gte?: Float;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  AND?: ItemWhereInput[] | ItemWhereInput;
+  OR?: ItemWhereInput[] | ItemWhereInput;
+  NOT?: ItemWhereInput[] | ItemWhereInput;
 }
 
-export interface ChecklistCreateOneWithoutConsumedItemsInput {
-  create?: ChecklistCreateWithoutConsumedItemsInput;
-  connect?: ChecklistWhereUniqueInput;
+export interface UserCreateWithoutItemsInput {
+  name: String;
+  email: String;
+  password: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  balance?: Float;
 }
 
-export interface ItemSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ItemWhereInput;
-  AND?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-  OR?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-  NOT?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+export interface UserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  password?: String;
+  password_not?: String;
+  password_in?: String[] | String;
+  password_not_in?: String[] | String;
+  password_lt?: String;
+  password_lte?: String;
+  password_gt?: String;
+  password_gte?: String;
+  password_contains?: String;
+  password_not_contains?: String;
+  password_starts_with?: String;
+  password_not_starts_with?: String;
+  password_ends_with?: String;
+  password_not_ends_with?: String;
+  purchases_every?: PurchaseWhereInput;
+  purchases_some?: PurchaseWhereInput;
+  purchases_none?: PurchaseWhereInput;
+  payments_every?: PaymentWhereInput;
+  payments_some?: PaymentWhereInput;
+  payments_none?: PaymentWhereInput;
+  items_every?: ItemWhereInput;
+  items_some?: ItemWhereInput;
+  items_none?: ItemWhereInput;
+  balance?: Float;
+  balance_not?: Float;
+  balance_in?: Float[] | Float;
+  balance_not_in?: Float[] | Float;
+  balance_lt?: Float;
+  balance_lte?: Float;
+  balance_gt?: Float;
+  balance_gte?: Float;
+  AND?: UserWhereInput[] | UserWhereInput;
+  OR?: UserWhereInput[] | UserWhereInput;
+  NOT?: UserWhereInput[] | UserWhereInput;
+}
+
+export interface PurchaseCreateManyWithoutUserInput {
+  create?: PurchaseCreateWithoutUserInput[] | PurchaseCreateWithoutUserInput;
+  connect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
 }
 
 export interface ClientSubscriptionWhereInput {
@@ -462,42 +645,25 @@ export interface ClientSubscriptionWhereInput {
   NOT?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface PurchaseCreateWithoutUserInput {
+  items?: ItemCreateManyInput;
+  total: Float;
+  date: DateTimeInput;
+}
+
+export interface UserUpdateInput {
   name?: String;
   email?: String;
   password?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  balance?: Float;
 }
 
-export interface ChecklistCreateInput {
-  type: ChecklistType;
-  date: DateTimeInput;
-  consumedItems?: ConsumedItemCreateManyWithoutChecklistInput;
-}
-
-export interface ConsumedItemUpdateWithoutConsumerDataInput {
-  item?: ItemUpdateOneRequiredInput;
-  checklist?: ChecklistUpdateOneRequiredWithoutConsumedItemsInput;
-  price?: Float;
-  amount?: Int;
-}
-
-export interface ConsumedItemCreateManyWithoutChecklistInput {
-  create?:
-    | ConsumedItemCreateWithoutChecklistInput[]
-    | ConsumedItemCreateWithoutChecklistInput;
-  connect?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-}
-
-export type ClientWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  identity?: String;
-}>;
-
-export interface ConsumedItemCreateWithoutChecklistInput {
-  item: ItemCreateOneInput;
-  consumer: UserCreateOneWithoutConsumedItemsInput;
-  price: Float;
-  amount: Int;
+export interface ItemCreateManyInput {
+  create?: ItemCreateInput[] | ItemCreateInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
 }
 
 export interface ClientWhereInput {
@@ -564,64 +730,214 @@ export interface ClientWhereInput {
   NOT?: ClientWhereInput[] | ClientWhereInput;
 }
 
-export interface ItemCreateOneInput {
-  create?: ItemCreateInput;
-  connect?: ItemWhereUniqueInput;
+export interface PaymentCreateManyWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput[] | PaymentCreateWithoutUserInput;
+  connect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
 }
 
-export interface UserUpdateInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  consumedItems?: ConsumedItemUpdateManyWithoutConsumerInput;
+export interface UserUpsertWithoutPurchasesInput {
+  update: UserUpdateWithoutPurchasesDataInput;
+  create: UserCreateWithoutPurchasesInput;
 }
 
-export interface ItemCreateInput {
-  name: String;
-  price: Float;
-  index: Int;
-  show?: Boolean;
+export interface PaymentCreateWithoutUserInput {
+  amount: Float;
+  date: DateTimeInput;
 }
 
-export interface ConsumedItemCreateManyWithoutConsumerInput {
-  create?:
-    | ConsumedItemCreateWithoutConsumerInput[]
-    | ConsumedItemCreateWithoutConsumerInput;
-  connect?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-}
-
-export interface UserCreateOneWithoutConsumedItemsInput {
-  create?: UserCreateWithoutConsumedItemsInput;
+export interface UserUpdateOneRequiredWithoutPurchasesInput {
+  create?: UserCreateWithoutPurchasesInput;
+  update?: UserUpdateWithoutPurchasesDataInput;
+  upsert?: UserUpsertWithoutPurchasesInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
-  consumedItems?: ConsumedItemCreateManyWithoutConsumerInput;
-}
-
-export interface UserCreateWithoutConsumedItemsInput {
-  name: String;
-  email: String;
-  password: String;
-}
-
 export interface ItemUpdateInput {
+  product?: ProductUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutItemsInput;
+  price?: Float;
+  amount?: Int;
+}
+
+export interface PurchaseUpdateInput {
+  items?: ItemUpdateManyInput;
+  total?: Float;
+  user?: UserUpdateOneRequiredWithoutPurchasesInput;
+  date?: DateTimeInput;
+}
+
+export interface ProductUpdateOneRequiredInput {
+  create?: ProductCreateInput;
+  update?: ProductUpdateDataInput;
+  upsert?: ProductUpsertNestedInput;
+  connect?: ProductWhereUniqueInput;
+}
+
+export interface UserCreateOneWithoutPurchasesInput {
+  create?: UserCreateWithoutPurchasesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface ProductUpdateDataInput {
   name?: String;
   price?: Float;
   index?: Int;
   show?: Boolean;
 }
 
-export interface ChecklistUpdateInput {
-  type?: ChecklistType;
-  date?: DateTimeInput;
-  consumedItems?: ConsumedItemUpdateManyWithoutChecklistInput;
+export interface PurchaseCreateInput {
+  items?: ItemCreateManyInput;
+  total: Float;
+  user: UserCreateOneWithoutPurchasesInput;
+  date: DateTimeInput;
 }
 
-export interface ConsumedItemWhereInput {
+export interface ProductUpsertNestedInput {
+  update: ProductUpdateDataInput;
+  create: ProductCreateInput;
+}
+
+export interface ProductUpdateInput {
+  name?: String;
+  price?: Float;
+  index?: Int;
+  show?: Boolean;
+}
+
+export interface UserUpdateOneRequiredWithoutItemsInput {
+  create?: UserCreateWithoutItemsInput;
+  update?: UserUpdateWithoutItemsDataInput;
+  upsert?: UserUpsertWithoutItemsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export type PurchaseWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface ItemCreateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+}
+
+export interface ItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput;
+  update: ItemUpdateWithoutUserDataInput;
+  create: ItemCreateWithoutUserInput;
+}
+
+export interface PurchaseUpdateManyWithoutUserInput {
+  create?: PurchaseCreateWithoutUserInput[] | PurchaseCreateWithoutUserInput;
+  delete?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+  connect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+  set?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+  disconnect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+  update?:
+    | PurchaseUpdateWithWhereUniqueWithoutUserInput[]
+    | PurchaseUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | PurchaseUpsertWithWhereUniqueWithoutUserInput[]
+    | PurchaseUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+  updateMany?:
+    | PurchaseUpdateManyWithWhereNestedInput[]
+    | PurchaseUpdateManyWithWhereNestedInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface PurchaseUpdateWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput;
+  data: PurchaseUpdateWithoutUserDataInput;
+}
+
+export interface ItemUpdateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
+  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  update?:
+    | ItemUpdateWithWhereUniqueWithoutUserInput[]
+    | ItemUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | ItemUpsertWithWhereUniqueWithoutUserInput[]
+    | ItemUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  updateMany?:
+    | ItemUpdateManyWithWhereNestedInput[]
+    | ItemUpdateManyWithWhereNestedInput;
+}
+
+export interface PurchaseUpdateWithoutUserDataInput {
+  items?: ItemUpdateManyInput;
+  total?: Float;
+  date?: DateTimeInput;
+}
+
+export interface UserUpdateOneRequiredWithoutPaymentsInput {
+  create?: UserCreateWithoutPaymentsInput;
+  update?: UserUpdateWithoutPaymentsDataInput;
+  upsert?: UserUpsertWithoutPaymentsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutPaymentsInput {
+  name: String;
+  email: String;
+  password: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  balance?: Float;
+}
+
+export interface ClientCreateInput {
+  identity: String;
+  secret: String;
+  name: String;
+  trusted?: Boolean;
+}
+
+export interface ItemUpdateWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput;
+  data: ItemUpdateDataInput;
+}
+
+export interface ClientUpdateManyMutationInput {
+  identity?: String;
+  secret?: String;
+  name?: String;
+  trusted?: Boolean;
+}
+
+export interface ItemUpdateDataInput {
+  product?: ProductUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutItemsInput;
+  price?: Float;
+  amount?: Int;
+}
+
+export interface PurchaseSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PurchaseWhereInput;
+  AND?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+  OR?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+  NOT?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+}
+
+export interface ItemUpsertWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput;
+  update: ItemUpdateDataInput;
+  create: ItemCreateInput;
+}
+
+export interface PurchaseWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -636,9 +952,46 @@ export interface ConsumedItemWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  item?: ItemWhereInput;
-  consumer?: UserWhereInput;
-  checklist?: ChecklistWhereInput;
+  items_every?: ItemWhereInput;
+  items_some?: ItemWhereInput;
+  items_none?: ItemWhereInput;
+  total?: Float;
+  total_not?: Float;
+  total_in?: Float[] | Float;
+  total_not_in?: Float[] | Float;
+  total_lt?: Float;
+  total_lte?: Float;
+  total_gt?: Float;
+  total_gte?: Float;
+  user?: UserWhereInput;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PurchaseWhereInput[] | PurchaseWhereInput;
+  OR?: PurchaseWhereInput[] | PurchaseWhereInput;
+  NOT?: PurchaseWhereInput[] | PurchaseWhereInput;
+}
+
+export interface ItemScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   price?: Float;
   price_not?: Float;
   price_in?: Float[] | Float;
@@ -655,54 +1008,171 @@ export interface ConsumedItemWhereInput {
   amount_lte?: Int;
   amount_gt?: Int;
   amount_gte?: Int;
-  AND?: ConsumedItemWhereInput[] | ConsumedItemWhereInput;
-  OR?: ConsumedItemWhereInput[] | ConsumedItemWhereInput;
-  NOT?: ConsumedItemWhereInput[] | ConsumedItemWhereInput;
+  AND?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  OR?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  NOT?: ItemScalarWhereInput[] | ItemScalarWhereInput;
 }
 
-export interface ConsumedItemUpdateManyWithoutChecklistInput {
-  create?:
-    | ConsumedItemCreateWithoutChecklistInput[]
-    | ConsumedItemCreateWithoutChecklistInput;
-  delete?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  connect?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  set?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  disconnect?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  update?:
-    | ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput[]
-    | ConsumedItemUpdateWithWhereUniqueWithoutChecklistInput;
-  upsert?:
-    | ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput[]
-    | ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput;
-  deleteMany?: ConsumedItemScalarWhereInput[] | ConsumedItemScalarWhereInput;
-  updateMany?:
-    | ConsumedItemUpdateManyWithWhereNestedInput[]
-    | ConsumedItemUpdateManyWithWhereNestedInput;
+export interface PaymentWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  amount?: Float;
+  amount_not?: Float;
+  amount_in?: Float[] | Float;
+  amount_not_in?: Float[] | Float;
+  amount_lt?: Float;
+  amount_lte?: Float;
+  amount_gt?: Float;
+  amount_gte?: Float;
+  user?: UserWhereInput;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PaymentWhereInput[] | PaymentWhereInput;
+  OR?: PaymentWhereInput[] | PaymentWhereInput;
+  NOT?: PaymentWhereInput[] | PaymentWhereInput;
 }
 
-export interface ChecklistUpsertWithoutConsumedItemsInput {
-  update: ChecklistUpdateWithoutConsumedItemsDataInput;
-  create: ChecklistCreateWithoutConsumedItemsInput;
+export interface ItemUpdateManyWithWhereNestedInput {
+  where: ItemScalarWhereInput;
+  data: ItemUpdateManyDataInput;
 }
 
-export interface ConsumedItemCreateInput {
-  item: ItemCreateOneInput;
-  consumer: UserCreateOneWithoutConsumedItemsInput;
-  checklist: ChecklistCreateOneWithoutConsumedItemsInput;
-  price: Float;
-  amount: Int;
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  balance?: Float;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface ConsumedItemUpdateWithoutChecklistDataInput {
-  item?: ItemUpdateOneRequiredInput;
-  consumer?: UserUpdateOneRequiredWithoutConsumedItemsInput;
+export interface ItemUpdateManyDataInput {
   price?: Float;
   amount?: Int;
+}
+
+export interface UserUpdateWithoutPurchasesDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  balance?: Float;
+}
+
+export interface PurchaseUpsertWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput;
+  update: PurchaseUpdateWithoutUserDataInput;
+  create: PurchaseCreateWithoutUserInput;
+}
+
+export interface UserCreateWithoutPurchasesInput {
+  name: String;
+  email: String;
+  password: String;
+  payments?: PaymentCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  balance?: Float;
+}
+
+export interface PurchaseScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  total?: Float;
+  total_not?: Float;
+  total_in?: Float[] | Float;
+  total_not_in?: Float[] | Float;
+  total_lt?: Float;
+  total_lte?: Float;
+  total_gt?: Float;
+  total_gte?: Float;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+  OR?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+  NOT?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+}
+
+export interface ProductUpdateManyMutationInput {
+  name?: String;
+  price?: Float;
+  index?: Int;
+  show?: Boolean;
+}
+
+export interface PurchaseUpdateManyWithWhereNestedInput {
+  where: PurchaseScalarWhereInput;
+  data: PurchaseUpdateManyDataInput;
+}
+
+export interface UserUpsertWithoutPaymentsInput {
+  update: UserUpdateWithoutPaymentsDataInput;
+  create: UserCreateWithoutPaymentsInput;
+}
+
+export interface PurchaseUpdateManyDataInput {
+  total?: Float;
+  date?: DateTimeInput;
+}
+
+export interface ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput;
+  data: ItemUpdateWithoutUserDataInput;
+}
+
+export interface PaymentUpdateManyWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput[] | PaymentCreateWithoutUserInput;
+  delete?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
+  connect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
+  set?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
+  disconnect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
+  update?:
+    | PaymentUpdateWithWhereUniqueWithoutUserInput[]
+    | PaymentUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | PaymentUpsertWithWhereUniqueWithoutUserInput[]
+    | PaymentUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  updateMany?:
+    | PaymentUpdateManyWithWhereNestedInput[]
+    | PaymentUpdateManyWithWhereNestedInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -716,44 +1186,12 @@ export interface UserSubscriptionWhereInput {
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
-export interface ItemUpdateOneRequiredInput {
-  create?: ItemCreateInput;
-  update?: ItemUpdateDataInput;
-  upsert?: ItemUpsertNestedInput;
-  connect?: ItemWhereUniqueInput;
+export interface PaymentUpdateWithWhereUniqueWithoutUserInput {
+  where: PaymentWhereUniqueInput;
+  data: PaymentUpdateWithoutUserDataInput;
 }
 
-export interface ChecklistSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ChecklistWhereInput;
-  AND?: ChecklistSubscriptionWhereInput[] | ChecklistSubscriptionWhereInput;
-  OR?: ChecklistSubscriptionWhereInput[] | ChecklistSubscriptionWhereInput;
-  NOT?: ChecklistSubscriptionWhereInput[] | ChecklistSubscriptionWhereInput;
-}
-
-export interface ItemUpdateDataInput {
-  name?: String;
-  price?: Float;
-  index?: Int;
-  show?: Boolean;
-}
-
-export interface ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput {
-  where: ConsumedItemWhereUniqueInput;
-  data: ConsumedItemUpdateWithoutConsumerDataInput;
-}
-
-export interface ClientUpdateManyMutationInput {
-  identity?: String;
-  secret?: String;
-  name?: String;
-  trusted?: Boolean;
-}
-
-export interface ItemWhereInput {
+export interface ProductWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -800,66 +1238,32 @@ export interface ItemWhereInput {
   index_gte?: Int;
   show?: Boolean;
   show_not?: Boolean;
-  AND?: ItemWhereInput[] | ItemWhereInput;
-  OR?: ItemWhereInput[] | ItemWhereInput;
-  NOT?: ItemWhereInput[] | ItemWhereInput;
+  AND?: ProductWhereInput[] | ProductWhereInput;
+  OR?: ProductWhereInput[] | ProductWhereInput;
+  NOT?: ProductWhereInput[] | ProductWhereInput;
 }
 
-export interface UserUpdateOneRequiredWithoutConsumedItemsInput {
-  create?: UserCreateWithoutConsumedItemsInput;
-  update?: UserUpdateWithoutConsumedItemsDataInput;
-  upsert?: UserUpsertWithoutConsumedItemsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export type ConsumedItemWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpdateWithoutConsumedItemsDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-}
-
-export type ItemWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpsertWithoutConsumedItemsInput {
-  update: UserUpdateWithoutConsumedItemsDataInput;
-  create: UserCreateWithoutConsumedItemsInput;
-}
-
-export interface ChecklistUpdateWithoutConsumedItemsDataInput {
-  type?: ChecklistType;
+export interface PaymentUpdateWithoutUserDataInput {
+  amount?: Float;
   date?: DateTimeInput;
 }
 
-export interface ConsumedItemUpsertWithWhereUniqueWithoutChecklistInput {
-  where: ConsumedItemWhereUniqueInput;
-  update: ConsumedItemUpdateWithoutChecklistDataInput;
-  create: ConsumedItemCreateWithoutChecklistInput;
+export interface PurchaseUpdateManyMutationInput {
+  total?: Float;
+  date?: DateTimeInput;
 }
 
-export interface ConsumedItemSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ConsumedItemWhereInput;
-  AND?:
-    | ConsumedItemSubscriptionWhereInput[]
-    | ConsumedItemSubscriptionWhereInput;
-  OR?:
-    | ConsumedItemSubscriptionWhereInput[]
-    | ConsumedItemSubscriptionWhereInput;
-  NOT?:
-    | ConsumedItemSubscriptionWhereInput[]
-    | ConsumedItemSubscriptionWhereInput;
+export interface PaymentUpsertWithWhereUniqueWithoutUserInput {
+  where: PaymentWhereUniqueInput;
+  update: PaymentUpdateWithoutUserDataInput;
+  create: PaymentCreateWithoutUserInput;
 }
 
-export interface ConsumedItemScalarWhereInput {
+export type ProductWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface PaymentScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -874,45 +1278,36 @@ export interface ConsumedItemScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  price?: Float;
-  price_not?: Float;
-  price_in?: Float[] | Float;
-  price_not_in?: Float[] | Float;
-  price_lt?: Float;
-  price_lte?: Float;
-  price_gt?: Float;
-  price_gte?: Float;
-  amount?: Int;
-  amount_not?: Int;
-  amount_in?: Int[] | Int;
-  amount_not_in?: Int[] | Int;
-  amount_lt?: Int;
-  amount_lte?: Int;
-  amount_gt?: Int;
-  amount_gte?: Int;
-  AND?: ConsumedItemScalarWhereInput[] | ConsumedItemScalarWhereInput;
-  OR?: ConsumedItemScalarWhereInput[] | ConsumedItemScalarWhereInput;
-  NOT?: ConsumedItemScalarWhereInput[] | ConsumedItemScalarWhereInput;
+  amount?: Float;
+  amount_not?: Float;
+  amount_in?: Float[] | Float;
+  amount_not_in?: Float[] | Float;
+  amount_lt?: Float;
+  amount_lte?: Float;
+  amount_gt?: Float;
+  amount_gte?: Float;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  OR?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  NOT?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
 }
 
-export interface ConsumedItemUpdateManyWithoutConsumerInput {
-  create?:
-    | ConsumedItemCreateWithoutConsumerInput[]
-    | ConsumedItemCreateWithoutConsumerInput;
-  delete?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  connect?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  set?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  disconnect?: ConsumedItemWhereUniqueInput[] | ConsumedItemWhereUniqueInput;
-  update?:
-    | ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput[]
-    | ConsumedItemUpdateWithWhereUniqueWithoutConsumerInput;
-  upsert?:
-    | ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput[]
-    | ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput;
-  deleteMany?: ConsumedItemScalarWhereInput[] | ConsumedItemScalarWhereInput;
-  updateMany?:
-    | ConsumedItemUpdateManyWithWhereNestedInput[]
-    | ConsumedItemUpdateManyWithWhereNestedInput;
+export interface ItemUpdateWithoutUserDataInput {
+  product?: ProductUpdateOneRequiredInput;
+  price?: Float;
+  amount?: Int;
+}
+
+export interface PaymentUpdateManyWithWhereNestedInput {
+  where: PaymentScalarWhereInput;
+  data: PaymentUpdateManyDataInput;
 }
 
 export interface ClientUpdateInput {
@@ -922,109 +1317,61 @@ export interface ClientUpdateInput {
   trusted?: Boolean;
 }
 
-export interface ChecklistUpdateManyMutationInput {
-  type?: ChecklistType;
-  date?: DateTimeInput;
-}
-
-export interface ConsumedItemUpdateManyDataInput {
-  price?: Float;
-  amount?: Int;
-}
-
-export interface ConsumedItemUpdateManyWithWhereNestedInput {
-  where: ConsumedItemScalarWhereInput;
-  data: ConsumedItemUpdateManyDataInput;
-}
-
-export interface ConsumedItemCreateWithoutConsumerInput {
-  item: ItemCreateOneInput;
-  checklist: ChecklistCreateOneWithoutConsumedItemsInput;
-  price: Float;
-  amount: Int;
-}
-
-export interface ConsumedItemUpsertWithWhereUniqueWithoutConsumerInput {
-  where: ConsumedItemWhereUniqueInput;
-  update: ConsumedItemUpdateWithoutConsumerDataInput;
-  create: ConsumedItemCreateWithoutConsumerInput;
-}
-
-export interface UserWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  email?: String;
-  email_not?: String;
-  email_in?: String[] | String;
-  email_not_in?: String[] | String;
-  email_lt?: String;
-  email_lte?: String;
-  email_gt?: String;
-  email_gte?: String;
-  email_contains?: String;
-  email_not_contains?: String;
-  email_starts_with?: String;
-  email_not_starts_with?: String;
-  email_ends_with?: String;
-  email_not_ends_with?: String;
-  password?: String;
-  password_not?: String;
-  password_in?: String[] | String;
-  password_not_in?: String[] | String;
-  password_lt?: String;
-  password_lte?: String;
-  password_gt?: String;
-  password_gte?: String;
-  password_contains?: String;
-  password_not_contains?: String;
-  password_starts_with?: String;
-  password_not_starts_with?: String;
-  password_ends_with?: String;
-  password_not_ends_with?: String;
-  consumedItems_every?: ConsumedItemWhereInput;
-  consumedItems_some?: ConsumedItemWhereInput;
-  consumedItems_none?: ConsumedItemWhereInput;
-  AND?: UserWhereInput[] | UserWhereInput;
-  OR?: UserWhereInput[] | UserWhereInput;
-  NOT?: UserWhereInput[] | UserWhereInput;
-}
-
-export interface ConsumedItemUpdateManyMutationInput {
-  price?: Float;
-  amount?: Int;
+export interface PaymentCreateInput {
+  amount: Float;
+  user: UserCreateOneWithoutPaymentsInput;
+  date: DateTimeInput;
 }
 
 export interface ItemUpdateManyMutationInput {
-  name?: String;
   price?: Float;
-  index?: Int;
-  show?: Boolean;
+  amount?: Int;
+}
+
+export interface UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput;
+  create: UserCreateWithoutItemsInput;
+}
+
+export interface PaymentUpdateManyDataInput {
+  amount?: Float;
+  date?: DateTimeInput;
+}
+
+export interface PaymentSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PaymentWhereInput;
+  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
+  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
+  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
+}
+
+export interface UserUpdateWithoutPaymentsDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  balance?: Float;
+}
+
+export interface PaymentUpdateManyMutationInput {
+  amount?: Float;
+  date?: DateTimeInput;
+}
+
+export type PaymentWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateManyMutationInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  balance?: Float;
 }
 
 export interface NodeNode {
@@ -1036,6 +1383,7 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   password: String;
+  balance: Float;
 }
 
 export interface UserPreviousValuesPromise
@@ -1045,6 +1393,7 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  balance: () => Promise<Float>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1054,49 +1403,211 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  balance: () => Promise<AsyncIterator<Float>>;
 }
 
-export interface ClientConnection {
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ClientEdge {
+  node: Client;
+  cursor: String;
+}
+
+export interface ClientEdgePromise extends Promise<ClientEdge>, Fragmentable {
+  node: <T = ClientPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ClientEdgeSubscription
+  extends Promise<AsyncIterator<ClientEdge>>,
+    Fragmentable {
+  node: <T = ClientSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ItemConnection {
   pageInfo: PageInfo;
-  edges: ClientEdge[];
+  edges: ItemEdge[];
 }
 
-export interface ClientConnectionPromise
-  extends Promise<ClientConnection>,
+export interface ItemConnectionPromise
+  extends Promise<ItemConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ClientEdge>>() => T;
-  aggregate: <T = AggregateClientPromise>() => T;
+  edges: <T = FragmentableArray<ItemEdge>>() => T;
+  aggregate: <T = AggregateItemPromise>() => T;
 }
 
-export interface ClientConnectionSubscription
-  extends Promise<AsyncIterator<ClientConnection>>,
+export interface ItemConnectionSubscription
+  extends Promise<AsyncIterator<ItemConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ClientEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateClientSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateItemSubscription>() => T;
 }
 
-export interface ConsumedItemPreviousValues {
+export interface ProductPreviousValues {
   id: ID_Output;
+  name: String;
   price: Float;
-  amount: Int;
+  index: Int;
+  show: Boolean;
 }
 
-export interface ConsumedItemPreviousValuesPromise
-  extends Promise<ConsumedItemPreviousValues>,
+export interface ProductPreviousValuesPromise
+  extends Promise<ProductPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
   price: () => Promise<Float>;
-  amount: () => Promise<Int>;
+  index: () => Promise<Int>;
+  show: () => Promise<Boolean>;
 }
 
-export interface ConsumedItemPreviousValuesSubscription
-  extends Promise<AsyncIterator<ConsumedItemPreviousValues>>,
+export interface ProductPreviousValuesSubscription
+  extends Promise<AsyncIterator<ProductPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
   price: () => Promise<AsyncIterator<Float>>;
-  amount: () => Promise<AsyncIterator<Int>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  show: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface Payment {
+  id: ID_Output;
+  amount: Float;
+  date: DateTimeOutput;
+}
+
+export interface PaymentPromise extends Promise<Payment>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  amount: () => Promise<Float>;
+  user: <T = UserPromise>() => T;
+  date: () => Promise<DateTimeOutput>;
+}
+
+export interface PaymentSubscription
+  extends Promise<AsyncIterator<Payment>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  amount: () => Promise<AsyncIterator<Float>>;
+  user: <T = UserSubscription>() => T;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface Purchase {
+  id: ID_Output;
+  total: Float;
+  date: DateTimeOutput;
+}
+
+export interface PurchasePromise extends Promise<Purchase>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  items: <T = FragmentableArray<Item>>(
+    args?: {
+      where?: ItemWhereInput;
+      orderBy?: ItemOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  total: () => Promise<Float>;
+  user: <T = UserPromise>() => T;
+  date: () => Promise<DateTimeOutput>;
+}
+
+export interface PurchaseSubscription
+  extends Promise<AsyncIterator<Purchase>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  items: <T = Promise<AsyncIterator<ItemSubscription>>>(
+    args?: {
+      where?: ItemWhereInput;
+      orderBy?: ItemOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  total: () => Promise<AsyncIterator<Float>>;
+  user: <T = UserSubscription>() => T;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AggregateClient {
+  count: Int;
+}
+
+export interface AggregateClientPromise
+  extends Promise<AggregateClient>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateClientSubscription
+  extends Promise<AsyncIterator<AggregateClient>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface Client {
@@ -1125,504 +1636,169 @@ export interface ClientSubscription
   trusted: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface ChecklistEdge {
-  node: Checklist;
-  cursor: String;
-}
-
-export interface ChecklistEdgePromise
-  extends Promise<ChecklistEdge>,
-    Fragmentable {
-  node: <T = ChecklistPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ChecklistEdgeSubscription
-  extends Promise<AsyncIterator<ChecklistEdge>>,
-    Fragmentable {
-  node: <T = ChecklistSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateChecklist {
-  count: Int;
-}
-
-export interface AggregateChecklistPromise
-  extends Promise<AggregateChecklist>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateChecklistSubscription
-  extends Promise<AsyncIterator<AggregateChecklist>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ItemPreviousValues {
-  id: ID_Output;
-  name: String;
-  price: Float;
-  index: Int;
-  show: Boolean;
-}
-
-export interface ItemPreviousValuesPromise
-  extends Promise<ItemPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  price: () => Promise<Float>;
-  index: () => Promise<Int>;
-  show: () => Promise<Boolean>;
-}
-
-export interface ItemPreviousValuesSubscription
-  extends Promise<AsyncIterator<ItemPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Float>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  show: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ItemSubscriptionPayload {
-  mutation: MutationType;
-  node: Item;
-  updatedFields: String[];
-  previousValues: ItemPreviousValues;
-}
-
-export interface ItemSubscriptionPayloadPromise
-  extends Promise<ItemSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ItemPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ItemPreviousValuesPromise>() => T;
-}
-
-export interface ItemSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ItemSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ItemSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ItemPreviousValuesSubscription>() => T;
-}
-
-export interface ChecklistConnection {
+export interface ClientConnection {
   pageInfo: PageInfo;
-  edges: ChecklistEdge[];
+  edges: ClientEdge[];
 }
 
-export interface ChecklistConnectionPromise
-  extends Promise<ChecklistConnection>,
+export interface ClientConnectionPromise
+  extends Promise<ClientConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ChecklistEdge>>() => T;
-  aggregate: <T = AggregateChecklistPromise>() => T;
+  edges: <T = FragmentableArray<ClientEdge>>() => T;
+  aggregate: <T = AggregateClientPromise>() => T;
 }
 
-export interface ChecklistConnectionSubscription
-  extends Promise<AsyncIterator<ChecklistConnection>>,
+export interface ClientConnectionSubscription
+  extends Promise<AsyncIterator<ClientConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ChecklistEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateChecklistSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ClientEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateClientSubscription>() => T;
 }
 
-export interface ItemEdge {
-  node: Item;
+export interface PurchaseEdge {
+  node: Purchase;
   cursor: String;
 }
 
-export interface ItemEdgePromise extends Promise<ItemEdge>, Fragmentable {
-  node: <T = ItemPromise>() => T;
+export interface PurchaseEdgePromise
+  extends Promise<PurchaseEdge>,
+    Fragmentable {
+  node: <T = PurchasePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface ItemEdgeSubscription
-  extends Promise<AsyncIterator<ItemEdge>>,
+export interface PurchaseEdgeSubscription
+  extends Promise<AsyncIterator<PurchaseEdge>>,
     Fragmentable {
-  node: <T = ItemSubscription>() => T;
+  node: <T = PurchaseSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ConsumedItem {
+export interface PurchasePreviousValues {
   id: ID_Output;
-  price: Float;
-  amount: Int;
-}
-
-export interface ConsumedItemPromise
-  extends Promise<ConsumedItem>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  item: <T = ItemPromise>() => T;
-  consumer: <T = UserPromise>() => T;
-  checklist: <T = ChecklistPromise>() => T;
-  price: () => Promise<Float>;
-  amount: () => Promise<Int>;
-}
-
-export interface ConsumedItemSubscription
-  extends Promise<AsyncIterator<ConsumedItem>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  item: <T = ItemSubscription>() => T;
-  consumer: <T = UserSubscription>() => T;
-  checklist: <T = ChecklistSubscription>() => T;
-  price: () => Promise<AsyncIterator<Float>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateConsumedItem {
-  count: Int;
-}
-
-export interface AggregateConsumedItemPromise
-  extends Promise<AggregateConsumedItem>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateConsumedItemSubscription
-  extends Promise<AsyncIterator<AggregateConsumedItem>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Checklist {
-  id: ID_Output;
-  type: ChecklistType;
+  total: Float;
   date: DateTimeOutput;
 }
 
-export interface ChecklistPromise extends Promise<Checklist>, Fragmentable {
+export interface PurchasePreviousValuesPromise
+  extends Promise<PurchasePreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  type: () => Promise<ChecklistType>;
+  total: () => Promise<Float>;
   date: () => Promise<DateTimeOutput>;
-  consumedItems: <T = FragmentableArray<ConsumedItem>>(
-    args?: {
-      where?: ConsumedItemWhereInput;
-      orderBy?: ConsumedItemOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
 }
 
-export interface ChecklistSubscription
-  extends Promise<AsyncIterator<Checklist>>,
+export interface PurchasePreviousValuesSubscription
+  extends Promise<AsyncIterator<PurchasePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  type: () => Promise<AsyncIterator<ChecklistType>>;
+  total: () => Promise<AsyncIterator<Float>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  consumedItems: <T = Promise<AsyncIterator<ConsumedItemSubscription>>>(
-    args?: {
-      where?: ConsumedItemWhereInput;
-      orderBy?: ConsumedItemOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
 }
 
-export interface ConsumedItemConnection {
-  pageInfo: PageInfo;
-  edges: ConsumedItemEdge[];
+export interface AggregateProduct {
+  count: Int;
 }
 
-export interface ConsumedItemConnectionPromise
-  extends Promise<ConsumedItemConnection>,
+export interface AggregateProductPromise
+  extends Promise<AggregateProduct>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ConsumedItemEdge>>() => T;
-  aggregate: <T = AggregateConsumedItemPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface ConsumedItemConnectionSubscription
-  extends Promise<AsyncIterator<ConsumedItemConnection>>,
+export interface AggregateProductSubscription
+  extends Promise<AsyncIterator<AggregateProduct>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ConsumedItemEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateConsumedItemSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ChecklistSubscriptionPayload {
+export interface PurchaseSubscriptionPayload {
   mutation: MutationType;
-  node: Checklist;
+  node: Purchase;
   updatedFields: String[];
-  previousValues: ChecklistPreviousValues;
+  previousValues: PurchasePreviousValues;
 }
 
-export interface ChecklistSubscriptionPayloadPromise
-  extends Promise<ChecklistSubscriptionPayload>,
+export interface PurchaseSubscriptionPayloadPromise
+  extends Promise<PurchaseSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = ChecklistPromise>() => T;
+  node: <T = PurchasePromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = ChecklistPreviousValuesPromise>() => T;
+  previousValues: <T = PurchasePreviousValuesPromise>() => T;
 }
 
-export interface ChecklistSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ChecklistSubscriptionPayload>>,
+export interface PurchaseSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PurchaseSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ChecklistSubscription>() => T;
+  node: <T = PurchaseSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ChecklistPreviousValuesSubscription>() => T;
+  previousValues: <T = PurchasePreviousValuesSubscription>() => T;
 }
 
-export interface ClientEdge {
+export interface ProductConnection {
+  pageInfo: PageInfo;
+  edges: ProductEdge[];
+}
+
+export interface ProductConnectionPromise
+  extends Promise<ProductConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProductEdge>>() => T;
+  aggregate: <T = AggregateProductPromise>() => T;
+}
+
+export interface ProductConnectionSubscription
+  extends Promise<AsyncIterator<ProductConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProductSubscription>() => T;
+}
+
+export interface ClientSubscriptionPayload {
+  mutation: MutationType;
   node: Client;
-  cursor: String;
-}
-
-export interface ClientEdgePromise extends Promise<ClientEdge>, Fragmentable {
-  node: <T = ClientPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ClientEdgeSubscription
-  extends Promise<AsyncIterator<ClientEdge>>,
-    Fragmentable {
-  node: <T = ClientSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ChecklistPreviousValues {
-  id: ID_Output;
-  type: ChecklistType;
-  date: DateTimeOutput;
-}
-
-export interface ChecklistPreviousValuesPromise
-  extends Promise<ChecklistPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  type: () => Promise<ChecklistType>;
-  date: () => Promise<DateTimeOutput>;
-}
-
-export interface ChecklistPreviousValuesSubscription
-  extends Promise<AsyncIterator<ChecklistPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  type: () => Promise<AsyncIterator<ChecklistType>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface User {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  consumedItems: <T = FragmentableArray<ConsumedItem>>(
-    args?: {
-      where?: ConsumedItemWhereInput;
-      orderBy?: ConsumedItemOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  consumedItems: <T = Promise<AsyncIterator<ConsumedItemSubscription>>>(
-    args?: {
-      where?: ConsumedItemWhereInput;
-      orderBy?: ConsumedItemOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface AggregateItem {
-  count: Int;
-}
-
-export interface AggregateItemPromise
-  extends Promise<AggregateItem>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateItemSubscription
-  extends Promise<AsyncIterator<AggregateItem>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ConsumedItemEdge {
-  node: ConsumedItem;
-  cursor: String;
-}
-
-export interface ConsumedItemEdgePromise
-  extends Promise<ConsumedItemEdge>,
-    Fragmentable {
-  node: <T = ConsumedItemPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ConsumedItemEdgeSubscription
-  extends Promise<AsyncIterator<ConsumedItemEdge>>,
-    Fragmentable {
-  node: <T = ConsumedItemSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ConsumedItemSubscriptionPayload {
-  mutation: MutationType;
-  node: ConsumedItem;
   updatedFields: String[];
-  previousValues: ConsumedItemPreviousValues;
+  previousValues: ClientPreviousValues;
 }
 
-export interface ConsumedItemSubscriptionPayloadPromise
-  extends Promise<ConsumedItemSubscriptionPayload>,
+export interface ClientSubscriptionPayloadPromise
+  extends Promise<ClientSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = ConsumedItemPromise>() => T;
+  node: <T = ClientPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = ConsumedItemPreviousValuesPromise>() => T;
+  previousValues: <T = ClientPreviousValuesPromise>() => T;
 }
 
-export interface ConsumedItemSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ConsumedItemSubscriptionPayload>>,
+export interface ClientSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ClientSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ConsumedItemSubscription>() => T;
+  node: <T = ClientSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ConsumedItemPreviousValuesSubscription>() => T;
+  previousValues: <T = ClientPreviousValuesSubscription>() => T;
 }
 
-export interface Item {
-  id: ID_Output;
-  name: String;
-  price: Float;
-  index: Int;
-  show: Boolean;
+export interface AggregatePayment {
+  count: Int;
 }
 
-export interface ItemPromise extends Promise<Item>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  price: () => Promise<Float>;
-  index: () => Promise<Int>;
-  show: () => Promise<Boolean>;
-}
-
-export interface ItemSubscription
-  extends Promise<AsyncIterator<Item>>,
+export interface AggregatePaymentPromise
+  extends Promise<AggregatePayment>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Float>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  show: () => Promise<AsyncIterator<Boolean>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePaymentSubscription
+  extends Promise<AsyncIterator<AggregatePayment>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ClientPreviousValues {
@@ -1653,66 +1829,159 @@ export interface ClientPreviousValuesSubscription
   trusted: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface ClientSubscriptionPayload {
-  mutation: MutationType;
-  node: Client;
-  updatedFields: String[];
-  previousValues: ClientPreviousValues;
-}
-
-export interface ClientSubscriptionPayloadPromise
-  extends Promise<ClientSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ClientPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ClientPreviousValuesPromise>() => T;
-}
-
-export interface ClientSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ClientSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ClientSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ClientPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateClient {
-  count: Int;
-}
-
-export interface AggregateClientPromise
-  extends Promise<AggregateClient>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateClientSubscription
-  extends Promise<AsyncIterator<AggregateClient>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ItemConnection {
+export interface PaymentConnection {
   pageInfo: PageInfo;
-  edges: ItemEdge[];
+  edges: PaymentEdge[];
 }
 
-export interface ItemConnectionPromise
-  extends Promise<ItemConnection>,
+export interface PaymentConnectionPromise
+  extends Promise<PaymentConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ItemEdge>>() => T;
-  aggregate: <T = AggregateItemPromise>() => T;
+  edges: <T = FragmentableArray<PaymentEdge>>() => T;
+  aggregate: <T = AggregatePaymentPromise>() => T;
 }
 
-export interface ItemConnectionSubscription
-  extends Promise<AsyncIterator<ItemConnection>>,
+export interface PaymentConnectionSubscription
+  extends Promise<AsyncIterator<PaymentConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ItemEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateItemSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePaymentSubscription>() => T;
+}
+
+export interface User {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  balance: Float;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  purchases: <T = FragmentableArray<Purchase>>(
+    args?: {
+      where?: PurchaseWhereInput;
+      orderBy?: PurchaseOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  payments: <T = FragmentableArray<Payment>>(
+    args?: {
+      where?: PaymentWhereInput;
+      orderBy?: PaymentOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  items: <T = FragmentableArray<Item>>(
+    args?: {
+      where?: ItemWhereInput;
+      orderBy?: ItemOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  balance: () => Promise<Float>;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  purchases: <T = Promise<AsyncIterator<PurchaseSubscription>>>(
+    args?: {
+      where?: PurchaseWhereInput;
+      orderBy?: PurchaseOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  payments: <T = Promise<AsyncIterator<PaymentSubscription>>>(
+    args?: {
+      where?: PaymentWhereInput;
+      orderBy?: PaymentOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  items: <T = Promise<AsyncIterator<ItemSubscription>>>(
+    args?: {
+      where?: ItemWhereInput;
+      orderBy?: ItemOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  balance: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface ItemEdge {
+  node: Item;
+  cursor: String;
+}
+
+export interface ItemEdgePromise extends Promise<ItemEdge>, Fragmentable {
+  node: <T = ItemPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ItemEdgeSubscription
+  extends Promise<AsyncIterator<ItemEdge>>,
+    Fragmentable {
+  node: <T = ItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ItemSubscriptionPayload {
+  mutation: MutationType;
+  node: Item;
+  updatedFields: String[];
+  previousValues: ItemPreviousValues;
+}
+
+export interface ItemSubscriptionPayloadPromise
+  extends Promise<ItemSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ItemPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ItemPreviousValuesPromise>() => T;
+}
+
+export interface ItemSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ItemSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ItemSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ItemPreviousValuesSubscription>() => T;
 }
 
 export interface UserConnection {
@@ -1734,6 +2003,73 @@ export interface UserConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
   aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface ItemPreviousValues {
+  id: ID_Output;
+  price: Float;
+  amount: Int;
+}
+
+export interface ItemPreviousValuesPromise
+  extends Promise<ItemPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Float>;
+  amount: () => Promise<Int>;
+}
+
+export interface ItemPreviousValuesSubscription
+  extends Promise<AsyncIterator<ItemPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  price: () => Promise<AsyncIterator<Float>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PurchaseConnection {
+  pageInfo: PageInfo;
+  edges: PurchaseEdge[];
+}
+
+export interface PurchaseConnectionPromise
+  extends Promise<PurchaseConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PurchaseEdge>>() => T;
+  aggregate: <T = AggregatePurchasePromise>() => T;
+}
+
+export interface PurchaseConnectionSubscription
+  extends Promise<AsyncIterator<PurchaseConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PurchaseEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePurchaseSubscription>() => T;
+}
+
+export interface Item {
+  id: ID_Output;
+  price: Float;
+  amount: Int;
+}
+
+export interface ItemPromise extends Promise<Item>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  product: <T = ProductPromise>() => T;
+  user: <T = UserPromise>() => T;
+  price: () => Promise<Float>;
+  amount: () => Promise<Int>;
+}
+
+export interface ItemSubscription
+  extends Promise<AsyncIterator<Item>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  product: <T = ProductSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+  price: () => Promise<AsyncIterator<Float>>;
+  amount: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1761,6 +2097,186 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
+export interface AggregateItem {
+  count: Int;
+}
+
+export interface AggregateItemPromise
+  extends Promise<AggregateItem>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateItemSubscription
+  extends Promise<AsyncIterator<AggregateItem>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ProductSubscriptionPayload {
+  mutation: MutationType;
+  node: Product;
+  updatedFields: String[];
+  previousValues: ProductPreviousValues;
+}
+
+export interface ProductSubscriptionPayloadPromise
+  extends Promise<ProductSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ProductPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ProductPreviousValuesPromise>() => T;
+}
+
+export interface ProductSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ProductSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ProductSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ProductPreviousValuesSubscription>() => T;
+}
+
+export interface Product {
+  id: ID_Output;
+  name: String;
+  price: Float;
+  index: Int;
+  show: Boolean;
+}
+
+export interface ProductPromise extends Promise<Product>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  price: () => Promise<Float>;
+  index: () => Promise<Int>;
+  show: () => Promise<Boolean>;
+}
+
+export interface ProductSubscription
+  extends Promise<AsyncIterator<Product>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Float>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  show: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface PaymentPreviousValues {
+  id: ID_Output;
+  amount: Float;
+  date: DateTimeOutput;
+}
+
+export interface PaymentPreviousValuesPromise
+  extends Promise<PaymentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  amount: () => Promise<Float>;
+  date: () => Promise<DateTimeOutput>;
+}
+
+export interface PaymentPreviousValuesSubscription
+  extends Promise<AsyncIterator<PaymentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  amount: () => Promise<AsyncIterator<Float>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PaymentSubscriptionPayload {
+  mutation: MutationType;
+  node: Payment;
+  updatedFields: String[];
+  previousValues: PaymentPreviousValues;
+}
+
+export interface PaymentSubscriptionPayloadPromise
+  extends Promise<PaymentSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PaymentPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PaymentPreviousValuesPromise>() => T;
+}
+
+export interface PaymentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PaymentSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PaymentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PaymentPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PaymentEdge {
+  node: Payment;
+  cursor: String;
+}
+
+export interface PaymentEdgePromise extends Promise<PaymentEdge>, Fragmentable {
+  node: <T = PaymentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PaymentEdgeSubscription
+  extends Promise<AsyncIterator<PaymentEdge>>,
+    Fragmentable {
+  node: <T = PaymentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ProductEdge {
+  node: Product;
+  cursor: String;
+}
+
+export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
+  node: <T = ProductPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ProductEdgeSubscription
+  extends Promise<AsyncIterator<ProductEdge>>,
+    Fragmentable {
+  node: <T = ProductSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePurchase {
+  count: Int;
+}
+
+export interface AggregatePurchasePromise
+  extends Promise<AggregatePurchase>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePurchaseSubscription
+  extends Promise<AsyncIterator<AggregatePurchase>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
@@ -1772,11 +2288,6 @@ export type Long = string;
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1799,6 +2310,11 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string;
 
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number;
+
 /**
  * Model Metadata
  */
@@ -1813,7 +2329,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Checklist",
+    name: "Product",
     embedded: false
   },
   {
@@ -1821,11 +2337,11 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "ConsumedItem",
+    name: "Purchase",
     embedded: false
   },
   {
-    name: "ChecklistType",
+    name: "Payment",
     embedded: false
   }
 ];

@@ -3,5 +3,8 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  consumedItems: [ConsumedItem!]!
+  purchases: [Purchase!]!
+  payments: [Payment!]!
+  items: [Item!]!
+  balance: Float! @default(value: 0)
 }

@@ -1,23 +1,12 @@
 type Item {
   id: ID!
-  name: String!
+  product: Product!
+  user: User!
+  amount: Int!
   price: Float!
-  index: Int!
-  show: Boolean!
-}
-
-input ItemInput {
-  name: String!
-  price: Float!
-  index: Int!
 }
 
 extend type Query {
   items: [Item!]!
   item(itemId: ID!): Item!
-}
-
-extend type Mutation {
-  createItem(input: ItemInput!): Item!
-  updateItem(itemId: ID!, input: ItemInput!): Item!
 }

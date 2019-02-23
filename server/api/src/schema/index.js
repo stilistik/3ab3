@@ -6,11 +6,12 @@ const {
 } = require('graphql-iso-date');
 const { makeExecutableSchema } = require('apollo-server-express');
 
-const user = require('./User');
-const client = require('./Client');
-const checklist = require('./Checklist');
-const item = require('./Item');
-const consumedItem = require('./ConsumedItem');
+const User = require('./User');
+const Client = require('./Client');
+const Product = require('./Product');
+const Item = require('./Item');
+const Purchase = require('./Purchase');
+const Payment = require('./Payment');
 
 const Scalar = `
   scalar Date
@@ -41,18 +42,20 @@ module.exports = makeExecutableSchema({
     Scalar,
     Query,
     Mutation,
-    user.typeDef,
-    checklist.typeDef,
-    client.typeDef,
-    item.typeDef,
-    consumedItem.typeDef,
+    User.typeDef,
+    Client.typeDef,
+    Product.typeDef,
+    Item.typeDef,
+    Purchase.typeDef,
+    Payment.typeDef,
   ],
   resolvers: merge(
     resolvers,
-    user.resolvers,
-    checklist.resolvers,
-    client.resolvers,
-    item.resolvers,
-    consumedItem.resolvers
+    User.resolvers,
+    Client.resolvers,
+    Product.resolvers,
+    Item.resolvers,
+    Purchase.resolvers,
+    Payment.resolvers
   ),
 });

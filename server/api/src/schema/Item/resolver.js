@@ -7,15 +7,12 @@ module.exports = {
       return context.prisma.item({ id: args.itemId });
     },
   },
-  Mutation: {
-    createItem(root, args, context) {
-      return context.prisma.createItem(args.input);
+  Item: {
+    user(root, args, context) {
+      return context.prisma.item({ id: root.id }).consumer();
     },
-    updateItem(root, args, context) {
-      return context.prisma.updateItem({
-        data: args.input,
-        where: { id: args.itemId },
-      });
+    product(root, args, context) {
+      return context.prisma.item({ id: root.id }).product();
     },
   },
 };

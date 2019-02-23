@@ -1,0 +1,22 @@
+type Payment {
+  id: ID!
+  amount: Float!
+  user: User!
+  date: DateTime!
+}
+
+input PaymentInput {
+  userId: ID!
+  date: DateTime!
+  amount: Float!
+}
+
+extend type Query {
+  payments: [Payment!]!
+  payment(paymentId: ID!): Payment!
+}
+
+extend type Mutation {
+  createPayment(input: PaymentInput!): Payment!
+  deletePayment(paymentId: ID!): Payment!
+}
