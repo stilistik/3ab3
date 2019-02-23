@@ -24,8 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Authentication Endpoints
 app.use(passport.initialize());
-auth.init;
-
 app.get('/oauth/verify', auth.oauth2.verify);
 app.post('/oauth/token', auth.oauth2.token);
 

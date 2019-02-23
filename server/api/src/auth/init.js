@@ -15,7 +15,7 @@ passport.use(
   new BasicStrategy(async (clientId, clientSecret, done) => {
     const registeredClient = await prisma.client({ identity: clientId });
     if (!registeredClient) {
-      return done(null, false, { message: 'client not found' });
+      return done(null, false);
     }
 
     const validateSecret = bcrypt.compareSync(
@@ -23,10 +23,10 @@ passport.use(
       registeredClient.secret
     );
     if (!validateSecret) {
-      return done(null, false, { message: 'bad password' });
+      return done(null, false);
     }
 
-    return done(null, registeredClient, { message: 'authenticated' });
+    return done(null, registeredClient);
   })
 );
 
@@ -34,23 +34,15 @@ passport.use(
   new BearerStrategy(async (accessToken, done) => {
     try {
       const token = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
-
       const foundUser = await prisma.user({ id: token.id });
 
       if (!foundUser) {
         return done(null, false);
       }
 
-      return done(null, foundUser, { scope: '*' });
+      return done(null, foundUser);
     } catch (err) {
-      if (err.name === 'TokenExpiredError') {
-        return done(null, false, 'The access token expired');
-      }
-
-      if (err.name === 'JsonWebTokenError') {
-        return done(null, false);
-      }
-      return done(err);
+      return done(null, false);
     }
   })
 );

@@ -3,7 +3,6 @@ type User {
   email: String!
   name: String!
   password: String!
-  posts: [Post!]!
   consumedItems: [ConsumedItem!]!
 }
 
