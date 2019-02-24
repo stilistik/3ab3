@@ -1,7 +1,9 @@
 module.exports = {
   Query: {
     purchases(root, args, context) {
-      return context.prisma.purchases();
+      return context.prisma.purchases({
+        orderBy: 'date_DESC',
+      });
     },
     purchase(root, args, context) {
       return context.prisma.purchase({ id: args.purchaseId });
@@ -13,47 +15,52 @@ module.exports = {
   Mutation: {
     async createPurchase(root, args, context) {
       const { userId, date, items } = args.input;
-      let total = 0;
-      const itemInput = [];
 
-      // compute total and set up item input to create the consumed items
-      for (let item of items) {
-        const product = await context.prisma.product({ id: item.productId });
-        total += product.price * item.amount;
-        itemInput.push({
-          price: product.price,
-          product: {
-            connect: {
-              id: product.id,
-            },
-          },
-          amount: item.amount,
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
-        });
-      }
+      // cart associates items and corresponding products
+      const cart = await Promise.all(
+        items.map(async (item) => {
+          const product = await context.prisma.product({ id: item.productId });
+          return { product, item };
+        })
+      );
 
-      // create new purchase entry
-      const purchase = context.prisma.createPurchase({
-        user: {
-          connect: {
-            id: userId,
-          },
-        },
+      // compute total of this purchase
+      const total = cart.reduce(
+        (t, el) => t + el.product.price * el.item.amount,
+        0
+      );
+
+      // compute new user balance
+      const user = await context.prisma.user({ id: userId });
+      let balance = user.balance + total;
+
+      // create input for the item nodes
+      const itemInput = cart.map((el) => {
+        return {
+          price: el.product.price,
+          product: { connect: { id: el.product.id } },
+          amount: el.item.amount,
+          user: { connect: { id: userId } },
+        };
+      });
+
+      // create new purchase entry, nested create items
+      const purchase = await context.prisma.createPurchase({
         total,
         date,
         items: {
           create: itemInput,
         },
+        user: {
+          connect: { id: userId },
+        },
       });
 
-      // add total to users balance
-      const user = await context.prisma.user({ id: userId });
+      if (!purchase) throw new Error('Purchase could not be created');
+
+      // update user balance
       await context.prisma.updateUser({
-        data: { balance: user.balance + total },
+        data: { balance: balance },
         where: { id: userId },
       });
 
