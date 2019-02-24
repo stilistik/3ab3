@@ -5,7 +5,7 @@ type User {
   password: String!
   purchases: [Purchase!]!
   payments: [Payment!]!
-  transactions: [Transaction!]!
+  transactions(type: TransactionType): [Transaction!]!
   items: [Item!]!
   balance: Float!
 }

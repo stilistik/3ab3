@@ -30,7 +30,9 @@ module.exports = {
       return context.prisma.user({ id: root.id }).payments();
     },
     transactions(root, args, context) {
-      return context.prisma.user({ id: root.id }).transactions();
+      return context.prisma
+        .user({ id: root.id })
+        .transactions({ where: { type: args.type } });
     },
   },
 };

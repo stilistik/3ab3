@@ -1,7 +1,9 @@
 module.exports = {
   Query: {
     transactions(root, args, context) {
-      return context.prisma.transactions();
+      return context.prisma.transactions({
+        where: { type: args.type },
+      });
     },
     transaction(root, args, context) {
       return context.prisma.transaction({ id: args.transactionId });
