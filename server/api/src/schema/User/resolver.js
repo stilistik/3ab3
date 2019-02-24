@@ -20,19 +20,24 @@ module.exports = {
     },
   },
   User: {
-    purchases(root, args, context) {
-      return context.prisma.user({ id: root.id }).purchases();
-    },
     items(root, args, context) {
       return context.prisma.user({ id: root.id }).items();
     },
+    purchases(root, args, context) {
+      return context.prisma.user({ id: root.id }).purchases({
+        orderBy: 'date_DESC',
+      });
+    },
     payments(root, args, context) {
-      return context.prisma.user({ id: root.id }).payments();
+      return context.prisma.user({ id: root.id }).payments({
+        orderBy: 'date_DESC',
+      });
     },
     transactions(root, args, context) {
-      return context.prisma
-        .user({ id: root.id })
-        .transactions({ where: { type: args.type } });
+      return context.prisma.user({ id: root.id }).transactions({
+        where: { type: args.type },
+        orderBy: 'date_DESC',
+      });
     },
   },
 };

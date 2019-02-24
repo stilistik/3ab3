@@ -3,6 +3,7 @@ module.exports = {
     transactions(root, args, context) {
       return context.prisma.transactions({
         where: { type: args.type },
+        orderBy: 'date_DESC',
       });
     },
     transaction(root, args, context) {

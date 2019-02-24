@@ -1,7 +1,9 @@
 module.exports = {
   Query: {
     payments(root, args, context) {
-      return context.prisma.payments();
+      return context.prisma.payments({
+        orderBy: 'date_DESC',
+      });
     },
     payment(root, args, context) {
       return context.prisma.payment({ id: args.paymentId });
