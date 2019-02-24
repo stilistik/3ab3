@@ -1,5 +1,6 @@
 type Purchase {
   id: ID!
+  transaction: Transaction!
   items: [Item!]!
   total: Float!
   user: User!

@@ -5,6 +5,7 @@ type User {
   password: String!
   purchases: [Purchase!]!
   payments: [Payment!]!
+  transactions: [Transaction!]!
   items: [Item!]!
   balance: Float! @default(value: 0)
 }

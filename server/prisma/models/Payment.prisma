@@ -3,4 +3,5 @@ type Payment {
   amount: Float!
   user: User!
   date: DateTime!
+  transaction: Transaction! @relation(name: "PaymentTransaction" onDelete: CASCADE)
 }

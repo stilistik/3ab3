@@ -11,20 +11,29 @@ module.exports = {
     async createPayment(root, args, context) {
       const { userId, amount, date } = args.input;
       const user = await context.prisma.user({ id: userId });
-      await context.prisma.updateUser({
-        data: { balance: user.balance - amount },
-        where: { id: userId },
-      });
-      const paymentInput = {
+      const payment = await context.prisma.createPayment({
         user: {
-          connect: {
-            id: userId,
+          connect: { id: userId },
+        },
+        transaction: {
+          create: {
+            user: { connect: { id: userId } },
+            date: date,
+            type: 'PAYMENT',
           },
         },
         date,
         amount,
-      };
-      return context.prisma.createPayment(paymentInput);
+      });
+
+      if (!payment) throw new Error('Payment could not be created.');
+
+      await context.prisma.updateUser({
+        data: { balance: user.balance - amount },
+        where: { id: userId },
+      });
+
+      return payment;
     },
     async deletePayment(root, args, context) {
       const payment = await context.prisma.payment({ id: args.paymentId });

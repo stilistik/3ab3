@@ -1,0 +1,13 @@
+type Transaction {
+  id: ID! @unique
+  user: User!
+  date: DateTime!
+  type: TransactionType!
+  payment: Payment @relation(name: "PaymentTransaction" onDelete: CASCADE)
+  purchase: Purchase @relation(name: "PurchaseTransaction" onDelete: CASCADE)
+}
+
+enum TransactionType {
+  PAYMENT,
+  PURCHASE
+}

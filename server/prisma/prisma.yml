@@ -6,6 +6,7 @@ datamodel:
   - models/Item.prisma
   - models/Purchase.prisma
   - models/Payment.prisma
+  - models/Transaction.prisma
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/

@@ -54,6 +54,13 @@ module.exports = {
         user: {
           connect: { id: userId },
         },
+        transaction: {
+          create: {
+            user: { connect: { id: userId } },
+            date: date,
+            type: 'PURCHASE',
+          },
+        },
       });
 
       if (!purchase) throw new Error('Purchase could not be created');

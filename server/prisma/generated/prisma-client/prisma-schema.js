@@ -23,6 +23,10 @@ type AggregatePurchase {
   count: Int!
 }
 
+type AggregateTransaction {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -456,6 +460,12 @@ type Mutation {
   upsertPurchase(where: PurchaseWhereUniqueInput!, create: PurchaseCreateInput!, update: PurchaseUpdateInput!): Purchase!
   deletePurchase(where: PurchaseWhereUniqueInput!): Purchase
   deleteManyPurchases(where: PurchaseWhereInput): BatchPayload!
+  createTransaction(data: TransactionCreateInput!): Transaction!
+  updateTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
+  updateManyTransactions(data: TransactionUpdateManyMutationInput!, where: TransactionWhereInput): BatchPayload!
+  upsertTransaction(where: TransactionWhereUniqueInput!, create: TransactionCreateInput!, update: TransactionUpdateInput!): Transaction!
+  deleteTransaction(where: TransactionWhereUniqueInput!): Transaction
+  deleteManyTransactions(where: TransactionWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -486,6 +496,7 @@ type Payment {
   amount: Float!
   user: User!
   date: DateTime!
+  transaction: Transaction!
 }
 
 type PaymentConnection {
@@ -498,6 +509,7 @@ input PaymentCreateInput {
   amount: Float!
   user: UserCreateOneWithoutPaymentsInput!
   date: DateTime!
+  transaction: TransactionCreateOneWithoutPaymentInput!
 }
 
 input PaymentCreateManyWithoutUserInput {
@@ -505,9 +517,21 @@ input PaymentCreateManyWithoutUserInput {
   connect: [PaymentWhereUniqueInput!]
 }
 
+input PaymentCreateOneWithoutTransactionInput {
+  create: PaymentCreateWithoutTransactionInput
+  connect: PaymentWhereUniqueInput
+}
+
+input PaymentCreateWithoutTransactionInput {
+  amount: Float!
+  user: UserCreateOneWithoutPaymentsInput!
+  date: DateTime!
+}
+
 input PaymentCreateWithoutUserInput {
   amount: Float!
   date: DateTime!
+  transaction: TransactionCreateOneWithoutPaymentInput!
 }
 
 type PaymentEdge {
@@ -592,6 +616,7 @@ input PaymentUpdateInput {
   amount: Float
   user: UserUpdateOneRequiredWithoutPaymentsInput
   date: DateTime
+  transaction: TransactionUpdateOneRequiredWithoutPaymentInput
 }
 
 input PaymentUpdateManyDataInput {
@@ -621,14 +646,35 @@ input PaymentUpdateManyWithWhereNestedInput {
   data: PaymentUpdateManyDataInput!
 }
 
+input PaymentUpdateOneWithoutTransactionInput {
+  create: PaymentCreateWithoutTransactionInput
+  update: PaymentUpdateWithoutTransactionDataInput
+  upsert: PaymentUpsertWithoutTransactionInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PaymentWhereUniqueInput
+}
+
+input PaymentUpdateWithoutTransactionDataInput {
+  amount: Float
+  user: UserUpdateOneRequiredWithoutPaymentsInput
+  date: DateTime
+}
+
 input PaymentUpdateWithoutUserDataInput {
   amount: Float
   date: DateTime
+  transaction: TransactionUpdateOneRequiredWithoutPaymentInput
 }
 
 input PaymentUpdateWithWhereUniqueWithoutUserInput {
   where: PaymentWhereUniqueInput!
   data: PaymentUpdateWithoutUserDataInput!
+}
+
+input PaymentUpsertWithoutTransactionInput {
+  update: PaymentUpdateWithoutTransactionDataInput!
+  create: PaymentCreateWithoutTransactionInput!
 }
 
 input PaymentUpsertWithWhereUniqueWithoutUserInput {
@@ -669,6 +715,7 @@ input PaymentWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  transaction: TransactionWhereInput
   AND: [PaymentWhereInput!]
   OR: [PaymentWhereInput!]
   NOT: [PaymentWhereInput!]
@@ -844,6 +891,7 @@ input ProductWhereUniqueInput {
 type Purchase {
   id: ID!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  transaction: Transaction!
   total: Float!
   user: User!
   date: DateTime!
@@ -857,6 +905,7 @@ type PurchaseConnection {
 
 input PurchaseCreateInput {
   items: ItemCreateManyInput
+  transaction: TransactionCreateOneWithoutPurchaseInput!
   total: Float!
   user: UserCreateOneWithoutPurchasesInput!
   date: DateTime!
@@ -867,8 +916,21 @@ input PurchaseCreateManyWithoutUserInput {
   connect: [PurchaseWhereUniqueInput!]
 }
 
+input PurchaseCreateOneWithoutTransactionInput {
+  create: PurchaseCreateWithoutTransactionInput
+  connect: PurchaseWhereUniqueInput
+}
+
+input PurchaseCreateWithoutTransactionInput {
+  items: ItemCreateManyInput
+  total: Float!
+  user: UserCreateOneWithoutPurchasesInput!
+  date: DateTime!
+}
+
 input PurchaseCreateWithoutUserInput {
   items: ItemCreateManyInput
+  transaction: TransactionCreateOneWithoutPurchaseInput!
   total: Float!
   date: DateTime!
 }
@@ -953,6 +1015,7 @@ input PurchaseSubscriptionWhereInput {
 
 input PurchaseUpdateInput {
   items: ItemUpdateManyInput
+  transaction: TransactionUpdateOneRequiredWithoutPurchaseInput
   total: Float
   user: UserUpdateOneRequiredWithoutPurchasesInput
   date: DateTime
@@ -985,8 +1048,25 @@ input PurchaseUpdateManyWithWhereNestedInput {
   data: PurchaseUpdateManyDataInput!
 }
 
+input PurchaseUpdateOneWithoutTransactionInput {
+  create: PurchaseCreateWithoutTransactionInput
+  update: PurchaseUpdateWithoutTransactionDataInput
+  upsert: PurchaseUpsertWithoutTransactionInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PurchaseWhereUniqueInput
+}
+
+input PurchaseUpdateWithoutTransactionDataInput {
+  items: ItemUpdateManyInput
+  total: Float
+  user: UserUpdateOneRequiredWithoutPurchasesInput
+  date: DateTime
+}
+
 input PurchaseUpdateWithoutUserDataInput {
   items: ItemUpdateManyInput
+  transaction: TransactionUpdateOneRequiredWithoutPurchaseInput
   total: Float
   date: DateTime
 }
@@ -994,6 +1074,11 @@ input PurchaseUpdateWithoutUserDataInput {
 input PurchaseUpdateWithWhereUniqueWithoutUserInput {
   where: PurchaseWhereUniqueInput!
   data: PurchaseUpdateWithoutUserDataInput!
+}
+
+input PurchaseUpsertWithoutTransactionInput {
+  update: PurchaseUpdateWithoutTransactionDataInput!
+  create: PurchaseCreateWithoutTransactionInput!
 }
 
 input PurchaseUpsertWithWhereUniqueWithoutUserInput {
@@ -1020,6 +1105,7 @@ input PurchaseWhereInput {
   items_every: ItemWhereInput
   items_some: ItemWhereInput
   items_none: ItemWhereInput
+  transaction: TransactionWhereInput
   total: Float
   total_not: Float
   total_in: [Float!]
@@ -1062,6 +1148,9 @@ type Query {
   purchase(where: PurchaseWhereUniqueInput!): Purchase
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase]!
   purchasesConnection(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseConnection!
+  transaction(where: TransactionWhereUniqueInput!): Transaction
+  transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
+  transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1074,7 +1163,276 @@ type Subscription {
   payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   purchase(where: PurchaseSubscriptionWhereInput): PurchaseSubscriptionPayload
+  transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Transaction {
+  id: ID!
+  user: User!
+  date: DateTime!
+  type: TransactionType!
+  payment: Payment
+  purchase: Purchase
+}
+
+type TransactionConnection {
+  pageInfo: PageInfo!
+  edges: [TransactionEdge]!
+  aggregate: AggregateTransaction!
+}
+
+input TransactionCreateInput {
+  user: UserCreateOneWithoutTransactionsInput!
+  date: DateTime!
+  type: TransactionType!
+  payment: PaymentCreateOneWithoutTransactionInput
+  purchase: PurchaseCreateOneWithoutTransactionInput
+}
+
+input TransactionCreateManyWithoutUserInput {
+  create: [TransactionCreateWithoutUserInput!]
+  connect: [TransactionWhereUniqueInput!]
+}
+
+input TransactionCreateOneWithoutPaymentInput {
+  create: TransactionCreateWithoutPaymentInput
+  connect: TransactionWhereUniqueInput
+}
+
+input TransactionCreateOneWithoutPurchaseInput {
+  create: TransactionCreateWithoutPurchaseInput
+  connect: TransactionWhereUniqueInput
+}
+
+input TransactionCreateWithoutPaymentInput {
+  user: UserCreateOneWithoutTransactionsInput!
+  date: DateTime!
+  type: TransactionType!
+  purchase: PurchaseCreateOneWithoutTransactionInput
+}
+
+input TransactionCreateWithoutPurchaseInput {
+  user: UserCreateOneWithoutTransactionsInput!
+  date: DateTime!
+  type: TransactionType!
+  payment: PaymentCreateOneWithoutTransactionInput
+}
+
+input TransactionCreateWithoutUserInput {
+  date: DateTime!
+  type: TransactionType!
+  payment: PaymentCreateOneWithoutTransactionInput
+  purchase: PurchaseCreateOneWithoutTransactionInput
+}
+
+type TransactionEdge {
+  node: Transaction!
+  cursor: String!
+}
+
+enum TransactionOrderByInput {
+  id_ASC
+  id_DESC
+  date_ASC
+  date_DESC
+  type_ASC
+  type_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TransactionPreviousValues {
+  id: ID!
+  date: DateTime!
+  type: TransactionType!
+}
+
+input TransactionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  type: TransactionType
+  type_not: TransactionType
+  type_in: [TransactionType!]
+  type_not_in: [TransactionType!]
+  AND: [TransactionScalarWhereInput!]
+  OR: [TransactionScalarWhereInput!]
+  NOT: [TransactionScalarWhereInput!]
+}
+
+type TransactionSubscriptionPayload {
+  mutation: MutationType!
+  node: Transaction
+  updatedFields: [String!]
+  previousValues: TransactionPreviousValues
+}
+
+input TransactionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TransactionWhereInput
+  AND: [TransactionSubscriptionWhereInput!]
+  OR: [TransactionSubscriptionWhereInput!]
+  NOT: [TransactionSubscriptionWhereInput!]
+}
+
+enum TransactionType {
+  PAYMENT
+  PURCHASE
+}
+
+input TransactionUpdateInput {
+  user: UserUpdateOneRequiredWithoutTransactionsInput
+  date: DateTime
+  type: TransactionType
+  payment: PaymentUpdateOneWithoutTransactionInput
+  purchase: PurchaseUpdateOneWithoutTransactionInput
+}
+
+input TransactionUpdateManyDataInput {
+  date: DateTime
+  type: TransactionType
+}
+
+input TransactionUpdateManyMutationInput {
+  date: DateTime
+  type: TransactionType
+}
+
+input TransactionUpdateManyWithoutUserInput {
+  create: [TransactionCreateWithoutUserInput!]
+  delete: [TransactionWhereUniqueInput!]
+  connect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
+  disconnect: [TransactionWhereUniqueInput!]
+  update: [TransactionUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [TransactionUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [TransactionScalarWhereInput!]
+  updateMany: [TransactionUpdateManyWithWhereNestedInput!]
+}
+
+input TransactionUpdateManyWithWhereNestedInput {
+  where: TransactionScalarWhereInput!
+  data: TransactionUpdateManyDataInput!
+}
+
+input TransactionUpdateOneRequiredWithoutPaymentInput {
+  create: TransactionCreateWithoutPaymentInput
+  update: TransactionUpdateWithoutPaymentDataInput
+  upsert: TransactionUpsertWithoutPaymentInput
+  connect: TransactionWhereUniqueInput
+}
+
+input TransactionUpdateOneRequiredWithoutPurchaseInput {
+  create: TransactionCreateWithoutPurchaseInput
+  update: TransactionUpdateWithoutPurchaseDataInput
+  upsert: TransactionUpsertWithoutPurchaseInput
+  connect: TransactionWhereUniqueInput
+}
+
+input TransactionUpdateWithoutPaymentDataInput {
+  user: UserUpdateOneRequiredWithoutTransactionsInput
+  date: DateTime
+  type: TransactionType
+  purchase: PurchaseUpdateOneWithoutTransactionInput
+}
+
+input TransactionUpdateWithoutPurchaseDataInput {
+  user: UserUpdateOneRequiredWithoutTransactionsInput
+  date: DateTime
+  type: TransactionType
+  payment: PaymentUpdateOneWithoutTransactionInput
+}
+
+input TransactionUpdateWithoutUserDataInput {
+  date: DateTime
+  type: TransactionType
+  payment: PaymentUpdateOneWithoutTransactionInput
+  purchase: PurchaseUpdateOneWithoutTransactionInput
+}
+
+input TransactionUpdateWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput!
+  data: TransactionUpdateWithoutUserDataInput!
+}
+
+input TransactionUpsertWithoutPaymentInput {
+  update: TransactionUpdateWithoutPaymentDataInput!
+  create: TransactionCreateWithoutPaymentInput!
+}
+
+input TransactionUpsertWithoutPurchaseInput {
+  update: TransactionUpdateWithoutPurchaseDataInput!
+  create: TransactionCreateWithoutPurchaseInput!
+}
+
+input TransactionUpsertWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput!
+  update: TransactionUpdateWithoutUserDataInput!
+  create: TransactionCreateWithoutUserInput!
+}
+
+input TransactionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  type: TransactionType
+  type_not: TransactionType
+  type_in: [TransactionType!]
+  type_not_in: [TransactionType!]
+  payment: PaymentWhereInput
+  purchase: PurchaseWhereInput
+  AND: [TransactionWhereInput!]
+  OR: [TransactionWhereInput!]
+  NOT: [TransactionWhereInput!]
+}
+
+input TransactionWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -1084,6 +1442,7 @@ type User {
   password: String!
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase!]
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
+  transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
   balance: Float!
 }
@@ -1100,6 +1459,7 @@ input UserCreateInput {
   password: String!
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
   balance: Float
 }
@@ -1119,12 +1479,18 @@ input UserCreateOneWithoutPurchasesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutTransactionsInput {
+  create: UserCreateWithoutTransactionsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutItemsInput {
   name: String!
   email: String!
   password: String!
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
   balance: Float
 }
 
@@ -1133,6 +1499,7 @@ input UserCreateWithoutPaymentsInput {
   email: String!
   password: String!
   purchases: PurchaseCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
   balance: Float
 }
@@ -1141,6 +1508,17 @@ input UserCreateWithoutPurchasesInput {
   name: String!
   email: String!
   password: String!
+  payments: PaymentCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  balance: Float
+}
+
+input UserCreateWithoutTransactionsInput {
+  name: String!
+  email: String!
+  password: String!
+  purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
   balance: Float
@@ -1200,6 +1578,7 @@ input UserUpdateInput {
   password: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
   balance: Float
 }
@@ -1232,12 +1611,20 @@ input UserUpdateOneRequiredWithoutPurchasesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutTransactionsInput {
+  create: UserCreateWithoutTransactionsInput
+  update: UserUpdateWithoutTransactionsDataInput
+  upsert: UserUpsertWithoutTransactionsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
   password: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
   balance: Float
 }
 
@@ -1246,6 +1633,7 @@ input UserUpdateWithoutPaymentsDataInput {
   email: String
   password: String
   purchases: PurchaseUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
   balance: Float
 }
@@ -1254,6 +1642,17 @@ input UserUpdateWithoutPurchasesDataInput {
   name: String
   email: String
   password: String
+  payments: PaymentUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  balance: Float
+}
+
+input UserUpdateWithoutTransactionsDataInput {
+  name: String
+  email: String
+  password: String
+  purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
   balance: Float
@@ -1272,6 +1671,11 @@ input UserUpsertWithoutPaymentsInput {
 input UserUpsertWithoutPurchasesInput {
   update: UserUpdateWithoutPurchasesDataInput!
   create: UserCreateWithoutPurchasesInput!
+}
+
+input UserUpsertWithoutTransactionsInput {
+  update: UserUpdateWithoutTransactionsDataInput!
+  create: UserCreateWithoutTransactionsInput!
 }
 
 input UserWhereInput {
@@ -1337,6 +1741,9 @@ input UserWhereInput {
   payments_every: PaymentWhereInput
   payments_some: PaymentWhereInput
   payments_none: PaymentWhereInput
+  transactions_every: TransactionWhereInput
+  transactions_some: TransactionWhereInput
+  transactions_none: TransactionWhereInput
   items_every: ItemWhereInput
   items_some: ItemWhereInput
   items_none: ItemWhereInput

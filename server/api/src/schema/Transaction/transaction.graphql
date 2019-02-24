@@ -1,0 +1,18 @@
+type Transaction {
+  id: ID!
+  user: User!
+  date: DateTime!
+  type: TransactionType!
+  purchase: Purchase
+  payment: Payment
+}
+
+enum TransactionType {
+  PAYMENT,
+  PURCHASE
+}
+
+extend type Query {
+  transactions: [Transaction!]!
+  transaction(transactionId: ID!): Transaction!
+}

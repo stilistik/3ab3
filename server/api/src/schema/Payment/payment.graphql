@@ -1,5 +1,6 @@
 type Payment {
   id: ID!
+  transaction: Transaction!
   amount: Float!
   user: User!
   date: DateTime!
