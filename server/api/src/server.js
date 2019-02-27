@@ -6,6 +6,7 @@ const passport = require('passport');
 const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
 const auth = require('./auth');
+const cors = require('cors');
 
 const API_PATH = '/api';
 
@@ -17,6 +18,7 @@ const app = express();
 
 // Compress all requests
 app.use(compression());
+app.use(cors());
 
 // Enable body parser
 app.use(bodyParser.json());

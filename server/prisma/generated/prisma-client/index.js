@@ -33,6 +33,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Event",
+    embedded: false
+  },
+  {
     name: "TransactionType",
     embedded: false
   }

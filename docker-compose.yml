@@ -35,14 +35,14 @@ services:
       - 3ab3
 
   postgres:
-    container_name: database
+    container_name: postgres
     image: postgres:10.5
     restart: unless-stopped
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
     volumes:
-      - /var/local/3ab3net:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     networks:
       - 3ab3
 

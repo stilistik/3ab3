@@ -1,0 +1,7 @@
+type Event {
+  id: ID! @unique
+  title: String!
+  description: String!
+  date: DateTime!
+  thumbnail: String!
+}

@@ -7,11 +7,12 @@ datamodel:
   - models/Purchase.prisma
   - models/Payment.prisma
   - models/Transaction.prisma
+  - models/Event.prisma
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/
 seed:
-  import: seed.graphql
+  import: seed.js
 hooks:
   post-deploy:
     - node ./seed.js
