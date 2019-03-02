@@ -30,13 +30,14 @@ app.get('/oauth/verify', auth.oauth2.verify);
 app.post('/oauth/token', auth.oauth2.token);
 
 // The GraphQL endpoint for API using Apollo Server
-// app.post(API_PATH, passport.authenticate('bearer', { session: false }));
+app.post(API_PATH, passport.authenticate('bearer', { session: false }));
 
 const apollo = new ApolloServer({
   schema: schema,
   introspection: true,
   context: ({ req }) => {
     return {
+      user: req.user,
       request: req,
       prisma: prisma,
     };

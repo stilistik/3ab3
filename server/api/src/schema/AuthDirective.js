@@ -1,4 +1,3 @@
-// Module dependencies
 const {
   DirectiveLocation,
   GraphQLDirective,
@@ -74,7 +73,7 @@ class AuthDirective extends SchemaDirectiveVisitor {
 
         if (user.role !== requiredRole) {
           throw new ForbiddenError(
-            `User do not has the required role (${requiredRole}) on field: ${fieldName}.`
+            `User does not have the required role (${requiredRole}) on field: ${fieldName}.`
           );
         }
 
@@ -84,5 +83,4 @@ class AuthDirective extends SchemaDirectiveVisitor {
   }
 }
 
-// Module exports
 module.exports = AuthDirective;

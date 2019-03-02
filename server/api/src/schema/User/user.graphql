@@ -25,7 +25,7 @@ input CreateUserInput {
 }
 
 extend type Query {
-  users: [User!]!
+  users: [User!]! @auth
   user(userId: ID!): User!
 }
 

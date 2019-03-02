@@ -19,6 +19,14 @@ const Event = require('./Event');
 const Production = require('./Production');
 const File = require('./File');
 
+const AuthDirective = require('./AuthDirective');
+
+const Directives = `
+  directive @auth(
+   requires: UserRole = ADMIN,
+  ) on OBJECT | FIELD_DEFINITION
+`;
+
 const Scalar = `
   scalar Date
   scalar Time
@@ -47,6 +55,7 @@ const resolvers = {
 
 module.exports = makeExecutableSchema({
   typeDefs: [
+    Directives,
     Scalar,
     Query,
     Mutation,
@@ -74,4 +83,7 @@ module.exports = makeExecutableSchema({
     Production.resolvers,
     File.resolvers
   ),
+  schemaDirectives: {
+    auth: AuthDirective,
+  },
 });
