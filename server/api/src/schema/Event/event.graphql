@@ -3,14 +3,14 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
-  thumbnail: String!
+  image: String!
 }
 
 input EventInput {
   title: String!
   description: String!
   date: DateTime!
-  thumbnail: String!
+  image: String!
 }
 
 extend type Query {

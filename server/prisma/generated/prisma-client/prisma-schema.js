@@ -202,7 +202,7 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
-  thumbnail: String!
+  image: String!
 }
 
 type EventConnection {
@@ -215,7 +215,7 @@ input EventCreateInput {
   title: String!
   description: String!
   date: DateTime!
-  thumbnail: String!
+  image: String!
 }
 
 type EventEdge {
@@ -232,8 +232,8 @@ enum EventOrderByInput {
   description_DESC
   date_ASC
   date_DESC
-  thumbnail_ASC
-  thumbnail_DESC
+  image_ASC
+  image_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -245,7 +245,7 @@ type EventPreviousValues {
   title: String!
   description: String!
   date: DateTime!
-  thumbnail: String!
+  image: String!
 }
 
 type EventSubscriptionPayload {
@@ -270,14 +270,14 @@ input EventUpdateInput {
   title: String
   description: String
   date: DateTime
-  thumbnail: String
+  image: String
 }
 
 input EventUpdateManyMutationInput {
   title: String
   description: String
   date: DateTime
-  thumbnail: String
+  image: String
 }
 
 input EventWhereInput {
@@ -331,20 +331,20 @@ input EventWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
-  thumbnail: String
-  thumbnail_not: String
-  thumbnail_in: [String!]
-  thumbnail_not_in: [String!]
-  thumbnail_lt: String
-  thumbnail_lte: String
-  thumbnail_gt: String
-  thumbnail_gte: String
-  thumbnail_contains: String
-  thumbnail_not_contains: String
-  thumbnail_starts_with: String
-  thumbnail_not_starts_with: String
-  thumbnail_ends_with: String
-  thumbnail_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   AND: [EventWhereInput!]
   OR: [EventWhereInput!]
   NOT: [EventWhereInput!]

@@ -473,8 +473,8 @@ export type EventOrderByInput =
   | "description_DESC"
   | "date_ASC"
   | "date_DESC"
-  | "thumbnail_ASC"
-  | "thumbnail_DESC"
+  | "image_ASC"
+  | "image_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1364,7 +1364,7 @@ export interface EventUpdateInput {
   title?: String;
   description?: String;
   date?: DateTimeInput;
-  thumbnail?: String;
+  image?: String;
 }
 
 export interface PurchaseUpdateManyWithoutUserInput {
@@ -1789,7 +1789,7 @@ export interface EventCreateInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  thumbnail: String;
+  image: String;
 }
 
 export interface TransactionUpdateWithoutPaymentDataInput {
@@ -2065,20 +2065,20 @@ export interface EventWhereInput {
   date_lte?: DateTimeInput;
   date_gt?: DateTimeInput;
   date_gte?: DateTimeInput;
-  thumbnail?: String;
-  thumbnail_not?: String;
-  thumbnail_in?: String[] | String;
-  thumbnail_not_in?: String[] | String;
-  thumbnail_lt?: String;
-  thumbnail_lte?: String;
-  thumbnail_gt?: String;
-  thumbnail_gte?: String;
-  thumbnail_contains?: String;
-  thumbnail_not_contains?: String;
-  thumbnail_starts_with?: String;
-  thumbnail_not_starts_with?: String;
-  thumbnail_ends_with?: String;
-  thumbnail_not_ends_with?: String;
+  image?: String;
+  image_not?: String;
+  image_in?: String[] | String;
+  image_not_in?: String[] | String;
+  image_lt?: String;
+  image_lte?: String;
+  image_gt?: String;
+  image_gte?: String;
+  image_contains?: String;
+  image_not_contains?: String;
+  image_starts_with?: String;
+  image_not_starts_with?: String;
+  image_ends_with?: String;
+  image_not_ends_with?: String;
   AND?: EventWhereInput[] | EventWhereInput;
   OR?: EventWhereInput[] | EventWhereInput;
   NOT?: EventWhereInput[] | EventWhereInput;
@@ -2185,7 +2185,7 @@ export interface EventUpdateManyMutationInput {
   title?: String;
   description?: String;
   date?: DateTimeInput;
-  thumbnail?: String;
+  image?: String;
 }
 
 export interface NodeNode {
@@ -2339,7 +2339,7 @@ export interface Event {
   title: String;
   description: String;
   date: DateTimeOutput;
-  thumbnail: String;
+  image: String;
 }
 
 export interface EventPromise extends Promise<Event>, Fragmentable {
@@ -2347,7 +2347,7 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
   title: () => Promise<String>;
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
-  thumbnail: () => Promise<String>;
+  image: () => Promise<String>;
 }
 
 export interface EventSubscription
@@ -2357,7 +2357,7 @@ export interface EventSubscription
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  thumbnail: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ClientEdge {
@@ -2780,7 +2780,7 @@ export interface EventPreviousValues {
   title: String;
   description: String;
   date: DateTimeOutput;
-  thumbnail: String;
+  image: String;
 }
 
 export interface EventPreviousValuesPromise
@@ -2790,7 +2790,7 @@ export interface EventPreviousValuesPromise
   title: () => Promise<String>;
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
-  thumbnail: () => Promise<String>;
+  image: () => Promise<String>;
 }
 
 export interface EventPreviousValuesSubscription
@@ -2800,7 +2800,7 @@ export interface EventPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  thumbnail: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ItemConnection {
