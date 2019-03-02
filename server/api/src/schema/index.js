@@ -4,6 +4,8 @@ const {
   GraphQLTime,
   GraphQLDateTime,
 } = require('graphql-iso-date');
+const { GraphQLUpload } = require('apollo-server-express');
+
 const { makeExecutableSchema } = require('apollo-server-express');
 
 const User = require('./User');
@@ -20,6 +22,7 @@ const Scalar = `
   scalar Date
   scalar Time
   scalar DateTime
+  scalar Upload
 `;
 
 const Query = `
@@ -38,6 +41,7 @@ const resolvers = {
   Date: GraphQLDate,
   Time: GraphQLTime,
   DateTime: GraphQLDateTime,
+  Upload: GraphQLUpload,
 };
 
 module.exports = makeExecutableSchema({

@@ -7,12 +7,14 @@ services:
       - "4000"
     volumes:
       - ./server/prisma/generated:/usr/src/app/src/generated
+      - /var/local/3ab3/storage/:/usr/src/app/storage
     networks:
       - 3ab3
     command: yarn start
     environment:
       - ACCESS_TOKEN_SECRET
       - ACCESS_TOKEN_EXPIRATION
+      - STORAGE_ROOT
 
   prisma:
     container_name: prisma

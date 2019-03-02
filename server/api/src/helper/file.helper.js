@@ -3,8 +3,9 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const uuidv4 = require('uuid/v4');
 
-const UPLOAD_DIR = path.join(process.env.STORAGE_ROOT, './public/file');
+const UPLOAD_DIR = path.resolve(process.env.STORAGE_ROOT);
 
 class FileHelper {
   static get uploadDirPath() {
@@ -33,10 +34,11 @@ class FileHelper {
     });
   }
 
-  static storeFS({ stream, filename }, file_id) {
+  static storeFS({ stream, filename }) {
+    const fileId = uuidv4();
     const dirPath = path.resolve(UPLOAD_DIR);
     const extension = filename.split('.').pop();
-    const filePath = path.join(dirPath, `${file_id}.${extension}`);
+    const filePath = path.join(dirPath, `${fileId}.${extension}`);
 
     mkdirp.sync(dirPath);
 
@@ -58,7 +60,7 @@ class FileHelper {
           hash.end();
           const fileHash = hash.read();
           resolve({
-            file_id,
+            fileId,
             filePath,
             fileHash,
           });
