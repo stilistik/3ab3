@@ -11,8 +11,6 @@ datamodel:
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/
-seed:
-  import: seed.js
 hooks:
   post-deploy:
     - node ./seed.js
