@@ -1,0 +1,26 @@
+type Production {
+  id: ID!
+  title: String!
+  description: String!
+  image: String!
+  index: Int!
+  show: Boolean!
+}
+
+input ProductionInput {
+  title: String!
+  description: String!
+  index: Int!
+  image: String!
+}
+
+extend type Query {
+  productions: [Production!]!
+  currentProductions: [Production!]! 
+  production(productionId: ID!): Production!
+}
+
+extend type Mutation {
+  createProduction(input: ProductionInput!): Production!
+  deleteProduction(productionId: ID!): Production!
+}

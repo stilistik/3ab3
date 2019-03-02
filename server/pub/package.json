@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "pub",
   "version": "0.0.1",
   "main": "index.js",
   "author": "Philipp Gerber",
@@ -11,21 +11,14 @@
   "dependencies": {
     "apollo-server-core": "^2.4.2",
     "apollo-server-express": "^2.4.2",
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "express": "^4.16.4",
-    "fs": "^0.0.1-security",
     "graphql": "^14.1.1",
     "graphql-iso-date": "^3.6.1",
     "graphql-middleware": "^3.0.2",
-    "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "oauth2orize": "^1.11.0",
-    "passport": "^0.4.0",
-    "passport-http": "^0.3.0",
-    "passport-http-bearer": "^1.0.1",
     "path": "^0.12.7",
     "prisma-client-lib": "^1.26.6"
   },

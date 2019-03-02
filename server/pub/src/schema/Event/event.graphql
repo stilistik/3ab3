@@ -1,0 +1,26 @@
+type Event {
+  id: ID!
+  title: String!
+  description: String!
+  date: DateTime!
+  image: String!
+}
+
+input EventInput {
+  title: String!
+  description: String!
+  date: DateTime!
+  image: String!
+}
+
+extend type Query {
+  events: [Event!]!
+  event(eventId: ID!): Event!
+  futureEvents(now: DateTime!): [Event!]!
+  pastEvents(now: DateTime!): [Event!]!
+}
+
+extend type Mutation {
+  createEvent(input: EventInput!): Event!
+  deleteEvent(eventId: ID!): Event!
+}
