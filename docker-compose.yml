@@ -51,6 +51,8 @@ services:
     build: ./server/proxy
     ports:
      - "4000:4000"
+    volumes:
+      - /var/local/3ab3/storage/:/usr/src/app/storage
     networks:
      - 3ab3
 
