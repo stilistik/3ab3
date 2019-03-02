@@ -7,6 +7,8 @@ const {
 
 const FileHelper = require('../../helper/file.helper.js');
 
+const SUPPORTED_EXT = ['PNG', 'GIF', 'JPG', 'PDF'];
+
 module.exports = {
   Query: {
     files(root, args, context) {
@@ -22,41 +24,35 @@ module.exports = {
       const { createReadStream, filename, mimetype } = await args.file;
       const stream = createReadStream();
 
+      if (!filename) {
+        throw new UserInputError('No filename provided');
+      }
+
+      const fileExtension = filename.split('.').pop();
+      if (SUPPORTED_EXT.indexOf(fileExtension.toUpperCase()) < 0) {
+        throw new ValidationError(`Unsupported file format ${fileExtension}`);
+      }
+
       const { fileId, filePath, fileHash } = await FileHelper.storeFS({
         stream,
         filename,
       });
 
-      console.log(fileId, filePath, fileHash);
-      // if (!filename) {
-      //   throw new UserInputError('No filename provided');
-      // }
-      // const fileExtension = filename.split('.').pop();
-      // if (_.indexOf(SUPPORTED_EXT, fileExtension.toUpperCase()) < 0) {
-      //   throw new ValidationError(`Unsupported file format ${fileExtension}`);
-      // }
-      //
+      const fileExist = await context.prisma.file({ hash: fileHash });
+      if (fileExist) {
+        await FileHelper.deleteFile(filePath);
+        throw new ValidationError(`File already exists in the database`);
+      }
 
-      //
-      // const fileExist = await File.init().findByHash(fileHash);
-      //
-      // if (fileExist) {
-      //   throw new ValidationError(`File existed in database`);
-      // }
-      //
-      // const uploadedFile = await File.init().create({
-      //   uuid: fileUuid,
-      //   user_uuid: currentUser.uuid,
-      //   dataset_uuid: dataset_uuid || null,
-      //   filename: filename,
-      //   mimetype: mimetype,
-      //   extension: fileExtension,
-      //   hash: fileHash,
-      //   tags: tags,
-      //   path: filePath,
-      //   status: 'PARSING',
-      // });
-      // return uploadedFile;
+      return context.prisma.createFile({
+        fileId: fileId,
+        path: filePath,
+        hash: fileHash,
+        filename: filename,
+        mimetype: mimetype,
+        extension: fileExtension,
+        uri: '/cdn/' + fileId + '.' + fileExtension,
+      });
     },
   },
 };

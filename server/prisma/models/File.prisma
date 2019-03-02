@@ -1,6 +1,7 @@
 type File {
   id: ID! @unique
   fileId: String! @unique
+  hash: String! @unique
   filename: String!
   path: String!
   uri: String!

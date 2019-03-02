@@ -12,20 +12,9 @@ class FileHelper {
     return UPLOAD_DIR;
   }
 
-  static checkExists(filePath) {
-    return new Promise((resolve) => {
-      fs.access(filePath, fs.constants.F_OK, (err) => {
-        if (err) {
-          return resolve(false);
-        }
-        return resolve(true);
-      });
-    });
-  }
-
-  static readFile(filePath, opts) {
+  static deleteFile(filePath) {
     return new Promise((resolve, reject) => {
-      fs.readFile(filePath, opts, (err, data) => {
+      fs.unlink(filePath, (err, data) => {
         if (err) {
           return reject(err);
         }

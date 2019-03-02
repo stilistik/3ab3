@@ -356,6 +356,8 @@ input EventWhereUniqueInput {
 
 type File {
   id: ID!
+  fileId: String!
+  hash: String!
   filename: String!
   path: String!
   uri: String!
@@ -371,6 +373,8 @@ type FileConnection {
 }
 
 input FileCreateInput {
+  fileId: String!
+  hash: String!
   filename: String!
   path: String!
   uri: String!
@@ -386,6 +390,10 @@ type FileEdge {
 enum FileOrderByInput {
   id_ASC
   id_DESC
+  fileId_ASC
+  fileId_DESC
+  hash_ASC
+  hash_DESC
   filename_ASC
   filename_DESC
   path_ASC
@@ -404,6 +412,8 @@ enum FileOrderByInput {
 
 type FilePreviousValues {
   id: ID!
+  fileId: String!
+  hash: String!
   filename: String!
   path: String!
   uri: String!
@@ -431,6 +441,8 @@ input FileSubscriptionWhereInput {
 }
 
 input FileUpdateInput {
+  fileId: String
+  hash: String
   filename: String
   path: String
   uri: String
@@ -439,6 +451,8 @@ input FileUpdateInput {
 }
 
 input FileUpdateManyMutationInput {
+  fileId: String
+  hash: String
   filename: String
   path: String
   uri: String
@@ -461,6 +475,34 @@ input FileWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  fileId: String
+  fileId_not: String
+  fileId_in: [String!]
+  fileId_not_in: [String!]
+  fileId_lt: String
+  fileId_lte: String
+  fileId_gt: String
+  fileId_gte: String
+  fileId_contains: String
+  fileId_not_contains: String
+  fileId_starts_with: String
+  fileId_not_starts_with: String
+  fileId_ends_with: String
+  fileId_not_ends_with: String
+  hash: String
+  hash_not: String
+  hash_in: [String!]
+  hash_not_in: [String!]
+  hash_lt: String
+  hash_lte: String
+  hash_gt: String
+  hash_gte: String
+  hash_contains: String
+  hash_not_contains: String
+  hash_starts_with: String
+  hash_not_starts_with: String
+  hash_ends_with: String
+  hash_not_ends_with: String
   filename: String
   filename_not: String
   filename_in: [String!]
@@ -546,6 +588,8 @@ input FileWhereInput {
 
 input FileWhereUniqueInput {
   id: ID
+  fileId: String
+  hash: String
 }
 
 type Item {
