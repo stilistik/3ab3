@@ -3,6 +3,13 @@ module.exports = {
     products(root, args, context) {
       return context.prisma.products();
     },
+    currentProducts(root, args, context) {
+      return context.prisma.products({
+        where: {
+          show: true,
+        },
+      });
+    },
     product(root, args, context) {
       return context.prisma.product({ id: args.productId });
     },

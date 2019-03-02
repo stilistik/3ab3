@@ -37,6 +37,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Production",
+    embedded: false
+  },
+  {
     name: "File",
     embedded: false
   },

@@ -27,6 +27,10 @@ type AggregateProduct {
   count: Int!
 }
 
+type AggregateProduction {
+  count: Int!
+}
+
 type AggregatePurchase {
   count: Int!
 }
@@ -869,6 +873,12 @@ type Mutation {
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteManyProducts(where: ProductWhereInput): BatchPayload!
+  createProduction(data: ProductionCreateInput!): Production!
+  updateProduction(data: ProductionUpdateInput!, where: ProductionWhereUniqueInput!): Production
+  updateManyProductions(data: ProductionUpdateManyMutationInput!, where: ProductionWhereInput): BatchPayload!
+  upsertProduction(where: ProductionWhereUniqueInput!, create: ProductionCreateInput!, update: ProductionUpdateInput!): Production!
+  deleteProduction(where: ProductionWhereUniqueInput!): Production
+  deleteManyProductions(where: ProductionWhereInput): BatchPayload!
   createPurchase(data: PurchaseCreateInput!): Purchase!
   updatePurchase(data: PurchaseUpdateInput!, where: PurchaseWhereUniqueInput!): Purchase
   updateManyPurchases(data: PurchaseUpdateManyMutationInput!, where: PurchaseWhereInput): BatchPayload!
@@ -1169,6 +1179,172 @@ input ProductCreateOneInput {
 type ProductEdge {
   node: Product!
   cursor: String!
+}
+
+type Production {
+  id: ID!
+  title: String!
+  description: String!
+  image: String!
+  index: Int!
+  show: Boolean!
+}
+
+type ProductionConnection {
+  pageInfo: PageInfo!
+  edges: [ProductionEdge]!
+  aggregate: AggregateProduction!
+}
+
+input ProductionCreateInput {
+  title: String!
+  description: String!
+  image: String!
+  index: Int!
+  show: Boolean
+}
+
+type ProductionEdge {
+  node: Production!
+  cursor: String!
+}
+
+enum ProductionOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  image_ASC
+  image_DESC
+  index_ASC
+  index_DESC
+  show_ASC
+  show_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ProductionPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  image: String!
+  index: Int!
+  show: Boolean!
+}
+
+type ProductionSubscriptionPayload {
+  mutation: MutationType!
+  node: Production
+  updatedFields: [String!]
+  previousValues: ProductionPreviousValues
+}
+
+input ProductionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductionWhereInput
+  AND: [ProductionSubscriptionWhereInput!]
+  OR: [ProductionSubscriptionWhereInput!]
+  NOT: [ProductionSubscriptionWhereInput!]
+}
+
+input ProductionUpdateInput {
+  title: String
+  description: String
+  image: String
+  index: Int
+  show: Boolean
+}
+
+input ProductionUpdateManyMutationInput {
+  title: String
+  description: String
+  image: String
+  index: Int
+  show: Boolean
+}
+
+input ProductionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  index: Int
+  index_not: Int
+  index_in: [Int!]
+  index_not_in: [Int!]
+  index_lt: Int
+  index_lte: Int
+  index_gt: Int
+  index_gte: Int
+  show: Boolean
+  show_not: Boolean
+  AND: [ProductionWhereInput!]
+  OR: [ProductionWhereInput!]
+  NOT: [ProductionWhereInput!]
+}
+
+input ProductionWhereUniqueInput {
+  id: ID
 }
 
 enum ProductOrderByInput {
@@ -1566,6 +1742,9 @@ type Query {
   product(where: ProductWhereUniqueInput!): Product
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
+  production(where: ProductionWhereUniqueInput!): Production
+  productions(where: ProductionWhereInput, orderBy: ProductionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Production]!
+  productionsConnection(where: ProductionWhereInput, orderBy: ProductionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductionConnection!
   purchase(where: PurchaseWhereUniqueInput!): Purchase
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase]!
   purchasesConnection(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseConnection!
@@ -1585,6 +1764,7 @@ type Subscription {
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
+  production(where: ProductionSubscriptionWhereInput): ProductionSubscriptionPayload
   purchase(where: PurchaseSubscriptionWhereInput): PurchaseSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload

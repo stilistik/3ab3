@@ -1,0 +1,8 @@
+type Production {
+  id: ID! @unique
+  title: String!
+  description: String!
+  image: String!
+  index: Int!
+  show: Boolean! @default(value: "true")
+}

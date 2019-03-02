@@ -16,6 +16,7 @@ const Purchase = require('./Purchase');
 const Payment = require('./Payment');
 const Transaction = require('./Transaction');
 const Event = require('./Event');
+const Production = require('./Production');
 const File = require('./File');
 
 const Scalar = `
@@ -57,6 +58,7 @@ module.exports = makeExecutableSchema({
     Payment.typeDef,
     Transaction.typeDef,
     Event.typeDef,
+    Production.typeDef,
     File.typeDef,
   ],
   resolvers: merge(
@@ -69,6 +71,7 @@ module.exports = makeExecutableSchema({
     Payment.resolvers,
     Transaction.resolvers,
     Event.resolvers,
+    Production.resolvers,
     File.resolvers
   ),
 });
