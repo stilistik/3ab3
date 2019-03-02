@@ -42,7 +42,7 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - /var/local/3ab3/postgres/:/var/lib/postgresql/data
     networks:
       - 3ab3
 
@@ -57,6 +57,7 @@ services:
 
 volumes:
   postgres:
+  storage:
 
 networks:
   3ab3:
