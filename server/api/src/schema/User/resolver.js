@@ -15,6 +15,7 @@ module.exports = {
         name: args.input.name,
         email: args.input.email,
         password: bcrypt.hashSync(args.input.password, 8),
+        role: args.input.role,
       };
       return context.prisma.createUser(input);
     },

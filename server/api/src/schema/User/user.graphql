@@ -8,12 +8,20 @@ type User {
   transactions(type: TransactionType): [Transaction!]!
   items: [Item!]!
   balance: Float!
+  role: UserRole!
+}
+
+enum UserRole {
+  SUPER,
+  ADMIN,
+  MEMBER
 }
 
 input CreateUserInput {
   name: String!
   email: String!
   password: String!
+  role: UserRole
 }
 
 extend type Query {

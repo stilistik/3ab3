@@ -45,6 +45,10 @@ var models = [
     embedded: false
   },
   {
+    name: "UserRole",
+    embedded: false
+  },
+  {
     name: "TransactionType",
     embedded: false
   }

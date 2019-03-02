@@ -7,5 +7,12 @@ type User {
   payments: [Payment!]!
   transactions: [Transaction!]!
   items: [Item!]!
+  role: UserRole! @default(value: MEMBER)
   balance: Float! @default(value: 0)
+}
+
+enum UserRole {
+  SUPER,
+  ADMIN,
+  MEMBER
 }

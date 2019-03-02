@@ -2047,6 +2047,7 @@ type User {
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  role: UserRole!
   balance: Float!
 }
 
@@ -2064,6 +2065,7 @@ input UserCreateInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2094,6 +2096,7 @@ input UserCreateWithoutItemsInput {
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2104,6 +2107,7 @@ input UserCreateWithoutPaymentsInput {
   purchases: PurchaseCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2114,6 +2118,7 @@ input UserCreateWithoutPurchasesInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2124,6 +2129,7 @@ input UserCreateWithoutTransactionsInput {
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2141,6 +2147,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  role_ASC
+  role_DESC
   balance_ASC
   balance_DESC
   createdAt_ASC
@@ -2154,7 +2162,14 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  role: UserRole!
   balance: Float!
+}
+
+enum UserRole {
+  SUPER
+  ADMIN
+  MEMBER
 }
 
 type UserSubscriptionPayload {
@@ -2183,6 +2198,7 @@ input UserUpdateInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2190,6 +2206,7 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  role: UserRole
   balance: Float
 }
 
@@ -2228,6 +2245,7 @@ input UserUpdateWithoutItemsDataInput {
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2238,6 +2256,7 @@ input UserUpdateWithoutPaymentsDataInput {
   purchases: PurchaseUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2248,6 +2267,7 @@ input UserUpdateWithoutPurchasesDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2258,6 +2278,7 @@ input UserUpdateWithoutTransactionsDataInput {
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  role: UserRole
   balance: Float
 }
 
@@ -2350,6 +2371,10 @@ input UserWhereInput {
   items_every: ItemWhereInput
   items_some: ItemWhereInput
   items_none: ItemWhereInput
+  role: UserRole
+  role_not: UserRole
+  role_in: [UserRole!]
+  role_not_in: [UserRole!]
   balance: Float
   balance_not: Float
   balance_in: [Float!]
