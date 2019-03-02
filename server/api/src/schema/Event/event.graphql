@@ -16,6 +16,8 @@ input EventInput {
 extend type Query {
   events: [Event!]!
   event(eventId: ID!): Event!
+  futureEvents(now: DateTime!): [Event!]!
+  pastEvents(now: DateTime!): [Event!]!
 }
 
 extend type Mutation {

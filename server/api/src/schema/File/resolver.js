@@ -1,9 +1,4 @@
-const {
-  ApolloError,
-  ForbiddenError,
-  ValidationError,
-  UserInputError,
-} = require('apollo-server-express');
+const { ValidationError, UserInputError } = require('apollo-server-express');
 
 const FileHelper = require('../../helper/file.helper.js');
 
