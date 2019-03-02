@@ -3,8 +3,8 @@ services:
   api:
     container_name: api
     build: ./server/api/
-    ports:
-      - "4000:4000"
+    expose:
+      - "4000"
     volumes:
       - ./server/prisma/generated:/usr/src/app/src/generated
     networks:
@@ -45,6 +45,14 @@ services:
       - postgres:/var/lib/postgresql/data
     networks:
       - 3ab3
+
+  proxy:
+    container_name: proxy
+    build: ./server/proxy
+    ports:
+     - "4000:4000"
+    networks:
+     - 3ab3
 
 
 volumes:
