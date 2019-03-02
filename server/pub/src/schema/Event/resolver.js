@@ -21,12 +21,4 @@ module.exports = {
       });
     },
   },
-  Mutation: {
-    createEvent(root, args, context) {
-      return context.prisma.createEvent(args.input);
-    },
-    deleteEvent(root, args, context) {
-      return context.prisma.deleteEvent({ id: args.eventId });
-    },
-  },
 };

@@ -14,12 +14,4 @@ module.exports = {
       return context.prisma.production({ id: args.productionId });
     },
   },
-  Mutation: {
-    createProduction(root, args, context) {
-      return context.prisma.createProduction(args.input);
-    },
-    deleteProduction(root, args, context) {
-      return context.prisma.deleteProduction({ id: args.productionId });
-    },
-  },
 };

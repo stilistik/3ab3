@@ -19,8 +19,3 @@ extend type Query {
   futureEvents(now: DateTime!): [Event!]!
   pastEvents(now: DateTime!): [Event!]!
 }
-
-extend type Mutation {
-  createEvent(input: EventInput!): Event!
-  deleteEvent(eventId: ID!): Event!
-}
