@@ -37,6 +37,10 @@ var models = [
     embedded: false
   },
   {
+    name: "File",
+    embedded: false
+  },
+  {
     name: "TransactionType",
     embedded: false
   }

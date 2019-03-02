@@ -1,0 +1,9 @@
+type File {
+  id: ID! @unique
+  filename: String!
+  path: String!
+  uri: String!
+  mimetype: String!
+  extension: String!
+  createdAt: DateTime!
+}

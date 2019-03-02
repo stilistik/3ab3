@@ -1,0 +1,14 @@
+type File {
+  id: ID!
+  filename: String!
+  path: String!
+  uri: String!
+  mimetype: String!
+  extension: String!
+  createdAt: DateTime!
+}
+
+extend type Query {
+  files: [File!]!
+  file(fileId: ID!): File!
+}
