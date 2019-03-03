@@ -16,11 +16,11 @@ input ProductionInput {
 
 extend type Query {
   productions: [Production!]!
-  currentProductions: [Production!]! 
+  currentProductions: [Production!]!
   production(productionId: ID!): Production!
 }
 
 extend type Mutation {
-  createProduction(input: ProductionInput!): Production!
-  deleteProduction(productionId: ID!): Production!
+  createProduction(input: ProductionInput!): Production! @auth
+  deleteProduction(productionId: ID!): Production! @auth
 }

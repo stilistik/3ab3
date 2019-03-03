@@ -18,6 +18,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createPayment(input: PaymentInput!): Payment!
-  deletePayment(paymentId: ID!): Payment!
+  createPayment(input: PaymentInput!): Payment! @auth
+  deletePayment(paymentId: ID!): Payment! @auth
 }

@@ -21,6 +21,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createEvent(input: EventInput!): Event!
-  deleteEvent(eventId: ID!): Event!
+  createEvent(input: EventInput!): Event! @auth
+  deleteEvent(eventId: ID!): Event! @auth
 }

@@ -25,10 +25,10 @@ input CreateUserInput {
 }
 
 extend type Query {
-  users: [User!]! @auth
+  users: [User!]!
   user(userId: ID!): User!
 }
 
 extend type Mutation {
-  createUser(input: CreateUserInput!): User!
+  createUser(input: CreateUserInput!): User! @auth
 }
