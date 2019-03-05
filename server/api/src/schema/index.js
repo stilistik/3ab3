@@ -18,6 +18,7 @@ const Transaction = require('./Transaction');
 const Event = require('./Event');
 const Production = require('./Production');
 const File = require('./File');
+const Email = require('./Email');
 
 const AuthDirective = require('./AuthDirective');
 
@@ -69,6 +70,7 @@ module.exports = makeExecutableSchema({
     Event.typeDef,
     Production.typeDef,
     File.typeDef,
+    Email.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -81,7 +83,8 @@ module.exports = makeExecutableSchema({
     Transaction.resolvers,
     Event.resolvers,
     Production.resolvers,
-    File.resolvers
+    File.resolvers,
+    Email.resolvers
   ),
   schemaDirectives: {
     auth: AuthDirective,

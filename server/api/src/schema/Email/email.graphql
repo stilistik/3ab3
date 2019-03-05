@@ -1,0 +1,17 @@
+type Email {
+  to: String!
+  from: String!
+  subject: String!
+  text: String!
+}
+
+input EmailInput {
+  to: String!
+  from: String!
+  subject: String!
+  text: String!
+}
+
+extend type Mutation {
+  sendEmail(input: EmailInput!): Email!
+}
