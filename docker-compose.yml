@@ -1,16 +1,5 @@
 version: '3.6'
 services:
-  pub:
-    container_name: pub
-    build: ./server/pub/
-    expose:
-      - "5000"
-    volumes:
-      - ./server/prisma/generated:/usr/src/app/src/generated
-    networks:
-      - 3ab3
-    command: yarn start
-
   api:
     container_name: api
     build: ./server/api/
