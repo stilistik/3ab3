@@ -3,36 +3,9 @@ const {
   GraphQLDirective,
   defaultFieldResolver,
 } = require('graphql');
-const jwt = require('jsonwebtoken');
 const { SchemaDirectiveVisitor } = require('apollo-server-express');
-const { AuthenticationError } = require('./errors');
-
-const { ACCESS_TOKEN_SECRET } = process.env;
-
-const verifyAndDecodeToken = (context) => {
-  if (
-    !context ||
-    !context.headers ||
-    (!context.headers.authorization && !context.headers.Authorization)
-  ) {
-    throw new AuthenticationError({ message: 'Could not find access token' });
-  }
-
-  const token = context.headers.authorization || context.headers.Authorization;
-  try {
-    const id_token = token.replace('Bearer ', '');
-    if (!ACCESS_TOKEN_SECRET) {
-      throw new Error('Could not find access token secret');
-    }
-    const decoded = jwt.verify(id_token, ACCESS_TOKEN_SECRET);
-
-    return decoded;
-  } catch (err) {
-    throw new AuthenticationError({
-      message: 'You are not authorized for this resource',
-    });
-  }
-};
+const { AuthenticationError } = require('../../auth/errors');
+const verifyAndDecodeToken = require('../../auth/verify');
 
 class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   static getDirectiveDeclaration() {

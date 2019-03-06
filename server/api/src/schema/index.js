@@ -20,10 +20,11 @@ const Production = require('./Production');
 const File = require('./File');
 const Email = require('./Email');
 
-const { IsAuthenticatedDirective } = require('./Directives');
+const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
 const Directives = `
   directive @isAuthenticated on OBJECT | FIELD_DEFINITION
+  directive @hasRole(requires: UserRole = ADMIN) on OBJECT | FIELD_DEFINITION
 `;
 
 const Scalar = `
@@ -86,5 +87,6 @@ module.exports = makeExecutableSchema({
   ),
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,
+    hasRole: HasRoleDirective,
   },
 });
