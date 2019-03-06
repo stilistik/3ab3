@@ -28,15 +28,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.post('/oauth/token', auth.oauth2.token);
 
-// The GraphQL endpoint for API using Apollo Server
-app.use(API_PATH, auth.jwt.getUserFromJwt);
-
 const apollo = new ApolloServer({
   schema: schema,
   introspection: true,
   context: ({ req }) => {
     return {
-      user: req.user,
+      headers: req.headers,
       request: req,
       prisma: prisma,
     };

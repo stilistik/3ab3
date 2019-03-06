@@ -1,6 +1,38 @@
-const { DirectiveLocation, GraphQLDirective } = require('graphql');
+const {
+  DirectiveLocation,
+  GraphQLDirective,
+  defaultFieldResolver,
+} = require('graphql');
+const jwt = require('jsonwebtoken');
 const { SchemaDirectiveVisitor } = require('apollo-server-express');
-const { AuthenticationError } = require('apollo-server-core');
+const { AuthenticationError } = require('./errors');
+
+const { ACCESS_TOKEN_SECRET } = process.env;
+
+const verifyAndDecodeToken = (context) => {
+  if (
+    !context ||
+    !context.headers ||
+    (!context.headers.authorization && !context.headers.Authorization)
+  ) {
+    throw new AuthenticationError({ message: 'Could not find access token' });
+  }
+
+  const token = context.headers.authorization || context.headers.Authorization;
+  try {
+    const id_token = token.replace('Bearer ', '');
+    if (!ACCESS_TOKEN_SECRET) {
+      throw new Error('Could not find access token secret');
+    }
+    const decoded = jwt.verify(id_token, ACCESS_TOKEN_SECRET);
+
+    return decoded;
+  } catch (err) {
+    throw new AuthenticationError({
+      message: 'You are not authorized for this resource',
+    });
+  }
+};
 
 class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   static getDirectiveDeclaration() {
@@ -15,30 +47,19 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
 
     Object.keys(fields).forEach((fieldName) => {
       const field = fields[fieldName];
-      const next = field.resolve;
-
-      field.resolve = async function(result, args, context, info) {
-        if (!context.user) {
-          throw new AuthenticationError({ message: 'Access token not found' });
-        }
-        console.log(context.user);
-        const user = await context.prisma.user({ id: context.user.id });
-        console.log(user);
-        if (!user) {
-          throw new AuthenticationError({ message: 'User not found' });
-        }
-        return result[field.name];
+      const { resolve = defaultFieldResolver } = field;
+      field.resolve = async (...args) => {
+        const context = args[2];
+        verifyAndDecodeToken(context);
+        return resolve.apply(this, args);
       };
     });
   }
 
   visitFieldDefinition(field) {
     field.resolve = async function(result, args, context) {
-      if (!context.user) {
-        throw new AuthenticationError({ message: 'Access token not found' });
-      }
-
-      const user = await context.prisma.user({ id: context.user.id });
+      const { id } = verifyAndDecodeToken(context);
+      const user = await context.prisma.user({ id: id });
       if (user) {
         return result[field.name];
       } else {

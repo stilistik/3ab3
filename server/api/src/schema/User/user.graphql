@@ -1,5 +1,5 @@
-type User {
-  id: ID! @isAuthenticated
+type User @isAuthenticated {
+  id: ID!
   email: String!
   name: String!
   password: String!
