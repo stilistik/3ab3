@@ -19,6 +19,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createProduct(input: ProductInput!): Product! @auth
-  updateProduct(productId: ID!, input: ProductInput!): Product! @auth
+  createProduct(input: ProductInput!): Product!
+  updateProduct(productId: ID!, input: ProductInput!): Product!
 }

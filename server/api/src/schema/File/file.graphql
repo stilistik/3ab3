@@ -14,5 +14,5 @@ extend type Query {
 }
 
 extend type Mutation {
-  upload(file: Upload!): File! @auth
+  upload(file: Upload!): File!
 }

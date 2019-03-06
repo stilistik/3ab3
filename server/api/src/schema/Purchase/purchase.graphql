@@ -25,6 +25,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createPurchase(input: PurchaseInput!): Purchase! @auth
-  deletePurchase(purchaseId: ID!): Purchase! @auth
+  createPurchase(input: PurchaseInput!): Purchase!
+  deletePurchase(purchaseId: ID!): Purchase!
 }

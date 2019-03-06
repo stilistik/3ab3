@@ -1,5 +1,5 @@
 type User {
-  id: ID!
+  id: ID! @isAuthenticated
   email: String!
   name: String!
   password: String!
@@ -30,5 +30,5 @@ extend type Query {
 }
 
 extend type Mutation {
-  createUser(input: CreateUserInput!): User! @auth
+  createUser(input: CreateUserInput!): User!
 }

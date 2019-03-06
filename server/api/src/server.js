@@ -26,11 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Authentication Endpoints
 app.use(passport.initialize());
-app.get('/oauth/verify', auth.oauth2.verify);
 app.post('/oauth/token', auth.oauth2.token);
 
 // The GraphQL endpoint for API using Apollo Server
-app.post(API_PATH, passport.authenticate('bearer', { session: false }));
+app.use(API_PATH, auth.jwt.getUserFromJwt);
 
 const apollo = new ApolloServer({
   schema: schema,
