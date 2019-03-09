@@ -1,4 +1,4 @@
-type User @isAuthenticated @hasRole {
+type User @isAuthenticated {
   id: ID!
   email: String!
   name: String!
@@ -30,5 +30,5 @@ extend type Query {
 }
 
 extend type Mutation {
-  createUser(input: CreateUserInput!): User!
+  createUser(input: CreateUserInput!): User! @hasRole
 }

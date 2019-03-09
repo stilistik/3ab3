@@ -23,47 +23,35 @@ class HasRoleDirective extends SchemaDirectiveVisitor {
 
   visitObject(obj) {
     const fields = obj.getFields();
-    const requiredRole = this.args.requires;
     Object.keys(fields).forEach((fieldName) => {
       const field = fields[fieldName];
-      const { resolve = defaultFieldResolver } = field;
-      field.resolve = async (...args) => {
-        const context = args[2];
-        if (!requiredRole) return resolve.apply(this, args);
-
-        const { id } = verifyAndDecodeToken(context);
-        const user = await context.prisma.user({ id: id });
-
-        if (user.role === 'SUPER') return resolve.apply(this, args);
-
-        if (user.role !== requiredRole) {
-          throw new AuthorizationError({
-            message: `You are not authorized for field: ${fieldName}`,
-          });
-        } else {
-          return resolve.apply(this, args);
-        }
-      };
+      return this.testRole(field);
     });
   }
 
   visitFieldDefinition(field) {
+    return this.testRole(field);
+  }
+
+  testRole(field) {
     const requiredRole = this.args.requires;
     const fieldName = field.name;
-    field.resolve = async function(result, args, context) {
-      if (!requiredRole) return result[field.name];
+    const { resolve = defaultFieldResolver } = field;
+    field.resolve = async function(...args) {
+      const context = args[2];
+      if (!requiredRole) return resolve.apply(this, args);
 
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });
 
-      if (user.role === 'SUPER') return result[field.name];
+      if (user.role === 'SUPER') return resolve.apply(this, args);
 
       if (user.role !== requiredRole) {
         throw new AuthorizationError({
           message: `You are not authorized for field: ${fieldName}`,
         });
       } else {
-        return result[field.name];
+        return resolve.apply(this, args);
       }
     };
   }

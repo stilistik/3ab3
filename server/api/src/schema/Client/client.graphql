@@ -1,4 +1,4 @@
-type Client {
+type Client @isAuthenticated @hasRole {
   id: ID!
   name: String!
   trusted: Boolean!

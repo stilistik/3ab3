@@ -1,4 +1,4 @@
-type Payment {
+type Payment @isAuthenticated {
   id: ID!
   transaction: Transaction!
   amount: Float!
@@ -18,6 +18,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createPayment(input: PaymentInput!): Payment!
-  deletePayment(paymentId: ID!): Payment!
+  createPayment(input: PaymentInput!): Payment! @hasRole
+  deletePayment(paymentId: ID!): Payment! @hasRole
 }

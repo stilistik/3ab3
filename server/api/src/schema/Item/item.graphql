@@ -1,4 +1,4 @@
-type Item {
+type Item @isAuthenticated {
   id: ID!
   product: Product!
   user: User!

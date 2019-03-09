@@ -1,4 +1,4 @@
-type Purchase {
+type Purchase @isAuthenticated {
   id: ID!
   transaction: Transaction!
   items: [Item!]!
@@ -25,6 +25,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createPurchase(input: PurchaseInput!): Purchase!
-  deletePurchase(purchaseId: ID!): Purchase!
+  createPurchase(input: PurchaseInput!): Purchase! @hasRole
+  deletePurchase(purchaseId: ID!): Purchase! @hasRole
 }

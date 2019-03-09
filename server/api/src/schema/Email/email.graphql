@@ -1,4 +1,4 @@
-type Email {
+type Email @isAuthenticated{
   to: String!
   from: String!
   subject: String!
@@ -13,5 +13,5 @@ input EmailInput {
 }
 
 extend type Mutation {
-  sendEmail(input: EmailInput!): Email!
+  sendEmail(input: EmailInput!): Email! @hasRole
 }

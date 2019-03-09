@@ -1,4 +1,4 @@
-type Transaction {
+type Transaction @isAuthenticated {
   id: ID!
   user: User!
   date: DateTime!
