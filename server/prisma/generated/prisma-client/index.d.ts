@@ -505,6 +505,8 @@ export type PaymentOrderByInput =
   | "amount_DESC"
   | "date_ASC"
   | "date_DESC"
+  | "verified_ASC"
+  | "verified_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -662,6 +664,7 @@ export interface PaymentCreateWithoutTransactionInput {
   amount: Float;
   user: UserCreateOneWithoutPaymentsInput;
   date: DateTimeInput;
+  verified?: Boolean;
 }
 
 export type ClientWhereUniqueInput = AtLeastOne<{
@@ -1134,6 +1137,8 @@ export interface PaymentWhereInput {
   date_lte?: DateTimeInput;
   date_gt?: DateTimeInput;
   date_gte?: DateTimeInput;
+  verified?: Boolean;
+  verified_not?: Boolean;
   transaction?: TransactionWhereInput;
   AND?: PaymentWhereInput[] | PaymentWhereInput;
   OR?: PaymentWhereInput[] | PaymentWhereInput;
@@ -1200,6 +1205,7 @@ export interface TransactionCreateInput {
 export interface PaymentCreateWithoutUserInput {
   amount: Float;
   date: DateTimeInput;
+  verified?: Boolean;
   transaction: TransactionCreateOneWithoutPaymentInput;
 }
 
@@ -1266,6 +1272,7 @@ export interface UserCreateOneWithoutPurchasesInput {
 export interface PaymentUpdateManyMutationInput {
   amount?: Float;
   date?: DateTimeInput;
+  verified?: Boolean;
 }
 
 export interface UserCreateWithoutPurchasesInput {
@@ -1283,6 +1290,7 @@ export interface PaymentCreateInput {
   amount: Float;
   user: UserCreateOneWithoutPaymentsInput;
   date: DateTimeInput;
+  verified?: Boolean;
   transaction: TransactionCreateOneWithoutPaymentInput;
 }
 
@@ -1752,6 +1760,7 @@ export interface PaymentUpdateInput {
   amount?: Float;
   user?: UserUpdateOneRequiredWithoutPaymentsInput;
   date?: DateTimeInput;
+  verified?: Boolean;
   transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
 }
 
@@ -1942,6 +1951,8 @@ export interface PaymentScalarWhereInput {
   date_lte?: DateTimeInput;
   date_gt?: DateTimeInput;
   date_gte?: DateTimeInput;
+  verified?: Boolean;
+  verified_not?: Boolean;
   AND?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
   OR?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
   NOT?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
@@ -1960,6 +1971,7 @@ export interface PurchaseUpsertWithoutTransactionInput {
 export interface PaymentUpdateWithoutUserDataInput {
   amount?: Float;
   date?: DateTimeInput;
+  verified?: Boolean;
   transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
 }
 
@@ -2208,6 +2220,7 @@ export interface PaymentUpdateWithoutTransactionDataInput {
   amount?: Float;
   user?: UserUpdateOneRequiredWithoutPaymentsInput;
   date?: DateTimeInput;
+  verified?: Boolean;
 }
 
 export interface PurchaseSubscriptionWhereInput {
@@ -2314,6 +2327,7 @@ export interface ClientWhereInput {
 export interface PaymentUpdateManyDataInput {
   amount?: Float;
   date?: DateTimeInput;
+  verified?: Boolean;
 }
 
 export interface ItemUpsertWithWhereUniqueWithoutUserInput {
@@ -3266,6 +3280,7 @@ export interface Payment {
   id: ID_Output;
   amount: Float;
   date: DateTimeOutput;
+  verified: Boolean;
 }
 
 export interface PaymentPromise extends Promise<Payment>, Fragmentable {
@@ -3273,6 +3288,7 @@ export interface PaymentPromise extends Promise<Payment>, Fragmentable {
   amount: () => Promise<Float>;
   user: <T = UserPromise>() => T;
   date: () => Promise<DateTimeOutput>;
+  verified: () => Promise<Boolean>;
   transaction: <T = TransactionPromise>() => T;
 }
 
@@ -3283,6 +3299,7 @@ export interface PaymentSubscription
   amount: () => Promise<AsyncIterator<Float>>;
   user: <T = UserSubscription>() => T;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  verified: () => Promise<AsyncIterator<Boolean>>;
   transaction: <T = TransactionSubscription>() => T;
 }
 
@@ -3466,6 +3483,7 @@ export interface PaymentPreviousValues {
   id: ID_Output;
   amount: Float;
   date: DateTimeOutput;
+  verified: Boolean;
 }
 
 export interface PaymentPreviousValuesPromise
@@ -3474,6 +3492,7 @@ export interface PaymentPreviousValuesPromise
   id: () => Promise<ID_Output>;
   amount: () => Promise<Float>;
   date: () => Promise<DateTimeOutput>;
+  verified: () => Promise<Boolean>;
 }
 
 export interface PaymentPreviousValuesSubscription
@@ -3482,6 +3501,7 @@ export interface PaymentPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   amount: () => Promise<AsyncIterator<Float>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  verified: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ProductConnection {

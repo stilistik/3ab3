@@ -3,6 +3,7 @@ type Payment @isAuthenticated {
   transaction: Transaction!
   amount: Float!
   user: User!
+  verified: Boolean!
   date: DateTime!
 }
 
@@ -18,6 +19,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createPayment(input: PaymentInput!): Payment! @hasRole
+  createPayment(input: PaymentInput!): Payment!
   deletePayment(paymentId: ID!): Payment! @hasRole
+  verifyPayment(paymentId: ID!): Payment! @hasRole
 }

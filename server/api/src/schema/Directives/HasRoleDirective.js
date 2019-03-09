@@ -4,7 +4,10 @@ const {
   defaultFieldResolver,
 } = require('graphql');
 const { SchemaDirectiveVisitor } = require('apollo-server-express');
-const { AuthorizationError } = require('../../auth/errors');
+const {
+  AuthorizationError,
+  AuthenticationError,
+} = require('../../auth/errors');
 const verifyAndDecodeToken = require('../../auth/verify');
 
 class HasRoleDirective extends SchemaDirectiveVisitor {
@@ -43,6 +46,12 @@ class HasRoleDirective extends SchemaDirectiveVisitor {
 
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });
+
+      if (!user) {
+        throw new AuthenticationError({
+          message: `User not found`,
+        });
+      }
 
       if (user.role === 'SUPER') return resolve.apply(this, args);
 

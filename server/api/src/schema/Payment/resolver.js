@@ -46,6 +46,12 @@ module.exports = {
       });
       return context.prisma.deletePayment({ id: args.paymentId });
     },
+    async verifyPayment(root, args, context) {
+      return context.prisma.updatePayment({
+        where: { id: args.paymentId },
+        data: { verified: true },
+      });
+    },
   },
   Payment: {
     user(root, args, context) {

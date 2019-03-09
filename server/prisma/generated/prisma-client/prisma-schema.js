@@ -921,6 +921,7 @@ type Payment {
   amount: Float!
   user: User!
   date: DateTime!
+  verified: Boolean!
   transaction: Transaction!
 }
 
@@ -934,6 +935,7 @@ input PaymentCreateInput {
   amount: Float!
   user: UserCreateOneWithoutPaymentsInput!
   date: DateTime!
+  verified: Boolean
   transaction: TransactionCreateOneWithoutPaymentInput!
 }
 
@@ -951,11 +953,13 @@ input PaymentCreateWithoutTransactionInput {
   amount: Float!
   user: UserCreateOneWithoutPaymentsInput!
   date: DateTime!
+  verified: Boolean
 }
 
 input PaymentCreateWithoutUserInput {
   amount: Float!
   date: DateTime!
+  verified: Boolean
   transaction: TransactionCreateOneWithoutPaymentInput!
 }
 
@@ -971,6 +975,8 @@ enum PaymentOrderByInput {
   amount_DESC
   date_ASC
   date_DESC
+  verified_ASC
+  verified_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -981,6 +987,7 @@ type PaymentPreviousValues {
   id: ID!
   amount: Float!
   date: DateTime!
+  verified: Boolean!
 }
 
 input PaymentScalarWhereInput {
@@ -1014,6 +1021,8 @@ input PaymentScalarWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  verified: Boolean
+  verified_not: Boolean
   AND: [PaymentScalarWhereInput!]
   OR: [PaymentScalarWhereInput!]
   NOT: [PaymentScalarWhereInput!]
@@ -1041,17 +1050,20 @@ input PaymentUpdateInput {
   amount: Float
   user: UserUpdateOneRequiredWithoutPaymentsInput
   date: DateTime
+  verified: Boolean
   transaction: TransactionUpdateOneRequiredWithoutPaymentInput
 }
 
 input PaymentUpdateManyDataInput {
   amount: Float
   date: DateTime
+  verified: Boolean
 }
 
 input PaymentUpdateManyMutationInput {
   amount: Float
   date: DateTime
+  verified: Boolean
 }
 
 input PaymentUpdateManyWithoutUserInput {
@@ -1084,11 +1096,13 @@ input PaymentUpdateWithoutTransactionDataInput {
   amount: Float
   user: UserUpdateOneRequiredWithoutPaymentsInput
   date: DateTime
+  verified: Boolean
 }
 
 input PaymentUpdateWithoutUserDataInput {
   amount: Float
   date: DateTime
+  verified: Boolean
   transaction: TransactionUpdateOneRequiredWithoutPaymentInput
 }
 
@@ -1140,6 +1154,8 @@ input PaymentWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  verified: Boolean
+  verified_not: Boolean
   transaction: TransactionWhereInput
   AND: [PaymentWhereInput!]
   OR: [PaymentWhereInput!]
