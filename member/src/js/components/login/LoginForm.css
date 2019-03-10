@@ -1,20 +1,18 @@
 .login {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  padding-top: 20%;
-}
-
-.title {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #555 !important;
+  padding-top: 100px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  width: 100%;
 }

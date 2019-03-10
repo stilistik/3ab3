@@ -1,4 +1,4 @@
-export const login = async (email, password, messageHandler) => {
+export const requestToken = async (email, password, messageHandler) => {
   const auth_details = new Buffer(
     'Ng37FZ3ZtZ5MvaKJsJdbqWKdP87IMPDtpa/izWqtB5BDZZ8myPzsPAWpO0bEaPMV:JNtTf4T+lag='
   ).toString('base64');

@@ -1,8 +1,18 @@
 import React from 'react';
-import { TextField, Typography, Button } from '@material-ui/core';
-import { login } from 'Auth/login';
+import { connect } from 'react-redux';
+import { login } from 'Redux/actions';
+import { TextField, Typography, Button, Grid } from '@material-ui/core';
+import { requestToken } from 'Auth/requestToken';
 
 import './LoginForm.css';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (access_token) => {
+      dispatch(login(access_token));
+    },
+  };
+};
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -15,16 +25,12 @@ class LoginForm extends React.Component {
 
   submit = async (e) => {
     e.preventDefault();
-    const response = await login(
+    const response = await requestToken(
       this.state.email,
       this.state.password,
       this.messageHandler
     );
-    console.log(response);
-  };
-
-  messageHandler = (...args) => {
-    console.log(args);
+    this.props.login(response.access_token);
   };
 
   onChange = (e) => {
@@ -36,40 +42,45 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div styleName="login">
-        <div>
-          <div styleName="title">
-            <Typography variant="h2" color="inherit">
-              Login
-            </Typography>
-          </div>
-          <br />
-          <form onSubmit={this.submit} styleName="form">
-            <TextField
-              name="email"
-              label="Email"
-              margin="normal"
-              onChange={this.onChange}
-            />
-            <TextField
-              name="password"
-              label="Password"
-              margin="normal"
-              onChange={this.onChange}
-            />
+        <Grid container spacing={24} justify="center">
+          <Grid item xs={9} sm={6} md={4} lg={3} xl={2}>
+            <div styleName="header">
+              <Typography variant="h2" color="inherit">
+                Login
+              </Typography>
+            </div>
             <br />
-            <Button
-              variant="contained"
-              type="submit"
-              color="primary"
-              size="large"
-            >
-              Login
-            </Button>
-          </form>
-        </div>
+            <form styleName="form" onSubmit={this.submit}>
+              <TextField
+                name="email"
+                label="Email"
+                margin="normal"
+                onChange={this.onChange}
+              />
+              <TextField
+                name="password"
+                label="Password"
+                margin="normal"
+                onChange={this.onChange}
+              />
+              <br />
+              <Button
+                variant="contained"
+                type="submit"
+                color="secondary"
+                size="large"
+              >
+                Login
+              </Button>
+            </form>
+          </Grid>
+        </Grid>
       </div>
     );
   }
 }
 
-export default LoginForm;
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginForm);

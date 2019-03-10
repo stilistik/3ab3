@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'Components/app';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+import App from 'Components/app';
+import Store from 'Redux/Store';
 
 import './css/master.css';
 
@@ -13,7 +15,7 @@ const theme = createMuiTheme({
       main: '#3c3e42',
     },
     secondary: {
-      main: '#2979ff',
+      main: '#1a77ad',
     },
   },
   typography: {
@@ -25,7 +27,9 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <App />
+    <Store>
+      <App />
+    </Store>
   </MuiThemeProvider>,
   document.getElementById('root')
 );
