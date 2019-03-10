@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'App/App';
+import App from 'Components/app';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import './css/master.css';
+
+global.API_URL = 'http://localhost:4000';
 
 const theme = createMuiTheme({
   palette: {
@@ -15,6 +17,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
+    color: '#222',
     fontFamily: '"MessinaBold", sans-serif',
     useNextVariants: true,
   },

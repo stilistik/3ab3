@@ -21,10 +21,12 @@ class AppHeader extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography styleName="grow" variant="h6" color="inherit">
-              News
+            <Typography styleName="grow" variant="h5" color="inherit">
+              3ab3
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button styleName="menu-button" color="inherit">
+              Login
+            </Button>
           </Toolbar>
         </AppBar>
       </div>
