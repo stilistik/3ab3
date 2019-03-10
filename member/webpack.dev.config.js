@@ -68,6 +68,9 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+       App: path.resolve(__dirname, 'src/js/components/app/'),
+    },
     extensions: ['*', '.js', '.jsx'],
   },
   output: {

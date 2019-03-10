@@ -1,0 +1,20 @@
+body {
+  margin: 0px;
+  overflow: hidden;
+  font-family: "MessinaBold", sans-serif;
+}
+
+@font-face {
+    font-family: MessinaLight;
+    src: url('../fonts/MessinaSans_Web_Light/MessinaSansWeb-Light.woff');
+}
+
+@font-face {
+    font-family: MessinaRegular;
+    src: url('../fonts/MessinaSans_Web_Regular/MessinaSansWeb-Regular.woff');
+}
+
+@font-face {
+    font-family: MessinaBold;
+    src: url('../fonts/MessinaSans_Web_Bold/MessinaSansWeb-Bold.woff');
+}
