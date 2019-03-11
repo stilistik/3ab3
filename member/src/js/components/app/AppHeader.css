@@ -2,11 +2,11 @@
   flex-grow: 1;
 }
 
-.grow {
+.brand {
   flex-grow: 1;
 }
 
 .menu-button {
-  margin-left: -12px !important;
-  margin-right: 20px !important;
+  margin-left: -10px !important;
+  margin-right: 10px !important;
 }

@@ -1,10 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
-import { TextField, Typography, Button, Grid } from '@material-ui/core';
+import { TextField, Typography, Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
 
 import './LoginForm.css';
+
+const styles = {
+  input: {
+    color: '#f2f2f2',
+  },
+  label: {
+    color: '#f2f2f2 !important',
+  },
+  header: {
+    color: '#f2f2f2',
+  },
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -40,47 +53,66 @@ class LoginForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div styleName="login">
-        <Grid container spacing={24} justify="center">
-          <Grid item xs={9} sm={6} md={4} lg={3} xl={2}>
-            <div styleName="header">
-              <Typography variant="h2" color="inherit">
-                Login
-              </Typography>
-            </div>
-            <br />
-            <form styleName="form" onSubmit={this.submit}>
-              <TextField
-                name="email"
-                label="Email"
-                margin="normal"
-                onChange={this.onChange}
-              />
-              <TextField
-                name="password"
-                label="Password"
-                margin="normal"
-                onChange={this.onChange}
-              />
-              <br />
-              <Button
-                variant="contained"
-                type="submit"
-                color="secondary"
-                size="large"
-              >
-                Login
-              </Button>
-            </form>
-          </Grid>
-        </Grid>
+      <div>
+        <div styleName="header">
+          <Typography
+            classes={{ root: classes.header }}
+            variant="h2"
+            color="inherit"
+          >
+            Login
+          </Typography>
+        </div>
+        <br />
+        <form styleName="form" onSubmit={this.submit}>
+          <TextField
+            classes={{ underline: classes.underline }}
+            InputProps={{
+              className: classes.input,
+            }}
+            InputLabelProps={{
+              className: classes.label,
+            }}
+            name="email"
+            label="Email"
+            margin="normal"
+            onChange={this.onChange}
+          />
+          <TextField
+            classes={{ underline: classes.underline }}
+            InputProps={{
+              className: classes.input,
+            }}
+            InputLabelProps={{
+              className: classes.label,
+            }}
+            name="password"
+            label="Password"
+            type="password"
+            margin="normal"
+            onChange={this.onChange}
+          />
+          <br />
+          <Button
+            variant="contained"
+            type="submit"
+            color="secondary"
+            size="large"
+            styleName="button"
+          >
+            Login
+          </Button>
+        </form>
       </div>
     );
   }
 }
 
+const StyledLoginForm = withStyles(styles)(LoginForm);
+
 export default connect(
   null,
   mapDispatchToProps
-)(LoginForm);
+)(StyledLoginForm);

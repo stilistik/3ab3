@@ -1,14 +1,27 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import { connect } from 'react-redux';
+import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { logout } from 'Redux/actions';
+import ProfileMenu from './ProfileMenu';
 
 import './AppHeader.css';
 
-class AppHeader extends React.Component {
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(logout());
+    },
+  };
+};
+
+class DefaultHeader extends React.Component {
   render() {
     return (
       <div styleName="root">
@@ -21,12 +34,10 @@ class AppHeader extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography styleName="grow" variant="h5" color="inherit">
+            <Typography styleName="brand" variant="h4" color="inherit">
               3ab3
             </Typography>
-            <Button styleName="menu-button" color="inherit">
-              Login
-            </Button>
+            <ProfileMenu />
           </Toolbar>
         </AppBar>
       </div>
@@ -34,4 +45,14 @@ class AppHeader extends React.Component {
   }
 }
 
-export default AppHeader;
+class AppHeader extends React.Component {
+  render() {
+    if (this.props.isAuthenticated) return <DefaultHeader {...this.props} />;
+    else return null;
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppHeader);

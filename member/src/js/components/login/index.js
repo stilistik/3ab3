@@ -1,10 +1,3 @@
-import React from 'react';
-import LoginForm from './LoginForm';
+import LoginPage from './LoginPage';
 
-class Login extends React.Component {
-  render() {
-    return <LoginForm />;
-  }
-}
-
-export default Login;
+export default LoginPage;
