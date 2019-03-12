@@ -1,13 +1,29 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
+const QUERY = gql`
+  query {
+    users {
+      id
+      name
+    }
+  }
+`;
 
 class Profile extends React.Component {
   render() {
+    if (!this.props.users) return null;
     return (
       <div>
-        <h1>Profile</h1>
+        {this.props.users.map((user) => {
+          return <p key={user.id}>{user.name}</p>;
+        })}
       </div>
     );
   }
 }
 
-export default Profile;
+export default graphql(QUERY, {
+  props: ({ data }) => ({ users: data.users }),
+})(Profile);

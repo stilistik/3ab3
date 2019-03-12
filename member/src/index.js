@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloProvider } from 'react-apollo';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import App from 'Components/app';
 import Store from 'Redux/Store';
+import client from 'Apollo';
 
 import './css/master.css';
 
@@ -28,7 +30,9 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Store>
-      <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </Store>
   </MuiThemeProvider>,
   document.getElementById('root')
