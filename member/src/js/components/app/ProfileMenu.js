@@ -43,11 +43,8 @@ class ProfileMenu extends React.Component {
 
     return (
       <div>
-        <IconButton>
-          <Avatar
-            style={{ backgroundColor: '#1a77ad', cursor: 'pointer' }}
-            onClick={this.handleMenuOpen}
-          >
+        <IconButton onClick={this.handleMenuOpen}>
+          <Avatar style={{ backgroundColor: '#1a77ad', cursor: 'pointer' }}>
             R
           </Avatar>
         </IconButton>

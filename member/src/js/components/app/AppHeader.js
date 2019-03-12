@@ -7,12 +7,6 @@ import ProfileMenu from './ProfileMenu';
 
 import './AppHeader.css';
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
@@ -21,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class DefaultHeader extends React.Component {
+class AppHeader extends React.Component {
   render() {
     return (
       <div styleName="root">
@@ -31,6 +25,7 @@ class DefaultHeader extends React.Component {
               styleName="menu-button"
               color="inherit"
               aria-label="Menu"
+              onClick={() => this.props.setDrawerOpen(true)}
             >
               <MenuIcon />
             </IconButton>
@@ -45,14 +40,7 @@ class DefaultHeader extends React.Component {
   }
 }
 
-class AppHeader extends React.Component {
-  render() {
-    if (this.props.isAuthenticated) return <DefaultHeader {...this.props} />;
-    else return null;
-  }
-}
-
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AppHeader);
