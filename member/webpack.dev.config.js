@@ -72,6 +72,7 @@ module.exports = {
       Auth: path.resolve(__dirname, 'src/js/auth/'),
       Components: path.resolve(__dirname, 'src/js/components/'),
       Routes: path.resolve(__dirname, 'src/js/routes/'),
+      History: path.resolve(__dirname, 'src/js/history/'),
       Redux: path.resolve(__dirname, 'src/js/redux'),
       Apollo: path.resolve(__dirname, 'src/js/apollo'),
     },

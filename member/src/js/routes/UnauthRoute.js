@@ -5,11 +5,11 @@ const UnauthRoute = ({ component: C, props: cProps, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) => {
+      render={() => {
         if (!cProps.app.isAuthenticated) {
           return <C {...cProps} />;
         } else {
-          return <Redirect to={{ ...props.location, pathname: 'dashboard' }} />;
+          return <Redirect to="/profile" />;
         }
       }}
     />

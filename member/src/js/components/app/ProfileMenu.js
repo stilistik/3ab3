@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Menu, MenuItem } from '@material-ui/core';
+import { Avatar, Menu, MenuItem, IconButton } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { logout } from 'Redux/actions';
 
@@ -43,12 +43,14 @@ class ProfileMenu extends React.Component {
 
     return (
       <div>
-        <Avatar
-          style={{ backgroundColor: '#1a77ad', cursor: 'pointer' }}
-          onClick={this.handleMenuOpen}
-        >
-          R
-        </Avatar>
+        <IconButton>
+          <Avatar
+            style={{ backgroundColor: '#1a77ad', cursor: 'pointer' }}
+            onClick={this.handleMenuOpen}
+          >
+            R
+          </Avatar>
+        </IconButton>
         {renderMenu}
       </div>
     );

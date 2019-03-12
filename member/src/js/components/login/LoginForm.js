@@ -4,6 +4,7 @@ import { login } from 'Redux/actions';
 import { TextField, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
+import { requestRoute } from 'History';
 
 import './LoginForm.css';
 
@@ -44,6 +45,7 @@ class LoginForm extends React.Component {
       this.messageHandler
     );
     this.props.login(response.access_token);
+    requestRoute('/profile');
   };
 
   onChange = (e) => {
@@ -51,6 +53,8 @@ class LoginForm extends React.Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  messageHandler = () => {};
 
   render() {
     const { classes } = this.props;

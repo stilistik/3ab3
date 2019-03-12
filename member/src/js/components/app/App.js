@@ -1,11 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
 import AppHeader from './AppHeader';
 import Routes from 'Routes';
+import history from 'History';
 
 import './App.css';
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -24,17 +32,18 @@ class App extends React.Component {
   render() {
     const props = {
       app: {
-        isAuthenticated: false,
+        isAuthenticated: this.props.isAuthenticated,
       },
     };
 
     return (
       <div styleName="container">
+        <CssBaseline />
         <div styleName="header">
           <AppHeader />
         </div>
         <div styleName="content">
-          <Router>
+          <Router history={history}>
             <Routes props={props} />
           </Router>
         </div>
@@ -44,6 +53,6 @@ class App extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
