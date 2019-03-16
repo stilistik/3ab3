@@ -67,6 +67,7 @@
     "graphql-tag": "^2.9.2",
     "gsap": "^2.1.2",
     "less": "^3.9.0",
+    "lodash": "^4.17.11",
     "react": "^16.4.2",
     "react-apollo": "^2.1.11",
     "react-dom": "^16.4.2",

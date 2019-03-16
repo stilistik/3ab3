@@ -6,7 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { connect } from 'react-redux';
 
 // eslint-disable-next-line
-global.API_URL = 'http://localhost:4000';
+global.API_URL = `${window.location.protocol}//${window.location.hostname}:4000`;
 
 export const createApolloClient = (cache = {}) => {
   return new ApolloClient({

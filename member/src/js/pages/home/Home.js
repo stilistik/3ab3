@@ -1,10 +1,38 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Paper } from 'Components';
-import { Typography, Grid } from '@material-ui/core';
+import { TrendPlot } from 'Components';
+import { Paper, Grid } from '@material-ui/core';
 
 import styles from './Home.css';
+
+const data = [
+  {
+    id: 'a',
+    date: new Date('2017-05-22'),
+    balance: 120,
+  },
+  {
+    id: 'b',
+    date: new Date('2017-08-13'),
+    balance: 78,
+  },
+  {
+    id: 'c',
+    date: new Date('2017-09-10'),
+    balance: 55,
+  },
+  {
+    id: 'd',
+    date: new Date('2017-11-21'),
+    balance: 120,
+  },
+  {
+    id: 'e',
+    date: new Date('2018-03-12'),
+    balance: 210,
+  },
+];
 
 const QUERY = gql`
   query {
@@ -15,7 +43,7 @@ const QUERY = gql`
   }
 `;
 
-class Profile extends React.Component {
+class Home extends React.Component {
   render() {
     if (!this.props.users) return null;
     return (
@@ -28,12 +56,21 @@ class Profile extends React.Component {
                 background: '#1a77ad',
                 color: 'white',
                 width: '100%',
-                height: '400px',
+                height: '300px',
               }}
             >
-              <Typography variant="h4" color="inherit">
-                Hello
-              </Typography>
+              <TrendPlot data={data} onClick={() => {}} />
+            </Paper>
+            <br />
+            <Paper
+              style={{
+                background: '#f26457',
+                color: 'white',
+                width: '100%',
+                height: '300px',
+              }}
+            >
+              <TrendPlot data={data} onClick={() => {}} />
             </Paper>
           </Grid>
         </Grid>
@@ -44,4 +81,4 @@ class Profile extends React.Component {
 
 export default graphql(QUERY, {
   props: ({ data }) => ({ users: data.users }),
-})(Profile);
+})(Home);
