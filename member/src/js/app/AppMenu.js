@@ -1,40 +1,32 @@
 import React from 'react';
-import {
-  SwipeableDrawer,
-  List,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
-import InboxIcon from '@material-ui/icons/Inbox';
+import { SwipeableDrawer, List, Divider } from '@material-ui/core';
+import MenuItem from './MenuItem';
+
+import styles from './AppMenu.css';
 
 class AppMenu extends React.Component {
+  componentDidMount = () => {
+    // preload image
+    this.image = new Image();
+    this.image.src = '/drawer.jpg';
+  };
+
+  onClick = (e) => {
+    console.log(e);
+    this.props.setDrawerOpen(false);
+  };
+
   createMenuItems = () => {
     return (
       <div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <MenuItem text="Home" icon="home" onClick={this.onClick} />
+          <MenuItem text="Payments" icon="payment" onClick={this.onClick} />
         </List>
-        <Divider />
+        <Divider className={styles.divider} />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <MenuItem text="Dashboard" icon="dashboard" onClick={this.onClick} />
         </List>
       </div>
     );
@@ -44,6 +36,7 @@ class AppMenu extends React.Component {
     const items = this.createMenuItems();
     return (
       <SwipeableDrawer
+        classes={{ paper: styles.drawer }}
         variant="temporary"
         anchor="left"
         open={this.props.drawerOpen}

@@ -23,7 +23,14 @@ class Profile extends React.Component {
         <Grid container justify="center">
           <Grid item xs={11} sm={6} md={4} lg={3} xl={3}>
             <br />
-            <Paper bgColor="#1a77ad" color="white" width="100%" height="400px">
+            <Paper
+              style={{
+                background: '#1a77ad',
+                color: 'white',
+                width: '100%',
+                height: '400px',
+              }}
+            >
               <Typography variant="h4" color="inherit">
                 Hello
               </Typography>

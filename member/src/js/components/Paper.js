@@ -6,10 +6,7 @@ export class Paper extends React.Component {
   render() {
     const styles = {
       root: {
-        background: this.props.bgColor,
-        color: this.props.color,
-        width: this.props.width,
-        height: this.props.height,
+        ...this.props.style,
       },
     };
     const C = withStyles(styles)(MuiPaper);

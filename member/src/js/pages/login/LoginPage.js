@@ -1,6 +1,6 @@
 import React from 'react';
 import { TweenMax } from 'gsap';
-import { Grid, Paper, CssBaseline, CircularProgress } from '@material-ui/core';
+import { Grid, CssBaseline, CircularProgress } from '@material-ui/core';
 import LoginForm from './LoginForm';
 
 import './LoginPage.css';
@@ -94,13 +94,13 @@ class LoginPage extends React.Component {
           styleName="background"
         />
         <Grid styleName="grid" container justify="center">
-          <Grid item xs={9} sm={6} md={4} lg={3} xl={3}>
+          <Grid item xs={9} sm={6} md={4} lg={3} xl={2}>
             {this.state.loading ? (
               <DelayedSpinner delay={200} />
             ) : (
-              <Paper styleName="paper">
+              <div style={{ position: 'relative' }}>
                 <LoginForm />
-              </Paper>
+              </div>
             )}
           </Grid>
         </Grid>

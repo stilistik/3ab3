@@ -50,7 +50,7 @@ class LoginForm extends React.Component {
         <div className={styles.header}>
           <Typography
             classes={{ root: styles.title }}
-            variant="h2"
+            variant="h3"
             color="inherit"
           >
             Login
