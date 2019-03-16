@@ -1,7 +1,8 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Paper, Typography, Grid } from '@material-ui/core';
+import { Paper } from 'Components';
+import { Typography, Grid } from '@material-ui/core';
 
 import styles from './Profile.css';
 
@@ -22,23 +23,7 @@ class Profile extends React.Component {
         <Grid container justify="center">
           <Grid item xs={11} sm={6} md={4} lg={3} xl={3}>
             <br />
-            <Paper classes={{ root: styles.info }}>
-              <Typography variant="h4" color="inherit">
-                Hello
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={11} sm={6} md={4} lg={3} xl={3}>
-            <br />
-            <Paper styleName="info">
-              <Typography variant="h4" color="inherit">
-                Hello
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={11} sm={6} md={4} lg={3} xl={3}>
-            <br />
-            <Paper styleName="info">
+            <Paper bgColor="#1a77ad" color="white" width="100%" height="400px">
               <Typography variant="h4" color="inherit">
                 Hello
               </Typography>
