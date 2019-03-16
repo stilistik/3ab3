@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Paper } from 'Components';
 import { Typography, Grid } from '@material-ui/core';
 
-import styles from './Profile.css';
+import styles from './Home.css';
 
 const QUERY = gql`
   query {

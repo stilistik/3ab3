@@ -1,6 +1,7 @@
 import React from 'react';
 import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import MenuItem from './MenuItem';
+import { requestRoute } from 'History';
 
 import styles from './AppMenu.css';
 
@@ -11,9 +12,9 @@ class AppMenu extends React.Component {
     this.image.src = '/drawer.jpg';
   };
 
-  onClick = (e) => {
-    console.log(e);
+  onClick = (route) => {
     this.props.setDrawerOpen(false);
+    requestRoute(route);
   };
 
   createMenuItems = () => {
@@ -21,12 +22,24 @@ class AppMenu extends React.Component {
       <div>
         <Divider />
         <List>
-          <MenuItem text="Home" icon="home" onClick={this.onClick} />
-          <MenuItem text="Payments" icon="payment" onClick={this.onClick} />
+          <MenuItem
+            text="Home"
+            icon="home"
+            onClick={() => this.onClick('home')}
+          />
+          <MenuItem
+            text="History"
+            icon="payment"
+            onClick={() => this.onClick('history')}
+          />
         </List>
         <Divider className={styles.divider} />
         <List>
-          <MenuItem text="Dashboard" icon="dashboard" onClick={this.onClick} />
+          <MenuItem
+            text="Dashboard"
+            icon="dashboard"
+            onClick={() => this.onClick('dashboard')}
+          />
         </List>
       </div>
     );

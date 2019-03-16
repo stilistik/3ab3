@@ -75,9 +75,6 @@ class ProfileMenu extends React.Component {
             <Paper>
               <ClickAwayListener onClickAway={this.handleClose}>
                 <MenuList>
-                  <MenuItem onClick={() => this.handleClick('profile')}>
-                    Profile
-                  </MenuItem>
                   <MenuItem onClick={() => this.handleClick('account')}>
                     My account
                   </MenuItem>

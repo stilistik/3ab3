@@ -62,6 +62,7 @@
     "apollo-link-retry": "^2.2.10",
     "apollo-upload-client": "^8.1.0",
     "babel-plugin-react-css-modules": "^5.0.0",
+    "d3": "^5.9.2",
     "graphql": "^0.13.0",
     "graphql-tag": "^2.9.2",
     "gsap": "^2.1.2",

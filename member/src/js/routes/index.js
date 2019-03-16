@@ -5,14 +5,18 @@ import AuthRoute from './AuthRoute';
 import UnauthRoute from './UnauthRoute';
 
 import Login from 'Pages/login';
-import Profile from 'Pages/profile';
+import Home from 'Pages/home';
+import History from 'Pages/history';
+import Dashboard from 'Pages/dashboard';
 
 const Routes = ({ props }) => {
   return (
     <Switch>
       <UnauthRoute path="/login" component={Login} props={props} />
-      <AuthRoute path="/profile" component={Profile} props={props} />
-      <AuthRoute path="/" component={Profile} props={props} />
+      <AuthRoute path="/history" component={History} props={props} />
+      <AuthRoute path="/dashboard" component={Dashboard} props={props} />
+      <AuthRoute path="/home" component={Home} props={props} />
+      <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );
 };

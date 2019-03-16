@@ -58,13 +58,14 @@ class LoginPage extends React.Component {
 
   loadImage = async () => {
     await this.setState({ loading: true });
-    let url = 'url(back.jpg)';
+    const pic = 'drawer.jpg';
+    let url = `url(${pic})`;
     let img = new Image();
     img.onload = () => {
       this.background.style.backgroundImage = url;
       this.setState({ loading: false });
     };
-    img.src = 'back.jpg';
+    img.src = pic;
   };
 
   parallaxIt = (e, target, movement) => {
