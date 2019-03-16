@@ -18,7 +18,7 @@ class Profile extends React.Component {
   render() {
     if (!this.props.users) return null;
     return (
-      <div>
+      <div className={styles.container}>
         <Grid container justify="center">
           <Grid item xs={11} sm={6} md={4} lg={3} xl={3}>
             <br />

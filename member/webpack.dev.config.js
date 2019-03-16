@@ -69,6 +69,8 @@ module.exports = {
   },
   resolve: {
     alias: {
+      App: path.resolve(__dirname, 'src/js/app'),
+      Pages: path.resolve(__dirname, 'src/js/pages'),
       Auth: path.resolve(__dirname, 'src/js/auth/'),
       Components: path.resolve(__dirname, 'src/js/components/'),
       Routes: path.resolve(__dirname, 'src/js/routes/'),

@@ -4,8 +4,8 @@ import { Switch } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import UnauthRoute from './UnauthRoute';
 
-import Login from 'Components/login';
-import Profile from 'Components/profile';
+import Login from 'Pages/login';
+import Profile from 'Pages/profile';
 
 const Routes = ({ props }) => {
   return (

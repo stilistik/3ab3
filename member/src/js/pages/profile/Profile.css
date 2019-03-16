@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.info {
+  background-color: #1a77ad;
+  height: 400px;
+}
