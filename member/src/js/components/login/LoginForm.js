@@ -6,19 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
 import { requestRoute } from 'History';
 
-import './LoginForm.css';
-
-const styles = {
-  input: {
-    color: '#f2f2f2',
-  },
-  label: {
-    color: '#f2f2f2 !important',
-  },
-  header: {
-    color: '#f2f2f2',
-  },
-};
+import styles from './LoginForm.css';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -57,12 +45,11 @@ class LoginForm extends React.Component {
   messageHandler = () => {};
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
-        <div styleName="header">
+        <div className={styles.header}>
           <Typography
-            classes={{ root: classes.header }}
+            classes={{ root: styles.title }}
             variant="h2"
             color="inherit"
           >
@@ -70,28 +57,18 @@ class LoginForm extends React.Component {
           </Typography>
         </div>
         <br />
-        <form styleName="form" onSubmit={this.submit}>
+        <form className={styles.form} onSubmit={this.submit}>
           <TextField
-            classes={{ underline: classes.underline }}
-            InputProps={{
-              className: classes.input,
-            }}
-            InputLabelProps={{
-              className: classes.label,
-            }}
+            InputProps={{ className: styles.input }}
+            InputLabelProps={{ className: styles.label }}
             name="email"
             label="Email"
             margin="normal"
             onChange={this.onChange}
           />
           <TextField
-            classes={{ underline: classes.underline }}
-            InputProps={{
-              className: classes.input,
-            }}
-            InputLabelProps={{
-              className: classes.label,
-            }}
+            InputProps={{ className: styles.input }}
+            InputLabelProps={{ className: styles.label }}
             name="password"
             label="Password"
             type="password"

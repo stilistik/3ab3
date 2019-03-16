@@ -12,6 +12,7 @@ const Routes = ({ props }) => {
     <Switch>
       <UnauthRoute path="/login" component={Login} props={props} />
       <AuthRoute path="/profile" component={Profile} props={props} />
+      <AuthRoute path="/" component={Profile} props={props} />
     </Switch>
   );
 };

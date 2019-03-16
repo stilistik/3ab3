@@ -1,7 +1,17 @@
 import React from 'react';
-import { Avatar, Menu, MenuItem, IconButton } from '@material-ui/core';
+import {
+  Avatar,
+  ClickAwayListener,
+  Grow,
+  Paper,
+  Popper,
+  MenuList,
+  MenuItem,
+  IconButton,
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 import { logout } from 'Redux/actions';
+import { requestRoute } from 'History';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -23,7 +33,7 @@ class ProfileMenu extends React.Component {
     this.setState({ anchor: e.currentTarget });
   };
 
-  handleMenuClose = () => {
+  handleClose = () => {
     this.setState({ anchor: null });
   };
 
@@ -31,14 +41,55 @@ class ProfileMenu extends React.Component {
     this.props.logout();
   };
 
+  handleClick = (action) => {
+    switch (action) {
+      case 'profile':
+        requestRoute('/profile');
+        break;
+      case 'account':
+        requestRoute('/account');
+        break;
+      case 'logout':
+        this.props.logout();
+        break;
+      default:
+        break;
+    }
+    this.setState({ anchor: null });
+  };
+
   render() {
     const { anchor } = this.state;
-    const isMenuOpen = anchor ? true : false;
+    const open = anchor ? true : false;
     const renderMenu = (
-      <Menu anchorEl={anchor} open={isMenuOpen} onClose={this.handleMenuClose}>
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
-      </Menu>
+      <Popper open={open} anchorEl={this.state.anchor} transition disablePortal>
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            id="menu-list-grow"
+            style={{
+              transformOrigin:
+                placement === 'bottom' ? 'center top' : 'center bottom',
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={this.handleClose}>
+                <MenuList>
+                  <MenuItem onClick={() => this.handleClick('profile')}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={() => this.handleClick('account')}>
+                    My account
+                  </MenuItem>
+                  <MenuItem onClick={() => this.handleClick('logout')}>
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     );
 
     return (

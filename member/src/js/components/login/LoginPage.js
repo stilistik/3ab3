@@ -1,23 +1,70 @@
 import React from 'react';
 import { TweenMax } from 'gsap';
-import { Grid, Paper, CssBaseline } from '@material-ui/core';
+import { Grid, Paper, CssBaseline, CircularProgress } from '@material-ui/core';
 import LoginForm from './LoginForm';
 
 import './LoginPage.css';
 
+class DelayedSpinner extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
+    this.mounted = false;
+  }
+
+  componentDidMount = () => {
+    this.mounted = true;
+    setTimeout(() => {
+      if (this.mounted) this.setState({ show: true });
+    }, this.props.delay);
+  };
+
+  componentWillUnmount = () => (this.mounted = false);
+
+  render() {
+    if (!this.state.show) return null;
+    return (
+      <div styleName="spinner">
+        <CircularProgress />
+      </div>
+    );
+  }
+}
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true,
+    };
     this.container = null;
     this.background = null;
   }
 
   componentDidMount = () => {
-    this.container.addEventListener('mousemove', (e) => {
-      this.parallaxIt(e, '#front', -60);
-      this.parallaxIt(e, '#middle', -30);
-      this.parallaxIt(e, '#back', 30);
-    });
+    this.container.addEventListener('mousemove', this.onMouseMove);
+    this.loadImage();
+  };
+
+  componentWillUnmount = () => {
+    this.container.removeEventListener('mousemove', this.onMouseMove);
+  };
+
+  onMouseMove = (e) => {
+    this.parallaxIt(e, '#back', 30);
+  };
+
+  loadImage = async () => {
+    await this.setState({ loading: true });
+    let url = 'url(back.jpg)';
+    let img = new Image();
+    img.onload = () => {
+      this.background.style.backgroundImage = url;
+      this.setState({ loading: false });
+    };
+    img.src = 'back.jpg';
   };
 
   parallaxIt = (e, target, movement) => {
@@ -48,9 +95,13 @@ class LoginPage extends React.Component {
         />
         <Grid styleName="grid" container justify="center">
           <Grid item xs={9} sm={6} md={4} lg={3} xl={3}>
-            <Paper styleName="paper">
-              <LoginForm />
-            </Paper>
+            {this.state.loading ? (
+              <DelayedSpinner delay={200} />
+            ) : (
+              <Paper styleName="paper">
+                <LoginForm />
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </div>

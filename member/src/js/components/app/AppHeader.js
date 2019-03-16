@@ -18,24 +18,22 @@ const mapDispatchToProps = (dispatch) => {
 class AppHeader extends React.Component {
   render() {
     return (
-      <div styleName="root">
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              styleName="menu-button"
-              color="inherit"
-              aria-label="Menu"
-              onClick={() => this.props.setDrawerOpen(true)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography styleName="brand" variant="h4" color="inherit">
-              3ab3
-            </Typography>
-            <ProfileMenu />
-          </Toolbar>
-        </AppBar>
-      </div>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            styleName="menu-button"
+            color="inherit"
+            aria-label="Menu"
+            onClick={() => this.props.setDrawerOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography styleName="brand" variant="h4" color="inherit">
+            3ab3
+          </Typography>
+          <ProfileMenu />
+        </Toolbar>
+      </AppBar>
     );
   }
 }
