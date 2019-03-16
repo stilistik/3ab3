@@ -75,6 +75,7 @@ module.exports = {
       History: path.resolve(__dirname, 'src/js/history/'),
       Redux: path.resolve(__dirname, 'src/js/redux'),
       Apollo: path.resolve(__dirname, 'src/js/apollo'),
+      Style: path.resolve(__dirname, 'src/js/style'),
     },
     extensions: ['*', '.js', '.jsx'],
   },
