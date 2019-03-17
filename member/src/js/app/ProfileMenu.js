@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Avatar,
   ClickAwayListener,
   Grow,
   Paper,
@@ -12,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { logout } from 'Redux/actions';
 import { requestRoute } from 'History';
+import ProfileAvatar from './ProfileAvatar';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -62,7 +62,13 @@ class ProfileMenu extends React.Component {
     const { anchor } = this.state;
     const open = anchor ? true : false;
     const renderMenu = (
-      <Popper open={open} anchorEl={this.state.anchor} transition disablePortal>
+      <Popper
+        style={{ marginTop: '5px' }}
+        open={open}
+        anchorEl={this.state.anchor}
+        transition
+        disablePortal
+      >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
@@ -72,13 +78,20 @@ class ProfileMenu extends React.Component {
                 placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
-            <Paper>
+            <Paper style={{ background: '#444' }}>
               <ClickAwayListener onClickAway={this.handleClose}>
                 <MenuList>
-                  <MenuItem onClick={() => this.handleClick('account')}>
+                  }}
+                  <MenuItem
+                    style={{ color: 'white' }}
+                    onClick={() => this.handleClick('account')}
+                  >
                     My account
                   </MenuItem>
-                  <MenuItem onClick={() => this.handleClick('logout')}>
+                  <MenuItem
+                    style={{ color: 'white' }}
+                    onClick={() => this.handleClick('logout')}
+                  >
                     Logout
                   </MenuItem>
                 </MenuList>
@@ -92,9 +105,7 @@ class ProfileMenu extends React.Component {
     return (
       <div>
         <IconButton onClick={this.handleMenuOpen}>
-          <Avatar style={{ backgroundColor: '#1a77ad', cursor: 'pointer' }}>
-            R
-          </Avatar>
+          <ProfileAvatar />
         </IconButton>
         {renderMenu}
       </div>
