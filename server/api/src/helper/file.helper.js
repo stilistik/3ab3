@@ -70,7 +70,7 @@ const uploadFile = async (root, args, context) => {
 
   const fileExtension = filename.split('.').pop();
   if (SUPPORTED_EXT.indexOf(fileExtension.toUpperCase()) < 0) {
-    throw new ValidationError(`Unsupported file format ${fileExtension}`);
+    throw new ValidationError(`Unsupported file format: ${fileExtension}`);
   }
 
   const { fileId, filePath, fileHash } = await FileHelper.storeFS({

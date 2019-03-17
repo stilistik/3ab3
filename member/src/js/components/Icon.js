@@ -6,6 +6,10 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import EventIcon from '@material-ui/icons/Event';
 import PaymentIcon from '@material-ui/icons/Payment';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
 
 const icons = {
   mail: MailIcon,
@@ -15,6 +19,10 @@ const icons = {
   event: EventIcon,
   payment: PaymentIcon,
   upload: CloudUploadIcon,
+  error: ErrorIcon,
+  success: CheckCircleIcon,
+  info: InfoIcon,
+  close: CloseIcon,
 };
 
 export class Icon extends React.Component {

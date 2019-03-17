@@ -1,5 +1,7 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { connect } from 'react-redux';
+import { showMessage } from 'Redux/actions';
+import { Mutation, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { IconButton } from '@material-ui/core';
 import { ProfileAvatar, Icon } from 'Components';
@@ -24,19 +26,37 @@ const MUTATION = gql`
   }
 `;
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    message: (message) => {
+      dispatch(showMessage(message));
+    },
+  };
+};
+
 class AvatarUpload extends React.Component {
   onChange = async (file) => {
     if (!file) return;
     try {
-      const data = await this.uploadAvatar({
+      await this.uploadAvatar({
         variables: { file },
         refetchQueries: () => {
           return [{ query: UPDATE_QUERY }];
         },
       });
     } catch (error) {
-      console.log(error);
+      this.handleError(error);
     }
+  };
+
+  handleError = (error) => {
+    if (error.message.includes('File already exists'))
+      this.props.message({ type: 'error', text: 'File already exists' });
+    else
+      this.props.message({
+        type: 'error',
+        text: 'Unknown error during upload',
+      });
   };
 
   render() {
@@ -78,4 +98,7 @@ class AvatarDisplay extends React.Component {
   }
 }
 
-export default AvatarUpload;
+export default connect(
+  null,
+  mapDispatchToProps
+)(AvatarUpload);

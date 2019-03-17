@@ -1,14 +1,2 @@
-import React from 'react';
-import AvatarUpload from './AvatarUpload';
-
-class Account extends React.Component {
-  render() {
-    return (
-      <div>
-        <AvatarUpload />
-      </div>
-    );
-  }
-}
-
+import Account from './Account';
 export default Account;
