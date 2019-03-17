@@ -10,7 +10,7 @@ export class DefaultGrid extends React.Component {
 
     return (
       <Grid container justify="center">
-        <Grid item xs={11} sm={6}>
+        <Grid item xs={12} md={8} lg={6} xl={5}>
           {childrenWithProps}
         </Grid>
       </Grid>

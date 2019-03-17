@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 const { ValidationError, UserInputError } = require('apollo-server-express');
 
 const UPLOAD_DIR = path.resolve(process.env.STORAGE_ROOT);
-const SUPPORTED_EXT = ['PNG', 'GIF', 'JPG', 'PDF'];
+const SUPPORTED_EXT = ['PNG', 'GIF', 'JPG', 'PDF', 'TIFF'];
 
 class FileHelper {
   static get uploadDirPath() {

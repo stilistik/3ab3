@@ -26,6 +26,18 @@ module.exports = {
       };
       return context.prisma.createUser(input);
     },
+    editSelf(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      const input = {
+        name: args.input.name,
+        email: args.input.email,
+        password: bcrypt.hashSync(args.input.password, 8),
+      };
+      return context.prisma.updateUser({
+        where: { id },
+        data: input,
+      });
+    },
     async uploadAvatar(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });

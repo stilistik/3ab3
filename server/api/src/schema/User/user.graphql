@@ -25,6 +25,12 @@ input CreateUserInput {
   role: UserRole
 }
 
+input EditSelfInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
 extend type Query {
   users: [User!]!
   user(userId: ID!): User!
@@ -33,5 +39,6 @@ extend type Query {
 
 extend type Mutation {
   createUser(input: CreateUserInput!): User! @hasRole
+  editSelf(input: EditSelfInput!): User!
   uploadAvatar(file: Upload!): User!
 }
