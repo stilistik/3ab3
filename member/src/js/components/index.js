@@ -1,2 +1,2 @@
 export * from './Icon';
-export * from './TrendPlot';
+export * from './plots';

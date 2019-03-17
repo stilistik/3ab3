@@ -70,7 +70,7 @@ class Home extends React.Component {
                 height: '300px',
               }}
             >
-              <TrendPlot data={data} onClick={() => {}} />
+              <TrendPlot data={data} />
             </Paper>
           </Grid>
         </Grid>

@@ -1,41 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
 import * as d3 from 'd3';
 
-import styles from './TrendPlot.css';
+import styles from './LineChart.css';
 
-export class TrendPlot extends React.Component {
-  componentDidMount = () => this.renderPlot();
+class LineChart extends React.Component {
+  componentDidUpdate = (prevProps) => {
+    if (!isEqual(prevProps, this.props)) {
+      this.clear();
+      this.draw();
+    }
+  };
 
-  renderPlot = () => {
-    if (!this.svg) return;
-    this.data = this.props.data;
-    this.color = '#fff';
-    this.interactorRadius = 20;
-    this.animDuration = 1000;
-    this.radius = 8;
-    this.margin = { top: 20, right: 20, bottom: 50, left: 50 };
-    this.width = this.svg.clientWidth - this.margin.left - this.margin.right;
-    this.height = this.svg.clientHeight - this.margin.top - this.margin.bottom;
+  clear = () => {
+    d3.select(this.svg)
+      .selectAll('*')
+      .remove();
+  };
 
-    this.xScale = d3
-      .scaleTime()
-      .rangeRound([0, this.width])
-      .domain(
-        d3.extent(this.data, function(d) {
-          return d.date;
-        })
-      );
-
-    this.yScale = d3
-      .scaleLinear()
-      .rangeRound([this.height, 0])
-      .domain(
-        d3.extent(this.data, function(d) {
-          return d.balance;
-        })
-      );
-
+  draw = () => {
+    if (!this.svg || !this.props.config) return;
     this.buildContainer();
     this.drawAxes();
     const path = this.drawLine();
@@ -44,14 +29,19 @@ export class TrendPlot extends React.Component {
 
   buildContainer = () => {
     const svg = d3.select(this.svg).style('cursor', 'pointer');
+    const { config } = this.props;
 
     svg
       .append('g')
       .attr('id', 'container')
-      .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
+      .attr(
+        'transform',
+        `translate(${config.margin.left},${config.margin.top})`
+      );
   };
 
   drawLine = () => {
+    const { config } = this.props;
     const graph = d3
       .select(this.svg)
       .selectAll('#container')
@@ -60,18 +50,18 @@ export class TrendPlot extends React.Component {
     const line = d3
       .line()
       .y((d) => {
-        return this.yScale(d.balance);
+        return config.yScale(d.balance);
       })
       .x((d) => {
-        return this.xScale(d.date);
+        return config.xScale(d.date);
       })
       .curve(d3.curveMonotoneX);
 
     const path = graph
       .append('path')
-      .datum(this.data)
+      .datum(this.props.data)
       .attr('fill', 'none')
-      .attr('stroke', this.color)
+      .attr('stroke', config.color)
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round')
       .attr('stroke-width', 5)
@@ -79,55 +69,58 @@ export class TrendPlot extends React.Component {
 
     const nodes = graph
       .selectAll('.node')
-      .data(this.data)
+      .data(this.props.data)
       .enter()
       .append('g')
       .attr('class', 'node')
       .attr('transform', (d) => {
         return (
           'translate(' +
-          this.xScale(d.date) +
+          config.xScale(d.date) +
           ', ' +
-          this.yScale(d.balance) +
+          config.yScale(d.balance) +
           ')'
         );
       });
 
     nodes
       .append('circle')
-      .on('click', this.onClick)
+      .on('click', this.props.onClick)
+      .on('mouseover', this.props.onMouseOver)
+      .on('mouseout', this.props.onMouseOut)
       .attr('class', styles.interactor)
-      .attr('r', this.interactorRadius)
+      .attr('r', config.interactorRadius)
       .style('opacity', 0);
 
     nodes
       .append('circle')
       .attr('class', styles.point)
-      .attr('fill', this.color)
+      .attr('fill', config.color)
       .attr('r', 0)
       .transition()
-      .duration(this.animDuration)
-      .attr('r', this.radius)
+      .duration(config.animDuration)
+      .attr('r', config.nodeRadius)
       .style('pointer-events', 'none');
 
     return path;
   };
 
   drawAxes = () => {
+    const { config } = this.props;
     const container = d3.select(this.svg).selectAll('#container');
     const xAxis = d3
-      .axisBottom(this.xScale)
+      .axisBottom(config.xScale)
       .ticks(d3.timeMonth)
       .tickFormat((d) => {
         return d.toString().split(' ')[1];
       })
-      .tickSizeInner(-this.height);
-    const yAxis = d3.axisLeft(this.yScale).tickSizeInner(-this.width);
+      .tickSizeInner(-config.height);
+    const yAxis = d3.axisLeft(config.yScale).tickSizeInner(-config.width);
 
     const x = container
       .append('g')
       .attr('class', 'xaxis')
-      .attr('transform', `translate(0, ${this.height})`)
+      .attr('transform', `translate(0, ${config.height})`)
       .call(xAxis);
 
     x.selectAll('.domain').style('opacity', 0);
@@ -169,22 +162,9 @@ export class TrendPlot extends React.Component {
       .attr('stroke-dashoffset', 0);
   };
 
-  onClick = (e) => {
-    this.props.onClick(e);
-  };
-
   render() {
     return <svg ref={(ref) => (this.svg = ref)} width="100%" height="100%" />;
   }
 }
 
-TrendPlot.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      date: PropTypes.instanceOf(Date).isRequired,
-      balance: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  onClick: PropTypes.func.isRequired,
-};
+export default LineChart;
