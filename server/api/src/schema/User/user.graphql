@@ -27,6 +27,7 @@ input CreateUserInput {
 extend type Query {
   users: [User!]!
   user(userId: ID!): User!
+  currentUser: User!
 }
 
 extend type Mutation {

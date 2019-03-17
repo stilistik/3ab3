@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const verifyAndDecodeToken = require('../../auth/verify');
 
 module.exports = {
   Query: {
@@ -7,6 +8,10 @@ module.exports = {
     },
     user(root, args, context) {
       return context.prisma.user({ id: args.userId });
+    },
+    currentUser(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      return context.prisma.user({ id: id });
     },
   },
   Mutation: {
