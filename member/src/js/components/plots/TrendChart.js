@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import LineChart from './elements/LineChart';
 import Tooltip from './elements/Tooltip';
 
-import styles from './TrendPlot.css';
+import styles from './TrendChart.css';
 
-export class TrendPlot extends React.Component {
+export class TrendChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +68,7 @@ export class TrendPlot extends React.Component {
   createScales = () => {};
 
   resize = () => {
-    return;
+    this.setupConfig();
   };
 
   onMouseOver = (e) => {
@@ -77,10 +77,6 @@ export class TrendPlot extends React.Component {
 
   onMouseOut = () => {
     this.setState({ datum: null });
-  };
-
-  onClick = (e) => {
-    console.log(e);
   };
 
   render() {
@@ -92,9 +88,20 @@ export class TrendPlot extends React.Component {
           config={this.state.config}
           onMouseOut={this.onMouseOut}
           onMouseOver={this.onMouseOver}
-          onClick={this.onClick}
+          onClick={this.props.onClick}
         />
       </div>
     );
   }
 }
+
+TrendChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
+      balance: PropTypes.number.isRequired,
+    }).isRequired
+  ).isRequired,
+  onClick: PropTypes.func.isRequired,
+};

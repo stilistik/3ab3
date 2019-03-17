@@ -1,1 +1,1 @@
-export * from './TrendPlot';
+export * from './TrendChart';

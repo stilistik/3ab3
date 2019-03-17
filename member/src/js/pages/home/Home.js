@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { TrendPlot } from 'Components';
+import { TrendChart } from 'Components';
 import { Paper, Grid } from '@material-ui/core';
 
 import styles from './Home.css';
@@ -44,6 +44,8 @@ const QUERY = gql`
 `;
 
 class Home extends React.Component {
+  onClick = (e) => console.log(e);
+
   render() {
     if (!this.props.users) return null;
     return (
@@ -59,7 +61,7 @@ class Home extends React.Component {
                 height: '300px',
               }}
             >
-              <TrendPlot data={data} onClick={() => {}} />
+              <TrendChart data={data} onClick={this.onClick} />
             </Paper>
             <br />
             <Paper
@@ -70,7 +72,7 @@ class Home extends React.Component {
                 height: '300px',
               }}
             >
-              <TrendPlot data={data} />
+              <TrendChart data={data} onClick={this.onClick} />
             </Paper>
           </Grid>
         </Grid>

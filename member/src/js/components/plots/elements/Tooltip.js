@@ -64,4 +64,34 @@ class Tooltip extends React.Component {
   }
 }
 
+Tooltip.propTypes = {
+  datum: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    date: PropTypes.instanceOf(Date).isRequired,
+    balance: PropTypes.number.isRequired,
+  }),
+  config: PropTypes.shape({
+    color: PropTypes.string.isRequired,
+    interactorRadius: PropTypes.number.isRequired,
+    nodeRadius: PropTypes.number.isRequired,
+    animDuration: PropTypes.number.isRequired,
+    margin: PropTypes.shape({
+      top: PropTypes.number.isRequired,
+      left: PropTypes.number.isRequired,
+      right: PropTypes.number.isRequired,
+      bottom: PropTypes.number.isRequired,
+    }).isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    xScale: PropTypes.func.isRequired,
+    yScale: PropTypes.func.isRequired,
+    tooltip: PropTypes.shape({
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired,
+      xOffset: PropTypes.number.isRequired,
+      yOffset: PropTypes.number.isRequired,
+    }).isRequired,
+  }),
+};
+
 export default Tooltip;
