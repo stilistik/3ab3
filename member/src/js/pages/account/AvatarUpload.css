@@ -1,0 +1,12 @@
+.icon {
+  position: absolute;
+  color: #fff;
+  z-index: 10;
+  transform: scale3d(1.5, 1.5, 1.5);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.button:hover .icon {
+  opacity: 1;
+}

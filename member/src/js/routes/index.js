@@ -8,6 +8,7 @@ import Login from 'Pages/login';
 import Home from 'Pages/home';
 import History from 'Pages/history';
 import Dashboard from 'Pages/dashboard';
+import Account from 'Pages/account';
 
 const Routes = ({ props }) => {
   return (
@@ -16,6 +17,7 @@ const Routes = ({ props }) => {
       <AuthRoute path="/history" component={History} props={props} />
       <AuthRoute path="/dashboard" component={Dashboard} props={props} />
       <AuthRoute path="/home" component={Home} props={props} />
+      <AuthRoute path="/account" component={Account} props={props} />
       <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );

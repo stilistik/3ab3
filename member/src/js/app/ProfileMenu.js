@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { logout } from 'Redux/actions';
 import { requestRoute } from 'History';
-import ProfileAvatar from './ProfileAvatar';
+import { ProfileAvatar } from 'Components';
 
 const mapDispatchToProps = (dispatch) => {
   return {
