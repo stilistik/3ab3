@@ -8,8 +8,10 @@ import styles from './AvatarUpload.css';
 
 const UPDATE_QUERY = gql`
   query {
-    users {
+    currentUser {
       id
+      name
+      avatar
     }
   }
 `;
@@ -24,11 +26,14 @@ const MUTATION = gql`
 
 class AvatarUpload extends React.Component {
   onChange = async (file) => {
+    if (!file) return;
     try {
       const data = await this.uploadAvatar({
         variables: { file },
+        refetchQueries: () => {
+          return [{ query: UPDATE_QUERY }];
+        },
       });
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

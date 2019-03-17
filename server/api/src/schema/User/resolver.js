@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const verifyAndDecodeToken = require('../../auth/verify');
+const { AuthenticationError } = require('../../auth/errors');
+const { uploadFile } = require('../../helper/file.helper.js');
 
 module.exports = {
   Query: {
@@ -23,6 +25,20 @@ module.exports = {
         role: args.input.role,
       };
       return context.prisma.createUser(input);
+    },
+    async uploadAvatar(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      const user = await context.prisma.user({ id: id });
+
+      if (!user) {
+        throw new AuthenticationError('User not found');
+      }
+
+      const file = await uploadFile(root, args, context);
+      return context.prisma.updateUser({
+        where: { id: user.id },
+        data: { avatar: file.uri },
+      });
     },
   },
   User: {

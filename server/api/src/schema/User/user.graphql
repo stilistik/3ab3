@@ -33,4 +33,5 @@ extend type Query {
 
 extend type Mutation {
   createUser(input: CreateUserInput!): User! @hasRole
+  uploadAvatar(file: Upload!): User!
 }

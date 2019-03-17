@@ -6,6 +6,7 @@ import { graphql } from 'react-apollo';
 const QUERY = gql`
   query {
     currentUser {
+      id
       name
       avatar
     }

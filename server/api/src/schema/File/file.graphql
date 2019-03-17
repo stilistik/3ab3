@@ -15,5 +15,4 @@ extend type Query {
 
 extend type Mutation {
   upload(file: Upload!): File! @hasRole
-  uploadAvatar(file: Upload!): File!
 }
