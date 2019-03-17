@@ -2059,6 +2059,7 @@ type User {
   name: String!
   email: String!
   password: String!
+  avatar: String
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase!]
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
@@ -2077,6 +2078,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -2109,6 +2111,7 @@ input UserCreateWithoutItemsInput {
   name: String!
   email: String!
   password: String!
+  avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -2120,6 +2123,7 @@ input UserCreateWithoutPaymentsInput {
   name: String!
   email: String!
   password: String!
+  avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
@@ -2131,6 +2135,7 @@ input UserCreateWithoutPurchasesInput {
   name: String!
   email: String!
   password: String!
+  avatar: String
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
@@ -2142,6 +2147,7 @@ input UserCreateWithoutTransactionsInput {
   name: String!
   email: String!
   password: String!
+  avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
@@ -2163,6 +2169,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  avatar_ASC
+  avatar_DESC
   role_ASC
   role_DESC
   balance_ASC
@@ -2178,6 +2186,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  avatar: String
   role: UserRole!
   balance: Float!
 }
@@ -2210,6 +2219,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -2222,6 +2232,7 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  avatar: String
   role: UserRole
   balance: Float
 }
@@ -2258,6 +2269,7 @@ input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
   password: String
+  avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -2269,6 +2281,7 @@ input UserUpdateWithoutPaymentsDataInput {
   name: String
   email: String
   password: String
+  avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
@@ -2280,6 +2293,7 @@ input UserUpdateWithoutPurchasesDataInput {
   name: String
   email: String
   password: String
+  avatar: String
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
@@ -2291,6 +2305,7 @@ input UserUpdateWithoutTransactionsDataInput {
   name: String
   email: String
   password: String
+  avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
@@ -2375,6 +2390,20 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  avatar: String
+  avatar_not: String
+  avatar_in: [String!]
+  avatar_not_in: [String!]
+  avatar_lt: String
+  avatar_lte: String
+  avatar_gt: String
+  avatar_gte: String
+  avatar_contains: String
+  avatar_not_contains: String
+  avatar_starts_with: String
+  avatar_not_starts_with: String
+  avatar_ends_with: String
+  avatar_not_ends_with: String
   purchases_every: PurchaseWhereInput
   purchases_some: PurchaseWhereInput
   purchases_none: PurchaseWhereInput

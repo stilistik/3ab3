@@ -7,6 +7,7 @@ const QUERY = gql`
   query {
     currentUser {
       name
+      avatar
     }
   }
 `;
@@ -15,9 +16,10 @@ class ProfileAvatar extends React.Component {
   render() {
     if (!this.props.user) return null;
     if (this.props.user.avatar) {
+      const url = global.API_URL + this.props.user.avatar;
       return (
         <Avatar
-          src={this.props.user.avatar}
+          src={url}
           alt="Not Found"
           style={{ backgroundColor: '#1a77ad', cursor: 'pointer' }}
         />

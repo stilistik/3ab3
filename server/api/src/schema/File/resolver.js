@@ -1,4 +1,5 @@
 const { ValidationError, UserInputError } = require('apollo-server-express');
+const { AuthenticationError } = require('../../auth/errors');
 const verifyAndDecodeToken = require('../../auth/verify');
 
 const FileHelper = require('../../helper/file.helper.js');
@@ -54,13 +55,20 @@ module.exports = {
       return uploadFile(root, args, context);
     },
     async uploadAvatar(root, args, context) {
-      const file = await uploadFile(root, args, context);
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });
-      return context.prisma.updateUser({
+
+      if (!user) {
+        throw new AuthenticationError('User not found');
+      }
+
+      const file = await uploadFile(root, args, context);
+      await context.prisma.updateUser({
         where: { id: user.id },
         data: { avatar: file.uri },
       });
+
+      return file;
     },
   },
 };

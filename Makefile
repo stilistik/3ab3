@@ -2,7 +2,7 @@ init:
 	yarn --cwd soil/api install
 	yarn --cwd soil/prisma install
 
-deploy:
+migrations:
 	cd server/prisma && prisma reset -f && prisma deploy
 
 prod:

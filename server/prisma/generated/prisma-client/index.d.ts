@@ -549,6 +549,8 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
+  | "avatar_ASC"
+  | "avatar_DESC"
   | "role_ASC"
   | "role_DESC"
   | "balance_ASC"
@@ -961,6 +963,7 @@ export interface UserCreateWithoutItemsInput {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
   payments?: PaymentCreateManyWithoutUserInput;
   transactions?: TransactionCreateManyWithoutUserInput;
@@ -1165,6 +1168,7 @@ export interface UserUpdateInput {
   name?: String;
   email?: String;
   password?: String;
+  avatar?: String;
   purchases?: PurchaseUpdateManyWithoutUserInput;
   payments?: PaymentUpdateManyWithoutUserInput;
   transactions?: TransactionUpdateManyWithoutUserInput;
@@ -1177,6 +1181,7 @@ export interface UserCreateWithoutTransactionsInput {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
   payments?: PaymentCreateManyWithoutUserInput;
   items?: ItemCreateManyWithoutUserInput;
@@ -1279,6 +1284,7 @@ export interface UserCreateWithoutPurchasesInput {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   payments?: PaymentCreateManyWithoutUserInput;
   transactions?: TransactionCreateManyWithoutUserInput;
   items?: ItemCreateManyWithoutUserInput;
@@ -1378,6 +1384,7 @@ export interface UserCreateWithoutPaymentsInput {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
   transactions?: TransactionCreateManyWithoutUserInput;
   items?: ItemCreateManyWithoutUserInput;
@@ -1475,6 +1482,7 @@ export interface UserUpdateWithoutItemsDataInput {
   name?: String;
   email?: String;
   password?: String;
+  avatar?: String;
   purchases?: PurchaseUpdateManyWithoutUserInput;
   payments?: PaymentUpdateManyWithoutUserInput;
   transactions?: TransactionUpdateManyWithoutUserInput;
@@ -1675,6 +1683,7 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
   payments?: PaymentCreateManyWithoutUserInput;
   transactions?: TransactionCreateManyWithoutUserInput;
@@ -1890,6 +1899,7 @@ export interface UserUpdateWithoutTransactionsDataInput {
   name?: String;
   email?: String;
   password?: String;
+  avatar?: String;
   purchases?: PurchaseUpdateManyWithoutUserInput;
   payments?: PaymentUpdateManyWithoutUserInput;
   items?: ItemUpdateManyWithoutUserInput;
@@ -2091,6 +2101,20 @@ export interface UserWhereInput {
   password_not_starts_with?: String;
   password_ends_with?: String;
   password_not_ends_with?: String;
+  avatar?: String;
+  avatar_not?: String;
+  avatar_in?: String[] | String;
+  avatar_not_in?: String[] | String;
+  avatar_lt?: String;
+  avatar_lte?: String;
+  avatar_gt?: String;
+  avatar_gte?: String;
+  avatar_contains?: String;
+  avatar_not_contains?: String;
+  avatar_starts_with?: String;
+  avatar_not_starts_with?: String;
+  avatar_ends_with?: String;
+  avatar_not_ends_with?: String;
   purchases_every?: PurchaseWhereInput;
   purchases_some?: PurchaseWhereInput;
   purchases_none?: PurchaseWhereInput;
@@ -2139,6 +2163,7 @@ export interface UserUpdateWithoutPurchasesDataInput {
   name?: String;
   email?: String;
   password?: String;
+  avatar?: String;
   payments?: PaymentUpdateManyWithoutUserInput;
   transactions?: TransactionUpdateManyWithoutUserInput;
   items?: ItemUpdateManyWithoutUserInput;
@@ -2245,6 +2270,7 @@ export interface UserUpdateManyMutationInput {
   name?: String;
   email?: String;
   password?: String;
+  avatar?: String;
   role?: UserRole;
   balance?: Float;
 }
@@ -2253,6 +2279,7 @@ export interface UserUpdateWithoutPaymentsDataInput {
   name?: String;
   email?: String;
   password?: String;
+  avatar?: String;
   purchases?: PurchaseUpdateManyWithoutUserInput;
   transactions?: TransactionUpdateManyWithoutUserInput;
   items?: ItemUpdateManyWithoutUserInput;
@@ -2405,6 +2432,7 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   role: UserRole;
   balance: Float;
 }
@@ -2416,6 +2444,7 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  avatar: () => Promise<String>;
   role: () => Promise<UserRole>;
   balance: () => Promise<Float>;
 }
@@ -2427,6 +2456,7 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  avatar: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
   balance: () => Promise<AsyncIterator<Float>>;
 }
@@ -2569,6 +2599,7 @@ export interface User {
   name: String;
   email: String;
   password: String;
+  avatar?: String;
   role: UserRole;
   balance: Float;
 }
@@ -2578,6 +2609,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  avatar: () => Promise<String>;
   purchases: <T = FragmentableArray<Purchase>>(
     args?: {
       where?: PurchaseWhereInput;
@@ -2633,6 +2665,7 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  avatar: () => Promise<AsyncIterator<String>>;
   purchases: <T = Promise<AsyncIterator<PurchaseSubscription>>>(
     args?: {
       where?: PurchaseWhereInput;
