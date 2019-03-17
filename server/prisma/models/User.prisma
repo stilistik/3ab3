@@ -3,6 +3,7 @@ type User {
   name: String!
   email: String! @unique
   password: String!
+  avatar: String
   purchases: [Purchase!]!
   payments: [Payment!]!
   transactions: [Transaction!]!
