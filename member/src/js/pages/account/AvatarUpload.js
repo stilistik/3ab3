@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
-import { Mutation, compose } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { IconButton } from '@material-ui/core';
 import { ProfileAvatar, Icon } from 'Components';
@@ -64,7 +64,9 @@ class AvatarUpload extends React.Component {
       <Mutation mutation={MUTATION}>
         {(uploadAvatar) => {
           this.uploadAvatar = uploadAvatar;
-          return <AvatarDisplay onChange={this.onChange} />;
+          return (
+            <AvatarDisplay onChange={this.onChange} style={this.props.style} />
+          );
         }}
       </Mutation>
     );
@@ -74,7 +76,7 @@ class AvatarUpload extends React.Component {
 class AvatarDisplay extends React.Component {
   render() {
     return (
-      <div>
+      <div style={this.props.style}>
         <input
           accept="image/*"
           style={{ display: 'none' }}
@@ -90,7 +92,9 @@ class AvatarDisplay extends React.Component {
             component="span"
           >
             <Icon className={styles.icon} type="upload" />
-            <ProfileAvatar style={{ width: '100px', height: '100px' }} />
+            <ProfileAvatar
+              classes={{ avatar: styles.avatar, typo: styles.typo }}
+            />
           </IconButton>
         </label>
       </div>

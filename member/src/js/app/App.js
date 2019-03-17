@@ -61,12 +61,10 @@ class App extends React.Component {
             />
           </div>
         ) : null}
-        <div styleName="content">
-          <Router history={history}>
-            <Routes props={props} />
-          </Router>
-          <MessageHandler />
-        </div>
+        <Router history={history}>
+          <Routes props={props} />
+        </Router>
+        <MessageHandler />
       </div>
     );
   }

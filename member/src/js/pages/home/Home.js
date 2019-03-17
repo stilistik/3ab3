@@ -2,7 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { TrendChart } from 'Components';
-import { Paper, Grid } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
+import { DefaultGrid } from 'Components';
 
 import styles from './Home.css';
 
@@ -44,39 +45,36 @@ const QUERY = gql`
 `;
 
 class Home extends React.Component {
-  onClick = (e) => console.log(e);
+  onClick = () => {};
 
   render() {
     if (!this.props.users) return null;
     return (
-      <div className={styles.container}>
-        <Grid container justify="center">
-          <Grid item xs={11} sm={6} md={4} lg={3} xl={3}>
-            <br />
-            <Paper
-              style={{
-                background: '#1a77ad',
-                color: 'white',
-                width: '100%',
-                height: '300px',
-              }}
-            >
-              <TrendChart data={data} onClick={this.onClick} />
-            </Paper>
-            <br />
-            <Paper
-              style={{
-                background: '#f26457',
-                color: 'white',
-                width: '100%',
-                height: '300px',
-              }}
-            >
-              <TrendChart data={data} onClick={this.onClick} />
-            </Paper>
-          </Grid>
-        </Grid>
-      </div>
+      <DefaultGrid>
+        <div className={styles.container}>
+          <Paper
+            style={{
+              background: '#1a77ad',
+              color: 'white',
+              width: '100%',
+              height: '300px',
+            }}
+          >
+            <TrendChart data={data} onClick={this.onClick} />
+          </Paper>
+          <br />
+          <Paper
+            style={{
+              background: '#f26457',
+              color: 'white',
+              width: '100%',
+              height: '300px',
+            }}
+          >
+            <TrendChart data={data} onClick={this.onClick} />
+          </Paper>
+        </div>
+      </DefaultGrid>
     );
   }
 }
