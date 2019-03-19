@@ -27,7 +27,7 @@ class Products extends React.Component {
   render() {
     if (!this.props.products) return null;
     return (
-      <DefaultGrid>
+      <DefaultGrid overflow>
         <div className={styles.container}>
           <Grid container spacing={24}>
             <Hidden smDown>

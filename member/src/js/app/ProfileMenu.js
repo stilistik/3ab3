@@ -63,7 +63,7 @@ class ProfileMenu extends React.Component {
     const open = anchor ? true : false;
     const renderMenu = (
       <Popper
-        style={{ marginTop: '5px' }}
+        style={{ marginTop: '5px', zIndex: 100 }}
         open={open}
         anchorEl={this.state.anchor}
         transition
