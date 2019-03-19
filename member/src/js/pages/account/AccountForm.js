@@ -33,6 +33,7 @@ class FormMutation extends React.Component {
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });
+      return;
     }
     this.props.message({ type: 'success', text: 'Profile update successful' });
   };

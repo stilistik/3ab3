@@ -1,16 +1,19 @@
 import React from 'react';
 import { DefaultGrid } from 'Components';
+import CreateProductForm from './CreateProductForm';
 
 import styles from './CreateProduct.css';
 
-export class CreateProduct extends React.Component {
+class CreateProduct extends React.Component {
   render() {
     return (
       <DefaultGrid overflow>
         <div className={styles.container}>
-          <h1>Create Product</h1>
+          <CreateProductForm />
         </div>
       </DefaultGrid>
     );
   }
 }
+
+export default CreateProduct;

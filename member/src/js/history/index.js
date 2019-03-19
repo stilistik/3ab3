@@ -10,4 +10,8 @@ export const requestRoute = (path, params) => {
   });
 };
 
+export const getQueryParams = () => {
+  return qs.parse(history.location.search.slice(1));
+};
+
 export default history;

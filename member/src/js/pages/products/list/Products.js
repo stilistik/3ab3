@@ -15,11 +15,12 @@ const QUERY = gql`
       id
       name
       price
+      index
     }
   }
 `;
 
-class Products_Component extends React.Component {
+class Products extends React.Component {
   onCreate = () => {
     requestRoute('/createproduct');
   };
@@ -64,6 +65,6 @@ class Products_Component extends React.Component {
   }
 }
 
-export const Products = graphql(QUERY, {
+export default graphql(QUERY, {
   props: ({ data }) => ({ products: data.products }),
-})(Products_Component);
+})(Products);
