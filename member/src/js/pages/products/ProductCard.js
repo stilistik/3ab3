@@ -13,14 +13,18 @@ import { Icon } from 'Components';
 import styles from './ProductCard.css';
 
 class ProductCard extends React.Component {
+  onEdit = () => {
+    this.props.onEdit(this.props.product.id);
+  };
+
   render() {
     return (
       <Card>
-        <CardActionArea className={styles.area}>
+        <CardActionArea className={styles.area} onClick={this.onEdit}>
           <CardMedia
             component="img"
-            alt="Contemplative Reptile"
-            image="http://www.felsenau.ch/cgi-bin/xcms/navibild/25/Header_Junker.jpg"
+            alt="3ab3 Product"
+            image={global.API_URL + this.props.product.thumbnail}
             title="Contemplative Reptile"
           />
           <CardContent>
@@ -38,7 +42,7 @@ class ProductCard extends React.Component {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <IconButton size="small" color="primary">
+          <IconButton size="small" color="primary" onClick={this.onEdit}>
             <Icon type="edit" />
           </IconButton>
           <IconButton size="small" color="primary">

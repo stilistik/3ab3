@@ -1,12 +1,12 @@
 import createHistory from 'history/createBrowserHistory';
+import qs from 'qs';
 
 const history = createHistory();
 
-export const requestRoute = (path, search) => {
-  if (!search) search = history.location.search;
+export const requestRoute = (path, params) => {
   history.push({
     pathname: path,
-    search: search,
+    search: qs.stringify(params),
   });
 };
 

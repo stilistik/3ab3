@@ -19,9 +19,15 @@ const QUERY = gql`
   }
 `;
 
-class Products extends React.Component {
+class Products_Component extends React.Component {
   onCreate = () => {
-    requestRoute('/product/create');
+    requestRoute('/createproduct');
+  };
+
+  onEdit = (productId) => {
+    requestRoute('/editproduct', {
+      id: productId,
+    });
   };
 
   render() {
@@ -38,7 +44,7 @@ class Products extends React.Component {
             {this.props.products.map((product) => {
               return (
                 <Grid key={product.id} item xs={12} sm={6} lg={4}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} onEdit={this.onEdit} />
                 </Grid>
               );
             })}
@@ -58,6 +64,6 @@ class Products extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export const Products = graphql(QUERY, {
   props: ({ data }) => ({ products: data.products }),
-})(Products);
+})(Products_Component);
