@@ -5,6 +5,7 @@ import { Grid, Fab, Hidden } from '@material-ui/core';
 import { DefaultGrid, Icon } from 'Components';
 import ProductCard from './ProductCard';
 import CreateCard from './CreateCard';
+import { requestRoute } from 'History';
 
 import styles from './Products.css';
 
@@ -19,6 +20,10 @@ const QUERY = gql`
 `;
 
 class Products extends React.Component {
+  onCreate = () => {
+    requestRoute('/product/create');
+  };
+
   render() {
     if (!this.props.products) return null;
     return (
@@ -27,7 +32,7 @@ class Products extends React.Component {
           <Grid container spacing={24}>
             <Hidden smDown>
               <Grid item xs={12} sm={6} lg={4}>
-                <CreateCard />
+                <CreateCard onClick={this.onCreate} />
               </Grid>
             </Hidden>
             {this.props.products.map((product) => {
@@ -38,7 +43,11 @@ class Products extends React.Component {
               );
             })}
             <Hidden smUp>
-              <Fab color="primary" className={styles.fab}>
+              <Fab
+                color="primary"
+                className={styles.fab}
+                onClick={this.onCreate}
+              >
                 <Icon type="add" />
               </Fab>
             </Hidden>

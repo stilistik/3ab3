@@ -8,7 +8,7 @@ class CreateCard extends React.Component {
   render() {
     return (
       <div className={styles.card}>
-        <CardActionArea className={styles.area}>
+        <CardActionArea className={styles.area} onClick={this.props.onClick}>
           <Icon type="add" className={styles.icon} />
         </CardActionArea>
       </div>
