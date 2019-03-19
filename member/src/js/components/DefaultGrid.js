@@ -9,8 +9,8 @@ export class DefaultGrid extends React.Component {
     });
 
     return (
-      <Grid container justify="center">
-        <Grid item xs={12} md={8} lg={6} xl={5}>
+      <Grid container justify="center" style={{ overflowY: 'auto' }}>
+        <Grid item xs={12} md={10} lg={8} xl={6}>
           {childrenWithProps}
         </Grid>
       </Grid>

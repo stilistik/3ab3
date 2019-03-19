@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
 import AppHeader from './AppHeader';
 import AppMenu from './AppMenu';
+import Auth from './Auth';
 import Routes from 'Routes';
 import MessageHandler from './MessageHandler';
 import history from 'History';
@@ -61,9 +62,11 @@ class App extends React.Component {
             />
           </div>
         ) : null}
-        <Router history={history}>
-          <Routes props={props} />
-        </Router>
+        <Auth>
+          <Router history={history}>
+            <Routes props={props} />
+          </Router>
+        </Auth>
         <MessageHandler />
       </div>
     );

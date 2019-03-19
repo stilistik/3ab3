@@ -9,6 +9,7 @@ import Home from 'Pages/home';
 import History from 'Pages/history';
 import Dashboard from 'Pages/dashboard';
 import Account from 'Pages/account';
+import Products from 'Pages/products';
 
 const Routes = ({ props }) => {
   return (
@@ -18,6 +19,7 @@ const Routes = ({ props }) => {
       <AuthRoute path="/dashboard" component={Dashboard} props={props} />
       <AuthRoute path="/home" component={Home} props={props} />
       <AuthRoute path="/account" component={Account} props={props} />
+      <AuthRoute path="/products" component={Products} props={props} />
       <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );

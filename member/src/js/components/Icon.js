@@ -10,6 +10,10 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
+import LocalBarIcon from '@material-ui/icons/LocalBar';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const icons = {
   mail: MailIcon,
@@ -23,6 +27,10 @@ const icons = {
   success: CheckCircleIcon,
   info: InfoIcon,
   close: CloseIcon,
+  drinks: LocalBarIcon,
+  add: AddIcon,
+  edit: EditIcon,
+  delete: DeleteIcon,
 };
 
 export class Icon extends React.Component {
