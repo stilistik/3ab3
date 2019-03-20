@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from 'Redux/actions';
+import { login, showMessage } from 'Redux/actions';
 import { TextField, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     login: (access_token) => {
       dispatch(login(access_token));
+    },
+    messageHandler: (message) => {
+      dispatch(showMessage(message));
     },
   };
 };
@@ -30,7 +33,7 @@ class LoginForm extends React.Component {
     const response = await requestToken(
       this.state.email,
       this.state.password,
-      this.messageHandler
+      this.props.messageHandler
     );
     this.props.login(response.access_token);
     requestRoute('/profile');
@@ -41,8 +44,6 @@ class LoginForm extends React.Component {
       [e.target.name]: e.target.value,
     });
   };
-
-  messageHandler = () => {};
 
   render() {
     return (

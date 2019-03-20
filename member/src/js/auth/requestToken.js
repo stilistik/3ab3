@@ -16,22 +16,31 @@ export const requestToken = async (email, password, messageHandler) => {
     body: JSON.stringify(payload),
   }).catch(async () => {
     // catch unknown authentication errors
-    messageHandler(
-      'error',
-      'Unable to fetch from login server. Maybe the server is offline...'
-    );
+    messageHandler({
+      type: 'error',
+      text: 'Unable to fetch from login server. Maybe the server is offline...',
+    });
     return null;
   });
   if (!response.ok) {
     // wrong login credentials
     if (response.status === 502) {
-      this.props.app.handleMessages('error', 'Login server gateway error.');
+      this.props.app.handleMessages({
+        type: 'error',
+        text: 'Login server gateway error.',
+      });
       return null;
     } else if (response.status === 403) {
-      messageHandler('error', 'Failed to login with your credentials.');
+      messageHandler({
+        type: 'error',
+        text: 'Failed to login with your credentials.',
+      });
       return null;
     } else {
-      messageHandler('error', 'Unknown error while logging in.');
+      messageHandler({
+        type: 'error',
+        text: 'Unknown error while logging in.',
+      });
       return null;
     }
   } else {
