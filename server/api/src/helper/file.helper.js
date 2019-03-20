@@ -14,6 +14,9 @@ class FileHelper {
     return UPLOAD_DIR;
   }
 
+  /**
+  Helper function to delete a file from the local file system
+  */
   static deleteFile(filePath) {
     return new Promise((resolve, reject) => {
       fs.unlink(filePath, (err, data) => {
@@ -25,6 +28,9 @@ class FileHelper {
     });
   }
 
+  /**
+  Helper function to store a file on the local file system
+  */
   static storeFS({ stream, filename }) {
     const fileId = uuidv4();
     const dirPath = path.resolve(UPLOAD_DIR);
@@ -60,12 +66,20 @@ class FileHelper {
   }
 }
 
+/**
+Convenience function to delete a file from the database and from the file
+system.
+*/
 const deleteFile = async (fileId, context) => {
   const file = await context.prisma.deleteFile({ id: fileId });
   await FileHelper.deleteFile(file.path);
   return file;
 };
 
+/**
+Convenience function to store a new file on the file system and create a
+database entry for it.
+*/
 const uploadFile = async (file, context) => {
   const { createReadStream, filename, mimetype } = await file;
   const stream = createReadStream();

@@ -39,6 +39,7 @@ module.exports = {
       });
     },
     async uploadAvatar(root, args, context) {
+      // get the current user
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });
 
@@ -47,11 +48,15 @@ module.exports = {
       }
 
       if (user.avatar) {
+        // user already has an avatar, we need to delete it
         const oldAvatar = await context.prisma.file({ uri: user.avatar });
         await deleteFile(oldAvatar.id, context);
       }
 
+      // store file and create database entry
       const file = await uploadFile(args.file, context);
+
+      // update user database entry
       return context.prisma.updateUser({
         where: { id: user.id },
         data: { avatar: file.uri },
