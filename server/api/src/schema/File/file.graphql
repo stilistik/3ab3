@@ -14,5 +14,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  upload(file: Upload!): File! @hasRole
+  uploadFile(file: Upload!): File! @hasRole
+  deleteFile(fileId: ID!): File! @hasRole
 }

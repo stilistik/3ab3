@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const verifyAndDecodeToken = require('../../auth/verify');
 const { AuthenticationError } = require('../../auth/errors');
-const { FileHelper } = require('../../helper/file.helper.js');
+const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
 
 module.exports = {
   Query: {
@@ -46,7 +46,12 @@ module.exports = {
         throw new AuthenticationError('User not found');
       }
 
-      const file = await FileHelper.uploadFile(root, args, context);
+      if (user.avatar) {
+        const oldAvatar = await context.prisma.file({ uri: user.avatar });
+        await deleteFile(oldAvatar.id, context);
+      }
+
+      const file = await uploadFile(args.file, context);
       return context.prisma.updateUser({
         where: { id: user.id },
         data: { avatar: file.uri },

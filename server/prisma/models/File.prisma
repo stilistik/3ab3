@@ -2,9 +2,9 @@ type File {
   id: ID! @unique
   fileId: String! @unique
   hash: String! @unique
+  uri: String! @unique
   filename: String!
   path: String!
-  uri: String!
   mimetype: String!
   extension: String!
   createdAt: DateTime!

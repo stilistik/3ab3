@@ -567,12 +567,12 @@ export type FileOrderByInput =
   | "fileId_DESC"
   | "hash_ASC"
   | "hash_DESC"
+  | "uri_ASC"
+  | "uri_DESC"
   | "filename_ASC"
   | "filename_DESC"
   | "path_ASC"
   | "path_DESC"
-  | "uri_ASC"
-  | "uri_DESC"
   | "mimetype_ASC"
   | "mimetype_DESC"
   | "extension_ASC"
@@ -757,9 +757,9 @@ export interface EventWhereInput {
 export interface FileUpdateInput {
   fileId?: String;
   hash?: String;
+  uri?: String;
   filename?: String;
   path?: String;
-  uri?: String;
   mimetype?: String;
   extension?: String;
 }
@@ -772,9 +772,9 @@ export interface UserUpsertWithoutPaymentsInput {
 export interface FileUpdateManyMutationInput {
   fileId?: String;
   hash?: String;
+  uri?: String;
   filename?: String;
   path?: String;
-  uri?: String;
   mimetype?: String;
   extension?: String;
 }
@@ -795,6 +795,7 @@ export type FileWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   fileId?: String;
   hash?: String;
+  uri?: String;
 }>;
 
 export interface ProductCreateOneInput {
@@ -845,6 +846,20 @@ export interface FileWhereInput {
   hash_not_starts_with?: String;
   hash_ends_with?: String;
   hash_not_ends_with?: String;
+  uri?: String;
+  uri_not?: String;
+  uri_in?: String[] | String;
+  uri_not_in?: String[] | String;
+  uri_lt?: String;
+  uri_lte?: String;
+  uri_gt?: String;
+  uri_gte?: String;
+  uri_contains?: String;
+  uri_not_contains?: String;
+  uri_starts_with?: String;
+  uri_not_starts_with?: String;
+  uri_ends_with?: String;
+  uri_not_ends_with?: String;
   filename?: String;
   filename_not?: String;
   filename_in?: String[] | String;
@@ -873,20 +888,6 @@ export interface FileWhereInput {
   path_not_starts_with?: String;
   path_ends_with?: String;
   path_not_ends_with?: String;
-  uri?: String;
-  uri_not?: String;
-  uri_in?: String[] | String;
-  uri_not_in?: String[] | String;
-  uri_lt?: String;
-  uri_lte?: String;
-  uri_gt?: String;
-  uri_gte?: String;
-  uri_contains?: String;
-  uri_not_contains?: String;
-  uri_starts_with?: String;
-  uri_not_starts_with?: String;
-  uri_ends_with?: String;
-  uri_not_ends_with?: String;
   mimetype?: String;
   mimetype_not?: String;
   mimetype_in?: String[] | String;
@@ -1537,9 +1538,9 @@ export interface PurchaseUpdateManyWithoutUserInput {
 export interface FileCreateInput {
   fileId: String;
   hash: String;
+  uri: String;
   filename: String;
   path: String;
-  uri: String;
   mimetype: String;
   extension: String;
 }
@@ -3011,9 +3012,9 @@ export interface File {
   id: ID_Output;
   fileId: String;
   hash: String;
+  uri: String;
   filename: String;
   path: String;
-  uri: String;
   mimetype: String;
   extension: String;
   createdAt: DateTimeOutput;
@@ -3023,9 +3024,9 @@ export interface FilePromise extends Promise<File>, Fragmentable {
   id: () => Promise<ID_Output>;
   fileId: () => Promise<String>;
   hash: () => Promise<String>;
+  uri: () => Promise<String>;
   filename: () => Promise<String>;
   path: () => Promise<String>;
-  uri: () => Promise<String>;
   mimetype: () => Promise<String>;
   extension: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -3037,9 +3038,9 @@ export interface FileSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   fileId: () => Promise<AsyncIterator<String>>;
   hash: () => Promise<AsyncIterator<String>>;
+  uri: () => Promise<AsyncIterator<String>>;
   filename: () => Promise<AsyncIterator<String>>;
   path: () => Promise<AsyncIterator<String>>;
-  uri: () => Promise<AsyncIterator<String>>;
   mimetype: () => Promise<AsyncIterator<String>>;
   extension: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -3256,9 +3257,9 @@ export interface FilePreviousValues {
   id: ID_Output;
   fileId: String;
   hash: String;
+  uri: String;
   filename: String;
   path: String;
-  uri: String;
   mimetype: String;
   extension: String;
   createdAt: DateTimeOutput;
@@ -3270,9 +3271,9 @@ export interface FilePreviousValuesPromise
   id: () => Promise<ID_Output>;
   fileId: () => Promise<String>;
   hash: () => Promise<String>;
+  uri: () => Promise<String>;
   filename: () => Promise<String>;
   path: () => Promise<String>;
-  uri: () => Promise<String>;
   mimetype: () => Promise<String>;
   extension: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -3284,9 +3285,9 @@ export interface FilePreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   fileId: () => Promise<AsyncIterator<String>>;
   hash: () => Promise<AsyncIterator<String>>;
+  uri: () => Promise<AsyncIterator<String>>;
   filename: () => Promise<AsyncIterator<String>>;
   path: () => Promise<AsyncIterator<String>>;
-  uri: () => Promise<AsyncIterator<String>>;
   mimetype: () => Promise<AsyncIterator<String>>;
   extension: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;

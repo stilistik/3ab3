@@ -1,4 +1,4 @@
-const { FileHelper } = require('../../helper/file.helper.js');
+const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
 
 module.exports = {
   Query: {
@@ -11,8 +11,11 @@ module.exports = {
   },
 
   Mutation: {
-    async upload(root, args, context) {
-      return FileHelper.uploadFile(root, args, context);
+    async uploadFile(root, args, context) {
+      return uploadFile(args.file, context);
+    },
+    async deleteFile(root, args, context) {
+      return deleteFile(args.fileId, context);
     },
   },
 };

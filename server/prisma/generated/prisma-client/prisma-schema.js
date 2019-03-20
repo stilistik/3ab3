@@ -362,9 +362,9 @@ type File {
   id: ID!
   fileId: String!
   hash: String!
+  uri: String!
   filename: String!
   path: String!
-  uri: String!
   mimetype: String!
   extension: String!
   createdAt: DateTime!
@@ -379,9 +379,9 @@ type FileConnection {
 input FileCreateInput {
   fileId: String!
   hash: String!
+  uri: String!
   filename: String!
   path: String!
-  uri: String!
   mimetype: String!
   extension: String!
 }
@@ -398,12 +398,12 @@ enum FileOrderByInput {
   fileId_DESC
   hash_ASC
   hash_DESC
+  uri_ASC
+  uri_DESC
   filename_ASC
   filename_DESC
   path_ASC
   path_DESC
-  uri_ASC
-  uri_DESC
   mimetype_ASC
   mimetype_DESC
   extension_ASC
@@ -418,9 +418,9 @@ type FilePreviousValues {
   id: ID!
   fileId: String!
   hash: String!
+  uri: String!
   filename: String!
   path: String!
-  uri: String!
   mimetype: String!
   extension: String!
   createdAt: DateTime!
@@ -447,9 +447,9 @@ input FileSubscriptionWhereInput {
 input FileUpdateInput {
   fileId: String
   hash: String
+  uri: String
   filename: String
   path: String
-  uri: String
   mimetype: String
   extension: String
 }
@@ -457,9 +457,9 @@ input FileUpdateInput {
 input FileUpdateManyMutationInput {
   fileId: String
   hash: String
+  uri: String
   filename: String
   path: String
-  uri: String
   mimetype: String
   extension: String
 }
@@ -507,6 +507,20 @@ input FileWhereInput {
   hash_not_starts_with: String
   hash_ends_with: String
   hash_not_ends_with: String
+  uri: String
+  uri_not: String
+  uri_in: [String!]
+  uri_not_in: [String!]
+  uri_lt: String
+  uri_lte: String
+  uri_gt: String
+  uri_gte: String
+  uri_contains: String
+  uri_not_contains: String
+  uri_starts_with: String
+  uri_not_starts_with: String
+  uri_ends_with: String
+  uri_not_ends_with: String
   filename: String
   filename_not: String
   filename_in: [String!]
@@ -535,20 +549,6 @@ input FileWhereInput {
   path_not_starts_with: String
   path_ends_with: String
   path_not_ends_with: String
-  uri: String
-  uri_not: String
-  uri_in: [String!]
-  uri_not_in: [String!]
-  uri_lt: String
-  uri_lte: String
-  uri_gt: String
-  uri_gte: String
-  uri_contains: String
-  uri_not_contains: String
-  uri_starts_with: String
-  uri_not_starts_with: String
-  uri_ends_with: String
-  uri_not_ends_with: String
   mimetype: String
   mimetype_not: String
   mimetype_in: [String!]
@@ -594,6 +594,7 @@ input FileWhereUniqueInput {
   id: ID
   fileId: String
   hash: String
+  uri: String
 }
 
 type Item {
