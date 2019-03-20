@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login, showMessage } from 'Redux/actions';
-import { TextField, Typography, Button } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
+import { Form, Field } from 'Components';
 import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
 import { requestRoute } from 'History';
@@ -28,15 +29,16 @@ class LoginForm extends React.Component {
     };
   }
 
-  submit = async (e) => {
-    e.preventDefault();
+  onSubmit = async (values) => {
     const response = await requestToken(
-      this.state.email,
-      this.state.password,
+      values.email,
+      values.password,
       this.props.messageHandler
     );
-    this.props.login(response.access_token);
-    requestRoute('/profile');
+    if (response) {
+      this.props.login(response.access_token);
+      requestRoute('/profile');
+    }
   };
 
   onChange = (e) => {
@@ -58,35 +60,30 @@ class LoginForm extends React.Component {
           </Typography>
         </div>
         <br />
-        <form noValidate className={styles.form} onSubmit={this.submit}>
-          <TextField
+        <Form className={styles.form} onSubmit={this.onSubmit}>
+          <Field
+            id="email"
+            name="Email"
+            type="email"
+            required={true}
+            className={styles.field}
             InputProps={{ className: styles.input }}
             InputLabelProps={{ className: styles.label }}
-            name="email"
-            label="Email"
-            margin="normal"
-            onChange={this.onChange}
           />
-          <TextField
+          <Field
+            id="password"
+            name="Password"
+            type="password"
+            required={true}
+            className={styles.field}
             InputProps={{ className: styles.input }}
             InputLabelProps={{ className: styles.label }}
-            name="password"
-            label="Password"
-            type="password"
-            margin="normal"
-            onChange={this.onChange}
           />
           <br />
-          <Button
-            variant="contained"
-            type="submit"
-            color="secondary"
-            size="large"
-            styleName="button"
-          >
-            Login
+          <Button type="submit" variant="contained" color="primary">
+            Submit
           </Button>
-        </form>
+        </Form>
       </div>
     );
   }
