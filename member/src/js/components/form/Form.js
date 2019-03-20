@@ -1,6 +1,9 @@
 import React from 'react';
 import { Field } from './Field';
+import { ImageField } from './ImageField';
 import Validator from './Validator';
+
+const FIELDTYPES = [Field.name, ImageField.name];
 
 export class Form extends React.Component {
   constructor(props) {
@@ -12,7 +15,7 @@ export class Form extends React.Component {
   createInitState = (children) => {
     let state = {};
     children.forEach((child) => {
-      if (child.type.name === Field.name) {
+      if (FIELDTYPES.indexOf(child.type.name) > -1) {
         const { id, type, required } = child.props;
         state[id] = {
           value: '',
@@ -25,8 +28,7 @@ export class Form extends React.Component {
     return state;
   };
 
-  onFieldChange = async (e) => {
-    const { id, value } = e.target;
+  onFieldChange = async (id, value) => {
     const fieldProps = Object.assign({}, this.state[id], {
       value: value,
     });

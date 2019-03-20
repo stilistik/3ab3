@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextField, Grid, Button } from '@material-ui/core';
+import { ImageField, Field, Form } from 'Components';
 
 import styles from './ProductForm.css';
 
@@ -21,14 +22,13 @@ class ProductForm extends React.Component {
     }
   }
 
-  submit = (e) => {
-    e.preventDefault();
-    const values = {
-      name: this.state.name,
-      price: parseFloat(this.state.price),
-      index: parseInt(this.state.index),
+  onSubmit = (values) => {
+    const formattedValues = {
+      name: values.name,
+      price: parseFloat(values.price),
+      index: parseInt(values.index),
     };
-    this.props.onSubmit(values);
+    this.props.onSubmit(formattedValues);
   };
 
   onChange = (e) => {
@@ -41,28 +41,28 @@ class ProductForm extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12} sm={6}>
-          <form className={styles.form} onSubmit={this.submit}>
-            <TextField
-              name="name"
-              label="Name"
-              margin="normal"
-              value={this.state.name}
-              onChange={this.onChange}
+          <Form className={styles.form} onSubmit={this.onSubmit}>
+            <ImageField id="thumbnail" name="Product Image" />
+            <Field
+              id="name"
+              name="Name"
+              required={true}
+              className={styles.field}
             />
-            <TextField
+            <Field
+              id="price"
               name="price"
               label="Price"
-              margin="normal"
-              value={this.state.price}
-              onChange={this.onChange}
+              required={true}
+              className={styles.field}
             />
-            <TextField
+            <Field
+              id="index"
               name="index"
               label="Index"
-              margin="normal"
               type="number"
-              value={this.state.index}
-              onChange={this.onChange}
+              required={true}
+              className={styles.field}
             />
             <br />
             <Button
@@ -73,7 +73,7 @@ class ProductForm extends React.Component {
             >
               Submit
             </Button>
-          </form>
+          </Form>
         </Grid>
       </Grid>
     );

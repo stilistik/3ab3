@@ -7,6 +7,10 @@ import {
 } from '@material-ui/core';
 
 export class Field extends React.Component {
+  onChange = (e) => {
+    this.props.onChange(this.props.id, e.target.value);
+  };
+
   render() {
     const {
       id,
@@ -14,7 +18,6 @@ export class Field extends React.Component {
       type,
       value,
       error,
-      onChange,
       InputLabelProps,
       InputProps,
       className,
@@ -27,7 +30,7 @@ export class Field extends React.Component {
         <Input
           id={id}
           type={type}
-          onChange={onChange}
+          onChange={this.onChange}
           value={value}
           {...InputProps}
         />
