@@ -58,7 +58,7 @@ class LoginForm extends React.Component {
           </Typography>
         </div>
         <br />
-        <form className={styles.form} onSubmit={this.submit}>
+        <form noValidate className={styles.form} onSubmit={this.submit}>
           <TextField
             InputProps={{ className: styles.input }}
             InputLabelProps={{ className: styles.label }}

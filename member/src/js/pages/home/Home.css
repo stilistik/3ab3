@@ -1,4 +1,8 @@
 .container {
-  width: 100%;
-  padding: 20px;
+  width: 400px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
 }
