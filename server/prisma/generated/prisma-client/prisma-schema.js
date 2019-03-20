@@ -1171,7 +1171,8 @@ type Product {
   name: String!
   price: Float!
   index: Int!
-  show: Boolean!
+  thumbnail: String
+  deleted: Boolean!
 }
 
 type ProductConnection {
@@ -1184,7 +1185,8 @@ input ProductCreateInput {
   name: String!
   price: Float!
   index: Int!
-  show: Boolean
+  thumbnail: String
+  deleted: Boolean
 }
 
 input ProductCreateOneInput {
@@ -1372,8 +1374,10 @@ enum ProductOrderByInput {
   price_DESC
   index_ASC
   index_DESC
-  show_ASC
-  show_DESC
+  thumbnail_ASC
+  thumbnail_DESC
+  deleted_ASC
+  deleted_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1385,7 +1389,8 @@ type ProductPreviousValues {
   name: String!
   price: Float!
   index: Int!
-  show: Boolean!
+  thumbnail: String
+  deleted: Boolean!
 }
 
 type ProductSubscriptionPayload {
@@ -1410,21 +1415,24 @@ input ProductUpdateDataInput {
   name: String
   price: Float
   index: Int
-  show: Boolean
+  thumbnail: String
+  deleted: Boolean
 }
 
 input ProductUpdateInput {
   name: String
   price: Float
   index: Int
-  show: Boolean
+  thumbnail: String
+  deleted: Boolean
 }
 
 input ProductUpdateManyMutationInput {
   name: String
   price: Float
   index: Int
-  show: Boolean
+  thumbnail: String
+  deleted: Boolean
 }
 
 input ProductUpdateOneRequiredInput {
@@ -1484,8 +1492,22 @@ input ProductWhereInput {
   index_lte: Int
   index_gt: Int
   index_gte: Int
-  show: Boolean
-  show_not: Boolean
+  thumbnail: String
+  thumbnail_not: String
+  thumbnail_in: [String!]
+  thumbnail_not_in: [String!]
+  thumbnail_lt: String
+  thumbnail_lte: String
+  thumbnail_gt: String
+  thumbnail_gte: String
+  thumbnail_contains: String
+  thumbnail_not_contains: String
+  thumbnail_starts_with: String
+  thumbnail_not_starts_with: String
+  thumbnail_ends_with: String
+  thumbnail_not_ends_with: String
+  deleted: Boolean
+  deleted_not: Boolean
   AND: [ProductWhereInput!]
   OR: [ProductWhereInput!]
   NOT: [ProductWhereInput!]

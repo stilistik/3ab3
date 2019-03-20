@@ -655,8 +655,10 @@ export type ProductOrderByInput =
   | "price_DESC"
   | "index_ASC"
   | "index_DESC"
-  | "show_ASC"
-  | "show_DESC"
+  | "thumbnail_ASC"
+  | "thumbnail_DESC"
+  | "deleted_ASC"
+  | "deleted_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -678,7 +680,8 @@ export interface ProductUpdateDataInput {
   name?: String;
   price?: Float;
   index?: Int;
-  show?: Boolean;
+  thumbnail?: String;
+  deleted?: Boolean;
 }
 
 export interface EventWhereInput {
@@ -929,7 +932,8 @@ export interface ProductCreateInput {
   name: String;
   price: Float;
   index: Int;
-  show?: Boolean;
+  thumbnail?: String;
+  deleted?: Boolean;
 }
 
 export interface ProductionSubscriptionWhereInput {
@@ -1096,8 +1100,22 @@ export interface ProductWhereInput {
   index_lte?: Int;
   index_gt?: Int;
   index_gte?: Int;
-  show?: Boolean;
-  show_not?: Boolean;
+  thumbnail?: String;
+  thumbnail_not?: String;
+  thumbnail_in?: String[] | String;
+  thumbnail_not_in?: String[] | String;
+  thumbnail_lt?: String;
+  thumbnail_lte?: String;
+  thumbnail_gt?: String;
+  thumbnail_gte?: String;
+  thumbnail_contains?: String;
+  thumbnail_not_contains?: String;
+  thumbnail_starts_with?: String;
+  thumbnail_not_starts_with?: String;
+  thumbnail_ends_with?: String;
+  thumbnail_not_ends_with?: String;
+  deleted?: Boolean;
+  deleted_not?: Boolean;
   AND?: ProductWhereInput[] | ProductWhereInput;
   OR?: ProductWhereInput[] | ProductWhereInput;
   NOT?: ProductWhereInput[] | ProductWhereInput;
@@ -1255,7 +1273,8 @@ export interface ProductUpdateManyMutationInput {
   name?: String;
   price?: Float;
   index?: Int;
-  show?: Boolean;
+  thumbnail?: String;
+  deleted?: Boolean;
 }
 
 export interface PurchaseCreateWithoutTransactionInput {
@@ -1755,7 +1774,8 @@ export interface ProductUpdateInput {
   name?: String;
   price?: Float;
   index?: Int;
-  show?: Boolean;
+  thumbnail?: String;
+  deleted?: Boolean;
 }
 
 export interface TransactionUpdateOneRequiredWithoutPurchaseInput {
@@ -3145,7 +3165,8 @@ export interface Product {
   name: String;
   price: Float;
   index: Int;
-  show: Boolean;
+  thumbnail?: String;
+  deleted: Boolean;
 }
 
 export interface ProductPromise extends Promise<Product>, Fragmentable {
@@ -3153,7 +3174,8 @@ export interface ProductPromise extends Promise<Product>, Fragmentable {
   name: () => Promise<String>;
   price: () => Promise<Float>;
   index: () => Promise<Int>;
-  show: () => Promise<Boolean>;
+  thumbnail: () => Promise<String>;
+  deleted: () => Promise<Boolean>;
 }
 
 export interface ProductSubscription
@@ -3163,7 +3185,8 @@ export interface ProductSubscription
   name: () => Promise<AsyncIterator<String>>;
   price: () => Promise<AsyncIterator<Float>>;
   index: () => Promise<AsyncIterator<Int>>;
-  show: () => Promise<AsyncIterator<Boolean>>;
+  thumbnail: () => Promise<AsyncIterator<String>>;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface PaymentConnection {
@@ -3642,7 +3665,8 @@ export interface ProductPreviousValues {
   name: String;
   price: Float;
   index: Int;
-  show: Boolean;
+  thumbnail?: String;
+  deleted: Boolean;
 }
 
 export interface ProductPreviousValuesPromise
@@ -3652,7 +3676,8 @@ export interface ProductPreviousValuesPromise
   name: () => Promise<String>;
   price: () => Promise<Float>;
   index: () => Promise<Int>;
-  show: () => Promise<Boolean>;
+  thumbnail: () => Promise<String>;
+  deleted: () => Promise<Boolean>;
 }
 
 export interface ProductPreviousValuesSubscription
@@ -3662,7 +3687,8 @@ export interface ProductPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   price: () => Promise<AsyncIterator<Float>>;
   index: () => Promise<AsyncIterator<Int>>;
-  show: () => Promise<AsyncIterator<Boolean>>;
+  thumbnail: () => Promise<AsyncIterator<String>>;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface TransactionPreviousValues {

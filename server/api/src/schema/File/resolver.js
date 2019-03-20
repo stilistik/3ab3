@@ -1,4 +1,4 @@
-const { uploadFile } = require('../../helper/file.helper.js');
+const { FileHelper } = require('../../helper/file.helper.js');
 
 module.exports = {
   Query: {
@@ -12,7 +12,7 @@ module.exports = {
 
   Mutation: {
     async upload(root, args, context) {
-      return uploadFile(root, args, context);
+      return FileHelper.uploadFile(root, args, context);
     },
   },
 };

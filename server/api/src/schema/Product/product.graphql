@@ -3,13 +3,16 @@ type Product @isAuthenticated {
   name: String!
   price: Float!
   index: Int!
-  show: Boolean!
+  thumbnail: String!
+  deleted: Boolean!
 }
 
 input ProductInput {
   name: String!
   price: Float!
   index: Int!
+  thumbnail: String
+  deleted: Boolean
 }
 
 extend type Query {

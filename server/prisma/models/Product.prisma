@@ -3,5 +3,6 @@ type Product {
   name: String!
   price: Float!
   index: Int!
-  show: Boolean! @default(value: "true")
+  thumbnail: String
+  deleted: Boolean! @default(value: "false")
 }
