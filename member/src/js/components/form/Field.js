@@ -29,7 +29,7 @@ export class Field extends React.Component {
         </InputLabel>
         <Input
           id={id}
-          type={type}
+          type={type === 'password' ? 'password' : null}
           onChange={this.onChange}
           value={value}
           {...InputProps}

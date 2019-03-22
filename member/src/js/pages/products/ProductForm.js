@@ -50,21 +50,21 @@ class ProductForm extends React.Component {
             <Field
               id="name"
               name="Name"
+              type="alpha"
               required={true}
               className={styles.field}
             />
             <Field
               id="price"
-              name="price"
-              label="Price"
+              name="Price"
+              type="float"
               required={true}
               className={styles.field}
             />
             <Field
               id="index"
-              name="index"
-              label="Index"
-              type="number"
+              name="Index"
+              type="integer"
               required={true}
               className={styles.field}
             />
