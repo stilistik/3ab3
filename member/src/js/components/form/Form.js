@@ -47,12 +47,24 @@ export class Form extends React.Component {
     this.dirty = true;
     const hasError = this.validateFormFields(this.state);
     if (!hasError) {
-      const values = {};
-      Object.keys(this.state).forEach((fieldName) => {
-        values[fieldName] = this.state[fieldName].value;
-      });
+      const values = this.createSubmitValues(this.state);
       this.props.onSubmit(values);
     }
+  };
+
+  createSubmitValues = (state) => {
+    const values = {};
+    Object.keys(state).forEach((id) => {
+      const field = state[id];
+      switch (field.type) {
+        case 'image':
+          if (field.value instanceof File) values[id] = field.value;
+          break;
+        default:
+          values[id] = field.value;
+      }
+    });
+    return values;
   };
 
   validateFormFields = (state) => {

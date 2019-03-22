@@ -24,7 +24,12 @@ class ProductForm extends React.Component {
             onSubmit={this.onSubmit}
             initValues={this.props.initValues}
           >
-            <ImageField id="image" required={true} name="Product Image" />
+            <ImageField
+              id="image"
+              type="image"
+              required={true}
+              name="Product Image"
+            />
             <Field
               id="name"
               name="Name"
