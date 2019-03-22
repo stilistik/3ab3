@@ -21,11 +21,12 @@ class ProductCard extends React.Component {
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
-          <CardMedia
-            component="img"
-            alt="3ab3 Product"
-            image={global.API_URL + this.props.product.thumbnail}
-            title="Contemplative Reptile"
+          <div
+            className={styles.background}
+            style={{
+              backgroundImage: `url(${global.API_URL +
+                this.props.product.thumbnail})`,
+            }}
           />
           <CardContent>
             <Typography
