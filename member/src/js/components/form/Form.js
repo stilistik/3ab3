@@ -8,11 +8,11 @@ const FIELDTYPES = [Field.name, ImageField.name];
 export class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.createInitState(props.children);
+    this.state = this.createInitState(props.children, props.initValues);
     this.dirty = false;
   }
 
-  createInitState = (children) => {
+  createInitState = (children, initValues) => {
     let state = {};
     children.forEach((child) => {
       if (FIELDTYPES.indexOf(child.type.name) > -1) {
@@ -25,6 +25,11 @@ export class Form extends React.Component {
         };
       }
     });
+    if (initValues) {
+      Object.keys(initValues).forEach((id) => {
+        if (state[id]) state[id].value = initValues[id];
+      });
+    }
     return state;
   };
 

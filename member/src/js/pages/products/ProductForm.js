@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Grid, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { ImageField, Field, Form } from 'Components';
 
 import styles from './ProductForm.css';
@@ -41,7 +41,11 @@ class ProductForm extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12} sm={6}>
-          <Form className={styles.form} onSubmit={this.onSubmit}>
+          <Form
+            className={styles.form}
+            onSubmit={this.onSubmit}
+            initValues={this.props.initValues}
+          >
             <ImageField id="thumbnail" name="Product Image" />
             <Field
               id="name"

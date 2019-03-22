@@ -56,7 +56,13 @@ class FormMutation extends React.Component {
       <Mutation mutation={MUTATION}>
         {(updateProduct) => {
           this.updateProduct = updateProduct;
-          return <ProductForm {...this.props} onSubmit={this.onSubmit} />;
+          return (
+            <ProductForm
+              {...this.props}
+              onSubmit={this.onSubmit}
+              initValues={this.props.product}
+            />
+          );
         }}
       </Mutation>
     );
