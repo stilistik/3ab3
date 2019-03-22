@@ -29,6 +29,16 @@ const Label = ({ error, name }) => {
   );
 };
 
+const Display = ({ url, cdn, err }) => {
+  if (url) {
+    return <Avatar src={url} className={styles.avatar} />;
+  } else if (cdn) {
+    return <Avatar src={global.API_URL + cdn} className={styles.avatar} />;
+  } else {
+    return <AvatarEmpty error={err} />;
+  }
+};
+
 export class ImageField extends React.Component {
   constructor(props) {
     super(props);
@@ -68,11 +78,7 @@ export class ImageField extends React.Component {
               variant="contained"
               component="span"
             >
-              {this.state.src ? (
-                <Avatar src={this.state.src} className={styles.avatar} />
-              ) : (
-                <AvatarEmpty error={error} />
-              )}
+              <Display url={this.state.src} cdn={value} err={error} />
             </IconButton>
           </label>
           <Label name={name} error={error} />

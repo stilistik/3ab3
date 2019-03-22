@@ -14,6 +14,7 @@ const QUERY = gql`
       name
       price
       index
+      thumbnail
     }
   }
 `;
@@ -35,10 +36,15 @@ class EditProductQuery extends React.Component {
 
 class EditProduct extends React.Component {
   render() {
+    const { thumbnail, ...rest } = this.props.product;
+    const initValues = {
+      image: thumbnail,
+      ...rest,
+    };
     return (
       <DefaultGrid overflow>
         <div className={styles.container}>
-          <EditProductForm {...this.props} />
+          <EditProductForm {...this.props} initValues={initValues} />
         </div>
       </DefaultGrid>
     );

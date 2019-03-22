@@ -60,7 +60,7 @@ class FormMutation extends React.Component {
             <ProductForm
               {...this.props}
               onSubmit={this.onSubmit}
-              initValues={this.props.product}
+              initValues={this.props.initValues}
             />
           );
         }}

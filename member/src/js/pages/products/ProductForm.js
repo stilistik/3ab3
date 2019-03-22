@@ -5,23 +5,6 @@ import { ImageField, Field, Form } from 'Components';
 import styles from './ProductForm.css';
 
 class ProductForm extends React.Component {
-  constructor(props) {
-    super(props);
-    if (props.product) {
-      this.state = {
-        name: props.product.name,
-        price: props.product.price,
-        index: props.product.index,
-      };
-    } else {
-      this.state = {
-        name: '',
-        price: '',
-        index: '',
-      };
-    }
-  }
-
   onSubmit = (values) => {
     const formattedValues = {
       name: values.name,
@@ -30,12 +13,6 @@ class ProductForm extends React.Component {
       image: values.image,
     };
     this.props.onSubmit(formattedValues);
-  };
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
   };
 
   render() {
