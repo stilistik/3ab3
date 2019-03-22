@@ -1,3 +1,5 @@
+const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
+
 module.exports = {
   Query: {
     products(root, args, context) {
@@ -15,8 +17,18 @@ module.exports = {
     },
   },
   Mutation: {
-    createProduct(root, args, context) {
-      return context.prisma.createProduct(args.input);
+    async createProduct(root, args, context) {
+      if (args.input.image) {
+        const { image, ...rest } = args.input;
+        const file = await uploadFile(image, context);
+        const input = {
+          thumbnail: file.uri,
+          ...rest,
+        };
+        return context.prisma.createProduct(input);
+      } else {
+        return context.prisma.createProduct(args.input);
+      }
     },
     updateProduct(root, args, context) {
       return context.prisma.updateProduct({

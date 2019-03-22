@@ -50,6 +50,7 @@ export class Form extends React.Component {
       Object.keys(this.state).forEach((fieldName) => {
         values[fieldName] = this.state[fieldName].value;
       });
+      console.log(values);
       this.props.onSubmit(values);
     }
   };

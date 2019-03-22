@@ -52,7 +52,6 @@ export class ImageField extends React.Component {
 
   render() {
     const { id, error, name, className, value } = this.props;
-    console.log(value);
     return (
       <div className={className}>
         <div className={styles.imagefield}>

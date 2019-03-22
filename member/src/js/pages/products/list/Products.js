@@ -16,6 +16,7 @@ const QUERY = gql`
       name
       price
       index
+      thumbnail
     }
   }
 `;

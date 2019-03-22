@@ -27,6 +27,7 @@ class ProductForm extends React.Component {
       name: values.name,
       price: parseFloat(values.price),
       index: parseInt(values.index),
+      image: values.image,
     };
     this.props.onSubmit(formattedValues);
   };
@@ -46,7 +47,7 @@ class ProductForm extends React.Component {
             onSubmit={this.onSubmit}
             initValues={this.props.initValues}
           >
-            <ImageField id="thumbnail" required={true} name="Product Image" />
+            <ImageField id="image" required={true} name="Product Image" />
             <Field
               id="name"
               name="Name"

@@ -3,7 +3,7 @@ import validator from 'validator';
 export default class Validator {
   static validate = (fieldProps) => {
     // validate required fields are not empty
-    if (fieldProps.required && validator.isEmpty(fieldProps.value))
+    if (fieldProps.required && !fieldProps.value)
       return { message: 'Please fill out this field.' };
 
     // switch validator based on field type
