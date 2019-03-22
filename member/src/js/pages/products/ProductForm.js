@@ -25,6 +25,7 @@ class ProductForm extends React.Component {
             initValues={this.props.initValues}
           >
             <ImageField
+              className={styles.imagefield}
               id="image"
               type="image"
               required={true}
