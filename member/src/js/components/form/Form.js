@@ -27,7 +27,8 @@ export class Form extends React.Component {
     });
     if (initValues) {
       Object.keys(initValues).forEach((id) => {
-        if (state[id]) state[id].value = initValues[id];
+        if (state[id] && initValues[id])
+          state[id].value = String(initValues[id]);
       });
     }
     return state;
