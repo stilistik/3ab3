@@ -14,6 +14,7 @@ import LocalBarIcon from '@material-ui/icons/LocalBar';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import GroupIcon from '@material-ui/icons/Group';
 
 const icons = {
   mail: MailIcon,
@@ -31,6 +32,7 @@ const icons = {
   add: AddIcon,
   edit: EditIcon,
   delete: DeleteIcon,
+  group: GroupIcon,
 };
 
 export class Icon extends React.Component {

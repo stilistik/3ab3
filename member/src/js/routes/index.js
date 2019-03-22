@@ -10,6 +10,7 @@ import History from 'Pages/history';
 import Dashboard from 'Pages/dashboard';
 import Account from 'Pages/account';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
+import Members from 'Pages/members';
 
 const Routes = ({ props }) => {
   return (
@@ -26,6 +27,7 @@ const Routes = ({ props }) => {
         props={props}
       />
       <AuthRoute path="/editproduct" component={EditProduct} props={props} />
+      <AuthRoute path="/members" component={Members} props={props} />
       <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );
