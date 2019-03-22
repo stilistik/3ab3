@@ -10,7 +10,7 @@ input EventInput {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: Upload
 }
 
 extend type Query {
