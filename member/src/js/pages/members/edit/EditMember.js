@@ -13,7 +13,6 @@ const QUERY = gql`
     user(userId: $userId) {
       id
       name
-      password
       email
       avatar
     }
