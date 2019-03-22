@@ -98,11 +98,8 @@ const uploadFile = async (file, context) => {
     filename,
   });
 
-  const fileExist = await context.prisma.file({ hash: fileHash });
-  if (fileExist) {
-    await FileHelper.deleteFile(filePath);
-    throw new ValidationError(`File already exists in the database`);
-  }
+  const existingFile = await context.prisma.file({ hash: fileHash });
+  if (existingFile) return existingFile;
 
   return context.prisma.createFile({
     fileId: fileId,
