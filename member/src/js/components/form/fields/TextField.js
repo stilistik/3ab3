@@ -6,7 +6,7 @@ import {
   FormHelperText,
 } from '@material-ui/core';
 
-export class Field extends React.Component {
+export class TextField extends React.Component {
   onChange = (e) => {
     this.props.onChange(this.props.id, e.target.value);
   };
@@ -28,15 +28,15 @@ export class Field extends React.Component {
           {name}
         </InputLabel>
         <Input
+          multiline={true}
           id={id}
+          rowsMax={10}
           type={type === 'password' ? 'password' : null}
           onChange={this.onChange}
           value={value}
           {...InputProps}
         />
-        <FormHelperText id="component-error-text">
-          {error ? error.message : null}
-        </FormHelperText>
+        <FormHelperText>{error ? error.message : null}</FormHelperText>
       </FormControl>
     );
   }

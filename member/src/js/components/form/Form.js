@@ -1,9 +1,13 @@
 import React from 'react';
-import { Field } from './Field';
-import { ImageField } from './ImageField';
+import { TextField, DateField, ImageField, Field } from './fields';
 import Validator from './Validator';
 
-const FIELDTYPES = [Field.name, ImageField.name];
+const FIELDTYPES = [
+  Field.name,
+  ImageField.name,
+  DateField.name,
+  TextField.name,
+];
 
 export class Form extends React.Component {
   constructor(props) {

@@ -25,6 +25,7 @@ class Events extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <DefaultGrid>
         <div className={styles.container}>

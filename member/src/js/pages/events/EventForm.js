@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
-import { ImageField, Field, Form } from 'Components';
+import { ImageField, TextField, Field, DateField, Form } from 'Components';
 
 import styles from './EventForm.css';
 
@@ -32,13 +32,13 @@ class ProductForm extends React.Component {
               required={true}
               className={styles.field}
             />
-            <Field
+            <TextField
               id="description"
               name="Description"
               required={true}
               className={styles.field}
             />
-            <Field
+            <DateField
               id="date"
               name="Date"
               type="date"
