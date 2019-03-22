@@ -19,7 +19,7 @@ class MemberItem extends React.Component {
             classes={{ avatar: styles.avatar, typo: styles.typo }}
           />
         </IconButton>
-        <Typography>{user.name}</Typography>
+        <Typography variant="h6">{user.name}</Typography>
       </div>
     );
   }

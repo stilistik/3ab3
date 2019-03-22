@@ -26,6 +26,18 @@ module.exports = {
       };
       return context.prisma.createUser(input);
     },
+    editUser(root, args, context) {
+      const input = {
+        name: args.input.name,
+        email: args.input.email,
+        password: bcrypt.hashSync(args.input.password, 8),
+        role: args.input.role,
+      };
+      return context.prisma.updateUser({
+        where: { id: args.userId },
+        data: input,
+      });
+    },
     editSelf(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
       const input = {

@@ -18,8 +18,8 @@ const UPDATE_QUERY = gql`
 `;
 
 const MUTATION = gql`
-  mutation($input: UserInput!) {
-    createUser(input: $input) {
+  mutation($userId: ID!, $input: UserInput!) {
+    editUser(userId: $userId, input: $input) {
       id
     }
   }
@@ -36,8 +36,9 @@ const mapDispatchToProps = (dispatch) => {
 class FormMutation extends React.Component {
   onSubmit = async (values) => {
     try {
-      await this.createUser({
+      await this.editUser({
         variables: {
+          userId: this.props.member.id,
           input: values,
         },
         refetchQueries: () => {
@@ -48,15 +49,21 @@ class FormMutation extends React.Component {
       this.props.message({ type: 'error', text: error.message });
       return;
     }
-    this.props.message({ type: 'success', text: 'User successfully created' });
+    this.props.message({ type: 'success', text: 'User update successful' });
   };
 
   render() {
     return (
       <Mutation mutation={MUTATION}>
-        {(createUser) => {
-          this.createUser = createUser;
-          return <MemberForm {...this.props} onSubmit={this.onSubmit} />;
+        {(editUser) => {
+          this.editUser = editUser;
+          return (
+            <MemberForm
+              {...this.props}
+              onSubmit={this.onSubmit}
+              initValues={this.props.initValues}
+            />
+          );
         }}
       </Mutation>
     );

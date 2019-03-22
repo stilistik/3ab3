@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 import { DefaultGrid } from 'Components';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -44,6 +45,9 @@ class EditProduct extends React.Component {
     return (
       <DefaultGrid overflow>
         <div className={styles.container}>
+          <Typography variant="h3" className={styles.typo}>
+            Edit Product
+          </Typography>
           <EditProductForm {...this.props} initValues={initValues} />
         </div>
       </DefaultGrid>

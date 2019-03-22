@@ -15,7 +15,7 @@ class CreateButton extends React.Component {
         >
           <Icon type="add" />
         </Fab>
-        <Typography>Create Member</Typography>
+        <Typography variant="h6">New</Typography>
       </div>
     );
   }
