@@ -4,6 +4,31 @@ import { Icon } from 'Components';
 
 import styles from './ImageField.css';
 
+const AvatarEmpty = ({ error }) => {
+  const cls = error ? 'avatar-empty-error' : 'avatar-empty';
+  return (
+    <Avatar className={styles[cls]}>
+      <Icon className={styles.icon} type="upload" />
+    </Avatar>
+  );
+};
+
+const Label = ({ error, name }) => {
+  const cls = error ? 'error' : 'typo';
+  return (
+    <div>
+      <Typography variant="subtitle1" className={styles[cls]}>
+        {name}
+      </Typography>
+      {error ? (
+        <Typography variant="subtitle2" className={styles.error}>
+          {error.message}
+        </Typography>
+      ) : null}
+    </div>
+  );
+};
+
 export class ImageField extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +51,8 @@ export class ImageField extends React.Component {
   };
 
   render() {
-    const { id, name, className } = this.props;
+    const { id, error, name, className, value } = this.props;
+    console.log(value);
     return (
       <div className={className}>
         <div className={styles.imagefield}>
@@ -46,15 +72,11 @@ export class ImageField extends React.Component {
               {this.state.src ? (
                 <Avatar src={this.state.src} className={styles.avatar} />
               ) : (
-                <Avatar className={styles['avatar-empty']}>
-                  <Icon className={styles.icon} type="upload" />
-                </Avatar>
+                <AvatarEmpty error={error} />
               )}
             </IconButton>
           </label>
-          <Typography variant="subtitle1" className={styles.typo}>
-            {name}
-          </Typography>
+          <Label name={name} error={error} />
         </div>
       </div>
     );

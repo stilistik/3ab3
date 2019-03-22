@@ -37,7 +37,7 @@ class Products extends React.Component {
       <DefaultGrid overflow>
         <div className={styles.container}>
           <Grid container spacing={24}>
-            <Hidden smDown>
+            <Hidden xsDown>
               <Grid item xs={12} sm={6} lg={4}>
                 <CreateCard onClick={this.onCreate} />
               </Grid>
