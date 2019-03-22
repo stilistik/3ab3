@@ -15,6 +15,9 @@ module.exports = {
       const { id } = verifyAndDecodeToken(context);
       return context.prisma.user({ id: id });
     },
+    roles() {
+      return ['MEMBER', 'ADMIN', 'SUPER'];
+    },
   },
   Mutation: {
     createUser(root, args, context) {

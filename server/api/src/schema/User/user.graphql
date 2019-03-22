@@ -33,6 +33,7 @@ input EditSelfInput {
 
 extend type Query {
   users: [User!]!
+  roles: [String!]! @isAuthenticated
   user(userId: ID!): User!
   currentUser: User!
 }

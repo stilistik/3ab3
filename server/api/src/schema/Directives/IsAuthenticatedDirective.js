@@ -30,11 +30,12 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   }
 
   visitFieldDefinition(field) {
+    const { resolve = defaultFieldResolver } = field;
     field.resolve = async function(result, args, context) {
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });
       if (user) {
-        return result[field.name];
+        return resolve.apply(this, args);
       } else {
         throw new AuthenticationError({ message: 'User not found' });
       }
