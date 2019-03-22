@@ -14,7 +14,10 @@ class MemberItem extends React.Component {
     return (
       <div className={styles.memberitem}>
         <IconButton className={styles.button} onClick={this.onClick}>
-          <UserAvatar user={user} classes={{ avatar: styles.avatar }} />
+          <UserAvatar
+            user={user}
+            classes={{ avatar: styles.avatar, typo: styles.typo }}
+          />
         </IconButton>
         <Typography>{user.name}</Typography>
       </div>

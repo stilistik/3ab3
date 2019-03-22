@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.imagefield {
+  margin-bottom: 30px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
