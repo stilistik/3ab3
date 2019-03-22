@@ -1,0 +1,27 @@
+.popper {
+  padding: 10px;
+}
+
+.paper {
+  margin-top: 10px;
+  background-color: #444;
+}
+
+.typo {
+  color: white;
+  margin-bottom: 5px;
+}
+
+.button-delete {
+  margin: 5px 5px 5px 0px;
+  background-color: #f44336;
+  color: white;
+}
+
+.button-delete:hover {
+  background-color: #f2584d;
+}
+
+.button-cancel {
+  margin: 5px 5px 5px 5px;
+}

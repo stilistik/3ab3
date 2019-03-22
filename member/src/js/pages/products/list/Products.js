@@ -46,7 +46,11 @@ class Products extends React.Component {
             {this.props.products.map((product) => {
               return (
                 <Grid key={product.id} item xs={12} sm={6} lg={4}>
-                  <ProductCard product={product} onEdit={this.onEdit} />
+                  <ProductCard
+                    product={product}
+                    onEdit={this.onEdit}
+                    onDelete={this.onDelete}
+                  />
                 </Grid>
               );
             })}

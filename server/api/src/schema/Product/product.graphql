@@ -24,4 +24,5 @@ extend type Query {
 extend type Mutation {
   createProduct(input: ProductInput!): Product! @hasRole
   updateProduct(productId: ID!, input: ProductInput!): Product! @hasRole
+  deleteProduct(productId: ID!): Product! @hasRole
 }

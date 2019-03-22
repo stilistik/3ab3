@@ -34,7 +34,6 @@ class ProductForm extends React.Component {
             <Field
               id="name"
               name="Name"
-              type="alpha"
               required={true}
               className={styles.field}
             />

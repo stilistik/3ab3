@@ -2,19 +2,23 @@ import React from 'react';
 import {
   Card,
   CardContent,
-  CardMedia,
   CardActions,
   CardActionArea,
   IconButton,
   Typography,
 } from '@material-ui/core';
 import { Icon } from 'Components';
+import DeleteProduct from '../delete/DeleteProduct';
 
 import styles from './ProductCard.css';
 
 class ProductCard extends React.Component {
   onEdit = () => {
     this.props.onEdit(this.props.product.id);
+  };
+
+  onDelete = () => {
+    this.props.onDelete(this.props.product.id);
   };
 
   render() {
@@ -46,9 +50,7 @@ class ProductCard extends React.Component {
           <IconButton size="small" color="primary" onClick={this.onEdit}>
             <Icon type="edit" />
           </IconButton>
-          <IconButton size="small" color="primary">
-            <Icon type="delete" />
-          </IconButton>
+          <DeleteProduct {...this.props} />
         </CardActions>
       </Card>
     );

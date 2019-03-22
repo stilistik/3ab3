@@ -3,12 +3,9 @@ const { uploadFile } = require('../../helper/file.helper.js');
 module.exports = {
   Query: {
     products(root, args, context) {
-      return context.prisma.products();
-    },
-    currentProducts(root, args, context) {
       return context.prisma.products({
         where: {
-          show: true,
+          deleted: false,
         },
       });
     },
@@ -48,6 +45,12 @@ module.exports = {
           where: { id: args.productId },
         });
       }
+    },
+    deleteProduct(root, args, context) {
+      return context.prisma.updateProduct({
+        where: { id: args.productId },
+        data: { deleted: true },
+      });
     },
   },
 };
