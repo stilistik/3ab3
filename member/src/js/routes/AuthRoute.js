@@ -9,7 +9,16 @@ const AuthRoute = ({ component: C, props: cProps, ...rest }) => {
         if (cProps.app.isAuthenticated) {
           return <C {...cProps} />;
         } else {
-          return <Redirect to="/login" />;
+          return (
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: {
+                  prevLocation: rest.location,
+                },
+              }}
+            />
+          );
         }
       }}
     />
