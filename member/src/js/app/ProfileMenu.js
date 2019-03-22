@@ -13,6 +13,8 @@ import { logout } from 'Redux/actions';
 import { requestRoute } from 'History';
 import { ProfileAvatar } from 'Components';
 
+import styles from './ProfileMenu.css';
+
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
@@ -105,7 +107,7 @@ class ProfileMenu extends React.Component {
     return (
       <div>
         <IconButton onClick={this.handleMenuOpen}>
-          <ProfileAvatar />
+          <ProfileAvatar classes={{ typo: styles.typo }} />
         </IconButton>
         {renderMenu}
       </div>
