@@ -15,6 +15,8 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import GroupIcon from '@material-ui/icons/Group';
+import PhotoIcon from '@material-ui/icons/Photo';
+import CameraIcon from '@material-ui/icons/PhotoCamera';
 
 const icons = {
   mail: MailIcon,
@@ -33,6 +35,8 @@ const icons = {
   edit: EditIcon,
   delete: DeleteIcon,
   group: GroupIcon,
+  photo: PhotoIcon,
+  camera: CameraIcon,
 };
 
 export class Icon extends React.Component {

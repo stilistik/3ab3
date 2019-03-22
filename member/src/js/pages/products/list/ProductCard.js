@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { Icon } from 'Components';
 import DeleteProduct from '../delete/DeleteProduct';
+import ProductImage from './ProductImage';
 
 import styles from './ProductCard.css';
 
@@ -25,13 +26,7 @@ class ProductCard extends React.Component {
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
-          <div
-            className={styles.background}
-            style={{
-              backgroundImage: `url(${global.API_URL +
-                this.props.product.thumbnail})`,
-            }}
-          />
+          <ProductImage thumbnail={this.props.product.thumbnail} />
           <CardContent>
             <Typography
               gutterBottom
