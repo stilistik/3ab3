@@ -6,16 +6,18 @@ import { Mutation } from 'react-apollo';
 import CreateCommentForm from './CreateCommentForm';
 
 const UPDATE_QUERY = gql`
-  query {
-    posts {
-      id
-      author {
+  query($postId: ID!) {
+    post(postId: $postId) {
+      comments {
         id
-        name
-        avatar
+        author {
+          id
+          name
+          avatar
+        }
+        text
+        date
       }
-      date
-      text
     }
   }
 `;
@@ -41,7 +43,9 @@ class CreateComment extends React.Component {
     try {
       await this.createComment({
         variables: { input: values },
-        refetchQueries: () => [{ query: UPDATE_QUERY }],
+        refetchQueries: () => [
+          { query: UPDATE_QUERY, variables: { postId: this.props.post.id } },
+        ],
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });
