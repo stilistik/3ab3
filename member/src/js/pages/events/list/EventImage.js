@@ -1,4 +1,5 @@
 import React from 'react';
+import { CircularProgress } from '@material-ui/core';
 import { Icon } from 'Components';
 
 import styles from './EventImage.css';
@@ -8,6 +9,7 @@ class EventImage extends React.Component {
     super(props);
     this.state = {
       error: false,
+      loading: true,
     };
   }
 
@@ -22,13 +24,19 @@ class EventImage extends React.Component {
   onLoad = () => {
     this.image.style.backgroundImage = `url(${global.API_URL +
       this.props.thumbnail})`;
+    this.setState({ loading: false });
   };
 
   render() {
     return (
       <div className={styles.background} ref={(ref) => (this.image = ref)}>
+        {this.state.loading ? (
+          <div className={styles.indicator}>
+            <CircularProgress size={60} className={styles.progress} />
+          </div>
+        ) : null}
         {this.state.error ? (
-          <div className={styles.error}>
+          <div className={styles.indicator}>
             <Icon type="camera" className={styles.icon} />
           </div>
         ) : null}

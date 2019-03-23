@@ -6,7 +6,6 @@ import styles from './EventForm.css';
 
 class ProductForm extends React.Component {
   onSubmit = (values) => {
-    console.log(values);
     this.props.onSubmit(values);
   };
 
