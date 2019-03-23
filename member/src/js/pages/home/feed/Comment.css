@@ -1,9 +1,25 @@
 .comment {
   padding: 0px 16px;
   margin-bottom: 5px;
+  max-width: 100%;
 }
 
 .user {
-  margin-right: 10px;
+  margin-right: 5px;
   color: #1a77ad;
+}
+
+.chip {
+  display: flex;
+  height: auto;
+  width: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.chiplabel {
+  white-space: normal;
+  align-self: center;
+  padding: 0.35em 0em;
+  margin-left: 10px;
 }

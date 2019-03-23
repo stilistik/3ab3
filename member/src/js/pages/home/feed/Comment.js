@@ -18,7 +18,11 @@ class Comment extends React.Component {
     );
     return (
       <div className={styles.comment}>
-        <Chip avatar={avatar} label={label} />
+        <Chip
+          classes={{ root: styles.chip, label: styles.chiplabel }}
+          avatar={avatar}
+          label={label}
+        />
       </div>
     );
   }

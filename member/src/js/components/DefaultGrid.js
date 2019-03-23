@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
+import styles from './DefaultGrid.css';
+
 export class DefaultGrid extends React.Component {
   render() {
     const { children, overflow, ...props } = this.props;
@@ -10,7 +12,7 @@ export class DefaultGrid extends React.Component {
 
     if (overflow) {
       return (
-        <Grid container justify="center" style={{ overflowY: 'auto' }}>
+        <Grid container justify="center" className={styles.container}>
           <Grid item xs={12} md={10} lg={8} xl={6}>
             {childrenWithProps}
           </Grid>
