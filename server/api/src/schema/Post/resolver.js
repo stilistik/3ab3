@@ -1,7 +1,9 @@
 module.exports = {
   Query: {
     posts(root, args, context) {
-      return context.prisma.posts();
+      return context.prisma.posts({
+        orderBy: 'date_DESC',
+      });
     },
     post(root, args, context) {
       return context.prisma.post({ id: args.postId });

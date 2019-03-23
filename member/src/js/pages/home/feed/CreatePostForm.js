@@ -39,6 +39,7 @@ class CreatePostForm extends React.Component {
       userId: this.props.user.id,
       text: this.state.value,
     });
+    this.setState({ value: '' });
   };
 
   render() {
