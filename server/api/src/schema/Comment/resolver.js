@@ -19,6 +19,16 @@ module.exports = {
         text,
       });
     },
+    likeComment(root, args, context) {
+      return context.prisma.updateComment({
+        where: { id: args.commentId },
+        data: {
+          likedBy: {
+            connect: { id: args.userId },
+          },
+        },
+      });
+    },
     deleteComment(root, args, context) {
       return context.prisma.deleteComment({ id: args.commentId });
     },
@@ -29,6 +39,9 @@ module.exports = {
     },
     author(root, args, context) {
       return context.prisma.comment({ id: root.id }).author();
+    },
+    likedBy(root, args, context) {
+      return context.prisma.comment({ id: root.id }).likedBy();
     },
   },
 };

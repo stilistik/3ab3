@@ -2,6 +2,7 @@ type Post @isAuthenticated {
   id: ID!
   text: String!
   author: User!
+  likedBy: [User!]!
   comments: [Comment!]!
   date: DateTime!
 }
@@ -19,4 +20,5 @@ extend type Query {
 extend type Mutation {
   createPost(input: PostInput!): Post!
   deletePost(postId: ID!): Post!
+  likePost(userId: ID!, postId: ID!): Post!
 }

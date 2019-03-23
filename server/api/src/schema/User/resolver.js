@@ -101,8 +101,14 @@ module.exports = {
     posts(root, args, context) {
       return context.prisma.user({ id: root.id }).posts();
     },
+    likedPosts(root, args, context) {
+      return context.prisma.user({ id: root.id }).likedPosts();
+    },
     comments(root, args, context) {
       return context.prisma.user({ id: root.id }).comments();
+    },
+    likedComments(root, args, context) {
+      return context.prisma.user({ id: root.id }).likedComments();
     },
   },
 };
