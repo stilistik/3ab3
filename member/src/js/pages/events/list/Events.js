@@ -2,8 +2,9 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { DefaultGrid, Icon } from 'Components';
-import { Fab } from '@material-ui/core';
+import { Fab, Grid, Hidden } from '@material-ui/core';
 import { requestRoute } from 'History';
+import EventCard from './EventCard';
 
 import styles from './Events.css';
 
@@ -25,14 +26,32 @@ class Events extends React.Component {
   };
 
   render() {
-    console.log(this.props);
+    if (!this.props.events) return null;
     return (
-      <DefaultGrid>
+      <DefaultGrid overflow>
         <div className={styles.container}>
-          <h1>Events</h1>
-          <Fab color="primary" onClick={this.onCreate}>
-            <Icon type="add" />
-          </Fab>
+          <Grid container spacing={24}>
+            {this.props.events.map((event) => {
+              return (
+                <Grid key={event.id} item xs={12} lg={6}>
+                  <EventCard
+                    event={event}
+                    onEdit={this.onEdit}
+                    onDelete={this.onDelete}
+                  />
+                </Grid>
+              );
+            })}
+            <Hidden smUp>
+              <Fab
+                color="primary"
+                className={styles.fab}
+                onClick={this.onCreate}
+              >
+                <Icon type="add" />
+              </Fab>
+            </Hidden>
+          </Grid>
         </div>
       </DefaultGrid>
     );

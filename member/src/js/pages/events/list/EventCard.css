@@ -1,0 +1,36 @@
+.typo {
+  color: #444;
+}
+
+.area {
+  border-bottom: 1px solid #eee;
+}
+
+.header {
+  display: flex;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.date {
+  margin-top:10px;
+  margin-right: 16px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month {
+  display: flex;
+  justify-content: center;
+  color: red;
+  margin-bottom: -3px;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+}

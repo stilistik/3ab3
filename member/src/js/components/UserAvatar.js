@@ -2,14 +2,15 @@ import React from 'react';
 import { Avatar, Typography } from '@material-ui/core';
 
 export class UserAvatar extends React.Component {
-  stringToHslColor = (str, s, l) => {
+  stringToHSL = (str) => {
     var hash = 0;
+    if (this.length == 0) return hash;
     for (var i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash = hash & hash; // Convert to 32bit integer
     }
-
-    var h = hash % 360;
-    return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
+    var shortened = hash % 300;
+    return 'hsl(' + shortened + ',60%,60%)';
   };
 
   render() {
@@ -32,7 +33,7 @@ export class UserAvatar extends React.Component {
       );
     } else {
       const letter = this.props.user.name.charAt(0).toUpperCase();
-      const color = this.stringToHslColor(this.props.user.name, 60, 60);
+      const color = this.stringToHSL(this.props.user.name);
       return (
         <Avatar
           className={avatar_cls ? avatar_cls : null}
