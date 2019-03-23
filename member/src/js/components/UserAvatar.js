@@ -22,6 +22,8 @@ export class UserAvatar extends React.Component {
       typo_cls = this.props.classes.typo;
     }
 
+    if (this.props.className) avatar_cls = this.props.className;
+
     if (this.props.user.avatar) {
       const url = global.API_URL + this.props.user.avatar;
       return (
@@ -39,7 +41,10 @@ export class UserAvatar extends React.Component {
           className={avatar_cls ? avatar_cls : null}
           style={{ background: color }}
         >
-          <Typography className={typo_cls ? typo_cls : null}>
+          <Typography
+            className={typo_cls ? typo_cls : null}
+            style={{ color: 'white' }}
+          >
             {letter}
           </Typography>
         </Avatar>

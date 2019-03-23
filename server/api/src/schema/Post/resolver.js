@@ -24,5 +24,8 @@ module.exports = {
     comments(root, args, context) {
       return context.prisma.post({ id: root.id }).comments();
     },
+    author(root, args, context) {
+      return context.prisma.post({ id: root.id }).author();
+    },
   },
 };
