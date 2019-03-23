@@ -9,7 +9,6 @@ type Comment @isAuthenticated {
 input CommentInput {
   postId: ID!
   userId: ID!
-  date: DateTime!
   text: String!
 }
 
@@ -19,4 +18,5 @@ extend type Query {
 
 extend type Mutation {
   createComment(input: CommentInput!): Comment!
+  deleteComment(commentId: ID!): Comment!
 }
