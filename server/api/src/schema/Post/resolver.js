@@ -6,7 +6,8 @@ module.exports = {
   },
   Mutation: {
     async createPost(root, args, context) {
-      const { userId, date, text } = args.input;
+      const { userId, text } = args.input;
+      const date = new Date().toISOString();
       return context.prisma.createPost({
         author: {
           connect: { id: userId },
@@ -14,6 +15,9 @@ module.exports = {
         date,
         text,
       });
+    },
+    deletePost(root, args, context) {
+      return context.prisma.deletePost({ id: args.postId });
     },
   },
   Post: {

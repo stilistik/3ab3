@@ -9,7 +9,6 @@ type Post @isAuthenticated {
 input PostInput {
   userId: ID!
   text: String!
-  date: DateTime!
 }
 
 extend type Query {
@@ -18,4 +17,5 @@ extend type Query {
 
 extend type Mutation {
   createPost(input: PostInput!): Post!
+  deletePost(postId: ID!): Post!
 }
