@@ -3,11 +3,13 @@ import {
   Card,
   CardContent,
   CardActions,
-  IconButton,
+  Button,
   Typography,
   Divider,
 } from '@material-ui/core';
 import { Icon, UserAvatar } from 'Components';
+import CreateComment from './CreateComment';
+import CommentList from './CommentList';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -31,6 +33,21 @@ const PostHeader = ({ user, date }) => {
 };
 
 class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
+  }
+
+  onComment = () => {
+    this.setState({ show: true });
+  };
+
+  onLike = () => {
+    return;
+  };
+
   render() {
     const { post } = this.props;
     return (
@@ -41,10 +58,19 @@ class Post extends React.Component {
         </CardContent>
         <Divider />
         <CardActions>
-          <IconButton size="small" color="primary">
-            <Icon type="comment" />
-          </IconButton>
+          <Button size="small" color="primary" onClick={this.onLike}>
+            <Icon type="like" style={{ marginRight: '5px' }} /> Like
+          </Button>
+          <Button size="small" color="primary" onClick={this.onComment}>
+            <Icon type="comment" style={{ marginRight: '5px' }} /> Comment
+          </Button>
         </CardActions>
+        {this.state.show ? (
+          <div>
+            <CreateComment post={post} />
+            <CommentList postId={post.id} />
+          </div>
+        ) : null}
       </Card>
     );
   }

@@ -13,6 +13,7 @@ input PostInput {
 
 extend type Query {
   posts: [Post!]!
+  post(postId: ID!): Post!
 }
 
 extend type Mutation {

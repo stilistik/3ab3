@@ -7,7 +7,6 @@ import {
   CardContent,
   Button,
   TextField,
-  Divider,
 } from '@material-ui/core';
 import { Icon, UserAvatar } from 'Components';
 
@@ -36,7 +35,6 @@ class CreatePostForm extends React.Component {
   };
 
   onSubmit = () => {
-    console.log(this.props);
     this.props.onSubmit({
       userId: this.props.user.id,
       text: this.state.value,
@@ -57,7 +55,6 @@ class CreatePostForm extends React.Component {
             style={{ width: '100%' }}
           />
         </CardContent>
-        <Divider />
         <CardActions>
           <Button
             variant="contained"

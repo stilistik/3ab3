@@ -19,6 +19,7 @@ import PhotoIcon from '@material-ui/icons/Photo';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import SendIcon from '@material-ui/icons/Send';
+import LikeIcon from '@material-ui/icons/ThumbUp';
 
 const icons = {
   mail: MailIcon,
@@ -41,6 +42,7 @@ const icons = {
   camera: CameraIcon,
   comment: AddCommentIcon,
   send: SendIcon,
+  like: LikeIcon,
 };
 
 export class Icon extends React.Component {

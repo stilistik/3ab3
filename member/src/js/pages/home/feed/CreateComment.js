@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
-import CreatePostForm from './CreatePostForm';
+import CreateCommentForm from './CreateCommentForm';
 
 const UPDATE_QUERY = gql`
   query {
@@ -21,8 +21,8 @@ const UPDATE_QUERY = gql`
 `;
 
 const MUTATION = gql`
-  mutation($input: PostInput!) {
-    createPost(input: $input) {
+  mutation($input: CommentInput!) {
+    createComment(input: $input) {
       id
     }
   }
@@ -36,10 +36,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class CreatePost extends React.Component {
+class CreateComment extends React.Component {
   onSubmit = async (values) => {
     try {
-      await this.createPost({
+      await this.createComment({
         variables: { input: values },
         refetchQueries: () => [{ query: UPDATE_QUERY }],
       });
@@ -52,9 +52,9 @@ class CreatePost extends React.Component {
   render() {
     return (
       <Mutation mutation={MUTATION}>
-        {(createPost) => {
-          this.createPost = createPost;
-          return <CreatePostForm onSubmit={this.onSubmit} />;
+        {(createComment) => {
+          this.createComment = createComment;
+          return <CreateCommentForm onSubmit={this.onSubmit} {...this.props} />;
         }}
       </Mutation>
     );
@@ -64,4 +64,4 @@ class CreatePost extends React.Component {
 export default connect(
   null,
   mapDispatchToProps
-)(CreatePost);
+)(CreateComment);

@@ -3,7 +3,7 @@ import { DefaultGrid } from 'Components';
 import { Grid } from '@material-ui/core';
 import Feed from './feed/Feed';
 
-import styles from './Home.css';
+// import styles from './Home.css';
 
 class Home extends React.Component {
   render() {

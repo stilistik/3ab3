@@ -3,6 +3,9 @@ module.exports = {
     posts(root, args, context) {
       return context.prisma.posts();
     },
+    post(root, args, context) {
+      return context.prisma.post({ id: args.postId });
+    },
   },
   Mutation: {
     async createPost(root, args, context) {

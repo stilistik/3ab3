@@ -1,0 +1,11 @@
+.container {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-right: 15px;
+  width: 30px;
+  height: 30px;
+}
