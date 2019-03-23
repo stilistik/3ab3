@@ -2,9 +2,7 @@ import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { Icon } from 'Components';
 
-import styles from './EventImage.css';
-
-class EventImage extends React.Component {
+export class ImageDiv extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +12,7 @@ class EventImage extends React.Component {
   }
 
   componentDidMount = () => {
-    const url = global.API_URL + this.props.thumbnail;
+    const url = global.API_URL + this.props.image;
     const img = new Image();
     img.onload = this.onLoad;
     img.onerror = () => this.setState({ error: true });
@@ -23,21 +21,23 @@ class EventImage extends React.Component {
 
   onLoad = () => {
     this.image.style.backgroundImage = `url(${global.API_URL +
-      this.props.thumbnail})`;
+      this.props.image})`;
     this.setState({ loading: false });
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className={styles.background} ref={(ref) => (this.image = ref)}>
+      <div className={classes.root} ref={(ref) => (this.image = ref)}>
         {this.state.loading ? (
-          <div className={styles.indicator}>
-            <CircularProgress size={60} className={styles.progress} />
+          <div className={classes.indicator}>
+            <CircularProgress size={60} className={classes.progress} />
           </div>
         ) : null}
         {this.state.error ? (
-          <div className={styles.indicator}>
-            <Icon type="camera" className={styles.icon} />
+          <div className={classes.indicator}>
+            <Icon type="camera" className={classes.icon} />
           </div>
         ) : null}
       </div>
@@ -45,4 +45,11 @@ class EventImage extends React.Component {
   }
 }
 
-export default EventImage;
+ImageDiv.defaultProps = {
+  classes: {
+    root: {},
+    indicator: {},
+    progress: {},
+    icon: {},
+  },
+};

@@ -7,8 +7,7 @@ import {
   CardActions,
   IconButton,
 } from '@material-ui/core';
-import { Icon } from 'Components';
-import EventImage from './EventImage';
+import { Icon, ImageDiv } from 'Components';
 
 import styles from './EventCard.css';
 
@@ -52,7 +51,15 @@ class EventCard extends React.Component {
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
-          <EventImage thumbnail={this.props.event.image} />
+          <ImageDiv
+            image={this.props.event.image}
+            classes={{
+              root: styles.image,
+              progress: styles.progress,
+              indicator: styles.indicator,
+              icon: styles.icon,
+            }}
+          />
           <CardContent>
             <EventHeader title={title} date={date} />
             <Typography component="p" className={styles.typo}>
