@@ -23,7 +23,7 @@ class ProductForm extends React.Component {
               id="image"
               type="image"
               required={true}
-              name="Product Image"
+              name="Event Image"
             />
             <Field
               id="title"
