@@ -4,18 +4,7 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import DeleteButton from './DeleteButton';
-
-const UPDATE_QUERY = gql`
-  query {
-    products {
-      id
-      name
-      price
-      index
-      thumbnail
-    }
-  }
-`;
+import { PRODUCTS } from '../list/Products';
 
 const MUTATION = gql`
   mutation($productId: ID!) {
@@ -38,7 +27,7 @@ class DeleteProduct extends React.Component {
     try {
       await this.deleteProduct({
         variables: { productId: this.props.product.id },
-        refetchQueries: () => [{ query: UPDATE_QUERY }],
+        refetchQueries: () => [{ query: PRODUCTS }],
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });

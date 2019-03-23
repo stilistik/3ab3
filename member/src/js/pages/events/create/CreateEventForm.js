@@ -4,18 +4,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
-
-const UPDATE_QUERY = gql`
-  query {
-    events {
-      id
-      title
-      description
-      date
-      image
-    }
-  }
-`;
+import { EVENTS } from '../list/Events';
 
 const MUTATION = gql`
   mutation($input: EventInput!) {
@@ -41,7 +30,7 @@ class FormMutation extends React.Component {
           input: values,
         },
         refetchQueries: () => {
-          return [{ query: UPDATE_QUERY }];
+          return [{ query: EVENTS }];
         },
       });
     } catch (error) {

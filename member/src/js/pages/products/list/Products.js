@@ -9,7 +9,7 @@ import { requestRoute } from 'History';
 
 import styles from './Products.css';
 
-const QUERY = gql`
+export const PRODUCTS = gql`
   query {
     products {
       id
@@ -70,6 +70,6 @@ class Products extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export default graphql(PRODUCTS, {
   props: ({ data }) => ({ products: data.products }),
 })(Products);

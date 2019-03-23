@@ -41,6 +41,7 @@ class CreateCommentForm extends React.Component {
       postId: this.props.post.id,
       text: this.state.value,
     });
+    this.setState({ value: '' });
   };
 
   render() {

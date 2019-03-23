@@ -4,21 +4,7 @@ import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
 import CreatePostForm from './CreatePostForm';
-
-const UPDATE_QUERY = gql`
-  query {
-    posts {
-      id
-      author {
-        id
-        name
-        avatar
-      }
-      date
-      text
-    }
-  }
-`;
+import { FEED } from './Feed';
 
 const MUTATION = gql`
   mutation($input: PostInput!) {
@@ -41,7 +27,7 @@ class CreatePost extends React.Component {
     try {
       await this.createPost({
         variables: { input: values },
-        refetchQueries: () => [{ query: UPDATE_QUERY }],
+        refetchQueries: () => [{ query: FEED }],
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });

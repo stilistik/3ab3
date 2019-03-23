@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { UserAvatar } from './UserAvatar';
 
-const QUERY = gql`
+export const PROFILE_AVATAR = gql`
   query {
     currentUser {
       id
@@ -16,7 +16,7 @@ const QUERY = gql`
 export class ProfileAvatar extends React.Component {
   render() {
     return (
-      <Query query={QUERY}>
+      <Query query={PROFILE_AVATAR}>
         {({ data, loading, error }) => {
           if (loading) return null;
           if (error) return null;

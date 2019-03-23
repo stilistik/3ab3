@@ -5,18 +5,9 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { IconButton } from '@material-ui/core';
 import { ProfileAvatar, Icon } from 'Components';
+import { PROFILE_AVATAR } from 'Components';
 
 import styles from './AvatarUpload.css';
-
-const UPDATE_QUERY = gql`
-  query {
-    currentUser {
-      id
-      name
-      avatar
-    }
-  }
-`;
 
 const MUTATION = gql`
   mutation($file: Upload!) {
@@ -41,7 +32,7 @@ class AvatarUpload extends React.Component {
       await this.uploadAvatar({
         variables: { file },
         refetchQueries: () => {
-          return [{ query: UPDATE_QUERY }];
+          return [{ query: PROFILE_AVATAR }];
         },
       });
     } catch (error) {

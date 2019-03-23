@@ -4,23 +4,7 @@ import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
 import CreateCommentForm from './CreateCommentForm';
-
-const UPDATE_QUERY = gql`
-  query($postId: ID!) {
-    post(postId: $postId) {
-      comments {
-        id
-        author {
-          id
-          name
-          avatar
-        }
-        text
-        date
-      }
-    }
-  }
-`;
+import { POST_COMMENTS } from './CommentList';
 
 const MUTATION = gql`
   mutation($input: CommentInput!) {
@@ -44,7 +28,7 @@ class CreateComment extends React.Component {
       await this.createComment({
         variables: { input: values },
         refetchQueries: () => [
-          { query: UPDATE_QUERY, variables: { postId: this.props.post.id } },
+          { query: POST_COMMENTS, variables: { postId: this.props.post.id } },
         ],
       });
     } catch (error) {

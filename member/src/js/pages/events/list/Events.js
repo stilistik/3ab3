@@ -8,7 +8,7 @@ import EventCard from './EventCard';
 
 import styles from './Events.css';
 
-const QUERY = gql`
+export const EVENTS = gql`
   query {
     events {
       id
@@ -58,6 +58,6 @@ class Events extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export default graphql(EVENTS, {
   props: ({ data }) => ({ events: data.events }),
 })(Events);

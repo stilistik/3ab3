@@ -8,12 +8,12 @@ import { DefaultGrid } from 'Components';
 
 import styles from './Account.css';
 
-const QUERY = gql`
+export const ACCOUNT = gql`
   query {
     currentUser {
+      id
       name
       email
-      id
     }
   }
 `;
@@ -37,6 +37,6 @@ class Account extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export default graphql(ACCOUNT, {
   props: ({ data }) => ({ user: data.currentUser }),
 })(Account);

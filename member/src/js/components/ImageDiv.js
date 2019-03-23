@@ -15,7 +15,7 @@ export class ImageDiv extends React.Component {
     const url = global.API_URL + this.props.image;
     const img = new Image();
     img.onload = this.onLoad;
-    img.onerror = () => this.setState({ error: true });
+    img.onerror = this.onError;
     img.src = url;
   };
 
@@ -23,6 +23,10 @@ export class ImageDiv extends React.Component {
     this.image.style.backgroundImage = `url(${global.API_URL +
       this.props.image})`;
     this.setState({ loading: false });
+  };
+
+  onError = () => {
+    this.setState({ error: true, loading: false });
   };
 
   render() {

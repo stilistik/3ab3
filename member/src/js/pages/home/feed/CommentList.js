@@ -5,7 +5,7 @@ import Comment from './Comment';
 
 import styles from './CommentList.css';
 
-const QUERY = gql`
+export const POST_COMMENTS = gql`
   query($postId: ID!) {
     post(postId: $postId) {
       comments {
@@ -36,7 +36,7 @@ class CommentList extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export default graphql(POST_COMMENTS, {
   skip: (props) => !props.postId,
   options: (props) => ({ variables: { postId: props.postId } }),
   props: ({ data }) => ({ post: data.post }),

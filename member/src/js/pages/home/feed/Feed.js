@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 
 import styles from './Feed.css';
 
-const QUERY = gql`
+export const FEED = gql`
   query {
     posts {
       id
@@ -44,6 +44,6 @@ class Feed extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export default graphql(FEED, {
   props: ({ data }) => ({ posts: data.posts }),
 })(Feed);

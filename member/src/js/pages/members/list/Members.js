@@ -9,7 +9,7 @@ import { requestRoute } from 'History';
 
 import styles from './Members.css';
 
-const QUERY = gql`
+export const MEMBERS = gql`
   query {
     users {
       id
@@ -55,6 +55,6 @@ class Members extends React.Component {
   }
 }
 
-export default graphql(QUERY, {
+export default graphql(MEMBERS, {
   props: ({ data }) => ({ users: data.users }),
 })(Members);
