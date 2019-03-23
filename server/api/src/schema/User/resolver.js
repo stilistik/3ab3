@@ -98,5 +98,11 @@ module.exports = {
         orderBy: 'date_DESC',
       });
     },
+    posts(root, args, context) {
+      return context.prisma.user({ id: root.id }).posts();
+    },
+    comments(root, args, context) {
+      return context.prisma.user({ id: root.id }).comments();
+    },
   },
 };

@@ -19,6 +19,8 @@ const Event = require('./Event');
 const Production = require('./Production');
 const File = require('./File');
 const Email = require('./Email');
+const Post = require('./Post');
+const Comment = require('./Comment');
 
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
@@ -70,6 +72,8 @@ module.exports = makeExecutableSchema({
     Production.typeDef,
     File.typeDef,
     Email.typeDef,
+    Post.typeDef,
+    Comment.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -83,7 +87,9 @@ module.exports = makeExecutableSchema({
     Event.resolvers,
     Production.resolvers,
     File.resolvers,
-    Email.resolvers
+    Email.resolvers,
+    Post.resolvers,
+    Comment.resolvers
   ),
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,

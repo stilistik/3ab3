@@ -1,0 +1,22 @@
+type Comment @isAuthenticated {
+  id: ID!
+  text: String!
+  author: User!
+  date: DateTime!
+  post: Post!
+}
+
+input CommentInput {
+  postId: ID!
+  userId: ID!
+  date: DateTime!
+  text: String!
+}
+
+extend type Query {
+  comments: [Comment!]!
+}
+
+extend type Mutation {
+  createComment(input: CommentInput!): Comment!
+}

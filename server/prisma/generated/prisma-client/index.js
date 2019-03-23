@@ -45,6 +45,14 @@ var models = [
     embedded: false
   },
   {
+    name: "Post",
+    embedded: false
+  },
+  {
+    name: "Comment",
+    embedded: false
+  },
+  {
     name: "UserRole",
     embedded: false
   },

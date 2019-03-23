@@ -1,0 +1,7 @@
+type Comment {
+  id: ID! @unique
+  text: String!
+  author: User! @relation(name: "CommentAuthor", onDelete: SET_NULL)
+  date: DateTime!
+  post: Post! @relation(name: "PostComments", onDelete: SET_NULL)
+}

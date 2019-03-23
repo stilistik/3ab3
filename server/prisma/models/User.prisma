@@ -10,6 +10,8 @@ type User {
   items: [Item!]!
   role: UserRole! @default(value: MEMBER)
   balance: Float! @default(value: 0)
+  posts: [Post!]! @relation(name: "PostAuthor", onDelete: CASCADE)
+  comments: [Comment!]! @relation(name: "CommentAuthor", onDelete: CASCADE)
 }
 
 enum UserRole {
