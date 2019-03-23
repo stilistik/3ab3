@@ -10,6 +10,8 @@ import {
 import { Icon, UserAvatar } from 'Components';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
+import LikeButton from './LikeButton';
+import StatsBar from './StatsBar';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -57,12 +59,11 @@ class Post extends React.Component {
           <Typography component="p">{post.text}</Typography>
         </CardContent>
         <Divider />
+        <StatsBar postId={post.id} />
         <CardActions>
-          <Button size="small" color="primary" onClick={this.onLike}>
-            <Icon type="like" style={{ marginRight: '5px' }} /> Like
-          </Button>
+          <LikeButton post={post} />
           <Button size="small" color="primary" onClick={this.onComment}>
-            <Icon type="comment" style={{ marginRight: '5px' }} /> Comment
+            <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
           </Button>
         </CardActions>
         {this.state.show ? (

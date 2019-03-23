@@ -18,6 +18,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import PhotoIcon from '@material-ui/icons/Photo';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import AddCommentIcon from '@material-ui/icons/AddComment';
+import CommentIcon from '@material-ui/icons/ModeComment';
 import SendIcon from '@material-ui/icons/Send';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 
@@ -40,7 +41,8 @@ const icons = {
   group: GroupIcon,
   photo: PhotoIcon,
   camera: CameraIcon,
-  comment: AddCommentIcon,
+  addComment: AddCommentIcon,
+  comment: CommentIcon,
   send: SendIcon,
   like: LikeIcon,
 };

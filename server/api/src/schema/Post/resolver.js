@@ -21,12 +21,38 @@ module.exports = {
         text,
       });
     },
-    likePost(root, args, context) {
+    async likePost(root, args, context) {
+      await context.prisma.updateUser({
+        where: { id: args.userId },
+        data: {
+          likedPosts: {
+            connect: { id: args.postId },
+          },
+        },
+      });
       return context.prisma.updatePost({
         where: { id: args.postId },
         data: {
           likedBy: {
             connect: { id: args.userId },
+          },
+        },
+      });
+    },
+    async unlikePost(root, args, context) {
+      await context.prisma.updateUser({
+        where: { id: args.userId },
+        data: {
+          likedPosts: {
+            disconnect: { id: args.postId },
+          },
+        },
+      });
+      return context.prisma.updatePost({
+        where: { id: args.postId },
+        data: {
+          likedBy: {
+            disconnect: { id: args.userId },
           },
         },
       });
