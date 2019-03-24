@@ -1,6 +1,7 @@
 type Post @isAuthenticated {
   id: ID!
   text: String!
+  image: String
   author: User!
   likedBy: [User!]!
   comments: [Comment!]!
@@ -9,7 +10,8 @@ type Post @isAuthenticated {
 
 input PostInput {
   userId: ID!
-  text: String!
+  text: String
+  image: Upload
 }
 
 extend type Query {

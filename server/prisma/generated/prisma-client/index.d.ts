@@ -611,6 +611,8 @@ export type PostOrderByInput =
   | "id_DESC"
   | "text_ASC"
   | "text_DESC"
+  | "image_ASC"
+  | "image_DESC"
   | "date_ASC"
   | "date_DESC"
   | "createdAt_ASC"
@@ -1041,6 +1043,7 @@ export interface ProductSubscriptionWhereInput {
 
 export interface PostCreateWithoutCommentsInput {
   text: String;
+  image?: String;
   author: UserCreateOneWithoutPostsInput;
   likedBy?: UserCreateManyWithoutLikedPostsInput;
   date: DateTimeInput;
@@ -1408,6 +1411,7 @@ export interface PurchaseUpdateManyWithoutUserInput {
 
 export interface PostUpdateInput {
   text?: String;
+  image?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
   comments?: CommentUpdateManyWithoutPostInput;
@@ -1421,6 +1425,7 @@ export interface PurchaseUpdateWithWhereUniqueWithoutUserInput {
 
 export interface PostCreateInput {
   text: String;
+  image?: String;
   author: UserCreateOneWithoutPostsInput;
   likedBy?: UserCreateManyWithoutLikedPostsInput;
   comments?: CommentCreateManyWithoutPostInput;
@@ -2074,6 +2079,7 @@ export interface TransactionCreateOneWithoutPaymentInput {
 
 export interface PostUpdateWithoutAuthorDataInput {
   text?: String;
+  image?: String;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
   comments?: CommentUpdateManyWithoutPostInput;
   date?: DateTimeInput;
@@ -2288,6 +2294,20 @@ export interface PostWhereInput {
   text_not_starts_with?: String;
   text_ends_with?: String;
   text_not_ends_with?: String;
+  image?: String;
+  image_not?: String;
+  image_in?: String[] | String;
+  image_not_in?: String[] | String;
+  image_lt?: String;
+  image_lte?: String;
+  image_gt?: String;
+  image_gte?: String;
+  image_contains?: String;
+  image_not_contains?: String;
+  image_starts_with?: String;
+  image_not_starts_with?: String;
+  image_ends_with?: String;
+  image_not_ends_with?: String;
   author?: UserWhereInput;
   likedBy_every?: UserWhereInput;
   likedBy_some?: UserWhereInput;
@@ -2382,6 +2402,7 @@ export interface CommentSubscriptionWhereInput {
 
 export interface PostUpdateWithoutLikedByDataInput {
   text?: String;
+  image?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
   comments?: CommentUpdateManyWithoutPostInput;
   date?: DateTimeInput;
@@ -2805,6 +2826,7 @@ export interface PaymentUpdateManyWithWhereNestedInput {
 
 export interface PostUpdateWithoutCommentsDataInput {
   text?: String;
+  image?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
   date?: DateTimeInput;
@@ -2975,6 +2997,7 @@ export interface CommentUpdateWithWhereUniqueWithoutLikedByInput {
 
 export interface PostCreateWithoutLikedByInput {
   text: String;
+  image?: String;
   author: UserCreateOneWithoutPostsInput;
   comments?: CommentCreateManyWithoutPostInput;
   date: DateTimeInput;
@@ -3057,6 +3080,7 @@ export interface CommentUpdateWithWhereUniqueWithoutPostInput {
 
 export interface PostUpdateManyMutationInput {
   text?: String;
+  image?: String;
   date?: DateTimeInput;
 }
 
@@ -3156,6 +3180,20 @@ export interface PostScalarWhereInput {
   text_not_starts_with?: String;
   text_ends_with?: String;
   text_not_ends_with?: String;
+  image?: String;
+  image_not?: String;
+  image_in?: String[] | String;
+  image_not_in?: String[] | String;
+  image_lt?: String;
+  image_lte?: String;
+  image_gt?: String;
+  image_gte?: String;
+  image_contains?: String;
+  image_not_contains?: String;
+  image_starts_with?: String;
+  image_not_starts_with?: String;
+  image_ends_with?: String;
+  image_not_ends_with?: String;
   date?: DateTimeInput;
   date_not?: DateTimeInput;
   date_in?: DateTimeInput[] | DateTimeInput;
@@ -3189,6 +3227,7 @@ export interface CommentCreateInput {
 
 export interface PostUpdateManyDataInput {
   text?: String;
+  image?: String;
   date?: DateTimeInput;
 }
 
@@ -3372,6 +3411,7 @@ export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
 
 export interface PostCreateWithoutAuthorInput {
   text: String;
+  image?: String;
   likedBy?: UserCreateManyWithoutLikedPostsInput;
   comments?: CommentCreateManyWithoutPostInput;
   date: DateTimeInput;
@@ -4142,12 +4182,14 @@ export interface AggregateProductSubscription
 export interface Post {
   id: ID_Output;
   text: String;
+  image?: String;
   date: DateTimeOutput;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  image: () => Promise<String>;
   author: <T = UserPromise>() => T;
   likedBy: <T = FragmentableArray<User>>(
     args?: {
@@ -4179,6 +4221,7 @@ export interface PostSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
   author: <T = UserSubscription>() => T;
   likedBy: <T = Promise<AsyncIterator<UserSubscription>>>(
     args?: {
@@ -4937,6 +4980,7 @@ export interface AggregateFileSubscription
 export interface PostPreviousValues {
   id: ID_Output;
   text: String;
+  image?: String;
   date: DateTimeOutput;
 }
 
@@ -4945,6 +4989,7 @@ export interface PostPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  image: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
 }
 
@@ -4953,6 +4998,7 @@ export interface PostPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 

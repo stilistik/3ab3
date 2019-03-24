@@ -1,3 +1,5 @@
+const { uploadFile } = require('../../helper/file.helper.js');
+
 module.exports = {
   Query: {
     posts(root, args, context) {
@@ -11,15 +13,27 @@ module.exports = {
   },
   Mutation: {
     async createPost(root, args, context) {
-      const { userId, text } = args.input;
+      const { userId, image, text } = args.input;
       const date = new Date().toISOString();
-      return context.prisma.createPost({
-        author: {
-          connect: { id: userId },
-        },
-        date,
-        text,
-      });
+      if (image) {
+        const file = await uploadFile(image, context);
+        return context.prisma.createPost({
+          author: {
+            connect: { id: userId },
+          },
+          image: file.uri,
+          date,
+          text,
+        });
+      } else {
+        return context.prisma.createPost({
+          author: {
+            connect: { id: userId },
+          },
+          date,
+          text,
+        });
+      }
     },
     likePost(root, args, context) {
       return context.prisma.updatePost({

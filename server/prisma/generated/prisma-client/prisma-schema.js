@@ -1497,6 +1497,7 @@ input PaymentWhereUniqueInput {
 type Post {
   id: ID!
   text: String!
+  image: String
   author: User!
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -1511,6 +1512,7 @@ type PostConnection {
 
 input PostCreateInput {
   text: String!
+  image: String
   author: UserCreateOneWithoutPostsInput!
   likedBy: UserCreateManyWithoutLikedPostsInput
   comments: CommentCreateManyWithoutPostInput
@@ -1534,6 +1536,7 @@ input PostCreateOneWithoutCommentsInput {
 
 input PostCreateWithoutAuthorInput {
   text: String!
+  image: String
   likedBy: UserCreateManyWithoutLikedPostsInput
   comments: CommentCreateManyWithoutPostInput
   date: DateTime!
@@ -1541,6 +1544,7 @@ input PostCreateWithoutAuthorInput {
 
 input PostCreateWithoutCommentsInput {
   text: String!
+  image: String
   author: UserCreateOneWithoutPostsInput!
   likedBy: UserCreateManyWithoutLikedPostsInput
   date: DateTime!
@@ -1548,6 +1552,7 @@ input PostCreateWithoutCommentsInput {
 
 input PostCreateWithoutLikedByInput {
   text: String!
+  image: String
   author: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostInput
   date: DateTime!
@@ -1563,6 +1568,8 @@ enum PostOrderByInput {
   id_DESC
   text_ASC
   text_DESC
+  image_ASC
+  image_DESC
   date_ASC
   date_DESC
   createdAt_ASC
@@ -1574,6 +1581,7 @@ enum PostOrderByInput {
 type PostPreviousValues {
   id: ID!
   text: String!
+  image: String
   date: DateTime!
 }
 
@@ -1606,6 +1614,20 @@ input PostScalarWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   date: DateTime
   date_not: DateTime
   date_in: [DateTime!]
@@ -1639,6 +1661,7 @@ input PostSubscriptionWhereInput {
 
 input PostUpdateInput {
   text: String
+  image: String
   author: UserUpdateOneRequiredWithoutPostsInput
   likedBy: UserUpdateManyWithoutLikedPostsInput
   comments: CommentUpdateManyWithoutPostInput
@@ -1647,11 +1670,13 @@ input PostUpdateInput {
 
 input PostUpdateManyDataInput {
   text: String
+  image: String
   date: DateTime
 }
 
 input PostUpdateManyMutationInput {
   text: String
+  image: String
   date: DateTime
 }
 
@@ -1693,6 +1718,7 @@ input PostUpdateOneRequiredWithoutCommentsInput {
 
 input PostUpdateWithoutAuthorDataInput {
   text: String
+  image: String
   likedBy: UserUpdateManyWithoutLikedPostsInput
   comments: CommentUpdateManyWithoutPostInput
   date: DateTime
@@ -1700,6 +1726,7 @@ input PostUpdateWithoutAuthorDataInput {
 
 input PostUpdateWithoutCommentsDataInput {
   text: String
+  image: String
   author: UserUpdateOneRequiredWithoutPostsInput
   likedBy: UserUpdateManyWithoutLikedPostsInput
   date: DateTime
@@ -1707,6 +1734,7 @@ input PostUpdateWithoutCommentsDataInput {
 
 input PostUpdateWithoutLikedByDataInput {
   text: String
+  image: String
   author: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostInput
   date: DateTime
@@ -1768,6 +1796,20 @@ input PostWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   author: UserWhereInput
   likedBy_every: UserWhereInput
   likedBy_some: UserWhereInput
