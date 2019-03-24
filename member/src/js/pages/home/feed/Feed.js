@@ -18,6 +18,7 @@ export const FEED = gql`
       }
       date
       text
+      image
     }
   }
 `;

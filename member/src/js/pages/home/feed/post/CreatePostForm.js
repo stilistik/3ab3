@@ -43,14 +43,15 @@ class CreatePostForm extends React.Component {
     const reader = new FileReader();
     reader.onload = (e) => this.setState({ src: e.target.result });
     reader.readAsDataURL(file);
-    this.setState({ file: e.target.files[0] });
+    this.setState({ file });
   };
 
-  onSubmit = () => {
+  onSubmit = async () => {
     if (this.state.value.length === 0 && !this.state.file) return;
-    this.props.onSubmit({
+    await this.props.onSubmit({
       userId: this.props.user.id,
       text: this.state.value,
+      image: this.state.file,
     });
     this.setState({ value: '', file: null });
   };

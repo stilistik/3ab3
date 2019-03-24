@@ -34,6 +34,20 @@ const PostHeader = ({ user, date }) => {
   );
 };
 
+const PostImage = ({ image }) => {
+  if (!image) return <Divider />;
+  return <img src={global.API_URL + image} width="100%" />;
+};
+
+const PostText = ({ text }) => {
+  if (!text) return null;
+  return (
+    <Typography className={styles.text} component="body1">
+      {text}
+    </Typography>
+  );
+};
+
 class Post extends React.Component {
   constructor(props) {
     super(props);
@@ -55,10 +69,10 @@ class Post extends React.Component {
     return (
       <Card>
         <PostHeader user={post.author} date={post.date} />
-        <CardContent>
-          <Typography component="p">{post.text}</Typography>
+        <CardContent className={styles.content}>
+          <PostText text={post.text} />
+          <PostImage image={post.image} />
         </CardContent>
-        <Divider />
         <PostStats postId={post.id} onComment={this.onComment} />
         <CardActions>
           <LikePost post={post} />
