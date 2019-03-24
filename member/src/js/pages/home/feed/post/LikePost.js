@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 import { Icon } from 'Components';
 import { POST_STATS } from './stats/PostStats';
 
-import styles from './LikeButton.css';
+import styles from './LikePost.css';
 
 const USER = gql`
   query {
@@ -34,7 +34,7 @@ const UNLIKE = gql`
   }
 `;
 
-class LikeButton extends React.Component {
+class LikePost extends React.Component {
   onLike = () => {
     this.mutate({
       variables: {
@@ -79,4 +79,4 @@ class LikeButton extends React.Component {
 
 export default graphql(USER, {
   props: ({ data }) => ({ user: data.currentUser }),
-})(LikeButton);
+})(LikePost);

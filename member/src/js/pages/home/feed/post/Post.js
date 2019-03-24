@@ -10,7 +10,7 @@ import {
 import { Icon, UserAvatar } from 'Components';
 import CreateComment from '../comment/CreateComment';
 import CommentList from '../comment/CommentList';
-import LikeButton from './LikeButton';
+import LikePost from './LikePost';
 import PostStats from './stats/PostStats';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -61,7 +61,7 @@ class Post extends React.Component {
         <Divider />
         <PostStats postId={post.id} onComment={this.onComment} />
         <CardActions>
-          <LikeButton post={post} />
+          <LikePost post={post} />
           <Button size="small" color="primary" onClick={this.onComment}>
             <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
           </Button>
