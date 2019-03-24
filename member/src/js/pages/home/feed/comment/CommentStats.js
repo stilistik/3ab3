@@ -20,12 +20,11 @@ export const COMMENT_STATS = gql`
 class PostStats extends React.Component {
   render() {
     if (!this.props.comment) return null;
-    console.log(this.props);
-    const { likedBy } = this.props.post;
+    const { likedBy } = this.props.comment;
     return (
       <div className={styles.container}>
         <div className={styles.bar}>
-          <span>hello</span>
+          <span>{likedBy.length}</span>
         </div>
         <Divider />
       </div>
@@ -34,5 +33,7 @@ class PostStats extends React.Component {
 }
 
 export default graphql(COMMENT_STATS, {
+  skip: (props) => !props.commentId,
+  options: (props) => ({ variables: { commentId: props.commentId } }),
   props: ({ data }) => ({ comment: data.comment }),
 })(PostStats);

@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Divider } from '@material-ui/core';
-import LikeCounter from './LikeCounter';
+import { LikeCounter } from 'Components';
 import CommentCounter from './CommentCounter';
 
 import styles from './PostStats.css';

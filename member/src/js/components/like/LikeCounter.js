@@ -2,9 +2,10 @@ import React from 'react';
 import { Avatar } from '@material-ui/core';
 import { Icon } from 'Components';
 import LikedBy from './LikedBy';
+
 import styles from './LikeCounter.css';
 
-class LikeCounter extends React.Component {
+export class LikeCounter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,13 +18,13 @@ class LikeCounter extends React.Component {
   onClose = () => this.setState({ open: false });
 
   render() {
-    const { likedBy } = this.props;
+    const { likedBy, classes } = this.props;
     return (
-      <div className={styles.stats}>
-        <Avatar className={styles.circle} onClick={this.onOpen}>
-          <Icon type="like" className={styles.icon} />
+      <div className={classes.root}>
+        <Avatar className={classes.circle} onClick={this.onOpen}>
+          <Icon type="like" className={classes.icon} />
         </Avatar>
-        <span className={styles.number}>{likedBy.length}</span>
+        <span className={classes.number}>{likedBy.length}</span>
         <LikedBy
           likedBy={likedBy}
           open={this.state.open}
@@ -34,4 +35,11 @@ class LikeCounter extends React.Component {
   }
 }
 
-export default LikeCounter;
+LikeCounter.defaultProps = {
+  classes: {
+    root: styles.root,
+    circle: styles.circle,
+    number: styles.number,
+    icon: styles.icon,
+  },
+};

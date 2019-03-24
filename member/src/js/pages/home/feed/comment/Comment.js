@@ -85,7 +85,7 @@ class Comment extends React.Component {
                 avatar={avatar}
                 label={label}
               />
-              <CommentStats />
+              <CommentStats commentId={comment.id} />
             </div>
           );
         }}
