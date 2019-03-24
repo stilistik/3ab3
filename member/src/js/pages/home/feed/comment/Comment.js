@@ -3,7 +3,7 @@ import { Chip } from '@material-ui/core';
 import { UserAvatar } from 'Components';
 import gql from 'graphql-tag';
 import { graphql, Mutation } from 'react-apollo';
-import CommentStats from './CommentStats';
+import CommentStats, { COMMENT_STATS } from './CommentStats';
 
 import styles from './Comment.css';
 
@@ -41,7 +41,13 @@ class Comment extends React.Component {
         userId: this.props.user.id,
         commentId: this.props.comment.id,
       },
-      refetchQueries: () => [{ query: USER }],
+      refetchQueries: () => [
+        { query: USER },
+        {
+          query: COMMENT_STATS,
+          variables: { commentId: this.props.comment.id },
+        },
+      ],
     });
   };
 
