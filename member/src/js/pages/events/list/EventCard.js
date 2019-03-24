@@ -52,7 +52,7 @@ class EventCard extends React.Component {
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
           <ImageDiv
-            image={this.props.event.image}
+            image={global.API_URL + this.props.event.image}
             classes={{
               root: styles.image,
               progress: styles.progress,

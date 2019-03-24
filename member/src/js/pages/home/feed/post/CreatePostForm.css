@@ -5,3 +5,10 @@
 .avatar {
   margin-right: 15px;
 }
+
+.preview {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

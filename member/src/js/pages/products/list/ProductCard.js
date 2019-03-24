@@ -26,7 +26,7 @@ class ProductCard extends React.Component {
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
           <ImageDiv
-            image={this.props.product.thumbnail}
+            image={global.API_URL + this.props.product.thumbnail}
             classes={{
               root: styles.image,
               progress: styles.progress,

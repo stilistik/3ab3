@@ -8,7 +8,8 @@ import {
   Button,
   TextField,
 } from '@material-ui/core';
-import { Icon, UserAvatar } from 'Components';
+import { Icon, UserAvatar, ImageDiv } from 'Components';
+import ImageInput from './ImageInput';
 
 import styles from './CreatePostForm.css';
 
@@ -27,6 +28,8 @@ class CreatePostForm extends React.Component {
     super(props);
     this.state = {
       value: '',
+      file: null,
+      src: null,
     };
   }
 
@@ -34,28 +37,46 @@ class CreatePostForm extends React.Component {
     this.setState({ value: e.target.value });
   };
 
+  onImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => this.setState({ src: e.target.result });
+    reader.readAsDataURL(file);
+    this.setState({ file: e.target.files[0] });
+  };
+
   onSubmit = () => {
-    if (this.state.value.length === 0) return;
+    if (this.state.value.length === 0 && !this.state.file) return;
     this.props.onSubmit({
       userId: this.props.user.id,
       text: this.state.value,
     });
-    this.setState({ value: '' });
+    this.setState({ value: '', file: null });
   };
 
   render() {
     if (!this.props.user) return null;
     return (
       <Card>
-        <CardContent className={styles.content}>
-          <UserAvatar user={this.props.user} className={styles.avatar} />
-          <TextField
-            value={this.state.value}
-            onChange={this.onChange}
-            multiline
-            placeholder="Write something..."
-            style={{ width: '100%' }}
-          />
+        <CardContent>
+          <div className={styles.content}>
+            <UserAvatar user={this.props.user} className={styles.avatar} />
+            <TextField
+              value={this.state.value}
+              onChange={this.onChange}
+              multiline
+              placeholder="Write something..."
+              style={{ width: '100%' }}
+            />
+            <ImageInput onChange={this.onImageChange} />
+          </div>
+          {this.state.src ? (
+            <ImageDiv
+              image={this.state.src}
+              classes={{ root: styles.preview }}
+            />
+          ) : null}
         </CardContent>
         <CardActions>
           <Button
