@@ -6,7 +6,7 @@ import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
 import { DefaultGrid } from 'Components';
 
-import './AppHeader.css';
+import styles from './AppHeader.css';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -23,14 +23,19 @@ class AppHeader extends React.Component {
         <DefaultGrid>
           <Toolbar>
             <IconButton
-              styleName="menu-button"
+              className={styles.button}
               color="inherit"
               aria-label="Menu"
               onClick={() => this.props.setDrawerOpen(true)}
             >
               <MenuIcon />
             </IconButton>
-            <Typography styleName="brand" variant="h4" color="inherit">
+            <Typography
+              styleName="brand"
+              variant="h4"
+              color="inherit"
+              className={styles.typo}
+            >
               3ab3
             </Typography>
             <ProfileMenu />

@@ -8,3 +8,7 @@
 .divider {
   background-color: #898989;
 }
+
+.item {
+  font-weight: bold;
+}

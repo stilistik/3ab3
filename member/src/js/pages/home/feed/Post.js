@@ -59,7 +59,7 @@ class Post extends React.Component {
           <Typography component="p">{post.text}</Typography>
         </CardContent>
         <Divider />
-        <StatsBar postId={post.id} />
+        <StatsBar postId={post.id} onComment={this.onComment} />
         <CardActions>
           <LikeButton post={post} />
           <Button size="small" color="primary" onClick={this.onComment}>

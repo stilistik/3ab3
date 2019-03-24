@@ -23,12 +23,12 @@ class AppMenu extends React.Component {
         <Divider />
         <List>
           <MenuItem
-            text="Home"
+            text={<span className={styles.item}>Home</span>}
             icon="home"
             onClick={() => this.onClick('home')}
           />
           <MenuItem
-            text="History"
+            text={<span className={styles.item}>History</span>}
             icon="payment"
             onClick={() => this.onClick('history')}
           />
@@ -36,22 +36,22 @@ class AppMenu extends React.Component {
         <Divider className={styles.divider} />
         <List>
           <MenuItem
-            text="Dashboard"
+            text={<span className={styles.item}>Dashboard</span>}
             icon="dashboard"
             onClick={() => this.onClick('dashboard')}
           />
           <MenuItem
-            text="Events"
+            text={<span className={styles.item}>Events</span>}
             icon="event"
             onClick={() => this.onClick('events')}
           />
           <MenuItem
-            text="Members"
+            text={<span className={styles.item}>Members</span>}
             icon="group"
             onClick={() => this.onClick('members')}
           />
           <MenuItem
-            text="Products"
+            text={<span className={styles.item}>Products</span>}
             icon="drinks"
             onClick={() => this.onClick('products')}
           />

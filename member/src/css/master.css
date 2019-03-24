@@ -1,22 +1,24 @@
 body {
-  font-family: "MessinaBold", sans-serif;
+  font-family: "Messina", sans-serif;
 }
 
 @font-face {
-    font-family: MessinaLight;
+    font-family: Messina;
     src: url('../fonts/MessinaSans_Web_Light/MessinaSansWeb-Light.woff');
+    font-weight: lighter;
 }
 
 @font-face {
-    font-family: MessinaRegular;
+    font-family: Messina;
     src: url('../fonts/MessinaSans_Web_Regular/MessinaSansWeb-Regular.woff');
 }
 
 @font-face {
-    font-family: MessinaBold;
+    font-family: Messina;
     src: url('../fonts/MessinaSans_Web_Bold/MessinaSansWeb-Bold.woff');
+    font-weight: bold
 }
-/* 
+/*
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
