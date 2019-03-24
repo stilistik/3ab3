@@ -29,12 +29,21 @@
   font-size: 12px;
 }
 
+.drawer {
+  height: 60%;
+}
+
 .title {
   padding: 10px 20px;
 }
 
+.paper {
+  max-height: 40%;
+}
+
 .likedby {
   padding: 10px 20px;
+  overflow-y: auto;
 }
 
 .like {

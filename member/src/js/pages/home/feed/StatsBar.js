@@ -51,6 +51,7 @@ class MobileDrawer extends React.Component {
         anchor="bottom"
         open={this.props.open}
         onClose={this.props.onClose}
+        classes={{ paper: styles.drawer }}
       >
         <DialogTitle className={styles.title}>Liked by</DialogTitle>
         <Divider />
@@ -64,7 +65,14 @@ class DesktopDialog extends React.Component {
   render() {
     const { likedBy, open, onClose } = this.props;
     return (
-      <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth={true}>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        maxWidth="xs"
+        fullWidth={true}
+        scroll="paper"
+        classes={{ scrollPaper: styles.paper }}
+      >
         <DialogTitle className={styles.title}>Liked by</DialogTitle>
         <Divider />
         <LikedBy likedBy={likedBy} />
