@@ -35,6 +35,7 @@ class CreatePostForm extends React.Component {
   };
 
   onSubmit = () => {
+    if (this.state.value.length === 0) return;
     this.props.onSubmit({
       userId: this.props.user.id,
       text: this.state.value,

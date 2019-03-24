@@ -210,9 +210,9 @@ input ClientWhereUniqueInput {
 type Comment {
   id: ID!
   text: String!
+  date: DateTime!
   author: User!
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  date: DateTime!
   post: Post!
 }
 
@@ -224,9 +224,9 @@ type CommentConnection {
 
 input CommentCreateInput {
   text: String!
+  date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   likedBy: UserCreateManyWithoutLikedCommentsInput
-  date: DateTime!
   post: PostCreateOneWithoutCommentsInput!
 }
 
@@ -247,23 +247,23 @@ input CommentCreateManyWithoutPostInput {
 
 input CommentCreateWithoutAuthorInput {
   text: String!
-  likedBy: UserCreateManyWithoutLikedCommentsInput
   date: DateTime!
+  likedBy: UserCreateManyWithoutLikedCommentsInput
   post: PostCreateOneWithoutCommentsInput!
 }
 
 input CommentCreateWithoutLikedByInput {
   text: String!
-  author: UserCreateOneWithoutCommentsInput!
   date: DateTime!
+  author: UserCreateOneWithoutCommentsInput!
   post: PostCreateOneWithoutCommentsInput!
 }
 
 input CommentCreateWithoutPostInput {
   text: String!
+  date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   likedBy: UserCreateManyWithoutLikedCommentsInput
-  date: DateTime!
 }
 
 type CommentEdge {
@@ -352,9 +352,9 @@ input CommentSubscriptionWhereInput {
 
 input CommentUpdateInput {
   text: String
+  date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   likedBy: UserUpdateManyWithoutLikedCommentsInput
-  date: DateTime
   post: PostUpdateOneRequiredWithoutCommentsInput
 }
 
@@ -411,23 +411,23 @@ input CommentUpdateManyWithWhereNestedInput {
 
 input CommentUpdateWithoutAuthorDataInput {
   text: String
-  likedBy: UserUpdateManyWithoutLikedCommentsInput
   date: DateTime
+  likedBy: UserUpdateManyWithoutLikedCommentsInput
   post: PostUpdateOneRequiredWithoutCommentsInput
 }
 
 input CommentUpdateWithoutLikedByDataInput {
   text: String
-  author: UserUpdateOneRequiredWithoutCommentsInput
   date: DateTime
+  author: UserUpdateOneRequiredWithoutCommentsInput
   post: PostUpdateOneRequiredWithoutCommentsInput
 }
 
 input CommentUpdateWithoutPostDataInput {
   text: String
+  date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   likedBy: UserUpdateManyWithoutLikedCommentsInput
-  date: DateTime
 }
 
 input CommentUpdateWithWhereUniqueWithoutAuthorInput {
@@ -492,10 +492,6 @@ input CommentWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
-  author: UserWhereInput
-  likedBy_every: UserWhereInput
-  likedBy_some: UserWhereInput
-  likedBy_none: UserWhereInput
   date: DateTime
   date_not: DateTime
   date_in: [DateTime!]
@@ -504,6 +500,10 @@ input CommentWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  author: UserWhereInput
+  likedBy_every: UserWhereInput
+  likedBy_some: UserWhereInput
+  likedBy_none: UserWhereInput
   post: PostWhereInput
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
@@ -1512,18 +1512,18 @@ type PostConnection {
 input PostCreateInput {
   text: String!
   author: UserCreateOneWithoutPostsInput!
-  likedBy: UserCreateManyInput
+  likedBy: UserCreateManyWithoutLikedPostsInput
   comments: CommentCreateManyWithoutPostInput
   date: DateTime!
 }
 
-input PostCreateManyInput {
-  create: [PostCreateInput!]
+input PostCreateManyWithoutAuthorInput {
+  create: [PostCreateWithoutAuthorInput!]
   connect: [PostWhereUniqueInput!]
 }
 
-input PostCreateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
+input PostCreateManyWithoutLikedByInput {
+  create: [PostCreateWithoutLikedByInput!]
   connect: [PostWhereUniqueInput!]
 }
 
@@ -1534,7 +1534,7 @@ input PostCreateOneWithoutCommentsInput {
 
 input PostCreateWithoutAuthorInput {
   text: String!
-  likedBy: UserCreateManyInput
+  likedBy: UserCreateManyWithoutLikedPostsInput
   comments: CommentCreateManyWithoutPostInput
   date: DateTime!
 }
@@ -1542,7 +1542,14 @@ input PostCreateWithoutAuthorInput {
 input PostCreateWithoutCommentsInput {
   text: String!
   author: UserCreateOneWithoutPostsInput!
-  likedBy: UserCreateManyInput
+  likedBy: UserCreateManyWithoutLikedPostsInput
+  date: DateTime!
+}
+
+input PostCreateWithoutLikedByInput {
+  text: String!
+  author: UserCreateOneWithoutPostsInput!
+  comments: CommentCreateManyWithoutPostInput
   date: DateTime!
 }
 
@@ -1630,18 +1637,10 @@ input PostSubscriptionWhereInput {
   NOT: [PostSubscriptionWhereInput!]
 }
 
-input PostUpdateDataInput {
-  text: String
-  author: UserUpdateOneRequiredWithoutPostsInput
-  likedBy: UserUpdateManyInput
-  comments: CommentUpdateManyWithoutPostInput
-  date: DateTime
-}
-
 input PostUpdateInput {
   text: String
   author: UserUpdateOneRequiredWithoutPostsInput
-  likedBy: UserUpdateManyInput
+  likedBy: UserUpdateManyWithoutLikedPostsInput
   comments: CommentUpdateManyWithoutPostInput
   date: DateTime
 }
@@ -1649,18 +1648,6 @@ input PostUpdateInput {
 input PostUpdateManyDataInput {
   text: String
   date: DateTime
-}
-
-input PostUpdateManyInput {
-  create: [PostCreateInput!]
-  update: [PostUpdateWithWhereUniqueNestedInput!]
-  upsert: [PostUpsertWithWhereUniqueNestedInput!]
-  delete: [PostWhereUniqueInput!]
-  connect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  deleteMany: [PostScalarWhereInput!]
-  updateMany: [PostUpdateManyWithWhereNestedInput!]
 }
 
 input PostUpdateManyMutationInput {
@@ -1680,6 +1667,18 @@ input PostUpdateManyWithoutAuthorInput {
   updateMany: [PostUpdateManyWithWhereNestedInput!]
 }
 
+input PostUpdateManyWithoutLikedByInput {
+  create: [PostCreateWithoutLikedByInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutLikedByInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutLikedByInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
 input PostUpdateManyWithWhereNestedInput {
   where: PostScalarWhereInput!
   data: PostUpdateManyDataInput!
@@ -1694,7 +1693,7 @@ input PostUpdateOneRequiredWithoutCommentsInput {
 
 input PostUpdateWithoutAuthorDataInput {
   text: String
-  likedBy: UserUpdateManyInput
+  likedBy: UserUpdateManyWithoutLikedPostsInput
   comments: CommentUpdateManyWithoutPostInput
   date: DateTime
 }
@@ -1702,13 +1701,15 @@ input PostUpdateWithoutAuthorDataInput {
 input PostUpdateWithoutCommentsDataInput {
   text: String
   author: UserUpdateOneRequiredWithoutPostsInput
-  likedBy: UserUpdateManyInput
+  likedBy: UserUpdateManyWithoutLikedPostsInput
   date: DateTime
 }
 
-input PostUpdateWithWhereUniqueNestedInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateDataInput!
+input PostUpdateWithoutLikedByDataInput {
+  text: String
+  author: UserUpdateOneRequiredWithoutPostsInput
+  comments: CommentUpdateManyWithoutPostInput
+  date: DateTime
 }
 
 input PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -1716,21 +1717,26 @@ input PostUpdateWithWhereUniqueWithoutAuthorInput {
   data: PostUpdateWithoutAuthorDataInput!
 }
 
+input PostUpdateWithWhereUniqueWithoutLikedByInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutLikedByDataInput!
+}
+
 input PostUpsertWithoutCommentsInput {
   update: PostUpdateWithoutCommentsDataInput!
   create: PostCreateWithoutCommentsInput!
-}
-
-input PostUpsertWithWhereUniqueNestedInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateDataInput!
-  create: PostCreateInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutAuthorInput {
   where: PostWhereUniqueInput!
   update: PostUpdateWithoutAuthorDataInput!
   create: PostCreateWithoutAuthorInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutLikedByInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutLikedByDataInput!
+  create: PostCreateWithoutLikedByInput!
 }
 
 input PostWhereInput {
@@ -2740,18 +2746,18 @@ input UserCreateInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
+input UserCreateManyWithoutLikedCommentsInput {
+  create: [UserCreateWithoutLikedCommentsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutLikedCommentsInput {
-  create: [UserCreateWithoutLikedCommentsInput!]
+input UserCreateManyWithoutLikedPostsInput {
+  create: [UserCreateWithoutLikedPostsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -2797,7 +2803,7 @@ input UserCreateWithoutCommentsInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
 
@@ -2812,7 +2818,7 @@ input UserCreateWithoutItemsInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
@@ -2829,8 +2835,24 @@ input UserCreateWithoutLikedCommentsInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutLikedPostsInput {
+  name: String!
+  email: String!
+  password: String!
+  avatar: String
+  purchases: PurchaseCreateManyWithoutUserInput
+  payments: PaymentCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  role: UserRole
+  balance: Float
+  posts: PostCreateManyWithoutAuthorInput
+  comments: CommentCreateManyWithoutAuthorInput
+  likedComments: CommentCreateManyWithoutLikedByInput
 }
 
 input UserCreateWithoutPaymentsInput {
@@ -2844,7 +2866,7 @@ input UserCreateWithoutPaymentsInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
@@ -2860,7 +2882,7 @@ input UserCreateWithoutPostsInput {
   items: ItemCreateManyWithoutUserInput
   role: UserRole
   balance: Float
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
@@ -2876,7 +2898,7 @@ input UserCreateWithoutPurchasesInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
@@ -2892,7 +2914,7 @@ input UserCreateWithoutTransactionsInput {
   role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyInput
+  likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
 }
@@ -3045,23 +3067,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  name: String
-  email: String
-  password: String
-  avatar: String
-  purchases: PurchaseUpdateManyWithoutUserInput
-  payments: PaymentUpdateManyWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-  items: ItemUpdateManyWithoutUserInput
-  role: UserRole
-  balance: Float
-  posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  likedComments: CommentUpdateManyWithoutLikedByInput
-}
-
 input UserUpdateInput {
   name: String
   email: String
@@ -3074,7 +3079,7 @@ input UserUpdateInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
 }
@@ -3086,18 +3091,6 @@ input UserUpdateManyDataInput {
   avatar: String
   role: UserRole
   balance: Float
-}
-
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyMutationInput {
@@ -3117,6 +3110,18 @@ input UserUpdateManyWithoutLikedCommentsInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutLikedCommentsInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutLikedCommentsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutLikedPostsInput {
+  create: [UserCreateWithoutLikedPostsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutLikedPostsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutLikedPostsInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -3180,7 +3185,7 @@ input UserUpdateWithoutCommentsDataInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   likedComments: CommentUpdateManyWithoutLikedByInput
 }
 
@@ -3195,7 +3200,7 @@ input UserUpdateWithoutItemsDataInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
 }
@@ -3212,8 +3217,24 @@ input UserUpdateWithoutLikedCommentsDataInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutLikedPostsDataInput {
+  name: String
+  email: String
+  password: String
+  avatar: String
+  purchases: PurchaseUpdateManyWithoutUserInput
+  payments: PaymentUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  role: UserRole
+  balance: Float
+  posts: PostUpdateManyWithoutAuthorInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  likedComments: CommentUpdateManyWithoutLikedByInput
 }
 
 input UserUpdateWithoutPaymentsDataInput {
@@ -3227,7 +3248,7 @@ input UserUpdateWithoutPaymentsDataInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
 }
@@ -3243,7 +3264,7 @@ input UserUpdateWithoutPostsDataInput {
   items: ItemUpdateManyWithoutUserInput
   role: UserRole
   balance: Float
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
 }
@@ -3259,7 +3280,7 @@ input UserUpdateWithoutPurchasesDataInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
 }
@@ -3275,19 +3296,19 @@ input UserUpdateWithoutTransactionsDataInput {
   role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-}
-
-input UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutLikedCommentsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutLikedPostsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutLikedPostsDataInput!
 }
 
 input UserUpsertWithoutCommentsInput {
@@ -3320,16 +3341,16 @@ input UserUpsertWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput!
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
-}
-
 input UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutLikedCommentsDataInput!
   create: UserCreateWithoutLikedCommentsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutLikedPostsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutLikedPostsDataInput!
+  create: UserCreateWithoutLikedPostsInput!
 }
 
 input UserWhereInput {

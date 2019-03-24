@@ -1,8 +1,8 @@
 type Comment {
   id: ID! @unique
   text: String!
-  author: User! @relation(name: "CommentAuthor", onDelete: SET_NULL)
-  likedBy: [User!]! @relation(name: "LikedComments")
   date: DateTime!
+  author: User! @relation(name: "CommentAuthor", onDelete: SET_NULL)
+  likedBy: [User!]! @relation(name: "LikedComments", onDelete: SET_NULL)
   post: Post! @relation(name: "PostComments", onDelete: SET_NULL)
 }
