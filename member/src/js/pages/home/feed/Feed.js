@@ -1,8 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import Post from './Post';
-import CreatePost from './CreatePost';
+import Post from './post/Post';
+import CreatePost from './post/CreatePost';
 import { Grid } from '@material-ui/core';
 
 import styles from './Feed.css';

@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { graphql, Mutation } from 'react-apollo';
 import { Button } from '@material-ui/core';
 import { Icon } from 'Components';
-import { STATS } from './StatsBar';
+import { POST_STATS } from './stats/PostStats';
 
 import styles from './LikeButton.css';
 
@@ -43,7 +43,7 @@ class LikeButton extends React.Component {
       },
       refetchQueries: () => [
         { query: USER },
-        { query: STATS, variables: { postId: this.props.post.id } },
+        { query: POST_STATS, variables: { postId: this.props.post.id } },
       ],
     });
   };

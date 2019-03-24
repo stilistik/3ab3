@@ -4,31 +4,6 @@
   align-items: center;
 }
 
-.stats {
-  display: flex;
-  align-items: center;
-  color: gray;
-  margin-right: 10px;
-}
-
-.circle {
-  width: 16px;
-  height: 16px;
-  background-color: #1a77ad;
-  color: white;
-  margin-right: 5px;
-  cursor: pointer;
-}
-
-.icon {
-  width: 10px;
-  height: 10px;
-}
-
-.number {
-  font-size: 12px;
-}
-
 .drawer {
   height: 60%;
 }

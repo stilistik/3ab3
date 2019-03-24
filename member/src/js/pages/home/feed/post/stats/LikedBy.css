@@ -1,0 +1,28 @@
+.drawer {
+  height: 60%;
+}
+
+.title {
+  padding: 10px 20px;
+}
+
+.paper {
+  max-height: 40%;
+}
+
+.likedby {
+  padding: 10px 20px;
+  overflow-y: auto;
+}
+
+.like {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.avatar {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}

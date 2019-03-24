@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
 import CreatePostForm from './CreatePostForm';
-import { FEED } from './Feed';
+import { FEED } from '../Feed';
 
 const MUTATION = gql`
   mutation($input: PostInput!) {

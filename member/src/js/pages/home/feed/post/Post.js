@@ -8,10 +8,10 @@ import {
   Divider,
 } from '@material-ui/core';
 import { Icon, UserAvatar } from 'Components';
-import CreateComment from './CreateComment';
-import CommentList from './CommentList';
+import CreateComment from '../comment/CreateComment';
+import CommentList from '../comment/CommentList';
 import LikeButton from './LikeButton';
-import StatsBar from './StatsBar';
+import PostStats from './stats/PostStats';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -59,7 +59,7 @@ class Post extends React.Component {
           <Typography component="p">{post.text}</Typography>
         </CardContent>
         <Divider />
-        <StatsBar postId={post.id} onComment={this.onComment} />
+        <PostStats postId={post.id} onComment={this.onComment} />
         <CardActions>
           <LikeButton post={post} />
           <Button size="small" color="primary" onClick={this.onComment}>

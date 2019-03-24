@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chip } from '@material-ui/core';
 import { UserAvatar } from 'Components';
+import CommentStats from './CommentStats';
 
 import styles from './Comment.css';
 
@@ -23,6 +24,7 @@ class Comment extends React.Component {
           avatar={avatar}
           label={label}
         />
+        <CommentStats />
       </div>
     );
   }
