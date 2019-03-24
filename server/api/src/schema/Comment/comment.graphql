@@ -15,6 +15,7 @@ input CommentInput {
 
 extend type Query {
   comments: [Comment!]!
+  comment(commentId: ID!): Comment!
 }
 
 extend type Mutation {

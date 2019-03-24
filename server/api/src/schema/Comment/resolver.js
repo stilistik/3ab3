@@ -3,6 +3,9 @@ module.exports = {
     comments(root, args, context) {
       return context.prisma.comments();
     },
+    comment(root, args, context) {
+      return context.prisma.comment({ id: args.commentId });
+    },
   },
   Mutation: {
     async createComment(root, args, context) {
