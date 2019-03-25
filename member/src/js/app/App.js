@@ -3,8 +3,7 @@ import { Router } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
-import AppHeader from './AppHeader';
-import AppMenu from './AppMenu';
+import AppCore from './AppCore';
 import Auth from './Auth';
 import Routes from 'Routes';
 import MessageHandler from './MessageHandler';
@@ -27,20 +26,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      drawerOpen: false,
-    };
-  }
-
   componentDidMount = () => {
     const access_token = window.localStorage.getItem('access_token');
     if (access_token) this.props.login(access_token);
-  };
-
-  setDrawerOpen = (value) => {
-    this.setState({ drawerOpen: value });
   };
 
   render() {
@@ -53,15 +41,7 @@ class App extends React.Component {
     return (
       <div styleName="container">
         <CssBaseline />
-        {this.props.isAuthenticated ? (
-          <div>
-            <AppHeader setDrawerOpen={this.setDrawerOpen} />
-            <AppMenu
-              drawerOpen={this.state.drawerOpen}
-              setDrawerOpen={this.setDrawerOpen}
-            />
-          </div>
-        ) : null}
+        <AppCore isAuthenticated={this.props.isAuthenticated} />
         <Auth>
           <Router history={history}>
             <Routes props={props} />

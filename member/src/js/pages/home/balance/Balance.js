@@ -15,6 +15,11 @@ const BALANCE = gql`
       balance
       avatar
       name
+      transactions(first: 5) {
+        id
+        date
+        balance
+      }
     }
   }
 `;
