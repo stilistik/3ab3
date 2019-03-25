@@ -45,7 +45,7 @@ const EventHeader = ({ title, date }) => {
   );
 };
 
-class EventCard extends React.Component {
+export class EventCard extends React.Component {
   render() {
     const { title, date, description } = this.props.event;
     return (
@@ -76,5 +76,3 @@ class EventCard extends React.Component {
     );
   }
 }
-
-export default EventCard;

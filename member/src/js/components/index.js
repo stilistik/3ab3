@@ -4,6 +4,7 @@ export * from './UserAvatar';
 export * from './DefaultGrid';
 export * from './ImageDiv';
 export * from './DeleteConfirm';
+export * from './EventCard';
 
 export * from './like';
 export * from './plots';

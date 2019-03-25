@@ -3,6 +3,7 @@ import { DefaultGrid } from 'Components';
 import { Grid } from '@material-ui/core';
 import Feed from './feed/Feed';
 import Balance from './balance/Balance';
+import Events from './events/Events';
 
 // import styles from './Home.css';
 
@@ -16,6 +17,7 @@ class Home extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Balance />
+            <Events />
           </Grid>
         </Grid>
       </DefaultGrid>

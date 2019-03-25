@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import { DefaultGrid, Icon } from 'Components';
 import { Fab, Grid, Hidden } from '@material-ui/core';
 import { requestRoute } from 'History';
-import EventCard from './EventCard';
+import { EventCard } from 'Components';
 
 import styles from './Events.css';
 
