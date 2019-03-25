@@ -53,7 +53,7 @@ class CreatePostForm extends React.Component {
       text: this.state.value,
       image: this.state.file,
     });
-    this.setState({ value: '', file: null });
+    this.setState({ value: '', file: null, src: null });
   };
 
   render() {
