@@ -21,6 +21,8 @@ import AddCommentIcon from '@material-ui/icons/AddComment';
 import CommentIcon from '@material-ui/icons/ModeComment';
 import SendIcon from '@material-ui/icons/Send';
 import LikeIcon from '@material-ui/icons/ThumbUp';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const icons = {
   mail: MailIcon,
@@ -45,6 +47,8 @@ const icons = {
   comment: CommentIcon,
   send: SendIcon,
   like: LikeIcon,
+  moreHorizontal: MoreHorizIcon,
+  moreVertical: MoreVertIcon,
 };
 
 export class Icon extends React.Component {

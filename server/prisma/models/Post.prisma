@@ -4,6 +4,6 @@ type Post {
   image: String
   author: User! @relation(name: "PostAuthor", onDelete: SET_NULL)
   likedBy: [User!]! @relation(name: "LikedPosts", onDelete: SET_NULL)
-  comments: [Comment!]! @relation(name: "PostComments", onDelete: SET_NULL)
+  comments: [Comment!]! @relation(name: "PostComments", onDelete: CASCADE)
   date: DateTime!
 }

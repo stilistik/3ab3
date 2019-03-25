@@ -11,6 +11,7 @@ import { Icon, UserAvatar } from 'Components';
 import CreateComment from '../comment/CreateComment';
 import CommentList from '../comment/CommentList';
 import LikePost from './LikePost';
+import DeletePost from './DeletePost';
 import PostStats from './stats/PostStats';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -20,16 +21,21 @@ import styles from './Post.css';
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-EN');
 
-const PostHeader = ({ user, date }) => {
+const PostHeader = ({ post }) => {
   return (
     <div className={styles.header}>
-      <UserAvatar user={user} className={styles.avatar} />
-      <div>
-        <Typography className={styles.username}>{user.name}</Typography>
-        <Typography className={styles.date}>
-          {timeAgo.format(new Date(date))}
-        </Typography>
+      <div className={styles.headerleft}>
+        <UserAvatar user={post.author} className={styles.avatar} />
+        <div>
+          <Typography className={styles.username}>
+            {post.author.name}
+          </Typography>
+          <Typography className={styles.date}>
+            {timeAgo.format(new Date(post.date))}
+          </Typography>
+        </div>
       </div>
+      <DeletePost post={post} />
     </div>
   );
 };
@@ -42,7 +48,7 @@ const PostImage = ({ image }) => {
 const PostText = ({ text }) => {
   if (!text) return null;
   return (
-    <Typography className={styles.text} component="body1">
+    <Typography className={styles.text} variant="body2">
       {text}
     </Typography>
   );
@@ -68,7 +74,7 @@ class Post extends React.Component {
     const { post } = this.props;
     return (
       <Card>
-        <PostHeader user={post.author} date={post.date} />
+        <PostHeader post={post} />
         <CardContent className={styles.content}>
           <PostText text={post.text} />
           <PostImage image={post.image} />

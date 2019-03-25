@@ -1,4 +1,6 @@
+const verifyAndDecodeToken = require('../../auth/verify');
 const { uploadFile } = require('../../helper/file.helper.js');
+const { AuthenticationError } = require('../../auth/errors');
 
 module.exports = {
   Query: {
@@ -55,8 +57,16 @@ module.exports = {
         },
       });
     },
-    deletePost(root, args, context) {
-      return context.prisma.deletePost({ id: args.postId });
+    async deletePost(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      const post = await context.prisma.post({ id: args.postId });
+      if (post.author.id === id) {
+        return context.prisma.deletePost({ id: args.postId });
+      } else {
+        throw new AuthenticationError({
+          message: 'You are not the author if this post',
+        });
+      }
     },
   },
   Post: {
