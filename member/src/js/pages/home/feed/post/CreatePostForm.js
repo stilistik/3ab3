@@ -60,7 +60,7 @@ class CreatePostForm extends React.Component {
     if (!this.props.user) return null;
     return (
       <Card>
-        <CardContent>
+        <CardContent className={styles.card}>
           <div className={styles.content}>
             <UserAvatar user={this.props.user} className={styles.avatar} />
             <TextField
