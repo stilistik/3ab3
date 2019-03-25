@@ -96,6 +96,7 @@ module.exports = {
       return context.prisma.user({ id: root.id }).transactions({
         where: { type: args.type },
         orderBy: 'date_DESC',
+        first: args.first,
       });
     },
     posts(root, args, context) {

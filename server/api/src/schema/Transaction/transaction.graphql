@@ -14,6 +14,6 @@ enum TransactionType {
 }
 
 extend type Query {
-  transactions(type: TransactionType): [Transaction!]!
+  transactions(type: TransactionType, first: Int): [Transaction!]!
   transaction(transactionId: ID!): Transaction!
 }
