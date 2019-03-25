@@ -3,6 +3,7 @@ export * from './ProfileAvatar';
 export * from './UserAvatar';
 export * from './DefaultGrid';
 export * from './ImageDiv';
+export * from './DeleteConfirm';
 
 export * from './like';
 export * from './plots';
