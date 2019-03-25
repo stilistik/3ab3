@@ -2489,6 +2489,7 @@ type Transaction {
   user: User!
   date: DateTime!
   type: TransactionType!
+  balance: Float!
   payment: Payment
   purchase: Purchase
 }
@@ -2503,6 +2504,7 @@ input TransactionCreateInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
+  balance: Float!
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
@@ -2526,6 +2528,7 @@ input TransactionCreateWithoutPaymentInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
+  balance: Float!
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
 
@@ -2533,12 +2536,14 @@ input TransactionCreateWithoutPurchaseInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
+  balance: Float!
   payment: PaymentCreateOneWithoutTransactionInput
 }
 
 input TransactionCreateWithoutUserInput {
   date: DateTime!
   type: TransactionType!
+  balance: Float!
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
@@ -2555,6 +2560,8 @@ enum TransactionOrderByInput {
   date_DESC
   type_ASC
   type_DESC
+  balance_ASC
+  balance_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -2565,6 +2572,7 @@ type TransactionPreviousValues {
   id: ID!
   date: DateTime!
   type: TransactionType!
+  balance: Float!
 }
 
 input TransactionScalarWhereInput {
@@ -2594,6 +2602,14 @@ input TransactionScalarWhereInput {
   type_not: TransactionType
   type_in: [TransactionType!]
   type_not_in: [TransactionType!]
+  balance: Float
+  balance_not: Float
+  balance_in: [Float!]
+  balance_not_in: [Float!]
+  balance_lt: Float
+  balance_lte: Float
+  balance_gt: Float
+  balance_gte: Float
   AND: [TransactionScalarWhereInput!]
   OR: [TransactionScalarWhereInput!]
   NOT: [TransactionScalarWhereInput!]
@@ -2626,6 +2642,7 @@ input TransactionUpdateInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
+  balance: Float
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
@@ -2633,11 +2650,13 @@ input TransactionUpdateInput {
 input TransactionUpdateManyDataInput {
   date: DateTime
   type: TransactionType
+  balance: Float
 }
 
 input TransactionUpdateManyMutationInput {
   date: DateTime
   type: TransactionType
+  balance: Float
 }
 
 input TransactionUpdateManyWithoutUserInput {
@@ -2675,6 +2694,7 @@ input TransactionUpdateWithoutPaymentDataInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
+  balance: Float
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
 
@@ -2682,12 +2702,14 @@ input TransactionUpdateWithoutPurchaseDataInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
+  balance: Float
   payment: PaymentUpdateOneWithoutTransactionInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
   date: DateTime
   type: TransactionType
+  balance: Float
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
@@ -2741,6 +2763,14 @@ input TransactionWhereInput {
   type_not: TransactionType
   type_in: [TransactionType!]
   type_not_in: [TransactionType!]
+  balance: Float
+  balance_not: Float
+  balance_in: [Float!]
+  balance_not_in: [Float!]
+  balance_lt: Float
+  balance_lte: Float
+  balance_gt: Float
+  balance_gte: Float
   payment: PaymentWhereInput
   purchase: PurchaseWhereInput
   AND: [TransactionWhereInput!]

@@ -645,6 +645,8 @@ export type TransactionOrderByInput =
   | "date_DESC"
   | "type_ASC"
   | "type_DESC"
+  | "balance_ASC"
+  | "balance_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -919,6 +921,14 @@ export interface TransactionWhereInput {
   type_not?: TransactionType;
   type_in?: TransactionType[] | TransactionType;
   type_not_in?: TransactionType[] | TransactionType;
+  balance?: Float;
+  balance_not?: Float;
+  balance_in?: Float[] | Float;
+  balance_not_in?: Float[] | Float;
+  balance_lt?: Float;
+  balance_lte?: Float;
+  balance_gt?: Float;
+  balance_gte?: Float;
   payment?: PaymentWhereInput;
   purchase?: PurchaseWhereInput;
   AND?: TransactionWhereInput[] | TransactionWhereInput;
@@ -1137,6 +1147,7 @@ export interface PurchaseCreateOneWithoutTransactionInput {
 export interface TransactionUpdateManyMutationInput {
   date?: DateTimeInput;
   type?: TransactionType;
+  balance?: Float;
 }
 
 export interface PurchaseCreateWithoutTransactionInput {
@@ -1150,6 +1161,7 @@ export interface TransactionUpdateInput {
   user?: UserUpdateOneRequiredWithoutTransactionsInput;
   date?: DateTimeInput;
   type?: TransactionType;
+  balance?: Float;
   payment?: PaymentUpdateOneWithoutTransactionInput;
   purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
@@ -1163,6 +1175,7 @@ export interface TransactionCreateInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
+  balance: Float;
   payment?: PaymentCreateOneWithoutTransactionInput;
   purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
@@ -1207,6 +1220,7 @@ export interface TransactionCreateWithoutPurchaseInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
+  balance: Float;
   payment?: PaymentCreateOneWithoutTransactionInput;
 }
 
@@ -1704,6 +1718,7 @@ export interface TransactionUpdateWithoutPaymentDataInput {
   user?: UserUpdateOneRequiredWithoutTransactionsInput;
   date?: DateTimeInput;
   type?: TransactionType;
+  balance?: Float;
   purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
 
@@ -2188,6 +2203,7 @@ export interface PaymentCreateOneWithoutTransactionInput {
 export interface TransactionUpdateWithoutUserDataInput {
   date?: DateTimeInput;
   type?: TransactionType;
+  balance?: Float;
   payment?: PaymentUpdateOneWithoutTransactionInput;
   purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
@@ -2928,6 +2944,7 @@ export interface TransactionCreateWithoutPaymentInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
+  balance: Float;
   purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
 
@@ -3268,6 +3285,7 @@ export interface PaymentUpsertWithoutTransactionInput {
 export interface TransactionCreateWithoutUserInput {
   date: DateTimeInput;
   type: TransactionType;
+  balance: Float;
   payment?: PaymentCreateOneWithoutTransactionInput;
   purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
@@ -3388,6 +3406,7 @@ export interface TransactionUpdateWithoutPurchaseDataInput {
   user?: UserUpdateOneRequiredWithoutTransactionsInput;
   date?: DateTimeInput;
   type?: TransactionType;
+  balance?: Float;
   payment?: PaymentUpdateOneWithoutTransactionInput;
 }
 
@@ -3444,6 +3463,14 @@ export interface TransactionScalarWhereInput {
   type_not?: TransactionType;
   type_in?: TransactionType[] | TransactionType;
   type_not_in?: TransactionType[] | TransactionType;
+  balance?: Float;
+  balance_not?: Float;
+  balance_in?: Float[] | Float;
+  balance_not_in?: Float[] | Float;
+  balance_lt?: Float;
+  balance_lte?: Float;
+  balance_gt?: Float;
+  balance_gte?: Float;
   AND?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
   OR?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
   NOT?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
@@ -3491,6 +3518,7 @@ export interface UserUpsertWithWhereUniqueWithoutLikedPostsInput {
 export interface TransactionUpdateManyDataInput {
   date?: DateTimeInput;
   type?: TransactionType;
+  balance?: Float;
 }
 
 export interface UserUpsertWithoutCommentsInput {
@@ -3880,6 +3908,7 @@ export interface TransactionPreviousValues {
   id: ID_Output;
   date: DateTimeOutput;
   type: TransactionType;
+  balance: Float;
 }
 
 export interface TransactionPreviousValuesPromise
@@ -3888,6 +3917,7 @@ export interface TransactionPreviousValuesPromise
   id: () => Promise<ID_Output>;
   date: () => Promise<DateTimeOutput>;
   type: () => Promise<TransactionType>;
+  balance: () => Promise<Float>;
 }
 
 export interface TransactionPreviousValuesSubscription
@@ -3896,6 +3926,7 @@ export interface TransactionPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   type: () => Promise<AsyncIterator<TransactionType>>;
+  balance: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface UserConnection {
@@ -4759,6 +4790,7 @@ export interface Transaction {
   id: ID_Output;
   date: DateTimeOutput;
   type: TransactionType;
+  balance: Float;
 }
 
 export interface TransactionPromise extends Promise<Transaction>, Fragmentable {
@@ -4766,6 +4798,7 @@ export interface TransactionPromise extends Promise<Transaction>, Fragmentable {
   user: <T = UserPromise>() => T;
   date: () => Promise<DateTimeOutput>;
   type: () => Promise<TransactionType>;
+  balance: () => Promise<Float>;
   payment: <T = PaymentPromise>() => T;
   purchase: <T = PurchasePromise>() => T;
 }
@@ -4777,6 +4810,7 @@ export interface TransactionSubscription
   user: <T = UserSubscription>() => T;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   type: () => Promise<AsyncIterator<TransactionType>>;
+  balance: () => Promise<AsyncIterator<Float>>;
   payment: <T = PaymentSubscription>() => T;
   purchase: <T = PurchaseSubscription>() => T;
 }

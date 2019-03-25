@@ -2,6 +2,7 @@ type Transaction @isAuthenticated {
   id: ID!
   user: User!
   date: DateTime!
+  balance: Float!
   type: TransactionType!
   purchase: Purchase
   payment: Payment

@@ -13,6 +13,7 @@ module.exports = {
     async createPayment(root, args, context) {
       const { userId, amount, date } = args.input;
       const user = await context.prisma.user({ id: userId });
+      const balance = user.balance - amount;
       const payment = await context.prisma.createPayment({
         user: {
           connect: { id: userId },
@@ -22,6 +23,7 @@ module.exports = {
             user: { connect: { id: userId } },
             date: date,
             type: 'PAYMENT',
+            balance: balance,
           },
         },
         date,
@@ -31,7 +33,7 @@ module.exports = {
       if (!payment) throw new Error('Payment could not be created.');
 
       await context.prisma.updateUser({
-        data: { balance: user.balance - amount },
+        data: { balance: balance },
         where: { id: userId },
       });
 
