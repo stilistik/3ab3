@@ -111,5 +111,11 @@ module.exports = {
     likedComments(root, args, context) {
       return context.prisma.user({ id: root.id }).likedComments();
     },
+    events(root, args, context) {
+      return context.prisma.user({ id: root.id }).events();
+    },
+    likedEvents(root, args, context) {
+      return context.prisma.user({ id: root.id }).likedEvents();
+    },
   },
 };

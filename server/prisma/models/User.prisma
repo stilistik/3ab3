@@ -11,9 +11,11 @@ type User {
   role: UserRole! @default(value: MEMBER)
   balance: Float! @default(value: 0)
   posts: [Post!]! @relation(name: "PostAuthor", onDelete: CASCADE)
-  likedPosts: [Post!]! @relation(name: "LikedPosts", onDelete: CASCADE)
+  likedPosts: [Post!]! @relation(name: "LikedPosts")
+  likedEvents: [Event!]! @relation(name: "LikedEvents")
   comments: [Comment!]! @relation(name: "CommentAuthor", onDelete: CASCADE)
-  likedComments: [Comment!]! @relation(name: "LikedComments" onDelete: CASCADE)
+  likedComments: [Comment!]! @relation(name: "LikedComments")
+  events: [Event!]! @relation(name: "EventCommittee")
 }
 
 enum UserRole {

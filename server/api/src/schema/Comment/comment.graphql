@@ -8,7 +8,8 @@ type Comment @isAuthenticated {
 }
 
 input CommentInput {
-  postId: ID!
+  postId: ID
+  eventId: ID
   userId: ID!
   text: String!
 }

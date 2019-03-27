@@ -11,7 +11,9 @@ type User @isAuthenticated {
   balance: Float!
   role: UserRole!
   posts: [Post!]!
+  events: [Event!]!
   likedPosts: [Post!]!
+  likedEvents: [Event!]!
   comments: [Comment!]!
   likedComments: [Comment!]!
 }

@@ -1,4 +1,5 @@
 const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
+const verifyAndDecodeToken = require('../../auth/verify');
 
 module.exports = {
   Query: {
@@ -25,16 +26,20 @@ module.exports = {
   },
   Mutation: {
     async createEvent(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
       if (args.input.image) {
         const { image, ...rest } = args.input;
         const file = await uploadFile(image, context);
-        const input = {
+        return context.prisma.createEvent({
           image: file.uri,
+          owner: { connect: { id: id } },
           ...rest,
-        };
-        return context.prisma.createEvent(input);
+        });
       } else {
-        return context.prisma.createEvent(args.input);
+        return context.prisma.createEvent({
+          owner: { connect: { id: id } },
+          ...args.input,
+        });
       }
     },
     async deleteEvent(root, args, context) {
@@ -42,6 +47,17 @@ module.exports = {
       const img = await context.prisma.file({ uri: toDelete.image });
       await deleteFile(img.id, context);
       return context.prisma.deleteEvent({ id: args.eventId });
+    },
+  },
+  Event: {
+    comments(root, args, context) {
+      return context.prisma.event({ id: root.id }).comments();
+    },
+    owner(root, args, context) {
+      return context.prisma.event({ id: root.id }).owner();
+    },
+    likedBy(root, args, context) {
+      return context.prisma.event({ id: root.id }).likedBy();
     },
   },
 };

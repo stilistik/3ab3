@@ -9,18 +9,21 @@ module.exports = {
   },
   Mutation: {
     async createComment(root, args, context) {
-      const { postId, userId, text } = args.input;
+      const { postId, eventId, userId, text } = args.input;
+
       const date = new Date().toISOString();
-      return context.prisma.createComment({
+      let input = {
         author: {
           connect: { id: userId },
         },
-        post: {
-          connect: { id: postId },
-        },
         date,
         text,
-      });
+      };
+
+      if (postId) input.post = { connect: { id: postId } };
+      else if (eventId) input.event = { connect: { id: eventId } };
+
+      return context.prisma.createComment(input);
     },
     likeComment(root, args, context) {
       return context.prisma.updateComment({

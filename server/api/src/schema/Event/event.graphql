@@ -4,6 +4,10 @@ type Event {
   description: String!
   date: DateTime!
   image: String!
+  comments: [Comment!]!
+  likedBy: [User!]!
+  owner: User!
+  committee: [User!]!
 }
 
 input EventInput {
