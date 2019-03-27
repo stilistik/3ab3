@@ -42,6 +42,26 @@ module.exports = {
         });
       }
     },
+    likeEvent(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          likedBy: {
+            connect: { id: args.userId },
+          },
+        },
+      });
+    },
+    unlikeEvent(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          likedBy: {
+            disconnect: { id: args.userId },
+          },
+        },
+      });
+    },
     async deleteEvent(root, args, context) {
       const toDelete = await context.prisma.event({ id: args.eventId });
       const img = await context.prisma.file({ uri: toDelete.image });

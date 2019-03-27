@@ -21,7 +21,6 @@ export const EVENTS = gql`
 class Events extends React.Component {
   render() {
     if (!this.props.events) return null;
-    console.log(this.props);
     return (
       <div className={styles.container}>
         <Grid container spacing={24}>

@@ -5,9 +5,10 @@ import {
   CardContent,
   Typography,
   CardActions,
-  IconButton,
+  Button,
 } from '@material-ui/core';
 import { Icon, ImageDiv } from 'Components';
+import LikeEvent from './LikeEvent';
 
 import styles from './EventCard.css';
 
@@ -47,7 +48,7 @@ const EventHeader = ({ title, date }) => {
 
 export class EventCard extends React.Component {
   render() {
-    const { title, date, description } = this.props.event;
+    const { event } = this.props;
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
@@ -61,16 +62,17 @@ export class EventCard extends React.Component {
             }}
           />
           <CardContent>
-            <EventHeader title={title} date={date} />
+            <EventHeader title={event.title} date={event.date} />
             <Typography component="p" className={styles.typo}>
-              {description}
+              {event.description}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <IconButton size="small" color="primary" onClick={this.onEdit}>
-            <Icon type="edit" />
-          </IconButton>
+          <LikeEvent event={event} />
+          <Button size="small" color="primary" onClick={this.onComment}>
+            <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
+          </Button>
         </CardActions>
       </Card>
     );
