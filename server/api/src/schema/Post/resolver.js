@@ -59,8 +59,8 @@ module.exports = {
     },
     async deletePost(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
-      const post = await context.prisma.post({ id: args.postId });
-      if (post.author.id === id) {
+      const author = await context.prisma.post({ id: args.postId }).author();
+      if (author.id === id) {
         return context.prisma.deletePost({ id: args.postId });
       } else {
         throw new AuthenticationError({
