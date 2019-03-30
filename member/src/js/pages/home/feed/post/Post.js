@@ -11,7 +11,7 @@ import { Icon, UserAvatar, CommentList } from 'Components';
 import CommentPost from './CommentPost';
 import LikePost from './LikePost';
 import DeletePost from './DeletePost';
-import PostStats from './stats/PostStats';
+import PostStats from './PostStats';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 

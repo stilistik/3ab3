@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { graphql, Mutation } from 'react-apollo';
 import { Button } from '@material-ui/core';
 import { Icon } from 'Components';
-import { POST_STATS } from './stats/PostStats';
+import { POST_STATS } from './PostStats';
 
 import styles from './LikePost.css';
 
