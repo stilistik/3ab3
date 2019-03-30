@@ -4,6 +4,13 @@ const { AuthenticationError } = require('../../auth/errors');
 
 module.exports = {
   Query: {
+    feed(root, args, context) {
+      return context.prisma.postsConnection({
+        orderBy: 'date_DESC',
+        first: args.first,
+        after: args.after,
+      });
+    },
     posts(root, args, context) {
       return context.prisma.posts({
         orderBy: 'date_DESC',

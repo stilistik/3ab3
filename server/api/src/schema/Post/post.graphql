@@ -1,4 +1,4 @@
-type Post @isAuthenticated {
+type Post implements Node @isAuthenticated {
   id: ID!
   text: String!
   image: String
@@ -7,6 +7,36 @@ type Post @isAuthenticated {
   comments: [Comment!]!
   date: DateTime!
 }
+
+interface Node {
+  id: ID
+}
+
+interface Edge {
+  cursor: String!
+  node: Node
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+}
+
+interface Connection {
+  pageInfo: PageInfo!
+  edges: [Edge]
+}
+
+type PostEdge implements Edge {
+  cursor: String!
+  node: Post
+}
+
+# Patient page with pagination infomation and patient edges
+type PostsConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [PostEdge]
+}
+
 
 input PostInput {
   userId: ID!
@@ -17,6 +47,7 @@ input PostInput {
 extend type Query {
   posts: [Post!]!
   post(postId: ID!): Post!
+  feed(first: Int = 10, after: String): PostsConnection
 }
 
 extend type Mutation {
