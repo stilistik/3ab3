@@ -3,8 +3,7 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
-import CreateCommentForm from './CreateCommentForm';
-import { POST_COMMENTS } from './CommentList';
+import { CreateCommentForm, POST_COMMENTS } from 'Components';
 
 const MUTATION = gql`
   mutation($postId: ID!, $text: String!) {
@@ -22,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class CreateComment extends React.Component {
+class CommentPost extends React.Component {
   onSubmit = async (values) => {
     try {
       await this.createComment({
@@ -52,4 +51,4 @@ class CreateComment extends React.Component {
 export default connect(
   null,
   mapDispatchToProps
-)(CreateComment);
+)(CommentPost);

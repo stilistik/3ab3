@@ -7,9 +7,8 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
-import { Icon, UserAvatar } from 'Components';
-import CreateComment from '../comment/CreateComment';
-import CommentList from '../comment/CommentList';
+import { Icon, UserAvatar, CommentList } from 'Components';
+import CommentPost from './CommentPost';
 import LikePost from './LikePost';
 import DeletePost from './DeletePost';
 import PostStats from './stats/PostStats';
@@ -88,7 +87,7 @@ class Post extends React.Component {
         </CardActions>
         {this.state.show ? (
           <div>
-            <CreateComment post={post} />
+            <CommentPost post={post} />
             <CommentList postId={post.id} />
           </div>
         ) : null}
