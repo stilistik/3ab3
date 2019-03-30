@@ -6,6 +6,46 @@ module.exports = {
     comment(root, args, context) {
       return context.prisma.comment({ id: args.commentId });
     },
+    postComments(root, args, context) {
+      return context.prisma.commentsConnection({
+        where: {
+          post: { id: args.postId },
+        },
+        orderBy: 'date_DESC',
+        first: args.first,
+        after: args.after,
+      });
+    },
+    postCommentCount(root, args, context) {
+      return context.prisma
+        .commentsConnection({
+          where: {
+            post: { id: args.postId },
+          },
+        })
+        .aggregate()
+        .count();
+    },
+    eventComments(root, args, context) {
+      return context.prisma.commentsConnection({
+        where: {
+          event: { id: args.eventId },
+        },
+        orderBy: 'date_DESC',
+        first: args.first,
+        after: args.after,
+      });
+    },
+    eventCommentCount(root, args, context) {
+      return context.prisma
+        .commentsConnection({
+          where: {
+            event: { id: args.eventId },
+          },
+        })
+        .aggregate()
+        .count();
+    },
   },
   Mutation: {
     likeComment(root, args, context) {

@@ -778,11 +778,11 @@ export type EventOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export interface TransactionUpdateOneRequiredWithoutPaymentInput {
-  create?: TransactionCreateWithoutPaymentInput;
-  update?: TransactionUpdateWithoutPaymentDataInput;
-  upsert?: TransactionUpsertWithoutPaymentInput;
-  connect?: TransactionWhereUniqueInput;
+export interface UserUpdateOneRequiredWithoutTransactionsInput {
+  create?: UserCreateWithoutTransactionsInput;
+  update?: UserUpdateWithoutTransactionsDataInput;
+  upsert?: UserUpsertWithoutTransactionsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export type ClientWhereUniqueInput = AtLeastOne<{
@@ -790,9 +790,9 @@ export type ClientWhereUniqueInput = AtLeastOne<{
   identity?: String;
 }>;
 
-export interface ItemUpdateManyWithWhereNestedInput {
-  where: ItemScalarWhereInput;
-  data: ItemUpdateManyDataInput;
+export interface ItemUpdateManyDataInput {
+  price?: Float;
+  amount?: Int;
 }
 
 export interface ItemWhereInput {
@@ -833,34 +833,7 @@ export interface ItemWhereInput {
   NOT?: ItemWhereInput[] | ItemWhereInput;
 }
 
-export interface EventCreateWithoutCommitteeInput {
-  title: String;
-  description: String;
-  date: DateTimeInput;
-  image: String;
-  comments?: CommentCreateManyInput;
-  likedBy?: UserCreateManyWithoutLikedEventsInput;
-  owner: UserCreateOneInput;
-}
-
-export interface UserUpsertWithoutTransactionsInput {
-  update: UserUpdateWithoutTransactionsDataInput;
-  create: UserCreateWithoutTransactionsInput;
-}
-
-export interface UserCreateManyWithoutLikedEventsInput {
-  create?:
-    | UserCreateWithoutLikedEventsInput[]
-    | UserCreateWithoutLikedEventsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface ItemUpdateManyDataInput {
-  price?: Float;
-  amount?: Int;
-}
-
-export interface UserCreateWithoutLikedEventsInput {
+export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
@@ -873,9 +846,56 @@ export interface UserCreateWithoutLikedEventsInput {
   balance?: Float;
   posts?: PostCreateManyWithoutAuthorInput;
   likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
   comments?: CommentCreateManyWithoutAuthorInput;
   likedComments?: CommentCreateManyWithoutLikedByInput;
   events?: EventCreateManyWithoutCommitteeInput;
+}
+
+export interface UserUpsertWithoutTransactionsInput {
+  update: UserUpdateWithoutTransactionsDataInput;
+  create: UserCreateWithoutTransactionsInput;
+}
+
+export interface UserCreateManyWithoutEventsInput {
+  create?: UserCreateWithoutEventsInput[] | UserCreateWithoutEventsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface PostUpdateManyWithoutAuthorInput {
+  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput;
+  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  set?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  update?:
+    | PostUpdateWithWhereUniqueWithoutAuthorInput[]
+    | PostUpdateWithWhereUniqueWithoutAuthorInput;
+  upsert?:
+    | PostUpsertWithWhereUniqueWithoutAuthorInput[]
+    | PostUpsertWithWhereUniqueWithoutAuthorInput;
+  deleteMany?: PostScalarWhereInput[] | PostScalarWhereInput;
+  updateMany?:
+    | PostUpdateManyWithWhereNestedInput[]
+    | PostUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateWithoutEventsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
 }
 
 export interface TransactionWhereInput {
@@ -921,10 +941,8 @@ export interface TransactionWhereInput {
   NOT?: TransactionWhereInput[] | TransactionWhereInput;
 }
 
-export interface CommentCreateManyWithoutLikedByInput {
-  create?:
-    | CommentCreateWithoutLikedByInput[]
-    | CommentCreateWithoutLikedByInput;
+export interface CommentCreateManyWithoutPostInput {
+  create?: CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput;
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
@@ -939,10 +957,12 @@ export interface UserSubscriptionWhereInput {
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
-export interface CommentCreateWithoutLikedByInput {
+export interface CommentCreateWithoutPostInput {
   text: String;
   date: DateTimeInput;
   author: UserCreateOneWithoutCommentsInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
 export interface CommentWhereInput {
@@ -986,14 +1006,16 @@ export interface CommentWhereInput {
   likedBy_every?: UserWhereInput;
   likedBy_some?: UserWhereInput;
   likedBy_none?: UserWhereInput;
+  post?: PostWhereInput;
+  event?: EventWhereInput;
   AND?: CommentWhereInput[] | CommentWhereInput;
   OR?: CommentWhereInput[] | CommentWhereInput;
   NOT?: CommentWhereInput[] | CommentWhereInput;
 }
 
-export interface UserCreateManyWithoutEventsInput {
-  create?: UserCreateWithoutEventsInput[] | UserCreateWithoutEventsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface PurchaseCreateOneWithoutTransactionInput {
+  create?: PurchaseCreateWithoutTransactionInput;
+  connect?: PurchaseWhereUniqueInput;
 }
 
 export interface TransactionSubscriptionWhereInput {
@@ -1007,22 +1029,11 @@ export interface TransactionSubscriptionWhereInput {
   NOT?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
 }
 
-export interface UserCreateWithoutEventsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
+export interface PurchaseCreateWithoutTransactionInput {
+  items?: ItemCreateManyInput;
+  total: Float;
+  user: UserCreateOneWithoutPurchasesInput;
+  date: DateTimeInput;
 }
 
 export interface ProductionSubscriptionWhereInput {
@@ -1036,9 +1047,9 @@ export interface ProductionSubscriptionWhereInput {
   NOT?: ProductionSubscriptionWhereInput[] | ProductionSubscriptionWhereInput;
 }
 
-export interface PurchaseCreateOneWithoutTransactionInput {
-  create?: PurchaseCreateWithoutTransactionInput;
-  connect?: PurchaseWhereUniqueInput;
+export interface UserCreateOneWithoutPurchasesInput {
+  create?: UserCreateWithoutPurchasesInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface PostSubscriptionWhereInput {
@@ -1050,40 +1061,6 @@ export interface PostSubscriptionWhereInput {
   AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
   OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
   NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-}
-
-export interface PurchaseCreateWithoutTransactionInput {
-  items?: ItemCreateManyInput;
-  total: Float;
-  user: UserCreateOneWithoutPurchasesInput;
-  date: DateTimeInput;
-}
-
-export interface ItemSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ItemWhereInput;
-  AND?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-  OR?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-  NOT?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-}
-
-export interface UserCreateOneWithoutPurchasesInput {
-  create?: UserCreateWithoutPurchasesInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface FileSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: FileWhereInput;
-  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
-  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
-  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
 }
 
 export interface UserCreateWithoutPurchasesInput {
@@ -1104,6 +1081,41 @@ export interface UserCreateWithoutPurchasesInput {
   events?: EventCreateManyWithoutCommitteeInput;
 }
 
+export interface ItemSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ItemWhereInput;
+  AND?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+  OR?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+  NOT?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+}
+
+export interface TransactionCreateOneWithoutPurchaseInput {
+  create?: TransactionCreateWithoutPurchaseInput;
+  connect?: TransactionWhereUniqueInput;
+}
+
+export interface FileSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: FileWhereInput;
+  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
+  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
+  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
+}
+
+export interface TransactionCreateWithoutPurchaseInput {
+  user: UserCreateOneWithoutTransactionsInput;
+  date: DateTimeInput;
+  type: TransactionType;
+  balance: Float;
+  payment?: PaymentCreateOneWithoutTransactionInput;
+}
+
 export interface CommentSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -1115,9 +1127,13 @@ export interface CommentSubscriptionWhereInput {
   NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
 }
 
-export interface TransactionCreateOneWithoutPurchaseInput {
-  create?: TransactionCreateWithoutPurchaseInput;
-  connect?: TransactionWhereUniqueInput;
+export interface CommentUpdateInput {
+  text?: String;
+  date?: DateTimeInput;
+  author?: UserUpdateOneRequiredWithoutCommentsInput;
+  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
+  post?: PostUpdateOneWithoutCommentsInput;
+  event?: EventUpdateOneWithoutCommentsInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1129,36 +1145,6 @@ export interface UserUpdateManyMutationInput {
   balance?: Float;
 }
 
-export interface TransactionCreateWithoutPurchaseInput {
-  user: UserCreateOneWithoutTransactionsInput;
-  date: DateTimeInput;
-  type: TransactionType;
-  balance: Float;
-  payment?: PaymentCreateOneWithoutTransactionInput;
-}
-
-export interface TransactionUpdateManyMutationInput {
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-}
-
-export interface CommentUpdateInput {
-  text?: String;
-  date?: DateTimeInput;
-  author?: UserUpdateOneRequiredWithoutCommentsInput;
-  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
-}
-
-export interface TransactionCreateInput {
-  user: UserCreateOneWithoutTransactionsInput;
-  date: DateTimeInput;
-  type: TransactionType;
-  balance: Float;
-  payment?: PaymentCreateOneWithoutTransactionInput;
-  purchase?: PurchaseCreateOneWithoutTransactionInput;
-}
-
 export interface UserUpdateOneRequiredWithoutCommentsInput {
   create?: UserCreateWithoutCommentsInput;
   update?: UserUpdateWithoutCommentsDataInput;
@@ -1166,9 +1152,11 @@ export interface UserUpdateOneRequiredWithoutCommentsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export type EventWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface TransactionUpdateManyMutationInput {
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+}
 
 export interface UserUpdateWithoutCommentsDataInput {
   name?: String;
@@ -1188,12 +1176,13 @@ export interface UserUpdateWithoutCommentsDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface PurchaseCreateInput {
-  items?: ItemCreateManyInput;
-  transaction: TransactionCreateOneWithoutPurchaseInput;
-  total: Float;
-  user: UserCreateOneWithoutPurchasesInput;
+export interface TransactionCreateInput {
+  user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
+  type: TransactionType;
+  balance: Float;
+  payment?: PaymentCreateOneWithoutTransactionInput;
+  purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
 
 export interface PurchaseUpdateManyWithoutUserInput {
@@ -1214,6 +1203,30 @@ export interface PurchaseUpdateManyWithoutUserInput {
     | PurchaseUpdateManyWithWhereNestedInput;
 }
 
+export type EventWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface PurchaseUpdateWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput;
+  data: PurchaseUpdateWithoutUserDataInput;
+}
+
+export interface PurchaseCreateInput {
+  items?: ItemCreateManyInput;
+  transaction: TransactionCreateOneWithoutPurchaseInput;
+  total: Float;
+  user: UserCreateOneWithoutPurchasesInput;
+  date: DateTimeInput;
+}
+
+export interface PurchaseUpdateWithoutUserDataInput {
+  items?: ItemUpdateManyInput;
+  transaction?: TransactionUpdateOneRequiredWithoutPurchaseInput;
+  total?: Float;
+  date?: DateTimeInput;
+}
+
 export type FileWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   fileId?: String;
@@ -1221,9 +1234,22 @@ export type FileWhereUniqueInput = AtLeastOne<{
   uri?: String;
 }>;
 
-export interface PurchaseUpdateWithWhereUniqueWithoutUserInput {
-  where: PurchaseWhereUniqueInput;
-  data: PurchaseUpdateWithoutUserDataInput;
+export interface ItemUpdateManyInput {
+  create?: ItemCreateInput[] | ItemCreateInput;
+  update?:
+    | ItemUpdateWithWhereUniqueNestedInput[]
+    | ItemUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | ItemUpsertWithWhereUniqueNestedInput[]
+    | ItemUpsertWithWhereUniqueNestedInput;
+  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  updateMany?:
+    | ItemUpdateManyWithWhereNestedInput[]
+    | ItemUpdateManyWithWhereNestedInput;
 }
 
 export interface FileWhereInput {
@@ -1352,11 +1378,9 @@ export interface FileWhereInput {
   NOT?: FileWhereInput[] | FileWhereInput;
 }
 
-export interface PurchaseUpdateWithoutUserDataInput {
-  items?: ItemUpdateManyInput;
-  transaction?: TransactionUpdateOneRequiredWithoutPurchaseInput;
-  total?: Float;
-  date?: DateTimeInput;
+export interface ItemUpdateWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput;
+  data: ItemUpdateDataInput;
 }
 
 export interface ProductionCreateInput {
@@ -1367,22 +1391,11 @@ export interface ProductionCreateInput {
   show?: Boolean;
 }
 
-export interface ItemUpdateManyInput {
-  create?: ItemCreateInput[] | ItemCreateInput;
-  update?:
-    | ItemUpdateWithWhereUniqueNestedInput[]
-    | ItemUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | ItemUpsertWithWhereUniqueNestedInput[]
-    | ItemUpsertWithWhereUniqueNestedInput;
-  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
-  updateMany?:
-    | ItemUpdateManyWithWhereNestedInput[]
-    | ItemUpdateManyWithWhereNestedInput;
+export interface ItemUpdateDataInput {
+  product?: ProductUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutItemsInput;
+  price?: Float;
+  amount?: Int;
 }
 
 export interface ProductUpdateInput {
@@ -1393,33 +1406,6 @@ export interface ProductUpdateInput {
   deleted?: Boolean;
 }
 
-export interface ItemUpdateWithWhereUniqueNestedInput {
-  where: ItemWhereUniqueInput;
-  data: ItemUpdateDataInput;
-}
-
-export interface PostUpdateManyMutationInput {
-  text?: String;
-  image?: String;
-  date?: DateTimeInput;
-}
-
-export interface ItemUpdateDataInput {
-  product?: ProductUpdateOneRequiredInput;
-  user?: UserUpdateOneRequiredWithoutItemsInput;
-  price?: Float;
-  amount?: Int;
-}
-
-export interface PostCreateInput {
-  text: String;
-  image?: String;
-  author: UserCreateOneWithoutPostsInput;
-  likedBy?: UserCreateManyWithoutLikedPostsInput;
-  comments?: CommentCreateManyInput;
-  date: DateTimeInput;
-}
-
 export interface ProductUpdateOneRequiredInput {
   create?: ProductCreateInput;
   update?: ProductUpdateDataInput;
@@ -1427,10 +1413,10 @@ export interface ProductUpdateOneRequiredInput {
   connect?: ProductWhereUniqueInput;
 }
 
-export interface PaymentUpdateManyMutationInput {
-  amount?: Float;
+export interface PostUpdateManyMutationInput {
+  text?: String;
+  image?: String;
   date?: DateTimeInput;
-  verified?: Boolean;
 }
 
 export interface ProductUpdateDataInput {
@@ -1441,12 +1427,13 @@ export interface ProductUpdateDataInput {
   deleted?: Boolean;
 }
 
-export interface PaymentCreateInput {
-  amount: Float;
-  user: UserCreateOneWithoutPaymentsInput;
+export interface PostCreateInput {
+  text: String;
+  image?: String;
+  author: UserCreateOneWithoutPostsInput;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
+  comments?: CommentCreateManyWithoutPostInput;
   date: DateTimeInput;
-  verified?: Boolean;
-  transaction: TransactionCreateOneWithoutPaymentInput;
 }
 
 export interface ProductUpsertNestedInput {
@@ -1454,9 +1441,10 @@ export interface ProductUpsertNestedInput {
   create: ProductCreateInput;
 }
 
-export interface ItemUpdateManyMutationInput {
-  price?: Float;
-  amount?: Int;
+export interface PaymentUpdateManyMutationInput {
+  amount?: Float;
+  date?: DateTimeInput;
+  verified?: Boolean;
 }
 
 export interface UserUpdateOneRequiredWithoutItemsInput {
@@ -1466,14 +1454,12 @@ export interface UserUpdateOneRequiredWithoutItemsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface FileUpdateManyMutationInput {
-  fileId?: String;
-  hash?: String;
-  uri?: String;
-  filename?: String;
-  path?: String;
-  mimetype?: String;
-  extension?: String;
+export interface PaymentCreateInput {
+  amount: Float;
+  user: UserCreateOneWithoutPaymentsInput;
+  date: DateTimeInput;
+  verified?: Boolean;
+  transaction: TransactionCreateOneWithoutPaymentInput;
 }
 
 export interface UserUpdateWithoutItemsDataInput {
@@ -1494,14 +1480,9 @@ export interface UserUpdateWithoutItemsDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface FileUpdateInput {
-  fileId?: String;
-  hash?: String;
-  uri?: String;
-  filename?: String;
-  path?: String;
-  mimetype?: String;
-  extension?: String;
+export interface ItemUpdateManyMutationInput {
+  price?: Float;
+  amount?: Int;
 }
 
 export interface PaymentUpdateManyWithoutUserInput {
@@ -1522,11 +1503,14 @@ export interface PaymentUpdateManyWithoutUserInput {
     | PaymentUpdateManyWithWhereNestedInput;
 }
 
-export interface EventUpdateManyMutationInput {
-  title?: String;
-  description?: String;
-  date?: DateTimeInput;
-  image?: String;
+export interface FileUpdateManyMutationInput {
+  fileId?: String;
+  hash?: String;
+  uri?: String;
+  filename?: String;
+  path?: String;
+  mimetype?: String;
+  extension?: String;
 }
 
 export interface PaymentUpdateWithWhereUniqueWithoutUserInput {
@@ -1534,15 +1518,47 @@ export interface PaymentUpdateWithWhereUniqueWithoutUserInput {
   data: PaymentUpdateWithoutUserDataInput;
 }
 
-export type ProductionWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface FileUpdateInput {
+  fileId?: String;
+  hash?: String;
+  uri?: String;
+  filename?: String;
+  path?: String;
+  mimetype?: String;
+  extension?: String;
+}
 
 export interface PaymentUpdateWithoutUserDataInput {
   amount?: Float;
   date?: DateTimeInput;
   verified?: Boolean;
   transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
+}
+
+export interface EventUpdateManyMutationInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
+}
+
+export interface TransactionUpdateOneRequiredWithoutPaymentInput {
+  create?: TransactionCreateWithoutPaymentInput;
+  update?: TransactionUpdateWithoutPaymentDataInput;
+  upsert?: TransactionUpsertWithoutPaymentInput;
+  connect?: TransactionWhereUniqueInput;
+}
+
+export type ProductionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface TransactionUpdateWithoutPaymentDataInput {
+  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+  purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
 
 export interface ProductionWhereInput {
@@ -1627,12 +1643,22 @@ export interface UserUpsertWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput;
 }
 
-export interface TransactionUpdateWithoutPaymentDataInput {
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
-  date?: DateTimeInput;
-  type?: TransactionType;
+export interface UserUpdateWithoutTransactionsDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
   balance?: Float;
-  purchase?: PurchaseUpdateOneWithoutTransactionInput;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  events?: EventUpdateManyWithoutCommitteeInput;
 }
 
 export interface PurchaseUpdateManyWithWhereNestedInput {
@@ -1640,11 +1666,22 @@ export interface PurchaseUpdateManyWithWhereNestedInput {
   data: PurchaseUpdateManyDataInput;
 }
 
-export interface UserUpdateOneRequiredWithoutTransactionsInput {
-  create?: UserCreateWithoutTransactionsInput;
-  update?: UserUpdateWithoutTransactionsDataInput;
-  upsert?: UserUpsertWithoutTransactionsInput;
-  connect?: UserWhereUniqueInput;
+export interface ItemUpdateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
+  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  update?:
+    | ItemUpdateWithWhereUniqueWithoutUserInput[]
+    | ItemUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | ItemUpsertWithWhereUniqueWithoutUserInput[]
+    | ItemUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  updateMany?:
+    | ItemUpdateManyWithWhereNestedInput[]
+    | ItemUpdateManyWithWhereNestedInput;
 }
 
 export interface PurchaseScalarWhereInput {
@@ -1683,22 +1720,9 @@ export interface PurchaseScalarWhereInput {
   NOT?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
 }
 
-export interface UserUpdateWithoutTransactionsDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  purchases?: PurchaseUpdateManyWithoutUserInput;
-  payments?: PaymentUpdateManyWithoutUserInput;
-  items?: ItemUpdateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostUpdateManyWithoutAuthorInput;
-  likedPosts?: PostUpdateManyWithoutLikedByInput;
-  likedEvents?: EventUpdateManyWithoutLikedByInput;
-  comments?: CommentUpdateManyWithoutAuthorInput;
-  likedComments?: CommentUpdateManyWithoutLikedByInput;
-  events?: EventUpdateManyWithoutCommitteeInput;
+export interface ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput;
+  data: ItemUpdateWithoutUserDataInput;
 }
 
 export interface TransactionUpsertWithoutPurchaseInput {
@@ -1706,22 +1730,10 @@ export interface TransactionUpsertWithoutPurchaseInput {
   create: TransactionCreateWithoutPurchaseInput;
 }
 
-export interface ItemUpdateManyWithoutUserInput {
-  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
-  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  update?:
-    | ItemUpdateWithWhereUniqueWithoutUserInput[]
-    | ItemUpdateWithWhereUniqueWithoutUserInput;
-  upsert?:
-    | ItemUpsertWithWhereUniqueWithoutUserInput[]
-    | ItemUpsertWithWhereUniqueWithoutUserInput;
-  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
-  updateMany?:
-    | ItemUpdateManyWithWhereNestedInput[]
-    | ItemUpdateManyWithWhereNestedInput;
+export interface ItemUpdateWithoutUserDataInput {
+  product?: ProductUpdateOneRequiredInput;
+  price?: Float;
+  amount?: Int;
 }
 
 export interface TransactionUpdateWithoutPurchaseDataInput {
@@ -1732,37 +1744,16 @@ export interface TransactionUpdateWithoutPurchaseDataInput {
   payment?: PaymentUpdateOneWithoutTransactionInput;
 }
 
-export interface ItemUpdateWithWhereUniqueWithoutUserInput {
-  where: ItemWhereUniqueInput;
-  data: ItemUpdateWithoutUserDataInput;
-}
-
-export interface ItemUpsertWithWhereUniqueNestedInput {
-  where: ItemWhereUniqueInput;
-  update: ItemUpdateDataInput;
-  create: ItemCreateInput;
-}
-
-export interface ItemUpdateWithoutUserDataInput {
-  product?: ProductUpdateOneRequiredInput;
-  price?: Float;
-  amount?: Int;
-}
-
-export interface UserUpsertWithoutItemsInput {
-  update: UserUpdateWithoutItemsDataInput;
-  create: UserCreateWithoutItemsInput;
-}
-
 export interface ItemUpsertWithWhereUniqueWithoutUserInput {
   where: ItemWhereUniqueInput;
   update: ItemUpdateWithoutUserDataInput;
   create: ItemCreateWithoutUserInput;
 }
 
-export interface PaymentUpdateManyWithWhereNestedInput {
-  where: PaymentScalarWhereInput;
-  data: PaymentUpdateManyDataInput;
+export interface ItemUpsertWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput;
+  update: ItemUpdateDataInput;
+  create: ItemCreateInput;
 }
 
 export interface ItemScalarWhereInput {
@@ -1801,11 +1792,19 @@ export interface ItemScalarWhereInput {
   NOT?: ItemScalarWhereInput[] | ItemScalarWhereInput;
 }
 
-export interface ClientCreateInput {
-  identity: String;
-  secret: String;
-  name: String;
-  trusted?: Boolean;
+export interface UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput;
+  create: UserCreateWithoutItemsInput;
+}
+
+export interface ItemUpdateManyWithWhereNestedInput {
+  where: ItemScalarWhereInput;
+  data: ItemUpdateManyDataInput;
+}
+
+export interface PaymentUpdateManyWithWhereNestedInput {
+  where: PaymentScalarWhereInput;
+  data: PaymentUpdateManyDataInput;
 }
 
 export interface ProductWhereInput {
@@ -1874,10 +1873,10 @@ export interface ProductWhereInput {
   NOT?: ProductWhereInput[] | ProductWhereInput;
 }
 
-export interface ClientUpdateManyMutationInput {
-  identity?: String;
-  secret?: String;
-  name?: String;
+export interface ClientCreateInput {
+  identity: String;
+  secret: String;
+  name: String;
   trusted?: Boolean;
 }
 
@@ -1999,33 +1998,11 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface PaymentUpsertWithWhereUniqueWithoutUserInput {
-  where: PaymentWhereUniqueInput;
-  update: PaymentUpdateWithoutUserDataInput;
-  create: PaymentCreateWithoutUserInput;
-}
-
-export interface PostUpdateManyWithoutAuthorInput {
-  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput;
-  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
-  set?: PostWhereUniqueInput[] | PostWhereUniqueInput;
-  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
-  update?:
-    | PostUpdateWithWhereUniqueWithoutAuthorInput[]
-    | PostUpdateWithWhereUniqueWithoutAuthorInput;
-  upsert?:
-    | PostUpsertWithWhereUniqueWithoutAuthorInput[]
-    | PostUpsertWithWhereUniqueWithoutAuthorInput;
-  deleteMany?: PostScalarWhereInput[] | PostScalarWhereInput;
-  updateMany?:
-    | PostUpdateManyWithWhereNestedInput[]
-    | PostUpdateManyWithWhereNestedInput;
-}
-
-export interface UserCreateOneWithoutCommentsInput {
-  create?: UserCreateWithoutCommentsInput;
-  connect?: UserWhereUniqueInput;
+export interface ClientUpdateManyMutationInput {
+  identity?: String;
+  secret?: String;
+  name?: String;
+  trusted?: Boolean;
 }
 
 export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -2033,22 +2010,23 @@ export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
   data: PostUpdateWithoutAuthorDataInput;
 }
 
-export interface PurchaseCreateManyWithoutUserInput {
-  create?: PurchaseCreateWithoutUserInput[] | PurchaseCreateWithoutUserInput;
-  connect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+export interface PaymentUpsertWithWhereUniqueWithoutUserInput {
+  where: PaymentWhereUniqueInput;
+  update: PaymentUpdateWithoutUserDataInput;
+  create: PaymentCreateWithoutUserInput;
 }
 
 export interface PostUpdateWithoutAuthorDataInput {
   text?: String;
   image?: String;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
-  comments?: CommentUpdateManyInput;
+  comments?: CommentUpdateManyWithoutPostInput;
   date?: DateTimeInput;
 }
 
-export interface ItemCreateManyInput {
-  create?: ItemCreateInput[] | ItemCreateInput;
-  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+export interface UserCreateOneWithoutCommentsInput {
+  create?: UserCreateWithoutCommentsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateManyWithoutLikedPostsInput {
@@ -2071,9 +2049,9 @@ export interface UserUpdateManyWithoutLikedPostsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface ProductCreateOneInput {
-  create?: ProductCreateInput;
-  connect?: ProductWhereUniqueInput;
+export interface PurchaseCreateManyWithoutUserInput {
+  create?: PurchaseCreateWithoutUserInput[] | PurchaseCreateWithoutUserInput;
+  connect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
@@ -2081,9 +2059,9 @@ export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
   data: UserUpdateWithoutLikedPostsDataInput;
 }
 
-export interface UserCreateOneWithoutItemsInput {
-  create?: UserCreateWithoutItemsInput;
-  connect?: UserWhereUniqueInput;
+export interface ItemCreateManyInput {
+  create?: ItemCreateInput[] | ItemCreateInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutLikedPostsDataInput {
@@ -2104,9 +2082,9 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface PaymentCreateManyWithoutUserInput {
-  create?: PaymentCreateWithoutUserInput[] | PaymentCreateWithoutUserInput;
-  connect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
+export interface ProductCreateOneInput {
+  create?: ProductCreateInput;
+  connect?: ProductWhereUniqueInput;
 }
 
 export interface TransactionUpdateManyWithoutUserInput {
@@ -2129,9 +2107,9 @@ export interface TransactionUpdateManyWithoutUserInput {
     | TransactionUpdateManyWithWhereNestedInput;
 }
 
-export interface TransactionCreateOneWithoutPaymentInput {
-  create?: TransactionCreateWithoutPaymentInput;
-  connect?: TransactionWhereUniqueInput;
+export interface UserCreateOneWithoutItemsInput {
+  create?: UserCreateWithoutItemsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
@@ -2139,9 +2117,9 @@ export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
   data: TransactionUpdateWithoutUserDataInput;
 }
 
-export interface UserCreateOneWithoutTransactionsInput {
-  create?: UserCreateWithoutTransactionsInput;
-  connect?: UserWhereUniqueInput;
+export interface PaymentCreateManyWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput[] | PaymentCreateWithoutUserInput;
+  connect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
 }
 
 export interface TransactionUpdateWithoutUserDataInput {
@@ -2152,9 +2130,9 @@ export interface TransactionUpdateWithoutUserDataInput {
   purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
 
-export interface ItemCreateManyWithoutUserInput {
-  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
-  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+export interface TransactionCreateOneWithoutPaymentInput {
+  create?: TransactionCreateWithoutPaymentInput;
+  connect?: TransactionWhereUniqueInput;
 }
 
 export interface PaymentUpdateOneWithoutTransactionInput {
@@ -2166,9 +2144,9 @@ export interface PaymentUpdateOneWithoutTransactionInput {
   connect?: PaymentWhereUniqueInput;
 }
 
-export interface PostCreateManyWithoutAuthorInput {
-  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+export interface UserCreateOneWithoutTransactionsInput {
+  create?: UserCreateWithoutTransactionsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface PaymentUpdateWithoutTransactionDataInput {
@@ -2178,11 +2156,9 @@ export interface PaymentUpdateWithoutTransactionDataInput {
   verified?: Boolean;
 }
 
-export interface UserCreateManyWithoutLikedPostsInput {
-  create?:
-    | UserCreateWithoutLikedPostsInput[]
-    | UserCreateWithoutLikedPostsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface ItemCreateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
 }
 
 export interface UserUpdateOneRequiredWithoutPaymentsInput {
@@ -2192,11 +2168,9 @@ export interface UserUpdateOneRequiredWithoutPaymentsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface TransactionCreateManyWithoutUserInput {
-  create?:
-    | TransactionCreateWithoutUserInput[]
-    | TransactionCreateWithoutUserInput;
-  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+export interface PostCreateManyWithoutAuthorInput {
+  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutPaymentsDataInput {
@@ -2217,9 +2191,11 @@ export interface UserUpdateWithoutPaymentsDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface PaymentCreateOneWithoutTransactionInput {
-  create?: PaymentCreateWithoutTransactionInput;
-  connect?: PaymentWhereUniqueInput;
+export interface UserCreateManyWithoutLikedPostsInput {
+  create?:
+    | UserCreateWithoutLikedPostsInput[]
+    | UserCreateWithoutLikedPostsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface PostUpdateManyWithoutLikedByInput {
@@ -2240,9 +2216,11 @@ export interface PostUpdateManyWithoutLikedByInput {
     | PostUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateOneWithoutPaymentsInput {
-  create?: UserCreateWithoutPaymentsInput;
-  connect?: UserWhereUniqueInput;
+export interface TransactionCreateManyWithoutUserInput {
+  create?:
+    | TransactionCreateWithoutUserInput[]
+    | TransactionCreateWithoutUserInput;
+  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
 }
 
 export interface PostUpdateWithWhereUniqueWithoutLikedByInput {
@@ -2250,21 +2228,21 @@ export interface PostUpdateWithWhereUniqueWithoutLikedByInput {
   data: PostUpdateWithoutLikedByDataInput;
 }
 
-export interface PostCreateManyWithoutLikedByInput {
-  create?: PostCreateWithoutLikedByInput[] | PostCreateWithoutLikedByInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+export interface PaymentCreateOneWithoutTransactionInput {
+  create?: PaymentCreateWithoutTransactionInput;
+  connect?: PaymentWhereUniqueInput;
 }
 
 export interface PostUpdateWithoutLikedByDataInput {
   text?: String;
   image?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
-  comments?: CommentUpdateManyInput;
+  comments?: CommentUpdateManyWithoutPostInput;
   date?: DateTimeInput;
 }
 
-export interface UserCreateOneWithoutPostsInput {
-  create?: UserCreateWithoutPostsInput;
+export interface UserCreateOneWithoutPaymentsInput {
+  create?: UserCreateWithoutPaymentsInput;
   connect?: UserWhereUniqueInput;
 }
 
@@ -2275,9 +2253,9 @@ export interface UserUpdateOneRequiredWithoutPostsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface EventCreateManyWithoutLikedByInput {
-  create?: EventCreateWithoutLikedByInput[] | EventCreateWithoutLikedByInput;
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
+export interface PostCreateManyWithoutLikedByInput {
+  create?: PostCreateWithoutLikedByInput[] | PostCreateWithoutLikedByInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutPostsDataInput {
@@ -2298,9 +2276,9 @@ export interface UserUpdateWithoutPostsDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface CommentCreateManyInput {
-  create?: CommentCreateInput[] | CommentCreateInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface UserCreateOneWithoutPostsInput {
+  create?: UserCreateWithoutPostsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface EventUpdateManyWithoutLikedByInput {
@@ -2321,23 +2299,9 @@ export interface EventUpdateManyWithoutLikedByInput {
     | EventUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-  events?: EventCreateManyWithoutCommitteeInput;
+export interface EventCreateManyWithoutLikedByInput {
+  create?: EventCreateWithoutLikedByInput[] | EventCreateWithoutLikedByInput;
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
 }
 
 export interface EventUpdateWithWhereUniqueWithoutLikedByInput {
@@ -2345,10 +2309,9 @@ export interface EventUpdateWithWhereUniqueWithoutLikedByInput {
   data: EventUpdateWithoutLikedByDataInput;
 }
 
-export interface CommentCreateWithoutAuthorInput {
-  text: String;
-  date: DateTimeInput;
-  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+export interface CommentCreateManyWithoutEventInput {
+  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface EventUpdateWithoutLikedByDataInput {
@@ -2356,171 +2319,62 @@ export interface EventUpdateWithoutLikedByDataInput {
   description?: String;
   date?: DateTimeInput;
   image?: String;
-  comments?: CommentUpdateManyInput;
+  comments?: CommentUpdateManyWithoutEventInput;
   owner?: UserUpdateOneRequiredInput;
   committee?: UserUpdateManyWithoutEventsInput;
 }
 
-export interface UserCreateWithoutLikedCommentsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  events?: EventCreateManyWithoutCommitteeInput;
+export interface UserCreateManyWithoutLikedCommentsInput {
+  create?:
+    | UserCreateWithoutLikedCommentsInput[]
+    | UserCreateWithoutLikedCommentsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
-export interface CommentUpdateManyInput {
-  create?: CommentCreateInput[] | CommentCreateInput;
-  update?:
-    | CommentUpdateWithWhereUniqueNestedInput[]
-    | CommentUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | CommentUpsertWithWhereUniqueNestedInput[]
-    | CommentUpsertWithWhereUniqueNestedInput;
+export interface CommentUpdateManyWithoutEventInput {
+  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
   delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  update?:
+    | CommentUpdateWithWhereUniqueWithoutEventInput[]
+    | CommentUpdateWithWhereUniqueWithoutEventInput;
+  upsert?:
+    | CommentUpsertWithWhereUniqueWithoutEventInput[]
+    | CommentUpsertWithWhereUniqueWithoutEventInput;
   deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
   updateMany?:
     | CommentUpdateManyWithWhereNestedInput[]
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export interface PaymentWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  amount?: Float;
-  amount_not?: Float;
-  amount_in?: Float[] | Float;
-  amount_not_in?: Float[] | Float;
-  amount_lt?: Float;
-  amount_lte?: Float;
-  amount_gt?: Float;
-  amount_gte?: Float;
-  user?: UserWhereInput;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  verified?: Boolean;
-  verified_not?: Boolean;
-  transaction?: TransactionWhereInput;
-  AND?: PaymentWhereInput[] | PaymentWhereInput;
-  OR?: PaymentWhereInput[] | PaymentWhereInput;
-  NOT?: PaymentWhereInput[] | PaymentWhereInput;
+export interface CommentCreateManyWithoutAuthorInput {
+  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
-export interface CommentUpdateWithWhereUniqueNestedInput {
+export interface CommentUpdateWithWhereUniqueWithoutEventInput {
   where: CommentWhereUniqueInput;
-  data: CommentUpdateDataInput;
+  data: CommentUpdateWithoutEventDataInput;
 }
 
-export interface PostWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  text?: String;
-  text_not?: String;
-  text_in?: String[] | String;
-  text_not_in?: String[] | String;
-  text_lt?: String;
-  text_lte?: String;
-  text_gt?: String;
-  text_gte?: String;
-  text_contains?: String;
-  text_not_contains?: String;
-  text_starts_with?: String;
-  text_not_starts_with?: String;
-  text_ends_with?: String;
-  text_not_ends_with?: String;
-  image?: String;
-  image_not?: String;
-  image_in?: String[] | String;
-  image_not_in?: String[] | String;
-  image_lt?: String;
-  image_lte?: String;
-  image_gt?: String;
-  image_gte?: String;
-  image_contains?: String;
-  image_not_contains?: String;
-  image_starts_with?: String;
-  image_not_starts_with?: String;
-  image_ends_with?: String;
-  image_not_ends_with?: String;
-  author?: UserWhereInput;
-  likedBy_every?: UserWhereInput;
-  likedBy_some?: UserWhereInput;
-  likedBy_none?: UserWhereInput;
-  comments_every?: CommentWhereInput;
-  comments_some?: CommentWhereInput;
-  comments_none?: CommentWhereInput;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  AND?: PostWhereInput[] | PostWhereInput;
-  OR?: PostWhereInput[] | PostWhereInput;
-  NOT?: PostWhereInput[] | PostWhereInput;
+export interface PostCreateOneWithoutCommentsInput {
+  create?: PostCreateWithoutCommentsInput;
+  connect?: PostWhereUniqueInput;
 }
 
-export interface CommentUpdateDataInput {
+export interface CommentUpdateWithoutEventDataInput {
   text?: String;
   date?: DateTimeInput;
   author?: UserUpdateOneRequiredWithoutCommentsInput;
   likedBy?: UserUpdateManyWithoutLikedCommentsInput;
+  post?: PostUpdateOneWithoutCommentsInput;
 }
 
-export interface PurchaseSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PurchaseWhereInput;
-  AND?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
-  OR?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
-  NOT?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+export interface EventCreateOneWithoutCommentsInput {
+  create?: EventCreateWithoutCommentsInput;
+  connect?: EventWhereUniqueInput;
 }
 
 export interface UserUpdateManyWithoutLikedCommentsInput {
@@ -2543,15 +2397,11 @@ export interface UserUpdateManyWithoutLikedCommentsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface PaymentSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PaymentWhereInput;
-  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
-  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
-  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
+export interface UserCreateManyWithoutLikedEventsInput {
+  create?:
+    | UserCreateWithoutLikedEventsInput[]
+    | UserCreateWithoutLikedEventsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
@@ -2559,15 +2409,11 @@ export interface UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
   data: UserUpdateWithoutLikedCommentsDataInput;
 }
 
-export interface EventSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: EventWhereInput;
-  AND?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
-  OR?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
-  NOT?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
+export interface CommentCreateManyWithoutLikedByInput {
+  create?:
+    | CommentCreateWithoutLikedByInput[]
+    | CommentCreateWithoutLikedByInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutLikedCommentsDataInput {
@@ -2588,23 +2434,11 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface UserUpdateInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  purchases?: PurchaseUpdateManyWithoutUserInput;
-  payments?: PaymentUpdateManyWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-  items?: ItemUpdateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostUpdateManyWithoutAuthorInput;
-  likedPosts?: PostUpdateManyWithoutLikedByInput;
-  likedEvents?: EventUpdateManyWithoutLikedByInput;
-  comments?: CommentUpdateManyWithoutAuthorInput;
-  likedComments?: CommentUpdateManyWithoutLikedByInput;
-  events?: EventUpdateManyWithoutCommitteeInput;
+export interface EventCreateManyWithoutCommitteeInput {
+  create?:
+    | EventCreateWithoutCommitteeInput[]
+    | EventCreateWithoutCommitteeInput;
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
 }
 
 export interface CommentUpdateManyWithoutAuthorInput {
@@ -2625,9 +2459,9 @@ export interface CommentUpdateManyWithoutAuthorInput {
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export interface PurchaseUpdateManyMutationInput {
-  total?: Float;
-  date?: DateTimeInput;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
@@ -2635,21 +2469,7 @@ export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
   data: CommentUpdateWithoutAuthorDataInput;
 }
 
-export interface ProductionUpdateManyMutationInput {
-  title?: String;
-  description?: String;
-  image?: String;
-  index?: Int;
-  show?: Boolean;
-}
-
-export interface CommentUpdateWithoutAuthorDataInput {
-  text?: String;
-  date?: DateTimeInput;
-  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
-}
-
-export interface ClientWhereInput {
+export interface PurchaseWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -2664,64 +2484,346 @@ export interface ClientWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  identity?: String;
-  identity_not?: String;
-  identity_in?: String[] | String;
-  identity_not_in?: String[] | String;
-  identity_lt?: String;
-  identity_lte?: String;
-  identity_gt?: String;
-  identity_gte?: String;
-  identity_contains?: String;
-  identity_not_contains?: String;
-  identity_starts_with?: String;
-  identity_not_starts_with?: String;
-  identity_ends_with?: String;
-  identity_not_ends_with?: String;
-  secret?: String;
-  secret_not?: String;
-  secret_in?: String[] | String;
-  secret_not_in?: String[] | String;
-  secret_lt?: String;
-  secret_lte?: String;
-  secret_gt?: String;
-  secret_gte?: String;
-  secret_contains?: String;
-  secret_not_contains?: String;
-  secret_starts_with?: String;
-  secret_not_starts_with?: String;
-  secret_ends_with?: String;
-  secret_not_ends_with?: String;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  trusted?: Boolean;
-  trusted_not?: Boolean;
-  AND?: ClientWhereInput[] | ClientWhereInput;
-  OR?: ClientWhereInput[] | ClientWhereInput;
-  NOT?: ClientWhereInput[] | ClientWhereInput;
+  items_every?: ItemWhereInput;
+  items_some?: ItemWhereInput;
+  items_none?: ItemWhereInput;
+  transaction?: TransactionWhereInput;
+  total?: Float;
+  total_not?: Float;
+  total_in?: Float[] | Float;
+  total_not_in?: Float[] | Float;
+  total_lt?: Float;
+  total_lte?: Float;
+  total_gt?: Float;
+  total_gte?: Float;
+  user?: UserWhereInput;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PurchaseWhereInput[] | PurchaseWhereInput;
+  OR?: PurchaseWhereInput[] | PurchaseWhereInput;
+  NOT?: PurchaseWhereInput[] | PurchaseWhereInput;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutAuthorDataInput;
-  create: CommentCreateWithoutAuthorInput;
+export interface CommentUpdateWithoutAuthorDataInput {
+  text?: String;
+  date?: DateTimeInput;
+  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
+  post?: PostUpdateOneWithoutCommentsInput;
+  event?: EventUpdateOneWithoutCommentsInput;
 }
 
-export type ItemWhereUniqueInput = AtLeastOne<{
+export interface EventWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  image?: String;
+  image_not?: String;
+  image_in?: String[] | String;
+  image_not_in?: String[] | String;
+  image_lt?: String;
+  image_lte?: String;
+  image_gt?: String;
+  image_gte?: String;
+  image_contains?: String;
+  image_not_contains?: String;
+  image_starts_with?: String;
+  image_not_starts_with?: String;
+  image_ends_with?: String;
+  image_not_ends_with?: String;
+  comments_every?: CommentWhereInput;
+  comments_some?: CommentWhereInput;
+  comments_none?: CommentWhereInput;
+  likedBy_every?: UserWhereInput;
+  likedBy_some?: UserWhereInput;
+  likedBy_none?: UserWhereInput;
+  owner?: UserWhereInput;
+  committee_every?: UserWhereInput;
+  committee_some?: UserWhereInput;
+  committee_none?: UserWhereInput;
+  AND?: EventWhereInput[] | EventWhereInput;
+  OR?: EventWhereInput[] | EventWhereInput;
+  NOT?: EventWhereInput[] | EventWhereInput;
+}
+
+export interface PostUpdateOneWithoutCommentsInput {
+  create?: PostCreateWithoutCommentsInput;
+  update?: PostUpdateWithoutCommentsDataInput;
+  upsert?: PostUpsertWithoutCommentsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: PostWhereUniqueInput;
+}
+
+export interface ProductSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ProductWhereInput;
+  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+}
+
+export interface PostUpdateWithoutCommentsDataInput {
+  text?: String;
+  image?: String;
+  author?: UserUpdateOneRequiredWithoutPostsInput;
+  likedBy?: UserUpdateManyWithoutLikedPostsInput;
+  date?: DateTimeInput;
+}
+
+export type CommentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface ClientSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ClientWhereInput;
+  AND?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+  OR?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+  NOT?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+}
+
+export interface EventUpdateOneWithoutCommentsInput {
+  create?: EventCreateWithoutCommentsInput;
+  update?: EventUpdateWithoutCommentsDataInput;
+  upsert?: EventUpsertWithoutCommentsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: EventWhereUniqueInput;
+}
+
+export interface TransactionUpdateInput {
+  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+  payment?: PaymentUpdateOneWithoutTransactionInput;
+  purchase?: PurchaseUpdateOneWithoutTransactionInput;
+}
+
+export interface EventUpdateWithoutCommentsDataInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
+  likedBy?: UserUpdateManyWithoutLikedEventsInput;
+  owner?: UserUpdateOneRequiredInput;
+  committee?: UserUpdateManyWithoutEventsInput;
+}
+
+export interface PurchaseUpdateInput {
+  items?: ItemUpdateManyInput;
+  transaction?: TransactionUpdateOneRequiredWithoutPurchaseInput;
+  total?: Float;
+  user?: UserUpdateOneRequiredWithoutPurchasesInput;
+  date?: DateTimeInput;
+}
+
+export interface UserUpdateManyWithoutLikedEventsInput {
+  create?:
+    | UserCreateWithoutLikedEventsInput[]
+    | UserCreateWithoutLikedEventsInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutLikedEventsInput[]
+    | UserUpdateWithWhereUniqueWithoutLikedEventsInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutLikedEventsInput[]
+    | UserUpsertWithWhereUniqueWithoutLikedEventsInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface ProductionUpdateInput {
+  title?: String;
+  description?: String;
+  image?: String;
+  index?: Int;
+  show?: Boolean;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutLikedEventsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutLikedEventsDataInput;
+}
+
+export interface ProductUpdateManyMutationInput {
+  name?: String;
+  price?: Float;
+  index?: Int;
+  thumbnail?: String;
+  deleted?: Boolean;
+}
+
+export interface UserUpdateWithoutLikedEventsDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  events?: EventUpdateManyWithoutCommitteeInput;
+}
+
+export interface PostUpdateInput {
+  text?: String;
+  image?: String;
+  author?: UserUpdateOneRequiredWithoutPostsInput;
+  likedBy?: UserUpdateManyWithoutLikedPostsInput;
+  comments?: CommentUpdateManyWithoutPostInput;
+  date?: DateTimeInput;
+}
+
+export interface CommentUpdateManyWithoutLikedByInput {
+  create?:
+    | CommentCreateWithoutLikedByInput[]
+    | CommentCreateWithoutLikedByInput;
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  update?:
+    | CommentUpdateWithWhereUniqueWithoutLikedByInput[]
+    | CommentUpdateWithWhereUniqueWithoutLikedByInput;
+  upsert?:
+    | CommentUpsertWithWhereUniqueWithoutLikedByInput[]
+    | CommentUpsertWithWhereUniqueWithoutLikedByInput;
+  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  updateMany?:
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput;
+}
+
+export interface PaymentUpdateInput {
+  amount?: Float;
+  user?: UserUpdateOneRequiredWithoutPaymentsInput;
+  date?: DateTimeInput;
+  verified?: Boolean;
+  transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutLikedByInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutLikedByDataInput;
+}
+
+export interface ItemUpdateInput {
+  product?: ProductUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutItemsInput;
+  price?: Float;
+  amount?: Int;
+}
+
+export interface CommentUpdateWithoutLikedByDataInput {
+  text?: String;
+  date?: DateTimeInput;
+  author?: UserUpdateOneRequiredWithoutCommentsInput;
+  post?: PostUpdateOneWithoutCommentsInput;
+  event?: EventUpdateOneWithoutCommentsInput;
+}
+
+export interface FileCreateInput {
+  fileId: String;
+  hash: String;
+  uri: String;
+  filename: String;
+  path: String;
+  mimetype: String;
+  extension: String;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutLikedByInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutLikedByDataInput;
+  create: CommentCreateWithoutLikedByInput;
+}
+
+export interface EventCreateInput {
+  title: String;
+  description: String;
+  date: DateTimeInput;
+  image: String;
+  comments?: CommentCreateManyWithoutEventInput;
+  likedBy?: UserCreateManyWithoutLikedEventsInput;
+  owner: UserCreateOneInput;
+  committee?: UserCreateManyWithoutEventsInput;
+}
 
 export interface CommentScalarWhereInput {
   id?: ID_Input;
@@ -2765,27 +2867,33 @@ export interface CommentScalarWhereInput {
   NOT?: CommentScalarWhereInput[] | CommentScalarWhereInput;
 }
 
-export type PaymentWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface PurchaseUpdateManyDataInput {
+  total?: Float;
+  date?: DateTimeInput;
+}
 
 export interface CommentUpdateManyWithWhereNestedInput {
   where: CommentScalarWhereInput;
   data: CommentUpdateManyDataInput;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface PurchaseUpsertWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput;
+  update: PurchaseUpdateWithoutUserDataInput;
+  create: PurchaseCreateWithoutUserInput;
+}
 
 export interface CommentUpdateManyDataInput {
   text?: String;
   date?: DateTimeInput;
 }
 
-export type ProductWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface TransactionUpdateOneRequiredWithoutPurchaseInput {
+  create?: TransactionCreateWithoutPurchaseInput;
+  update?: TransactionUpdateWithoutPurchaseDataInput;
+  upsert?: TransactionUpsertWithoutPurchaseInput;
+  connect?: TransactionWhereUniqueInput;
+}
 
 export interface EventUpdateManyWithoutCommitteeInput {
   create?:
@@ -2807,15 +2915,10 @@ export interface EventUpdateManyWithoutCommitteeInput {
     | EventUpdateManyWithWhereNestedInput;
 }
 
-export interface EventUpdateInput {
-  title?: String;
-  description?: String;
+export interface PaymentUpdateManyDataInput {
+  amount?: Float;
   date?: DateTimeInput;
-  image?: String;
-  comments?: CommentUpdateManyInput;
-  likedBy?: UserUpdateManyWithoutLikedEventsInput;
-  owner?: UserUpdateOneRequiredInput;
-  committee?: UserUpdateManyWithoutEventsInput;
+  verified?: Boolean;
 }
 
 export interface EventUpdateWithWhereUniqueWithoutCommitteeInput {
@@ -2823,9 +2926,11 @@ export interface EventUpdateWithWhereUniqueWithoutCommitteeInput {
   data: EventUpdateWithoutCommitteeDataInput;
 }
 
-export interface CommentUpdateManyMutationInput {
-  text?: String;
-  date?: DateTimeInput;
+export interface ClientUpdateInput {
+  identity?: String;
+  secret?: String;
+  name?: String;
+  trusted?: Boolean;
 }
 
 export interface EventUpdateWithoutCommitteeDataInput {
@@ -2833,50 +2938,35 @@ export interface EventUpdateWithoutCommitteeDataInput {
   description?: String;
   date?: DateTimeInput;
   image?: String;
-  comments?: CommentUpdateManyInput;
+  comments?: CommentUpdateManyWithoutEventInput;
   likedBy?: UserUpdateManyWithoutLikedEventsInput;
   owner?: UserUpdateOneRequiredInput;
 }
 
-export type PurchaseWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpdateManyWithoutLikedEventsInput {
-  create?:
-    | UserCreateWithoutLikedEventsInput[]
-    | UserCreateWithoutLikedEventsInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutLikedEventsInput[]
-    | UserUpdateWithWhereUniqueWithoutLikedEventsInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutLikedEventsInput[]
-    | UserUpsertWithWhereUniqueWithoutLikedEventsInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
+export interface CommentCreateInput {
+  text: String;
+  date: DateTimeInput;
+  author: UserCreateOneWithoutCommentsInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
-export type TransactionWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpdateWithWhereUniqueWithoutLikedEventsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutLikedEventsDataInput;
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
+export interface PurchaseCreateWithoutUserInput {
+  items?: ItemCreateManyInput;
+  transaction: TransactionCreateOneWithoutPurchaseInput;
+  total: Float;
+  date: DateTimeInput;
+}
 
-export interface UserUpdateWithoutLikedEventsDataInput {
+export interface UserUpdateDataInput {
   name?: String;
   email?: String;
   password?: String;
@@ -2889,12 +2979,57 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   balance?: Float;
   posts?: PostUpdateManyWithoutAuthorInput;
   likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface PaymentScalarWhereInput {
+export interface ProductCreateInput {
+  name: String;
+  price: Float;
+  index: Int;
+  thumbnail?: String;
+  deleted?: Boolean;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface PaymentCreateWithoutUserInput {
+  amount: Float;
+  date: DateTimeInput;
+  verified?: Boolean;
+  transaction: TransactionCreateOneWithoutPaymentInput;
+}
+
+export interface EventUpsertWithWhereUniqueWithoutCommitteeInput {
+  where: EventWhereUniqueInput;
+  update: EventUpdateWithoutCommitteeDataInput;
+  create: EventCreateWithoutCommitteeInput;
+}
+
+export interface UserCreateWithoutTransactionsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  events?: EventCreateManyWithoutCommitteeInput;
+}
+
+export interface EventScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -2909,14 +3044,34 @@ export interface PaymentScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  amount?: Float;
-  amount_not?: Float;
-  amount_in?: Float[] | Float;
-  amount_not_in?: Float[] | Float;
-  amount_lt?: Float;
-  amount_lte?: Float;
-  amount_gt?: Float;
-  amount_gte?: Float;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
   date?: DateTimeInput;
   date_not?: DateTimeInput;
   date_in?: DateTimeInput[] | DateTimeInput;
@@ -2925,77 +3080,61 @@ export interface PaymentScalarWhereInput {
   date_lte?: DateTimeInput;
   date_gt?: DateTimeInput;
   date_gte?: DateTimeInput;
-  verified?: Boolean;
-  verified_not?: Boolean;
-  AND?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
-  OR?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
-  NOT?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  image?: String;
+  image_not?: String;
+  image_in?: String[] | String;
+  image_not_in?: String[] | String;
+  image_lt?: String;
+  image_lte?: String;
+  image_gt?: String;
+  image_gte?: String;
+  image_contains?: String;
+  image_not_contains?: String;
+  image_starts_with?: String;
+  image_not_starts_with?: String;
+  image_ends_with?: String;
+  image_not_ends_with?: String;
+  AND?: EventScalarWhereInput[] | EventScalarWhereInput;
+  OR?: EventScalarWhereInput[] | EventScalarWhereInput;
+  NOT?: EventScalarWhereInput[] | EventScalarWhereInput;
 }
 
-export interface CommentUpdateManyWithoutLikedByInput {
-  create?:
-    | CommentCreateWithoutLikedByInput[]
-    | CommentCreateWithoutLikedByInput;
-  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  update?:
-    | CommentUpdateWithWhereUniqueWithoutLikedByInput[]
-    | CommentUpdateWithWhereUniqueWithoutLikedByInput;
-  upsert?:
-    | CommentUpsertWithWhereUniqueWithoutLikedByInput[]
-    | CommentUpsertWithWhereUniqueWithoutLikedByInput;
-  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  updateMany?:
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput;
+export interface PostCreateWithoutAuthorInput {
+  text: String;
+  image?: String;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
+  comments?: CommentCreateManyWithoutPostInput;
+  date: DateTimeInput;
 }
 
-export interface UserCreateWithoutCommentsInput {
+export interface EventUpdateManyWithWhereNestedInput {
+  where: EventScalarWhereInput;
+  data: EventUpdateManyDataInput;
+}
+
+export interface TransactionCreateWithoutUserInput {
+  date: DateTimeInput;
+  type: TransactionType;
+  balance: Float;
+  payment?: PaymentCreateOneWithoutTransactionInput;
+  purchase?: PurchaseCreateOneWithoutTransactionInput;
+}
+
+export interface EventUpdateManyDataInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
+}
+
+export interface UserCreateWithoutPaymentsInput {
   name: String;
   email: String;
   password: String;
   avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
   transactions?: TransactionCreateManyWithoutUserInput;
   items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-  events?: EventCreateManyWithoutCommitteeInput;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutLikedByInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutLikedByDataInput;
-}
-
-export interface ItemCreateInput {
-  product: ProductCreateOneInput;
-  user: UserCreateOneWithoutItemsInput;
-  price: Float;
-  amount: Int;
-}
-
-export interface CommentUpdateWithoutLikedByDataInput {
-  text?: String;
-  date?: DateTimeInput;
-  author?: UserUpdateOneRequiredWithoutCommentsInput;
-}
-
-export interface UserCreateWithoutItemsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
   role?: UserRole;
   balance?: Float;
   posts?: PostCreateManyWithoutAuthorInput;
@@ -3006,30 +3145,28 @@ export interface UserCreateWithoutItemsInput {
   events?: EventCreateManyWithoutCommitteeInput;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutLikedByInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutLikedByDataInput;
-  create: CommentCreateWithoutLikedByInput;
-}
-
-export interface TransactionCreateWithoutPaymentInput {
-  user: UserCreateOneWithoutTransactionsInput;
-  date: DateTimeInput;
-  type: TransactionType;
-  balance: Float;
-  purchase?: PurchaseCreateOneWithoutTransactionInput;
-}
-
 export interface UserUpsertWithWhereUniqueWithoutLikedEventsInput {
   where: UserWhereUniqueInput;
   update: UserUpdateWithoutLikedEventsDataInput;
   create: UserCreateWithoutLikedEventsInput;
 }
 
-export interface ItemCreateWithoutUserInput {
-  product: ProductCreateOneInput;
-  price: Float;
-  amount: Int;
+export interface UserCreateWithoutPostsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  events?: EventCreateManyWithoutCommitteeInput;
 }
 
 export interface UserScalarWhereInput {
@@ -3120,22 +3257,12 @@ export interface UserScalarWhereInput {
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface UserCreateWithoutLikedPostsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-  events?: EventCreateManyWithoutCommitteeInput;
+export interface CommentCreateWithoutEventInput {
+  text: String;
+  date: DateTimeInput;
+  author: UserCreateOneWithoutCommentsInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
 }
 
 export interface UserUpdateManyWithWhereNestedInput {
@@ -3143,11 +3270,12 @@ export interface UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput;
 }
 
-export interface PaymentCreateWithoutTransactionInput {
-  amount: Float;
-  user: UserCreateOneWithoutPaymentsInput;
+export interface CommentCreateWithoutAuthorInput {
+  text: String;
   date: DateTimeInput;
-  verified?: Boolean;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
 export interface UserUpdateManyDataInput {
@@ -3159,282 +3287,14 @@ export interface UserUpdateManyDataInput {
   balance?: Float;
 }
 
-export interface PostCreateWithoutLikedByInput {
-  text: String;
-  image?: String;
-  author: UserCreateOneWithoutPostsInput;
-  comments?: CommentCreateManyInput;
-  date: DateTimeInput;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface EventCreateWithoutLikedByInput {
+export interface EventCreateWithoutCommentsInput {
   title: String;
   description: String;
   date: DateTimeInput;
   image: String;
-  comments?: CommentCreateManyInput;
+  likedBy?: UserCreateManyWithoutLikedEventsInput;
   owner: UserCreateOneInput;
   committee?: UserCreateManyWithoutEventsInput;
-}
-
-export interface UserUpdateDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  purchases?: PurchaseUpdateManyWithoutUserInput;
-  payments?: PaymentUpdateManyWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-  items?: ItemUpdateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostUpdateManyWithoutAuthorInput;
-  likedPosts?: PostUpdateManyWithoutLikedByInput;
-  likedEvents?: EventUpdateManyWithoutLikedByInput;
-  comments?: CommentUpdateManyWithoutAuthorInput;
-  likedComments?: CommentUpdateManyWithoutLikedByInput;
-  events?: EventUpdateManyWithoutCommitteeInput;
-}
-
-export interface CommentCreateManyWithoutAuthorInput {
-  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface EventCreateManyWithoutCommitteeInput {
-  create?:
-    | EventCreateWithoutCommitteeInput[]
-    | EventCreateWithoutCommitteeInput;
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
-}
-
-export interface EventUpsertWithWhereUniqueWithoutCommitteeInput {
-  where: EventWhereUniqueInput;
-  update: EventUpdateWithoutCommitteeDataInput;
-  create: EventCreateWithoutCommitteeInput;
-}
-
-export interface EventWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  image?: String;
-  image_not?: String;
-  image_in?: String[] | String;
-  image_not_in?: String[] | String;
-  image_lt?: String;
-  image_lte?: String;
-  image_gt?: String;
-  image_gte?: String;
-  image_contains?: String;
-  image_not_contains?: String;
-  image_starts_with?: String;
-  image_not_starts_with?: String;
-  image_ends_with?: String;
-  image_not_ends_with?: String;
-  comments_every?: CommentWhereInput;
-  comments_some?: CommentWhereInput;
-  comments_none?: CommentWhereInput;
-  likedBy_every?: UserWhereInput;
-  likedBy_some?: UserWhereInput;
-  likedBy_none?: UserWhereInput;
-  owner?: UserWhereInput;
-  committee_every?: UserWhereInput;
-  committee_some?: UserWhereInput;
-  committee_none?: UserWhereInput;
-  AND?: EventWhereInput[] | EventWhereInput;
-  OR?: EventWhereInput[] | EventWhereInput;
-  NOT?: EventWhereInput[] | EventWhereInput;
-}
-
-export interface EventScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  image?: String;
-  image_not?: String;
-  image_in?: String[] | String;
-  image_not_in?: String[] | String;
-  image_lt?: String;
-  image_lte?: String;
-  image_gt?: String;
-  image_gte?: String;
-  image_contains?: String;
-  image_not_contains?: String;
-  image_starts_with?: String;
-  image_not_starts_with?: String;
-  image_ends_with?: String;
-  image_not_ends_with?: String;
-  AND?: EventScalarWhereInput[] | EventScalarWhereInput;
-  OR?: EventScalarWhereInput[] | EventScalarWhereInput;
-  NOT?: EventScalarWhereInput[] | EventScalarWhereInput;
-}
-
-export type CommentWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface EventUpdateManyWithWhereNestedInput {
-  where: EventScalarWhereInput;
-  data: EventUpdateManyDataInput;
-}
-
-export interface TransactionUpdateInput {
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-  payment?: PaymentUpdateOneWithoutTransactionInput;
-  purchase?: PurchaseUpdateOneWithoutTransactionInput;
-}
-
-export interface EventUpdateManyDataInput {
-  title?: String;
-  description?: String;
-  date?: DateTimeInput;
-  image?: String;
-}
-
-export interface ProductionUpdateInput {
-  title?: String;
-  description?: String;
-  image?: String;
-  index?: Int;
-  show?: Boolean;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedCommentsDataInput;
-  create: UserCreateWithoutLikedCommentsInput;
-}
-
-export interface PostUpdateInput {
-  text?: String;
-  image?: String;
-  author?: UserUpdateOneRequiredWithoutPostsInput;
-  likedBy?: UserUpdateManyWithoutLikedPostsInput;
-  comments?: CommentUpdateManyInput;
-  date?: DateTimeInput;
-}
-
-export interface CommentUpsertWithWhereUniqueNestedInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateDataInput;
-  create: CommentCreateInput;
-}
-
-export interface ItemUpdateInput {
-  product?: ProductUpdateOneRequiredInput;
-  user?: UserUpdateOneRequiredWithoutItemsInput;
-  price?: Float;
-  amount?: Int;
 }
 
 export interface UserUpdateManyWithoutEventsInput {
@@ -3455,15 +3315,12 @@ export interface UserUpdateManyWithoutEventsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface EventCreateInput {
-  title: String;
-  description: String;
+export interface CommentCreateWithoutLikedByInput {
+  text: String;
   date: DateTimeInput;
-  image: String;
-  comments?: CommentCreateManyInput;
-  likedBy?: UserCreateManyWithoutLikedEventsInput;
-  owner: UserCreateOneInput;
-  committee?: UserCreateManyWithoutEventsInput;
+  author: UserCreateOneWithoutCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutEventsInput {
@@ -3471,10 +3328,44 @@ export interface UserUpdateWithWhereUniqueWithoutEventsInput {
   data: UserUpdateWithoutEventsDataInput;
 }
 
-export interface PurchaseUpsertWithWhereUniqueWithoutUserInput {
-  where: PurchaseWhereUniqueInput;
-  update: PurchaseUpdateWithoutUserDataInput;
-  create: PurchaseCreateWithoutUserInput;
+export interface PaymentWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  amount?: Float;
+  amount_not?: Float;
+  amount_in?: Float[] | Float;
+  amount_not_in?: Float[] | Float;
+  amount_lt?: Float;
+  amount_lte?: Float;
+  amount_gt?: Float;
+  amount_gte?: Float;
+  user?: UserWhereInput;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  verified?: Boolean;
+  verified_not?: Boolean;
+  transaction?: TransactionWhereInput;
+  AND?: PaymentWhereInput[] | PaymentWhereInput;
+  OR?: PaymentWhereInput[] | PaymentWhereInput;
+  NOT?: PaymentWhereInput[] | PaymentWhereInput;
 }
 
 export interface UserUpdateWithoutEventsDataInput {
@@ -3495,10 +3386,15 @@ export interface UserUpdateWithoutEventsDataInput {
   likedComments?: CommentUpdateManyWithoutLikedByInput;
 }
 
-export interface PaymentUpdateManyDataInput {
-  amount?: Float;
-  date?: DateTimeInput;
-  verified?: Boolean;
+export interface PurchaseSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PurchaseWhereInput;
+  AND?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+  OR?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+  NOT?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutEventsInput {
@@ -3507,12 +3403,116 @@ export interface UserUpsertWithWhereUniqueWithoutEventsInput {
   create: UserCreateWithoutEventsInput;
 }
 
-export interface CommentCreateInput {
-  text: String;
-  date: DateTimeInput;
-  author: UserCreateOneWithoutCommentsInput;
-  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+export interface EventSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: EventWhereInput;
+  AND?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
+  OR?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
+  NOT?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
 }
+
+export interface EventUpsertWithoutCommentsInput {
+  update: EventUpdateWithoutCommentsDataInput;
+  create: EventCreateWithoutCommentsInput;
+}
+
+export interface PurchaseUpdateManyMutationInput {
+  total?: Float;
+  date?: DateTimeInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutAuthorDataInput;
+  create: CommentCreateWithoutAuthorInput;
+}
+
+export interface ClientWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  identity?: String;
+  identity_not?: String;
+  identity_in?: String[] | String;
+  identity_not_in?: String[] | String;
+  identity_lt?: String;
+  identity_lte?: String;
+  identity_gt?: String;
+  identity_gte?: String;
+  identity_contains?: String;
+  identity_not_contains?: String;
+  identity_starts_with?: String;
+  identity_not_starts_with?: String;
+  identity_ends_with?: String;
+  identity_not_ends_with?: String;
+  secret?: String;
+  secret_not?: String;
+  secret_in?: String[] | String;
+  secret_not_in?: String[] | String;
+  secret_lt?: String;
+  secret_lte?: String;
+  secret_gt?: String;
+  secret_gte?: String;
+  secret_contains?: String;
+  secret_not_contains?: String;
+  secret_starts_with?: String;
+  secret_not_starts_with?: String;
+  secret_ends_with?: String;
+  secret_not_ends_with?: String;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  trusted?: Boolean;
+  trusted_not?: Boolean;
+  AND?: ClientWhereInput[] | ClientWhereInput;
+  OR?: ClientWhereInput[] | ClientWhereInput;
+  NOT?: ClientWhereInput[] | ClientWhereInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLikedCommentsDataInput;
+  create: UserCreateWithoutLikedCommentsInput;
+}
+
+export type PaymentWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CommentUpsertWithWhereUniqueWithoutEventInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutEventDataInput;
+  create: CommentCreateWithoutEventInput;
+}
+
+export type ProductWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface EventUpsertWithWhereUniqueWithoutLikedByInput {
   where: EventWhereUniqueInput;
@@ -3520,12 +3520,9 @@ export interface EventUpsertWithWhereUniqueWithoutLikedByInput {
   create: EventCreateWithoutLikedByInput;
 }
 
-export interface ProductCreateInput {
-  name: String;
-  price: Float;
-  index: Int;
-  thumbnail?: String;
-  deleted?: Boolean;
+export interface CommentUpdateManyMutationInput {
+  text?: String;
+  date?: DateTimeInput;
 }
 
 export interface UserUpsertWithoutPostsInput {
@@ -3533,14 +3530,59 @@ export interface UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput;
 }
 
-export interface UserCreateWithoutTransactionsInput {
+export type TransactionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CommentUpdateManyWithoutPostInput {
+  create?: CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput;
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  update?:
+    | CommentUpdateWithWhereUniqueWithoutPostInput[]
+    | CommentUpdateWithWhereUniqueWithoutPostInput;
+  upsert?:
+    | CommentUpsertWithWhereUniqueWithoutPostInput[]
+    | CommentUpsertWithWhereUniqueWithoutPostInput;
+  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  updateMany?:
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateWithoutCommentsInput {
   name: String;
   email: String;
   password: String;
   avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
   payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
   items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  events?: EventCreateManyWithoutCommitteeInput;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutPostDataInput;
+}
+
+export interface UserCreateWithoutItemsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
   role?: UserRole;
   balance?: Float;
   posts?: PostCreateManyWithoutAuthorInput;
@@ -3551,18 +3593,47 @@ export interface UserCreateWithoutTransactionsInput {
   events?: EventCreateManyWithoutCommitteeInput;
 }
 
+export interface CommentUpdateWithoutPostDataInput {
+  text?: String;
+  date?: DateTimeInput;
+  author?: UserUpdateOneRequiredWithoutCommentsInput;
+  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
+  event?: EventUpdateOneWithoutCommentsInput;
+}
+
+export interface ItemCreateWithoutUserInput {
+  product: ProductCreateOneInput;
+  price: Float;
+  amount: Int;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutPostDataInput;
+  create: CommentCreateWithoutPostInput;
+}
+
+export interface PaymentCreateWithoutTransactionInput {
+  amount: Float;
+  user: UserCreateOneWithoutPaymentsInput;
+  date: DateTimeInput;
+  verified?: Boolean;
+}
+
 export interface PostUpsertWithWhereUniqueWithoutLikedByInput {
   where: PostWhereUniqueInput;
   update: PostUpdateWithoutLikedByDataInput;
   create: PostCreateWithoutLikedByInput;
 }
 
-export interface TransactionCreateWithoutUserInput {
+export interface EventCreateWithoutLikedByInput {
+  title: String;
+  description: String;
   date: DateTimeInput;
-  type: TransactionType;
-  balance: Float;
-  payment?: PaymentCreateOneWithoutTransactionInput;
-  purchase?: PurchaseCreateOneWithoutTransactionInput;
+  image: String;
+  comments?: CommentCreateManyWithoutEventInput;
+  owner: UserCreateOneInput;
+  committee?: UserCreateManyWithoutEventsInput;
 }
 
 export interface PostScalarWhereInput {
@@ -3621,22 +3692,12 @@ export interface PostScalarWhereInput {
   NOT?: PostScalarWhereInput[] | PostScalarWhereInput;
 }
 
-export interface UserCreateWithoutPostsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-  events?: EventCreateManyWithoutCommitteeInput;
+export interface PostCreateWithoutCommentsInput {
+  text: String;
+  image?: String;
+  author: UserCreateOneWithoutPostsInput;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
+  date: DateTimeInput;
 }
 
 export interface PostUpdateManyWithWhereNestedInput {
@@ -3644,11 +3705,14 @@ export interface PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput;
 }
 
-export interface UserCreateManyWithoutLikedCommentsInput {
-  create?:
-    | UserCreateWithoutLikedCommentsInput[]
-    | UserCreateWithoutLikedCommentsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface EventCreateWithoutCommitteeInput {
+  title: String;
+  description: String;
+  date: DateTimeInput;
+  image: String;
+  comments?: CommentCreateManyWithoutEventInput;
+  likedBy?: UserCreateManyWithoutLikedEventsInput;
+  owner: UserCreateOneInput;
 }
 
 export interface PostUpdateManyDataInput {
@@ -3657,15 +3721,15 @@ export interface PostUpdateManyDataInput {
   date?: DateTimeInput;
 }
 
-export interface ProductSubscriptionWhereInput {
+export interface PaymentSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: ProductWhereInput;
-  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
-  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
-  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  node?: PaymentWhereInput;
+  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
+  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
+  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput;
 }
 
 export interface UserUpsertWithoutPaymentsInput {
@@ -3673,12 +3737,12 @@ export interface UserUpsertWithoutPaymentsInput {
   create: UserCreateWithoutPaymentsInput;
 }
 
-export interface PurchaseUpdateInput {
-  items?: ItemUpdateManyInput;
-  transaction?: TransactionUpdateOneRequiredWithoutPurchaseInput;
-  total?: Float;
-  user?: UserUpdateOneRequiredWithoutPurchasesInput;
-  date?: DateTimeInput;
+export interface ProductionUpdateManyMutationInput {
+  title?: String;
+  description?: String;
+  image?: String;
+  index?: Int;
+  show?: Boolean;
 }
 
 export interface PaymentUpsertWithoutTransactionInput {
@@ -3686,13 +3750,9 @@ export interface PaymentUpsertWithoutTransactionInput {
   create: PaymentCreateWithoutTransactionInput;
 }
 
-export interface PaymentUpdateInput {
-  amount?: Float;
-  user?: UserUpdateOneRequiredWithoutPaymentsInput;
-  date?: DateTimeInput;
-  verified?: Boolean;
-  transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
-}
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface PurchaseUpdateOneWithoutTransactionInput {
   create?: PurchaseCreateWithoutTransactionInput;
@@ -3703,10 +3763,9 @@ export interface PurchaseUpdateOneWithoutTransactionInput {
   connect?: PurchaseWhereUniqueInput;
 }
 
-export interface PurchaseUpdateManyDataInput {
-  total?: Float;
-  date?: DateTimeInput;
-}
+export type PurchaseWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface PurchaseUpdateWithoutTransactionDataInput {
   items?: ItemUpdateManyInput;
@@ -3715,11 +3774,42 @@ export interface PurchaseUpdateWithoutTransactionDataInput {
   date?: DateTimeInput;
 }
 
-export interface ClientUpdateInput {
-  identity?: String;
-  secret?: String;
-  name?: String;
-  trusted?: Boolean;
+export interface PaymentScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  amount?: Float;
+  amount_not?: Float;
+  amount_in?: Float[] | Float;
+  amount_not_in?: Float[] | Float;
+  amount_lt?: Float;
+  amount_lte?: Float;
+  amount_gt?: Float;
+  amount_gte?: Float;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  verified?: Boolean;
+  verified_not?: Boolean;
+  AND?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  OR?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  NOT?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
 }
 
 export interface UserUpdateOneRequiredWithoutPurchasesInput {
@@ -3729,11 +3819,12 @@ export interface UserUpdateOneRequiredWithoutPurchasesInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface PaymentCreateWithoutUserInput {
-  amount: Float;
+export interface TransactionCreateWithoutPaymentInput {
+  user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
-  verified?: Boolean;
-  transaction: TransactionCreateOneWithoutPaymentInput;
+  type: TransactionType;
+  balance: Float;
+  purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
 
 export interface UserUpdateWithoutPurchasesDataInput {
@@ -3754,22 +3845,12 @@ export interface UserUpdateWithoutPurchasesDataInput {
   events?: EventUpdateManyWithoutCommitteeInput;
 }
 
-export interface UserCreateWithoutPaymentsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-  events?: EventCreateManyWithoutCommitteeInput;
+export interface PostCreateWithoutLikedByInput {
+  text: String;
+  image?: String;
+  author: UserCreateOneWithoutPostsInput;
+  comments?: CommentCreateManyWithoutPostInput;
+  date: DateTimeInput;
 }
 
 export interface UserUpsertWithoutPurchasesInput {
@@ -3777,45 +3858,22 @@ export interface UserUpsertWithoutPurchasesInput {
   create: UserCreateWithoutPurchasesInput;
 }
 
-export interface PurchaseWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  items_every?: ItemWhereInput;
-  items_some?: ItemWhereInput;
-  items_none?: ItemWhereInput;
-  transaction?: TransactionWhereInput;
-  total?: Float;
-  total_not?: Float;
-  total_in?: Float[] | Float;
-  total_not_in?: Float[] | Float;
-  total_lt?: Float;
-  total_lte?: Float;
-  total_gt?: Float;
-  total_gte?: Float;
-  user?: UserWhereInput;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  AND?: PurchaseWhereInput[] | PurchaseWhereInput;
-  OR?: PurchaseWhereInput[] | PurchaseWhereInput;
-  NOT?: PurchaseWhereInput[] | PurchaseWhereInput;
+export interface UserCreateWithoutLikedEventsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  events?: EventCreateManyWithoutCommitteeInput;
 }
 
 export interface PurchaseUpsertWithoutTransactionInput {
@@ -3823,12 +3881,23 @@ export interface PurchaseUpsertWithoutTransactionInput {
   create: PurchaseCreateWithoutTransactionInput;
 }
 
-export interface ProductUpdateManyMutationInput {
+export interface UserUpdateInput {
   name?: String;
-  price?: Float;
-  index?: Int;
-  thumbnail?: String;
-  deleted?: Boolean;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  events?: EventUpdateManyWithoutCommitteeInput;
 }
 
 export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
@@ -3837,11 +3906,15 @@ export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
   create: TransactionCreateWithoutUserInput;
 }
 
-export interface TransactionUpdateOneRequiredWithoutPurchaseInput {
-  create?: TransactionCreateWithoutPurchaseInput;
-  update?: TransactionUpdateWithoutPurchaseDataInput;
-  upsert?: TransactionUpsertWithoutPurchaseInput;
-  connect?: TransactionWhereUniqueInput;
+export interface EventUpdateInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
+  comments?: CommentUpdateManyWithoutEventInput;
+  likedBy?: UserUpdateManyWithoutLikedEventsInput;
+  owner?: UserUpdateOneRequiredInput;
+  committee?: UserUpdateManyWithoutEventsInput;
 }
 
 export interface TransactionScalarWhereInput {
@@ -3884,12 +3957,11 @@ export interface TransactionScalarWhereInput {
   NOT?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
 }
 
-export interface PostCreateWithoutAuthorInput {
-  text: String;
-  image?: String;
-  likedBy?: UserCreateManyWithoutLikedPostsInput;
-  comments?: CommentCreateManyInput;
-  date: DateTimeInput;
+export interface ItemCreateInput {
+  product: ProductCreateOneInput;
+  user: UserCreateOneWithoutItemsInput;
+  price: Float;
+  amount: Int;
 }
 
 export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
@@ -3915,37 +3987,112 @@ export interface TransactionUpdateManyWithWhereNestedInput {
   data: TransactionUpdateManyDataInput;
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
+export interface UserCreateWithoutLikedPostsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  events?: EventCreateManyWithoutCommitteeInput;
 }
 
-export interface PurchaseCreateWithoutUserInput {
-  items?: ItemCreateManyInput;
-  transaction: TransactionCreateOneWithoutPurchaseInput;
-  total: Float;
-  date: DateTimeInput;
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export type ItemWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface PostWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  image?: String;
+  image_not?: String;
+  image_in?: String[] | String;
+  image_not_in?: String[] | String;
+  image_lt?: String;
+  image_lte?: String;
+  image_gt?: String;
+  image_gte?: String;
+  image_contains?: String;
+  image_not_contains?: String;
+  image_starts_with?: String;
+  image_not_starts_with?: String;
+  image_ends_with?: String;
+  image_not_ends_with?: String;
+  author?: UserWhereInput;
+  likedBy_every?: UserWhereInput;
+  likedBy_some?: UserWhereInput;
+  likedBy_none?: UserWhereInput;
+  comments_every?: CommentWhereInput;
+  comments_some?: CommentWhereInput;
+  comments_none?: CommentWhereInput;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PostWhereInput[] | PostWhereInput;
+  OR?: PostWhereInput[] | PostWhereInput;
+  NOT?: PostWhereInput[] | PostWhereInput;
 }
 
-export interface FileCreateInput {
-  fileId: String;
-  hash: String;
-  uri: String;
-  filename: String;
-  path: String;
-  mimetype: String;
-  extension: String;
-}
-
-export interface ClientSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ClientWhereInput;
-  AND?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
-  OR?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
-  NOT?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+export interface UserCreateWithoutLikedCommentsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  events?: EventCreateManyWithoutCommitteeInput;
 }
 
 export interface NodeNode {
@@ -5711,6 +5858,8 @@ export interface CommentPromise extends Promise<Comment>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  post: <T = PostPromise>() => T;
+  event: <T = EventPromise>() => T;
 }
 
 export interface CommentSubscription
@@ -5731,6 +5880,8 @@ export interface CommentSubscription
       last?: Int;
     }
   ) => T;
+  post: <T = PostSubscription>() => T;
+  event: <T = EventSubscription>() => T;
 }
 
 export interface ItemEdge {

@@ -61,7 +61,9 @@ class FeedManager extends React.Component {
           if (error) return null;
           this.fetchMore = fetchMore;
           const posts = data.feed.edges.map((edge) => edge.node);
-          const cursor = data.feed.edges.slice(-1).pop().cursor;
+          const cursor = data.feed.edges.length
+            ? data.feed.edges.slice(-1).pop().cursor
+            : null;
           return (
             <Feed
               posts={posts}

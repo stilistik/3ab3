@@ -1,14 +1,31 @@
-type Comment @isAuthenticated {
+type Comment implements Node @isAuthenticated {
   id: ID!
   text: String!
   author: User!
   likedBy: [User!]!
   date: DateTime!
+  post: Post
+  event: Event
 }
+
+type CommentEdge implements Edge {
+  cursor: String!
+  node: Comment
+}
+
+type CommentsConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [CommentEdge]
+}
+
 
 extend type Query {
   comments: [Comment!]!
   comment(commentId: ID!): Comment!
+  postComments(postId: ID!, first: Int = 5, after: String): CommentsConnection
+  postCommentCount(postId: ID!): Int!
+  eventComments(eventId: ID!, first: Int = 5, after: String): CommentsConnection
+  eventCommentCount(eventId: ID!): Int!
 }
 
 extend type Mutation {

@@ -213,6 +213,8 @@ type Comment {
   date: DateTime!
   author: User!
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  post: Post
+  event: Event
 }
 
 type CommentConnection {
@@ -226,15 +228,17 @@ input CommentCreateInput {
   date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   likedBy: UserCreateManyWithoutLikedCommentsInput
-}
-
-input CommentCreateManyInput {
-  create: [CommentCreateInput!]
-  connect: [CommentWhereUniqueInput!]
+  post: PostCreateOneWithoutCommentsInput
+  event: EventCreateOneWithoutCommentsInput
 }
 
 input CommentCreateManyWithoutAuthorInput {
   create: [CommentCreateWithoutAuthorInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateManyWithoutEventInput {
+  create: [CommentCreateWithoutEventInput!]
   connect: [CommentWhereUniqueInput!]
 }
 
@@ -243,16 +247,41 @@ input CommentCreateManyWithoutLikedByInput {
   connect: [CommentWhereUniqueInput!]
 }
 
+input CommentCreateManyWithoutPostInput {
+  create: [CommentCreateWithoutPostInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
 input CommentCreateWithoutAuthorInput {
   text: String!
   date: DateTime!
   likedBy: UserCreateManyWithoutLikedCommentsInput
+  post: PostCreateOneWithoutCommentsInput
+  event: EventCreateOneWithoutCommentsInput
+}
+
+input CommentCreateWithoutEventInput {
+  text: String!
+  date: DateTime!
+  author: UserCreateOneWithoutCommentsInput!
+  likedBy: UserCreateManyWithoutLikedCommentsInput
+  post: PostCreateOneWithoutCommentsInput
 }
 
 input CommentCreateWithoutLikedByInput {
   text: String!
   date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
+  post: PostCreateOneWithoutCommentsInput
+  event: EventCreateOneWithoutCommentsInput
+}
+
+input CommentCreateWithoutPostInput {
+  text: String!
+  date: DateTime!
+  author: UserCreateOneWithoutCommentsInput!
+  likedBy: UserCreateManyWithoutLikedCommentsInput
+  event: EventCreateOneWithoutCommentsInput
 }
 
 type CommentEdge {
@@ -339,35 +368,18 @@ input CommentSubscriptionWhereInput {
   NOT: [CommentSubscriptionWhereInput!]
 }
 
-input CommentUpdateDataInput {
-  text: String
-  date: DateTime
-  author: UserUpdateOneRequiredWithoutCommentsInput
-  likedBy: UserUpdateManyWithoutLikedCommentsInput
-}
-
 input CommentUpdateInput {
   text: String
   date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   likedBy: UserUpdateManyWithoutLikedCommentsInput
+  post: PostUpdateOneWithoutCommentsInput
+  event: EventUpdateOneWithoutCommentsInput
 }
 
 input CommentUpdateManyDataInput {
   text: String
   date: DateTime
-}
-
-input CommentUpdateManyInput {
-  create: [CommentCreateInput!]
-  update: [CommentUpdateWithWhereUniqueNestedInput!]
-  upsert: [CommentUpsertWithWhereUniqueNestedInput!]
-  delete: [CommentWhereUniqueInput!]
-  connect: [CommentWhereUniqueInput!]
-  set: [CommentWhereUniqueInput!]
-  disconnect: [CommentWhereUniqueInput!]
-  deleteMany: [CommentScalarWhereInput!]
-  updateMany: [CommentUpdateManyWithWhereNestedInput!]
 }
 
 input CommentUpdateManyMutationInput {
@@ -387,6 +399,18 @@ input CommentUpdateManyWithoutAuthorInput {
   updateMany: [CommentUpdateManyWithWhereNestedInput!]
 }
 
+input CommentUpdateManyWithoutEventInput {
+  create: [CommentCreateWithoutEventInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutEventInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutEventInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
 input CommentUpdateManyWithoutLikedByInput {
   create: [CommentCreateWithoutLikedByInput!]
   delete: [CommentWhereUniqueInput!]
@@ -395,6 +419,18 @@ input CommentUpdateManyWithoutLikedByInput {
   disconnect: [CommentWhereUniqueInput!]
   update: [CommentUpdateWithWhereUniqueWithoutLikedByInput!]
   upsert: [CommentUpsertWithWhereUniqueWithoutLikedByInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
+input CommentUpdateManyWithoutPostInput {
+  create: [CommentCreateWithoutPostInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutPostInput!]
   deleteMany: [CommentScalarWhereInput!]
   updateMany: [CommentUpdateManyWithWhereNestedInput!]
 }
@@ -408,17 +444,32 @@ input CommentUpdateWithoutAuthorDataInput {
   text: String
   date: DateTime
   likedBy: UserUpdateManyWithoutLikedCommentsInput
+  post: PostUpdateOneWithoutCommentsInput
+  event: EventUpdateOneWithoutCommentsInput
+}
+
+input CommentUpdateWithoutEventDataInput {
+  text: String
+  date: DateTime
+  author: UserUpdateOneRequiredWithoutCommentsInput
+  likedBy: UserUpdateManyWithoutLikedCommentsInput
+  post: PostUpdateOneWithoutCommentsInput
 }
 
 input CommentUpdateWithoutLikedByDataInput {
   text: String
   date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
+  post: PostUpdateOneWithoutCommentsInput
+  event: EventUpdateOneWithoutCommentsInput
 }
 
-input CommentUpdateWithWhereUniqueNestedInput {
-  where: CommentWhereUniqueInput!
-  data: CommentUpdateDataInput!
+input CommentUpdateWithoutPostDataInput {
+  text: String
+  date: DateTime
+  author: UserUpdateOneRequiredWithoutCommentsInput
+  likedBy: UserUpdateManyWithoutLikedCommentsInput
+  event: EventUpdateOneWithoutCommentsInput
 }
 
 input CommentUpdateWithWhereUniqueWithoutAuthorInput {
@@ -426,15 +477,19 @@ input CommentUpdateWithWhereUniqueWithoutAuthorInput {
   data: CommentUpdateWithoutAuthorDataInput!
 }
 
+input CommentUpdateWithWhereUniqueWithoutEventInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutEventDataInput!
+}
+
 input CommentUpdateWithWhereUniqueWithoutLikedByInput {
   where: CommentWhereUniqueInput!
   data: CommentUpdateWithoutLikedByDataInput!
 }
 
-input CommentUpsertWithWhereUniqueNestedInput {
+input CommentUpdateWithWhereUniqueWithoutPostInput {
   where: CommentWhereUniqueInput!
-  update: CommentUpdateDataInput!
-  create: CommentCreateInput!
+  data: CommentUpdateWithoutPostDataInput!
 }
 
 input CommentUpsertWithWhereUniqueWithoutAuthorInput {
@@ -443,10 +498,22 @@ input CommentUpsertWithWhereUniqueWithoutAuthorInput {
   create: CommentCreateWithoutAuthorInput!
 }
 
+input CommentUpsertWithWhereUniqueWithoutEventInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutEventDataInput!
+  create: CommentCreateWithoutEventInput!
+}
+
 input CommentUpsertWithWhereUniqueWithoutLikedByInput {
   where: CommentWhereUniqueInput!
   update: CommentUpdateWithoutLikedByDataInput!
   create: CommentCreateWithoutLikedByInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutPostDataInput!
+  create: CommentCreateWithoutPostInput!
 }
 
 input CommentWhereInput {
@@ -490,6 +557,8 @@ input CommentWhereInput {
   likedBy_every: UserWhereInput
   likedBy_some: UserWhereInput
   likedBy_none: UserWhereInput
+  post: PostWhereInput
+  event: EventWhereInput
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -524,7 +593,7 @@ input EventCreateInput {
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyInput
+  comments: CommentCreateManyWithoutEventInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   committee: UserCreateManyWithoutEventsInput
@@ -540,12 +609,27 @@ input EventCreateManyWithoutLikedByInput {
   connect: [EventWhereUniqueInput!]
 }
 
+input EventCreateOneWithoutCommentsInput {
+  create: EventCreateWithoutCommentsInput
+  connect: EventWhereUniqueInput
+}
+
+input EventCreateWithoutCommentsInput {
+  title: String!
+  description: String!
+  date: DateTime!
+  image: String!
+  likedBy: UserCreateManyWithoutLikedEventsInput
+  owner: UserCreateOneInput!
+  committee: UserCreateManyWithoutEventsInput
+}
+
 input EventCreateWithoutCommitteeInput {
   title: String!
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyInput
+  comments: CommentCreateManyWithoutEventInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
 }
@@ -555,7 +639,7 @@ input EventCreateWithoutLikedByInput {
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyInput
+  comments: CommentCreateManyWithoutEventInput
   owner: UserCreateOneInput!
   committee: UserCreateManyWithoutEventsInput
 }
@@ -683,7 +767,7 @@ input EventUpdateInput {
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyInput
+  comments: CommentUpdateManyWithoutEventInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   committee: UserUpdateManyWithoutEventsInput
@@ -732,12 +816,31 @@ input EventUpdateManyWithWhereNestedInput {
   data: EventUpdateManyDataInput!
 }
 
+input EventUpdateOneWithoutCommentsInput {
+  create: EventCreateWithoutCommentsInput
+  update: EventUpdateWithoutCommentsDataInput
+  upsert: EventUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: EventWhereUniqueInput
+}
+
+input EventUpdateWithoutCommentsDataInput {
+  title: String
+  description: String
+  date: DateTime
+  image: String
+  likedBy: UserUpdateManyWithoutLikedEventsInput
+  owner: UserUpdateOneRequiredInput
+  committee: UserUpdateManyWithoutEventsInput
+}
+
 input EventUpdateWithoutCommitteeDataInput {
   title: String
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyInput
+  comments: CommentUpdateManyWithoutEventInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
 }
@@ -747,7 +850,7 @@ input EventUpdateWithoutLikedByDataInput {
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyInput
+  comments: CommentUpdateManyWithoutEventInput
   owner: UserUpdateOneRequiredInput
   committee: UserUpdateManyWithoutEventsInput
 }
@@ -760,6 +863,11 @@ input EventUpdateWithWhereUniqueWithoutCommitteeInput {
 input EventUpdateWithWhereUniqueWithoutLikedByInput {
   where: EventWhereUniqueInput!
   data: EventUpdateWithoutLikedByDataInput!
+}
+
+input EventUpsertWithoutCommentsInput {
+  update: EventUpdateWithoutCommentsDataInput!
+  create: EventCreateWithoutCommentsInput!
 }
 
 input EventUpsertWithWhereUniqueWithoutCommitteeInput {
@@ -1700,7 +1808,7 @@ input PostCreateInput {
   image: String
   author: UserCreateOneWithoutPostsInput!
   likedBy: UserCreateManyWithoutLikedPostsInput
-  comments: CommentCreateManyInput
+  comments: CommentCreateManyWithoutPostInput
   date: DateTime!
 }
 
@@ -1714,11 +1822,24 @@ input PostCreateManyWithoutLikedByInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input PostCreateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  connect: PostWhereUniqueInput
+}
+
 input PostCreateWithoutAuthorInput {
   text: String!
   image: String
   likedBy: UserCreateManyWithoutLikedPostsInput
-  comments: CommentCreateManyInput
+  comments: CommentCreateManyWithoutPostInput
+  date: DateTime!
+}
+
+input PostCreateWithoutCommentsInput {
+  text: String!
+  image: String
+  author: UserCreateOneWithoutPostsInput!
+  likedBy: UserCreateManyWithoutLikedPostsInput
   date: DateTime!
 }
 
@@ -1726,7 +1847,7 @@ input PostCreateWithoutLikedByInput {
   text: String!
   image: String
   author: UserCreateOneWithoutPostsInput!
-  comments: CommentCreateManyInput
+  comments: CommentCreateManyWithoutPostInput
   date: DateTime!
 }
 
@@ -1836,7 +1957,7 @@ input PostUpdateInput {
   image: String
   author: UserUpdateOneRequiredWithoutPostsInput
   likedBy: UserUpdateManyWithoutLikedPostsInput
-  comments: CommentUpdateManyInput
+  comments: CommentUpdateManyWithoutPostInput
   date: DateTime
 }
 
@@ -1881,11 +2002,28 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
+input PostUpdateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  update: PostUpdateWithoutCommentsDataInput
+  upsert: PostUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PostWhereUniqueInput
+}
+
 input PostUpdateWithoutAuthorDataInput {
   text: String
   image: String
   likedBy: UserUpdateManyWithoutLikedPostsInput
-  comments: CommentUpdateManyInput
+  comments: CommentUpdateManyWithoutPostInput
+  date: DateTime
+}
+
+input PostUpdateWithoutCommentsDataInput {
+  text: String
+  image: String
+  author: UserUpdateOneRequiredWithoutPostsInput
+  likedBy: UserUpdateManyWithoutLikedPostsInput
   date: DateTime
 }
 
@@ -1893,7 +2031,7 @@ input PostUpdateWithoutLikedByDataInput {
   text: String
   image: String
   author: UserUpdateOneRequiredWithoutPostsInput
-  comments: CommentUpdateManyInput
+  comments: CommentUpdateManyWithoutPostInput
   date: DateTime
 }
 
@@ -1905,6 +2043,11 @@ input PostUpdateWithWhereUniqueWithoutAuthorInput {
 input PostUpdateWithWhereUniqueWithoutLikedByInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutLikedByDataInput!
+}
+
+input PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput!
+  create: PostCreateWithoutCommentsInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutAuthorInput {
