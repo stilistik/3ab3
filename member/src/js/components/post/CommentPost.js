@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
 import { CreateCommentForm } from 'Components';
-import { POST_COMMENTS } from './PostComments';
 
 const MUTATION = gql`
   mutation($postId: ID!, $text: String!) {

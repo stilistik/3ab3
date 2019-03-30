@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
 import { CreateCommentForm } from 'Components';
-import { EVENT_COMMENTS } from './EventComments';
 
 const MUTATION = gql`
   mutation($eventId: ID!, $text: String!) {
@@ -30,9 +29,7 @@ class CommentEvent extends React.Component {
           eventId: values.id,
           text: values.text,
         },
-        refetchQueries: () => [
-          { query: EVENT_COMMENTS, variables: { eventId: values.id } },
-        ],
+        refetchQueries: () => this.props.refetch,
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });
@@ -49,7 +46,7 @@ class CommentEvent extends React.Component {
             <CreateCommentForm
               onSubmit={this.onSubmit}
               user={this.props.user}
-              id={this.props.event.id}
+              id={this.props.eventId}
             />
           );
         }}

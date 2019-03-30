@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import { Icon, ImageDiv } from 'Components';
 import LikeEvent from './LikeEvent';
-import CommentEvent from './CommentEvent';
 import EventComments from './EventComments';
 import EventStats from './EventStats';
 
@@ -89,12 +88,7 @@ export class EventCard extends React.Component {
             <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
           </Button>
         </CardActions>
-        {this.state.show ? (
-          <div>
-            <CommentEvent event={event} />
-            <EventComments eventId={event.id} />
-          </div>
-        ) : null}
+        {this.state.show ? <EventComments eventId={event.id} /> : null}
       </Card>
     );
   }

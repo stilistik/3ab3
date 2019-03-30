@@ -6,26 +6,24 @@ import { SocialStats } from 'Components';
 export const EVENT_STATS = gql`
   query($eventId: ID!) {
     event(eventId: $eventId) {
-      comments {
-        id
-      }
       likedBy {
         id
         name
         avatar
       }
     }
+    eventCommentCount(eventId: $eventId)
   }
 `;
 
 class EventStats extends React.Component {
   render() {
     if (!this.props.event) return null;
-    const { likedBy, comments } = this.props.event;
+    const { likedBy } = this.props.event;
     return (
       <SocialStats
         likedBy={likedBy}
-        comments={comments}
+        count={this.props.count}
         onComment={this.props.onComment}
       />
     );
@@ -33,5 +31,5 @@ class EventStats extends React.Component {
 }
 
 export default graphql(EVENT_STATS, {
-  props: ({ data }) => ({ event: data.event }),
+  props: ({ data }) => ({ event: data.event, count: data.eventCommentCount }),
 })(EventStats);
