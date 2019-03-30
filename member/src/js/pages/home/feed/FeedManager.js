@@ -42,8 +42,6 @@ class FeedManager extends React.Component {
 
         return newEdges.length
           ? {
-              // Put the new comments at the end of the list and update `pageInfo`
-              // so we have the new `endCursor` and `hasNextPage` values
               feed: {
                 __typename: previousResult.feed.__typename,
                 edges: [...previousResult.feed.edges, ...newEdges],

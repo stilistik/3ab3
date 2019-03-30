@@ -81,8 +81,8 @@ export class EventCard extends React.Component {
               {event.description}
             </Typography>
           </CardContent>
-          <EventStats eventId={event.id} onComment={this.onComment} />
         </CardActionArea>
+        <EventStats eventId={event.id} onComment={this.onComment} />
         <CardActions>
           <LikeEvent event={event} />
           <Button size="small" color="primary" onClick={this.onComment}>
