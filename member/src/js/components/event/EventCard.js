@@ -11,6 +11,7 @@ import { Icon, ImageDiv } from 'Components';
 import LikeEvent from './LikeEvent';
 import CommentEvent from './CommentEvent';
 import EventComments from './EventComments';
+import EventStats from './EventStats';
 
 import styles from './EventCard.css';
 
@@ -80,6 +81,7 @@ export class EventCard extends React.Component {
               {event.description}
             </Typography>
           </CardContent>
+          <EventStats eventId={event.id} onComment={this.onComment} />
         </CardActionArea>
         <CardActions>
           <LikeEvent event={event} />

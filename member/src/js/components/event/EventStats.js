@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { SocialStats } from 'Components';
 
-export const POST_STATS = gql`
-  query($postId: ID!) {
-    post(postId: $postId) {
+export const EVENT_STATS = gql`
+  query($eventId: ID!) {
+    event(eventId: $eventId) {
       comments {
         id
       }
@@ -18,10 +18,10 @@ export const POST_STATS = gql`
   }
 `;
 
-class PostStats extends React.Component {
+class EventStats extends React.Component {
   render() {
-    if (!this.props.post) return null;
-    const { likedBy, comments } = this.props.post;
+    if (!this.props.event) return null;
+    const { likedBy, comments } = this.props.event;
     return (
       <SocialStats
         likedBy={likedBy}
@@ -32,6 +32,6 @@ class PostStats extends React.Component {
   }
 }
 
-export default graphql(POST_STATS, {
-  props: ({ data }) => ({ post: data.post }),
-})(PostStats);
+export default graphql(EVENT_STATS, {
+  props: ({ data }) => ({ event: data.event }),
+})(EventStats);

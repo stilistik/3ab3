@@ -3,7 +3,8 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
-import { CreateCommentForm, POST_COMMENTS } from 'Components';
+import { CreateCommentForm } from 'Components';
+import { EVENT_COMMENTS } from './EventComments';
 
 const MUTATION = gql`
   mutation($eventId: ID!, $text: String!) {
@@ -30,7 +31,7 @@ class CommentEvent extends React.Component {
           text: values.text,
         },
         refetchQueries: () => [
-          { query: POST_COMMENTS, variables: { eventId: values.id } },
+          { query: EVENT_COMMENTS, variables: { eventId: values.id } },
         ],
       });
     } catch (error) {
@@ -44,7 +45,13 @@ class CommentEvent extends React.Component {
       <Mutation mutation={MUTATION}>
         {(createComment) => {
           this.createComment = createComment;
-          return <CreateCommentForm onSubmit={this.onSubmit} {...this.props} />;
+          return (
+            <CreateCommentForm
+              onSubmit={this.onSubmit}
+              user={this.props.user}
+              id={this.props.event.id}
+            />
+          );
         }}
       </Mutation>
     );

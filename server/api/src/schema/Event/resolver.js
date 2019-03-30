@@ -68,6 +68,22 @@ module.exports = {
       await deleteFile(img.id, context);
       return context.prisma.deleteEvent({ id: args.eventId });
     },
+    commentEvent(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      const date = new Date().toISOString();
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          comments: {
+            create: {
+              author: { connect: { id: id } },
+              date: date,
+              text: args.text,
+            },
+          },
+        },
+      });
+    },
   },
   Event: {
     comments(root, args, context) {
