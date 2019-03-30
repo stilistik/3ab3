@@ -1,8 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import Post from './post/Post';
-import CreatePost from './post/CreatePost';
+import { Post, CreatePost } from 'Components';
 import { Grid } from '@material-ui/core';
 
 import styles from './Feed.css';
@@ -30,12 +29,12 @@ class Feed extends React.Component {
       <div className={styles.container}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <CreatePost />
+            <CreatePost refetch={[{ query: FEED }]} />
           </Grid>
           {this.props.posts.map((post) => {
             return (
               <Grid key={post.id} item xs={12}>
-                <Post post={post} />
+                <Post post={post} refetch={[{ query: FEED }]} />
               </Grid>
             );
           })}

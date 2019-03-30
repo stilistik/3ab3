@@ -10,3 +10,4 @@ export * from './like';
 export * from './plots';
 export * from './form';
 export * from './comment';
+export * from './post';

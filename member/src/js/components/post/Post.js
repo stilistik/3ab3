@@ -20,7 +20,7 @@ import styles from './Post.css';
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-EN');
 
-const PostHeader = ({ post }) => {
+const PostHeader = ({ post, refetch }) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerleft}>
@@ -34,7 +34,7 @@ const PostHeader = ({ post }) => {
           </Typography>
         </div>
       </div>
-      <DeletePost post={post} />
+      <DeletePost post={post} refetch={refetch} />
     </div>
   );
 };
@@ -73,7 +73,7 @@ class Post extends React.Component {
     const { post } = this.props;
     return (
       <Card>
-        <PostHeader post={post} />
+        <PostHeader post={post} refetch={this.props.refetch} />
         <CardContent className={styles.content}>
           <PostText text={post.text} />
           <PostImage image={post.image} />

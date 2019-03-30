@@ -3,7 +3,6 @@ import { IconButton } from '@material-ui/core';
 import { Icon, DeleteConfirm } from 'Components';
 import gql from 'graphql-tag';
 import { graphql, Mutation } from 'react-apollo';
-import { FEED } from '../Feed';
 
 const USER = gql`
   query {
@@ -32,7 +31,7 @@ class DeletePost extends React.Component {
   onDelete = () => {
     this.deletePost({
       variables: { postId: this.props.post.id },
-      refetchQueries: () => [{ query: FEED }],
+      refetchQueries: () => this.props.refetch,
     });
   };
 
