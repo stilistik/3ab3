@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultGrid } from 'Components';
 import { Grid } from '@material-ui/core';
-import Feed from './feed/Feed';
+import Feed from './feed/FeedManager';
 import Balance from './balance/Balance';
 import Events from './events/Events';
 

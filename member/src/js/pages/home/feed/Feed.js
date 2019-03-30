@@ -1,26 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
 import { Post, CreatePost } from 'Components';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 
 import styles from './Feed.css';
-
-export const FEED = gql`
-  query {
-    posts {
-      id
-      author {
-        id
-        name
-        avatar
-      }
-      date
-      text
-      image
-    }
-  }
-`;
 
 class Feed extends React.Component {
   render() {
@@ -29,21 +11,28 @@ class Feed extends React.Component {
       <div className={styles.container}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <CreatePost refetch={[{ query: FEED }]} />
+            <CreatePost refetch={this.props.refetch} />
           </Grid>
           {this.props.posts.map((post) => {
             return (
               <Grid key={post.id} item xs={12}>
-                <Post post={post} refetch={[{ query: FEED }]} />
+                <Post post={post} refetch={this.props.refetch} />
               </Grid>
             );
           })}
+          {this.props.hasNext ? (
+            <Grid item xs={12}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button onClick={() => this.props.more(this.props.cursor)}>
+                  More
+                </Button>
+              </div>
+            </Grid>
+          ) : null}
         </Grid>
       </div>
     );
   }
 }
 
-export default graphql(FEED, {
-  props: ({ data }) => ({ posts: data.posts }),
-})(Feed);
+export default Feed;
