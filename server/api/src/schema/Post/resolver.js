@@ -68,6 +68,22 @@ module.exports = {
         });
       }
     },
+    commentPost(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      const date = new Date().toISOString();
+      return context.prisma.updatePost({
+        where: { id: args.postId },
+        data: {
+          comments: {
+            create: {
+              author: { connect: { id: id } },
+              date: date,
+              text: args.text,
+            },
+          },
+        },
+      });
+    },
   },
   Post: {
     comments(root, args, context) {

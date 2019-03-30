@@ -8,23 +8,6 @@ module.exports = {
     },
   },
   Mutation: {
-    async createComment(root, args, context) {
-      const { postId, eventId, userId, text } = args.input;
-
-      const date = new Date().toISOString();
-      let input = {
-        author: {
-          connect: { id: userId },
-        },
-        date,
-        text,
-      };
-
-      if (postId) input.post = { connect: { id: postId } };
-      else if (eventId) input.event = { connect: { id: eventId } };
-
-      return context.prisma.createComment(input);
-    },
     likeComment(root, args, context) {
       return context.prisma.updateComment({
         where: { id: args.commentId },
@@ -50,9 +33,6 @@ module.exports = {
     },
   },
   Comment: {
-    post(root, args, context) {
-      return context.prisma.comment({ id: root.id }).post();
-    },
     author(root, args, context) {
       return context.prisma.comment({ id: root.id }).author();
     },

@@ -4,6 +4,4 @@ type Comment {
   date: DateTime!
   author: User! @relation(name: "CommentAuthor")
   likedBy: [User!]! @relation(name: "LikedComments")
-  post: Post @relation(name: "PostComments")
-  event: Event @relation(name: "EventComments")
 }

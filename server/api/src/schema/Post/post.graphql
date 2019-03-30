@@ -23,5 +23,6 @@ extend type Mutation {
   createPost(input: PostInput!): Post!
   deletePost(postId: ID!): Post!
   likePost(userId: ID!, postId: ID!): Post!
-  unlikePost(userId: ID, postId: ID!): Post!
+  unlikePost(userId: ID!, postId: ID!): Post!
+  commentPost(postId: ID!, text: String! ): Post!
 }

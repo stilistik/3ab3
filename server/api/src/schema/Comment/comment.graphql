@@ -4,14 +4,6 @@ type Comment @isAuthenticated {
   author: User!
   likedBy: [User!]!
   date: DateTime!
-  post: Post!
-}
-
-input CommentInput {
-  postId: ID
-  eventId: ID
-  userId: ID!
-  text: String!
 }
 
 extend type Query {
@@ -20,7 +12,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createComment(input: CommentInput!): Comment!
   likeComment(userId: ID!, commentId: ID!): Comment!
   unlikeComment(userId: ID!, commentId: ID!): Comment!
   deleteComment(commentId: ID!): Comment!

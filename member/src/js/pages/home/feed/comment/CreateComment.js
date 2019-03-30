@@ -7,8 +7,8 @@ import CreateCommentForm from './CreateCommentForm';
 import { POST_COMMENTS } from './CommentList';
 
 const MUTATION = gql`
-  mutation($input: CommentInput!) {
-    createComment(input: $input) {
+  mutation($postId: ID!, $text: String!) {
+    commentPost(postId: $postId, text: $text) {
       id
     }
   }
@@ -26,9 +26,9 @@ class CreateComment extends React.Component {
   onSubmit = async (values) => {
     try {
       await this.createComment({
-        variables: { input: values },
+        variables: values,
         refetchQueries: () => [
-          { query: POST_COMMENTS, variables: { postId: this.props.post.id } },
+          { query: POST_COMMENTS, variables: { postId: values.postId } },
         ],
       });
     } catch (error) {
