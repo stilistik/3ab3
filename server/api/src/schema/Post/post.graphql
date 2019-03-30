@@ -8,35 +8,15 @@ type Post implements Node @isAuthenticated {
   date: DateTime!
 }
 
-interface Node {
-  id: ID
-}
-
-interface Edge {
-  cursor: String!
-  node: Node
-}
-
-type PageInfo {
-  hasNextPage: Boolean!
-}
-
-interface Connection {
-  pageInfo: PageInfo!
-  edges: [Edge]
-}
-
 type PostEdge implements Edge {
   cursor: String!
   node: Post
 }
 
-# Patient page with pagination infomation and patient edges
 type PostsConnection implements Connection {
   pageInfo: PageInfo!
   edges: [PostEdge]
 }
-
 
 input PostInput {
   userId: ID!

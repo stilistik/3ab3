@@ -8,6 +8,7 @@ const { GraphQLUpload } = require('apollo-server-express');
 
 const { makeExecutableSchema } = require('apollo-server-express');
 
+const Pagination = require('./Pagination');
 const User = require('./User');
 const Client = require('./Client');
 const Product = require('./Product');
@@ -61,6 +62,7 @@ module.exports = makeExecutableSchema({
     Scalar,
     Query,
     Mutation,
+    Pagination.typeDef,
     User.typeDef,
     Client.typeDef,
     Product.typeDef,
@@ -94,5 +96,8 @@ module.exports = makeExecutableSchema({
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,
     hasRole: HasRoleDirective,
+  },
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
   },
 });
