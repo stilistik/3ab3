@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { graphql, Mutation } from 'react-apollo';
 import { Button } from '@material-ui/core';
 import { Icon } from 'Components';
+import { EVENT_STATS } from './EventStats';
 
 import styles from './LikeEvent.css';
 
@@ -40,7 +41,10 @@ class LikeEvent extends React.Component {
         eventId: this.props.event.id,
         userId: this.props.user.id,
       },
-      refetchQueries: () => [{ query: USER }],
+      refetchQueries: () => [
+        { query: USER },
+        { query: EVENT_STATS, variables: { eventId: this.props.event.id } },
+      ],
     });
   };
 
