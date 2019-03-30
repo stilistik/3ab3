@@ -8,7 +8,6 @@ import {
   Divider,
 } from '@material-ui/core';
 import { Icon, UserAvatar } from 'Components';
-import CommentPost from './CommentPost';
 import LikePost from './LikePost';
 import DeletePost from './DeletePost';
 import PostStats from './PostStats';
@@ -86,12 +85,7 @@ class Post extends React.Component {
             <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
           </Button>
         </CardActions>
-        {this.state.show ? (
-          <div>
-            <CommentPost post={post} />
-            <PostComments postId={post.id} />
-          </div>
-        ) : null}
+        {this.state.show ? <PostComments postId={post.id} /> : null}
       </Card>
     );
   }

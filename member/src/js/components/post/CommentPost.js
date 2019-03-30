@@ -30,9 +30,7 @@ class CommentPost extends React.Component {
           postId: values.id,
           text: values.text,
         },
-        refetchQueries: () => [
-          { query: POST_COMMENTS, variables: { postId: values.id } },
-        ],
+        refetchQueries: () => this.props.refetch,
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });
@@ -49,7 +47,7 @@ class CommentPost extends React.Component {
             <CreateCommentForm
               onSubmit={this.onSubmit}
               user={this.props.user}
-              id={this.props.post.id}
+              id={this.props.postId}
             />
           );
         }}

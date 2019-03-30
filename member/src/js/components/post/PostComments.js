@@ -2,6 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { CommentList } from 'Components';
+import CommentPost from './CommentPost';
 
 export const POST_COMMENTS = gql`
   query($postId: ID!, $first: Int, $after: String) {
@@ -68,18 +69,23 @@ class PostComments extends React.Component {
             ? data.postComments.edges.slice(-1).pop().cursor
             : null;
           return (
-            <CommentList
-              comments={comments}
-              more={this.more}
-              hasNext={data.postComments.pageInfo.hasNextPage}
-              cursor={cursor}
-              refetch={[
-                {
-                  query: POST_COMMENTS,
-                  variables: { first: COUNT, postId: this.props.postId },
-                },
-              ]}
-            />
+            <div>
+              <CommentPost
+                postId={this.props.postId}
+                refetch={[
+                  {
+                    query: POST_COMMENTS,
+                    variables: { first: COUNT, postId: this.props.postId },
+                  },
+                ]}
+              />
+              <CommentList
+                comments={comments}
+                more={this.more}
+                hasNext={data.postComments.pageInfo.hasNextPage}
+                cursor={cursor}
+              />
+            </div>
           );
         }}
       </Query>
