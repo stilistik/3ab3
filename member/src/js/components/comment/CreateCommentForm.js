@@ -37,7 +37,7 @@ class CreateCommentForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit({
-      postId: this.props.post.id,
+      id: this.props.id,
       text: this.state.value,
     });
     this.setState({ value: '' });

@@ -7,11 +7,12 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
-import { Icon, UserAvatar, CommentList } from 'Components';
+import { Icon, UserAvatar } from 'Components';
 import CommentPost from './CommentPost';
 import LikePost from './LikePost';
 import DeletePost from './DeletePost';
 import PostStats from './PostStats';
+import PostComments from './PostComments';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -88,7 +89,7 @@ class Post extends React.Component {
         {this.state.show ? (
           <div>
             <CommentPost post={post} />
-            <CommentList postId={post.id} />
+            <PostComments postId={post.id} />
           </div>
         ) : null}
       </Card>

@@ -3,12 +3,11 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
-import { CreateCommentForm } from 'Components';
-import { POST_COMMENTS } from './PostComments';
+import { CreateCommentForm, POST_COMMENTS } from 'Components';
 
 const MUTATION = gql`
-  mutation($postId: ID!, $text: String!) {
-    commentPost(postId: $postId, text: $text) {
+  mutation($eventId: ID!, $text: String!) {
+    commentEvent(eventId: $eventId, text: $text) {
       id
     }
   }
@@ -22,16 +21,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class CommentPost extends React.Component {
+class CommentEvent extends React.Component {
   onSubmit = async (values) => {
     try {
       await this.createComment({
         variables: {
-          postId: values.id,
+          eventId: values.id,
           text: values.text,
         },
         refetchQueries: () => [
-          { query: POST_COMMENTS, variables: { postId: values.id } },
+          { query: POST_COMMENTS, variables: { eventId: values.id } },
         ],
       });
     } catch (error) {
@@ -45,13 +44,7 @@ class CommentPost extends React.Component {
       <Mutation mutation={MUTATION}>
         {(createComment) => {
           this.createComment = createComment;
-          return (
-            <CreateCommentForm
-              onSubmit={this.onSubmit}
-              user={this.props.user}
-              id={this.props.post.id}
-            />
-          );
+          return <CreateCommentForm onSubmit={this.onSubmit} {...this.props} />;
         }}
       </Mutation>
     );
@@ -61,4 +54,4 @@ class CommentPost extends React.Component {
 export default connect(
   null,
   mapDispatchToProps
-)(CommentPost);
+)(CommentEvent);

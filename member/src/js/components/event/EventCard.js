@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core';
 import { Icon, ImageDiv } from 'Components';
 import LikeEvent from './LikeEvent';
+import CommentEvent from './CommentEvent';
+import EventComments from './EventComments';
 
 import styles from './EventCard.css';
 
@@ -47,6 +49,17 @@ const EventHeader = ({ title, date }) => {
 };
 
 export class EventCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
+  }
+
+  onComment = () => {
+    this.setState({ show: true });
+  };
+
   render() {
     const { event } = this.props;
     return (
@@ -74,6 +87,12 @@ export class EventCard extends React.Component {
             <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
           </Button>
         </CardActions>
+        {this.state.show ? (
+          <div>
+            <CommentEvent event={event} />
+            <EventComments eventId={event.id} />
+          </div>
+        ) : null}
       </Card>
     );
   }
