@@ -4,12 +4,12 @@ import { LikeCounter, CommentCounter } from 'Components';
 
 import styles from './SocialStats.css';
 
-export const SocialStats = ({ likedBy, comments, onComment }) => {
+export const SocialStats = ({ likedBy, count, onComment }) => {
   return (
     <div className={styles.container}>
       <div className={styles.bar}>
         <LikeCounter likedBy={likedBy} />
-        <CommentCounter comments={comments} onComment={onComment} />
+        <CommentCounter count={count} onComment={onComment} />
       </div>
       <Divider />
     </div>

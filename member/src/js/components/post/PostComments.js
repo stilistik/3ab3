@@ -1,35 +1,90 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { CommentList } from 'Components';
 
 export const POST_COMMENTS = gql`
-  query($postId: ID!) {
-    post(postId: $postId) {
-      comments {
-        id
-        author {
+  query($postId: ID!, $first: Int, $after: String) {
+    postComments(postId: $postId, first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
           id
-          name
-          avatar
+          author {
+            id
+            name
+            avatar
+          }
+          text
+          date
         }
-        text
-        date
       }
     }
   }
 `;
 
+const COUNT = 5;
+
 class PostComments extends React.Component {
+  more = (cursor) => {
+    this.fetchMore({
+      variables: {
+        postId: this.props.postId,
+        first: COUNT,
+        after: cursor,
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        const newEdges = fetchMoreResult.postComments.edges;
+        const pageInfo = fetchMoreResult.postComments.pageInfo;
+
+        return newEdges.length
+          ? {
+              postComments: {
+                __typename: previousResult.postComments.__typename,
+                edges: [...previousResult.postComments.edges, ...newEdges],
+                pageInfo,
+              },
+            }
+          : previousResult;
+      },
+    });
+  };
+
   render() {
-    if (!this.props.post) return null;
-    const { post } = this.props;
-    return <CommentList comments={post.comments} />;
+    return (
+      <Query
+        query={POST_COMMENTS}
+        variables={{ postId: this.props.postId, first: COUNT }}
+      >
+        {({ data, loading, error, fetchMore }) => {
+          if (loading) return null;
+          if (error) return null;
+          this.fetchMore = fetchMore;
+          const comments = data.postComments.edges.map((edge) => edge.node);
+          const cursor = data.postComments.edges.length
+            ? data.postComments.edges.slice(-1).pop().cursor
+            : null;
+          return (
+            <CommentList
+              comments={comments}
+              more={this.more}
+              hasNext={data.postComments.pageInfo.hasNextPage}
+              cursor={cursor}
+              refetch={[
+                {
+                  query: POST_COMMENTS,
+                  variables: { first: COUNT, postId: this.props.postId },
+                },
+              ]}
+            />
+          );
+        }}
+      </Query>
+    );
   }
 }
 
-export default graphql(POST_COMMENTS, {
-  skip: (props) => !props.postId,
-  options: (props) => ({ variables: { postId: props.postId } }),
-  props: ({ data }) => ({ post: data.post }),
-})(PostComments);
+export default PostComments;
