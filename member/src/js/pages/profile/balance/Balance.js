@@ -1,11 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { Grid, Card, CardContent } from '@material-ui/core';
-import BalanceDisplay from './BalanceDisplay';
-import AccountInfo from './AccountInfo';
+import { Grid } from '@material-ui/core';
 import BalanceChart from './BalanceChart';
-import Chart from './Chart';
 
 import styles from './Balance.css';
 
@@ -51,7 +48,7 @@ class Balance extends React.Component {
       <div className={styles.container}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Chart data={data} color={color} />
+            <BalanceChart data={data} color={color} />
           </Grid>
         </Grid>
       </div>
