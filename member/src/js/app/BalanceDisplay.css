@@ -1,0 +1,17 @@
+.btn {
+  font-weight: bold;
+  padding: 0px 10px !important;
+  height: 30px !important;
+}
+
+.low {
+  color: #43a047;
+}
+
+.medium {
+  color: #ffa000;
+}
+
+.high {
+  color: #d32f2f;
+}

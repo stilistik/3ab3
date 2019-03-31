@@ -80,7 +80,7 @@ class ProfileMenu extends React.Component {
                 placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
-            <Paper style={{ background: '#444' }}>
+            <Paper className={styles.paper}>
               <ClickAwayListener onClickAway={this.handleClose}>
                 <MenuList>
                   }}

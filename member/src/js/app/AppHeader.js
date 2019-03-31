@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
+import BalanceDisplay from './BalanceDisplay';
 import { DefaultGrid } from 'Components';
 
 import styles from './AppHeader.css';
@@ -38,6 +39,7 @@ class AppHeader extends React.Component {
             >
               3ab3
             </Typography>
+            <BalanceDisplay />
             <ProfileMenu />
           </Toolbar>
         </DefaultGrid>
