@@ -7,6 +7,11 @@ type Product @isAuthenticated {
   deleted: Boolean!
 }
 
+type ProductConsumption {
+  count: Int!
+  product: Product!
+}
+
 input ProductInput {
   name: String!
   price: Float!
@@ -19,6 +24,8 @@ extend type Query {
   products: [Product!]!
   currentProducts: [Product!]!
   product(productId: ID!): Product!
+  consumption(userId: ID!, productId: ID!): ProductConsumption!
+  consumptions(userId: ID!): [ProductConsumption]!
 }
 
 extend type Mutation {

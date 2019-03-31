@@ -12,6 +12,40 @@ module.exports = {
     product(root, args, context) {
       return context.prisma.product({ id: args.productId });
     },
+    async consumption(root, args, context) {
+      const items = await context.prisma.items({
+        where: {
+          user: { id: args.userId },
+          product: { id: args.productId },
+        },
+      });
+      const product = await context.prisma.product({ id: args.productId });
+      const count = items.reduce((acc, it) => {
+        return acc + it.amount;
+      }, 0);
+      return {
+        count,
+        product,
+      };
+    },
+    async consumptions(root, args, context) {
+      const products = await context.prisma.products();
+      return products.map(async (product) => {
+        const items = await context.prisma.items({
+          where: {
+            user: { id: args.userId },
+            product: { id: product.id },
+          },
+        });
+        const count = items.reduce((acc, it) => {
+          return acc + it.amount;
+        }, 0);
+        return {
+          count,
+          product,
+        };
+      });
+    },
   },
   Mutation: {
     async createProduct(root, args, context) {
