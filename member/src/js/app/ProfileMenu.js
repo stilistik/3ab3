@@ -86,9 +86,15 @@ class ProfileMenu extends React.Component {
                   }}
                   <MenuItem
                     style={{ color: 'white' }}
+                    onClick={() => this.handleClick('profile')}
+                  >
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    style={{ color: 'white' }}
                     onClick={() => this.handleClick('account')}
                   >
-                    My account
+                    Account
                   </MenuItem>
                   <MenuItem
                     style={{ color: 'white' }}
