@@ -24,8 +24,8 @@ extend type Query {
   products: [Product!]!
   currentProducts: [Product!]!
   product(productId: ID!): Product!
-  consumption(userId: ID!, productId: ID!): ProductConsumption!
-  consumptions(userId: ID!): [ProductConsumption]!
+  consumption(productId: ID!): ProductConsumption!
+  consumptions: [ProductConsumption]!
 }
 
 extend type Mutation {

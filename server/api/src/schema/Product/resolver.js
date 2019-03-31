@@ -1,4 +1,5 @@
 const { uploadFile } = require('../../helper/file.helper.js');
+const verifyAndDecodeToken = require('../../auth/verify');
 
 module.exports = {
   Query: {
@@ -13,9 +14,10 @@ module.exports = {
       return context.prisma.product({ id: args.productId });
     },
     async consumption(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
       const items = await context.prisma.items({
         where: {
-          user: { id: args.userId },
+          user: { id: id },
           product: { id: args.productId },
         },
       });
@@ -29,11 +31,12 @@ module.exports = {
       };
     },
     async consumptions(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
       const products = await context.prisma.products();
       return products.map(async (product) => {
         const items = await context.prisma.items({
           where: {
-            user: { id: args.userId },
+            user: { id: id },
             product: { id: product.id },
           },
         });
