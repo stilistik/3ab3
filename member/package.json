@@ -64,6 +64,7 @@
     "apollo-link-retry": "^2.2.10",
     "apollo-upload-client": "^8.1.0",
     "babel-plugin-react-css-modules": "^5.0.0",
+    "bizcharts": "^3.5.2",
     "d3": "^5.9.2",
     "date-fns": "^2.0.0-alpha.27",
     "graphql": "^0.13.0",

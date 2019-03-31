@@ -5,6 +5,7 @@ import { Grid, Card, CardContent } from '@material-ui/core';
 import BalanceDisplay from './BalanceDisplay';
 import AccountInfo from './AccountInfo';
 import BalanceChart from './BalanceChart';
+import Chart from './Chart';
 
 import styles from './Balance.css';
 
@@ -25,20 +26,32 @@ const BALANCE = gql`
 `;
 
 class Balance extends React.Component {
+  createChartData = (transactions) => {
+    const data = transactions.map((transaction) => {
+      const { date, ...rest } = transaction;
+      return {
+        date: new Date(date),
+        ...rest,
+      };
+    });
+    return data.reverse();
+  };
+
   render() {
     const { user } = this.props;
     if (!user) return null;
+
+    let color;
+    if (user.balance < 30) color = '#5ba05e';
+    else if (user.balance >= 30 && user.balance <= 60) color = '#ffa000';
+    else color = '#cc4949';
+
+    const data = this.createChartData(user.transactions);
     return (
       <div className={styles.container}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <BalanceDisplay user={user} />
-                <AccountInfo />
-                <BalanceChart user={user} />
-              </CardContent>
-            </Card>
+            <Chart data={data} color={color} />
           </Grid>
         </Grid>
       </div>

@@ -10,6 +10,8 @@ const BalanceDisplay = ({ user }) => {
   else if (user.balance >= 30 && user.balance <= 60) cls = 'medium';
   else cls = 'high';
 
+  const balance = user.balance.toFixed(2);
+
   return (
     <div className={styles.balance}>
       <UserAvatar user={user} className={styles.avatar} />
@@ -17,7 +19,7 @@ const BalanceDisplay = ({ user }) => {
         Balance:
       </Typography>
       <Typography className={styles[cls]} variant="h6">
-        {user.balance} CHF
+        {balance} CHF
       </Typography>
     </div>
   );
