@@ -1,10 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { Grid } from '@material-ui/core';
 import ProductsChart from './ProductsChart';
-
-import styles from './Products.css';
 
 const PRODUCTS = gql`
   query {
@@ -32,15 +29,7 @@ class Products extends React.Component {
     const { consumptions } = this.props;
     if (!consumptions) return null;
     const data = this.createChartData(consumptions);
-    return (
-      <div className={styles.container}>
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <ProductsChart data={data} />
-          </Grid>
-        </Grid>
-      </div>
-    );
+    return <ProductsChart data={data} />;
   }
 }
 

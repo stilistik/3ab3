@@ -32,6 +32,11 @@ class AppMenu extends React.Component {
             icon="payment"
             onClick={() => this.onClick('history')}
           />
+          <MenuItem
+            text={<span className={styles.item}>Events</span>}
+            icon="event"
+            onClick={() => this.onClick('events')}
+          />
         </List>
         <Divider className={styles.divider} />
         <List>
@@ -39,11 +44,6 @@ class AppMenu extends React.Component {
             text={<span className={styles.item}>Dashboard</span>}
             icon="dashboard"
             onClick={() => this.onClick('dashboard')}
-          />
-          <MenuItem
-            text={<span className={styles.item}>Events</span>}
-            icon="event"
-            onClick={() => this.onClick('events')}
           />
           <MenuItem
             text={<span className={styles.item}>Members</span>}

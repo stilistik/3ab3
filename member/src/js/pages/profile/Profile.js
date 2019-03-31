@@ -3,19 +3,27 @@ import { DefaultGrid } from 'Components';
 import { Grid } from '@material-ui/core';
 import Balance from './balance/Balance';
 import Products from './products/Products';
+import AccountInfo from './info/AccountInfo';
+
+import styles from './Profile.css';
 
 class Profile extends React.Component {
   render() {
     return (
       <DefaultGrid>
-        <Grid container>
-          <Grid item xs={12} sm={6}>
-            <Balance />
+        <div className={styles.container}>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <AccountInfo />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Balance />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Products />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Products />
-          </Grid>
-        </Grid>
+        </div>
       </DefaultGrid>
     );
   }
