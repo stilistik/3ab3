@@ -1,8 +1,8 @@
-.container {
-  width: 400px;
+.header {
+  padding: 20px 20px 0px 20px;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
+.typo {
+  color: #555;
+  font-weight: lighter;
 }

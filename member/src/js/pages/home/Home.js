@@ -1,11 +1,18 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { DefaultGrid } from 'Components';
-import { Grid, Hidden, Tabs, Tab } from '@material-ui/core';
+import {
+  Grid,
+  Hidden,
+  Tabs,
+  Tab,
+  Typography,
+  Divider,
+} from '@material-ui/core';
 import Feed from './feed/FeedManager';
 import Events from './events/Events';
 
-// import styles from './Home.css';
+import styles from './Home.css';
 
 class MobileHome extends React.Component {
   constructor(props) {
@@ -33,12 +40,12 @@ class MobileHome extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <Grid container>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Feed />
             </Grid>
           </Grid>
           <Grid container>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Events />
             </Grid>
           </Grid>
@@ -48,6 +55,31 @@ class MobileHome extends React.Component {
   }
 }
 
+const DesktopHome = () => {
+  return (
+    <Grid container>
+      <Grid item sm={6}>
+        <div className={styles.header}>
+          <Typography variant="h5" className={styles.typo}>
+            FEED
+          </Typography>
+          <Divider />
+        </div>
+        <Feed />
+      </Grid>
+      <Grid item sm={6}>
+        <div className={styles.header}>
+          <Typography variant="h5" className={styles.typo}>
+            EVENTS
+          </Typography>
+          <Divider />
+        </div>
+        <Events />
+      </Grid>
+    </Grid>
+  );
+};
+
 class Home extends React.Component {
   render() {
     return (
@@ -56,14 +88,7 @@ class Home extends React.Component {
           <MobileHome />
         </Hidden>
         <Hidden xsDown>
-          <Grid container>
-            <Grid sm={6}>
-              <Feed />
-            </Grid>
-            <Grid sm={6}>
-              <Events />
-            </Grid>
-          </Grid>
+          <DesktopHome />
         </Hidden>
       </DefaultGrid>
     );
