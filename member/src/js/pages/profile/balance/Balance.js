@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import BalanceChart from './BalanceChart';
 
-const BALANCE = gql`
+export const BALANCE = gql`
   query {
     currentUser {
       id

@@ -1,3 +1,15 @@
 .accountinfo {
   padding: 20px;
 }
+
+.accounts {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #eee;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.typo {
+  font-weight: bold;
+}

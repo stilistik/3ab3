@@ -6,7 +6,7 @@ import { graphql } from 'react-apollo';
 
 import styles from './BalanceDisplay.css';
 
-const BALANCE = gql`
+export const BALANCE_DISPLAY = gql`
   query {
     currentUser {
       id
@@ -39,6 +39,6 @@ const BalanceDisplay = ({ user }) => {
   );
 };
 
-export default graphql(BALANCE, {
+export default graphql(BALANCE_DISPLAY, {
   props: ({ data }) => ({ user: data.currentUser }),
 })(BalanceDisplay);

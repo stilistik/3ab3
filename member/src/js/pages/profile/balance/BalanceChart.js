@@ -9,9 +9,6 @@ const HEIGHT = 300;
 class BalanceChart extends React.Component {
   render() {
     const scale = {
-      balance: {
-        min: 0,
-      },
       date: {
         type: 'time',
         tickCount: 8,
