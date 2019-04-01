@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { CommentList } from 'Components';
 import CommentPost from './CommentPost';
+import { POST_STATS } from './PostStats';
 
 export const POST_COMMENTS = gql`
   query($postId: ID!, $first: Int, $after: String) {
@@ -76,6 +77,10 @@ class PostComments extends React.Component {
                   {
                     query: POST_COMMENTS,
                     variables: { first: COUNT, postId: this.props.postId },
+                  },
+                  {
+                    query: POST_STATS,
+                    variables: { postId: this.props.postId },
                   },
                 ]}
               />

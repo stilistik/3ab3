@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { CommentList } from 'Components';
 import CommentEvent from './CommentEvent';
+import { EVENT_STATS } from './EventStats';
 
 export const EVENT_COMMENTS = gql`
   query($eventId: ID!, $first: Int, $after: String) {
@@ -76,6 +77,10 @@ class EventComments extends React.Component {
                   {
                     query: EVENT_COMMENTS,
                     variables: { first: COUNT, eventId: this.props.eventId },
+                  },
+                  {
+                    query: EVENT_STATS,
+                    variables: { eventId: this.props.eventId },
                   },
                 ]}
               />
