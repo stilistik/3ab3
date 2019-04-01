@@ -13,17 +13,6 @@ const USERS = gql`
 `;
 
 export class UserSelector extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: null,
-    };
-  }
-
-  onChange = (value) => {
-    this.setState({ value });
-  };
-
   render() {
     return (
       <Query query={USERS}>
@@ -39,8 +28,8 @@ export class UserSelector extends React.Component {
           return (
             <Select
               options={options}
-              value={this.state.value}
-              onChange={this.onChange}
+              value={this.props.value}
+              onChange={this.props.onChange}
               placeholder="Select a user..."
               isMulti={this.props.isMulti}
             />
