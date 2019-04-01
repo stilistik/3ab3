@@ -7,7 +7,7 @@ type Event {
   comments: [Comment!]!
   likedBy: [User!]!
   owner: User!
-  committee: [User!]!
+  committee: Committee!
 }
 
 input EventInput {

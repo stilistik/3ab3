@@ -1,0 +1,6 @@
+type Committee {
+  id: ID! @unique
+  creator: User! @relation(name: "CommitteeCreator")
+  members: [User!]! @relation(name: "CommitteeMember")
+  event: Event! @relation(name: "EventCommittee")
+}

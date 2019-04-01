@@ -33,6 +33,11 @@ module.exports = {
         return context.prisma.createEvent({
           image: file.uri,
           owner: { connect: { id: id } },
+          committee: {
+            create: {
+              creator: { connect: { id: id } },
+            },
+          },
           ...rest,
         });
       } else {
@@ -94,6 +99,9 @@ module.exports = {
     },
     likedBy(root, args, context) {
       return context.prisma.event({ id: root.id }).likedBy();
+    },
+    committee(root, args, context) {
+      return context.prisma.event({ id: root.id }).committee();
     },
   },
 };

@@ -53,6 +53,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Committee",
+    embedded: false
+  },
+  {
     name: "UserRole",
     embedded: false
   },

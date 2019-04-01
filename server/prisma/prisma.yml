@@ -12,6 +12,7 @@ datamodel:
   - models/File.prisma
   - models/Post.prisma
   - models/Comment.prisma
+  - models/Committee.prisma
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/

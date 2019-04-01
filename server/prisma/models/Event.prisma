@@ -7,5 +7,5 @@ type Event {
   comments: [Comment!]! @relation(name: "EventComments", onDelete: CASCADE)
   likedBy: [User!]! @relation(name: "LikedEvents")
   owner: User! @relation(name: "EventOwner")
-  committee: [User!]! @relation(name: "EventCommittee")
+  committee: Committee! @relation(name: "EventCommittee", onDelete: CASCADE)
 }

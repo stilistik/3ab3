@@ -11,6 +11,10 @@ type AggregateComment {
   count: Int!
 }
 
+type AggregateCommittee {
+  count: Int!
+}
+
 type AggregateEvent {
   count: Int!
 }
@@ -568,6 +572,123 @@ input CommentWhereUniqueInput {
   id: ID
 }
 
+type Committee {
+  id: ID!
+  creator: User!
+  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  event: Event!
+}
+
+type CommitteeConnection {
+  pageInfo: PageInfo!
+  edges: [CommitteeEdge]!
+  aggregate: AggregateCommittee!
+}
+
+input CommitteeCreateInput {
+  creator: UserCreateOneInput!
+  members: UserCreateManyInput
+  event: EventCreateOneWithoutCommitteeInput!
+}
+
+input CommitteeCreateOneWithoutEventInput {
+  create: CommitteeCreateWithoutEventInput
+  connect: CommitteeWhereUniqueInput
+}
+
+input CommitteeCreateWithoutEventInput {
+  creator: UserCreateOneInput!
+  members: UserCreateManyInput
+}
+
+type CommitteeEdge {
+  node: Committee!
+  cursor: String!
+}
+
+enum CommitteeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CommitteePreviousValues {
+  id: ID!
+}
+
+type CommitteeSubscriptionPayload {
+  mutation: MutationType!
+  node: Committee
+  updatedFields: [String!]
+  previousValues: CommitteePreviousValues
+}
+
+input CommitteeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CommitteeWhereInput
+  AND: [CommitteeSubscriptionWhereInput!]
+  OR: [CommitteeSubscriptionWhereInput!]
+  NOT: [CommitteeSubscriptionWhereInput!]
+}
+
+input CommitteeUpdateInput {
+  creator: UserUpdateOneRequiredInput
+  members: UserUpdateManyInput
+  event: EventUpdateOneRequiredWithoutCommitteeInput
+}
+
+input CommitteeUpdateOneRequiredWithoutEventInput {
+  create: CommitteeCreateWithoutEventInput
+  update: CommitteeUpdateWithoutEventDataInput
+  upsert: CommitteeUpsertWithoutEventInput
+  connect: CommitteeWhereUniqueInput
+}
+
+input CommitteeUpdateWithoutEventDataInput {
+  creator: UserUpdateOneRequiredInput
+  members: UserUpdateManyInput
+}
+
+input CommitteeUpsertWithoutEventInput {
+  update: CommitteeUpdateWithoutEventDataInput!
+  create: CommitteeCreateWithoutEventInput!
+}
+
+input CommitteeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  creator: UserWhereInput
+  members_every: UserWhereInput
+  members_some: UserWhereInput
+  members_none: UserWhereInput
+  event: EventWhereInput
+  AND: [CommitteeWhereInput!]
+  OR: [CommitteeWhereInput!]
+  NOT: [CommitteeWhereInput!]
+}
+
+input CommitteeWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type Event {
@@ -579,7 +700,7 @@ type Event {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
-  committee(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  committee: Committee!
 }
 
 type EventConnection {
@@ -596,12 +717,7 @@ input EventCreateInput {
   comments: CommentCreateManyWithoutEventInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
-  committee: UserCreateManyWithoutEventsInput
-}
-
-input EventCreateManyWithoutCommitteeInput {
-  create: [EventCreateWithoutCommitteeInput!]
-  connect: [EventWhereUniqueInput!]
+  committee: CommitteeCreateOneWithoutEventInput!
 }
 
 input EventCreateManyWithoutLikedByInput {
@@ -614,6 +730,11 @@ input EventCreateOneWithoutCommentsInput {
   connect: EventWhereUniqueInput
 }
 
+input EventCreateOneWithoutCommitteeInput {
+  create: EventCreateWithoutCommitteeInput
+  connect: EventWhereUniqueInput
+}
+
 input EventCreateWithoutCommentsInput {
   title: String!
   description: String!
@@ -621,7 +742,7 @@ input EventCreateWithoutCommentsInput {
   image: String!
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
-  committee: UserCreateManyWithoutEventsInput
+  committee: CommitteeCreateOneWithoutEventInput!
 }
 
 input EventCreateWithoutCommitteeInput {
@@ -641,7 +762,7 @@ input EventCreateWithoutLikedByInput {
   image: String!
   comments: CommentCreateManyWithoutEventInput
   owner: UserCreateOneInput!
-  committee: UserCreateManyWithoutEventsInput
+  committee: CommitteeCreateOneWithoutEventInput!
 }
 
 type EventEdge {
@@ -770,7 +891,7 @@ input EventUpdateInput {
   comments: CommentUpdateManyWithoutEventInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
-  committee: UserUpdateManyWithoutEventsInput
+  committee: CommitteeUpdateOneRequiredWithoutEventInput
 }
 
 input EventUpdateManyDataInput {
@@ -785,18 +906,6 @@ input EventUpdateManyMutationInput {
   description: String
   date: DateTime
   image: String
-}
-
-input EventUpdateManyWithoutCommitteeInput {
-  create: [EventCreateWithoutCommitteeInput!]
-  delete: [EventWhereUniqueInput!]
-  connect: [EventWhereUniqueInput!]
-  set: [EventWhereUniqueInput!]
-  disconnect: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutCommitteeInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutCommitteeInput!]
-  deleteMany: [EventScalarWhereInput!]
-  updateMany: [EventUpdateManyWithWhereNestedInput!]
 }
 
 input EventUpdateManyWithoutLikedByInput {
@@ -816,6 +925,13 @@ input EventUpdateManyWithWhereNestedInput {
   data: EventUpdateManyDataInput!
 }
 
+input EventUpdateOneRequiredWithoutCommitteeInput {
+  create: EventCreateWithoutCommitteeInput
+  update: EventUpdateWithoutCommitteeDataInput
+  upsert: EventUpsertWithoutCommitteeInput
+  connect: EventWhereUniqueInput
+}
+
 input EventUpdateOneWithoutCommentsInput {
   create: EventCreateWithoutCommentsInput
   update: EventUpdateWithoutCommentsDataInput
@@ -832,7 +948,7 @@ input EventUpdateWithoutCommentsDataInput {
   image: String
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
-  committee: UserUpdateManyWithoutEventsInput
+  committee: CommitteeUpdateOneRequiredWithoutEventInput
 }
 
 input EventUpdateWithoutCommitteeDataInput {
@@ -852,12 +968,7 @@ input EventUpdateWithoutLikedByDataInput {
   image: String
   comments: CommentUpdateManyWithoutEventInput
   owner: UserUpdateOneRequiredInput
-  committee: UserUpdateManyWithoutEventsInput
-}
-
-input EventUpdateWithWhereUniqueWithoutCommitteeInput {
-  where: EventWhereUniqueInput!
-  data: EventUpdateWithoutCommitteeDataInput!
+  committee: CommitteeUpdateOneRequiredWithoutEventInput
 }
 
 input EventUpdateWithWhereUniqueWithoutLikedByInput {
@@ -870,8 +981,7 @@ input EventUpsertWithoutCommentsInput {
   create: EventCreateWithoutCommentsInput!
 }
 
-input EventUpsertWithWhereUniqueWithoutCommitteeInput {
-  where: EventWhereUniqueInput!
+input EventUpsertWithoutCommitteeInput {
   update: EventUpdateWithoutCommitteeDataInput!
   create: EventCreateWithoutCommitteeInput!
 }
@@ -954,9 +1064,7 @@ input EventWhereInput {
   likedBy_some: UserWhereInput
   likedBy_none: UserWhereInput
   owner: UserWhereInput
-  committee_every: UserWhereInput
-  committee_some: UserWhereInput
-  committee_none: UserWhereInput
+  committee: CommitteeWhereInput
   AND: [EventWhereInput!]
   OR: [EventWhereInput!]
   NOT: [EventWhereInput!]
@@ -1458,6 +1566,11 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createCommittee(data: CommitteeCreateInput!): Committee!
+  updateCommittee(data: CommitteeUpdateInput!, where: CommitteeWhereUniqueInput!): Committee
+  upsertCommittee(where: CommitteeWhereUniqueInput!, create: CommitteeCreateInput!, update: CommitteeUpdateInput!): Committee!
+  deleteCommittee(where: CommitteeWhereUniqueInput!): Committee
+  deleteManyCommittees(where: CommitteeWhereInput): BatchPayload!
   createEvent(data: EventCreateInput!): Event!
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
@@ -2731,6 +2844,9 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  committee(where: CommitteeWhereUniqueInput!): Committee
+  committees(where: CommitteeWhereInput, orderBy: CommitteeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Committee]!
+  committeesConnection(where: CommitteeWhereInput, orderBy: CommitteeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommitteeConnection!
   event(where: EventWhereUniqueInput!): Event
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
@@ -2767,6 +2883,7 @@ type Query {
 type Subscription {
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  committee(where: CommitteeSubscriptionWhereInput): CommitteeSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
@@ -3094,7 +3211,6 @@ type User {
   likedEvents(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   likedComments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
 }
 
 type UserConnection {
@@ -3119,11 +3235,10 @@ input UserCreateInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
-input UserCreateManyWithoutEventsInput {
-  create: [UserCreateWithoutEventsInput!]
+input UserCreateManyInput {
+  create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -3192,25 +3307,6 @@ input UserCreateWithoutCommentsInput {
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
-}
-
-input UserCreateWithoutEventsInput {
-  name: String!
-  email: String!
-  password: String!
-  avatar: String
-  purchases: PurchaseCreateManyWithoutUserInput
-  payments: PaymentCreateManyWithoutUserInput
-  transactions: TransactionCreateManyWithoutUserInput
-  items: ItemCreateManyWithoutUserInput
-  role: UserRole
-  balance: Float
-  posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyWithoutLikedByInput
-  likedEvents: EventCreateManyWithoutLikedByInput
-  comments: CommentCreateManyWithoutAuthorInput
-  likedComments: CommentCreateManyWithoutLikedByInput
 }
 
 input UserCreateWithoutItemsInput {
@@ -3228,7 +3324,6 @@ input UserCreateWithoutItemsInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutLikedCommentsInput {
@@ -3246,7 +3341,6 @@ input UserCreateWithoutLikedCommentsInput {
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutLikedEventsInput {
@@ -3264,7 +3358,6 @@ input UserCreateWithoutLikedEventsInput {
   likedPosts: PostCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutLikedPostsInput {
@@ -3282,7 +3375,6 @@ input UserCreateWithoutLikedPostsInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutPaymentsInput {
@@ -3300,7 +3392,6 @@ input UserCreateWithoutPaymentsInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -3318,7 +3409,6 @@ input UserCreateWithoutPostsInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutPurchasesInput {
@@ -3336,7 +3426,6 @@ input UserCreateWithoutPurchasesInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 input UserCreateWithoutTransactionsInput {
@@ -3354,7 +3443,6 @@ input UserCreateWithoutTransactionsInput {
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  events: EventCreateManyWithoutCommitteeInput
 }
 
 type UserEdge {
@@ -3521,7 +3609,6 @@ input UserUpdateDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateInput {
@@ -3540,7 +3627,6 @@ input UserUpdateInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateManyDataInput {
@@ -3552,6 +3638,18 @@ input UserUpdateManyDataInput {
   balance: Float
 }
 
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
 input UserUpdateManyMutationInput {
   name: String
   email: String
@@ -3559,18 +3657,6 @@ input UserUpdateManyMutationInput {
   avatar: String
   role: UserRole
   balance: Float
-}
-
-input UserUpdateManyWithoutEventsInput {
-  create: [UserCreateWithoutEventsInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutEventsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutEventsInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithoutLikedCommentsInput {
@@ -3678,25 +3764,6 @@ input UserUpdateWithoutCommentsDataInput {
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
-}
-
-input UserUpdateWithoutEventsDataInput {
-  name: String
-  email: String
-  password: String
-  avatar: String
-  purchases: PurchaseUpdateManyWithoutUserInput
-  payments: PaymentUpdateManyWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-  items: ItemUpdateManyWithoutUserInput
-  role: UserRole
-  balance: Float
-  posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyWithoutLikedByInput
-  likedEvents: EventUpdateManyWithoutLikedByInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  likedComments: CommentUpdateManyWithoutLikedByInput
 }
 
 input UserUpdateWithoutItemsDataInput {
@@ -3714,7 +3781,6 @@ input UserUpdateWithoutItemsDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutLikedCommentsDataInput {
@@ -3732,7 +3798,6 @@ input UserUpdateWithoutLikedCommentsDataInput {
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutLikedEventsDataInput {
@@ -3750,7 +3815,6 @@ input UserUpdateWithoutLikedEventsDataInput {
   likedPosts: PostUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutLikedPostsDataInput {
@@ -3768,7 +3832,6 @@ input UserUpdateWithoutLikedPostsDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutPaymentsDataInput {
@@ -3786,7 +3849,6 @@ input UserUpdateWithoutPaymentsDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -3804,7 +3866,6 @@ input UserUpdateWithoutPostsDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutPurchasesDataInput {
@@ -3822,7 +3883,6 @@ input UserUpdateWithoutPurchasesDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
 input UserUpdateWithoutTransactionsDataInput {
@@ -3840,12 +3900,11 @@ input UserUpdateWithoutTransactionsDataInput {
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  events: EventUpdateManyWithoutCommitteeInput
 }
 
-input UserUpdateWithWhereUniqueWithoutEventsInput {
+input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutEventsDataInput!
+  data: UserUpdateDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
@@ -3898,10 +3957,10 @@ input UserUpsertWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutEventsInput {
+input UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutEventsDataInput!
-  create: UserCreateWithoutEventsInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
@@ -4032,9 +4091,6 @@ input UserWhereInput {
   likedComments_every: CommentWhereInput
   likedComments_some: CommentWhereInput
   likedComments_none: CommentWhereInput
-  events_every: EventWhereInput
-  events_some: EventWhereInput
-  events_none: EventWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
