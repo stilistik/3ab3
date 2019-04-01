@@ -26,5 +26,3 @@ export class ProfileAvatar extends React.Component {
     );
   }
 }
-
-ProfileAvatar;

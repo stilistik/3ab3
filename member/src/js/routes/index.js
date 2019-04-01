@@ -10,7 +10,7 @@ import History from 'Pages/history';
 import Dashboard from 'Pages/dashboard';
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
-import { Events, CreateEvent } from 'Pages/events';
+import { Events, CreateEvent, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
 import { Members, CreateMember, EditMember } from 'Pages/members';
 
@@ -35,6 +35,7 @@ const Routes = ({ props }) => {
       <AuthRoute path="/editmember" component={EditMember} props={props} />
       <AuthRoute path="/events" component={Events} props={props} />
       <AuthRoute path="/createevent" component={CreateEvent} props={props} />
+      <AuthRoute path="/editevent" component={EditEvent} props={props} />
       <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );

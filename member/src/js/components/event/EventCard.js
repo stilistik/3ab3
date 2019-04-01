@@ -11,6 +11,7 @@ import { Icon, ImageDiv } from 'Components';
 import LikeEvent from './LikeEvent';
 import EventComments from './EventComments';
 import EventStats from './EventStats';
+import { requestRoute } from 'History';
 
 import styles from './EventCard.css';
 
@@ -58,6 +59,10 @@ export class EventCard extends React.Component {
 
   onComment = () => {
     this.setState({ show: true });
+  };
+
+  onEdit = () => {
+    requestRoute('/editevent');
   };
 
   render() {
