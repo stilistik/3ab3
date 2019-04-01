@@ -3,4 +3,5 @@ type Committee {
   creator: User!
   members: [User!]!
   event: Event!
+  invitations: [Invitation!]!
 }

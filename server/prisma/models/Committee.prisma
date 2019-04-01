@@ -3,4 +3,5 @@ type Committee {
   creator: User! @relation(name: "CommitteeCreator")
   members: [User!]! @relation(name: "CommitteeMember")
   event: Event! @relation(name: "EventCommittee")
+  invitations: [Invitation!]!
 }

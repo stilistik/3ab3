@@ -1,0 +1,12 @@
+type Invitation {
+  id: ID! @unique
+  user: User! @relation(name: "UserInvitation")
+  committee: Committee!
+  status: InvitationStatus! @default(value: PENDING)
+}
+
+enum InvitationStatus {
+  PENDING,
+  ACCEPTED,
+  DECLINED
+}

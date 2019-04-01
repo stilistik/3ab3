@@ -9,5 +9,8 @@ module.exports = {
     members(root, args, context) {
       return context.prisma.committee({ id: root.id }).members();
     },
+    invitations(root, args, context) {
+      return context.prisma.committee({ id: root.id }).invitations();
+    },
   },
 };

@@ -15,6 +15,7 @@ type User {
   likedEvents: [Event!]! @relation(name: "LikedEvents")
   comments: [Comment!]! @relation(name: "CommentAuthor", onDelete: CASCADE)
   likedComments: [Comment!]! @relation(name: "LikedComments")
+  invitations: [Invitation!]! @relation(name: "UserInvitation", onDelete: CASCADE)
 }
 
 enum UserRole {

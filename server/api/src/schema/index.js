@@ -23,6 +23,7 @@ const Email = require('./Email');
 const Post = require('./Post');
 const Comment = require('./Comment');
 const Committee = require('./Committee');
+const Invitation = require('./Invitation');
 
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
@@ -78,6 +79,7 @@ module.exports = makeExecutableSchema({
     Post.typeDef,
     Comment.typeDef,
     Committee.typeDef,
+    Invitation.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -94,7 +96,8 @@ module.exports = makeExecutableSchema({
     Email.resolvers,
     Post.resolvers,
     Comment.resolvers,
-    Committee.resolvers
+    Committee.resolvers,
+    Invitation.resolvers
   ),
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,

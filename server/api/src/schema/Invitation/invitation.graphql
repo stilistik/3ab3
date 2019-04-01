@@ -1,0 +1,18 @@
+type Invitation {
+  id: ID!
+  user: User!
+  committee: Committee!
+  status: InvitationStatus!
+}
+
+enum InvitationStatus {
+  PENDING,
+  ACCEPTED,
+  DECLINED
+}
+
+extend type Mutation {
+  createInvitation(userId: ID!, committeeId: ID!): Invitation!
+  acceptInvitation(invitationId: ID!): Invitation!
+  declineInvitation(invitationId: ID!): Invitation!
+}

@@ -57,11 +57,19 @@ var models = [
     embedded: false
   },
   {
+    name: "Invitation",
+    embedded: false
+  },
+  {
     name: "UserRole",
     embedded: false
   },
   {
     name: "TransactionType",
+    embedded: false
+  },
+  {
+    name: "InvitationStatus",
     embedded: false
   }
 ];

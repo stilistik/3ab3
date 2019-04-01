@@ -19,6 +19,7 @@ export interface Exists {
   committee: (where?: CommitteeWhereInput) => Promise<boolean>;
   event: (where?: EventWhereInput) => Promise<boolean>;
   file: (where?: FileWhereInput) => Promise<boolean>;
+  invitation: (where?: InvitationWhereInput) => Promise<boolean>;
   item: (where?: ItemWhereInput) => Promise<boolean>;
   payment: (where?: PaymentWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
@@ -163,6 +164,29 @@ export interface Prisma {
       last?: Int;
     }
   ) => FileConnectionPromise;
+  invitation: (where: InvitationWhereUniqueInput) => InvitationPromise;
+  invitations: (
+    args?: {
+      where?: InvitationWhereInput;
+      orderBy?: InvitationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Invitation>;
+  invitationsConnection: (
+    args?: {
+      where?: InvitationWhereInput;
+      orderBy?: InvitationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => InvitationConnectionPromise;
   item: (where: ItemWhereUniqueInput) => ItemPromise;
   items: (
     args?: {
@@ -430,6 +454,25 @@ export interface Prisma {
   ) => FilePromise;
   deleteFile: (where: FileWhereUniqueInput) => FilePromise;
   deleteManyFiles: (where?: FileWhereInput) => BatchPayloadPromise;
+  createInvitation: (data: InvitationCreateInput) => InvitationPromise;
+  updateInvitation: (
+    args: { data: InvitationUpdateInput; where: InvitationWhereUniqueInput }
+  ) => InvitationPromise;
+  updateManyInvitations: (
+    args: {
+      data: InvitationUpdateManyMutationInput;
+      where?: InvitationWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertInvitation: (
+    args: {
+      where: InvitationWhereUniqueInput;
+      create: InvitationCreateInput;
+      update: InvitationUpdateInput;
+    }
+  ) => InvitationPromise;
+  deleteInvitation: (where: InvitationWhereUniqueInput) => InvitationPromise;
+  deleteManyInvitations: (where?: InvitationWhereInput) => BatchPayloadPromise;
   createItem: (data: ItemCreateInput) => ItemPromise;
   updateItem: (
     args: { data: ItemUpdateInput; where: ItemWhereUniqueInput }
@@ -590,6 +633,9 @@ export interface Subscription {
   file: (
     where?: FileSubscriptionWhereInput
   ) => FileSubscriptionPayloadSubscription;
+  invitation: (
+    where?: InvitationSubscriptionWhereInput
+  ) => InvitationSubscriptionPayloadSubscription;
   item: (
     where?: ItemSubscriptionWhereInput
   ) => ItemSubscriptionPayloadSubscription;
@@ -734,32 +780,6 @@ export type CommitteeOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type UserRole = "SUPER" | "ADMIN" | "MEMBER";
-
-export type PurchaseOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "total_ASC"
-  | "total_DESC"
-  | "date_ASC"
-  | "date_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
-export type ItemOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "price_ASC"
-  | "price_DESC"
-  | "amount_ASC"
-  | "amount_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
 export type PaymentOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -785,6 +805,46 @@ export type EventOrderByInput =
   | "date_DESC"
   | "image_ASC"
   | "image_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type UserRole = "SUPER" | "ADMIN" | "MEMBER";
+
+export type InvitationStatus = "PENDING" | "ACCEPTED" | "DECLINED";
+
+export type PurchaseOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "total_ASC"
+  | "total_DESC"
+  | "date_ASC"
+  | "date_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type ItemOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "price_ASC"
+  | "price_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type InvitationOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "status_ASC"
+  | "status_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -824,23 +884,22 @@ export type ProductOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export interface UserUpdateWithoutTransactionsDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  purchases?: PurchaseUpdateManyWithoutUserInput;
-  payments?: PaymentUpdateManyWithoutUserInput;
-  items?: ItemUpdateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostUpdateManyWithoutAuthorInput;
-  likedPosts?: PostUpdateManyWithoutLikedByInput;
-  likedEvents?: EventUpdateManyWithoutLikedByInput;
-  comments?: CommentUpdateManyWithoutAuthorInput;
-  likedComments?: CommentUpdateManyWithoutLikedByInput;
+export interface ItemUpdateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
+  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+  update?:
+    | ItemUpdateWithWhereUniqueWithoutUserInput[]
+    | ItemUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | ItemUpsertWithWhereUniqueWithoutUserInput[]
+    | ItemUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
+  updateMany?:
+    | ItemUpdateManyWithWhereNestedInput[]
+    | ItemUpdateManyWithWhereNestedInput;
 }
 
 export type ClientWhereUniqueInput = AtLeastOne<{
@@ -848,83 +907,24 @@ export type ClientWhereUniqueInput = AtLeastOne<{
   identity?: String;
 }>;
 
-export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput;
-  data: PostUpdateWithoutAuthorDataInput;
-}
-
-export interface ProductWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  price?: Float;
-  price_not?: Float;
-  price_in?: Float[] | Float;
-  price_not_in?: Float[] | Float;
-  price_lt?: Float;
-  price_lte?: Float;
-  price_gt?: Float;
-  price_gte?: Float;
-  index?: Int;
-  index_not?: Int;
-  index_in?: Int[] | Int;
-  index_not_in?: Int[] | Int;
-  index_lt?: Int;
-  index_lte?: Int;
-  index_gt?: Int;
-  index_gte?: Int;
-  thumbnail?: String;
-  thumbnail_not?: String;
-  thumbnail_in?: String[] | String;
-  thumbnail_not_in?: String[] | String;
-  thumbnail_lt?: String;
-  thumbnail_lte?: String;
-  thumbnail_gt?: String;
-  thumbnail_gte?: String;
-  thumbnail_contains?: String;
-  thumbnail_not_contains?: String;
-  thumbnail_starts_with?: String;
-  thumbnail_not_starts_with?: String;
-  thumbnail_ends_with?: String;
-  thumbnail_not_ends_with?: String;
-  deleted?: Boolean;
-  deleted_not?: Boolean;
-  AND?: ProductWhereInput[] | ProductWhereInput;
-  OR?: ProductWhereInput[] | ProductWhereInput;
-  NOT?: ProductWhereInput[] | ProductWhereInput;
-}
-
-export interface PostUpdateWithoutAuthorDataInput {
-  text?: String;
-  image?: String;
-  likedBy?: UserUpdateManyWithoutLikedPostsInput;
-  comments?: CommentUpdateManyWithoutPostInput;
-  date?: DateTimeInput;
+export interface UserUpdateManyWithoutLikedPostsInput {
+  create?:
+    | UserCreateWithoutLikedPostsInput[]
+    | UserCreateWithoutLikedPostsInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutLikedPostsInput[]
+    | UserUpdateWithWhereUniqueWithoutLikedPostsInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutLikedPostsInput[]
+    | UserUpsertWithWhereUniqueWithoutLikedPostsInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
 }
 
 export interface UserWhereInput {
@@ -1037,29 +1037,17 @@ export interface UserWhereInput {
   likedComments_every?: CommentWhereInput;
   likedComments_some?: CommentWhereInput;
   likedComments_none?: CommentWhereInput;
+  invitations_every?: InvitationWhereInput;
+  invitations_some?: InvitationWhereInput;
+  invitations_none?: InvitationWhereInput;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface UserUpdateManyWithoutLikedPostsInput {
-  create?:
-    | UserCreateWithoutLikedPostsInput[]
-    | UserCreateWithoutLikedPostsInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutLikedPostsInput[]
-    | UserUpdateWithWhereUniqueWithoutLikedPostsInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutLikedPostsInput[]
-    | UserUpsertWithWhereUniqueWithoutLikedPostsInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
+export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutLikedPostsDataInput;
 }
 
 export interface TransactionWhereInput {
@@ -1105,52 +1093,6 @@ export interface TransactionWhereInput {
   NOT?: TransactionWhereInput[] | TransactionWhereInput;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutLikedPostsDataInput;
-}
-
-export interface PurchaseWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  items_every?: ItemWhereInput;
-  items_some?: ItemWhereInput;
-  items_none?: ItemWhereInput;
-  transaction?: TransactionWhereInput;
-  total?: Float;
-  total_not?: Float;
-  total_in?: Float[] | Float;
-  total_not_in?: Float[] | Float;
-  total_lt?: Float;
-  total_lte?: Float;
-  total_gt?: Float;
-  total_gte?: Float;
-  user?: UserWhereInput;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  AND?: PurchaseWhereInput[] | PurchaseWhereInput;
-  OR?: PurchaseWhereInput[] | PurchaseWhereInput;
-  NOT?: PurchaseWhereInput[] | PurchaseWhereInput;
-}
-
 export interface UserUpdateWithoutLikedPostsDataInput {
   name?: String;
   email?: String;
@@ -1166,6 +1108,93 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
+}
+
+export interface ProductWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  price?: Float;
+  price_not?: Float;
+  price_in?: Float[] | Float;
+  price_not_in?: Float[] | Float;
+  price_lt?: Float;
+  price_lte?: Float;
+  price_gt?: Float;
+  price_gte?: Float;
+  index?: Int;
+  index_not?: Int;
+  index_in?: Int[] | Int;
+  index_not_in?: Int[] | Int;
+  index_lt?: Int;
+  index_lte?: Int;
+  index_gt?: Int;
+  index_gte?: Int;
+  thumbnail?: String;
+  thumbnail_not?: String;
+  thumbnail_in?: String[] | String;
+  thumbnail_not_in?: String[] | String;
+  thumbnail_lt?: String;
+  thumbnail_lte?: String;
+  thumbnail_gt?: String;
+  thumbnail_gte?: String;
+  thumbnail_contains?: String;
+  thumbnail_not_contains?: String;
+  thumbnail_starts_with?: String;
+  thumbnail_not_starts_with?: String;
+  thumbnail_ends_with?: String;
+  thumbnail_not_ends_with?: String;
+  deleted?: Boolean;
+  deleted_not?: Boolean;
+  AND?: ProductWhereInput[] | ProductWhereInput;
+  OR?: ProductWhereInput[] | ProductWhereInput;
+  NOT?: ProductWhereInput[] | ProductWhereInput;
+}
+
+export interface TransactionUpdateManyWithoutUserInput {
+  create?:
+    | TransactionCreateWithoutUserInput[]
+    | TransactionCreateWithoutUserInput;
+  delete?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  set?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  disconnect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  update?:
+    | TransactionUpdateWithWhereUniqueWithoutUserInput[]
+    | TransactionUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | TransactionUpsertWithWhereUniqueWithoutUserInput[]
+    | TransactionUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
+  updateMany?:
+    | TransactionUpdateManyWithWhereNestedInput[]
+    | TransactionUpdateManyWithWhereNestedInput;
 }
 
 export interface CommentWhereInput {
@@ -1216,24 +1245,9 @@ export interface CommentWhereInput {
   NOT?: CommentWhereInput[] | CommentWhereInput;
 }
 
-export interface TransactionUpdateManyWithoutUserInput {
-  create?:
-    | TransactionCreateWithoutUserInput[]
-    | TransactionCreateWithoutUserInput;
-  delete?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  set?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  disconnect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  update?:
-    | TransactionUpdateWithWhereUniqueWithoutUserInput[]
-    | TransactionUpdateWithWhereUniqueWithoutUserInput;
-  upsert?:
-    | TransactionUpsertWithWhereUniqueWithoutUserInput[]
-    | TransactionUpsertWithWhereUniqueWithoutUserInput;
-  deleteMany?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
-  updateMany?:
-    | TransactionUpdateManyWithWhereNestedInput[]
-    | TransactionUpdateManyWithWhereNestedInput;
+export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput;
+  data: TransactionUpdateWithoutUserDataInput;
 }
 
 export interface CommitteeWhereInput {
@@ -1256,9 +1270,58 @@ export interface CommitteeWhereInput {
   members_some?: UserWhereInput;
   members_none?: UserWhereInput;
   event?: EventWhereInput;
+  invitations_every?: InvitationWhereInput;
+  invitations_some?: InvitationWhereInput;
+  invitations_none?: InvitationWhereInput;
   AND?: CommitteeWhereInput[] | CommitteeWhereInput;
   OR?: CommitteeWhereInput[] | CommitteeWhereInput;
   NOT?: CommitteeWhereInput[] | CommitteeWhereInput;
+}
+
+export interface TransactionUpdateWithoutUserDataInput {
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+  payment?: PaymentUpdateOneWithoutTransactionInput;
+  purchase?: PurchaseUpdateOneWithoutTransactionInput;
+}
+
+export interface ItemWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  product?: ProductWhereInput;
+  user?: UserWhereInput;
+  price?: Float;
+  price_not?: Float;
+  price_in?: Float[] | Float;
+  price_not_in?: Float[] | Float;
+  price_lt?: Float;
+  price_lte?: Float;
+  price_gt?: Float;
+  price_gte?: Float;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  AND?: ItemWhereInput[] | ItemWhereInput;
+  OR?: ItemWhereInput[] | ItemWhereInput;
+  NOT?: ItemWhereInput[] | ItemWhereInput;
 }
 
 export interface CommentCreateManyWithoutPostInput {
@@ -1266,9 +1329,10 @@ export interface CommentCreateManyWithoutPostInput {
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
-export interface PaymentUpdateManyWithWhereNestedInput {
-  where: PaymentScalarWhereInput;
-  data: PaymentUpdateManyDataInput;
+export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutAuthorDataInput;
+  create: PostCreateWithoutAuthorInput;
 }
 
 export interface CommentCreateWithoutPostInput {
@@ -1279,9 +1343,13 @@ export interface CommentCreateWithoutPostInput {
   event?: EventCreateOneWithoutCommentsInput;
 }
 
-export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
-  where: TransactionWhereUniqueInput;
-  data: TransactionUpdateWithoutUserDataInput;
+export interface PaymentUpdateOneWithoutTransactionInput {
+  create?: PaymentCreateWithoutTransactionInput;
+  update?: PaymentUpdateWithoutTransactionDataInput;
+  upsert?: PaymentUpsertWithoutTransactionInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: PaymentWhereUniqueInput;
 }
 
 export interface PurchaseCreateOneWithoutTransactionInput {
@@ -1323,9 +1391,16 @@ export interface UserCreateOneWithoutPurchasesInput {
   connect?: UserWhereUniqueInput;
 }
 
-export type CommentWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface PostSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PostWhereInput;
+  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+}
 
 export interface UserCreateWithoutPurchasesInput {
   name: String;
@@ -1342,6 +1417,7 @@ export interface UserCreateWithoutPurchasesInput {
   likedEvents?: EventCreateManyWithoutLikedByInput;
   comments?: CommentCreateManyWithoutAuthorInput;
   likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
 }
 
 export interface PaymentSubscriptionWhereInput {
@@ -1360,15 +1436,15 @@ export interface TransactionCreateOneWithoutPurchaseInput {
   connect?: TransactionWhereUniqueInput;
 }
 
-export interface FileSubscriptionWhereInput {
+export interface InvitationSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: FileWhereInput;
-  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
-  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
-  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
+  node?: InvitationWhereInput;
+  AND?: InvitationSubscriptionWhereInput[] | InvitationSubscriptionWhereInput;
+  OR?: InvitationSubscriptionWhereInput[] | InvitationSubscriptionWhereInput;
+  NOT?: InvitationSubscriptionWhereInput[] | InvitationSubscriptionWhereInput;
 }
 
 export interface TransactionCreateWithoutPurchaseInput {
@@ -1379,15 +1455,15 @@ export interface TransactionCreateWithoutPurchaseInput {
   payment?: PaymentCreateOneWithoutTransactionInput;
 }
 
-export interface CommitteeSubscriptionWhereInput {
+export interface EventSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: CommitteeWhereInput;
-  AND?: CommitteeSubscriptionWhereInput[] | CommitteeSubscriptionWhereInput;
-  OR?: CommitteeSubscriptionWhereInput[] | CommitteeSubscriptionWhereInput;
-  NOT?: CommitteeSubscriptionWhereInput[] | CommitteeSubscriptionWhereInput;
+  node?: EventWhereInput;
+  AND?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
+  OR?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
+  NOT?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
 }
 
 export interface CommentUpdateInput {
@@ -1399,15 +1475,15 @@ export interface CommentUpdateInput {
   event?: EventUpdateOneWithoutCommentsInput;
 }
 
-export interface ClientSubscriptionWhereInput {
+export interface CommentSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: ClientWhereInput;
-  AND?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
-  OR?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
-  NOT?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+  node?: CommentWhereInput;
+  AND?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+  OR?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+  NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
 }
 
 export interface UserUpdateOneRequiredWithoutCommentsInput {
@@ -1417,22 +1493,13 @@ export interface UserUpdateOneRequiredWithoutCommentsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateInput {
+export interface UserUpdateManyMutationInput {
   name?: String;
   email?: String;
   password?: String;
   avatar?: String;
-  purchases?: PurchaseUpdateManyWithoutUserInput;
-  payments?: PaymentUpdateManyWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-  items?: ItemUpdateManyWithoutUserInput;
   role?: UserRole;
   balance?: Float;
-  posts?: PostUpdateManyWithoutAuthorInput;
-  likedPosts?: PostUpdateManyWithoutLikedByInput;
-  likedEvents?: EventUpdateManyWithoutLikedByInput;
-  comments?: CommentUpdateManyWithoutAuthorInput;
-  likedComments?: CommentUpdateManyWithoutLikedByInput;
 }
 
 export interface UserUpdateWithoutCommentsDataInput {
@@ -1450,6 +1517,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   likedPosts?: PostUpdateManyWithoutLikedByInput;
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
 export interface TransactionUpdateManyMutationInput {
@@ -1476,13 +1544,13 @@ export interface PurchaseUpdateManyWithoutUserInput {
     | PurchaseUpdateManyWithWhereNestedInput;
 }
 
-export interface TransactionCreateInput {
-  user: UserCreateOneWithoutTransactionsInput;
-  date: DateTimeInput;
-  type: TransactionType;
-  balance: Float;
-  payment?: PaymentCreateOneWithoutTransactionInput;
-  purchase?: PurchaseCreateOneWithoutTransactionInput;
+export interface TransactionUpdateInput {
+  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+  payment?: PaymentUpdateOneWithoutTransactionInput;
+  purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
 
 export interface PurchaseUpdateWithWhereUniqueWithoutUserInput {
@@ -1490,9 +1558,10 @@ export interface PurchaseUpdateWithWhereUniqueWithoutUserInput {
   data: PurchaseUpdateWithoutUserDataInput;
 }
 
-export type EventWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface PurchaseUpdateManyMutationInput {
+  total?: Float;
+  date?: DateTimeInput;
+}
 
 export interface PurchaseUpdateWithoutUserDataInput {
   items?: ItemUpdateManyInput;
@@ -1501,13 +1570,9 @@ export interface PurchaseUpdateWithoutUserDataInput {
   date?: DateTimeInput;
 }
 
-export interface PurchaseCreateInput {
-  items?: ItemCreateManyInput;
-  transaction: TransactionCreateOneWithoutPurchaseInput;
-  total: Float;
-  user: UserCreateOneWithoutPurchasesInput;
-  date: DateTimeInput;
-}
+export type EventWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface ItemUpdateManyInput {
   create?: ItemCreateInput[] | ItemCreateInput;
@@ -1527,6 +1592,19 @@ export interface ItemUpdateManyInput {
     | ItemUpdateManyWithWhereNestedInput;
 }
 
+export interface ProductionUpdateManyMutationInput {
+  title?: String;
+  description?: String;
+  image?: String;
+  index?: Int;
+  show?: Boolean;
+}
+
+export interface ItemUpdateWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput;
+  data: ItemUpdateDataInput;
+}
+
 export type FileWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   fileId?: String;
@@ -1534,9 +1612,11 @@ export type FileWhereUniqueInput = AtLeastOne<{
   uri?: String;
 }>;
 
-export interface ItemUpdateWithWhereUniqueNestedInput {
-  where: ItemWhereUniqueInput;
-  data: ItemUpdateDataInput;
+export interface ItemUpdateDataInput {
+  product?: ProductUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutItemsInput;
+  price?: Float;
+  amount?: Int;
 }
 
 export interface FileWhereInput {
@@ -1665,21 +1745,6 @@ export interface FileWhereInput {
   NOT?: FileWhereInput[] | FileWhereInput;
 }
 
-export interface ItemUpdateDataInput {
-  product?: ProductUpdateOneRequiredInput;
-  user?: UserUpdateOneRequiredWithoutItemsInput;
-  price?: Float;
-  amount?: Int;
-}
-
-export interface ProductionCreateInput {
-  title: String;
-  description: String;
-  image: String;
-  index: Int;
-  show?: Boolean;
-}
-
 export interface ProductUpdateOneRequiredInput {
   create?: ProductCreateInput;
   update?: ProductUpdateDataInput;
@@ -1687,7 +1752,7 @@ export interface ProductUpdateOneRequiredInput {
   connect?: ProductWhereUniqueInput;
 }
 
-export interface ProductUpdateInput {
+export interface ProductUpdateManyMutationInput {
   name?: String;
   price?: Float;
   index?: Int;
@@ -1714,13 +1779,13 @@ export interface ProductUpsertNestedInput {
   create: ProductCreateInput;
 }
 
-export interface PostCreateInput {
-  text: String;
+export interface PostUpdateInput {
+  text?: String;
   image?: String;
-  author: UserCreateOneWithoutPostsInput;
-  likedBy?: UserCreateManyWithoutLikedPostsInput;
-  comments?: CommentCreateManyWithoutPostInput;
-  date: DateTimeInput;
+  author?: UserUpdateOneRequiredWithoutPostsInput;
+  likedBy?: UserUpdateManyWithoutLikedPostsInput;
+  comments?: CommentUpdateManyWithoutPostInput;
+  date?: DateTimeInput;
 }
 
 export interface UserUpdateOneRequiredWithoutItemsInput {
@@ -1751,14 +1816,15 @@ export interface UserUpdateWithoutItemsDataInput {
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface PaymentCreateInput {
-  amount: Float;
-  user: UserCreateOneWithoutPaymentsInput;
-  date: DateTimeInput;
+export interface PaymentUpdateInput {
+  amount?: Float;
+  user?: UserUpdateOneRequiredWithoutPaymentsInput;
+  date?: DateTimeInput;
   verified?: Boolean;
-  transaction: TransactionCreateOneWithoutPaymentInput;
+  transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
 }
 
 export interface PaymentUpdateManyWithoutUserInput {
@@ -1789,14 +1855,11 @@ export interface PaymentUpdateWithWhereUniqueWithoutUserInput {
   data: PaymentUpdateWithoutUserDataInput;
 }
 
-export interface FileUpdateManyMutationInput {
-  fileId?: String;
-  hash?: String;
-  uri?: String;
-  filename?: String;
-  path?: String;
-  mimetype?: String;
-  extension?: String;
+export interface ItemUpdateInput {
+  product?: ProductUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutItemsInput;
+  price?: Float;
+  amount?: Int;
 }
 
 export interface PaymentUpdateWithoutUserDataInput {
@@ -1804,6 +1867,33 @@ export interface PaymentUpdateWithoutUserDataInput {
   date?: DateTimeInput;
   verified?: Boolean;
   transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
+}
+
+export interface InvitationUpdateInput {
+  user?: UserUpdateOneRequiredWithoutInvitationsInput;
+  committee?: CommitteeUpdateOneRequiredWithoutInvitationsInput;
+  status?: InvitationStatus;
+}
+
+export interface TransactionUpdateOneRequiredWithoutPaymentInput {
+  create?: TransactionCreateWithoutPaymentInput;
+  update?: TransactionUpdateWithoutPaymentDataInput;
+  upsert?: TransactionUpsertWithoutPaymentInput;
+  connect?: TransactionWhereUniqueInput;
+}
+
+export interface InvitationCreateInput {
+  user: UserCreateOneWithoutInvitationsInput;
+  committee: CommitteeCreateOneWithoutInvitationsInput;
+  status?: InvitationStatus;
+}
+
+export interface TransactionUpdateWithoutPaymentDataInput {
+  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+  purchase?: PurchaseUpdateOneWithoutTransactionInput;
 }
 
 export interface FileUpdateInput {
@@ -1816,37 +1906,65 @@ export interface FileUpdateInput {
   extension?: String;
 }
 
-export interface TransactionUpdateOneRequiredWithoutPaymentInput {
-  create?: TransactionCreateWithoutPaymentInput;
-  update?: TransactionUpdateWithoutPaymentDataInput;
-  upsert?: TransactionUpsertWithoutPaymentInput;
-  connect?: TransactionWhereUniqueInput;
+export interface UserUpdateOneRequiredWithoutTransactionsInput {
+  create?: UserCreateWithoutTransactionsInput;
+  update?: UserUpdateWithoutTransactionsDataInput;
+  upsert?: UserUpsertWithoutTransactionsInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export interface EventUpdateManyMutationInput {
+export interface FileCreateInput {
+  fileId: String;
+  hash: String;
+  uri: String;
+  filename: String;
+  path: String;
+  mimetype: String;
+  extension: String;
+}
+
+export interface UserUpdateWithoutTransactionsDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
+}
+
+export interface EventUpdateInput {
   title?: String;
   description?: String;
   date?: DateTimeInput;
   image?: String;
+  comments?: CommentUpdateManyWithoutEventInput;
+  likedBy?: UserUpdateManyWithoutLikedEventsInput;
+  owner?: UserUpdateOneRequiredInput;
+  committee?: CommitteeUpdateOneRequiredWithoutEventInput;
 }
 
-export interface TransactionUpdateWithoutPaymentDataInput {
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-  purchase?: PurchaseUpdateOneWithoutTransactionInput;
+export interface PaymentUpsertWithWhereUniqueWithoutUserInput {
+  where: PaymentWhereUniqueInput;
+  update: PaymentUpdateWithoutUserDataInput;
+  create: PaymentCreateWithoutUserInput;
 }
 
 export type ProductionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface UserUpdateOneRequiredWithoutTransactionsInput {
-  create?: UserCreateWithoutTransactionsInput;
-  update?: UserUpdateWithoutTransactionsDataInput;
-  upsert?: UserUpsertWithoutTransactionsInput;
-  connect?: UserWhereUniqueInput;
+export interface ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput;
+  data: ItemUpdateWithoutUserDataInput;
 }
 
 export interface ProductionWhereInput {
@@ -1921,72 +2039,15 @@ export interface ProductionWhereInput {
   NOT?: ProductionWhereInput[] | ProductionWhereInput;
 }
 
-export interface TransactionUpdateOneRequiredWithoutPurchaseInput {
-  create?: TransactionCreateWithoutPurchaseInput;
-  update?: TransactionUpdateWithoutPurchaseDataInput;
-  upsert?: TransactionUpsertWithoutPurchaseInput;
-  connect?: TransactionWhereUniqueInput;
-}
-
-export interface EventUpdateWithoutCommitteeDataInput {
-  title?: String;
-  description?: String;
-  date?: DateTimeInput;
-  image?: String;
-  comments?: CommentUpdateManyWithoutEventInput;
-  likedBy?: UserUpdateManyWithoutLikedEventsInput;
-  owner?: UserUpdateOneRequiredInput;
-}
-
-export interface ItemUpdateManyWithoutUserInput {
-  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
-  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
-  update?:
-    | ItemUpdateWithWhereUniqueWithoutUserInput[]
-    | ItemUpdateWithWhereUniqueWithoutUserInput;
-  upsert?:
-    | ItemUpsertWithWhereUniqueWithoutUserInput[]
-    | ItemUpsertWithWhereUniqueWithoutUserInput;
-  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput;
-  updateMany?:
-    | ItemUpdateManyWithWhereNestedInput[]
-    | ItemUpdateManyWithWhereNestedInput;
-}
-
-export interface CommitteeUpdateInput {
-  creator?: UserUpdateOneRequiredInput;
-  members?: UserUpdateManyInput;
-  event?: EventUpdateOneRequiredWithoutCommitteeInput;
-}
-
-export interface ItemUpdateWithWhereUniqueWithoutUserInput {
-  where: ItemWhereUniqueInput;
-  data: ItemUpdateWithoutUserDataInput;
-}
-
-export interface EventCreateWithoutCommitteeInput {
-  title: String;
-  description: String;
-  date: DateTimeInput;
-  image: String;
-  comments?: CommentCreateManyWithoutEventInput;
-  likedBy?: UserCreateManyWithoutLikedEventsInput;
-  owner: UserCreateOneInput;
-}
-
 export interface ItemUpdateWithoutUserDataInput {
   product?: ProductUpdateOneRequiredInput;
   price?: Float;
   amount?: Int;
 }
 
-export interface CommitteeCreateInput {
-  creator: UserCreateOneInput;
-  members?: UserCreateManyInput;
-  event: EventCreateOneWithoutCommitteeInput;
+export interface CommentUpdateManyMutationInput {
+  text?: String;
+  date?: DateTimeInput;
 }
 
 export interface ItemUpsertWithWhereUniqueWithoutUserInput {
@@ -1995,8 +2056,8 @@ export interface ItemUpsertWithWhereUniqueWithoutUserInput {
   create: ItemCreateWithoutUserInput;
 }
 
-export interface CommentUpdateManyMutationInput {
-  text?: String;
+export interface PurchaseUpdateManyDataInput {
+  total?: Float;
   date?: DateTimeInput;
 }
 
@@ -2036,9 +2097,9 @@ export interface ItemScalarWhereInput {
   NOT?: ItemScalarWhereInput[] | ItemScalarWhereInput;
 }
 
-export interface PurchaseUpdateManyDataInput {
-  total?: Float;
-  date?: DateTimeInput;
+export interface PurchaseUpdateManyWithWhereNestedInput {
+  where: PurchaseScalarWhereInput;
+  data: PurchaseUpdateManyDataInput;
 }
 
 export interface ItemUpdateManyWithWhereNestedInput {
@@ -2046,9 +2107,10 @@ export interface ItemUpdateManyWithWhereNestedInput {
   data: ItemUpdateManyDataInput;
 }
 
-export interface PurchaseUpdateManyWithWhereNestedInput {
-  where: PurchaseScalarWhereInput;
-  data: PurchaseUpdateManyDataInput;
+export interface PurchaseUpsertWithWhereUniqueWithoutUserInput {
+  where: PurchaseWhereUniqueInput;
+  update: PurchaseUpdateWithoutUserDataInput;
+  create: PurchaseCreateWithoutUserInput;
 }
 
 export interface ItemUpdateManyDataInput {
@@ -2056,10 +2118,9 @@ export interface ItemUpdateManyDataInput {
   amount?: Int;
 }
 
-export interface PurchaseUpsertWithWhereUniqueWithoutUserInput {
-  where: PurchaseWhereUniqueInput;
-  update: PurchaseUpdateWithoutUserDataInput;
-  create: PurchaseCreateWithoutUserInput;
+export interface TransactionUpsertWithoutPurchaseInput {
+  update: TransactionUpdateWithoutPurchaseDataInput;
+  create: TransactionCreateWithoutPurchaseInput;
 }
 
 export interface PostUpdateManyWithoutAuthorInput {
@@ -2080,11 +2141,16 @@ export interface PostUpdateManyWithoutAuthorInput {
     | PostUpdateManyWithWhereNestedInput;
 }
 
-export interface ClientCreateInput {
-  identity: String;
-  secret: String;
-  name: String;
-  trusted?: Boolean;
+export interface TransactionUpdateOneRequiredWithoutPurchaseInput {
+  create?: TransactionCreateWithoutPurchaseInput;
+  update?: TransactionUpdateWithoutPurchaseDataInput;
+  upsert?: TransactionUpsertWithoutPurchaseInput;
+  connect?: TransactionWhereUniqueInput;
+}
+
+export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutAuthorDataInput;
 }
 
 export interface ItemUpsertWithWhereUniqueNestedInput {
@@ -2093,11 +2159,18 @@ export interface ItemUpsertWithWhereUniqueNestedInput {
   create: ItemCreateInput;
 }
 
-export interface ClientUpdateManyMutationInput {
-  identity?: String;
-  secret?: String;
-  name?: String;
-  trusted?: Boolean;
+export interface PostUpdateWithoutAuthorDataInput {
+  text?: String;
+  image?: String;
+  likedBy?: UserUpdateManyWithoutLikedPostsInput;
+  comments?: CommentUpdateManyWithoutPostInput;
+  date?: DateTimeInput;
+}
+
+export interface PaymentUpdateManyDataInput {
+  amount?: Float;
+  date?: DateTimeInput;
+  verified?: Boolean;
 }
 
 export interface PaymentWhereInput {
@@ -2140,55 +2213,23 @@ export interface PaymentWhereInput {
   NOT?: PaymentWhereInput[] | PaymentWhereInput;
 }
 
-export interface TransactionUpdateWithoutPurchaseDataInput {
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-  payment?: PaymentUpdateOneWithoutTransactionInput;
+export interface ClientCreateInput {
+  identity: String;
+  secret: String;
+  name: String;
+  trusted?: Boolean;
 }
 
-export interface ItemWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  product?: ProductWhereInput;
-  user?: UserWhereInput;
-  price?: Float;
-  price_not?: Float;
-  price_in?: Float[] | Float;
-  price_not_in?: Float[] | Float;
-  price_lt?: Float;
-  price_lte?: Float;
-  price_gt?: Float;
-  price_gte?: Float;
-  amount?: Int;
-  amount_not?: Int;
-  amount_in?: Int[] | Int;
-  amount_not_in?: Int[] | Int;
-  amount_lt?: Int;
-  amount_lte?: Int;
-  amount_gt?: Int;
-  amount_gte?: Int;
-  AND?: ItemWhereInput[] | ItemWhereInput;
-  OR?: ItemWhereInput[] | ItemWhereInput;
-  NOT?: ItemWhereInput[] | ItemWhereInput;
+export interface TransactionUpsertWithoutPaymentInput {
+  update: TransactionUpdateWithoutPaymentDataInput;
+  create: TransactionCreateWithoutPaymentInput;
 }
 
-export interface UserCreateOneWithoutCommentsInput {
-  create?: UserCreateWithoutCommentsInput;
-  connect?: UserWhereUniqueInput;
+export interface ClientUpdateManyMutationInput {
+  identity?: String;
+  secret?: String;
+  name?: String;
+  trusted?: Boolean;
 }
 
 export interface PostWhereInput {
@@ -2254,9 +2295,42 @@ export interface PostWhereInput {
   NOT?: PostWhereInput[] | PostWhereInput;
 }
 
-export interface PurchaseCreateManyWithoutUserInput {
-  create?: PurchaseCreateWithoutUserInput[] | PurchaseCreateWithoutUserInput;
-  connect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+export interface PaymentScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  amount?: Float;
+  amount_not?: Float;
+  amount_in?: Float[] | Float;
+  amount_not_in?: Float[] | Float;
+  amount_lt?: Float;
+  amount_lte?: Float;
+  amount_gt?: Float;
+  amount_gte?: Float;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  verified?: Boolean;
+  verified_not?: Boolean;
+  AND?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  OR?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  NOT?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
 }
 
 export interface EventWhereInput {
@@ -2337,57 +2411,96 @@ export interface EventWhereInput {
   NOT?: EventWhereInput[] | EventWhereInput;
 }
 
+export interface UserCreateOneWithoutCommentsInput {
+  create?: UserCreateWithoutCommentsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface InvitationWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  user?: UserWhereInput;
+  committee?: CommitteeWhereInput;
+  status?: InvitationStatus;
+  status_not?: InvitationStatus;
+  status_in?: InvitationStatus[] | InvitationStatus;
+  status_not_in?: InvitationStatus[] | InvitationStatus;
+  AND?: InvitationWhereInput[] | InvitationWhereInput;
+  OR?: InvitationWhereInput[] | InvitationWhereInput;
+  NOT?: InvitationWhereInput[] | InvitationWhereInput;
+}
+
+export interface PurchaseCreateManyWithoutUserInput {
+  create?: PurchaseCreateWithoutUserInput[] | PurchaseCreateWithoutUserInput;
+  connect?: PurchaseWhereUniqueInput[] | PurchaseWhereUniqueInput;
+}
+
+export interface PurchaseWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  items_every?: ItemWhereInput;
+  items_some?: ItemWhereInput;
+  items_none?: ItemWhereInput;
+  transaction?: TransactionWhereInput;
+  total?: Float;
+  total_not?: Float;
+  total_in?: Float[] | Float;
+  total_not_in?: Float[] | Float;
+  total_lt?: Float;
+  total_lte?: Float;
+  total_gt?: Float;
+  total_gte?: Float;
+  user?: UserWhereInput;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: PurchaseWhereInput[] | PurchaseWhereInput;
+  OR?: PurchaseWhereInput[] | PurchaseWhereInput;
+  NOT?: PurchaseWhereInput[] | PurchaseWhereInput;
+}
+
 export interface ItemCreateManyInput {
   create?: ItemCreateInput[] | ItemCreateInput;
   connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
 }
 
-export interface UserUpsertWithoutItemsInput {
-  update: UserUpdateWithoutItemsDataInput;
-  create: UserCreateWithoutItemsInput;
+export interface UserUpsertWithoutTransactionsInput {
+  update: UserUpdateWithoutTransactionsDataInput;
+  create: UserCreateWithoutTransactionsInput;
 }
 
 export interface ProductCreateOneInput {
   create?: ProductCreateInput;
   connect?: ProductWhereUniqueInput;
-}
-
-export interface PaymentUpdateManyDataInput {
-  amount?: Float;
-  date?: DateTimeInput;
-  verified?: Boolean;
-}
-
-export interface UserCreateOneWithoutItemsInput {
-  create?: UserCreateWithoutItemsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface TransactionUpdateWithoutUserDataInput {
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-  payment?: PaymentUpdateOneWithoutTransactionInput;
-  purchase?: PurchaseUpdateOneWithoutTransactionInput;
-}
-
-export interface PaymentCreateManyWithoutUserInput {
-  create?: PaymentCreateWithoutUserInput[] | PaymentCreateWithoutUserInput;
-  connect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
-}
-
-export interface PaymentUpdateOneWithoutTransactionInput {
-  create?: PaymentCreateWithoutTransactionInput;
-  update?: PaymentUpdateWithoutTransactionDataInput;
-  upsert?: PaymentUpsertWithoutTransactionInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: PaymentWhereUniqueInput;
-}
-
-export interface TransactionCreateOneWithoutPaymentInput {
-  create?: TransactionCreateWithoutPaymentInput;
-  connect?: TransactionWhereUniqueInput;
 }
 
 export interface PaymentUpdateWithoutTransactionDataInput {
@@ -2397,8 +2510,8 @@ export interface PaymentUpdateWithoutTransactionDataInput {
   verified?: Boolean;
 }
 
-export interface UserCreateOneWithoutTransactionsInput {
-  create?: UserCreateWithoutTransactionsInput;
+export interface UserCreateOneWithoutItemsInput {
+  create?: UserCreateWithoutItemsInput;
   connect?: UserWhereUniqueInput;
 }
 
@@ -2409,9 +2522,9 @@ export interface UserUpdateOneRequiredWithoutPaymentsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface ItemCreateManyWithoutUserInput {
-  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
-  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
+export interface PaymentCreateManyWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput[] | PaymentCreateWithoutUserInput;
+  connect?: PaymentWhereUniqueInput[] | PaymentWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutPaymentsDataInput {
@@ -2429,11 +2542,12 @@ export interface UserUpdateWithoutPaymentsDataInput {
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface PostCreateManyWithoutAuthorInput {
-  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+export interface TransactionCreateOneWithoutPaymentInput {
+  create?: TransactionCreateWithoutPaymentInput;
+  connect?: TransactionWhereUniqueInput;
 }
 
 export interface PostUpdateManyWithoutLikedByInput {
@@ -2454,11 +2568,9 @@ export interface PostUpdateManyWithoutLikedByInput {
     | PostUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateManyWithoutLikedPostsInput {
-  create?:
-    | UserCreateWithoutLikedPostsInput[]
-    | UserCreateWithoutLikedPostsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface UserCreateOneWithoutTransactionsInput {
+  create?: UserCreateWithoutTransactionsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface PostUpdateWithWhereUniqueWithoutLikedByInput {
@@ -2466,11 +2578,9 @@ export interface PostUpdateWithWhereUniqueWithoutLikedByInput {
   data: PostUpdateWithoutLikedByDataInput;
 }
 
-export interface TransactionCreateManyWithoutUserInput {
-  create?:
-    | TransactionCreateWithoutUserInput[]
-    | TransactionCreateWithoutUserInput;
-  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+export interface ItemCreateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput;
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput;
 }
 
 export interface PostUpdateWithoutLikedByDataInput {
@@ -2481,9 +2591,9 @@ export interface PostUpdateWithoutLikedByDataInput {
   date?: DateTimeInput;
 }
 
-export interface PaymentCreateOneWithoutTransactionInput {
-  create?: PaymentCreateWithoutTransactionInput;
-  connect?: PaymentWhereUniqueInput;
+export interface PostCreateManyWithoutAuthorInput {
+  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
 }
 
 export interface UserUpdateOneRequiredWithoutPostsInput {
@@ -2493,9 +2603,11 @@ export interface UserUpdateOneRequiredWithoutPostsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserCreateOneWithoutPaymentsInput {
-  create?: UserCreateWithoutPaymentsInput;
-  connect?: UserWhereUniqueInput;
+export interface UserCreateManyWithoutLikedPostsInput {
+  create?:
+    | UserCreateWithoutLikedPostsInput[]
+    | UserCreateWithoutLikedPostsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutPostsDataInput {
@@ -2513,11 +2625,14 @@ export interface UserUpdateWithoutPostsDataInput {
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface PostCreateManyWithoutLikedByInput {
-  create?: PostCreateWithoutLikedByInput[] | PostCreateWithoutLikedByInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+export interface TransactionCreateManyWithoutUserInput {
+  create?:
+    | TransactionCreateWithoutUserInput[]
+    | TransactionCreateWithoutUserInput;
+  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
 }
 
 export interface EventUpdateManyWithoutLikedByInput {
@@ -2538,9 +2653,9 @@ export interface EventUpdateManyWithoutLikedByInput {
     | EventUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateOneWithoutPostsInput {
-  create?: UserCreateWithoutPostsInput;
-  connect?: UserWhereUniqueInput;
+export interface PaymentCreateOneWithoutTransactionInput {
+  create?: PaymentCreateWithoutTransactionInput;
+  connect?: PaymentWhereUniqueInput;
 }
 
 export interface EventUpdateWithWhereUniqueWithoutLikedByInput {
@@ -2548,9 +2663,9 @@ export interface EventUpdateWithWhereUniqueWithoutLikedByInput {
   data: EventUpdateWithoutLikedByDataInput;
 }
 
-export interface EventCreateManyWithoutLikedByInput {
-  create?: EventCreateWithoutLikedByInput[] | EventCreateWithoutLikedByInput;
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
+export interface UserCreateOneWithoutPaymentsInput {
+  create?: UserCreateWithoutPaymentsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface EventUpdateWithoutLikedByDataInput {
@@ -2563,9 +2678,9 @@ export interface EventUpdateWithoutLikedByDataInput {
   committee?: CommitteeUpdateOneRequiredWithoutEventInput;
 }
 
-export interface CommentCreateManyWithoutEventInput {
-  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface PostCreateManyWithoutLikedByInput {
+  create?: PostCreateWithoutLikedByInput[] | PostCreateWithoutLikedByInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
 }
 
 export interface CommentUpdateManyWithoutEventInput {
@@ -2586,11 +2701,9 @@ export interface CommentUpdateManyWithoutEventInput {
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateManyWithoutLikedCommentsInput {
-  create?:
-    | UserCreateWithoutLikedCommentsInput[]
-    | UserCreateWithoutLikedCommentsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface UserCreateOneWithoutPostsInput {
+  create?: UserCreateWithoutPostsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface CommentUpdateWithWhereUniqueWithoutEventInput {
@@ -2598,9 +2711,9 @@ export interface CommentUpdateWithWhereUniqueWithoutEventInput {
   data: CommentUpdateWithoutEventDataInput;
 }
 
-export interface CommentCreateManyWithoutAuthorInput {
-  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface EventCreateManyWithoutLikedByInput {
+  create?: EventCreateWithoutLikedByInput[] | EventCreateWithoutLikedByInput;
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
 }
 
 export interface CommentUpdateWithoutEventDataInput {
@@ -2611,9 +2724,9 @@ export interface CommentUpdateWithoutEventDataInput {
   post?: PostUpdateOneWithoutCommentsInput;
 }
 
-export interface PostCreateOneWithoutCommentsInput {
-  create?: PostCreateWithoutCommentsInput;
-  connect?: PostWhereUniqueInput;
+export interface CommentCreateManyWithoutEventInput {
+  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface UserUpdateManyWithoutLikedCommentsInput {
@@ -2636,9 +2749,11 @@ export interface UserUpdateManyWithoutLikedCommentsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface EventCreateOneWithoutCommentsInput {
-  create?: EventCreateWithoutCommentsInput;
-  connect?: EventWhereUniqueInput;
+export interface UserCreateManyWithoutLikedCommentsInput {
+  create?:
+    | UserCreateWithoutLikedCommentsInput[]
+    | UserCreateWithoutLikedCommentsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
@@ -2646,11 +2761,9 @@ export interface UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
   data: UserUpdateWithoutLikedCommentsDataInput;
 }
 
-export interface UserCreateManyWithoutLikedEventsInput {
-  create?:
-    | UserCreateWithoutLikedEventsInput[]
-    | UserCreateWithoutLikedEventsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface CommentCreateManyWithoutAuthorInput {
+  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutLikedCommentsDataInput {
@@ -2668,13 +2781,12 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   likedPosts?: PostUpdateManyWithoutLikedByInput;
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface CommentCreateManyWithoutLikedByInput {
-  create?:
-    | CommentCreateWithoutLikedByInput[]
-    | CommentCreateWithoutLikedByInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface PostCreateOneWithoutCommentsInput {
+  create?: PostCreateWithoutCommentsInput;
+  connect?: PostWhereUniqueInput;
 }
 
 export interface CommentUpdateManyWithoutAuthorInput {
@@ -2695,9 +2807,9 @@ export interface CommentUpdateManyWithoutAuthorInput {
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
+export interface EventCreateOneWithoutCommentsInput {
+  create?: EventCreateWithoutCommentsInput;
+  connect?: EventWhereUniqueInput;
 }
 
 export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
@@ -2705,9 +2817,11 @@ export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
   data: CommentUpdateWithoutAuthorDataInput;
 }
 
-export interface CommitteeCreateOneWithoutEventInput {
-  create?: CommitteeCreateWithoutEventInput;
-  connect?: CommitteeWhereUniqueInput;
+export interface UserCreateManyWithoutLikedEventsInput {
+  create?:
+    | UserCreateWithoutLikedEventsInput[]
+    | UserCreateWithoutLikedEventsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface CommentUpdateWithoutAuthorDataInput {
@@ -2718,9 +2832,11 @@ export interface CommentUpdateWithoutAuthorDataInput {
   event?: EventUpdateOneWithoutCommentsInput;
 }
 
-export interface UserCreateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface CommentCreateManyWithoutLikedByInput {
+  create?:
+    | CommentCreateWithoutLikedByInput[]
+    | CommentCreateWithoutLikedByInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface PostUpdateOneWithoutCommentsInput {
@@ -2732,15 +2848,11 @@ export interface PostUpdateOneWithoutCommentsInput {
   connect?: PostWhereUniqueInput;
 }
 
-export interface PurchaseSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PurchaseWhereInput;
-  AND?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
-  OR?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
-  NOT?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+export interface InvitationCreateManyWithoutUserInput {
+  create?:
+    | InvitationCreateWithoutUserInput[]
+    | InvitationCreateWithoutUserInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
 }
 
 export interface PostUpdateWithoutCommentsDataInput {
@@ -2751,15 +2863,9 @@ export interface PostUpdateWithoutCommentsDataInput {
   date?: DateTimeInput;
 }
 
-export interface PostSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PostWhereInput;
-  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+export interface CommitteeCreateOneWithoutInvitationsInput {
+  create?: CommitteeCreateWithoutInvitationsInput;
+  connect?: CommitteeWhereUniqueInput;
 }
 
 export interface PostUpsertWithoutCommentsInput {
@@ -2767,15 +2873,9 @@ export interface PostUpsertWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput;
 }
 
-export interface EventSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: EventWhereInput;
-  AND?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
-  OR?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
-  NOT?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface EventUpdateOneWithoutCommentsInput {
@@ -2787,13 +2887,9 @@ export interface EventUpdateOneWithoutCommentsInput {
   connect?: EventWhereUniqueInput;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  role?: UserRole;
-  balance?: Float;
+export interface UserCreateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface EventUpdateWithoutCommentsDataInput {
@@ -2806,13 +2902,14 @@ export interface EventUpdateWithoutCommentsDataInput {
   committee?: CommitteeUpdateOneRequiredWithoutEventInput;
 }
 
-export interface TransactionUpdateInput {
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-  payment?: PaymentUpdateOneWithoutTransactionInput;
-  purchase?: PurchaseUpdateOneWithoutTransactionInput;
+export interface EventCreateWithoutCommitteeInput {
+  title: String;
+  description: String;
+  date: DateTimeInput;
+  image: String;
+  comments?: CommentCreateManyWithoutEventInput;
+  likedBy?: UserCreateManyWithoutLikedEventsInput;
+  owner: UserCreateOneInput;
 }
 
 export interface UserUpdateManyWithoutLikedEventsInput {
@@ -2835,12 +2932,10 @@ export interface UserUpdateManyWithoutLikedEventsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface PurchaseUpdateInput {
-  items?: ItemUpdateManyInput;
-  transaction?: TransactionUpdateOneRequiredWithoutPurchaseInput;
-  total?: Float;
-  user?: UserUpdateOneRequiredWithoutPurchasesInput;
-  date?: DateTimeInput;
+export interface CommitteeCreateWithoutEventInput {
+  creator: UserCreateOneInput;
+  members?: UserCreateManyInput;
+  invitations?: InvitationCreateManyWithoutCommitteeInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutLikedEventsInput {
@@ -2848,12 +2943,9 @@ export interface UserUpdateWithWhereUniqueWithoutLikedEventsInput {
   data: UserUpdateWithoutLikedEventsDataInput;
 }
 
-export interface ProductionUpdateInput {
-  title?: String;
-  description?: String;
-  image?: String;
-  index?: Int;
-  show?: Boolean;
+export interface InvitationCreateWithoutCommitteeInput {
+  user: UserCreateOneWithoutInvitationsInput;
+  status?: InvitationStatus;
 }
 
 export interface UserUpdateWithoutLikedEventsDataInput {
@@ -2871,14 +2963,25 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   likedPosts?: PostUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface ProductUpdateManyMutationInput {
-  name?: String;
-  price?: Float;
-  index?: Int;
-  thumbnail?: String;
-  deleted?: Boolean;
+export interface UserCreateWithoutInvitationsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
 }
 
 export interface CommentUpdateManyWithoutLikedByInput {
@@ -2901,13 +3004,15 @@ export interface CommentUpdateManyWithoutLikedByInput {
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export interface PostUpdateInput {
-  text?: String;
-  image?: String;
-  author?: UserUpdateOneRequiredWithoutPostsInput;
-  likedBy?: UserUpdateManyWithoutLikedPostsInput;
-  comments?: CommentUpdateManyWithoutPostInput;
-  date?: DateTimeInput;
+export interface PurchaseSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PurchaseWhereInput;
+  AND?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+  OR?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
+  NOT?: PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput;
 }
 
 export interface CommentUpdateWithWhereUniqueWithoutLikedByInput {
@@ -2915,13 +3020,9 @@ export interface CommentUpdateWithWhereUniqueWithoutLikedByInput {
   data: CommentUpdateWithoutLikedByDataInput;
 }
 
-export interface PaymentUpdateInput {
-  amount?: Float;
-  user?: UserUpdateOneRequiredWithoutPaymentsInput;
-  date?: DateTimeInput;
-  verified?: Boolean;
-  transaction?: TransactionUpdateOneRequiredWithoutPaymentInput;
-}
+export type CommentWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface CommentUpdateWithoutLikedByDataInput {
   text?: String;
@@ -2931,11 +3032,15 @@ export interface CommentUpdateWithoutLikedByDataInput {
   event?: EventUpdateOneWithoutCommentsInput;
 }
 
-export interface ItemUpdateInput {
-  product?: ProductUpdateOneRequiredInput;
-  user?: UserUpdateOneRequiredWithoutItemsInput;
-  price?: Float;
-  amount?: Int;
+export interface FileSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: FileWhereInput;
+  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
+  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
+  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutLikedByInput {
@@ -2944,14 +3049,15 @@ export interface CommentUpsertWithWhereUniqueWithoutLikedByInput {
   create: CommentCreateWithoutLikedByInput;
 }
 
-export interface FileCreateInput {
-  fileId: String;
-  hash: String;
-  uri: String;
-  filename: String;
-  path: String;
-  mimetype: String;
-  extension: String;
+export interface ClientSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ClientWhereInput;
+  AND?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+  OR?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
+  NOT?: ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput;
 }
 
 export interface CommentScalarWhereInput {
@@ -2996,6 +3102,189 @@ export interface CommentScalarWhereInput {
   NOT?: CommentScalarWhereInput[] | CommentScalarWhereInput;
 }
 
+export type CommitteeWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput;
+  data: CommentUpdateManyDataInput;
+}
+
+export interface PurchaseUpdateInput {
+  items?: ItemUpdateManyInput;
+  transaction?: TransactionUpdateOneRequiredWithoutPurchaseInput;
+  total?: Float;
+  user?: UserUpdateOneRequiredWithoutPurchasesInput;
+  date?: DateTimeInput;
+}
+
+export interface CommentUpdateManyDataInput {
+  text?: String;
+  date?: DateTimeInput;
+}
+
+export interface ProductionUpdateInput {
+  title?: String;
+  description?: String;
+  image?: String;
+  index?: Int;
+  show?: Boolean;
+}
+
+export interface InvitationUpdateManyWithoutUserInput {
+  create?:
+    | InvitationCreateWithoutUserInput[]
+    | InvitationCreateWithoutUserInput;
+  delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  set?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  update?:
+    | InvitationUpdateWithWhereUniqueWithoutUserInput[]
+    | InvitationUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | InvitationUpsertWithWhereUniqueWithoutUserInput[]
+    | InvitationUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
+  updateMany?:
+    | InvitationUpdateManyWithWhereNestedInput[]
+    | InvitationUpdateManyWithWhereNestedInput;
+}
+
+export interface ClientWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  identity?: String;
+  identity_not?: String;
+  identity_in?: String[] | String;
+  identity_not_in?: String[] | String;
+  identity_lt?: String;
+  identity_lte?: String;
+  identity_gt?: String;
+  identity_gte?: String;
+  identity_contains?: String;
+  identity_not_contains?: String;
+  identity_starts_with?: String;
+  identity_not_starts_with?: String;
+  identity_ends_with?: String;
+  identity_not_ends_with?: String;
+  secret?: String;
+  secret_not?: String;
+  secret_in?: String[] | String;
+  secret_not_in?: String[] | String;
+  secret_lt?: String;
+  secret_lte?: String;
+  secret_gt?: String;
+  secret_gte?: String;
+  secret_contains?: String;
+  secret_not_contains?: String;
+  secret_starts_with?: String;
+  secret_not_starts_with?: String;
+  secret_ends_with?: String;
+  secret_not_ends_with?: String;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  trusted?: Boolean;
+  trusted_not?: Boolean;
+  AND?: ClientWhereInput[] | ClientWhereInput;
+  OR?: ClientWhereInput[] | ClientWhereInput;
+  NOT?: ClientWhereInput[] | ClientWhereInput;
+}
+
+export interface InvitationUpdateWithWhereUniqueWithoutUserInput {
+  where: InvitationWhereUniqueInput;
+  data: InvitationUpdateWithoutUserDataInput;
+}
+
+export type InvitationWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface InvitationUpdateWithoutUserDataInput {
+  committee?: CommitteeUpdateOneRequiredWithoutInvitationsInput;
+  status?: InvitationStatus;
+}
+
+export type ItemWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CommitteeUpdateOneRequiredWithoutInvitationsInput {
+  create?: CommitteeCreateWithoutInvitationsInput;
+  update?: CommitteeUpdateWithoutInvitationsDataInput;
+  upsert?: CommitteeUpsertWithoutInvitationsInput;
+  connect?: CommitteeWhereUniqueInput;
+}
+
+export type PaymentWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CommitteeUpdateWithoutInvitationsDataInput {
+  creator?: UserUpdateOneRequiredInput;
+  members?: UserUpdateManyInput;
+  event?: EventUpdateOneRequiredWithoutCommitteeInput;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export type ProductWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
+}
+
 export interface EventCreateInput {
   title: String;
   description: String;
@@ -3007,38 +3296,59 @@ export interface EventCreateInput {
   committee: CommitteeCreateOneWithoutEventInput;
 }
 
-export interface CommentUpdateManyWithWhereNestedInput {
-  where: CommentScalarWhereInput;
-  data: CommentUpdateManyDataInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
-export interface EventUpdateOneRequiredWithoutCommitteeInput {
-  create?: EventCreateWithoutCommitteeInput;
-  update?: EventUpdateWithoutCommitteeDataInput;
-  upsert?: EventUpsertWithoutCommitteeInput;
-  connect?: EventWhereUniqueInput;
+export interface CommitteeCreateInput {
+  creator: UserCreateOneInput;
+  members?: UserCreateManyInput;
+  event: EventCreateOneWithoutCommitteeInput;
+  invitations?: InvitationCreateManyWithoutCommitteeInput;
 }
 
-export interface CommentUpdateManyDataInput {
-  text?: String;
-  date?: DateTimeInput;
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  update?:
+    | UserUpdateWithWhereUniqueNestedInput[]
+    | UserUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueNestedInput[]
+    | UserUpsertWithWhereUniqueNestedInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface EventCreateOneWithoutCommitteeInput {
-  create?: EventCreateWithoutCommitteeInput;
-  connect?: EventWhereUniqueInput;
-}
+export type PurchaseWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
-export interface UserUpsertWithWhereUniqueWithoutLikedEventsInput {
+export interface UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedEventsDataInput;
-  create: UserCreateWithoutLikedEventsInput;
+  data: UserUpdateDataInput;
 }
 
-export interface UserUpsertWithoutCommentsInput {
-  update: UserUpdateWithoutCommentsDataInput;
-  create: UserCreateWithoutCommentsInput;
+export type TransactionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
 
 export interface UserScalarWhereInput {
   id?: ID_Input;
@@ -3128,7 +3438,141 @@ export interface UserScalarWhereInput {
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface PurchaseScalarWhereInput {
+export interface PaymentUpdateManyWithWhereNestedInput {
+  where: PaymentScalarWhereInput;
+  data: PaymentUpdateManyDataInput;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface UserCreateWithoutCommentsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface UserUpdateManyDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  role?: UserRole;
+  balance?: Float;
+}
+
+export interface ItemCreateInput {
+  product: ProductCreateOneInput;
+  user: UserCreateOneWithoutItemsInput;
+  price: Float;
+  amount: Int;
+}
+
+export interface EventUpdateOneRequiredWithoutCommitteeInput {
+  create?: EventCreateWithoutCommitteeInput;
+  update?: EventUpdateWithoutCommitteeDataInput;
+  upsert?: EventUpsertWithoutCommitteeInput;
+  connect?: EventWhereUniqueInput;
+}
+
+export interface UserCreateWithoutItemsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface EventUpdateWithoutCommitteeDataInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
+  comments?: CommentUpdateManyWithoutEventInput;
+  likedBy?: UserUpdateManyWithoutLikedEventsInput;
+  owner?: UserUpdateOneRequiredInput;
+}
+
+export interface TransactionCreateWithoutPaymentInput {
+  user: UserCreateOneWithoutTransactionsInput;
+  date: DateTimeInput;
+  type: TransactionType;
+  balance: Float;
+  purchase?: PurchaseCreateOneWithoutTransactionInput;
+}
+
+export interface EventUpsertWithoutCommitteeInput {
+  update: EventUpdateWithoutCommitteeDataInput;
+  create: EventCreateWithoutCommitteeInput;
+}
+
+export interface ItemCreateWithoutUserInput {
+  product: ProductCreateOneInput;
+  price: Float;
+  amount: Int;
+}
+
+export interface CommitteeUpsertWithoutInvitationsInput {
+  update: CommitteeUpdateWithoutInvitationsDataInput;
+  create: CommitteeCreateWithoutInvitationsInput;
+}
+
+export interface UserCreateWithoutLikedPostsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface InvitationUpsertWithWhereUniqueWithoutUserInput {
+  where: InvitationWhereUniqueInput;
+  update: InvitationUpdateWithoutUserDataInput;
+  create: InvitationCreateWithoutUserInput;
+}
+
+export interface PaymentCreateWithoutTransactionInput {
+  amount: Float;
+  user: UserCreateOneWithoutPaymentsInput;
+  date: DateTimeInput;
+  verified?: Boolean;
+}
+
+export interface InvitationScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -3143,72 +3587,188 @@ export interface PurchaseScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  total?: Float;
-  total_not?: Float;
-  total_in?: Float[] | Float;
-  total_not_in?: Float[] | Float;
-  total_lt?: Float;
-  total_lte?: Float;
-  total_gt?: Float;
-  total_gte?: Float;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  AND?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
-  OR?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
-  NOT?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+  status?: InvitationStatus;
+  status_not?: InvitationStatus;
+  status_in?: InvitationStatus[] | InvitationStatus;
+  status_not_in?: InvitationStatus[] | InvitationStatus;
+  AND?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
+  OR?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
+  NOT?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
 }
 
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
+export interface PostCreateWithoutLikedByInput {
+  text: String;
+  image?: String;
+  author: UserCreateOneWithoutPostsInput;
+  comments?: CommentCreateManyWithoutPostInput;
+  date: DateTimeInput;
 }
 
-export interface ClientUpdateInput {
-  identity?: String;
-  secret?: String;
-  name?: String;
-  trusted?: Boolean;
+export interface InvitationUpdateManyWithWhereNestedInput {
+  where: InvitationScalarWhereInput;
+  data: InvitationUpdateManyDataInput;
 }
 
-export interface UserUpdateManyDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
+export interface EventCreateWithoutLikedByInput {
+  title: String;
+  description: String;
+  date: DateTimeInput;
+  image: String;
+  comments?: CommentCreateManyWithoutEventInput;
+  owner: UserCreateOneInput;
+  committee: CommitteeCreateOneWithoutEventInput;
+}
+
+export interface InvitationUpdateManyDataInput {
+  status?: InvitationStatus;
+}
+
+export interface UserCreateWithoutLikedCommentsInput {
+  name: String;
+  email: String;
+  password: String;
   avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
   role?: UserRole;
   balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
 }
 
-export interface CommentCreateInput {
+export interface UserUpsertWithWhereUniqueWithoutLikedEventsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLikedEventsDataInput;
+  create: UserCreateWithoutLikedEventsInput;
+}
+
+export interface PostCreateWithoutCommentsInput {
   text: String;
+  image?: String;
+  author: UserCreateOneWithoutPostsInput;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
   date: DateTimeInput;
-  author: UserCreateOneWithoutCommentsInput;
-  likedBy?: UserCreateManyWithoutLikedCommentsInput;
-  post?: PostCreateOneWithoutCommentsInput;
-  event?: EventCreateOneWithoutCommentsInput;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
+export interface CommitteeUpdateOneRequiredWithoutEventInput {
+  create?: CommitteeCreateWithoutEventInput;
+  update?: CommitteeUpdateWithoutEventDataInput;
+  upsert?: CommitteeUpsertWithoutEventInput;
+  connect?: CommitteeWhereUniqueInput;
+}
+
+export interface UserCreateWithoutLikedEventsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface CommitteeUpdateWithoutEventDataInput {
+  creator?: UserUpdateOneRequiredInput;
+  members?: UserUpdateManyInput;
+  invitations?: InvitationUpdateManyWithoutCommitteeInput;
+}
+
+export interface InvitationCreateWithoutUserInput {
+  committee: CommitteeCreateOneWithoutInvitationsInput;
+  status?: InvitationStatus;
+}
+
+export interface InvitationUpdateManyWithoutCommitteeInput {
+  create?:
+    | InvitationCreateWithoutCommitteeInput[]
+    | InvitationCreateWithoutCommitteeInput;
+  delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  set?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  update?:
+    | InvitationUpdateWithWhereUniqueWithoutCommitteeInput[]
+    | InvitationUpdateWithWhereUniqueWithoutCommitteeInput;
+  upsert?:
+    | InvitationUpsertWithWhereUniqueWithoutCommitteeInput[]
+    | InvitationUpsertWithWhereUniqueWithoutCommitteeInput;
+  deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
+  updateMany?:
+    | InvitationUpdateManyWithWhereNestedInput[]
+    | InvitationUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface InvitationUpdateWithWhereUniqueWithoutCommitteeInput {
+  where: InvitationWhereUniqueInput;
+  data: InvitationUpdateWithoutCommitteeDataInput;
+}
+
+export interface CommitteeCreateOneWithoutEventInput {
+  create?: CommitteeCreateWithoutEventInput;
+  connect?: CommitteeWhereUniqueInput;
+}
+
+export interface InvitationUpdateWithoutCommitteeDataInput {
+  user?: UserUpdateOneRequiredWithoutInvitationsInput;
+  status?: InvitationStatus;
+}
+
+export interface UserCreateOneWithoutInvitationsInput {
+  create?: UserCreateWithoutInvitationsInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface PurchaseCreateWithoutUserInput {
-  items?: ItemCreateManyInput;
-  transaction: TransactionCreateOneWithoutPurchaseInput;
-  total: Float;
-  date: DateTimeInput;
+export interface UserUpdateOneRequiredWithoutInvitationsInput {
+  create?: UserCreateWithoutInvitationsInput;
+  update?: UserUpdateWithoutInvitationsDataInput;
+  upsert?: UserUpsertWithoutInvitationsInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateDataInput {
+export interface ProductSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ProductWhereInput;
+  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+}
+
+export interface UserUpdateWithoutInvitationsDataInput {
   name?: String;
   email?: String;
   password?: String;
@@ -3226,82 +3786,24 @@ export interface UserUpdateDataInput {
   likedComments?: CommentUpdateManyWithoutLikedByInput;
 }
 
-export interface ProductCreateInput {
-  name: String;
-  price: Float;
-  index: Int;
-  thumbnail?: String;
-  deleted?: Boolean;
+export interface CommitteeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CommitteeWhereInput;
+  AND?: CommitteeSubscriptionWhereInput[] | CommitteeSubscriptionWhereInput;
+  OR?: CommitteeSubscriptionWhereInput[] | CommitteeSubscriptionWhereInput;
+  NOT?: CommitteeSubscriptionWhereInput[] | CommitteeSubscriptionWhereInput;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithoutInvitationsInput {
+  update: UserUpdateWithoutInvitationsDataInput;
+  create: UserCreateWithoutInvitationsInput;
 }
 
-export interface PaymentCreateWithoutUserInput {
-  amount: Float;
-  date: DateTimeInput;
-  verified?: Boolean;
-  transaction: TransactionCreateOneWithoutPaymentInput;
-}
-
-export interface CommitteeUpdateOneRequiredWithoutEventInput {
-  create?: CommitteeCreateWithoutEventInput;
-  update?: CommitteeUpdateWithoutEventDataInput;
-  upsert?: CommitteeUpsertWithoutEventInput;
-  connect?: CommitteeWhereUniqueInput;
-}
-
-export interface UserCreateWithoutTransactionsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-}
-
-export interface CommitteeUpdateWithoutEventDataInput {
-  creator?: UserUpdateOneRequiredInput;
-  members?: UserUpdateManyInput;
-}
-
-export interface PostCreateWithoutAuthorInput {
-  text: String;
-  image?: String;
-  likedBy?: UserCreateManyWithoutLikedPostsInput;
-  comments?: CommentCreateManyWithoutPostInput;
-  date: DateTimeInput;
-}
-
-export interface UserUpdateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  update?:
-    | UserUpdateWithWhereUniqueNestedInput[]
-    | UserUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueNestedInput[]
-    | UserUpsertWithWhereUniqueNestedInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface TransactionCreateWithoutUserInput {
+export interface TransactionCreateInput {
+  user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
   balance: Float;
@@ -3309,49 +3811,18 @@ export interface TransactionCreateWithoutUserInput {
   purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
 
-export interface UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateDataInput;
+export interface InvitationUpsertWithWhereUniqueWithoutCommitteeInput {
+  where: InvitationWhereUniqueInput;
+  update: InvitationUpdateWithoutCommitteeDataInput;
+  create: InvitationCreateWithoutCommitteeInput;
 }
 
-export interface UserCreateWithoutPaymentsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-}
-
-export interface UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface UserCreateWithoutPostsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
+export interface ProductionCreateInput {
+  title: String;
+  description: String;
+  image: String;
+  index: Int;
+  show?: Boolean;
 }
 
 export interface CommitteeUpsertWithoutEventInput {
@@ -3359,12 +3830,13 @@ export interface CommitteeUpsertWithoutEventInput {
   create: CommitteeCreateWithoutEventInput;
 }
 
-export interface CommentCreateWithoutEventInput {
+export interface PostCreateInput {
   text: String;
+  image?: String;
+  author: UserCreateOneWithoutPostsInput;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
+  comments?: CommentCreateManyWithoutPostInput;
   date: DateTimeInput;
-  author: UserCreateOneWithoutCommentsInput;
-  likedBy?: UserCreateManyWithoutLikedCommentsInput;
-  post?: PostCreateOneWithoutCommentsInput;
 }
 
 export interface EventUpsertWithoutCommentsInput {
@@ -3372,12 +3844,8 @@ export interface EventUpsertWithoutCommentsInput {
   create: EventCreateWithoutCommentsInput;
 }
 
-export interface CommentCreateWithoutAuthorInput {
-  text: String;
-  date: DateTimeInput;
-  likedBy?: UserCreateManyWithoutLikedCommentsInput;
-  post?: PostCreateOneWithoutCommentsInput;
-  event?: EventCreateOneWithoutCommentsInput;
+export interface InvitationUpdateManyMutationInput {
+  status?: InvitationStatus;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
@@ -3386,14 +3854,11 @@ export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
   create: CommentCreateWithoutAuthorInput;
 }
 
-export interface EventCreateWithoutCommentsInput {
-  title: String;
-  description: String;
-  date: DateTimeInput;
-  image: String;
-  likedBy?: UserCreateManyWithoutLikedEventsInput;
-  owner: UserCreateOneInput;
-  committee: CommitteeCreateOneWithoutEventInput;
+export interface EventUpdateManyMutationInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
@@ -3402,12 +3867,9 @@ export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
   create: UserCreateWithoutLikedCommentsInput;
 }
 
-export interface CommentCreateWithoutLikedByInput {
-  text: String;
-  date: DateTimeInput;
-  author: UserCreateOneWithoutCommentsInput;
-  post?: PostCreateOneWithoutCommentsInput;
-  event?: EventCreateOneWithoutCommentsInput;
+export interface UserUpsertWithoutCommentsInput {
+  update: UserUpdateWithoutCommentsDataInput;
+  create: UserCreateWithoutCommentsInput;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutEventInput {
@@ -3416,9 +3878,12 @@ export interface CommentUpsertWithWhereUniqueWithoutEventInput {
   create: CommentCreateWithoutEventInput;
 }
 
-export interface CommitteeCreateWithoutEventInput {
-  creator: UserCreateOneInput;
-  members?: UserCreateManyInput;
+export interface TransactionUpdateWithoutPurchaseDataInput {
+  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+  payment?: PaymentUpdateOneWithoutTransactionInput;
 }
 
 export interface EventUpsertWithWhereUniqueWithoutLikedByInput {
@@ -3427,15 +3892,11 @@ export interface EventUpsertWithWhereUniqueWithoutLikedByInput {
   create: EventCreateWithoutLikedByInput;
 }
 
-export interface ProductSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ProductWhereInput;
-  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
-  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
-  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput;
+export interface ClientUpdateInput {
+  identity?: String;
+  secret?: String;
+  name?: String;
+  trusted?: Boolean;
 }
 
 export interface EventScalarWhereInput {
@@ -3508,15 +3969,11 @@ export interface EventScalarWhereInput {
   NOT?: EventScalarWhereInput[] | EventScalarWhereInput;
 }
 
-export interface CommentSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CommentWhereInput;
-  AND?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-  OR?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-  NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+export interface PurchaseCreateWithoutUserInput {
+  items?: ItemCreateManyInput;
+  transaction: TransactionCreateOneWithoutPurchaseInput;
+  total: Float;
+  date: DateTimeInput;
 }
 
 export interface EventUpdateManyWithWhereNestedInput {
@@ -3524,9 +3981,11 @@ export interface EventUpdateManyWithWhereNestedInput {
   data: EventUpdateManyDataInput;
 }
 
-export interface PurchaseUpdateManyMutationInput {
-  total?: Float;
-  date?: DateTimeInput;
+export interface PaymentCreateWithoutUserInput {
+  amount: Float;
+  date: DateTimeInput;
+  verified?: Boolean;
+  transaction: TransactionCreateOneWithoutPaymentInput;
 }
 
 export interface EventUpdateManyDataInput {
@@ -3536,68 +3995,12 @@ export interface EventUpdateManyDataInput {
   image?: String;
 }
 
-export interface ClientWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  identity?: String;
-  identity_not?: String;
-  identity_in?: String[] | String;
-  identity_not_in?: String[] | String;
-  identity_lt?: String;
-  identity_lte?: String;
-  identity_gt?: String;
-  identity_gte?: String;
-  identity_contains?: String;
-  identity_not_contains?: String;
-  identity_starts_with?: String;
-  identity_not_starts_with?: String;
-  identity_ends_with?: String;
-  identity_not_ends_with?: String;
-  secret?: String;
-  secret_not?: String;
-  secret_in?: String[] | String;
-  secret_not_in?: String[] | String;
-  secret_lt?: String;
-  secret_lte?: String;
-  secret_gt?: String;
-  secret_gte?: String;
-  secret_contains?: String;
-  secret_not_contains?: String;
-  secret_starts_with?: String;
-  secret_not_starts_with?: String;
-  secret_ends_with?: String;
-  secret_not_ends_with?: String;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  trusted?: Boolean;
-  trusted_not?: Boolean;
-  AND?: ClientWhereInput[] | ClientWhereInput;
-  OR?: ClientWhereInput[] | ClientWhereInput;
-  NOT?: ClientWhereInput[] | ClientWhereInput;
+export interface PostCreateWithoutAuthorInput {
+  text: String;
+  image?: String;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
+  comments?: CommentCreateManyWithoutPostInput;
+  date: DateTimeInput;
 }
 
 export interface UserUpsertWithoutPostsInput {
@@ -3605,9 +4008,23 @@ export interface UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput;
 }
 
-export type PaymentWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface UserCreateWithoutPaymentsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
 
 export interface CommentUpdateManyWithoutPostInput {
   create?: CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput;
@@ -3627,18 +4044,27 @@ export interface CommentUpdateManyWithoutPostInput {
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export type ProductWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface CommentCreateWithoutEventInput {
+  text: String;
+  date: DateTimeInput;
+  author: UserCreateOneWithoutCommentsInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+}
 
 export interface CommentUpdateWithWhereUniqueWithoutPostInput {
   where: CommentWhereUniqueInput;
   data: CommentUpdateWithoutPostDataInput;
 }
 
-export interface EventUpsertWithoutCommitteeInput {
-  update: EventUpdateWithoutCommitteeDataInput;
-  create: EventCreateWithoutCommitteeInput;
+export interface EventCreateWithoutCommentsInput {
+  title: String;
+  description: String;
+  date: DateTimeInput;
+  image: String;
+  likedBy?: UserCreateManyWithoutLikedEventsInput;
+  owner: UserCreateOneInput;
+  committee: CommitteeCreateOneWithoutEventInput;
 }
 
 export interface CommentUpdateWithoutPostDataInput {
@@ -3649,9 +4075,11 @@ export interface CommentUpdateWithoutPostDataInput {
   event?: EventUpdateOneWithoutCommentsInput;
 }
 
-export type TransactionWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface CommitteeCreateWithoutInvitationsInput {
+  creator: UserCreateOneInput;
+  members?: UserCreateManyInput;
+  event: EventCreateOneWithoutCommitteeInput;
+}
 
 export interface CommentUpsertWithWhereUniqueWithoutPostInput {
   where: CommentWhereUniqueInput;
@@ -3659,21 +4087,11 @@ export interface CommentUpsertWithWhereUniqueWithoutPostInput {
   create: CommentCreateWithoutPostInput;
 }
 
-export interface UserCreateWithoutCommentsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
+export interface InvitationCreateManyWithoutCommitteeInput {
+  create?:
+    | InvitationCreateWithoutCommitteeInput[]
+    | InvitationCreateWithoutCommitteeInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
 }
 
 export interface PostUpsertWithWhereUniqueWithoutLikedByInput {
@@ -3682,21 +4100,15 @@ export interface PostUpsertWithWhereUniqueWithoutLikedByInput {
   create: PostCreateWithoutLikedByInput;
 }
 
-export interface UserCreateWithoutItemsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
+export interface ItemSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ItemWhereInput;
+  AND?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+  OR?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+  NOT?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
 }
 
 export interface PostScalarWhereInput {
@@ -3755,10 +4167,12 @@ export interface PostScalarWhereInput {
   NOT?: PostScalarWhereInput[] | PostScalarWhereInput;
 }
 
-export interface ItemCreateWithoutUserInput {
-  product: ProductCreateOneInput;
-  price: Float;
-  amount: Int;
+export interface PurchaseCreateInput {
+  items?: ItemCreateManyInput;
+  transaction: TransactionCreateOneWithoutPurchaseInput;
+  total: Float;
+  user: UserCreateOneWithoutPurchasesInput;
+  date: DateTimeInput;
 }
 
 export interface PostUpdateManyWithWhereNestedInput {
@@ -3766,11 +4180,12 @@ export interface PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput;
 }
 
-export interface PaymentCreateWithoutTransactionInput {
+export interface PaymentCreateInput {
   amount: Float;
   user: UserCreateOneWithoutPaymentsInput;
   date: DateTimeInput;
   verified?: Boolean;
+  transaction: TransactionCreateOneWithoutPaymentInput;
 }
 
 export interface PostUpdateManyDataInput {
@@ -3779,14 +4194,11 @@ export interface PostUpdateManyDataInput {
   date?: DateTimeInput;
 }
 
-export interface EventCreateWithoutLikedByInput {
-  title: String;
-  description: String;
-  date: DateTimeInput;
-  image: String;
-  comments?: CommentCreateManyWithoutEventInput;
-  owner: UserCreateOneInput;
-  committee: CommitteeCreateOneWithoutEventInput;
+export interface CommitteeUpdateInput {
+  creator?: UserUpdateOneRequiredInput;
+  members?: UserUpdateManyInput;
+  event?: EventUpdateOneRequiredWithoutCommitteeInput;
+  invitations?: InvitationUpdateManyWithoutCommitteeInput;
 }
 
 export interface UserUpsertWithoutPaymentsInput {
@@ -3794,12 +4206,9 @@ export interface UserUpsertWithoutPaymentsInput {
   create: UserCreateWithoutPaymentsInput;
 }
 
-export interface PostCreateWithoutCommentsInput {
-  text: String;
-  image?: String;
-  author: UserCreateOneWithoutPostsInput;
-  likedBy?: UserCreateManyWithoutLikedPostsInput;
-  date: DateTimeInput;
+export interface UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput;
+  create: UserCreateWithoutItemsInput;
 }
 
 export interface PaymentUpsertWithoutTransactionInput {
@@ -3807,22 +4216,12 @@ export interface PaymentUpsertWithoutTransactionInput {
   create: PaymentCreateWithoutTransactionInput;
 }
 
-export interface UserCreateInput {
+export interface ProductCreateInput {
   name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
+  price: Float;
+  index: Int;
+  thumbnail?: String;
+  deleted?: Boolean;
 }
 
 export interface PurchaseUpdateOneWithoutTransactionInput {
@@ -3834,15 +4233,12 @@ export interface PurchaseUpdateOneWithoutTransactionInput {
   connect?: PurchaseWhereUniqueInput;
 }
 
-export interface ItemSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ItemWhereInput;
-  AND?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-  OR?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
-  NOT?: ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput;
+export interface TransactionCreateWithoutUserInput {
+  date: DateTimeInput;
+  type: TransactionType;
+  balance: Float;
+  payment?: PaymentCreateOneWithoutTransactionInput;
+  purchase?: PurchaseCreateOneWithoutTransactionInput;
 }
 
 export interface PurchaseUpdateWithoutTransactionDataInput {
@@ -3852,12 +4248,12 @@ export interface PurchaseUpdateWithoutTransactionDataInput {
   date?: DateTimeInput;
 }
 
-export interface ProductionUpdateManyMutationInput {
-  title?: String;
-  description?: String;
-  image?: String;
-  index?: Int;
-  show?: Boolean;
+export interface CommentCreateWithoutAuthorInput {
+  text: String;
+  date: DateTimeInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
 export interface UserUpdateOneRequiredWithoutPurchasesInput {
@@ -3867,9 +4263,10 @@ export interface UserUpdateOneRequiredWithoutPurchasesInput {
   connect?: UserWhereUniqueInput;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface EventCreateOneWithoutCommitteeInput {
+  create?: EventCreateWithoutCommitteeInput;
+  connect?: EventWhereUniqueInput;
+}
 
 export interface UserUpdateWithoutPurchasesDataInput {
   name?: String;
@@ -3886,20 +4283,41 @@ export interface UserUpdateWithoutPurchasesDataInput {
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export type PurchaseWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface UserUpdateInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
+}
 
 export interface UserUpsertWithoutPurchasesInput {
   update: UserUpdateWithoutPurchasesDataInput;
   create: UserCreateWithoutPurchasesInput;
 }
 
-export interface TransactionUpsertWithoutPurchaseInput {
-  update: TransactionUpdateWithoutPurchaseDataInput;
-  create: TransactionCreateWithoutPurchaseInput;
+export interface FileUpdateManyMutationInput {
+  fileId?: String;
+  hash?: String;
+  uri?: String;
+  filename?: String;
+  path?: String;
+  mimetype?: String;
+  extension?: String;
 }
 
 export interface PurchaseUpsertWithoutTransactionInput {
@@ -3907,12 +4325,13 @@ export interface PurchaseUpsertWithoutTransactionInput {
   create: PurchaseCreateWithoutTransactionInput;
 }
 
-export interface TransactionCreateWithoutPaymentInput {
-  user: UserCreateOneWithoutTransactionsInput;
+export interface CommentCreateInput {
+  text: String;
   date: DateTimeInput;
-  type: TransactionType;
-  balance: Float;
-  purchase?: PurchaseCreateOneWithoutTransactionInput;
+  author: UserCreateOneWithoutCommentsInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
 export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
@@ -3921,12 +4340,39 @@ export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
   create: TransactionCreateWithoutUserInput;
 }
 
-export interface PostCreateWithoutLikedByInput {
-  text: String;
-  image?: String;
-  author: UserCreateOneWithoutPostsInput;
-  comments?: CommentCreateManyWithoutPostInput;
-  date: DateTimeInput;
+export interface UserCreateWithoutPostsInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutLikedPostsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLikedPostsDataInput;
+  create: UserCreateWithoutLikedPostsInput;
+}
+
+export interface TransactionUpdateManyDataInput {
+  date?: DateTimeInput;
+  type?: TransactionType;
+  balance?: Float;
+}
+
+export interface TransactionUpdateManyWithWhereNestedInput {
+  where: TransactionScalarWhereInput;
+  data: TransactionUpdateManyDataInput;
 }
 
 export interface TransactionScalarWhereInput {
@@ -3969,76 +4415,21 @@ export interface TransactionScalarWhereInput {
   NOT?: TransactionScalarWhereInput[] | TransactionScalarWhereInput;
 }
 
-export interface UserCreateWithoutLikedEventsInput {
+export interface CommentCreateWithoutLikedByInput {
+  text: String;
+  date: DateTimeInput;
+  author: UserCreateOneWithoutCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
+}
+
+export interface UserCreateWithoutTransactionsInput {
   name: String;
   email: String;
   password: String;
   avatar?: String;
   purchases?: PurchaseCreateManyWithoutUserInput;
   payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-}
-
-export interface TransactionUpdateManyWithWhereNestedInput {
-  where: TransactionScalarWhereInput;
-  data: TransactionUpdateManyDataInput;
-}
-
-export type CommitteeWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface TransactionUpdateManyDataInput {
-  date?: DateTimeInput;
-  type?: TransactionType;
-  balance?: Float;
-}
-
-export interface EventUpdateInput {
-  title?: String;
-  description?: String;
-  date?: DateTimeInput;
-  image?: String;
-  comments?: CommentUpdateManyWithoutEventInput;
-  likedBy?: UserUpdateManyWithoutLikedEventsInput;
-  owner?: UserUpdateOneRequiredInput;
-  committee?: CommitteeUpdateOneRequiredWithoutEventInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutLikedPostsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedPostsDataInput;
-  create: UserCreateWithoutLikedPostsInput;
-}
-
-export interface ItemCreateInput {
-  product: ProductCreateOneInput;
-  user: UserCreateOneWithoutItemsInput;
-  price: Float;
-  amount: Int;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutAuthorDataInput;
-  create: PostCreateWithoutAuthorInput;
-}
-
-export interface UserCreateWithoutLikedCommentsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
   items?: ItemCreateManyWithoutUserInput;
   role?: UserRole;
   balance?: Float;
@@ -4046,9 +4437,11 @@ export interface UserCreateWithoutLikedCommentsInput {
   likedPosts?: PostCreateManyWithoutLikedByInput;
   likedEvents?: EventCreateManyWithoutLikedByInput;
   comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
 }
 
-export interface PaymentScalarWhereInput {
+export interface PurchaseScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -4063,14 +4456,14 @@ export interface PaymentScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  amount?: Float;
-  amount_not?: Float;
-  amount_in?: Float[] | Float;
-  amount_not_in?: Float[] | Float;
-  amount_lt?: Float;
-  amount_lte?: Float;
-  amount_gt?: Float;
-  amount_gte?: Float;
+  total?: Float;
+  total_not?: Float;
+  total_in?: Float[] | Float;
+  total_not_in?: Float[] | Float;
+  total_lt?: Float;
+  total_lte?: Float;
+  total_gt?: Float;
+  total_gte?: Float;
   date?: DateTimeInput;
   date_not?: DateTimeInput;
   date_in?: DateTimeInput[] | DateTimeInput;
@@ -4079,27 +4472,17 @@ export interface PaymentScalarWhereInput {
   date_lte?: DateTimeInput;
   date_gt?: DateTimeInput;
   date_gte?: DateTimeInput;
-  verified?: Boolean;
-  verified_not?: Boolean;
-  AND?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
-  OR?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
-  NOT?: PaymentScalarWhereInput[] | PaymentScalarWhereInput;
+  AND?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+  OR?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
+  NOT?: PurchaseScalarWhereInput[] | PurchaseScalarWhereInput;
 }
 
-export interface PaymentUpsertWithWhereUniqueWithoutUserInput {
-  where: PaymentWhereUniqueInput;
-  update: PaymentUpdateWithoutUserDataInput;
-  create: PaymentCreateWithoutUserInput;
-}
-
-export interface TransactionUpsertWithoutPaymentInput {
-  update: TransactionUpdateWithoutPaymentDataInput;
-  create: TransactionCreateWithoutPaymentInput;
-}
-
-export interface UserUpsertWithoutTransactionsInput {
-  update: UserUpdateWithoutTransactionsDataInput;
-  create: UserCreateWithoutTransactionsInput;
+export interface ProductUpdateInput {
+  name?: String;
+  price?: Float;
+  index?: Int;
+  thumbnail?: String;
+  deleted?: Boolean;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -4112,32 +4495,6 @@ export interface UserSubscriptionWhereInput {
   OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
-
-export interface UserCreateWithoutLikedPostsInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export type ItemWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
 
 export interface NodeNode {
   id: ID_Output;
@@ -4177,61 +4534,20 @@ export interface UserPreviousValuesSubscription
   balance: () => Promise<AsyncIterator<Float>>;
 }
 
-export interface AggregateCommittee {
+export interface AggregateComment {
   count: Int;
 }
 
-export interface AggregateCommitteePromise
-  extends Promise<AggregateCommittee>,
+export interface AggregateCommentPromise
+  extends Promise<AggregateComment>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateCommitteeSubscription
-  extends Promise<AsyncIterator<AggregateCommittee>>,
+export interface AggregateCommentSubscription
+  extends Promise<AsyncIterator<AggregateComment>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PurchasePreviousValues {
-  id: ID_Output;
-  total: Float;
-  date: DateTimeOutput;
-}
-
-export interface PurchasePreviousValuesPromise
-  extends Promise<PurchasePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  total: () => Promise<Float>;
-  date: () => Promise<DateTimeOutput>;
-}
-
-export interface PurchasePreviousValuesSubscription
-  extends Promise<AsyncIterator<PurchasePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  total: () => Promise<AsyncIterator<Float>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface CommitteeEdge {
-  node: Committee;
-  cursor: String;
-}
-
-export interface CommitteeEdgePromise
-  extends Promise<CommitteeEdge>,
-    Fragmentable {
-  node: <T = CommitteePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CommitteeEdgeSubscription
-  extends Promise<AsyncIterator<CommitteeEdge>>,
-    Fragmentable {
-  node: <T = CommitteeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Purchase {
@@ -4280,49 +4596,21 @@ export interface PurchaseSubscription
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface CommitteeConnection {
-  pageInfo: PageInfo;
-  edges: CommitteeEdge[];
+export interface CommentEdge {
+  node: Comment;
+  cursor: String;
 }
 
-export interface CommitteeConnectionPromise
-  extends Promise<CommitteeConnection>,
+export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
+  node: <T = CommentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CommentEdgeSubscription
+  extends Promise<AsyncIterator<CommentEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CommitteeEdge>>() => T;
-  aggregate: <T = AggregateCommitteePromise>() => T;
-}
-
-export interface CommitteeConnectionSubscription
-  extends Promise<AsyncIterator<CommitteeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CommitteeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCommitteeSubscription>() => T;
-}
-
-export interface Item {
-  id: ID_Output;
-  price: Float;
-  amount: Int;
-}
-
-export interface ItemPromise extends Promise<Item>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  product: <T = ProductPromise>() => T;
-  user: <T = UserPromise>() => T;
-  price: () => Promise<Float>;
-  amount: () => Promise<Int>;
-}
-
-export interface ItemSubscription
-  extends Promise<AsyncIterator<Item>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  product: <T = ProductSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-  price: () => Promise<AsyncIterator<Float>>;
-  amount: () => Promise<AsyncIterator<Int>>;
+  node: <T = CommentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -4442,6 +4730,17 @@ export interface UserPromise extends Promise<User>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  invitations: <T = FragmentableArray<Invitation>>(
+    args?: {
+      where?: InvitationWhereInput;
+      orderBy?: InvitationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
 export interface UserSubscription
@@ -4553,88 +4852,17 @@ export interface UserSubscription
       last?: Int;
     }
   ) => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AggregateComment {
-  count: Int;
-}
-
-export interface AggregateCommentPromise
-  extends Promise<AggregateComment>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCommentSubscription
-  extends Promise<AsyncIterator<AggregateComment>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CommentEdge {
-  node: Comment;
-  cursor: String;
-}
-
-export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
-  node: <T = CommentPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CommentEdgeSubscription
-  extends Promise<AsyncIterator<CommentEdge>>,
-    Fragmentable {
-  node: <T = CommentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateTransaction {
-  count: Int;
-}
-
-export interface AggregateTransactionPromise
-  extends Promise<AggregateTransaction>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTransactionSubscription
-  extends Promise<AsyncIterator<AggregateTransaction>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  invitations: <T = Promise<AsyncIterator<InvitationSubscription>>>(
+    args?: {
+      where?: InvitationWhereInput;
+      orderBy?: InvitationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
 export interface CommentConnection {
@@ -4658,73 +4886,214 @@ export interface CommentConnectionSubscription
   aggregate: <T = AggregateCommentSubscription>() => T;
 }
 
-export interface TransactionConnection {
-  pageInfo: PageInfo;
-  edges: TransactionEdge[];
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface TransactionConnectionPromise
-  extends Promise<TransactionConnection>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TransactionEdge>>() => T;
-  aggregate: <T = AggregateTransactionPromise>() => T;
+  count: () => Promise<Long>;
 }
 
-export interface TransactionConnectionSubscription
-  extends Promise<AsyncIterator<TransactionConnection>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TransactionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTransactionSubscription>() => T;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface Product {
+export interface Invitation {
   id: ID_Output;
-  name: String;
-  price: Float;
-  index: Int;
-  thumbnail?: String;
-  deleted: Boolean;
+  status: InvitationStatus;
 }
 
-export interface ProductPromise extends Promise<Product>, Fragmentable {
+export interface InvitationPromise extends Promise<Invitation>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  price: () => Promise<Float>;
-  index: () => Promise<Int>;
-  thumbnail: () => Promise<String>;
-  deleted: () => Promise<Boolean>;
+  user: <T = UserPromise>() => T;
+  committee: <T = CommitteePromise>() => T;
+  status: () => Promise<InvitationStatus>;
 }
 
-export interface ProductSubscription
-  extends Promise<AsyncIterator<Product>>,
+export interface InvitationSubscription
+  extends Promise<AsyncIterator<Invitation>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Float>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  thumbnail: () => Promise<AsyncIterator<String>>;
-  deleted: () => Promise<AsyncIterator<Boolean>>;
+  user: <T = UserSubscription>() => T;
+  committee: <T = CommitteeSubscription>() => T;
+  status: () => Promise<AsyncIterator<InvitationStatus>>;
 }
 
-export interface PurchaseEdge {
-  node: Purchase;
+export interface UserEdge {
+  node: User;
   cursor: String;
 }
 
-export interface PurchaseEdgePromise
-  extends Promise<PurchaseEdge>,
-    Fragmentable {
-  node: <T = PurchasePromise>() => T;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface PurchaseEdgeSubscription
-  extends Promise<AsyncIterator<PurchaseEdge>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  node: <T = PurchaseSubscription>() => T;
+  node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TransactionSubscriptionPayload {
+  mutation: MutationType;
+  node: Transaction;
+  updatedFields: String[];
+  previousValues: TransactionPreviousValues;
+}
+
+export interface TransactionSubscriptionPayloadPromise
+  extends Promise<TransactionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransactionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransactionPreviousValuesPromise>() => T;
+}
+
+export interface TransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransactionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
+}
+
+export interface PurchasePreviousValues {
+  id: ID_Output;
+  total: Float;
+  date: DateTimeOutput;
+}
+
+export interface PurchasePreviousValuesPromise
+  extends Promise<PurchasePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  total: () => Promise<Float>;
+  date: () => Promise<DateTimeOutput>;
+}
+
+export interface PurchasePreviousValuesSubscription
+  extends Promise<AsyncIterator<PurchasePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  total: () => Promise<AsyncIterator<Float>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateTransaction {
+  count: Int;
+}
+
+export interface AggregateTransactionPromise
+  extends Promise<AggregateTransaction>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTransactionSubscription
+  extends Promise<AsyncIterator<AggregateTransaction>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface AggregatePurchase {
+  count: Int;
+}
+
+export interface AggregatePurchasePromise
+  extends Promise<AggregatePurchase>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePurchaseSubscription
+  extends Promise<AsyncIterator<AggregatePurchase>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TransactionEdge {
+  node: Transaction;
+  cursor: String;
+}
+
+export interface TransactionEdgePromise
+  extends Promise<TransactionEdge>,
+    Fragmentable {
+  node: <T = TransactionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TransactionEdgeSubscription
+  extends Promise<AsyncIterator<TransactionEdge>>,
+    Fragmentable {
+  node: <T = TransactionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PurchaseConnection {
+  pageInfo: PageInfo;
+  edges: PurchaseEdge[];
+}
+
+export interface PurchaseConnectionPromise
+  extends Promise<PurchaseConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PurchaseEdge>>() => T;
+  aggregate: <T = AggregatePurchasePromise>() => T;
+}
+
+export interface PurchaseConnectionSubscription
+  extends Promise<AsyncIterator<PurchaseConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PurchaseEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePurchaseSubscription>() => T;
 }
 
 export interface ClientSubscriptionPayload {
@@ -4752,20 +5121,23 @@ export interface ClientSubscriptionPayloadSubscription
   previousValues: <T = ClientPreviousValuesSubscription>() => T;
 }
 
-export interface AggregateProduction {
-  count: Int;
+export interface ProductionEdge {
+  node: Production;
+  cursor: String;
 }
 
-export interface AggregateProductionPromise
-  extends Promise<AggregateProduction>,
+export interface ProductionEdgePromise
+  extends Promise<ProductionEdge>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = ProductionPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateProductionSubscription
-  extends Promise<AsyncIterator<AggregateProduction>>,
+export interface ProductionEdgeSubscription
+  extends Promise<AsyncIterator<ProductionEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = ProductionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ClientPreviousValues {
@@ -4796,94 +5168,67 @@ export interface ClientPreviousValuesSubscription
   trusted: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface ProductionConnection {
-  pageInfo: PageInfo;
-  edges: ProductionEdge[];
+export interface Client {
+  id: ID_Output;
+  identity: String;
+  secret: String;
+  name: String;
+  trusted: Boolean;
 }
 
-export interface ProductionConnectionPromise
-  extends Promise<ProductionConnection>,
+export interface ClientPromise extends Promise<Client>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  identity: () => Promise<String>;
+  secret: () => Promise<String>;
+  name: () => Promise<String>;
+  trusted: () => Promise<Boolean>;
+}
+
+export interface ClientSubscription
+  extends Promise<AsyncIterator<Client>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  identity: () => Promise<AsyncIterator<String>>;
+  secret: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  trusted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface ClientConnection {
+  pageInfo: PageInfo;
+  edges: ClientEdge[];
+}
+
+export interface ClientConnectionPromise
+  extends Promise<ClientConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProductionEdge>>() => T;
-  aggregate: <T = AggregateProductionPromise>() => T;
+  edges: <T = FragmentableArray<ClientEdge>>() => T;
+  aggregate: <T = AggregateClientPromise>() => T;
 }
 
-export interface ProductionConnectionSubscription
-  extends Promise<AsyncIterator<ProductionConnection>>,
+export interface ClientConnectionSubscription
+  extends Promise<AsyncIterator<ClientConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProductionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProductionSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ClientEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateClientSubscription>() => T;
 }
 
-export interface Committee {
-  id: ID_Output;
+export interface AggregateProduct {
+  count: Int;
 }
 
-export interface CommitteePromise extends Promise<Committee>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  creator: <T = UserPromise>() => T;
-  members: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  event: <T = EventPromise>() => T;
-}
-
-export interface CommitteeSubscription
-  extends Promise<AsyncIterator<Committee>>,
+export interface AggregateProductPromise
+  extends Promise<AggregateProduct>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  creator: <T = UserSubscription>() => T;
-  members: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  event: <T = EventSubscription>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface Production {
-  id: ID_Output;
-  title: String;
-  description: String;
-  image: String;
-  index: Int;
-  show: Boolean;
-}
-
-export interface ProductionPromise extends Promise<Production>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  image: () => Promise<String>;
-  index: () => Promise<Int>;
-  show: () => Promise<Boolean>;
-}
-
-export interface ProductionSubscription
-  extends Promise<AsyncIterator<Production>>,
+export interface AggregateProductSubscription
+  extends Promise<AsyncIterator<AggregateProduct>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
-  index: () => Promise<AsyncIterator<Int>>;
-  show: () => Promise<AsyncIterator<Boolean>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface CommentSubscriptionPayload {
@@ -4911,21 +5256,25 @@ export interface CommentSubscriptionPayloadSubscription
   previousValues: <T = CommentPreviousValuesSubscription>() => T;
 }
 
-export interface ProductEdge {
-  node: Product;
-  cursor: String;
+export interface ProductConnection {
+  pageInfo: PageInfo;
+  edges: ProductEdge[];
 }
 
-export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
-  node: <T = ProductPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ProductEdgeSubscription
-  extends Promise<AsyncIterator<ProductEdge>>,
+export interface ProductConnectionPromise
+  extends Promise<ProductConnection>,
     Fragmentable {
-  node: <T = ProductSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProductEdge>>() => T;
+  aggregate: <T = AggregateProductPromise>() => T;
+}
+
+export interface ProductConnectionSubscription
+  extends Promise<AsyncIterator<ProductConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProductSubscription>() => T;
 }
 
 export interface CommentPreviousValues {
@@ -4950,29 +5299,177 @@ export interface CommentPreviousValuesSubscription
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface TransactionSubscriptionPayload {
-  mutation: MutationType;
-  node: Transaction;
-  updatedFields: String[];
-  previousValues: TransactionPreviousValues;
+export interface AggregatePost {
+  count: Int;
 }
 
-export interface TransactionSubscriptionPayloadPromise
-  extends Promise<TransactionSubscriptionPayload>,
+export interface AggregatePostPromise
+  extends Promise<AggregatePost>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePostSubscription
+  extends Promise<AsyncIterator<AggregatePost>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Committee {
+  id: ID_Output;
+}
+
+export interface CommitteePromise extends Promise<Committee>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  creator: <T = UserPromise>() => T;
+  members: <T = FragmentableArray<User>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  event: <T = EventPromise>() => T;
+  invitations: <T = FragmentableArray<Invitation>>(
+    args?: {
+      where?: InvitationWhereInput;
+      orderBy?: InvitationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface CommitteeSubscription
+  extends Promise<AsyncIterator<Committee>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  creator: <T = UserSubscription>() => T;
+  members: <T = Promise<AsyncIterator<UserSubscription>>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  event: <T = EventSubscription>() => T;
+  invitations: <T = Promise<AsyncIterator<InvitationSubscription>>>(
+    args?: {
+      where?: InvitationWhereInput;
+      orderBy?: InvitationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
+}
+
+export interface CommitteeSubscriptionPayload {
+  mutation: MutationType;
+  node: Committee;
+  updatedFields: String[];
+  previousValues: CommitteePreviousValues;
+}
+
+export interface CommitteeSubscriptionPayloadPromise
+  extends Promise<CommitteeSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = TransactionPromise>() => T;
+  node: <T = CommitteePromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = TransactionPreviousValuesPromise>() => T;
+  previousValues: <T = CommitteePreviousValuesPromise>() => T;
 }
 
-export interface TransactionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TransactionSubscriptionPayload>>,
+export interface CommitteeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CommitteeSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TransactionSubscription>() => T;
+  node: <T = CommitteeSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
+  previousValues: <T = CommitteePreviousValuesSubscription>() => T;
+}
+
+export interface PaymentEdge {
+  node: Payment;
+  cursor: String;
+}
+
+export interface PaymentEdgePromise extends Promise<PaymentEdge>, Fragmentable {
+  node: <T = PaymentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PaymentEdgeSubscription
+  extends Promise<AsyncIterator<PaymentEdge>>,
+    Fragmentable {
+  node: <T = PaymentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CommitteePreviousValues {
+  id: ID_Output;
+}
+
+export interface CommitteePreviousValuesPromise
+  extends Promise<CommitteePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface CommitteePreviousValuesSubscription
+  extends Promise<AsyncIterator<CommitteePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface AggregateItem {
+  count: Int;
+}
+
+export interface AggregateItemPromise
+  extends Promise<AggregateItem>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateItemSubscription
+  extends Promise<AsyncIterator<AggregateItem>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Event {
@@ -5049,137 +5546,25 @@ export interface EventSubscription
   committee: <T = CommitteeSubscription>() => T;
 }
 
-export interface PostEdge {
-  node: Post;
-  cursor: String;
-}
-
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
-    Fragmentable {
-  node: <T = PostSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CommitteeSubscriptionPayload {
-  mutation: MutationType;
-  node: Committee;
-  updatedFields: String[];
-  previousValues: CommitteePreviousValues;
-}
-
-export interface CommitteeSubscriptionPayloadPromise
-  extends Promise<CommitteeSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CommitteePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CommitteePreviousValuesPromise>() => T;
-}
-
-export interface CommitteeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CommitteeSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CommitteeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CommitteePreviousValuesSubscription>() => T;
-}
-
-export interface AggregatePayment {
-  count: Int;
-}
-
-export interface AggregatePaymentPromise
-  extends Promise<AggregatePayment>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePaymentSubscription
-  extends Promise<AsyncIterator<AggregatePayment>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CommitteePreviousValues {
-  id: ID_Output;
-}
-
-export interface CommitteePreviousValuesPromise
-  extends Promise<CommitteePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-}
-
-export interface CommitteePreviousValuesSubscription
-  extends Promise<AsyncIterator<CommitteePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-}
-
-export interface PaymentConnection {
+export interface ItemConnection {
   pageInfo: PageInfo;
-  edges: PaymentEdge[];
+  edges: ItemEdge[];
 }
 
-export interface PaymentConnectionPromise
-  extends Promise<PaymentConnection>,
+export interface ItemConnectionPromise
+  extends Promise<ItemConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PaymentEdge>>() => T;
-  aggregate: <T = AggregatePaymentPromise>() => T;
+  edges: <T = FragmentableArray<ItemEdge>>() => T;
+  aggregate: <T = AggregateItemPromise>() => T;
 }
 
-export interface PaymentConnectionSubscription
-  extends Promise<AsyncIterator<PaymentConnection>>,
+export interface ItemConnectionSubscription
+  extends Promise<AsyncIterator<ItemConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePaymentSubscription>() => T;
-}
-
-export interface ClientConnection {
-  pageInfo: PageInfo;
-  edges: ClientEdge[];
-}
-
-export interface ClientConnectionPromise
-  extends Promise<ClientConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ClientEdge>>() => T;
-  aggregate: <T = AggregateClientPromise>() => T;
-}
-
-export interface ClientConnectionSubscription
-  extends Promise<AsyncIterator<ClientConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ClientEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateClientSubscription>() => T;
-}
-
-export interface ItemEdge {
-  node: Item;
-  cursor: String;
-}
-
-export interface ItemEdgePromise extends Promise<ItemEdge>, Fragmentable {
-  node: <T = ItemPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ItemEdgeSubscription
-  extends Promise<AsyncIterator<ItemEdge>>,
-    Fragmentable {
-  node: <T = ItemSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  edges: <T = Promise<AsyncIterator<ItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateItemSubscription>() => T;
 }
 
 export interface EventSubscriptionPayload {
@@ -5207,20 +5592,23 @@ export interface EventSubscriptionPayloadSubscription
   previousValues: <T = EventPreviousValuesSubscription>() => T;
 }
 
-export interface AggregateFile {
-  count: Int;
+export interface InvitationEdge {
+  node: Invitation;
+  cursor: String;
 }
 
-export interface AggregateFilePromise
-  extends Promise<AggregateFile>,
+export interface InvitationEdgePromise
+  extends Promise<InvitationEdge>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = InvitationPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateFileSubscription
-  extends Promise<AsyncIterator<AggregateFile>>,
+export interface InvitationEdgeSubscription
+  extends Promise<AsyncIterator<InvitationEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = InvitationSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface EventPreviousValues {
@@ -5251,25 +5639,20 @@ export interface EventPreviousValuesSubscription
   image: () => Promise<AsyncIterator<String>>;
 }
 
-export interface FileConnection {
-  pageInfo: PageInfo;
-  edges: FileEdge[];
+export interface AggregateFile {
+  count: Int;
 }
 
-export interface FileConnectionPromise
-  extends Promise<FileConnection>,
+export interface AggregateFilePromise
+  extends Promise<AggregateFile>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<FileEdge>>() => T;
-  aggregate: <T = AggregateFilePromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface FileConnectionSubscription
-  extends Promise<AsyncIterator<FileConnection>>,
+export interface AggregateFileSubscription
+  extends Promise<AsyncIterator<AggregateFile>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<FileEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateFileSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PageInfo {
@@ -5295,20 +5678,25 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateEvent {
-  count: Int;
+export interface FileConnection {
+  pageInfo: PageInfo;
+  edges: FileEdge[];
 }
 
-export interface AggregateEventPromise
-  extends Promise<AggregateEvent>,
+export interface FileConnectionPromise
+  extends Promise<FileConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<FileEdge>>() => T;
+  aggregate: <T = AggregateFilePromise>() => T;
 }
 
-export interface AggregateEventSubscription
-  extends Promise<AsyncIterator<AggregateEvent>>,
+export interface FileConnectionSubscription
+  extends Promise<AsyncIterator<FileConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FileEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFileSubscription>() => T;
 }
 
 export interface FileSubscriptionPayload {
@@ -5336,25 +5724,20 @@ export interface FileSubscriptionPayloadSubscription
   previousValues: <T = FilePreviousValuesSubscription>() => T;
 }
 
-export interface EventConnection {
-  pageInfo: PageInfo;
-  edges: EventEdge[];
+export interface AggregateEvent {
+  count: Int;
 }
 
-export interface EventConnectionPromise
-  extends Promise<EventConnection>,
+export interface AggregateEventPromise
+  extends Promise<AggregateEvent>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<EventEdge>>() => T;
-  aggregate: <T = AggregateEventPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface EventConnectionSubscription
-  extends Promise<AsyncIterator<EventConnection>>,
+export interface AggregateEventSubscription
+  extends Promise<AsyncIterator<AggregateEvent>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateEventSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface FilePreviousValues {
@@ -5397,29 +5780,25 @@ export interface FilePreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface TransactionPreviousValues {
-  id: ID_Output;
-  date: DateTimeOutput;
-  type: TransactionType;
-  balance: Float;
+export interface EventConnection {
+  pageInfo: PageInfo;
+  edges: EventEdge[];
 }
 
-export interface TransactionPreviousValuesPromise
-  extends Promise<TransactionPreviousValues>,
+export interface EventConnectionPromise
+  extends Promise<EventConnection>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  date: () => Promise<DateTimeOutput>;
-  type: () => Promise<TransactionType>;
-  balance: () => Promise<Float>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<EventEdge>>() => T;
+  aggregate: <T = AggregateEventPromise>() => T;
 }
 
-export interface TransactionPreviousValuesSubscription
-  extends Promise<AsyncIterator<TransactionPreviousValues>>,
+export interface EventConnectionSubscription
+  extends Promise<AsyncIterator<EventConnection>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  type: () => Promise<AsyncIterator<TransactionType>>;
-  balance: () => Promise<AsyncIterator<Float>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateEventSubscription>() => T;
 }
 
 export interface ClientEdge {
@@ -5439,25 +5818,144 @@ export interface ClientEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface CommitteeEdge {
+  node: Committee;
+  cursor: String;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface CommitteeEdgePromise
+  extends Promise<CommitteeEdge>,
+    Fragmentable {
+  node: <T = CommitteePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CommitteeEdgeSubscription
+  extends Promise<AsyncIterator<CommitteeEdge>>,
+    Fragmentable {
+  node: <T = CommitteeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface InvitationSubscriptionPayload {
+  mutation: MutationType;
+  node: Invitation;
+  updatedFields: String[];
+  previousValues: InvitationPreviousValues;
+}
+
+export interface InvitationSubscriptionPayloadPromise
+  extends Promise<InvitationSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = InvitationPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = InvitationPreviousValuesPromise>() => T;
+}
+
+export interface InvitationSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<InvitationSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = InvitationSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = InvitationPreviousValuesSubscription>() => T;
+}
+
+export interface Item {
+  id: ID_Output;
+  price: Float;
+  amount: Int;
+}
+
+export interface ItemPromise extends Promise<Item>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  product: <T = ProductPromise>() => T;
+  user: <T = UserPromise>() => T;
+  price: () => Promise<Float>;
+  amount: () => Promise<Int>;
+}
+
+export interface ItemSubscription
+  extends Promise<AsyncIterator<Item>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  product: <T = ProductSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+  price: () => Promise<AsyncIterator<Float>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface InvitationPreviousValues {
+  id: ID_Output;
+  status: InvitationStatus;
+}
+
+export interface InvitationPreviousValuesPromise
+  extends Promise<InvitationPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  status: () => Promise<InvitationStatus>;
+}
+
+export interface InvitationPreviousValuesSubscription
+  extends Promise<AsyncIterator<InvitationPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  status: () => Promise<AsyncIterator<InvitationStatus>>;
+}
+
+export interface TransactionConnection {
+  pageInfo: PageInfo;
+  edges: TransactionEdge[];
+}
+
+export interface TransactionConnectionPromise
+  extends Promise<TransactionConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<TransactionEdge>>() => T;
+  aggregate: <T = AggregateTransactionPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface TransactionConnectionSubscription
+  extends Promise<AsyncIterator<TransactionConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TransactionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTransactionSubscription>() => T;
+}
+
+export interface AggregateClient {
+  count: Int;
+}
+
+export interface AggregateClientPromise
+  extends Promise<AggregateClient>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateClientSubscription
+  extends Promise<AsyncIterator<AggregateClient>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateProduction {
+  count: Int;
+}
+
+export interface AggregateProductionPromise
+  extends Promise<AggregateProduction>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateProductionSubscription
+  extends Promise<AsyncIterator<AggregateProduction>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ItemSubscriptionPayload {
@@ -5485,20 +5983,33 @@ export interface ItemSubscriptionPayloadSubscription
   previousValues: <T = ItemPreviousValuesSubscription>() => T;
 }
 
-export interface AggregatePurchase {
-  count: Int;
+export interface Production {
+  id: ID_Output;
+  title: String;
+  description: String;
+  image: String;
+  index: Int;
+  show: Boolean;
 }
 
-export interface AggregatePurchasePromise
-  extends Promise<AggregatePurchase>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface ProductionPromise extends Promise<Production>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  index: () => Promise<Int>;
+  show: () => Promise<Boolean>;
 }
 
-export interface AggregatePurchaseSubscription
-  extends Promise<AsyncIterator<AggregatePurchase>>,
+export interface ProductionSubscription
+  extends Promise<AsyncIterator<Production>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  show: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ItemPreviousValues {
@@ -5523,23 +6034,29 @@ export interface ItemPreviousValuesSubscription
   amount: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ProductionEdge {
-  node: Production;
-  cursor: String;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface ProductionEdgePromise
-  extends Promise<ProductionEdge>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  node: <T = ProductionPromise>() => T;
-  cursor: () => Promise<String>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface ProductionEdgeSubscription
-  extends Promise<AsyncIterator<ProductionEdge>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  node: <T = ProductionSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface Post {
@@ -5611,18 +6128,18 @@ export interface PostSubscription
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateProduct {
+export interface AggregatePayment {
   count: Int;
 }
 
-export interface AggregateProductPromise
-  extends Promise<AggregateProduct>,
+export interface AggregatePaymentPromise
+  extends Promise<AggregatePayment>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateProductSubscription
-  extends Promise<AsyncIterator<AggregateProduct>>,
+export interface AggregatePaymentSubscription
+  extends Promise<AsyncIterator<AggregatePayment>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -5652,20 +6169,21 @@ export interface PaymentSubscriptionPayloadSubscription
   previousValues: <T = PaymentPreviousValuesSubscription>() => T;
 }
 
-export interface AggregatePost {
-  count: Int;
+export interface ItemEdge {
+  node: Item;
+  cursor: String;
 }
 
-export interface AggregatePostPromise
-  extends Promise<AggregatePost>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface ItemEdgePromise extends Promise<ItemEdge>, Fragmentable {
+  node: <T = ItemPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregatePostSubscription
-  extends Promise<AsyncIterator<AggregatePost>>,
+export interface ItemEdgeSubscription
+  extends Promise<AsyncIterator<ItemEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = ItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PaymentPreviousValues {
@@ -5693,171 +6211,25 @@ export interface PaymentPreviousValuesSubscription
   verified: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface PaymentEdge {
-  node: Payment;
-  cursor: String;
-}
-
-export interface PaymentEdgePromise extends Promise<PaymentEdge>, Fragmentable {
-  node: <T = PaymentPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PaymentEdgeSubscription
-  extends Promise<AsyncIterator<PaymentEdge>>,
-    Fragmentable {
-  node: <T = PaymentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateClient {
-  count: Int;
-}
-
-export interface AggregateClientPromise
-  extends Promise<AggregateClient>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateClientSubscription
-  extends Promise<AsyncIterator<AggregateClient>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ItemConnection {
+export interface InvitationConnection {
   pageInfo: PageInfo;
-  edges: ItemEdge[];
+  edges: InvitationEdge[];
 }
 
-export interface ItemConnectionPromise
-  extends Promise<ItemConnection>,
+export interface InvitationConnectionPromise
+  extends Promise<InvitationConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ItemEdge>>() => T;
-  aggregate: <T = AggregateItemPromise>() => T;
+  edges: <T = FragmentableArray<InvitationEdge>>() => T;
+  aggregate: <T = AggregateInvitationPromise>() => T;
 }
 
-export interface ItemConnectionSubscription
-  extends Promise<AsyncIterator<ItemConnection>>,
+export interface InvitationConnectionSubscription
+  extends Promise<AsyncIterator<InvitationConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ItemEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateItemSubscription>() => T;
-}
-
-export interface PostSubscriptionPayload {
-  mutation: MutationType;
-  node: Post;
-  updatedFields: String[];
-  previousValues: PostPreviousValues;
-}
-
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
-}
-
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
-}
-
-export interface File {
-  id: ID_Output;
-  fileId: String;
-  hash: String;
-  uri: String;
-  filename: String;
-  path: String;
-  mimetype: String;
-  extension: String;
-  createdAt: DateTimeOutput;
-}
-
-export interface FilePromise extends Promise<File>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  fileId: () => Promise<String>;
-  hash: () => Promise<String>;
-  uri: () => Promise<String>;
-  filename: () => Promise<String>;
-  path: () => Promise<String>;
-  mimetype: () => Promise<String>;
-  extension: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface FileSubscription
-  extends Promise<AsyncIterator<File>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  fileId: () => Promise<AsyncIterator<String>>;
-  hash: () => Promise<AsyncIterator<String>>;
-  uri: () => Promise<AsyncIterator<String>>;
-  filename: () => Promise<AsyncIterator<String>>;
-  path: () => Promise<AsyncIterator<String>>;
-  mimetype: () => Promise<AsyncIterator<String>>;
-  extension: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface PostPreviousValues {
-  id: ID_Output;
-  text: String;
-  image?: String;
-  date: DateTimeOutput;
-}
-
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  image: () => Promise<String>;
-  date: () => Promise<DateTimeOutput>;
-}
-
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<InvitationEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateInvitationSubscription>() => T;
 }
 
 export interface Comment {
@@ -5908,23 +6280,183 @@ export interface CommentSubscription
   event: <T = EventSubscription>() => T;
 }
 
-export interface TransactionEdge {
-  node: Transaction;
-  cursor: String;
+export interface File {
+  id: ID_Output;
+  fileId: String;
+  hash: String;
+  uri: String;
+  filename: String;
+  path: String;
+  mimetype: String;
+  extension: String;
+  createdAt: DateTimeOutput;
 }
 
-export interface TransactionEdgePromise
-  extends Promise<TransactionEdge>,
-    Fragmentable {
-  node: <T = TransactionPromise>() => T;
-  cursor: () => Promise<String>;
+export interface FilePromise extends Promise<File>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  fileId: () => Promise<String>;
+  hash: () => Promise<String>;
+  uri: () => Promise<String>;
+  filename: () => Promise<String>;
+  path: () => Promise<String>;
+  mimetype: () => Promise<String>;
+  extension: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface TransactionEdgeSubscription
-  extends Promise<AsyncIterator<TransactionEdge>>,
+export interface FileSubscription
+  extends Promise<AsyncIterator<File>>,
     Fragmentable {
-  node: <T = TransactionSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fileId: () => Promise<AsyncIterator<String>>;
+  hash: () => Promise<AsyncIterator<String>>;
+  uri: () => Promise<AsyncIterator<String>>;
+  filename: () => Promise<AsyncIterator<String>>;
+  path: () => Promise<AsyncIterator<String>>;
+  mimetype: () => Promise<AsyncIterator<String>>;
+  extension: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PostSubscriptionPayload {
+  mutation: MutationType;
+  node: Post;
+  updatedFields: String[];
+  previousValues: PostPreviousValues;
+}
+
+export interface PostSubscriptionPayloadPromise
+  extends Promise<PostSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PostPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PostPreviousValuesPromise>() => T;
+}
+
+export interface PostSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PostSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PostPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCommittee {
+  count: Int;
+}
+
+export interface AggregateCommitteePromise
+  extends Promise<AggregateCommittee>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCommitteeSubscription
+  extends Promise<AsyncIterator<AggregateCommittee>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PostPreviousValues {
+  id: ID_Output;
+  text: String;
+  image?: String;
+  date: DateTimeOutput;
+}
+
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  image: () => Promise<String>;
+  date: () => Promise<DateTimeOutput>;
+}
+
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TransactionPreviousValues {
+  id: ID_Output;
+  date: DateTimeOutput;
+  type: TransactionType;
+  balance: Float;
+}
+
+export interface TransactionPreviousValuesPromise
+  extends Promise<TransactionPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  date: () => Promise<DateTimeOutput>;
+  type: () => Promise<TransactionType>;
+  balance: () => Promise<Float>;
+}
+
+export interface TransactionPreviousValuesSubscription
+  extends Promise<AsyncIterator<TransactionPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  type: () => Promise<AsyncIterator<TransactionType>>;
+  balance: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface Product {
+  id: ID_Output;
+  name: String;
+  price: Float;
+  index: Int;
+  thumbnail?: String;
+  deleted: Boolean;
+}
+
+export interface ProductPromise extends Promise<Product>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  price: () => Promise<Float>;
+  index: () => Promise<Int>;
+  thumbnail: () => Promise<String>;
+  deleted: () => Promise<Boolean>;
+}
+
+export interface ProductSubscription
+  extends Promise<AsyncIterator<Product>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Float>>;
+  index: () => Promise<AsyncIterator<Int>>;
+  thumbnail: () => Promise<AsyncIterator<String>>;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface ProductionConnection {
+  pageInfo: PageInfo;
+  edges: ProductionEdge[];
+}
+
+export interface ProductionConnectionPromise
+  extends Promise<ProductionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProductionEdge>>() => T;
+  aggregate: <T = AggregateProductionPromise>() => T;
+}
+
+export interface ProductionConnectionSubscription
+  extends Promise<AsyncIterator<ProductionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProductionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProductionSubscription>() => T;
 }
 
 export interface ProductSubscriptionPayload {
@@ -5952,30 +6484,21 @@ export interface ProductSubscriptionPayloadSubscription
   previousValues: <T = ProductPreviousValuesSubscription>() => T;
 }
 
-export interface Client {
-  id: ID_Output;
-  identity: String;
-  secret: String;
-  name: String;
-  trusted: Boolean;
+export interface PostEdge {
+  node: Post;
+  cursor: String;
 }
 
-export interface ClientPromise extends Promise<Client>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  identity: () => Promise<String>;
-  secret: () => Promise<String>;
-  name: () => Promise<String>;
-  trusted: () => Promise<Boolean>;
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface ClientSubscription
-  extends Promise<AsyncIterator<Client>>,
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  identity: () => Promise<AsyncIterator<String>>;
-  secret: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  trusted: () => Promise<AsyncIterator<Boolean>>;
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ProductPreviousValues {
@@ -6009,25 +6532,20 @@ export interface ProductPreviousValuesSubscription
   deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface PostConnection {
-  pageInfo: PageInfo;
-  edges: PostEdge[];
+export interface AggregateInvitation {
+  count: Int;
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface AggregateInvitationPromise
+  extends Promise<AggregateInvitation>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface AggregateInvitationSubscription
+  extends Promise<AsyncIterator<AggregateInvitation>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Payment {
@@ -6057,37 +6575,40 @@ export interface PaymentSubscription
   transaction: <T = TransactionSubscription>() => T;
 }
 
-export interface FileEdge {
-  node: File;
+export interface EventEdge {
+  node: Event;
   cursor: String;
 }
 
-export interface FileEdgePromise extends Promise<FileEdge>, Fragmentable {
-  node: <T = FilePromise>() => T;
+export interface EventEdgePromise extends Promise<EventEdge>, Fragmentable {
+  node: <T = EventPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface FileEdgeSubscription
-  extends Promise<AsyncIterator<FileEdge>>,
+export interface EventEdgeSubscription
+  extends Promise<AsyncIterator<EventEdge>>,
     Fragmentable {
-  node: <T = FileSubscription>() => T;
+  node: <T = EventSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface PurchaseEdge {
+  node: Purchase;
+  cursor: String;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface PurchaseEdgePromise
+  extends Promise<PurchaseEdge>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = PurchasePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface PurchaseEdgeSubscription
+  extends Promise<AsyncIterator<PurchaseEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = PurchaseSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PurchaseSubscriptionPayload {
@@ -6200,85 +6721,109 @@ export interface ProductionSubscriptionPayloadSubscription
   previousValues: <T = ProductionPreviousValuesSubscription>() => T;
 }
 
-export interface PurchaseConnection {
-  pageInfo: PageInfo;
-  edges: PurchaseEdge[];
-}
-
-export interface PurchaseConnectionPromise
-  extends Promise<PurchaseConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PurchaseEdge>>() => T;
-  aggregate: <T = AggregatePurchasePromise>() => T;
-}
-
-export interface PurchaseConnectionSubscription
-  extends Promise<AsyncIterator<PurchaseConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PurchaseEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePurchaseSubscription>() => T;
-}
-
-export interface EventEdge {
-  node: Event;
+export interface ProductEdge {
+  node: Product;
   cursor: String;
 }
 
-export interface EventEdgePromise extends Promise<EventEdge>, Fragmentable {
-  node: <T = EventPromise>() => T;
+export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
+  node: <T = ProductPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface EventEdgeSubscription
-  extends Promise<AsyncIterator<EventEdge>>,
+export interface ProductEdgeSubscription
+  extends Promise<AsyncIterator<ProductEdge>>,
     Fragmentable {
-  node: <T = EventSubscription>() => T;
+  node: <T = ProductSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateItem {
-  count: Int;
-}
-
-export interface AggregateItemPromise
-  extends Promise<AggregateItem>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateItemSubscription
-  extends Promise<AsyncIterator<AggregateItem>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ProductConnection {
+export interface CommitteeConnection {
   pageInfo: PageInfo;
-  edges: ProductEdge[];
+  edges: CommitteeEdge[];
 }
 
-export interface ProductConnectionPromise
-  extends Promise<ProductConnection>,
+export interface CommitteeConnectionPromise
+  extends Promise<CommitteeConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProductEdge>>() => T;
-  aggregate: <T = AggregateProductPromise>() => T;
+  edges: <T = FragmentableArray<CommitteeEdge>>() => T;
+  aggregate: <T = AggregateCommitteePromise>() => T;
 }
 
-export interface ProductConnectionSubscription
-  extends Promise<AsyncIterator<ProductConnection>>,
+export interface CommitteeConnectionSubscription
+  extends Promise<AsyncIterator<CommitteeConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProductSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CommitteeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCommitteeSubscription>() => T;
 }
+
+export interface FileEdge {
+  node: File;
+  cursor: String;
+}
+
+export interface FileEdgePromise extends Promise<FileEdge>, Fragmentable {
+  node: <T = FilePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FileEdgeSubscription
+  extends Promise<AsyncIterator<FileEdge>>,
+    Fragmentable {
+  node: <T = FileSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PaymentConnection {
+  pageInfo: PageInfo;
+  edges: PaymentEdge[];
+}
+
+export interface PaymentConnectionPromise
+  extends Promise<PaymentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PaymentEdge>>() => T;
+  aggregate: <T = AggregatePaymentPromise>() => T;
+}
+
+export interface PaymentConnectionSubscription
+  extends Promise<AsyncIterator<PaymentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePaymentSubscription>() => T;
+}
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number;
+
+export type Long = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -6289,29 +6834,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
-
-export type Long = string;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /**
  * Model Metadata
@@ -6371,11 +6893,19 @@ export const models: Model[] = [
     embedded: false
   },
   {
+    name: "Invitation",
+    embedded: false
+  },
+  {
     name: "UserRole",
     embedded: false
   },
   {
     name: "TransactionType",
+    embedded: false
+  },
+  {
+    name: "InvitationStatus",
     embedded: false
   }
 ];
