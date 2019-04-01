@@ -62,7 +62,9 @@ export class EventCard extends React.Component {
   };
 
   onEdit = () => {
-    requestRoute('/editevent');
+    requestRoute('/editevent', {
+      id: this.props.event.id,
+    });
   };
 
   render() {

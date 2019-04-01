@@ -42,6 +42,7 @@ export class UserSelector extends React.Component {
               value={this.state.value}
               onChange={this.onChange}
               placeholder="Select a user..."
+              isMulti={this.props.isMulti}
             />
           );
         }}

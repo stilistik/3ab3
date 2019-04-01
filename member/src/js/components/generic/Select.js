@@ -13,8 +13,7 @@ import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1,
-    height: 250,
+    position: 'relative',
   },
   input: {
     display: 'flex',
@@ -204,6 +203,7 @@ class IntegrationReactSelect extends React.Component {
         onChange={this.props.onChange}
         placeholder={this.props.placeholder || 'Select...'}
         isClearable
+        isMulti={this.props.isMulti || false}
       />
     );
   }
