@@ -71,19 +71,19 @@ class ProfileMenu extends React.Component {
         transition
         disablePortal
       >
-        {({ TransitionProps, placement }) => (
+        {({ TransitionProps }) => (
           <Grow
             {...TransitionProps}
             id="menu-list-grow"
             style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
+              top: 0,
+              right: '-15px',
+              position: 'absolute',
             }}
           >
             <Paper className={styles.paper}>
               <ClickAwayListener onClickAway={this.handleClose}>
                 <MenuList>
-                  }}
                   <MenuItem
                     style={{ color: 'white' }}
                     onClick={() => this.handleClick('profile')}
