@@ -104,7 +104,7 @@ class Invitations extends React.Component {
             <Icon type="mail" className={styles.icon} />
           </Badge>
         </IconButton>
-        {renderMenu}
+        {pending.length > 0 ? renderMenu : null}
       </div>
     );
   }

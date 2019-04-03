@@ -118,7 +118,9 @@ class Invitation extends React.Component {
     const event = this.props.invitation.committee.event;
     return (
       <div className={styles.invitation}>
-        <p className={styles.text}>Committee Invitation: {event.title}</p>
+        <p className={styles.text}>
+          Committee Invitation: <strong>{event.title}</strong>
+        </p>
         <ConnectedAccept {...this.props} />
         <ConnectedDecline {...this.props} />
       </div>
