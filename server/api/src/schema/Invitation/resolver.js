@@ -1,6 +1,16 @@
 const verifyAndDecodeToken = require('../../auth/verify');
 
 module.exports = {
+  Query: {
+    pendingInvitations(root, args, context) {
+      return context.prisma.invitations({
+        where: {
+          user: { id: args.userId },
+          status: 'PENDING',
+        },
+      });
+    },
+  },
   Mutation: {
     createInvitation(root, args, context) {
       return context.prisma.createInvitation({

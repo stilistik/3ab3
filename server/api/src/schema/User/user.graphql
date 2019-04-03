@@ -17,6 +17,7 @@ type User @isAuthenticated {
   comments: [Comment!]!
   likedComments: [Comment!]!
   invitations: [Invitation!]!
+  pendingInvitations: [Invitation!]!
 }
 
 enum UserRole {

@@ -120,5 +120,10 @@ module.exports = {
     invitations(root, args, context) {
       return context.prisma.user({ id: root.id }).invitations();
     },
+    pendingInvitations(root, args, context) {
+      return context.prisma.user({ id: root.id }).invitations({
+        where: { status: 'PENDING' },
+      });
+    },
   },
 };

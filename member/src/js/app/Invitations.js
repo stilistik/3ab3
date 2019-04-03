@@ -19,7 +19,7 @@ const INVITATIONS = gql`
   query {
     currentUser {
       id
-      invitations {
+      pendingInvitations {
         id
         status
         committee {
@@ -51,9 +51,7 @@ class Invitations extends React.Component {
 
   render() {
     if (!this.props.user) return null;
-    const pending = this.props.user.invitations.filter(
-      (inv) => inv.status === 'PENDING'
-    );
+    const pending = this.props.user.pendingInvitations;
     const { anchor } = this.state;
     const open = anchor ? true : false;
     const renderMenu = (

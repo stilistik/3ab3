@@ -11,6 +11,10 @@ enum InvitationStatus {
   DECLINED
 }
 
+extend type Query {
+  pendingInvitations(userId: ID!): [Invitation!]!
+}
+
 extend type Mutation {
   createInvitation(userId: ID!, committeeId: ID!): Invitation!
   acceptInvitation(invitationId: ID!): Invitation!
