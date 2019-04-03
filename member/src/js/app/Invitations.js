@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 
 import styles from './Invitations.css';
 
-const INVITATIONS = gql`
+export const INVITATIONS = gql`
   query {
     currentUser {
       id

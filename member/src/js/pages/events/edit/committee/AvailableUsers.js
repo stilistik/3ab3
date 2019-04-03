@@ -26,9 +26,14 @@ class AvailableUsers extends React.Component {
           if (loading) return null;
           if (error) return null;
 
+          const { committee } = this.props;
           const available = data.users.filter((user) => {
-            return !user.pendingInvitations.find(
-              (inv) => inv.committee.id === this.props.committee.id
+            return (
+              !user.pendingInvitations.find(
+                (inv) => inv.committee.id === committee.id
+              ) &&
+              !committee.members.find((member) => member.id === user.id) &&
+              user.id !== committee.creator.id
             );
           });
 

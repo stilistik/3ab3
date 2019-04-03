@@ -14,6 +14,12 @@ const EVENT = gql`
       id
       committee {
         id
+        creator {
+          id
+        }
+        members {
+          id
+        }
       }
     }
   }

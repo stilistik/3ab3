@@ -17,6 +17,7 @@ extend type Query {
 
 extend type Mutation {
   createInvitation(userId: ID!, committeeId: ID!): Invitation!
+  createInvitations(userIds: [ID!]!, committeeId: ID!): [Invitation!]!
   acceptInvitation(invitationId: ID!): Invitation!
   declineInvitation(invitationId: ID!): Invitation!
 }

@@ -6,8 +6,8 @@ import { Mutation } from 'react-apollo';
 import CommitteeForm from './CommitteeForm';
 
 const MUTATION = gql`
-  mutation($userId: ID!, $committeeId: ID!) {
-    createInvitation(userId: $userId, committeeId: $committeeId) {
+  mutation($userIds: [ID!]!, $committeeId: ID!) {
+    createInvitations(userIds: $userIds, committeeId: $committeeId) {
       id
     }
   }
@@ -24,13 +24,12 @@ const mapDispatchToProps = (dispatch) => {
 class CreateCommittee extends React.Component {
   onSubmit = async (users) => {
     try {
-      await users.forEach(async (user) => {
-        await this.createInvitation({
-          variables: {
-            userId: user.value,
-            committeeId: this.props.committee.id,
-          },
-        });
+      const userIds = users.map((user) => user.value);
+      await this.createInvitation({
+        variables: {
+          userIds: userIds,
+          committeeId: this.props.committee.id,
+        },
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });

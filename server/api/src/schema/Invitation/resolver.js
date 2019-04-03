@@ -18,6 +18,14 @@ module.exports = {
         committee: { connect: { id: args.committeeId } },
       });
     },
+    createInvitations(root, args, context) {
+      return args.userIds.map((userId) =>
+        context.prisma.createInvitation({
+          user: { connect: { id: userId } },
+          committee: { connect: { id: args.committeeId } },
+        })
+      );
+    },
     async acceptInvitation(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
       const invited = await context.prisma
