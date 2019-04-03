@@ -47,7 +47,12 @@ class CreateCommittee extends React.Component {
       <Mutation mutation={MUTATION}>
         {(createInvitation) => {
           this.createInvitation = createInvitation;
-          return <CommitteeForm onSubmit={this.onSubmit} />;
+          return (
+            <CommitteeForm
+              onSubmit={this.onSubmit}
+              committee={this.props.committee}
+            />
+          );
         }}
       </Mutation>
     );

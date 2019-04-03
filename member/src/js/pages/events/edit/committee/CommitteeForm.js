@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserSelector } from 'Components';
 import { Paper, Typography, Button } from '@material-ui/core';
+import AvailableUsers from './AvailableUsers';
 
 class CommitteeForm extends React.Component {
   constructor(props) {
@@ -26,7 +26,8 @@ class CommitteeForm extends React.Component {
           Select the members for your committee and send invitations
         </Typography>
         <br />
-        <UserSelector
+        <AvailableUsers
+          committee={this.props.committee}
           isMulti={true}
           value={this.state.value}
           onChange={this.onChange}
