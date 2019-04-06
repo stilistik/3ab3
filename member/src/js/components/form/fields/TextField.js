@@ -21,9 +21,10 @@ export class TextField extends React.Component {
       InputLabelProps,
       InputProps,
       className,
+      style,
     } = this.props;
     return (
-      <FormControl error={error && true} className={className}>
+      <FormControl error={error && true} className={className} style={style}>
         <InputLabel htmlFor={id} {...InputLabelProps}>
           {name}
         </InputLabel>

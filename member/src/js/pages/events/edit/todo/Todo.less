@@ -1,0 +1,27 @@
+
+@circle-size: 50px;
+@margin: 20px;
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.todo {
+  padding-left: @circle-size / 2 + @margin;
+  margin-left: @circle-size / 2;
+  border-left: 1px solid lightgray;
+}
+
+.index {
+  width: @circle-size;
+  height: @circle-size;
+  border-radius: @circle-size / 2;
+  border: 1px solid lightgray;
+  font-size: 17px;
+  font-weight: lighter;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: @margin;
+}

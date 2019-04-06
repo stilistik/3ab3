@@ -61,9 +61,9 @@ export class ImageField extends React.Component {
   };
 
   render() {
-    const { id, error, name, className, value } = this.props;
+    const { id, error, name, className, value, style } = this.props;
     return (
-      <div className={className}>
+      <div className={className} style={style}>
         <div className={styles.imagefield}>
           <input
             accept="image/*"

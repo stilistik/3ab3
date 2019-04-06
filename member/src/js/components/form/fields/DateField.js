@@ -9,12 +9,12 @@ export class DateField extends React.Component {
   };
 
   render() {
-    const { id, name, value, error, className } = this.props;
+    const { id, name, value, error, className, style } = this.props;
     return (
       <FormControl
         error={error && true}
         className={className}
-        style={{ marginTop: '20px' }}
+        style={{ marginTop: '20px', ...style }}
       >
         <DatePicker
           id={id}

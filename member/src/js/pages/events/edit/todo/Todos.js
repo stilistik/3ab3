@@ -1,7 +1,9 @@
 import React from 'react';
-import TodoList from './TodoList';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Grid } from '@material-ui/core';
+import TodoList from './TodoList';
+import CreateTodo from './CreateTodo';
 
 export const TODOS = gql`
   query($eventId: ID!) {
@@ -22,7 +24,12 @@ class Todos extends React.Component {
     if (!event) return null;
     return (
       <div style={{ width: '100%', padding: '20px' }}>
-        <TodoList />
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <CreateTodo eventId={event.id} />
+            <TodoList todos={event.todos} />
+          </Grid>
+        </Grid>
       </div>
     );
   }
