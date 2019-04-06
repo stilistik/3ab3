@@ -26,7 +26,10 @@ class Todos extends React.Component {
       <div style={{ width: '100%', padding: '20px' }}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <CreateTodo eventId={event.id} />
+            <CreateTodo
+              eventId={event.id}
+              refetch={[{ query: TODOS, variables: { eventId: event.id } }]}
+            />
             <TodoList todos={event.todos} />
           </Grid>
         </Grid>

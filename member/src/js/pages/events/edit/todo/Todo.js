@@ -12,8 +12,6 @@ const TodoIndicator = ({ index }) => {
 };
 
 const DateDisplay = ({ date }) => {
-  console.log(date);
-  
   const date_str = new Date(date).toDateString();
   return <Typography variant="h6">{date_str}</Typography>;
 };
