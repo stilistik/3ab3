@@ -5,7 +5,6 @@ import { Typography, Button } from '@material-ui/core';
 import { Form, Field } from 'Components';
 import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
-import { requestRoute } from 'History';
 
 import styles from './LoginForm.css';
 

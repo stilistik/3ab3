@@ -9,7 +9,6 @@ import {
   Badge,
 } from '@material-ui/core';
 import Invitation from './Invitation';
-import { getQueryParams } from 'History';
 import { Icon } from 'Components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
