@@ -1,0 +1,5 @@
+type TodoTemplate {
+  id: ID! @unique
+  text: String!
+  offsetDays: Int!
+}

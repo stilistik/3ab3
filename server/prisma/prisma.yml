@@ -14,6 +14,9 @@ datamodel:
   - models/Comment.prisma
   - models/Committee.prisma
   - models/Invitation.prisma
+  - models/Todo.prisma
+  - models/Question.prisma
+  - models/TodoTemplate.prisma
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/

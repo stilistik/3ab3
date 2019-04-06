@@ -51,6 +51,18 @@ type AggregatePurchase {
   count: Int!
 }
 
+type AggregateQuestion {
+  count: Int!
+}
+
+type AggregateTodo {
+  count: Int!
+}
+
+type AggregateTodoTemplate {
+  count: Int!
+}
+
 type AggregateTransaction {
   count: Int!
 }
@@ -742,6 +754,7 @@ type Event {
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
   committee: Committee!
+  todos(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo!]
 }
 
 type EventConnection {
@@ -759,6 +772,7 @@ input EventCreateInput {
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   committee: CommitteeCreateOneWithoutEventInput!
+  todos: TodoCreateManyWithoutEventInput
 }
 
 input EventCreateManyWithoutLikedByInput {
@@ -776,6 +790,11 @@ input EventCreateOneWithoutCommitteeInput {
   connect: EventWhereUniqueInput
 }
 
+input EventCreateOneWithoutTodosInput {
+  create: EventCreateWithoutTodosInput
+  connect: EventWhereUniqueInput
+}
+
 input EventCreateWithoutCommentsInput {
   title: String!
   description: String!
@@ -784,6 +803,7 @@ input EventCreateWithoutCommentsInput {
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   committee: CommitteeCreateOneWithoutEventInput!
+  todos: TodoCreateManyWithoutEventInput
 }
 
 input EventCreateWithoutCommitteeInput {
@@ -794,6 +814,7 @@ input EventCreateWithoutCommitteeInput {
   comments: CommentCreateManyWithoutEventInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
+  todos: TodoCreateManyWithoutEventInput
 }
 
 input EventCreateWithoutLikedByInput {
@@ -802,6 +823,18 @@ input EventCreateWithoutLikedByInput {
   date: DateTime!
   image: String!
   comments: CommentCreateManyWithoutEventInput
+  owner: UserCreateOneInput!
+  committee: CommitteeCreateOneWithoutEventInput!
+  todos: TodoCreateManyWithoutEventInput
+}
+
+input EventCreateWithoutTodosInput {
+  title: String!
+  description: String!
+  date: DateTime!
+  image: String!
+  comments: CommentCreateManyWithoutEventInput
+  likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   committee: CommitteeCreateOneWithoutEventInput!
 }
@@ -933,6 +966,7 @@ input EventUpdateInput {
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
+  todos: TodoUpdateManyWithoutEventInput
 }
 
 input EventUpdateManyDataInput {
@@ -973,6 +1007,13 @@ input EventUpdateOneRequiredWithoutCommitteeInput {
   connect: EventWhereUniqueInput
 }
 
+input EventUpdateOneRequiredWithoutTodosInput {
+  create: EventCreateWithoutTodosInput
+  update: EventUpdateWithoutTodosDataInput
+  upsert: EventUpsertWithoutTodosInput
+  connect: EventWhereUniqueInput
+}
+
 input EventUpdateOneWithoutCommentsInput {
   create: EventCreateWithoutCommentsInput
   update: EventUpdateWithoutCommentsDataInput
@@ -990,6 +1031,7 @@ input EventUpdateWithoutCommentsDataInput {
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
+  todos: TodoUpdateManyWithoutEventInput
 }
 
 input EventUpdateWithoutCommitteeDataInput {
@@ -1000,6 +1042,7 @@ input EventUpdateWithoutCommitteeDataInput {
   comments: CommentUpdateManyWithoutEventInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
+  todos: TodoUpdateManyWithoutEventInput
 }
 
 input EventUpdateWithoutLikedByDataInput {
@@ -1008,6 +1051,18 @@ input EventUpdateWithoutLikedByDataInput {
   date: DateTime
   image: String
   comments: CommentUpdateManyWithoutEventInput
+  owner: UserUpdateOneRequiredInput
+  committee: CommitteeUpdateOneRequiredWithoutEventInput
+  todos: TodoUpdateManyWithoutEventInput
+}
+
+input EventUpdateWithoutTodosDataInput {
+  title: String
+  description: String
+  date: DateTime
+  image: String
+  comments: CommentUpdateManyWithoutEventInput
+  likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
 }
@@ -1025,6 +1080,11 @@ input EventUpsertWithoutCommentsInput {
 input EventUpsertWithoutCommitteeInput {
   update: EventUpdateWithoutCommitteeDataInput!
   create: EventCreateWithoutCommitteeInput!
+}
+
+input EventUpsertWithoutTodosInput {
+  update: EventUpdateWithoutTodosDataInput!
+  create: EventCreateWithoutTodosInput!
 }
 
 input EventUpsertWithWhereUniqueWithoutLikedByInput {
@@ -1106,6 +1166,9 @@ input EventWhereInput {
   likedBy_none: UserWhereInput
   owner: UserWhereInput
   committee: CommitteeWhereInput
+  todos_every: TodoWhereInput
+  todos_some: TodoWhereInput
+  todos_none: TodoWhereInput
   AND: [EventWhereInput!]
   OR: [EventWhereInput!]
   NOT: [EventWhereInput!]
@@ -1879,6 +1942,24 @@ type Mutation {
   upsertPurchase(where: PurchaseWhereUniqueInput!, create: PurchaseCreateInput!, update: PurchaseUpdateInput!): Purchase!
   deletePurchase(where: PurchaseWhereUniqueInput!): Purchase
   deleteManyPurchases(where: PurchaseWhereInput): BatchPayload!
+  createQuestion(data: QuestionCreateInput!): Question!
+  updateQuestion(data: QuestionUpdateInput!, where: QuestionWhereUniqueInput!): Question
+  updateManyQuestions(data: QuestionUpdateManyMutationInput!, where: QuestionWhereInput): BatchPayload!
+  upsertQuestion(where: QuestionWhereUniqueInput!, create: QuestionCreateInput!, update: QuestionUpdateInput!): Question!
+  deleteQuestion(where: QuestionWhereUniqueInput!): Question
+  deleteManyQuestions(where: QuestionWhereInput): BatchPayload!
+  createTodo(data: TodoCreateInput!): Todo!
+  updateTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
+  updateManyTodoes(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
+  upsertTodo(where: TodoWhereUniqueInput!, create: TodoCreateInput!, update: TodoUpdateInput!): Todo!
+  deleteTodo(where: TodoWhereUniqueInput!): Todo
+  deleteManyTodoes(where: TodoWhereInput): BatchPayload!
+  createTodoTemplate(data: TodoTemplateCreateInput!): TodoTemplate!
+  updateTodoTemplate(data: TodoTemplateUpdateInput!, where: TodoTemplateWhereUniqueInput!): TodoTemplate
+  updateManyTodoTemplates(data: TodoTemplateUpdateManyMutationInput!, where: TodoTemplateWhereInput): BatchPayload!
+  upsertTodoTemplate(where: TodoTemplateWhereUniqueInput!, create: TodoTemplateCreateInput!, update: TodoTemplateUpdateInput!): TodoTemplate!
+  deleteTodoTemplate(where: TodoTemplateWhereUniqueInput!): TodoTemplate
+  deleteManyTodoTemplates(where: TodoTemplateWhereInput): BatchPayload!
   createTransaction(data: TransactionCreateInput!): Transaction!
   updateTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
   updateManyTransactions(data: TransactionUpdateManyMutationInput!, where: TransactionWhereInput): BatchPayload!
@@ -3134,6 +3215,15 @@ type Query {
   purchase(where: PurchaseWhereUniqueInput!): Purchase
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase]!
   purchasesConnection(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseConnection!
+  question(where: QuestionWhereUniqueInput!): Question
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question]!
+  questionsConnection(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuestionConnection!
+  todo(where: TodoWhereUniqueInput!): Todo
+  todoes(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo]!
+  todoesConnection(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoConnection!
+  todoTemplate(where: TodoTemplateWhereUniqueInput!): TodoTemplate
+  todoTemplates(where: TodoTemplateWhereInput, orderBy: TodoTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TodoTemplate]!
+  todoTemplatesConnection(where: TodoTemplateWhereInput, orderBy: TodoTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoTemplateConnection!
   transaction(where: TransactionWhereUniqueInput!): Transaction
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
   transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
@@ -3141,6 +3231,133 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
+}
+
+type Question {
+  id: ID!
+  text: String!
+  description: String!
+  templates(where: TodoTemplateWhereInput, orderBy: TodoTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TodoTemplate!]
+}
+
+type QuestionConnection {
+  pageInfo: PageInfo!
+  edges: [QuestionEdge]!
+  aggregate: AggregateQuestion!
+}
+
+input QuestionCreateInput {
+  text: String!
+  description: String!
+  templates: TodoTemplateCreateManyInput
+}
+
+type QuestionEdge {
+  node: Question!
+  cursor: String!
+}
+
+enum QuestionOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type QuestionPreviousValues {
+  id: ID!
+  text: String!
+  description: String!
+}
+
+type QuestionSubscriptionPayload {
+  mutation: MutationType!
+  node: Question
+  updatedFields: [String!]
+  previousValues: QuestionPreviousValues
+}
+
+input QuestionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: QuestionWhereInput
+  AND: [QuestionSubscriptionWhereInput!]
+  OR: [QuestionSubscriptionWhereInput!]
+  NOT: [QuestionSubscriptionWhereInput!]
+}
+
+input QuestionUpdateInput {
+  text: String
+  description: String
+  templates: TodoTemplateUpdateManyInput
+}
+
+input QuestionUpdateManyMutationInput {
+  text: String
+  description: String
+}
+
+input QuestionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  templates_every: TodoTemplateWhereInput
+  templates_some: TodoTemplateWhereInput
+  templates_none: TodoTemplateWhereInput
+  AND: [QuestionWhereInput!]
+  OR: [QuestionWhereInput!]
+  NOT: [QuestionWhereInput!]
+}
+
+input QuestionWhereUniqueInput {
+  id: ID
 }
 
 type Subscription {
@@ -3156,8 +3373,466 @@ type Subscription {
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   production(where: ProductionSubscriptionWhereInput): ProductionSubscriptionPayload
   purchase(where: PurchaseSubscriptionWhereInput): PurchaseSubscriptionPayload
+  question(where: QuestionSubscriptionWhereInput): QuestionSubscriptionPayload
+  todo(where: TodoSubscriptionWhereInput): TodoSubscriptionPayload
+  todoTemplate(where: TodoTemplateSubscriptionWhereInput): TodoTemplateSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Todo {
+  id: ID!
+  due: DateTime!
+  text: String!
+  done: Boolean
+  doneBy: User
+  doneAt: DateTime
+  event: Event!
+}
+
+type TodoConnection {
+  pageInfo: PageInfo!
+  edges: [TodoEdge]!
+  aggregate: AggregateTodo!
+}
+
+input TodoCreateInput {
+  due: DateTime!
+  text: String!
+  done: Boolean
+  doneBy: UserCreateOneInput
+  doneAt: DateTime
+  event: EventCreateOneWithoutTodosInput!
+}
+
+input TodoCreateManyWithoutEventInput {
+  create: [TodoCreateWithoutEventInput!]
+  connect: [TodoWhereUniqueInput!]
+}
+
+input TodoCreateWithoutEventInput {
+  due: DateTime!
+  text: String!
+  done: Boolean
+  doneBy: UserCreateOneInput
+  doneAt: DateTime
+}
+
+type TodoEdge {
+  node: Todo!
+  cursor: String!
+}
+
+enum TodoOrderByInput {
+  id_ASC
+  id_DESC
+  due_ASC
+  due_DESC
+  text_ASC
+  text_DESC
+  done_ASC
+  done_DESC
+  doneAt_ASC
+  doneAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TodoPreviousValues {
+  id: ID!
+  due: DateTime!
+  text: String!
+  done: Boolean
+  doneAt: DateTime
+}
+
+input TodoScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  due: DateTime
+  due_not: DateTime
+  due_in: [DateTime!]
+  due_not_in: [DateTime!]
+  due_lt: DateTime
+  due_lte: DateTime
+  due_gt: DateTime
+  due_gte: DateTime
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  done: Boolean
+  done_not: Boolean
+  doneAt: DateTime
+  doneAt_not: DateTime
+  doneAt_in: [DateTime!]
+  doneAt_not_in: [DateTime!]
+  doneAt_lt: DateTime
+  doneAt_lte: DateTime
+  doneAt_gt: DateTime
+  doneAt_gte: DateTime
+  AND: [TodoScalarWhereInput!]
+  OR: [TodoScalarWhereInput!]
+  NOT: [TodoScalarWhereInput!]
+}
+
+type TodoSubscriptionPayload {
+  mutation: MutationType!
+  node: Todo
+  updatedFields: [String!]
+  previousValues: TodoPreviousValues
+}
+
+input TodoSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TodoWhereInput
+  AND: [TodoSubscriptionWhereInput!]
+  OR: [TodoSubscriptionWhereInput!]
+  NOT: [TodoSubscriptionWhereInput!]
+}
+
+type TodoTemplate {
+  id: ID!
+  text: String!
+  offsetDays: Int!
+}
+
+type TodoTemplateConnection {
+  pageInfo: PageInfo!
+  edges: [TodoTemplateEdge]!
+  aggregate: AggregateTodoTemplate!
+}
+
+input TodoTemplateCreateInput {
+  text: String!
+  offsetDays: Int!
+}
+
+input TodoTemplateCreateManyInput {
+  create: [TodoTemplateCreateInput!]
+  connect: [TodoTemplateWhereUniqueInput!]
+}
+
+type TodoTemplateEdge {
+  node: TodoTemplate!
+  cursor: String!
+}
+
+enum TodoTemplateOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  offsetDays_ASC
+  offsetDays_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TodoTemplatePreviousValues {
+  id: ID!
+  text: String!
+  offsetDays: Int!
+}
+
+input TodoTemplateScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  offsetDays: Int
+  offsetDays_not: Int
+  offsetDays_in: [Int!]
+  offsetDays_not_in: [Int!]
+  offsetDays_lt: Int
+  offsetDays_lte: Int
+  offsetDays_gt: Int
+  offsetDays_gte: Int
+  AND: [TodoTemplateScalarWhereInput!]
+  OR: [TodoTemplateScalarWhereInput!]
+  NOT: [TodoTemplateScalarWhereInput!]
+}
+
+type TodoTemplateSubscriptionPayload {
+  mutation: MutationType!
+  node: TodoTemplate
+  updatedFields: [String!]
+  previousValues: TodoTemplatePreviousValues
+}
+
+input TodoTemplateSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TodoTemplateWhereInput
+  AND: [TodoTemplateSubscriptionWhereInput!]
+  OR: [TodoTemplateSubscriptionWhereInput!]
+  NOT: [TodoTemplateSubscriptionWhereInput!]
+}
+
+input TodoTemplateUpdateDataInput {
+  text: String
+  offsetDays: Int
+}
+
+input TodoTemplateUpdateInput {
+  text: String
+  offsetDays: Int
+}
+
+input TodoTemplateUpdateManyDataInput {
+  text: String
+  offsetDays: Int
+}
+
+input TodoTemplateUpdateManyInput {
+  create: [TodoTemplateCreateInput!]
+  update: [TodoTemplateUpdateWithWhereUniqueNestedInput!]
+  upsert: [TodoTemplateUpsertWithWhereUniqueNestedInput!]
+  delete: [TodoTemplateWhereUniqueInput!]
+  connect: [TodoTemplateWhereUniqueInput!]
+  set: [TodoTemplateWhereUniqueInput!]
+  disconnect: [TodoTemplateWhereUniqueInput!]
+  deleteMany: [TodoTemplateScalarWhereInput!]
+  updateMany: [TodoTemplateUpdateManyWithWhereNestedInput!]
+}
+
+input TodoTemplateUpdateManyMutationInput {
+  text: String
+  offsetDays: Int
+}
+
+input TodoTemplateUpdateManyWithWhereNestedInput {
+  where: TodoTemplateScalarWhereInput!
+  data: TodoTemplateUpdateManyDataInput!
+}
+
+input TodoTemplateUpdateWithWhereUniqueNestedInput {
+  where: TodoTemplateWhereUniqueInput!
+  data: TodoTemplateUpdateDataInput!
+}
+
+input TodoTemplateUpsertWithWhereUniqueNestedInput {
+  where: TodoTemplateWhereUniqueInput!
+  update: TodoTemplateUpdateDataInput!
+  create: TodoTemplateCreateInput!
+}
+
+input TodoTemplateWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  offsetDays: Int
+  offsetDays_not: Int
+  offsetDays_in: [Int!]
+  offsetDays_not_in: [Int!]
+  offsetDays_lt: Int
+  offsetDays_lte: Int
+  offsetDays_gt: Int
+  offsetDays_gte: Int
+  AND: [TodoTemplateWhereInput!]
+  OR: [TodoTemplateWhereInput!]
+  NOT: [TodoTemplateWhereInput!]
+}
+
+input TodoTemplateWhereUniqueInput {
+  id: ID
+}
+
+input TodoUpdateInput {
+  due: DateTime
+  text: String
+  done: Boolean
+  doneBy: UserUpdateOneInput
+  doneAt: DateTime
+  event: EventUpdateOneRequiredWithoutTodosInput
+}
+
+input TodoUpdateManyDataInput {
+  due: DateTime
+  text: String
+  done: Boolean
+  doneAt: DateTime
+}
+
+input TodoUpdateManyMutationInput {
+  due: DateTime
+  text: String
+  done: Boolean
+  doneAt: DateTime
+}
+
+input TodoUpdateManyWithoutEventInput {
+  create: [TodoCreateWithoutEventInput!]
+  delete: [TodoWhereUniqueInput!]
+  connect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutEventInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutEventInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+}
+
+input TodoUpdateManyWithWhereNestedInput {
+  where: TodoScalarWhereInput!
+  data: TodoUpdateManyDataInput!
+}
+
+input TodoUpdateWithoutEventDataInput {
+  due: DateTime
+  text: String
+  done: Boolean
+  doneBy: UserUpdateOneInput
+  doneAt: DateTime
+}
+
+input TodoUpdateWithWhereUniqueWithoutEventInput {
+  where: TodoWhereUniqueInput!
+  data: TodoUpdateWithoutEventDataInput!
+}
+
+input TodoUpsertWithWhereUniqueWithoutEventInput {
+  where: TodoWhereUniqueInput!
+  update: TodoUpdateWithoutEventDataInput!
+  create: TodoCreateWithoutEventInput!
+}
+
+input TodoWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  due: DateTime
+  due_not: DateTime
+  due_in: [DateTime!]
+  due_not_in: [DateTime!]
+  due_lt: DateTime
+  due_lte: DateTime
+  due_gt: DateTime
+  due_gte: DateTime
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  done: Boolean
+  done_not: Boolean
+  doneBy: UserWhereInput
+  doneAt: DateTime
+  doneAt_not: DateTime
+  doneAt_in: [DateTime!]
+  doneAt_not_in: [DateTime!]
+  doneAt_lt: DateTime
+  doneAt_lte: DateTime
+  doneAt_gt: DateTime
+  doneAt_gte: DateTime
+  event: EventWhereInput
+  AND: [TodoWhereInput!]
+  OR: [TodoWhereInput!]
+  NOT: [TodoWhereInput!]
+}
+
+input TodoWhereUniqueInput {
+  id: ID
 }
 
 type Transaction {
@@ -3998,6 +4673,15 @@ input UserUpdateManyWithoutLikedPostsInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredInput {

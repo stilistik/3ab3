@@ -1,0 +1,6 @@
+type Question {
+  id: ID! @unique
+  text: String!
+  description: String!
+  templates: [TodoTemplate!]!
+}

@@ -8,4 +8,5 @@ type Event {
   likedBy: [User!]! @relation(name: "LikedEvents")
   owner: User! @relation(name: "EventOwner")
   committee: Committee! @relation(name: "EventCommittee", onDelete: CASCADE)
+  todos: [Todo!]! @relation(name: "EventTodo", onDelete: CASCADE)
 }

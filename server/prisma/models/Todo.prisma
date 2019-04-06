@@ -1,0 +1,9 @@
+type Todo {
+  id: ID! @unique 
+  due: DateTime! 
+  text: String!
+  done: Boolean @default(value: "false")
+  doneBy: User 
+  doneAt: DateTime 
+  event: Event! @relation(name: "EventTodo")
+}

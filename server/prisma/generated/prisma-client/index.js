@@ -61,6 +61,18 @@ var models = [
     embedded: false
   },
   {
+    name: "Todo",
+    embedded: false
+  },
+  {
+    name: "Question",
+    embedded: false
+  },
+  {
+    name: "TodoTemplate",
+    embedded: false
+  },
+  {
     name: "UserRole",
     embedded: false
   },
