@@ -9,9 +9,11 @@ import {
   Badge,
 } from '@material-ui/core';
 import Invitation from './Invitation';
+import { getQueryParams } from 'History';
 import { Icon } from 'Components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { COMMITTEE } from 'Pages/events/edit/committee/Committee';
 
 import styles from './Invitations.css';
 
@@ -80,7 +82,15 @@ class Invitations extends React.Component {
                       <Invitation
                         key={invitation.id}
                         invitation={invitation}
-                        refetch={[{ query: INVITATIONS }]}
+                        refetch={[
+                          { query: INVITATIONS },
+                          {
+                            query: COMMITTEE,
+                            variables: {
+                              eventId: invitation.committee.event.id,
+                            },
+                          },
+                        ]}
                       />
                     );
                   })}

@@ -31,6 +31,7 @@ export class UserAvatar extends React.Component {
           src={url}
           alt="Not Found"
           className={avatar_cls ? avatar_cls : null}
+          style={this.props.style}
         />
       );
     } else {
@@ -39,7 +40,7 @@ export class UserAvatar extends React.Component {
       return (
         <Avatar
           className={avatar_cls ? avatar_cls : null}
-          style={{ background: color }}
+          style={{ background: color, ...this.props.style }}
         >
           <Typography
             className={typo_cls ? typo_cls : null}

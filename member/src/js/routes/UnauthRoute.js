@@ -12,7 +12,7 @@ const UnauthRoute = ({ component: C, props: cProps, ...rest }) => {
         } else if (prevLocation) {
           return <Redirect to={prevLocation} />;
         } else {
-          return <Redirect to="/profile" />;
+          return <Redirect to="/home" />;
         }
       }}
     />

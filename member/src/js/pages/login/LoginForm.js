@@ -37,7 +37,6 @@ class LoginForm extends React.Component {
     );
     if (response) {
       this.props.login(response.access_token);
-      requestRoute('/profile');
     }
   };
 
