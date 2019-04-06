@@ -8,7 +8,13 @@ class TodoList extends React.Component {
       <Paper style={{ padding: '20px' }}>
         {this.props.todos.map((todo, i) => {
           const index = i + 1;
-          return <Todo key={todo.id} todo={{ index, ...todo }} />;
+          return (
+            <Todo
+              key={todo.id}
+              todo={{ index, ...todo }}
+              refetch={this.props.refetch}
+            />
+          );
         })}
       </Paper>
     );

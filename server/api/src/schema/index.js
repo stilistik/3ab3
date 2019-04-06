@@ -28,7 +28,6 @@ const Todo = require('./Todo');
 const TodoTemplate = require('./TodoTemplate');
 const Question = require('./Question');
 
-
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
 const Directives = `

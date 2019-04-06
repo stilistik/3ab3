@@ -13,6 +13,13 @@ export const TODOS = gql`
         id
         text
         due
+        done
+        doneBy {
+          id
+          avatar
+          name
+        }
+        doneAt
       }
     }
   }
@@ -30,7 +37,10 @@ class Todos extends React.Component {
               eventId={event.id}
               refetch={[{ query: TODOS, variables: { eventId: event.id } }]}
             />
-            <TodoList todos={event.todos} />
+            <TodoList
+              todos={event.todos}
+              refetch={[{ query: TODOS, variables: { eventId: event.id } }]}
+            />
           </Grid>
         </Grid>
       </div>

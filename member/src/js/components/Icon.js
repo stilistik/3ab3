@@ -23,6 +23,7 @@ import SendIcon from '@material-ui/icons/Send';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DoneIcon from '@material-ui/icons/Done';
 
 const icons = {
   mail: MailIcon,
@@ -49,6 +50,7 @@ const icons = {
   like: LikeIcon,
   moreHorizontal: MoreHorizIcon,
   moreVertical: MoreVertIcon,
+  done: DoneIcon,
 };
 
 export class Icon extends React.Component {
