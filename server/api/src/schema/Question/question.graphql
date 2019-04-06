@@ -1,0 +1,7 @@
+type Question {
+  id: ID!
+  text: String!
+  description: String!
+  templates: [TodoTemplate!]!
+}
+

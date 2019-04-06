@@ -1,0 +1,20 @@
+type Todo {
+  id: ID!
+  due: DateTime! 
+  text: String!
+  done: Boolean!
+  doneBy: User 
+  doneAt: DateTime 
+  event: Event! 
+}
+
+input TodoInput {
+  due: DateTime!,
+  text: String!,
+  eventId: ID!
+}
+
+extend type Mutation {
+  createTodo(input: TodoInput!): Todo!
+}
+

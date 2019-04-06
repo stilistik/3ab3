@@ -103,5 +103,8 @@ module.exports = {
     committee(root, args, context) {
       return context.prisma.event({ id: root.id }).committee();
     },
+    todos(root, args, context) {
+      return context.prisma.event({ id: root.id }).todos();
+    },
   },
 };

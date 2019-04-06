@@ -24,6 +24,10 @@ const Post = require('./Post');
 const Comment = require('./Comment');
 const Committee = require('./Committee');
 const Invitation = require('./Invitation');
+const Todo = require('./Todo');
+const TodoTemplate = require('./TodoTemplate');
+const Question = require('./Question');
+
 
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
@@ -80,6 +84,9 @@ module.exports = makeExecutableSchema({
     Comment.typeDef,
     Committee.typeDef,
     Invitation.typeDef,
+    Todo.typeDef,
+    TodoTemplate.typeDef,
+    Question.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -97,7 +104,10 @@ module.exports = makeExecutableSchema({
     Post.resolvers,
     Comment.resolvers,
     Committee.resolvers,
-    Invitation.resolvers
+    Invitation.resolvers,
+    Todo.resolvers,
+    TodoTemplate.resolvers,
+    Question.resolvers
   ),
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,

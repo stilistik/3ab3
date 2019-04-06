@@ -10,7 +10,7 @@ export const TODOS = gql`
       todos {
         id
         text
-        date
+        due
       }
     }
   }
