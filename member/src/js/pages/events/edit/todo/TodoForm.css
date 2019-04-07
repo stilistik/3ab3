@@ -1,8 +1,10 @@
 .form {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
 .field {
   margin-right: 10px;
+  flex-basis: 300px;
 }

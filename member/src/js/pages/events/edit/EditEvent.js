@@ -6,8 +6,6 @@ import { Tabs, Tab } from '@material-ui/core';
 import Committee from './committee/Committee';
 import Todos from './todo/Todos';
 
-import styles from './EditEvent.css';
-
 class EditEvent extends React.Component {
   constructor(props) {
     super(props);

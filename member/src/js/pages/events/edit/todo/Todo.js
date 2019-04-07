@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { Typography, Tooltip } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { Icon, UserAvatar } from 'Components';
 
@@ -92,14 +92,10 @@ const UNCHECK_TODO = gql`
 
 class TodoMutation extends React.Component {
   onClick = () => {
-    try {
-      this.mutate({
-        variables: { todoId: this.props.todo.id },
-        refetchQueries: () => this.props.refetch,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    this.mutate({
+      variables: { todoId: this.props.todo.id },
+      refetchQueries: () => this.props.refetch,
+    });
   };
 
   render() {
