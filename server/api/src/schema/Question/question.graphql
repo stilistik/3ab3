@@ -5,3 +5,18 @@ type Question {
   templates: [TodoTemplate!]!
 }
 
+input QuestionInput {
+  text: String!
+  description: String! 
+  templateIds: [ID!]!
+}
+
+extend type Query {
+  questions: [Question!]!
+  question(questionId: ID!): Question!
+}
+
+extend type Mutation {
+  createQuestion(input: QuestionInput!): Question!
+  deleteQuestion(questionId: ID!): Question!
+}

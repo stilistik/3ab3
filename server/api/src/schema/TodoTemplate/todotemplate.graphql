@@ -3,3 +3,13 @@ type TodoTemplate {
   text: String!
   offsetDays: Int!
 }
+
+extend type Query {
+  todoTemplates: [TodoTemplate!]!
+  todoTemplate(templateId: ID!): TodoTemplate!
+}
+
+extend type Mutation {
+  createTodoTemplate(text: String!, offsetDays: Int!): TodoTemplate!
+  deleteTodoTemplate(templatedId: ID!): TodoTemplate!
+}
