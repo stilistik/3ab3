@@ -12,6 +12,10 @@
   border-left: 1px solid lightgray;
 }
 
+.due {
+  width: 200px;
+}
+
 .index {
   width: @circle-size;
   height: @circle-size;
@@ -28,7 +32,31 @@
 }
 
 .index:hover {
-  background-color: #8de0af;
-  border-color: #8de0af;
-  transition: all 0.3s ease;
+  transform: scale3d(1.1, 1.1, 1.1)
+}
+
+.done {
+  color: #6acc94;
+  border-color: #6acc94;
+}
+
+.doneby {
+  display: flex;
+  align-items: center;
+}
+
+.date {
+  margin-right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month {
+  color: red;
+  margin-right: 10px;
+}
+
+.day {
+  margin: 0px;
 }

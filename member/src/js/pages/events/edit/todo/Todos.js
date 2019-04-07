@@ -37,6 +37,8 @@ class Todos extends React.Component {
               eventId={event.id}
               refetch={[{ query: TODOS, variables: { eventId: event.id } }]}
             />
+          </Grid>
+          <Grid item xs={12}>
             <TodoList
               todos={event.todos}
               refetch={[{ query: TODOS, variables: { eventId: event.id } }]}

@@ -1,33 +1,70 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { Typography } from '@material-ui/core';
+import { Typography, Tooltip } from '@material-ui/core';
 import gql from 'graphql-tag';
-import { Icon } from 'Components';
+import { Icon, UserAvatar } from 'Components';
 
 import styles from './Todo.less';
 
 const TodoIndicator = ({ index, done, onClick }) => {
+  let cls = styles.index;
+  if (done) cls += ' ' + styles.done;
   return (
-    <div className={styles.index} onClick={onClick}>
+    <div className={cls} onClick={onClick}>
       {done ? <Icon type="done" /> : <span>{index}</span>}
     </div>
   );
 };
 
 const DateDisplay = ({ date }) => {
-  const date_str = new Date(date).toDateString();
-  return <Typography variant="h6">{date_str}</Typography>;
+  const str = new Date(date).toString();
+  const month = str.split(' ')[1].toUpperCase();
+  const day = str.split(' ')[2];
+  return (
+    <div className={styles.date}>
+      <Typography variant="body1" className={styles.month}>
+        {month}
+      </Typography>
+      <Typography gutterBottom variant="h5" className={styles.day}>
+        {day}
+      </Typography>
+    </div>
+  );
+};
+
+const DoneBy = ({ done, doneBy, doneAt }) => {
+  if (!done) return null;
+  return (
+    <div>
+      <div className={styles.doneby}>
+        <UserAvatar
+          user={doneBy}
+          style={{ width: '25px', height: '25px', marginRight: '10px' }}
+        />
+        <Typography variant="h6" className={styles.typo}>
+          {doneBy.name}
+        </Typography>
+      </div>
+      <Typography variant="body2" style={{ color: '#666' }}>
+        {new Date(doneAt).toDateString()}
+      </Typography>
+    </div>
+  );
 };
 
 class Todo extends React.Component {
   render() {
-    const { index, text, due, done } = this.props.todo;
+    const { index, text, due, done, doneBy, doneAt } = this.props.todo;
     const { onClick } = this.props;
     return (
       <div>
         <div className={styles.header}>
           <TodoIndicator index={index} done={done} onClick={onClick} />
-          <DateDisplay date={due} />
+          {done ? (
+            <DoneBy doneBy={doneBy} done={done} doneAt={doneAt} />
+          ) : (
+            <DateDisplay date={due} />
+          )}
         </div>
         <div className={styles.todo}>
           <p>{text}</p>
