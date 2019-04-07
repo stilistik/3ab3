@@ -22,11 +22,11 @@ const DateDisplay = ({ date }) => {
   const day = str.split(' ')[2];
   return (
     <div className={styles.date}>
-      <Typography variant="body1" className={styles.month}>
+      <Typography variant="h6" className={styles.month}>
         {month}
       </Typography>
-      <Typography gutterBottom variant="h5" className={styles.day}>
-        {day}
+      <Typography gutterBottom variant="h6" className={styles.day}>
+        | {day}
       </Typography>
     </div>
   );
@@ -41,7 +41,7 @@ const DoneBy = ({ done, doneBy, doneAt }) => {
           user={doneBy}
           style={{ width: '25px', height: '25px', marginRight: '10px' }}
         />
-        <Typography variant="h6" className={styles.typo}>
+        <Typography variant="body1" className={styles.typo}>
           {doneBy.name}
         </Typography>
       </div>
