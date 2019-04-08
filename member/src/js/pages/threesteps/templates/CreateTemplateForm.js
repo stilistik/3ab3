@@ -22,19 +22,24 @@ class CreateTemplateForm extends React.Component {
         <Form onSubmit={this.onSubmit} className={styles.form}>
           <TextField
             id="text"
-            name="Todo Text"
+            name="Todo"
             type="text"
-            isRequired={true}
+            required={true}
             className={styles.field}
           />
           <Field
             id="offsetDays"
             name="Offset Days"
             type="number"
-            isRequired={true}
+            required={true}
             className={styles.field}
           />
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            className={styles.field}
+          >
             Submit
           </Button>
         </Form>

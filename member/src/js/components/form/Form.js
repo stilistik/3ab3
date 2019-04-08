@@ -46,13 +46,16 @@ export class Form extends React.Component {
     if (this.dirty) this.validateFormFields(this.state);
   };
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
     this.dirty = true;
     const hasError = this.validateFormFields(this.state);
     if (!hasError) {
       const values = this.createSubmitValues(this.state);
-      this.props.onSubmit(values);
+      await this.props.onSubmit(values);
+      this.setState(
+        this.createInitState(this.props.children, this.props.initValues)
+      );
     }
   };
 
