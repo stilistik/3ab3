@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buffer {
+  width: 45%;
+  flex-shrink: 1;
+  padding: 20px;
+}

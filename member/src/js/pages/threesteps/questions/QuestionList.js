@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Question from './Question';
+import CreateQuestionButton from './CreateQuestionButton';
 
 const QUESTIONS = gql`
   query {
@@ -24,6 +25,7 @@ class QuestionList extends React.Component {
     if (!questions) return null;
     return (
       <div>
+        <CreateQuestionButton />
         {questions.map((question) => {
           return (
             <Question

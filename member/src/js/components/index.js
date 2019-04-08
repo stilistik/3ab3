@@ -3,6 +3,7 @@ export * from './DefaultGrid';
 export * from './ImageDiv';
 export * from './DeleteConfirm';
 export * from './SocialStats';
+export * from './CreateButton';
 
 export * from './generic';
 export * from './event';
