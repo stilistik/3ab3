@@ -1,11 +1,11 @@
 import React from 'react';
 import { DefaultGrid } from 'Components';
 import { Grid } from '@material-ui/core';
-import QuestionList from './questions/QuestionList';
+import QuestionList from './QuestionList';
 
-import styles from './ThreeSteps.css';
+import styles from './Questions.css';
 
-class ThreeSteps extends React.Component {
+class Questions extends React.Component {
   render() {
     return (
       <DefaultGrid>
@@ -21,4 +21,4 @@ class ThreeSteps extends React.Component {
   }
 }
 
-export default ThreeSteps;
+export default Questions;

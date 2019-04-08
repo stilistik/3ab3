@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import TodoTemplate from './TodoTemplate';
+import TodoTemplate from '../../templates/TodoTemplate';
 
 const TEMPLATES = gql`
   query {
@@ -26,6 +26,7 @@ class TemplateSelector extends React.Component {
     const found = selected.find((el) => el === templateId);
     if (found) selected.splice(selected.indexOf(found), 1);
     else selected.push(templateId);
+    this.props.onChange(selected);
     this.setState({ selected });
   };
 

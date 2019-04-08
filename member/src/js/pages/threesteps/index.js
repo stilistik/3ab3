@@ -1,3 +1,1 @@
-import ThreeSteps from './ThreeSteps';
-
-export default ThreeSteps;
+export * from './questions';

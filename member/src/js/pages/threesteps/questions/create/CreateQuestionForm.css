@@ -1,0 +1,25 @@
+.container {
+  padding: 20px;
+}
+
+.paper {
+  padding: 20px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btnwrap {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn {
+  width: 100px;
+}

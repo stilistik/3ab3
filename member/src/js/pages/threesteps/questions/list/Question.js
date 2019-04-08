@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { Mutation } from 'react-apollo';
 import { Icon } from 'Components';
-import TodoTemplate from '../templates/TodoTemplate';
+import TodoTemplate from '../../templates/TodoTemplate';
 
 import styles from './Question.css';
 import gql from 'graphql-tag';

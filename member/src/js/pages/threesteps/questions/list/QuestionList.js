@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Question from './Question';
 import CreateQuestionButton from './CreateQuestionButton';
 
-const QUESTIONS = gql`
+export const QUESTIONS = gql`
   query {
     questions {
       id
