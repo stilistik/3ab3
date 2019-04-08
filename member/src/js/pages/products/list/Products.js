@@ -1,10 +1,9 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Grid, Fab, Hidden } from '@material-ui/core';
-import { DefaultGrid, Icon } from 'Components';
+import { Grid } from '@material-ui/core';
+import { DefaultGrid, CreateButton } from 'Components';
 import ProductCard from './ProductCard';
-import CreateCard from './CreateCard';
 import { requestRoute } from 'History';
 
 import styles from './Products.css';
@@ -38,11 +37,9 @@ class Products extends React.Component {
       <DefaultGrid overflow>
         <div className={styles.container}>
           <Grid container spacing={24}>
-            <Hidden xsDown>
-              <Grid item xs={12} sm={6} lg={4}>
-                <CreateCard onClick={this.onCreate} />
-              </Grid>
-            </Hidden>
+            <Grid item xs={12}>
+              <CreateButton onClick={this.onCreate} />
+            </Grid>
             {this.props.products.map((product) => {
               return (
                 <Grid key={product.id} item xs={12} sm={6} lg={4}>
@@ -54,15 +51,6 @@ class Products extends React.Component {
                 </Grid>
               );
             })}
-            <Hidden smUp>
-              <Fab
-                color="primary"
-                className={styles.fab}
-                onClick={this.onCreate}
-              >
-                <Icon type="add" />
-              </Fab>
-            </Hidden>
           </Grid>
         </div>
       </DefaultGrid>

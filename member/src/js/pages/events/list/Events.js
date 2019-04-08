@@ -1,8 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { DefaultGrid, Icon } from 'Components';
-import { Fab, Grid, Hidden } from '@material-ui/core';
+import { DefaultGrid, CreateButton } from 'Components';
+import { Grid } from '@material-ui/core';
 import { requestRoute } from 'History';
 import { EventCard } from 'Components';
 
@@ -31,6 +31,9 @@ class Events extends React.Component {
       <DefaultGrid overflow>
         <div className={styles.container}>
           <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <CreateButton onClick={this.onCreate} />
+            </Grid>
             {this.props.events.map((event) => {
               return (
                 <Grid key={event.id} item xs={12} lg={6}>
@@ -42,15 +45,6 @@ class Events extends React.Component {
                 </Grid>
               );
             })}
-            <Hidden smUp>
-              <Fab
-                color="primary"
-                className={styles.fab}
-                onClick={this.onCreate}
-              >
-                <Icon type="add" />
-              </Fab>
-            </Hidden>
           </Grid>
         </div>
       </DefaultGrid>

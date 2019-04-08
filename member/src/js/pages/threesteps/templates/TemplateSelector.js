@@ -1,10 +1,7 @@
 import React from 'react';
-import { Paper } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import TodoTemplate from './TodoTemplate';
-
-import styles from './TemplateSelector.css';
 
 const TEMPLATES = gql`
   query {
