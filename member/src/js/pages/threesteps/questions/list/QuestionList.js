@@ -26,6 +26,7 @@ class QuestionList extends React.Component {
     return (
       <div>
         <CreateQuestionButton />
+        <br />
         {questions.map((question) => {
           return (
             <Question

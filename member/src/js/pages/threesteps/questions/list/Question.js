@@ -9,7 +9,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { Mutation } from 'react-apollo';
-import { Icon } from 'Components';
+import { Icon, DeleteConfirm } from 'Components';
 import TodoTemplate from '../../templates/TodoTemplate';
 
 import styles from './Question.css';
@@ -40,9 +40,20 @@ const Description = ({ description }) => {
 };
 
 class Question extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      anchorEl: null,
+    };
+  }
+
   onDelete = () => {
     this.props.onDelete();
   };
+
+  onOpen = (e) => this.setState({ anchorEl: e.target });
+
+  onCancel = () => this.setState({ anchorEl: null });
 
   onEdit = () => {};
 
@@ -64,9 +75,14 @@ class Question extends React.Component {
           <IconButton onClick={this.onEdit}>
             <Icon type="edit" />
           </IconButton>
-          <IconButton onClick={this.onDelete}>
+          <IconButton onClick={this.onOpen}>
             <Icon type="delete" />
           </IconButton>
+          <DeleteConfirm
+            anchorEl={this.state.anchorEl}
+            onDelete={this.onDelete}
+            onCancel={this.onCancel}
+          />
         </ExpansionPanelActions>
       </ExpansionPanel>
     );
