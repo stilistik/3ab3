@@ -13,6 +13,7 @@ import Profile from 'Pages/profile';
 import { Events, CreateEvent, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
 import { Members, CreateMember, EditMember } from 'Pages/members';
+import ThreeSteps from 'Pages/threesteps';
 
 const Routes = ({ props }) => {
   return (
@@ -36,6 +37,7 @@ const Routes = ({ props }) => {
       <AuthRoute path="/events" component={Events} props={props} />
       <AuthRoute path="/createevent" component={CreateEvent} props={props} />
       <AuthRoute path="/editevent" component={EditEvent} props={props} />
+      <AuthRoute path="/3steps" component={ThreeSteps} props={props} />
       <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );

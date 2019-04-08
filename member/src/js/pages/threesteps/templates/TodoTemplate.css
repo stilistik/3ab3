@@ -1,0 +1,26 @@
+.selected {
+  background-color: lightgreen;
+}
+
+.selected:focus {
+  background-color: lightgreen;
+}
+
+.selected:hover {
+  background-color: lightgreen;
+}
+
+.chip {
+  display: flex;
+  height: auto;
+  width: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.chiplabel {
+  white-space: normal;
+  align-self: center;
+  padding: 0.35em 0em;
+  margin-left: 10px;
+}

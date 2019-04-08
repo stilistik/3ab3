@@ -24,6 +24,7 @@ import LikeIcon from '@material-ui/icons/ThumbUp';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DoneIcon from '@material-ui/icons/Done';
+import ThreeStepsIcon from '@material-ui/icons/Looks3';
 
 const icons = {
   mail: MailIcon,
@@ -51,6 +52,7 @@ const icons = {
   moreHorizontal: MoreHorizIcon,
   moreVertical: MoreVertIcon,
   done: DoneIcon,
+  threeSteps: ThreeStepsIcon,
 };
 
 export class Icon extends React.Component {
