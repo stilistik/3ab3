@@ -104,7 +104,9 @@ module.exports = {
       return context.prisma.event({ id: root.id }).committee();
     },
     todos(root, args, context) {
-      return context.prisma.event({ id: root.id }).todos();
+      return context.prisma.event({ id: root.id }).todos({
+        orderBy: 'due_ASC',
+      });
     },
   },
 };
