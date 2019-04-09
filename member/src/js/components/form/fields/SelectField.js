@@ -1,6 +1,5 @@
 import React from 'react';
-import { Select } from 'Components';
-import { FormControl, FormHelperText } from '@material-ui/core';
+import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 
 export class SelectField extends React.Component {
   onChange = (e) => {
@@ -9,28 +8,30 @@ export class SelectField extends React.Component {
 
   render() {
     const {
-      isMulti,
-      name,
-      value,
       options,
-      error,
+      value,
+      id,
+      name,
       className,
+      error,
       style,
+      multiple,
     } = this.props;
+
     return (
-      <FormControl
-        error={error && true}
-        className={className}
-        style={{ marginTop: '20px', ...style }}
-      >
+      <FormControl error={error && true} className={className} style={style}>
+        <InputLabel htmlFor={id}>{name}</InputLabel>
         <Select
-          options={options}
-          value={value}
+          id={id}
+          value={value || []}
           onChange={this.onChange}
-          placeholder={name}
-          isMulti={isMulti}
-        />
-        <FormHelperText>{error ? error.message : null}</FormHelperText>
+          className={this.props.className}
+          multiple={multiple}
+        >
+          {options.map((option) => {
+            return <MenuItem value={option.value}>{option.label}</MenuItem>;
+          })}
+        </Select>
       </FormControl>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Select } from 'Components';
+import { TagSelect } from 'Components';
 
 const USERS = gql`
   query {
@@ -43,7 +43,7 @@ class AvailableUsers extends React.Component {
           }));
 
           return (
-            <Select
+            <TagSelect
               options={options}
               value={this.props.value}
               onChange={this.props.onChange}

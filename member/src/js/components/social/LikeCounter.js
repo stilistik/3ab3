@@ -5,7 +5,7 @@ import LikedBy from './LikedBy';
 
 import styles from './LikeCounter.css';
 
-export class LikeCounter extends React.Component {
+class LikeCounter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,3 +43,5 @@ LikeCounter.defaultProps = {
     icon: styles.icon,
   },
 };
+
+export default LikeCounter;

@@ -179,7 +179,7 @@ const components = {
   ValueContainer,
 };
 
-class IntegrationReactSelect extends React.Component {
+class TagSelect extends React.Component {
   render() {
     const { classes, theme } = this.props;
 
@@ -209,9 +209,9 @@ class IntegrationReactSelect extends React.Component {
   }
 }
 
-IntegrationReactSelect.propTypes = {
+TagSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);
+export default withStyles(styles, { withTheme: true })(TagSelect);

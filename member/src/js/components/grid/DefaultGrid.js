@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 
 import styles from './DefaultGrid.css';
 
-export class DefaultGrid extends React.Component {
+class DefaultGrid extends React.Component {
   render() {
     const { children, overflow, ...props } = this.props;
     const childrenWithProps = React.Children.map(children, (child) => {
@@ -29,3 +29,5 @@ export class DefaultGrid extends React.Component {
     }
   }
 }
+
+export default DefaultGrid;

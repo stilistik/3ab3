@@ -9,7 +9,7 @@ class CreateQuestionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      templateIds: [],
+      templates: [],
       text: '',
       description: '',
     };
@@ -23,11 +23,16 @@ class CreateQuestionForm extends React.Component {
 
   onSelectionChange = (values) => {
     this.setState({
-      templateIds: values,
+      templates: values,
     });
   };
 
   onSubmit = () => {
+    const values = {
+      text: this.state.text,
+      description: this.state.description,
+      templateIds: this.state.templates,
+    };
     this.props.onSubmit(this.state);
   };
 

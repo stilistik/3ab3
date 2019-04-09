@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { Mutation, compose, graphql } from 'react-apollo';
 import CreateQuestionForm from './CreateQuestionForm';
 import { QUESTIONS } from '../list/QuestionList';
 import { connect } from 'react-redux';
@@ -10,6 +10,16 @@ const MUTATION = gql`
   mutation($input: QuestionInput!) {
     createQuestion(input: $input) {
       id
+    }
+  }
+`;
+
+const TEMPLATES = gql`
+  query {
+    todoTemplates {
+      id
+      text
+      offsetDays
     }
   }
 `;
@@ -40,18 +50,26 @@ class CreateQuestion extends React.Component {
   };
 
   render() {
+    if (!this.props.templates) return null;
     return (
       <Mutation mutation={MUTATION}>
         {(createQuestion) => {
           this.createQuestion = createQuestion;
-          return <CreateQuestionForm onSubmit={this.onSubmit} />;
+          return (
+            <CreateQuestionForm onSubmit={this.onSubmit} {...this.props} />
+          );
         }}
       </Mutation>
     );
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  graphql(TEMPLATES, {
+    props: ({ data }) => ({ templates: data.todoTemplates }),
+  })
 )(CreateQuestion);

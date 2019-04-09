@@ -2,7 +2,7 @@ import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { Icon } from 'Components';
 
-export class ImageDiv extends React.Component {
+class ImageContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +46,7 @@ export class ImageDiv extends React.Component {
   }
 }
 
-ImageDiv.defaultProps = {
+ImageContainer.defaultProps = {
   classes: {
     root: null,
     indicator: null,
@@ -54,3 +54,5 @@ ImageDiv.defaultProps = {
     icon: null,
   },
 };
+
+export default ImageContainer;

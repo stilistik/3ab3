@@ -3,7 +3,7 @@ import { Fab, Divider } from '@material-ui/core';
 import { Icon } from 'Components';
 import styles from './CreateButton.css';
 
-export class CreateButton extends React.Component {
+class CreateButton extends React.Component {
   render() {
     return (
       <div className={styles.container}>
@@ -20,3 +20,5 @@ export class CreateButton extends React.Component {
     );
   }
 }
+
+export default CreateButton;

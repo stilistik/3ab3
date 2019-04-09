@@ -7,7 +7,7 @@ import {
   CardActions,
   Button,
 } from '@material-ui/core';
-import { Icon, ImageDiv } from 'Components';
+import { Icon, ImageContainer } from 'Components';
 import LikeEvent from './LikeEvent';
 import EventComments from './EventComments';
 import EventStats from './EventStats';
@@ -72,7 +72,7 @@ export class EventCard extends React.Component {
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
-          <ImageDiv
+          <ImageContainer
             image={global.API_URL + this.props.event.image}
             classes={{
               root: styles.image,

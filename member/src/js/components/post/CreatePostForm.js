@@ -8,7 +8,7 @@ import {
   Button,
   TextField,
 } from '@material-ui/core';
-import { Icon, UserAvatar, ImageDiv } from 'Components';
+import { Icon, UserAvatar, ImageContainer } from 'Components';
 import ImageInput from './ImageInput';
 
 import styles from './CreatePostForm.css';
@@ -73,7 +73,7 @@ class CreatePostForm extends React.Component {
             <ImageInput onChange={this.onImageChange} />
           </div>
           {this.state.src ? (
-            <ImageDiv
+            <ImageContainer
               image={this.state.src}
               classes={{ root: styles.preview }}
             />

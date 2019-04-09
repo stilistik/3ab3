@@ -10,7 +10,7 @@ import {
 
 import styles from './DeleteConfirm.css';
 
-export class DeleteConfirm extends React.Component {
+class DeleteConfirm extends React.Component {
   render() {
     const { anchorEl, onCancel, onDelete } = this.props;
     return (
@@ -46,3 +46,5 @@ export class DeleteConfirm extends React.Component {
     );
   }
 }
+
+export default DeleteConfirm;

@@ -57,9 +57,11 @@ const icons = {
   expand: ExpandMoreIcon,
 };
 
-export class Icon extends React.Component {
+class Icon extends React.Component {
   render() {
     const C = icons[this.props.type];
     return <C {...this.props} />;
   }
 }
+
+export default Icon;

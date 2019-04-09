@@ -7,7 +7,7 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core';
-import { Icon, ImageDiv } from 'Components';
+import { Icon, ImageContainer } from 'Components';
 import DeleteProduct from '../delete/DeleteProduct';
 
 import styles from './ProductCard.css';
@@ -25,7 +25,7 @@ class ProductCard extends React.Component {
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
-          <ImageDiv
+          <ImageContainer
             image={global.API_URL + this.props.product.thumbnail}
             classes={{
               root: styles.image,
