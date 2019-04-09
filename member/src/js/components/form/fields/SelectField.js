@@ -1,5 +1,11 @@
 import React from 'react';
-import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+} from '@material-ui/core';
 
 export class SelectField extends React.Component {
   onChange = (e) => {
@@ -19,7 +25,7 @@ export class SelectField extends React.Component {
     } = this.props;
 
     return (
-      <FormControl error={error && true} className={className} style={style}>
+      <FormControl className={className} style={style}>
         <InputLabel htmlFor={id}>{name}</InputLabel>
         <Select
           id={id}
@@ -32,6 +38,9 @@ export class SelectField extends React.Component {
             return <MenuItem value={option.value}>{option.label}</MenuItem>;
           })}
         </Select>
+        <FormHelperText style={{ color: 'red' }}>
+          {error ? error.message : null}
+        </FormHelperText>
       </FormControl>
     );
   }

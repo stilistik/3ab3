@@ -24,7 +24,7 @@ export class TextField extends React.Component {
       style,
     } = this.props;
     return (
-      <FormControl error={error && true} className={className} style={style}>
+      <FormControl className={className} style={style}>
         <InputLabel htmlFor={id} {...InputLabelProps}>
           {name}
         </InputLabel>
@@ -37,7 +37,9 @@ export class TextField extends React.Component {
           value={value}
           {...InputProps}
         />
-        <FormHelperText>{error ? error.message : null}</FormHelperText>
+        <FormHelperText style={{ color: 'red' }}>
+          {error ? error.message : null}
+        </FormHelperText>
       </FormControl>
     );
   }

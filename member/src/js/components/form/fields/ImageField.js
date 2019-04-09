@@ -14,10 +14,9 @@ const AvatarEmpty = ({ error }) => {
 };
 
 const Label = ({ error, name }) => {
-  const cls = error ? 'error' : 'typo';
   return (
     <div>
-      <Typography variant="subtitle1" className={styles[cls]}>
+      <Typography variant="subtitle1" className={styles.typo}>
         {name}
       </Typography>
       {error ? (
@@ -78,7 +77,7 @@ export class ImageField extends React.Component {
               variant="contained"
               component="span"
             >
-              <Display url={this.state.src} cdn={value} err={error} />
+              <Display url={this.state.src} cdn={value} />
             </IconButton>
           </label>
           <Label name={name} error={error} />

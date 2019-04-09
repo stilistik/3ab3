@@ -33,7 +33,7 @@ class CreateQuestionForm extends React.Component {
       description: this.state.description,
       templateIds: this.state.templates,
     };
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(values);
   };
 
   render() {
