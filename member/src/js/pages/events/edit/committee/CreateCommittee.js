@@ -4,6 +4,7 @@ import { showMessage } from 'Redux/actions';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import CommitteeForm from './CommitteeForm';
+import AvailableUsers from './AvailableUsers';
 
 const MUTATION = gql`
   mutation($userIds: [ID!]!, $committeeId: ID!) {
@@ -47,10 +48,12 @@ class CreateCommittee extends React.Component {
         {(createInvitation) => {
           this.createInvitation = createInvitation;
           return (
-            <CommitteeForm
-              onSubmit={this.onSubmit}
-              committee={this.props.committee}
-            />
+            <AvailableUsers {...this.props}>
+              <CommitteeForm
+                onSubmit={this.onSubmit}
+                committee={this.props.committee}
+              />
+            </AvailableUsers>
           );
         }}
       </Mutation>

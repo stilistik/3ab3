@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { TagSelect } from 'Components';
 
 const USERS = gql`
   query {
@@ -26,7 +25,7 @@ class AvailableUsers extends React.Component {
           if (loading) return null;
           if (error) return null;
 
-          const { committee } = this.props;
+          const { children, committee } = this.props;
           const available = data.users.filter((user) => {
             return (
               !user.pendingInvitations.find(
@@ -42,15 +41,11 @@ class AvailableUsers extends React.Component {
             label: user.name,
           }));
 
-          return (
-            <TagSelect
-              options={options}
-              value={this.props.value}
-              onChange={this.props.onChange}
-              placeholder="Select a user..."
-              isMulti={this.props.isMulti}
-            />
-          );
+          return React.Children.map(children, (child) => {
+            return React.cloneElement(child, {
+              options,
+            });
+          });
         }}
       </Query>
     );

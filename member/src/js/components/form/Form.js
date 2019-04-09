@@ -1,5 +1,12 @@
 import React from 'react';
-import { TextField, DateField, ImageField, Field, SelectField } from './fields';
+import {
+  TextField,
+  DateField,
+  ImageField,
+  Field,
+  SelectField,
+  TagField,
+} from './fields';
 import Validator from './Validator';
 
 const FIELDTYPES = [
@@ -8,6 +15,7 @@ const FIELDTYPES = [
   DateField.name,
   TextField.name,
   SelectField.name,
+  TagField.name,
 ];
 
 export class Form extends React.Component {

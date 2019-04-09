@@ -1,6 +1,8 @@
 import React from 'react';
 import { Paper, Typography, Button } from '@material-ui/core';
-import AvailableUsers from './AvailableUsers';
+import { Form, TagField } from 'Components';
+
+import styles from './CommitteeForm.css';
 
 class CommitteeForm extends React.Component {
   constructor(props) {
@@ -14,33 +16,35 @@ class CommitteeForm extends React.Component {
     this.setState({ value });
   };
 
-  onSubmit = () => {
-    this.props.onSubmit(this.state.value);
-    this.setState({ value: null });
+  onSubmit = (values) => {
+    this.props.onSubmit(values.users);
   };
 
   render() {
+    const { options } = this.props;
     return (
       <Paper style={{ padding: '20px' }}>
         <Typography variant="h3">
           Select the members for your committee and send invitations
         </Typography>
         <br />
-        <AvailableUsers
-          committee={this.props.committee}
-          isMulti={true}
-          value={this.state.value}
-          onChange={this.onChange}
-        />
-        <br />
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ width: '100%' }}
-          onClick={this.onSubmit}
-        >
-          Invite
-        </Button>
+        <Form onSubmit={this.onSubmit}>
+          <TagField
+            id="users"
+            name="Users"
+            options={options}
+            required={true}
+            className={styles.field}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            className={styles.field}
+          >
+            Invite
+          </Button>
+        </Form>
       </Paper>
     );
   }

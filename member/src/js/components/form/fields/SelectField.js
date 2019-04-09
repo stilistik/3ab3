@@ -13,17 +13,7 @@ export class SelectField extends React.Component {
   };
 
   render() {
-    const {
-      options,
-      value,
-      id,
-      name,
-      className,
-      error,
-      style,
-      multiple,
-    } = this.props;
-
+    const { options, value, id, name, className, error, style } = this.props;
     return (
       <FormControl className={className} style={style}>
         <InputLabel htmlFor={id}>{name}</InputLabel>
@@ -32,7 +22,6 @@ export class SelectField extends React.Component {
           value={value || []}
           onChange={this.onChange}
           className={this.props.className}
-          multiple={multiple}
         >
           {options.map((option) => {
             return <MenuItem value={option.value}>{option.label}</MenuItem>;
