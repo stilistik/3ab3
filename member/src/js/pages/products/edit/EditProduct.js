@@ -37,10 +37,12 @@ class EditProductQuery extends React.Component {
 
 class EditProduct extends React.Component {
   render() {
-    const { thumbnail, ...rest } = this.props.product;
+    const { thumbnail, index, price, name } = this.props.product;
     const initValues = {
       image: thumbnail,
-      ...rest,
+      index: String(index),
+      price: String(price),
+      name: name,
     };
     return (
       <DefaultGrid overflow>

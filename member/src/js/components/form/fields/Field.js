@@ -10,7 +10,8 @@ export class Field extends React.Component {
   static getInitValue = () => '';
 
   onChange = (e) => {
-    this.props.onChange(this.props.id, e.target.value);
+    const value = String(e.target.value);
+    this.props.onChange(this.props.id, value);
   };
 
   render() {

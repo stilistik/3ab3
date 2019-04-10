@@ -101,10 +101,10 @@ export class Form extends React.Component {
       const fieldValue = this.state[id].value;
       switch (field.props.type) {
         case 'image':
-          if (fieldValue instanceof File) values[id] = field.value;
+          if (fieldValue instanceof File) values[id] = fieldValue;
           break;
         default:
-          values[id] = field.value;
+          values[id] = fieldValue;
       }
     });
     return values;
@@ -115,7 +115,7 @@ export class Form extends React.Component {
     Object.keys(this.fields).forEach((id) => {
       const field = this.fields[id];
       const fieldValue = this.state[id].value;
-      const error = Validator.validate(field.props, fieldValue);
+      const error = Validator.validate(field, fieldValue);
       if (error) hasError = true;
       const newState = Object.assign({}, this.state[id], {
         error: error,

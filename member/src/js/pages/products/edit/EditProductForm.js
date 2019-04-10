@@ -24,6 +24,8 @@ const mapDispatchToProps = (dispatch) => {
 
 class FormMutation extends React.Component {
   onSubmit = async (values) => {
+    console.log(values);
+
     try {
       await this.updateProduct({
         variables: {
