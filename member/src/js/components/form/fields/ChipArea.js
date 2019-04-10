@@ -21,11 +21,19 @@ export class ChipArea extends React.Component {
   };
 
   render() {
-    const { options, value, name, className, error, style } = this.props;
+    const {
+      options,
+      value,
+      name,
+      className,
+      error,
+      style,
+      classes,
+    } = this.props;
     return (
       <FormControl className={className} style={style}>
         <Typography>{name}</Typography>
-        <div>
+        <div className={classes.area}>
           {options.map((option) => {
             const isSelected = value.find((el) => el === option.id);
             return (
@@ -50,3 +58,9 @@ export class ChipArea extends React.Component {
     );
   }
 }
+
+ChipArea.defaultProps = {
+  classes: {
+    area: '',
+  },
+};

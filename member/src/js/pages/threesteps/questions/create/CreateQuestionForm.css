@@ -14,6 +14,11 @@
   margin-bottom: 10px;
 }
 
+.area {
+  max-height: 250px;
+  overflow: scroll;
+}
+
 .btnwrap {
   display: flex;
   width: 100%;

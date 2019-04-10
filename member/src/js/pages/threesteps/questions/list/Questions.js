@@ -8,7 +8,7 @@ import styles from './Questions.css';
 class Questions extends React.Component {
   render() {
     return (
-      <DefaultGrid>
+      <DefaultGrid overflow>
         <div className={styles.container}>
           <Grid container spacing={24}>
             <Grid item xs={12}>

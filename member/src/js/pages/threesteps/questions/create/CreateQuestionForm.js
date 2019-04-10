@@ -27,7 +27,7 @@ class CreateQuestionForm extends React.Component {
   render() {
     const options = this.createOptions(this.props.templates);
     return (
-      <DefaultGrid>
+      <DefaultGrid overflow>
         <div className={styles.container}>
           <Paper className={styles.paper}>
             <Form onSubmit={this.onSubmit}>

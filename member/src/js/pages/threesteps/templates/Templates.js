@@ -9,7 +9,7 @@ import styles from './Templates.css';
 class Templates extends React.Component {
   render() {
     return (
-      <DefaultGrid>
+      <DefaultGrid overflow>
         <div className={styles.container}>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={6}>
