@@ -13,7 +13,7 @@ import Profile from 'Pages/profile';
 import { Events, CreateEvent, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
 import { Members, CreateMember, EditMember } from 'Pages/members';
-import { Questions, CreateQuestion } from 'Pages/threesteps';
+import { Questions, Templates, CreateQuestion } from 'Pages/threesteps';
 
 const Routes = ({ props }) => {
   return (
@@ -43,6 +43,7 @@ const Routes = ({ props }) => {
         component={CreateQuestion}
         props={props}
       />
+      <AuthRoute path="/templates" component={Templates} props={props} />
       <AuthRoute path="/" component={Home} props={props} />
     </Switch>
   );

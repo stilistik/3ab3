@@ -1,6 +1,7 @@
 import React from 'react';
-import { DefaultGrid, TextField, ChipArea, Form } from 'Components';
-import { Paper, Grid, Button, Typography } from '@material-ui/core';
+import { DefaultGrid, TextField, ChipArea, Form, Icon } from 'Components';
+import { Paper, Grid, Button, Typography, Fab } from '@material-ui/core';
+import { requestRoute } from 'History';
 
 import styles from './CreateQuestionForm.css';
 
@@ -17,6 +18,10 @@ class CreateQuestionForm extends React.Component {
         text: template.text,
       };
     });
+  };
+
+  onCreateTemplate = () => {
+    requestRoute('/templates');
   };
 
   render() {
@@ -46,7 +51,17 @@ class CreateQuestionForm extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Typography variant="h3">Todos</Typography>
+                  <div className={styles.todoheader}>
+                    <Typography variant="h3">Todos</Typography>
+                    <Fab
+                      color="primary"
+                      size="small"
+                      onClick={this.onCreateTemplate}
+                      style={{ marginRight: '5px' }}
+                    >
+                      <Icon type="add" />
+                    </Fab>
+                  </div>
                   <br />
                   <ChipArea
                     id="templateIds"
