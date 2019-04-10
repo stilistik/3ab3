@@ -7,7 +7,7 @@ import {
   Avatar,
 } from '@material-ui/core';
 
-import styles from './ChipArea.css';
+import styles from './ChipArea.less';
 
 export class ChipArea extends React.Component {
   static getInitValue = () => [];
@@ -33,7 +33,9 @@ export class ChipArea extends React.Component {
                 <Chip
                   className={isSelected ? styles.selected : ''}
                   classes={{ root: styles.chip, label: styles.chiplabel }}
-                  avatar={<Avatar>{option.avatar}</Avatar>}
+                  avatar={
+                    <Avatar className={styles.avatar}>{option.avatar}</Avatar>
+                  }
                   label={option.text}
                   onClick={() => this.onClick(option.id)}
                 />

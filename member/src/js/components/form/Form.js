@@ -23,27 +23,53 @@ const FIELDTYPES = [
 export class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.createInitState(props.children, props.initValues);
+    this.fields = {};
+    this.recursiveMap(props.children, this.findField);
+    this.state = this.createInitState(props.initValues);
     this.dirty = false;
   }
 
-  createInitState = (children, initValues) => {
-    let state = {};
-    children.forEach((child) => {
-      if (FIELDTYPES.indexOf(child.type.name) > -1) {
-        const { id, type, required } = child.props;
-        state[id] = {
-          value: child.type.getInitValue(),
-          type: type,
-          required: required,
-          error: null,
-        };
+  findField = (child) => {
+    if (FIELDTYPES.indexOf(child.type.name) > -1) {
+      const { id } = child.props;
+      if (!id) throw new Error('All form fields must specify id prop.');
+      this.fields[id] = child;
+    }
+  };
+
+  recursiveMap = (children, fn) => {
+    return React.Children.map(children, (child) => {
+      if (!React.isValidElement(child)) {
+        return child;
       }
+
+      if (child.props.children) {
+        child = React.cloneElement(child, {
+          children: this.recursiveMap(child.props.children, fn),
+        });
+      }
+
+      return fn(child);
+    });
+  };
+
+  createInitState = (initValues) => {
+    let state = {};
+    Object.keys(this.fields).forEach((id) => {
+      const field = this.fields[id];
+      state[id] = {
+        value: field.type.getInitValue(),
+        error: null,
+      };
     });
     if (initValues) {
-      Object.keys(initValues).forEach((id) => {
-        if (state[id] && initValues[id])
-          state[id].value = String(initValues[id]);
+      Object.keys(this.fields).forEach((id) => {
+        if (initValues[id]) {
+          state[id] = {
+            value: initValues[id],
+            error: null,
+          };
+        }
       });
     }
     return state;
@@ -54,26 +80,24 @@ export class Form extends React.Component {
       value: value,
     });
     await this.setState({ [id]: fieldProps });
-    if (this.dirty) this.validateFormFields(this.state);
+    if (this.dirty) this.validateFormFields();
   };
 
   onSubmit = async (e) => {
     e.preventDefault();
     this.dirty = true;
-    const hasError = this.validateFormFields(this.state);
+    const hasError = this.validateFormFields();
     if (!hasError) {
-      const values = this.createSubmitValues(this.state);
+      const values = this.createSubmitValues();
       await this.props.onSubmit(values);
-      this.setState(
-        this.createInitState(this.props.children, this.props.initValues)
-      );
+      this.setState(this.createInitState());
     }
   };
 
-  createSubmitValues = (state) => {
+  createSubmitValues = () => {
     const values = {};
-    Object.keys(state).forEach((id) => {
-      const field = state[id];
+    Object.keys(this.state).forEach((id) => {
+      const field = this.state[id];
       switch (field.type) {
         case 'image':
           if (field.value instanceof File) values[id] = field.value;
@@ -85,35 +109,43 @@ export class Form extends React.Component {
     return values;
   };
 
-  validateFormFields = (state) => {
+  validateFormFields = () => {
     let hasError = false;
-    Object.keys(state).forEach((fieldName) => {
-      const fieldProps = state[fieldName];
-      const error = Validator.validate(fieldProps);
+    Object.keys(this.fields).forEach((id) => {
+      const field = this.fields[id];
+      const fieldValue = this.state[id].value;
+      const error = Validator.validate(field.props, fieldValue);
       if (error) hasError = true;
-      const newProps = Object.assign({}, fieldProps, {
+      const newState = Object.assign({}, this.state[id], {
         error: error,
       });
-      this.setState({ [fieldName]: newProps });
+      this.setState({ [id]: newState });
     });
     return hasError;
   };
 
-  render() {
-    const fields = React.Children.map(this.props.children, (child) => {
-      const fieldProps = {
-        ...this.state[child.props.id],
+  injectFieldProps = (child) => {
+    const { id } = child.props;
+    if (!id || !this.fields[id]) return child;
+    else
+      return React.cloneElement(child, {
+        ...this.state[id],
         onChange: this.onFieldChange,
-      };
-      return React.cloneElement(child, { ...fieldProps });
-    });
+      });
+  };
+
+  render() {
+    const fieldsWithProps = this.recursiveMap(
+      this.props.children,
+      this.injectFieldProps
+    );
     return (
       <form
         noValidate
         className={this.props.className}
         onSubmit={this.onSubmit}
       >
-        {fields}
+        {fieldsWithProps}
       </form>
     );
   }

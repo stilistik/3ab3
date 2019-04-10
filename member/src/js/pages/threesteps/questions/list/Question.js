@@ -71,7 +71,7 @@ class Question extends React.Component {
           <Todos templates={templates} />
         </ExpansionPanelDetails>
         <Divider />
-        <ExpansionPanelActions>
+        <ExpansionPanelActions className={styles.actions}>
           <IconButton onClick={this.onEdit}>
             <Icon type="edit" />
           </IconButton>

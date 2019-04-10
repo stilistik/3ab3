@@ -12,7 +12,7 @@ class TodoTemplate extends React.Component {
         <Chip
           className={isSelected ? styles.selected : ''}
           classes={{ root: styles.chip, label: styles.chiplabel }}
-          avatar={<Avatar>{offsetDays}</Avatar>}
+          avatar={<Avatar className={styles.avatar}>{offsetDays}</Avatar>}
           label={text}
           onClick={onClick ? () => onClick(id) : null}
         />

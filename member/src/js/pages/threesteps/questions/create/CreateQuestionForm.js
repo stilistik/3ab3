@@ -5,33 +5,7 @@ import { Paper, Grid, Button } from '@material-ui/core';
 import styles from './CreateQuestionForm.css';
 
 class CreateQuestionForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      templates: [],
-      text: '',
-      description: '',
-    };
-  }
-
-  onChange = (id, value) => {
-    this.setState({
-      [id]: value,
-    });
-  };
-
-  onSelectionChange = (values) => {
-    this.setState({
-      templates: values,
-    });
-  };
-
-  onSubmit = () => {
-    const values = {
-      text: this.state.text,
-      description: this.state.description,
-      templateIds: this.state.templates,
-    };
+  onSubmit = (values) => {
     this.props.onSubmit(values);
   };
 
@@ -52,26 +26,25 @@ class CreateQuestionForm extends React.Component {
         <div className={styles.container}>
           <Paper className={styles.paper}>
             <Grid item xs={12}>
-              <Form>
+              <Form onSubmit={this.onSubmit}>
                 <TextField
                   id="text"
                   name="Question"
                   type="text"
-                  onChange={this.onChange}
-                  value={this.state.text}
+                  required={true}
                   className={styles.field}
                 />
                 <TextField
                   id="description"
                   name="Description"
                   type="text"
-                  onChange={this.onChange}
-                  value={this.state.description}
+                  required={true}
                   className={styles.field}
                 />
                 <ChipArea
                   id="templateIds"
                   name="Todos"
+                  type="select"
                   required={true}
                   className={styles.field}
                   options={options}
