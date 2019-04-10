@@ -96,11 +96,12 @@ export class Form extends React.Component {
 
   createSubmitValues = () => {
     const values = {};
-    Object.keys(this.state).forEach((id) => {
-      const field = this.state[id];
-      switch (field.type) {
+    Object.keys(this.fields).forEach((id) => {
+      const field = this.fields[id];
+      const fieldValue = this.state[id].value;
+      switch (field.props.type) {
         case 'image':
-          if (field.value instanceof File) values[id] = field.value;
+          if (fieldValue instanceof File) values[id] = field.value;
           break;
         default:
           values[id] = field.value;

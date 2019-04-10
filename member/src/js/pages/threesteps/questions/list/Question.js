@@ -6,6 +6,7 @@ import {
   ExpansionPanelActions,
   Typography,
   Divider,
+  Grid,
   IconButton,
 } from '@material-ui/core';
 import { Mutation } from 'react-apollo';
@@ -67,8 +68,14 @@ class Question extends React.Component {
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Description description={description} />
-          <Todos templates={templates} />
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={6}>
+              <Description description={description} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Todos templates={templates} />
+            </Grid>
+          </Grid>
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions className={styles.actions}>
