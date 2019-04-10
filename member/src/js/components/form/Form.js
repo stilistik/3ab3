@@ -6,6 +6,7 @@ import {
   Field,
   SelectField,
   TagField,
+  ChipArea,
 } from './fields';
 import Validator from './Validator';
 
@@ -16,6 +17,7 @@ const FIELDTYPES = [
   TextField.name,
   SelectField.name,
   TagField.name,
+  ChipArea.name,
 ];
 
 export class Form extends React.Component {
