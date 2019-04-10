@@ -1,7 +1,6 @@
 import React from 'react';
-import { DefaultGrid, TextField } from 'Components';
-import { Paper, Grid, Typography, Divider, Button } from '@material-ui/core';
-import TemplateSelector from './TemplateSelector';
+import { DefaultGrid, TextField, ChipArea, Form } from 'Components';
+import { Paper, Grid, Button } from '@material-ui/core';
 
 import styles from './CreateQuestionForm.css';
 
@@ -36,16 +35,24 @@ class CreateQuestionForm extends React.Component {
     this.props.onSubmit(values);
   };
 
+  createOptions = (templates) => {
+    return templates.map((template) => {
+      return {
+        id: template.id,
+        avatar: template.offsetDays,
+        text: template.text,
+      };
+    });
+  };
+
   render() {
+    const options = this.createOptions(this.props.templates);
     return (
       <DefaultGrid>
         <div className={styles.container}>
           <Paper className={styles.paper}>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Formulate Question:</Typography>
-                <Divider />
-                <br />
+            <Grid item xs={12}>
+              <Form>
                 <TextField
                   id="text"
                   name="Question"
@@ -62,25 +69,22 @@ class CreateQuestionForm extends React.Component {
                   value={this.state.description}
                   className={styles.field}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Select Todos:</Typography>
-                <Divider />
-                <br />
-                <TemplateSelector onChange={this.onSelectionChange} />
-              </Grid>
-              <Grid item xs={12}>
-                <div className={styles.btnwrap}>
-                  <Button
-                    className={styles.btn}
-                    variant="contained"
-                    color="primary"
-                    onClick={this.onSubmit}
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </Grid>
+                <ChipArea
+                  id="templateIds"
+                  name="Todos"
+                  required={true}
+                  className={styles.field}
+                  options={options}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  className={styles.field}
+                >
+                  Submit
+                </Button>
+              </Form>
             </Grid>
           </Paper>
         </div>

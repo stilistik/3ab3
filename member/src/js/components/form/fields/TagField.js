@@ -3,6 +3,8 @@ import { FormControl, FormHelperText } from '@material-ui/core';
 import { TagSelect } from 'Components';
 
 export class TagField extends React.Component {
+  static getInitValue = () => [];
+
   onChange = (value) => {
     this.props.onChange(this.props.id, value);
   };

@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 
 export class Field extends React.Component {
+  static getInitValue = () => '';
+
   onChange = (e) => {
     this.props.onChange(this.props.id, e.target.value);
   };

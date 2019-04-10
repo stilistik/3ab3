@@ -3,6 +3,8 @@ import { FormControl, FormHelperText } from '@material-ui/core';
 import { DatePicker } from 'material-ui-pickers';
 
 export class DateField extends React.Component {
+  static getInitValue = () => '';
+
   onChange = (date) => {
     const str = new Date(date).toISOString();
     this.props.onChange(this.props.id, str);

@@ -33,7 +33,7 @@ export class Form extends React.Component {
       if (FIELDTYPES.indexOf(child.type.name) > -1) {
         const { id, type, required } = child.props;
         state[id] = {
-          value: '',
+          value: child.type.getInitValue(),
           type: type,
           required: required,
           error: null,

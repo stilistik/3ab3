@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 
 export class SelectField extends React.Component {
+  static getInitValue = () => '';
   onChange = (e) => {
     this.props.onChange(this.props.id, e.target.value);
   };

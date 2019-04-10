@@ -4,15 +4,18 @@ import {
   FormControl,
   FormHelperText,
   Typography,
+  Avatar,
 } from '@material-ui/core';
 
 import styles from './ChipArea.css';
 
-export class SelectField extends React.Component {
+export class ChipArea extends React.Component {
+  static getInitValue = () => [];
+
   onClick = (optionId) => {
-    const { value, id } = this.props;
-    const selected = value.find((el) => el === optionId);
-    if (selected) value.slice(value.indexOf(selected), 1);
+    let { value, id } = this.props;
+    const found = value.find((el) => el === optionId);
+    if (found) value.splice(value.indexOf(found), 1);
     else value.push(optionId);
     this.props.onChange(id, value);
   };
@@ -26,7 +29,7 @@ export class SelectField extends React.Component {
           {options.map((option) => {
             const isSelected = value.find((el) => el === option.id);
             return (
-              <div style={{ margin: '5px' }}>
+              <div key={option.id} style={{ margin: '5px' }}>
                 <Chip
                   className={isSelected ? styles.selected : ''}
                   classes={{ root: styles.chip, label: styles.chiplabel }}

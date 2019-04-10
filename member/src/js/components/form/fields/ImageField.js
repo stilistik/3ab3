@@ -39,6 +39,8 @@ const Display = ({ url, cdn, err }) => {
 };
 
 export class ImageField extends React.Component {
+  static getInitValue = () => '';
+
   constructor(props) {
     super(props);
     this.state = {
