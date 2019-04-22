@@ -19,6 +19,11 @@ export const TODOS = gql`
           avatar
           name
         }
+        assigned {
+          id
+          avatar
+          name
+        }
         doneAt
       }
     }

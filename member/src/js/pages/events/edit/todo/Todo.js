@@ -1,12 +1,13 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { Typography, IconButton } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { Icon, UserAvatar } from 'Components';
+import Assign from './Assign';
 
 import styles from './Todo.less';
 
-const TodoIndicator = ({ index, done, onClick, date }) => {
+const TodoIndicator = ({ done, onClick, date }) => {
   let cls = styles.circle;
   if (done) cls += ' ' + styles.done;
   return (
@@ -52,31 +53,18 @@ const DoneBy = ({ done, doneBy, doneAt }) => {
   );
 };
 
-const Assign = () => {
-  return (
-    <IconButton>
-      <Icon type="personAdd" />
-    </IconButton>
-  );
-};
-
 class Todo extends React.Component {
   render() {
-    const { index, text, due, done, doneBy, doneAt } = this.props.todo;
-    const { onClick } = this.props;
+    const { id, text, due, done, doneBy, doneAt, assigned } = this.props.todo;
+    const { onClick, refetch } = this.props;
     return (
       <div style={{ marginBottom: '10px' }}>
         <div className={styles.header}>
-          <TodoIndicator
-            index={index}
-            done={done}
-            onClick={onClick}
-            date={due}
-          />
+          <TodoIndicator done={done} onClick={onClick} date={due} />
           {done ? (
             <DoneBy doneBy={doneBy} done={done} doneAt={doneAt} />
           ) : (
-            <Assign />
+            <Assign todoId={id} assigned={assigned} refetch={refetch} />
           )}
         </div>
         <div className={styles.todo}>
