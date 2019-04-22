@@ -112,7 +112,7 @@ class ProfileMenu extends React.Component {
 
     return (
       <div>
-        <IconButton onClick={this.handleMenuOpen}>
+        <IconButton style={{ padding: 0 }} onClick={this.handleMenuOpen}>
           <ProfileAvatar classes={{ typo: styles.typo }} />
         </IconButton>
         {renderMenu}

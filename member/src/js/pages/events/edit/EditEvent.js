@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab } from '@material-ui/core';
 import Committee from './committee/Committee';
 import Todos from './todo/Todos';
+import Steps from './steps/Steps';
 
 class EditEvent extends React.Component {
   constructor(props) {
@@ -57,9 +58,7 @@ class EditEvent extends React.Component {
             <div>
               <h1>Info</h1>
             </div>
-            <div>
-              <h1>Steps</h1>
-            </div>
+            <Steps />
           </SwipeableViews>
         </div>
       </DefaultGrid>
