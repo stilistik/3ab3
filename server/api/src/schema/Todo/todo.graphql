@@ -18,6 +18,7 @@ input TodoInput {
 
 extend type Mutation {
   createTodo(input: TodoInput!): Todo!
+  createManyTodos(input: [TodoInput!]!): [Todo!]!
   checkTodo(todoId: ID!): Todo!
   uncheckTodo(todoId: ID!): Todo!
   assignUser(todoId: ID!, userId: ID!): Todo!

@@ -9,6 +9,18 @@ module.exports = {
         ...input,
       });
     },
+    async createManyTodos(root, args, context) {
+      const created = [];
+      for (let el of args.input) {
+        const { eventId, ...rest } = el;
+        const todo = await context.prisma.createTodo({
+          event: { connect: { id: eventId } },
+          ...rest,
+        });
+        created.push(todo);
+      }
+      return created;
+    },
     checkTodo(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
       const date = new Date().toISOString();

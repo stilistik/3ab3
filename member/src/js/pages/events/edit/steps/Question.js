@@ -11,17 +11,16 @@ import { Icon } from 'Components';
 import styles from './Question.css';
 
 class Question extends React.Component {
-  onCheck = (e) => {
-    e.stopPropagation();
-  };
-
   render() {
-    const { text, description } = this.props.question;
+    const { text, description, id } = this.props.question;
     return (
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<Icon type="expand" />}>
           <div className={styles.question}>
-            <Checkbox onClick={this.onCheck} />
+            <Checkbox
+              onClick={(e) => e.stopPropagation()}
+              onChange={() => this.props.onChange(id)}
+            />
             <Typography variant="h6" className={styles.header}>
               {text}
             </Typography>

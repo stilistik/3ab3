@@ -58,7 +58,7 @@ class EditEvent extends React.Component {
             <div>
               <h1>Info</h1>
             </div>
-            <Steps />
+            <Steps eventId={id} />
           </SwipeableViews>
         </div>
       </DefaultGrid>

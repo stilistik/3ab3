@@ -5,7 +5,11 @@ import gql from 'graphql-tag';
 import Questionnaire from './Questionnaire';
 
 export const QUESTIONS = gql`
-  query {
+  query($eventId: ID!) {
+    event(eventId: $eventId) {
+      id
+      date
+    }
     questions {
       id
       text
@@ -21,12 +25,13 @@ export const QUESTIONS = gql`
 
 class Steps extends React.Component {
   render() {
-    if (!this.props.questions) return null;
+    const { questions, event } = this.props;
+    if (!questions || !event) return null;
     return (
       <div style={{ width: '100%', height: '100%', padding: '20px' }}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Questionnaire questions={this.props.questions} />
+            <Questionnaire {...this.props} />
           </Grid>
         </Grid>
       </div>
@@ -35,5 +40,7 @@ class Steps extends React.Component {
 }
 
 export default graphql(QUESTIONS, {
-  props: ({ data }) => ({ questions: data.questions }),
+  skip: (props) => !props.eventId,
+  options: (props) => ({ variables: { eventId: props.eventId } }),
+  props: ({ data }) => ({ questions: data.questions, event: data.event }),
 })(Steps);
