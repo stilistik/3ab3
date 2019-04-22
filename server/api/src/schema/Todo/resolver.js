@@ -21,6 +21,9 @@ module.exports = {
       }
       return created;
     },
+    deleteTodo(root, args, context) {
+      return context.prisma.deleteTodo({ id: args.todoId });
+    },
     checkTodo(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
       const date = new Date().toISOString();

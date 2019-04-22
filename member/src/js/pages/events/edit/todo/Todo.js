@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { Typography } from '@material-ui/core';
+import { Typography, IconButton } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { Icon, UserAvatar } from 'Components';
 import Assign from './Assign';
@@ -53,6 +53,38 @@ const DoneBy = ({ done, doneBy, doneAt }) => {
   );
 };
 
+const MUTATION = gql`
+  mutation($todoId: ID!) {
+    deleteTodo(todoId: $todoId) {
+      id
+    }
+  }
+`;
+
+class DeleteTodo extends React.Component {
+  onClick = () => {
+    this.deleteTodo({
+      variables: { todoId: this.props.todoId },
+      refetchQueries: () => this.props.refetch,
+    });
+  };
+
+  render() {
+    return (
+      <Mutation mutation={MUTATION}>
+        {(deleteTodo) => {
+          this.deleteTodo = deleteTodo;
+          return (
+            <IconButton onClick={this.onClick}>
+              <Icon type="delete" />
+            </IconButton>
+          );
+        }}
+      </Mutation>
+    );
+  }
+}
+
 class Todo extends React.Component {
   render() {
     const { id, text, due, done, doneBy, doneAt, assigned } = this.props.todo;
@@ -66,6 +98,7 @@ class Todo extends React.Component {
           ) : (
             <Assign todoId={id} assigned={assigned} refetch={refetch} />
           )}
+          <DeleteTodo todoId={id} refetch={refetch} />
         </div>
         <div className={styles.todo}>
           <p>{text}</p>
