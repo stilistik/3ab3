@@ -31,6 +31,14 @@ module.exports = {
         },
       });
     },
+    assignUser(root, args, context) {
+      return context.prisma.updateTodo({
+        where: { id: args.todoId },
+        data: {
+          assigned: { connect: { id: args.userId } },
+        },
+      });
+    },
   },
   Todo: {
     event(root, args, context) {
@@ -38,6 +46,9 @@ module.exports = {
     },
     doneBy(root, args, context) {
       return context.prisma.todo({ id: root.id }).doneBy();
+    },
+    assigned(root, args, context) {
+      return context.prisma.todo({ id: root.id }).assigned();
     },
   },
 };

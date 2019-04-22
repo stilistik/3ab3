@@ -1003,6 +1003,8 @@ export type TodoOrderByInput =
   | "text_DESC"
   | "done_ASC"
   | "done_DESC"
+  | "link_ASC"
+  | "link_DESC"
   | "doneAt_ASC"
   | "doneAt_DESC"
   | "createdAt_ASC"
@@ -1378,6 +1380,21 @@ export interface TodoWhereInput {
   text_not_ends_with?: String;
   done?: Boolean;
   done_not?: Boolean;
+  assigned?: UserWhereInput;
+  link?: String;
+  link_not?: String;
+  link_in?: String[] | String;
+  link_not_in?: String[] | String;
+  link_lt?: String;
+  link_lte?: String;
+  link_gt?: String;
+  link_gte?: String;
+  link_contains?: String;
+  link_not_contains?: String;
+  link_starts_with?: String;
+  link_not_starts_with?: String;
+  link_ends_with?: String;
+  link_not_ends_with?: String;
   doneBy?: UserWhereInput;
   doneAt?: DateTimeInput;
   doneAt_not?: DateTimeInput;
@@ -1947,6 +1964,8 @@ export interface TodoUpdateInput {
   due?: DateTimeInput;
   text?: String;
   done?: Boolean;
+  assigned?: UserUpdateOneInput;
+  link?: String;
   doneBy?: UserUpdateOneInput;
   doneAt?: DateTimeInput;
   event?: EventUpdateOneRequiredWithoutTodosInput;
@@ -1979,6 +1998,8 @@ export interface TodoCreateInput {
   due: DateTimeInput;
   text: String;
   done?: Boolean;
+  assigned?: UserCreateOneInput;
+  link?: String;
   doneBy?: UserCreateOneInput;
   doneAt?: DateTimeInput;
   event: EventCreateOneWithoutTodosInput;
@@ -3425,6 +3446,8 @@ export interface TodoCreateWithoutEventInput {
   due: DateTimeInput;
   text: String;
   done?: Boolean;
+  assigned?: UserCreateOneInput;
+  link?: String;
   doneBy?: UserCreateOneInput;
   doneAt?: DateTimeInput;
 }
@@ -3884,6 +3907,8 @@ export interface TodoUpdateWithoutEventDataInput {
   due?: DateTimeInput;
   text?: String;
   done?: Boolean;
+  assigned?: UserUpdateOneInput;
+  link?: String;
   doneBy?: UserUpdateOneInput;
   doneAt?: DateTimeInput;
 }
@@ -3959,6 +3984,20 @@ export interface TodoScalarWhereInput {
   text_not_ends_with?: String;
   done?: Boolean;
   done_not?: Boolean;
+  link?: String;
+  link_not?: String;
+  link_in?: String[] | String;
+  link_not_in?: String[] | String;
+  link_lt?: String;
+  link_lte?: String;
+  link_gt?: String;
+  link_gte?: String;
+  link_contains?: String;
+  link_not_contains?: String;
+  link_starts_with?: String;
+  link_not_starts_with?: String;
+  link_ends_with?: String;
+  link_not_ends_with?: String;
   doneAt?: DateTimeInput;
   doneAt_not?: DateTimeInput;
   doneAt_in?: DateTimeInput[] | DateTimeInput;
@@ -3993,6 +4032,7 @@ export interface TodoUpdateManyDataInput {
   due?: DateTimeInput;
   text?: String;
   done?: Boolean;
+  link?: String;
   doneAt?: DateTimeInput;
 }
 
@@ -4472,6 +4512,7 @@ export interface TodoUpdateManyMutationInput {
   due?: DateTimeInput;
   text?: String;
   done?: Boolean;
+  link?: String;
   doneAt?: DateTimeInput;
 }
 
@@ -5928,6 +5969,7 @@ export interface Todo {
   due: DateTimeOutput;
   text: String;
   done?: Boolean;
+  link?: String;
   doneAt?: DateTimeOutput;
 }
 
@@ -5936,6 +5978,8 @@ export interface TodoPromise extends Promise<Todo>, Fragmentable {
   due: () => Promise<DateTimeOutput>;
   text: () => Promise<String>;
   done: () => Promise<Boolean>;
+  assigned: <T = UserPromise>() => T;
+  link: () => Promise<String>;
   doneBy: <T = UserPromise>() => T;
   doneAt: () => Promise<DateTimeOutput>;
   event: <T = EventPromise>() => T;
@@ -5948,6 +5992,8 @@ export interface TodoSubscription
   due: () => Promise<AsyncIterator<DateTimeOutput>>;
   text: () => Promise<AsyncIterator<String>>;
   done: () => Promise<AsyncIterator<Boolean>>;
+  assigned: <T = UserSubscription>() => T;
+  link: () => Promise<AsyncIterator<String>>;
   doneBy: <T = UserSubscription>() => T;
   doneAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   event: <T = EventSubscription>() => T;
@@ -7777,6 +7823,7 @@ export interface TodoPreviousValues {
   due: DateTimeOutput;
   text: String;
   done?: Boolean;
+  link?: String;
   doneAt?: DateTimeOutput;
 }
 
@@ -7787,6 +7834,7 @@ export interface TodoPreviousValuesPromise
   due: () => Promise<DateTimeOutput>;
   text: () => Promise<String>;
   done: () => Promise<Boolean>;
+  link: () => Promise<String>;
   doneAt: () => Promise<DateTimeOutput>;
 }
 
@@ -7797,6 +7845,7 @@ export interface TodoPreviousValuesSubscription
   due: () => Promise<AsyncIterator<DateTimeOutput>>;
   text: () => Promise<AsyncIterator<String>>;
   done: () => Promise<AsyncIterator<Boolean>>;
+  link: () => Promise<AsyncIterator<String>>;
   doneAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { Typography } from '@material-ui/core';
+import { Typography, IconButton } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { Icon, UserAvatar } from 'Components';
 
 import styles from './Todo.less';
 
-const TodoIndicator = ({ index, done, onClick }) => {
-  let cls = styles.index;
+const TodoIndicator = ({ index, done, onClick, date }) => {
+  let cls = styles.circle;
   if (done) cls += ' ' + styles.done;
   return (
     <div className={cls} onClick={onClick}>
-      {done ? <Icon type="done" /> : <span>{index}</span>}
+      {done ? <Icon type="done" /> : <DateDisplay date={date} />}
     </div>
   );
 };
@@ -22,12 +22,12 @@ const DateDisplay = ({ date }) => {
   const day = str.split(' ')[2];
   return (
     <div className={styles.date}>
-      <Typography variant="h6" className={styles.month}>
-        {month}
-      </Typography>
-      <Typography gutterBottom variant="h6" className={styles.day}>
-        | {day}
-      </Typography>
+      <div className={styles.month}>
+        <span>{month}</span>
+      </div>
+      <div className={styles.day}>
+        <span>{day}</span>
+      </div>
     </div>
   );
 };
@@ -52,18 +52,31 @@ const DoneBy = ({ done, doneBy, doneAt }) => {
   );
 };
 
+const Assign = () => {
+  return (
+    <IconButton>
+      <Icon type="personAdd" />
+    </IconButton>
+  );
+};
+
 class Todo extends React.Component {
   render() {
     const { index, text, due, done, doneBy, doneAt } = this.props.todo;
     const { onClick } = this.props;
     return (
-      <div>
+      <div style={{ marginBottom: '10px' }}>
         <div className={styles.header}>
-          <TodoIndicator index={index} done={done} onClick={onClick} />
+          <TodoIndicator
+            index={index}
+            done={done}
+            onClick={onClick}
+            date={due}
+          />
           {done ? (
             <DoneBy doneBy={doneBy} done={done} doneAt={doneAt} />
           ) : (
-            <DateDisplay date={due} />
+            <Assign />
           )}
         </div>
         <div className={styles.todo}>

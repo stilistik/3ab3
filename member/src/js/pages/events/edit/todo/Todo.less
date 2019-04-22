@@ -16,11 +16,12 @@
   width: 200px;
 }
 
-.index {
+.circle {
+  position: relative;
   width: @circle-size;
   height: @circle-size;
   border-radius: @circle-size / 2;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   font-size: 17px;
   font-weight: lighter;
   display: flex;
@@ -28,11 +29,12 @@
   align-items: center;
   margin-right: @margin;
   transition: all 0.3s ease;
+  overflow: hidden;
   cursor: pointer;
 }
 
-.index:hover {
-  transform: scale3d(1.1, 1.1, 1.1)
+.circle:hover {
+  transform: scale3d(1.1, 1.1, 1.1);
 }
 
 .done {
@@ -53,10 +55,31 @@
 }
 
 .month {
-  color: red;
-  margin-right: 5px;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+  background: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;  
 }
 
 .day {
-  margin: 0px;
+  position: absolute;
+  top: 40%;
+  left: 0%;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day span {
+  margin-bottom: 5px;
 }

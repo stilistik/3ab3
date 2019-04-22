@@ -26,6 +26,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DoneIcon from '@material-ui/icons/Done';
 import ThreeStepsIcon from '@material-ui/icons/Looks3';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const icons = {
   mail: MailIcon,
@@ -55,6 +56,7 @@ const icons = {
   done: DoneIcon,
   threeSteps: ThreeStepsIcon,
   expand: ExpandMoreIcon,
+  personAdd: PersonAddIcon,
 };
 
 class Icon extends React.Component {

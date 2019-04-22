@@ -3385,6 +3385,8 @@ type Todo {
   due: DateTime!
   text: String!
   done: Boolean
+  assigned: User
+  link: String
   doneBy: User
   doneAt: DateTime
   event: Event!
@@ -3400,6 +3402,8 @@ input TodoCreateInput {
   due: DateTime!
   text: String!
   done: Boolean
+  assigned: UserCreateOneInput
+  link: String
   doneBy: UserCreateOneInput
   doneAt: DateTime
   event: EventCreateOneWithoutTodosInput!
@@ -3414,6 +3418,8 @@ input TodoCreateWithoutEventInput {
   due: DateTime!
   text: String!
   done: Boolean
+  assigned: UserCreateOneInput
+  link: String
   doneBy: UserCreateOneInput
   doneAt: DateTime
 }
@@ -3432,6 +3438,8 @@ enum TodoOrderByInput {
   text_DESC
   done_ASC
   done_DESC
+  link_ASC
+  link_DESC
   doneAt_ASC
   doneAt_DESC
   createdAt_ASC
@@ -3445,6 +3453,7 @@ type TodoPreviousValues {
   due: DateTime!
   text: String!
   done: Boolean
+  link: String
   doneAt: DateTime
 }
 
@@ -3487,6 +3496,20 @@ input TodoScalarWhereInput {
   text_not_ends_with: String
   done: Boolean
   done_not: Boolean
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   doneAt: DateTime
   doneAt_not: DateTime
   doneAt_in: [DateTime!]
@@ -3722,6 +3745,8 @@ input TodoUpdateInput {
   due: DateTime
   text: String
   done: Boolean
+  assigned: UserUpdateOneInput
+  link: String
   doneBy: UserUpdateOneInput
   doneAt: DateTime
   event: EventUpdateOneRequiredWithoutTodosInput
@@ -3731,6 +3756,7 @@ input TodoUpdateManyDataInput {
   due: DateTime
   text: String
   done: Boolean
+  link: String
   doneAt: DateTime
 }
 
@@ -3738,6 +3764,7 @@ input TodoUpdateManyMutationInput {
   due: DateTime
   text: String
   done: Boolean
+  link: String
   doneAt: DateTime
 }
 
@@ -3762,6 +3789,8 @@ input TodoUpdateWithoutEventDataInput {
   due: DateTime
   text: String
   done: Boolean
+  assigned: UserUpdateOneInput
+  link: String
   doneBy: UserUpdateOneInput
   doneAt: DateTime
 }
@@ -3816,6 +3845,21 @@ input TodoWhereInput {
   text_not_ends_with: String
   done: Boolean
   done_not: Boolean
+  assigned: UserWhereInput
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   doneBy: UserWhereInput
   doneAt: DateTime
   doneAt_not: DateTime

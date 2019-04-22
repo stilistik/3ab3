@@ -3,6 +3,8 @@ type Todo {
   due: DateTime! 
   text: String!
   done: Boolean!
+  link: String
+  assigned: User
   doneBy: User 
   doneAt: DateTime 
   event: Event! 
@@ -18,5 +20,6 @@ extend type Mutation {
   createTodo(input: TodoInput!): Todo!
   checkTodo(todoId: ID!): Todo!
   uncheckTodo(todoId: ID!): Todo!
+  assignUser(todoId: ID!, userId: ID!): Todo!
 }
 

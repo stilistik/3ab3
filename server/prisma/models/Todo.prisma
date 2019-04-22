@@ -3,7 +3,9 @@ type Todo {
   due: DateTime! 
   text: String!
   done: Boolean @default(value: "false")
-  doneBy: User 
+  assigned: User @relation(name: "AssignedUser")
+  link: String
+  doneBy: User @relation(name: "DoneByUser")
   doneAt: DateTime 
   event: Event! @relation(name: "EventTodo")
 }
