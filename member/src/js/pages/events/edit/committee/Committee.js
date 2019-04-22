@@ -31,7 +31,7 @@ class Committee extends React.Component {
     const { event } = this.props;
     if (!event) return null;
     return (
-      <div style={{ width: '100%', padding: '20px' }}>
+      <div style={{ width: '100%', height: '100%', padding: '20px' }}>
         <Grid container spacing={24}>
           <Grid item xs={12} md={6}>
             <CreateCommittee committee={event.committee} />
