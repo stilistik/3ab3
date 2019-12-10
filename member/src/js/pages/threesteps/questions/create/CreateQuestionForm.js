@@ -31,7 +31,7 @@ class CreateQuestionForm extends React.Component {
         <div className={styles.container}>
           <Paper className={styles.paper}>
             <Form onSubmit={this.onSubmit}>
-              <Grid container spacing={24}>
+              <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h3">Question</Typography>
                   <br />

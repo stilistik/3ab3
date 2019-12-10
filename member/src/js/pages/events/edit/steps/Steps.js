@@ -29,7 +29,7 @@ class Steps extends React.Component {
     if (!questions || !event) return null;
     return (
       <div style={{ width: '100%', height: '100%', padding: '20px' }}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Questionnaire {...this.props} />
           </Grid>

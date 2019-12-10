@@ -68,7 +68,7 @@ class Question extends React.Component {
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container spacing={24}>
+          <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <Description description={description} />
             </Grid>

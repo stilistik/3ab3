@@ -75,7 +75,7 @@ class DeleteTodo extends React.Component {
         {(deleteTodo) => {
           this.deleteTodo = deleteTodo;
           return (
-            <IconButton onClick={this.onClick}>
+            <IconButton style={{ marginLeft: '5px' }} onClick={this.onClick}>
               <Icon type="delete" />
             </IconButton>
           );

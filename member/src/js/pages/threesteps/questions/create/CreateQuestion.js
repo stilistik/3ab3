@@ -1,9 +1,10 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Mutation, compose, graphql } from 'react-apollo';
+import { Mutation, graphql } from 'react-apollo';
 import CreateQuestionForm from './CreateQuestionForm';
 import { QUESTIONS } from '../list/QuestionList';
 import { connect } from 'react-redux';
+import { flowRight as compose } from 'lodash';
 import { showMessage } from 'Redux/actions';
 
 const MUTATION = gql`
@@ -65,10 +66,7 @@ class CreateQuestion extends React.Component {
 }
 
 export default compose(
-  connect(
-    null,
-    mapDispatchToProps
-  ),
+  connect(null, mapDispatchToProps),
   graphql(TEMPLATES, {
     props: ({ data }) => ({ templates: data.todoTemplates }),
   })

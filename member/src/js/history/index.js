@@ -1,7 +1,7 @@
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import qs from 'qs';
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 export const requestRoute = (path, params) => {
   history.push({

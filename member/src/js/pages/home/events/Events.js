@@ -23,7 +23,7 @@ class Events extends React.Component {
     if (!this.props.events) return null;
     return (
       <div className={styles.container}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           {this.props.events.map((event) => {
             return (
               <Grid key={event.id} item xs={12}>

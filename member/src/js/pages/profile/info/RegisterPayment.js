@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Mutation, graphql, compose } from 'react-apollo';
+import { Mutation, graphql } from 'react-apollo';
+import { flowRight as compose } from 'lodash';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import PaymentForm from './PaymentForm';
@@ -68,10 +69,7 @@ class RegisterPayment extends React.Component {
 }
 
 export default compose(
-  connect(
-    null,
-    mapDispatchToProps
-  ),
+  connect(null, mapDispatchToProps),
   graphql(USER, {
     props: ({ data }) => ({ user: data.currentUser }),
   })

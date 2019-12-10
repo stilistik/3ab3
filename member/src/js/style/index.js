@@ -1,8 +1,7 @@
 import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import JssProvider from 'react-jss/lib/JssProvider';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { create } from 'jss';
-import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,18 +19,16 @@ const theme = createMuiTheme({
   },
 });
 
-const generateClassName = createGenerateClassName();
 const jss = create({
   ...jssPreset(),
-  insertionPoint: 'insertion-point-jss',
 });
 
 class Style extends React.Component {
   render() {
     return (
-      <JssProvider jss={jss} generateClassName={generateClassName}>
-        <MuiThemeProvider theme={theme}>{this.props.children}</MuiThemeProvider>
-      </JssProvider>
+      <StylesProvider jss={jss} injectFirst>
+        <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
+      </StylesProvider>
     );
   }
 }

@@ -9,7 +9,7 @@ class Feed extends React.Component {
     if (!this.props.posts) return null;
     return (
       <div className={styles.container}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <CreatePost refetch={this.props.refetch} />
           </Grid>

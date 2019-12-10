@@ -36,7 +36,7 @@ class Todos extends React.Component {
     if (!event) return null;
     return (
       <div style={{ width: '100%', padding: '20px' }}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <CreateTodo
               eventId={event.id}
