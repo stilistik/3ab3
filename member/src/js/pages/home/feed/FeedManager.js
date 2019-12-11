@@ -64,6 +64,7 @@ class FeedManager extends React.Component {
           const cursor = data.feed.edges.length
             ? data.feed.edges.slice(-1).pop().cursor
             : null;
+          console.log(cursor);
           return (
             <Feed
               posts={posts}

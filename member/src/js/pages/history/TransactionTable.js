@@ -11,25 +11,29 @@ import {
   IconButton,
 } from '@material-ui/core';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
 const TRANSACTIONS = gql`
-  query {
+  query($first: Int!, $skip: Int) {
     currentUser {
       id
-      transactions {
-        id
-        date
-        type
-        payment {
-          amount
-        }
-        purchase {
-          total
+      transactions(first: $first, skip: $skip) {
+        edges {
+          node {
+            id
+            date
+            type
+            payment {
+              amount
+            }
+            purchase {
+              total
+            }
+          }
         }
       }
     }
@@ -102,76 +106,66 @@ const AmountCell = ({ transaction }) => {
   return <TableCell align="right">{amount.toFixed(2)} CHF</TableCell>;
 };
 
-class TransactionTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rowsPerPage: 5,
-      page: 0,
-    };
-  }
+const TransactionTable = () => {
+  const [pageSize, setPageSize] = React.useState(10);
+  const [page, setPage] = React.useState(0);
 
-  onChangePage = (event, page) => {
-    this.setState({ page });
+  const skip = page * pageSize;
+
+  const { loading, error, data } = useQuery(TRANSACTIONS, {
+    variables: { first: pageSize, skip: skip },
+  });
+
+  if (loading || error) return null;
+
+  const onChangePage = (event, page) => {
+    setPage(page);
   };
 
-  onChangeRowsPerPage = (event) => {
-    this.setState({ page: 0, rowsPerPage: event.target.value });
+  const onChangePageSize = (event) => {
+    setPage(0);
+    setPageSize(event.target.value);
   };
 
-  getPaginatedTransactions = (transactions) => {
-    const { page, rowsPerPage } = this.state;
-    return transactions.slice(
-      page * rowsPerPage,
-      page * rowsPerPage + rowsPerPage
-    );
-  };
-
-  render() {
-    if (!this.props.user) return null;
-    const { transactions } = this.props.user;
-    const rows = this.getPaginatedTransactions(transactions);
-    return (
-      <Paper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell align="right">Type</TableCell>
-              <TableCell align="right">Amount</TableCell>
+  const transactions = data.currentUser.transactions.edges.map((el) => el.node);
+  return (
+    <Paper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell align="right">Type</TableCell>
+            <TableCell align="right">Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {transactions.map((transaction) => (
+            <TableRow key={transaction.id}>
+              <TableCell component="th" scope="row">
+                {new Date(transaction.date).toDateString()}
+              </TableCell>
+              <TableCell align="right">{transaction.type}</TableCell>
+              <AmountCell transaction={transaction} />
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((transaction) => (
-              <TableRow key={transaction.id}>
-                <TableCell component="th" scope="row">
-                  {new Date(transaction.date).toDateString()}
-                </TableCell>
-                <TableCell align="right">{transaction.type}</TableCell>
-                <AmountCell transaction={transaction} />
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                colSpan={3}
-                count={transactions.length}
-                rowsPerPage={this.state.rowsPerPage}
-                page={this.state.page}
-                onChangePage={this.onChangePage}
-                onChangeRowsPerPage={this.onChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </Paper>
-    );
-  }
-}
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              colSpan={3}
+              count={transactions.length}
+              rowsPerPage={pageSize}
+              page={page}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangePageSize}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </Paper>
+  );
+};
 
-export default graphql(TRANSACTIONS, {
-  props: ({ data }) => ({ user: data.currentUser }),
-})(TransactionTable);
+export default TransactionTable;

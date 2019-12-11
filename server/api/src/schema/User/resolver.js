@@ -93,10 +93,12 @@ module.exports = {
       });
     },
     transactions(root, args, context) {
-      return context.prisma.user({ id: root.id }).transactions({
-        where: { type: args.type },
+      return context.prisma.transactionsConnection({
+        where: { type: args.type, user: { id: root.id } },
         orderBy: 'date_DESC',
         first: args.first,
+        skip: args.skip,
+        after: args.after,
       });
     },
     posts(root, args, context) {

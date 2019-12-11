@@ -1,4 +1,4 @@
-type Transaction @isAuthenticated {
+type Transaction implements Node @isAuthenticated {
   id: ID!
   user: User!
   date: DateTime!
@@ -8,12 +8,22 @@ type Transaction @isAuthenticated {
   payment: Payment
 }
 
+type TransactionEdge implements Edge {
+  cursor: String!
+  node: Transaction
+}
+
+type TransactionConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [TransactionEdge]
+}
+
 enum TransactionType {
   PAYMENT,
   PURCHASE
 }
 
 extend type Query {
-  transactions(type: TransactionType, first: Int): [Transaction!]!
   transaction(transactionId: ID!): Transaction!
+  transactions(type: TransactionType, first: Int!, skip: Int, after: String): TransactionConnection
 }

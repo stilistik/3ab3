@@ -6,7 +6,7 @@ type User @isAuthenticated {
   avatar: String
   purchases: [Purchase!]!
   payments: [Payment!]!
-  transactions(type: TransactionType, first: Int): [Transaction!]!
+  transactions(type: TransactionType, first: Int!, skip: Int, after: String): TransactionConnection
   items: [Item!]!
   balance: Float!
   role: UserRole!
