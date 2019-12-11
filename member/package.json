@@ -44,6 +44,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.17.0",
     "file-loader": "^5.0.2",
+    "graphql": "^14.5.8",
+    "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "prettier": "^1.19.1",
     "style-loader": "^1.0.1",
