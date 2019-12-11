@@ -60,43 +60,31 @@ class Invitations extends React.Component {
         style={{ marginTop: '15px', zIndex: 100 }}
         open={open}
         anchorEl={this.state.anchor}
-        transition
-        disablePortal
       >
-        {({ TransitionProps }) => (
-          <Grow
-            {...TransitionProps}
-            id="menu-list-grow"
-            style={{
-              top: 0,
-              right: '-15px',
-              position: 'absolute',
-            }}
-          >
-            <Paper className={styles.paper}>
-              <ClickAwayListener onClickAway={this.handleClose}>
-                <MenuList>
-                  {pending.map((invitation) => {
-                    return (
-                      <Invitation
-                        key={invitation.id}
-                        invitation={invitation}
-                        refetch={[
-                          { query: INVITATIONS },
-                          {
-                            query: COMMITTEE,
-                            variables: {
-                              eventId: invitation.committee.event.id,
-                            },
+        {() => (
+          <Paper className={styles.paper}>
+            <ClickAwayListener onClickAway={this.handleClose}>
+              <MenuList>
+                {pending.map((invitation) => {
+                  return (
+                    <Invitation
+                      key={invitation.id}
+                      invitation={invitation}
+                      refetch={[
+                        { query: INVITATIONS },
+                        {
+                          query: COMMITTEE,
+                          variables: {
+                            eventId: invitation.committee.event.id,
                           },
-                        ]}
-                      />
-                    );
-                  })}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
+                        },
+                      ]}
+                    />
+                  );
+                })}
+              </MenuList>
+            </ClickAwayListener>
+          </Paper>
         )}
       </Popper>
     );

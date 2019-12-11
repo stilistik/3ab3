@@ -14,7 +14,8 @@ const theme = createMuiTheme({
   },
   typography: {
     color: '#222',
-    fontFamily: '"MessinaBold", sans-serif',
+    fontFamily: '"MontSerrat", sans-serif',
+    fontWeight: 900,
     useNextVariants: true,
   },
 });

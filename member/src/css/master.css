@@ -1,22 +1,5 @@
 body {
-  font-family: "Messina", sans-serif;
-}
-
-@font-face {
-    font-family: Messina;
-    src: url('../fonts/MessinaSans_Web_Light/MessinaSansWeb-Light.woff');
-    font-weight: lighter;
-}
-
-@font-face {
-    font-family: Messina;
-    src: url('../fonts/MessinaSans_Web_Regular/MessinaSansWeb-Regular.woff');
-}
-
-@font-face {
-    font-family: Messina;
-    src: url('../fonts/MessinaSans_Web_Bold/MessinaSansWeb-Bold.woff');
-    font-weight: bold
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* width */

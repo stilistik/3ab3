@@ -7,6 +7,7 @@ import ProfileMenu from './ProfileMenu';
 import Invitations from './Invitations';
 import BalanceDisplay from './BalanceDisplay';
 import { DefaultGrid } from 'Components';
+import { Logo } from './Logo.js';
 
 import styles from './AppHeader.css';
 
@@ -32,14 +33,7 @@ class AppHeader extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              styleName="brand"
-              variant="h4"
-              color="inherit"
-              className={styles.typo}
-            >
-              3ab3
-            </Typography>
+            <Logo />
             <BalanceDisplay />
             <Invitations />
             <ProfileMenu />
@@ -50,7 +44,4 @@ class AppHeader extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AppHeader);
+export default connect(null, mapDispatchToProps)(AppHeader);

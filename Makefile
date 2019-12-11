@@ -5,5 +5,8 @@ init:
 migrations:
 	cd server/prisma && prisma reset -f && prisma deploy
 
-prod:
+member-client: 
+	cd member && yarn start
+
+prod-server:
 	docker-compose up --build

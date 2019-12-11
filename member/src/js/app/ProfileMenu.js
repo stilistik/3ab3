@@ -65,47 +65,35 @@ class ProfileMenu extends React.Component {
     const open = anchor ? true : false;
     const renderMenu = (
       <Popper
-        style={{ marginTop: '5px', zIndex: 100 }}
+        style={{ marginTop: 5, zIndex: 1000 }}
         open={open}
         anchorEl={this.state.anchor}
-        transition
-        disablePortal
       >
         {({ TransitionProps }) => (
-          <Grow
-            {...TransitionProps}
-            id="menu-list-grow"
-            style={{
-              top: 0,
-              right: '-15px',
-              position: 'absolute',
-            }}
-          >
-            <Paper className={styles.paper}>
-              <ClickAwayListener onClickAway={this.handleClose}>
-                <MenuList>
-                  <MenuItem
-                    style={{ color: 'white' }}
-                    onClick={() => this.handleClick('profile')}
-                  >
-                    Profile
-                  </MenuItem>
-                  <MenuItem
-                    style={{ color: 'white' }}
-                    onClick={() => this.handleClick('account')}
-                  >
-                    Account
-                  </MenuItem>
-                  <MenuItem
-                    style={{ color: 'white' }}
-                    onClick={() => this.handleClick('logout')}
-                  >
-                    Logout
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
+          <Paper className={styles.paper}>
+            <ClickAwayListener onClickAway={this.handleClose}>
+              <MenuList>
+                <MenuItem
+                  style={{ color: 'white' }}
+                  onClick={() => this.handleClick('profile')}
+                >
+                  Profile
+                </MenuItem>
+                <MenuItem
+                  style={{ color: 'white' }}
+                  onClick={() => this.handleClick('account')}
+                >
+                  Account
+                </MenuItem>
+                <MenuItem
+                  style={{ color: 'white' }}
+                  onClick={() => this.handleClick('logout')}
+                >
+                  Logout
+                </MenuItem>
+              </MenuList>
+            </ClickAwayListener>
+          </Paper>
         )}
       </Popper>
     );
@@ -121,7 +109,4 @@ class ProfileMenu extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ProfileMenu);
+export default connect(null, mapDispatchToProps)(ProfileMenu);

@@ -6,7 +6,6 @@ export * from './social';
 export * from './buttons';
 export * from './inputs';
 export * from './event';
-export * from './plots';
 export * from './form';
 export * from './comment';
 export * from './post';

@@ -37,7 +37,7 @@ class Members extends React.Component {
     return (
       <DefaultGrid overflow>
         <div className={styles.container}>
-          <Grid container spacing={24}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6} lg={4}>
               <CreateButton onClick={this.onCreate} />
             </Grid>

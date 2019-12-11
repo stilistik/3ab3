@@ -1,8 +1,0 @@
-.interactor:hover ~ .point {
-  transform: scale3d(1.2, 1.2, 1.2);
-}
-
-.point {
-  transition: all 0.3s ease-in-out;
-  transform: scale3d(1, 1, 1);
-}
