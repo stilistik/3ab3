@@ -1,10 +1,12 @@
 module.exports = {
   Query: {
     transactions(root, args, context) {
-      return context.prisma.transactions({
+      return context.prisma.transactionsConnection({
         where: { type: args.type },
         orderBy: 'date_DESC',
         first: args.first,
+        skip: args.skip,
+        after: args.after,
       });
     },
     transaction(root, args, context) {
@@ -17,6 +19,14 @@ module.exports = {
     },
     purchase(root, args, context) {
       return context.prisma.transaction({ id: root.id }).purchase();
+    },
+  },
+  TransactionConnection: {
+    count(root, args, context) {
+      return context.prisma
+        .transactionsConnection({ where: { type: args.type } })
+        .aggregate()
+        .count();
     },
   },
 };

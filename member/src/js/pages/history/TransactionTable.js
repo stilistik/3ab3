@@ -22,6 +22,7 @@ const TRANSACTIONS = gql`
     currentUser {
       id
       transactions(first: $first, skip: $skip) {
+        count
         edges {
           node {
             id
@@ -127,7 +128,13 @@ const TransactionTable = () => {
     setPageSize(event.target.value);
   };
 
-  const transactions = data.currentUser.transactions.edges.map((el) => el.node);
+  console.log(data);
+
+  const {
+    transactions: { count, edges },
+  } = data.currentUser;
+
+  const transactions = edges.map((el) => el.node);
   return (
     <Paper>
       <Table>
@@ -154,7 +161,7 @@ const TransactionTable = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               colSpan={3}
-              count={transactions.length}
+              count={count}
               rowsPerPage={pageSize}
               page={page}
               onChangePage={onChangePage}

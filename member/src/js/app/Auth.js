@@ -34,7 +34,7 @@ class Auth extends React.Component {
         {({ loading, error }) => {
           if (loading) return null;
           if (error) {
-            {/* this.props.logout(); */}
+            this.props.logout();
             return null;
           }
           return this.props.children;

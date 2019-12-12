@@ -9,6 +9,7 @@ interface Edge {
 
 type PageInfo {
   hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
 }
 
 interface Connection {
