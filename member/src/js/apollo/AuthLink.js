@@ -38,7 +38,7 @@ const refreshToken = () => {
 };
 
 const getToken = () => {
-  return window.sessionStorage.getItem('access_token');
+  return window.localStorage.getItem('access_token');
 };
 
 export class AuthLink extends ApolloLink {

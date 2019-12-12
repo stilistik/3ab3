@@ -7,13 +7,13 @@ const initState = {
 export const auth = (state = initState, action) => {
   switch (action.type) {
     case LOGIN: {
-      window.sessionStorage.setItem('access_token', action.access_token);
+      window.localStorage.setItem('access_token', action.access_token);
       return Object.assign({}, state, {
         isAuthenticated: true,
       });
     }
     case LOGOUT: {
-      window.sessionStorage.removeItem('access_token');
+      window.localStorage.removeItem('access_token');
       return Object.assign({}, state, {
         isAuthenticated: false,
       });
