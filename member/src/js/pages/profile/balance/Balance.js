@@ -9,9 +9,13 @@ export const BALANCE = gql`
       id
       balance
       transactions(first: 5) {
-        id
-        date
-        balance
+        edges {
+          node {
+            id
+            date
+            balance
+          }
+        }
       }
     }
   }
@@ -19,14 +23,14 @@ export const BALANCE = gql`
 
 class Balance extends React.Component {
   createChartData = (transactions) => {
-    const data = transactions.map((transaction) => {
-      const { date, ...rest } = transaction;
+    const data = transactions.edges.map((el) => {
+      const { date, ...rest } = el.node;
       return {
         date: new Date(date),
         ...rest,
       };
     });
-    return data.reverse();
+    return data;
   };
 
   render() {

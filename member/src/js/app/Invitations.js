@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ClickAwayListener,
-  Grow,
+  Typography,
   Paper,
   Popper,
   MenuList,
@@ -65,23 +65,31 @@ class Invitations extends React.Component {
           <Paper className={styles.paper}>
             <ClickAwayListener onClickAway={this.handleClose}>
               <MenuList>
-                {pending.map((invitation) => {
-                  return (
-                    <Invitation
-                      key={invitation.id}
-                      invitation={invitation}
-                      refetch={[
-                        { query: INVITATIONS },
-                        {
-                          query: COMMITTEE,
-                          variables: {
-                            eventId: invitation.committee.event.id,
-                          },
-                        },
-                      ]}
-                    />
-                  );
-                })}
+                {pending.length ? (
+                  <div>
+                    {pending.map((invitation) => {
+                      return (
+                        <Invitation
+                          key={invitation.id}
+                          invitation={invitation}
+                          refetch={[
+                            { query: INVITATIONS },
+                            {
+                              query: COMMITTEE,
+                              variables: {
+                                eventId: invitation.committee.event.id,
+                              },
+                            },
+                          ]}
+                        />
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <Typography className={styles.typo}>
+                    No notifications
+                  </Typography>
+                )}
               </MenuList>
             </ClickAwayListener>
           </Paper>
@@ -99,7 +107,7 @@ class Invitations extends React.Component {
             <Icon type="mail" className={styles.icon} />
           </Badge>
         </IconButton>
-        {pending.length > 0 ? renderMenu : null}
+        {renderMenu}
       </div>
     );
   }
