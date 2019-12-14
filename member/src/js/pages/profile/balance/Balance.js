@@ -23,10 +23,11 @@ export const BALANCE = gql`
 
 class Balance extends React.Component {
   createChartData = (transactions) => {
-    const data = transactions.edges.map((el) => {
+    const data = transactions.edges.map((el, index) => {
       const { date, ...rest } = el.node;
       return {
         date: new Date(date),
+        index,
         ...rest,
       };
     });
@@ -43,7 +44,7 @@ class Balance extends React.Component {
     else color = '#cc4949';
 
     const data = this.createChartData(user.transactions);
-    return <BalanceChart data={data} color={color} />;
+    return <BalanceChart data={data} color={color} height={300} />;
   }
 }
 
