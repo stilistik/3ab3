@@ -7,7 +7,7 @@ import {
   TableRow,
   TableCell,
   TableFooter,
-  TablePagination,
+  Typography,
   IconButton,
 } from '@material-ui/core';
 import gql from 'graphql-tag';
@@ -41,7 +41,7 @@ const TRANSACTIONS = gql`
   }
 `;
 
-class TablePaginationActions extends React.Component {
+class TablePagination extends React.Component {
   handleFirstPageButtonClick = (event) => {
     this.props.onChangePage(event, 0);
   };
@@ -62,39 +62,52 @@ class TablePaginationActions extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     const { count, page, rowsPerPage } = this.props;
 
     return (
-      <div style={{ width: '100%' }}>
-        <IconButton
-          onClick={this.handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="First Page"
-        >
-          <FirstPageIcon />
-        </IconButton>
-        <IconButton
-          onClick={this.handleBackButtonClick}
-          disabled={page === 0}
-          aria-label="Previous Page"
-        >
-          <KeyboardArrowLeft />
-        </IconButton>
-        <IconButton
-          onClick={this.handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Next Page"
-        >
-          <KeyboardArrowRight />
-        </IconButton>
-        <IconButton
-          onClick={this.handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Last Page"
-        >
-          <LastPageIcon />
-        </IconButton>
-      </div>
+      <TableRow>
+        <td colSpan={this.props.colSpan}>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <IconButton
+              onClick={this.handleFirstPageButtonClick}
+              disabled={page === 0}
+              aria-label="First Page"
+            >
+              <FirstPageIcon />
+            </IconButton>
+            <IconButton
+              onClick={this.handleBackButtonClick}
+              disabled={page === 0}
+              aria-label="Previous Page"
+            >
+              <KeyboardArrowLeft />
+            </IconButton>
+            <Typography style={{ margin: '0px 15px' }}>{page}</Typography>
+            <IconButton
+              onClick={this.handleNextButtonClick}
+              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+              aria-label="Next Page"
+            >
+              <KeyboardArrowRight />
+            </IconButton>
+            <IconButton
+              onClick={this.handleLastPageButtonClick}
+              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+              aria-label="Last Page"
+            >
+              <LastPageIcon />
+            </IconButton>
+          </div>
+        </td>
+      </TableRow>
     );
   }
 }
@@ -157,18 +170,15 @@ const TransactionTable = () => {
           ))}
         </TableBody>
         <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              colSpan={3}
-              count={count}
-              rowsPerPage={pageSize}
-              page={page}
-              onChangePage={onChangePage}
-              onChangeRowsPerPage={onChangePageSize}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            colSpan={3}
+            count={count}
+            rowsPerPage={pageSize}
+            page={page}
+            onChangePage={onChangePage}
+            onChangeRowsPerPage={onChangePageSize}
+          />
         </TableFooter>
       </Table>
     </Paper>

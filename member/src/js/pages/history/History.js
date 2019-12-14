@@ -8,7 +8,7 @@ import styles from './History.css';
 class History extends React.Component {
   render() {
     return (
-      <DefaultGrid>
+      <DefaultGrid overflow>
         <div className={styles.container}>
           <Typography variant="h5" className={styles.typo}>
             HISTORY
