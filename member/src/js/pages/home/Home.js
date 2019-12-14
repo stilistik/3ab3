@@ -14,50 +14,42 @@ import Events from './events/Events';
 
 import styles from './Home.css';
 
-class MobileHome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
-    };
-  }
+const MobileHome = () => {
+  const [value, setValue] = React.useState(0);
 
-  onChange = (event, value) => {
-    this.setState({ value });
+  const onChange = (event, value) => {
+    setValue(value);
   };
 
-  handleChangeIndex = (index) => {
-    this.setState({ value: index });
+  const handleChangeIndex = (index) => {
+    setValue(index);
   };
 
-  render() {
-    const { value } = this.state;
-    return (
-      <div>
-        <Tabs value={value} onChange={this.onChange} variant="fullWidth">
-          <Tab label="Feed" />
-          <Tab label="Events" />
-        </Tabs>
-        <SwipeableViews
-          axis="x"
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <Grid container>
-            <Grid item xs={12}>
-              <Feed />
-            </Grid>
+  return (
+    <div>
+      <Tabs value={value} onChange={onChange} variant="fullWidth">
+        <Tab label="Feed" />
+        <Tab label="Events" />
+      </Tabs>
+      <SwipeableViews
+        axis="x"
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <Grid container>
+          <Grid item xs={12}>
+            <Feed />
           </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Events />
-            </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <Events />
           </Grid>
-        </SwipeableViews>
-      </div>
-    );
-  }
-}
+        </Grid>
+      </SwipeableViews>
+    </div>
+  );
+};
 
 const DesktopHome = () => {
   return (
@@ -84,19 +76,17 @@ const DesktopHome = () => {
   );
 };
 
-class Home extends React.Component {
-  render() {
-    return (
-      <DefaultGrid overflow>
-        <Hidden smUp>
-          <MobileHome />
-        </Hidden>
-        <Hidden xsDown>
-          <DesktopHome />
-        </Hidden>
-      </DefaultGrid>
-    );
-  }
-}
+const Home = () => {
+  return (
+    <DefaultGrid overflow>
+      <Hidden smUp>
+        <MobileHome />
+      </Hidden>
+      <Hidden xsDown>
+        <DesktopHome />
+      </Hidden>
+    </DefaultGrid>
+  );
+};
 
 export default Home;

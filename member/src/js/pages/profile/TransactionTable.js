@@ -9,6 +9,9 @@ import {
   TableFooter,
   Typography,
   IconButton,
+  Hidden,
+  Select,
+  MenuItem,
 } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -41,76 +44,84 @@ const TRANSACTIONS = gql`
   }
 `;
 
-class TablePagination extends React.Component {
-  handleFirstPageButtonClick = (event) => {
-    this.props.onChangePage(event, 0);
+const TablePagination = ({ page, count, pageSize, ...rest }) => {
+  const handleFirstPageButtonClick = () => {
+    rest.onChangePage(0);
   };
 
-  handleBackButtonClick = (event) => {
-    this.props.onChangePage(event, this.props.page - 1);
+  const handleBackButtonClick = () => {
+    rest.onChangePage(page - 1);
   };
 
-  handleNextButtonClick = (event) => {
-    this.props.onChangePage(event, this.props.page + 1);
+  const handleNextButtonClick = () => {
+    rest.onChangePage(page + 1);
   };
 
-  handleLastPageButtonClick = (event) => {
-    this.props.onChangePage(
-      event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
-    );
+  const handleLastPageButtonClick = () => {
+    rest.onChangePage(Math.max(0, Math.ceil(count / pageSize) - 1));
   };
 
-  render() {
-    console.log(this.props);
-    const { count, page, rowsPerPage } = this.props;
+  const handlePageSizeChange = (e) => {
+    rest.onChangePageSize(e.target.value);
+  };
 
-    return (
-      <TableRow>
-        <td colSpan={this.props.colSpan}>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+  const pageCount = Math.ceil(count / pageSize) - 1;
+
+  return (
+    <TableRow>
+      <td colSpan={rest.colSpan}>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <IconButton
+            onClick={handleFirstPageButtonClick}
+            disabled={page === 0}
+            aria-label="First Page"
           >
-            <IconButton
-              onClick={this.handleFirstPageButtonClick}
-              disabled={page === 0}
-              aria-label="First Page"
-            >
-              <FirstPageIcon />
-            </IconButton>
-            <IconButton
-              onClick={this.handleBackButtonClick}
-              disabled={page === 0}
-              aria-label="Previous Page"
-            >
-              <KeyboardArrowLeft />
-            </IconButton>
-            <Typography style={{ margin: '0px 15px' }}>{page}</Typography>
-            <IconButton
-              onClick={this.handleNextButtonClick}
-              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-              aria-label="Next Page"
-            >
-              <KeyboardArrowRight />
-            </IconButton>
-            <IconButton
-              onClick={this.handleLastPageButtonClick}
-              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-              aria-label="Last Page"
-            >
-              <LastPageIcon />
-            </IconButton>
-          </div>
-        </td>
-      </TableRow>
-    );
-  }
-}
+            <FirstPageIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleBackButtonClick}
+            disabled={page === 0}
+            aria-label="Previous Page"
+          >
+            <KeyboardArrowLeft />
+          </IconButton>
+          <Typography style={{ margin: '0px 15px' }}>
+            {page} | {pageCount}
+          </Typography>
+          <IconButton
+            onClick={handleNextButtonClick}
+            disabled={page >= pageCount}
+            aria-label="Next Page"
+          >
+            <KeyboardArrowRight />
+          </IconButton>
+          <IconButton
+            onClick={handleLastPageButtonClick}
+            disabled={page >= pageCount}
+            aria-label="Last Page"
+          >
+            <LastPageIcon />
+          </IconButton>
+          <Hidden xsDown>
+            <Typography style={{ marginRight: 10 }}>Per page:</Typography>
+            <Select onChange={handlePageSizeChange} value={pageSize}>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+            </Select>
+          </Hidden>
+        </div>
+      </td>
+    </TableRow>
+  );
+};
 
 const AmountCell = ({ transaction }) => {
   const amount =
@@ -132,16 +143,14 @@ const TransactionTable = () => {
 
   if (loading || error) return null;
 
-  const onChangePage = (event, page) => {
+  const onChangePage = (page) => {
     setPage(page);
   };
 
-  const onChangePageSize = (event) => {
+  const onChangePageSize = (pageSize) => {
     setPage(0);
-    setPageSize(event.target.value);
+    setPageSize(pageSize);
   };
-
-  console.log(data);
 
   const {
     transactions: { count, edges },
@@ -174,10 +183,10 @@ const TransactionTable = () => {
             rowsPerPageOptions={[5, 10, 25]}
             colSpan={3}
             count={count}
-            rowsPerPage={pageSize}
+            pageSize={pageSize}
             page={page}
             onChangePage={onChangePage}
-            onChangeRowsPerPage={onChangePageSize}
+            onChangePageSize={onChangePageSize}
           />
         </TableFooter>
       </Table>

@@ -5,11 +5,9 @@ import { Paper } from '@material-ui/core';
 import styles from './BalanceChart.css';
 
 const BalanceChart = ({ data, height, color }) => {
-  console.log(data);
-
   const scale = {
     date: {
-      type: 'timeCat',
+      type: 'time',
       formatter: (text) => {
         let date = new Date(parseInt(text));
         let tokens = date.toString().split(' ');
