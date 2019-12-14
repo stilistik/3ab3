@@ -1,0 +1,77 @@
+@import '../index.less';
+
+.tracker {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px;
+  max-width: 350px;
+  width: 350px;
+  z-index: 100;
+  background: white;
+  box-shadow: @imagebox-shadow;
+  border-radius: @border-radius;
+}
+
+.toggle-minimized {
+  transform: rotateZ(180deg);
+  transition: @standard-transition;
+}
+
+.toggle-maximized {
+  transform: rotateZ(0deg);
+  transition: @standard-transition;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn > * {
+  font-size: 20px;
+}
+
+.statistics {
+  display: flex;
+  margin-bottom: 10px;
+  height: 20px;
+  width: 100%;
+}
+
+.progressMinimized {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.list {
+  max-height: 150px;
+  padding-right: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+}
+
+.tracker-enter {
+  transform: translateY(200px);
+}
+
+.tracker-enter.tracker-enter-active {
+  transform: translateY(0px);
+  transition: all 300ms ease-in;
+}
+
+.tracker-exit {
+  transform: translateY(0px);
+}
+
+.tracker-exit.tracker-exit-active {
+  transform: translateY(200px);
+  transition: all 300ms ease-in;
+}

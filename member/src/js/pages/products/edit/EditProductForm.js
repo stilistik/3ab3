@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductForm from '../ProductForm';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
+import { Message } from 'Components';
 import { PRODUCTS } from '../list/Products';
 
 const MUTATION = gql`
@@ -14,52 +14,30 @@ const MUTATION = gql`
   }
 `;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
+export const EditProductForm = ({ product }) => {
+  const [updateProduct] = useMutation(MUTATION);
 
-class FormMutation extends React.Component {
-  onSubmit = async (values) => {
+  const onSubmit = async (values) => {
+    const { thumbnail, ...rest } = values;
+    console.log(thumbnail);
+
     try {
-      await this.updateProduct({
+      await updateProduct({
         variables: {
-          productId: this.props.product.id,
-          input: values,
+          productId: product.id,
+          input: { image: thumbnail, ...rest },
         },
         refetchQueries: () => {
           return [{ query: PRODUCTS }];
         },
       });
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
+      Message.error(error.message);
       return;
     }
-    this.props.message({ type: 'success', text: 'Product update successful' });
+    Message.success('Product update successful');
   };
+  return <ProductForm onSubmit={onSubmit} initValues={product} />;
+};
 
-  render() {
-    return (
-      <Mutation mutation={MUTATION}>
-        {(updateProduct) => {
-          this.updateProduct = updateProduct;
-          return (
-            <ProductForm
-              {...this.props}
-              onSubmit={this.onSubmit}
-              initValues={this.props.initValues}
-            />
-          );
-        }}
-      </Mutation>
-    );
-  }
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(FormMutation);
+export default EditProductForm;

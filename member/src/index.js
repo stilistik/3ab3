@@ -7,7 +7,7 @@ import Store from 'Redux/Store';
 import { MuiPickersUtilsProvider as Picker } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-import './css/master.css';
+import './css/master.less';
 
 ReactDOM.render(
   <Style>

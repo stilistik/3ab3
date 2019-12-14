@@ -1,0 +1,19 @@
+.ghost {
+  z-index: 1000;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  overflow: visible;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ghost-inner {
+  transform: translate3d(-50%, -50%, 0) scale(0.3);
+}
+
+.drag-end {
+  transition: all 0.3s ease;
+  transform: scale(0);
+}

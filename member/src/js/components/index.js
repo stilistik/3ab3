@@ -7,6 +7,8 @@ export * from './buttons';
 export * from './inputs';
 export * from './event';
 export * from './form';
+export * from './dragdrop';
+export * from './feedback';
 export * from './comment';
 export * from './post';
 export * from './user';

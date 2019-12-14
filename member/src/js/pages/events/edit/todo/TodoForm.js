@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Button } from '@material-ui/core';
-import { Form, Field, DateField } from 'Components';
+import { Form, TextField, DateField } from 'Components';
 
 import styles from './TodoForm.css';
 
@@ -13,16 +13,16 @@ class TodoForm extends React.Component {
     return (
       <Paper style={{ padding: '20px' }}>
         <Form onSubmit={this.onSubmit} className={styles.form}>
-          <Field
+          <TextField
             id="text"
-            name="Todo"
+            label="Todo"
             type="text"
             required={true}
             className={styles.field}
           />
           <DateField
             id="due"
-            name="Due"
+            label="Due Date"
             type="date"
             required={true}
             className={styles.field}

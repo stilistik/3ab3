@@ -6,7 +6,7 @@ import { login } from 'Redux/actions';
 import AppCore from './AppCore';
 import Auth from './Auth';
 import Routes from 'Routes';
-import MessageHandler from './MessageHandler';
+import { Notifier } from 'Components';
 import history from 'History';
 
 import './App.css';
@@ -47,13 +47,10 @@ class App extends React.Component {
             <Routes props={props} />
           </Router>
         </Auth>
-        <MessageHandler />
+        <Notifier />
       </div>
     );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

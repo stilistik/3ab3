@@ -1,0 +1,51 @@
+@import '../index.less';
+
+.dropzone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dragover {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed @primary-color;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  background-color: #fff;
+  transition: @standard-transition;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 25x;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+  color: @primary-color;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+}

@@ -8,29 +8,27 @@ import TransactionTable from './TransactionTable';
 
 import styles from './Profile.css';
 
-class Profile extends React.Component {
-  render() {
-    return (
-      <DefaultGrid overflow>
-        <div className={styles.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <AccountInfo />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Balance />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Products />
-            </Grid>
-            <Grid item xs={12}>
-              <TransactionTable />
-            </Grid>
+const Profile = () => {
+  return (
+    <DefaultGrid overflow>
+      <div className={styles.container}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <AccountInfo />
           </Grid>
-        </div>
-      </DefaultGrid>
-    );
-  }
-}
+          <Grid item xs={12} sm={6}>
+            <Balance />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Products />
+          </Grid>
+          <Grid item xs={12}>
+            <TransactionTable />
+          </Grid>
+        </Grid>
+      </div>
+    </DefaultGrid>
+  );
+};
 
 export default Profile;

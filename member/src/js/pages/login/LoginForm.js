@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login, showMessage } from 'Redux/actions';
 import { Typography, Button } from '@material-ui/core';
-import { Form, Field } from 'Components';
+import { Form, TextField } from 'Components';
 import { withStyles } from '@material-ui/core/styles';
 import { requestToken } from 'Auth/requestToken';
 
@@ -59,18 +59,18 @@ class LoginForm extends React.Component {
         </div>
         <br />
         <Form className={styles.form} onSubmit={this.onSubmit}>
-          <Field
+          <TextField
             id="email"
-            name="Email"
+            label="Email"
             type="email"
             required={true}
             className={styles.field}
             InputProps={{ className: styles.input }}
             InputLabelProps={{ className: styles.label }}
           />
-          <Field
+          <TextField
             id="password"
-            name="Password"
+            label="Password"
             type="password"
             required={true}
             className={styles.field}

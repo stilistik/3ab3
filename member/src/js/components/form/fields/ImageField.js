@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field } from './Field';
 import { IconButton, Avatar, Typography } from '@material-ui/core';
 import { Icon } from 'Components';
 
@@ -13,11 +14,11 @@ const AvatarEmpty = ({ error }) => {
   );
 };
 
-const Label = ({ error, name }) => {
+const Label = ({ error, label }) => {
   return (
     <div>
       <Typography variant="subtitle1" className={styles.typo}>
-        {name}
+        {label}
       </Typography>
       {error ? (
         <Typography variant="subtitle2" className={styles.error}>
@@ -38,53 +39,53 @@ const Display = ({ url, cdn, err }) => {
   }
 };
 
-export class ImageField extends React.Component {
-  static getInitValue = () => '';
+const ImageInput = ({ id, error, label, value, ...rest }) => {
+  const [src, setSrc] = React.useState(null);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      src: null,
-    };
-  }
-
-  onChange = (e) => {
+  const onChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = this.onLoad;
+    reader.onload = onLoad;
     reader.readAsDataURL(file);
-    this.props.onChange(this.props.id, file);
+    rest.onChange(file);
   };
 
-  onLoad = (e) => {
-    this.setState({ src: e.target.result });
+  const onLoad = (e) => {
+    setSrc(e.target.result);
   };
 
-  render() {
-    const { id, error, name, className, value, style } = this.props;
-    return (
-      <div className={className} style={style}>
-        <div className={styles.imagefield}>
-          <input
-            accept="image/*"
-            style={{ display: 'none' }}
-            id={id}
-            type="file"
-            onChange={this.onChange}
-          />
-          <label htmlFor={id}>
-            <IconButton
-              className={styles.button}
-              variant="contained"
-              component="span"
-            >
-              <Display url={this.state.src} cdn={value} />
-            </IconButton>
-          </label>
-          <Label name={name} error={error} />
-        </div>
+  console.log(value);
+
+  return (
+    <div className={rest.className} style={rest.style}>
+      <div className={styles.imagefield}>
+        <input
+          accept="image/*"
+          style={{ display: 'none' }}
+          id={id}
+          type="file"
+          onChange={onChange}
+        />
+        <label htmlFor={id}>
+          <IconButton
+            className={styles.button}
+            variant="contained"
+            component="span"
+          >
+            <Display url={src} cdn={value} error={error} />
+          </IconButton>
+        </label>
+        <Label label={label} error={error} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export const ImageField = (props) => {
+  return (
+    <Field fieldType="image" defaultValue={null} {...props}>
+      <ImageInput />
+    </Field>
+  );
+};

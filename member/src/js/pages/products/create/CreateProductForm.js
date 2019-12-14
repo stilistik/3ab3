@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductForm from '../ProductForm';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
+import { Message } from 'Components';
 import { PRODUCTS } from '../list/Products';
 
 const MUTATION = gql`
@@ -14,45 +14,27 @@ const MUTATION = gql`
   }
 `;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
+const CreateProductForm = (props) => {
+  const [createProduct] = useMutation(MUTATION);
 
-class FormMutation extends React.Component {
-  onSubmit = async (values) => {
+  const onSubmit = async (values) => {
+    const { thumbnail, ...rest } = values;
     try {
-      await this.createProduct({
+      await createProduct({
         variables: {
-          input: values,
+          input: { image: thumbnail, ...rest },
         },
         refetchQueries: () => {
           return [{ query: PRODUCTS }];
         },
       });
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
+      Message.error(error.message);
       return;
     }
-    this.props.message({ type: 'success', text: 'Product update successful' });
+    Message.success('Product update successful');
   };
+  return <ProductForm {...props} onSubmit={onSubmit} />;
+};
 
-  render() {
-    return (
-      <Mutation mutation={MUTATION}>
-        {(createProduct) => {
-          this.createProduct = createProduct;
-          return <ProductForm {...this.props} onSubmit={this.onSubmit} />;
-        }}
-      </Mutation>
-    );
-  }
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(FormMutation);
+export default CreateProductForm;

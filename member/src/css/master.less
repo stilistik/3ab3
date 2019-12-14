@@ -1,0 +1,60 @@
+// primary palette
+@primary-color: #1a77ad;
+@primary-color-hover: lighten(@primary-color, 10%);
+
+@secondary-color: #3c3e42;
+@secondary-color-hover: lighten(@secondary-color, 10%);
+
+// status colors
+@success-color: #2cde68;
+@warning-color: #faad14;
+@error-color: #f5222d;
+@info-color: #1890ff;
+
+// text color
+@heading-color: rgba(0, 0, 0, 0.85);
+@text-color: rgba(0, 0, 0, 0.75);
+@text-color-secondary: rgba(0, 0, 0, 0.45);
+@text-color-dark: rgba(255, 255, 255, 0.95);
+@text-color-secondary-dark: rgba(255, 255, 255, 0.65);
+
+// shape
+@border-radius: 3px;
+@imagebox-border-radius: 3px;
+
+// shadow
+@appbar-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2),
+  0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 3px 3px -2px rgba(0, 0, 0, 0.12);
+@imagebox-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2),
+  0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 3px 3px -2px rgba(0, 0, 0, 0.12);
+@foreground-shadow: none;
+
+// animations
+@standard-transition: 0.2s ease;
+
+/*** MASTER CSS ***/
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

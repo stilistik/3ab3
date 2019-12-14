@@ -1,30 +1,25 @@
 import React from 'react';
-import { FormControl, FormHelperText } from '@material-ui/core';
-import { TagSelect } from 'Components';
+import { InputLabel } from '@material-ui/core';
+import { TagInput } from '../../inputs';
+import { Field } from './Field';
 
-export class TagField extends React.Component {
-  static getInitValue = () => [];
-
-  onChange = (value) => {
-    this.props.onChange(this.props.id, value);
+const FieldInput = ({ label, id, ...rest }) => {
+  const onChange = (value) => {
+    rest.onChange(value);
+    rest.onFieldCommit(id, value);
   };
+  return (
+    <React.Fragment>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <TagInput id={id} {...rest} onChange={onChange} />
+    </React.Fragment>
+  );
+};
 
-  render() {
-    const { options, value, name, className, error, style } = this.props;
-
-    return (
-      <FormControl className={className} style={style}>
-        <TagSelect
-          options={options}
-          value={value}
-          onChange={this.onChange}
-          placeholder={name}
-          isMulti={true}
-        />
-        <FormHelperText style={{ color: 'red' }}>
-          {error ? error.message : null}
-        </FormHelperText>
-      </FormControl>
-    );
-  }
-}
+export const TagField = (props) => {
+  return (
+    <Field fieldType="multiselect" defaultValue={[]} {...props}>
+      <FieldInput />
+    </Field>
+  );
+};

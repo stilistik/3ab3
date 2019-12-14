@@ -1,37 +1,41 @@
 import React from 'react';
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-} from '@material-ui/core';
+import { InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Field } from './Field';
 
-export class SelectField extends React.Component {
-  static getInitValue = () => '';
-  onChange = (e) => {
-    this.props.onChange(this.props.id, e.target.value);
+const SelectInput = ({ id, value, options, label, ...rest }) => {
+  const onChange = (e) => {
+    rest.onChange(e.target.value);
+    rest.onFieldCommit(id, e.target.value);
   };
+  return (
+    <React.Fragment>
+      <InputLabel htmlFor={id} {...rest.InputLabelProps}>
+        {label}
+      </InputLabel>
+      <Select
+        id={id}
+        onChange={onChange}
+        value={value || ''}
+        data-cy={rest['data-cy']}
+      >
+        {options && options.length ? (
+          options.map((option) => (
+            <MenuItem data-cy="option" key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem disabled>No Options</MenuItem>
+        )}
+      </Select>
+    </React.Fragment>
+  );
+};
 
-  render() {
-    const { options, value, id, name, className, error, style } = this.props;
-    return (
-      <FormControl className={className} style={style}>
-        <InputLabel htmlFor={id}>{name}</InputLabel>
-        <Select
-          id={id}
-          value={value || []}
-          onChange={this.onChange}
-          className={this.props.className}
-        >
-          {options.map((option) => {
-            return <MenuItem value={option.value}>{option.label}</MenuItem>;
-          })}
-        </Select>
-        <FormHelperText style={{ color: 'red' }}>
-          {error ? error.message : null}
-        </FormHelperText>
-      </FormControl>
-    );
-  }
-}
+export const SelectField = (props) => {
+  return (
+    <Field fieldType="select" defaultValue="" {...props}>
+      <SelectInput />
+    </Field>
+  );
+};

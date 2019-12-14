@@ -6,7 +6,6 @@ import UnauthRoute from './UnauthRoute';
 
 import Login from 'Pages/login';
 import Home from 'Pages/home';
-import History from 'Pages/history';
 import Dashboard from 'Pages/dashboard';
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
@@ -19,7 +18,6 @@ const Routes = ({ props }) => {
   return (
     <Switch>
       <UnauthRoute path="/login" component={Login} props={props} />
-      <AuthRoute path="/history" component={History} props={props} />
       <AuthRoute path="/dashboard" component={Dashboard} props={props} />
       <AuthRoute path="/home" component={Home} props={props} />
       <AuthRoute path="/account" component={Account} props={props} />

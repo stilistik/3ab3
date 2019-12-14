@@ -1,14 +1,14 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { DefaultGrid } from 'Components';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { getQueryParams } from 'History';
 import EditProductForm from './EditProductForm';
 
-import styles from './EditProduct.css';
+import styles from './EditProduct.less';
 
-const QUERY = gql`
+export const QUERY = gql`
   query($productId: ID!) {
     product(productId: $productId) {
       id
@@ -20,41 +20,25 @@ const QUERY = gql`
   }
 `;
 
-class EditProductQuery extends React.Component {
-  render() {
-    const { id } = getQueryParams();
-    return (
-      <Query query={QUERY} variables={{ productId: id }}>
-        {({ loading, error, data }) => {
-          if (loading) return null;
-          if (error) return null;
-          return <EditProduct product={data.product} />;
-        }}
-      </Query>
-    );
-  }
-}
+const EditProduct = (props) => {
+  const { id } = getQueryParams();
+  const { loading, error, data } = useQuery(QUERY, {
+    variables: { productId: id },
+    fetchPolicy: 'no-cache',
+  });
 
-class EditProduct extends React.Component {
-  render() {
-    const { thumbnail, index, price, name } = this.props.product;
-    const initValues = {
-      image: thumbnail,
-      index: String(index),
-      price: String(price),
-      name: name,
-    };
-    return (
-      <DefaultGrid overflow>
-        <div className={styles.container}>
-          <Typography variant="h3" className={styles.typo}>
-            Edit Product
-          </Typography>
-          <EditProductForm {...this.props} initValues={initValues} />
-        </div>
-      </DefaultGrid>
-    );
-  }
-}
+  if (loading || error) return null;
 
-export default EditProductQuery;
+  return (
+    <DefaultGrid overflow>
+      <div className={styles.container}>
+        <Typography variant="h3" className={styles.typo}>
+          Edit Product
+        </Typography>
+        <EditProductForm product={data.product} />
+      </div>
+    </DefaultGrid>
+  );
+};
+
+export default EditProduct;

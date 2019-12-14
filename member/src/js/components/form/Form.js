@@ -1,153 +1,259 @@
 import React from 'react';
-import {
-  TextField,
-  DateField,
-  ImageField,
-  Field,
-  SelectField,
-  TagField,
-  ChipArea,
-} from './fields';
+import PropTypes from 'prop-types';
 import Validator from './Validator';
+import { isEqual } from 'lodash';
 
-const FIELDTYPES = [
-  Field.name,
-  ImageField.name,
-  DateField.name,
-  TextField.name,
-  SelectField.name,
-  TagField.name,
-  ChipArea.name,
-];
+export const FormContext = React.createContext({});
+export const useFormContext = () => React.useContext(FormContext);
 
 export class Form extends React.Component {
   constructor(props) {
     super(props);
     this.fields = {};
-    this.recursiveMap(props.children, this.findField);
-    this.state = this.createInitState(props.initValues);
+    this.values = {};
+    this.options = {};
+    this.errors = {};
     this.dirty = false;
+    this.valid = false;
   }
 
-  findField = (child) => {
-    if (FIELDTYPES.indexOf(child.type.name) > -1) {
-      const { id } = child.props;
-      if (!id) throw new Error('All form fields must specify id prop.');
-      this.fields[id] = child;
+  componentDidUpdate = (prevProps) => {
+    if (!isEqual(prevProps.initValues, this.props.initValues)) {
+      for (let id in this.props.initValues) {
+        const value = this.props.initValues[id];
+        this.setFieldValue(id, value, false);
+      }
     }
   };
 
-  recursiveMap = (children, fn) => {
-    return React.Children.map(children, (child) => {
-      if (!React.isValidElement(child)) {
-        return child;
-      }
+  /**
+   * Called from Field to register with this form when the field
+   * did mount
+   * @param {String} id: The id of the field
+   * @param {Object} fieldProps: The props of the field
+   */
+  registerField = (id, fieldProps) => {
+    const { initValues, initOpts, updateWithDefault } = this.props;
+    this.fields[id] = fieldProps;
 
-      if (child.props.children) {
-        child = React.cloneElement(child, {
-          children: this.recursiveMap(child.props.children, fn),
-        });
-      }
-
-      return fn(child);
-    });
-  };
-
-  createInitState = (initValues) => {
-    let state = {};
-    Object.keys(this.fields).forEach((id) => {
-      const field = this.fields[id];
-      state[id] = {
-        value: field.type.getInitValue(),
-        error: null,
-      };
-    });
-    if (initValues) {
-      Object.keys(this.fields).forEach((id) => {
-        if (initValues[id]) {
-          state[id] = {
-            value: initValues[id],
-            error: null,
-          };
-        }
-      });
+    if (initOpts[id]) {
+      // set field init options
+      this.setFieldOptions(id, initOpts[id], false);
+    } else {
+      // set field default options
+      this.setFieldOptions(id, fieldProps.defaultOpts, false);
     }
-    return state;
-  };
 
-  onFieldChange = async (id, value) => {
-    const fieldProps = Object.assign({}, this.state[id], {
-      value: value,
-    });
-    await this.setState({ [id]: fieldProps });
-    if (this.dirty) this.validateFormFields();
-  };
-
-  onSubmit = async (e) => {
-    e.preventDefault();
-    this.dirty = true;
-    const hasError = this.validateFormFields();
-    if (!hasError) {
-      const values = this.createSubmitValues();
-      await this.props.onSubmit(values);
-      this.setState(this.createInitState());
+    if (initValues[id] || !isNaN(initValues[id])) {
+      // set field init value
+      this.setFieldValue(id, initValues[id], false);
+    } else {
+      // set field default value
+      this.setFieldValue(id, fieldProps.defaultValue, updateWithDefault);
     }
   };
 
-  createSubmitValues = () => {
-    const values = {};
-    Object.keys(this.fields).forEach((id) => {
-      const field = this.fields[id];
-      const fieldValue = this.state[id].value;
-      switch (field.props.type) {
-        case 'image':
-          if (fieldValue instanceof File) values[id] = fieldValue;
-          break;
-        default:
-          values[id] = fieldValue;
+  /**
+   * Called from Field to unregister from this form when the field
+   * unmounts.
+   * @param {String} id: The id of the field
+   */
+  unregisterField = (id) => delete this.fields[id];
+
+  /**
+   * Called from Field to update its value. Will validate
+   * the field if this form is dirty.
+   * @param {String} id: The id of the field
+   * @param {*} value: The new value of the field
+   * @param {Boolean} shouldUpdate: True if props update methods should be called
+   */
+  setFieldValue = (id, value, shouldUpdate = true) => {
+    const field = this.fields[id];
+    if (!field) return;
+
+    this.values[id] = value;
+    if (this.dirty) {
+      this.validateField(id, value);
+      this.setFieldError(id);
+    }
+
+    field.setValue(value);
+
+    // if the form was passed a notifier, call it if we are not initializing
+    if (this.props.onFieldChange && shouldUpdate) {
+      this.props.onFieldChange(id, value);
+    }
+
+    // if the form was passed an onValidChange notifier
+    if (this.props.onValidChange) {
+      // validate the form and call notifier if valid changed
+      const valid = this.validateForm();
+      if (valid !== this.valid) {
+        this.valid = valid;
+        this.props.onValidChange(valid);
       }
-    });
-    return values;
+    }
   };
 
-  validateFormFields = () => {
+  /**
+   * Called from Field to set its additional state.
+   * @param {String} id: The id of the field
+   * @param {*} opts: The new options state of the field
+   */
+  setFieldOptions = (id, opts, shouldUpdate = true) => {
+    this.options[id] = opts;
+    this.fields[id].setOpts(opts);
+    if (shouldUpdate) {
+      this.validateField(id, this.values[id]);
+      this.setFieldError(id);
+    }
+  };
+
+  onFieldCommit = (id, value) => {
+    // if form was passed an onFieldCommit notifier, call it
+    if (this.props.onFieldCommit) this.props.onFieldCommit(id, value);
+  };
+
+  /**
+   * Validates a field value using first the default validator, then
+   * custom field based validators and last but not least combined field
+   * validators. Stores the error and updates the error
+   * on the field that was validated
+   * @param {String} id: The id of the field
+   * @param {*} value: The field value to validate
+   */
+  validateField = (id, value) => {
+    const { skip } = this.options[id] || {};
+    if (skip) {
+      this.errors[id] = null;
+      return true;
+    }
+
+    // run default validator
+    let error = Validator.validate(this.fields[id], value);
+
+    // run custom field props validator
+    const validate = this.fields[id].validate;
+    if (!error && validate) error = validate(value);
+
+    // run combined field validators
+    if (!error) error = this.validateCombined(id);
+
+    // update errors
+    this.errors[id] = error;
+
+    if (error) return false;
+    else return true;
+  };
+
+  /**
+   * Validates form fields against each other if combined validators
+   * are specified in the form
+   */
+  validateCombined = (id) => {
+    let error = null;
+    // get validators that validate this field
+    const validators = this.props.validators.filter((el) =>
+      el.ids.includes(id)
+    );
+    for (let validator of validators) {
+      // create args for the validator
+      let args = {};
+      for (let id of validator.ids) args[id] = this.values[id];
+
+      // run validator
+      error = validator.func(args);
+
+      // update errors on all validated fields
+      for (let id of validator.ids) {
+        this.errors[id] = error;
+        this.fields[id].setError(error);
+      }
+    }
+    return error;
+  };
+
+  /**
+   * Validate all form fields
+   * @returns {Boolean}: Returns true if the form is valid, false otherwise
+   */
+  validateForm = () => {
     let hasError = false;
-    Object.keys(this.fields).forEach((id) => {
-      const field = this.fields[id];
-      const fieldValue = this.state[id].value;
-      const error = Validator.validate(field, fieldValue);
-      if (error) hasError = true;
-      const newState = Object.assign({}, this.state[id], {
-        error: error,
-      });
-      this.setState({ [id]: newState });
-    });
-    return hasError;
+    for (let id in this.fields) {
+      if (!this.validateField(id, this.values[id])) hasError = true;
+    }
+    return !hasError;
   };
 
-  injectFieldProps = (child) => {
-    const { id } = child.props;
-    if (!id || !this.fields[id]) return child;
-    else
-      return React.cloneElement(child, {
-        ...this.state[id],
-        onChange: this.onFieldChange,
-      });
+  /**
+   * Update a specific field with its current error value
+   * @param {String} id: the id of the field to update the error on
+   */
+  setFieldError = (id) => this.fields[id].setError(this.errors[id]);
+
+  /**
+   * Update all form fields with their current error values
+   */
+  setFieldErrors = () => {
+    for (let id in this.errors) this.setFieldError(id);
+  };
+
+  /**
+   * Prevents default submit navigation
+   * @param {Event} e: Submit event
+   */
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.requestSubmit();
+  };
+
+  /**
+   * Sets form state to dirty, validates all fields and calls props
+   * onSubmit if no errors are present
+   */
+  requestSubmit = () => {
+    this.dirty = true;
+    if (this.validateForm()) this.props.onSubmit(this.values, this.options);
+    else this.setFieldErrors();
   };
 
   render() {
-    const fieldsWithProps = this.recursiveMap(
-      this.props.children,
-      this.injectFieldProps
-    );
     return (
-      <form
-        noValidate
-        className={this.props.className}
-        onSubmit={this.onSubmit}
+      <FormContext.Provider
+        value={{
+          registerField: this.registerField,
+          unregisterField: this.unregisterField,
+          setFieldValue: this.setFieldValue,
+          setFieldOptions: this.setFieldOptions,
+          onFieldCommit: this.onFieldCommit,
+          requestSubmit: this.requestSubmit,
+          noHelp: this.props.noHelp,
+        }}
       >
-        {fieldsWithProps}
-      </form>
+        <form
+          noValidate
+          className={this.props.className}
+          style={this.props.style}
+          onSubmit={this.onSubmit}
+          data-cy={this.props['data-cy']}
+        >
+          {this.props.children}
+        </form>
+      </FormContext.Provider>
     );
   }
 }
+
+Form.defaultProps = {
+  initValues: {},
+  initOpts: {},
+  validators: [],
+  onSubmit: () => {},
+  updateWithDefault: false,
+};
+
+Form.propTypes = {
+  onFieldChange: PropTypes.func,
+  onValidChange: PropTypes.func,
+  onFieldCommit: PropTypes.func,
+};

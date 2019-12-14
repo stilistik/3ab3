@@ -1,63 +1,61 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
-import { ImageField, TextField, Field, DateField, Form } from 'Components';
+import { ImageField, TextField, DateField, Form } from 'Components';
 
-import styles from './EventForm.css';
+import styles from './EventForm.less';
 
-class ProductForm extends React.Component {
-  onSubmit = (values) => {
-    this.props.onSubmit(values);
+const EventForm = ({ initValues, ...rest }) => {
+  const onSubmit = (values) => {
+    rest.onSubmit(values);
   };
 
-  render() {
-    return (
-      <Grid container>
-        <Grid item xs={12} sm={6}>
-          <Form
-            className={styles.form}
-            onSubmit={this.onSubmit}
-            initValues={this.props.initValues}
+  return (
+    <Grid container>
+      <Grid item xs={12} sm={6}>
+        <Form
+          className={styles.form}
+          onSubmit={onSubmit}
+          initValues={initValues}
+        >
+          <ImageField
+            className={styles.imagefield}
+            id="image"
+            type="image"
+            required={true}
+            label="Event Image"
+          />
+          <TextField
+            id="title"
+            label="Title"
+            required={true}
+            className={styles.field}
+          />
+          <TextField
+            id="description"
+            label="Description"
+            required={true}
+            className={styles.field}
+          />
+          <DateField
+            id="date"
+            label="Date"
+            type="date"
+            required={true}
+            className={styles.field}
+          />
+          <br />
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            color="primary"
           >
-            <ImageField
-              className={styles.imagefield}
-              id="image"
-              type="image"
-              required={true}
-              name="Event Image"
-            />
-            <Field
-              id="title"
-              name="Title"
-              required={true}
-              className={styles.field}
-            />
-            <TextField
-              id="description"
-              name="Description"
-              required={true}
-              className={styles.field}
-            />
-            <DateField
-              id="date"
-              name="Date"
-              type="date"
-              required={true}
-              className={styles.field}
-            />
-            <br />
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
-            >
-              Submit
-            </Button>
-          </Form>
-        </Grid>
+            Submit
+          </Button>
+        </Form>
       </Grid>
-    );
-  }
-}
+    </Grid>
+  );
+};
 
-export default ProductForm;
+export default EventForm;

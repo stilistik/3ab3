@@ -1,48 +1,76 @@
 import React from 'react';
-import {
-  FormControl,
-  InputLabel,
-  Input,
-  FormHelperText,
-} from '@material-ui/core';
+import { InputLabel, Input } from '@material-ui/core';
+import { Field } from './Field';
 
-export class TextField extends React.Component {
-  static getInitValue = () => '';
-
-  onChange = (e) => {
-    this.props.onChange(this.props.id, e.target.value);
-  };
-
-  render() {
-    const {
-      id,
-      name,
-      type,
-      value,
-      error,
-      InputLabelProps,
-      InputProps,
-      className,
-      style,
-    } = this.props;
-    return (
-      <FormControl className={className} style={style}>
-        <InputLabel htmlFor={id} {...InputLabelProps}>
-          {name}
-        </InputLabel>
-        <Input
-          multiline={true}
-          id={id}
-          rowsMax={10}
-          type={type === 'password' ? 'password' : null}
-          onChange={this.onChange}
-          value={value}
-          {...InputProps}
-        />
-        <FormHelperText style={{ color: 'red' }}>
-          {error ? error.message : null}
-        </FormHelperText>
-      </FormControl>
-    );
+const defaultHandleKeyDown = (e, props) => {
+  const { onEnterSubmit, requestSubmit, multiline } = props;
+  if (e.key === 'Enter') {
+    if (multiline) e.preventDefault(); // if input is multiline we dont want to insert empty lines but instead submit
+    if (onEnterSubmit && requestSubmit) {
+      props.requestSubmit();
+    }
+    props.onFieldCommit(props.id, props.value);
   }
-}
+};
+
+const defaultHandleBlur = (e, props) => {
+  if (props.onBlurSubmit && props.requestSubmit) props.requestSubmit();
+  props.onFieldCommit(props.id, props.value);
+};
+
+export const TextInput = (props) => {
+  const {
+    id,
+    value,
+    label,
+    type,
+    multiline,
+    autoFocus,
+    settings,
+    disableUnderline,
+  } = props;
+  const { handleBlur, handleKeyDown, ...rest } = props;
+
+  const onChange = (e) => {
+    const value = e.target.value.slice(0, settings.len);
+    rest.onChange(value);
+  };
+  return (
+    <React.Fragment>
+      <InputLabel htmlFor={id} {...rest.InputLabelProps}>
+        {label}
+      </InputLabel>
+      <Input
+        id={id}
+        type={type}
+        className={rest.className}
+        onChange={onChange}
+        value={value || ''}
+        inputProps={{
+          ['data-cy']: rest['data-cy'],
+          onBlur: (e) => handleBlur(e, rest),
+          onKeyDown: (e) => handleKeyDown(e, rest),
+        }}
+        multiline={multiline}
+        autoFocus={autoFocus}
+        disableUnderline={disableUnderline}
+        {...rest.InputProps}
+      />
+    </React.Fragment>
+  );
+};
+
+TextInput.defaultProps = {
+  handleKeyDown: defaultHandleKeyDown,
+  handleBlur: defaultHandleBlur,
+  onChange: () => {},
+  settings: {},
+};
+
+export const TextField = (props) => {
+  return (
+    <Field fieldType="text" defaultValue="" {...props}>
+      <TextInput />
+    </Field>
+  );
+};

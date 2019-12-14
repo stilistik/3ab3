@@ -47,12 +47,12 @@ class AppMenu extends React.Component {
           />
           <MenuItem
             text={<span className={styles.item}>Products</span>}
-            icon="drinks"
+            icon="localBar"
             onClick={() => this.onClick('products')}
           />
           <MenuItem
             text={<span className={styles.item}>Three Steps</span>}
-            icon="threeSteps"
+            icon="linearScale"
             onClick={() => this.onClick('questions')}
           />
         </List>
