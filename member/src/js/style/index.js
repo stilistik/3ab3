@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,14 +19,10 @@ const theme = createMuiTheme({
   },
 });
 
-const jss = create({
-  ...jssPreset(),
-});
-
 class Style extends React.Component {
   render() {
     return (
-      <StylesProvider jss={jss} injectFirst>
+      <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
       </StylesProvider>
     );
