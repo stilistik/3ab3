@@ -5,19 +5,17 @@ import CreateMemberForm from './CreateMemberForm';
 
 import styles from './CreateMember.css';
 
-class CreateMember extends React.Component {
-  render() {
-    return (
-      <DefaultGrid overflow>
-        <div className={styles.container}>
-          <Typography variant="h3" className={styles.typo}>
-            New Member
-          </Typography>
-          <CreateMemberForm />
-        </div>
-      </DefaultGrid>
-    );
-  }
-}
+const CreateMember = () => {
+  return (
+    <DefaultGrid overflow>
+      <div className={styles.container}>
+        <Typography variant="h3" className={styles.typo}>
+          New Member
+        </Typography>
+        <CreateMemberForm />
+      </div>
+    </DefaultGrid>
+  );
+};
 
 export default CreateMember;

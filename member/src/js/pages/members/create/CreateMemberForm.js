@@ -1,10 +1,10 @@
 import React from 'react';
 import MemberForm from '../MemberForm';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
+import { useMutation } from '@apollo/react-hooks';
 import { MEMBERS } from '../list/Members';
+import { Message } from 'Components';
+import { requestRoute } from 'History';
 
 const MUTATION = gql`
   mutation($input: UserInput!) {
@@ -14,18 +14,11 @@ const MUTATION = gql`
   }
 `;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
-
-class FormMutation extends React.Component {
-  onSubmit = async (values) => {
+const CreateMemberForm = (props) => {
+  const [createUser] = useMutation(MUTATION);
+  const onSubmit = async (values) => {
     try {
-      await this.createUser({
+      await createUser({
         variables: {
           input: values,
         },
@@ -34,25 +27,14 @@ class FormMutation extends React.Component {
         },
       });
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
+      Message.error(error.message);
       return;
     }
-    this.props.message({ type: 'success', text: 'User successfully created' });
+    Message.success('User successfully created');
+    requestRoute('/members');
   };
 
-  render() {
-    return (
-      <Mutation mutation={MUTATION}>
-        {(createUser) => {
-          this.createUser = createUser;
-          return <MemberForm {...this.props} onSubmit={this.onSubmit} />;
-        }}
-      </Mutation>
-    );
-  }
-}
+  return <MemberForm {...props} onSubmit={onSubmit} />;
+};
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(FormMutation);
+export default CreateMemberForm;
