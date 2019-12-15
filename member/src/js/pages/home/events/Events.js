@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { EventCard } from 'Components';
+import { EventCard, CreateButton } from 'Components';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
+import { requestRoute } from 'History';
 
 import styles from './Events.css';
 
@@ -18,29 +19,39 @@ export const EVENTS = gql`
   }
 `;
 
-class Events extends React.Component {
-  render() {
-    if (!this.props.events) return null;
-    return (
-      <div className={styles.container}>
-        <Grid container spacing={3}>
-          {this.props.events.map((event) => {
-            return (
-              <Grid key={event.id} item xs={12}>
-                <EventCard
-                  event={event}
-                  onEdit={this.onEdit}
-                  onDelete={this.onDelete}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </div>
-    );
-  }
-}
+const Events = () => {
+  const { loading, error, data } = useQuery(EVENTS);
+  if (loading || error) return null;
 
-export default graphql(EVENTS, {
-  props: ({ data }) => ({ events: data.events }),
-})(Events);
+  const onCreate = () => {
+    requestRoute('/createevent');
+  };
+
+  const onEdit = () => {};
+
+  const onDelete = () => {};
+
+  const { events } = data;
+  return (
+    <div className={styles.container}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <CreateButton onClick={onCreate} />
+        </Grid>
+        {events.map((event) => {
+          return (
+            <Grid key={event.id} item xs={12}>
+              <EventCard
+                event={event}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </div>
+  );
+};
+
+export default Events;
