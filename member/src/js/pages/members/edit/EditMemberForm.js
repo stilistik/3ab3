@@ -1,10 +1,10 @@
 import React from 'react';
 import MemberForm from '../MemberForm';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
+import { Message } from 'Components';
+import { useMutation } from '@apollo/react-hooks';
 import { MEMBERS } from '../list/Members';
+import { requestRoute } from 'History';
 
 const MUTATION = gql`
   mutation($userId: ID!, $input: UserInput!) {
@@ -14,20 +14,14 @@ const MUTATION = gql`
   }
 `;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
+const EditMemberForm = ({ user, ...rest }) => {
+  const [editUser] = useMutation(MUTATION);
 
-class FormMutation extends React.Component {
-  onSubmit = async (values) => {
+  const onSubmit = async (values) => {
     try {
-      await this.editUser({
+      await editUser({
         variables: {
-          userId: this.props.member.id,
+          userId: user.id,
           input: values,
         },
         refetchQueries: () => {
@@ -35,31 +29,14 @@ class FormMutation extends React.Component {
         },
       });
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
+      Message.error(error.message);
       return;
     }
-    this.props.message({ type: 'success', text: 'User update successful' });
+    Message.success('User update successful');
+    requestRoute('/members');
   };
 
-  render() {
-    return (
-      <Mutation mutation={MUTATION}>
-        {(editUser) => {
-          this.editUser = editUser;
-          return (
-            <MemberForm
-              {...this.props}
-              onSubmit={this.onSubmit}
-              initValues={this.props.initValues}
-            />
-          );
-        }}
-      </Mutation>
-    );
-  }
-}
+  return <MemberForm {...rest} onSubmit={onSubmit} initValues={user} />;
+};
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(FormMutation);
+export default EditMemberForm;
