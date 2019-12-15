@@ -3,13 +3,13 @@ import { Chip } from '@material-ui/core';
 import { UserAvatar } from 'Components';
 import CommentActions from './CommentActions';
 
-import styles from './Comment.css';
+import styles from './Comment.less';
 
 class Comment extends React.Component {
   render() {
     const { comment } = this.props;
     const avatar = (
-      <UserAvatar user={comment.author} className={styles.avatar} />
+      <UserAvatar user={comment.author} classes={{ avatar: styles.avatar }} />
     );
     const label = (
       <div className={styles.label}>
@@ -21,7 +21,11 @@ class Comment extends React.Component {
       <div className={styles.comment}>
         <Chip
           onClick={this.onClick}
-          classes={{ root: styles.chip, label: styles.chiplabel }}
+          classes={{
+            root: styles.chip,
+            label: styles.chiplabel,
+            avatar: styles.chipAvatar,
+          }}
           avatar={avatar}
           label={label}
         />

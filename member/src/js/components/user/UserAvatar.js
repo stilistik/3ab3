@@ -1,8 +1,9 @@
 import React from 'react';
 import { Avatar, Typography } from '@material-ui/core';
+import classnames from 'classnames';
 
-export class UserAvatar extends React.Component {
-  stringToHSL = (str) => {
+export const UserAvatar = ({ user, classes, className, style }) => {
+  const stringToHSL = (str) => {
     var hash = 0;
     if (this.length == 0) return hash;
     for (var i = 0; i < str.length; i++) {
@@ -13,43 +14,34 @@ export class UserAvatar extends React.Component {
     return 'hsl(' + shortened + ',60%,60%)';
   };
 
-  render() {
-    if (!this.props.user) return null;
+  if (!user) return null;
 
-    let avatar_cls, typo_cls;
-    if (this.props.classes) {
-      avatar_cls = this.props.classes.avatar;
-      typo_cls = this.props.classes.typo;
-    }
+  const avatarClass = classnames(className, classes.avatar);
 
-    if (this.props.className) avatar_cls = this.props.className;
-
-    if (this.props.user.avatar) {
-      const url = global.API_URL + this.props.user.avatar;
-      return (
-        <Avatar
-          src={url}
-          alt="Not Found"
-          className={avatar_cls ? avatar_cls : null}
-          style={this.props.style}
-        />
-      );
-    } else {
-      const letter = this.props.user.name.charAt(0).toUpperCase();
-      const color = this.stringToHSL(this.props.user.name);
-      return (
-        <Avatar
-          className={avatar_cls ? avatar_cls : null}
-          style={{ background: color, ...this.props.style }}
-        >
-          <Typography
-            className={typo_cls ? typo_cls : null}
-            style={{ color: 'white' }}
-          >
-            {letter}
-          </Typography>
-        </Avatar>
-      );
-    }
+  if (user.avatar) {
+    const url = global.API_URL + user.avatar;
+    return (
+      <Avatar src={url} alt="Not Found" className={avatarClass} style={style} />
+    );
+  } else {
+    const letter = user.name.charAt(0).toUpperCase();
+    const color = stringToHSL(user.name);
+    return (
+      <Avatar
+        className={avatarClass}
+        style={{ background: color, ...this.props.style }}
+      >
+        <Typography className={classes.typo} style={{ color: 'white' }}>
+          {letter}
+        </Typography>
+      </Avatar>
+    );
   }
-}
+};
+
+UserAvatar.defaultProps = {
+  classes: {
+    avatar: '',
+    typo: '',
+  },
+};
