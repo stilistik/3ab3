@@ -14,8 +14,6 @@ const NumberInput = ({ id, value, min, max, step, unit, ...rest }) => {
   };
 
   const isValid = (number) => {
-    console.log(number);
-
     if (isNaN(number)) return false;
     const isMultipleOfStep = (number - min) % step === 0;
     return number >= min && number <= max && isMultipleOfStep;

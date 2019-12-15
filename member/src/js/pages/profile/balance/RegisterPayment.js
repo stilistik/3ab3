@@ -5,8 +5,8 @@ import { flowRight as compose } from 'lodash';
 import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import PaymentForm from './PaymentForm';
-import { BALANCE_DISPLAY } from './BalanceDisplay';
-import { BALANCE } from '../balance/Balance';
+import { BALANCE_DISPLAY_QUERY } from './BalanceDisplay';
+import { BALANCE_QUERY } from '../BalanceChart';
 
 const USER = gql`
   query {
@@ -43,7 +43,10 @@ class RegisterPayment extends React.Component {
             date: new Date().toISOString(),
           },
         },
-        refetchQueries: () => [{ query: BALANCE }, { query: BALANCE_DISPLAY }],
+        refetchQueries: () => [
+          { query: BALANCE_QUERY },
+          { query: BALANCE_DISPLAY_QUERY },
+        ],
       });
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });

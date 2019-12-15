@@ -5,4 +5,5 @@
 
 .field {
   margin-right: 10px;
+  max-width: 200px;
 }
