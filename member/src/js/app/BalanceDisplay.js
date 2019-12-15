@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { requestRoute } from 'History';
 
-import styles from './BalanceDisplay.css';
+import styles from './BalanceDisplay.less';
 
 const USER = gql`
   query {
