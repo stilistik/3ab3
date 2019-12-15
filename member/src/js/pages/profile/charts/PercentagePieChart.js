@@ -24,6 +24,13 @@ const PercentagePieChart = ({ data }) => (
     animate={true}
     motionStiffness={90}
     motionDamping={15}
+    tooltip={({ label, value, color }) => {
+      return (
+        <div style={{ color: color }}>
+          <strong>{label}:</strong> {value}
+        </div>
+      );
+    }}
   />
 );
 

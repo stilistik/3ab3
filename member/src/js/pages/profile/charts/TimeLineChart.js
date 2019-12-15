@@ -77,10 +77,14 @@ export const TimeLineChart = ({ data }) => {
             style={{
               background: 'white',
               padding: '9px 12px',
-              border: '1px solid #ccc',
+              borderRadius: 3,
+              boxShadow:
+                '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
             }}
           >
             {slice.points.map((point) => {
+              const serieId =
+                point.serieId.charAt(0).toUpperCase() + point.serieId.slice(1);
               return (
                 <div
                   key={point.id}
@@ -97,7 +101,7 @@ export const TimeLineChart = ({ data }) => {
                       timeStyle: 'medium',
                     })}
                   </div>
-                  <strong>{point.serieId}:</strong> {point.data.yFormatted} CHF
+                  <strong>{serieId}:</strong> {point.data.yFormatted} CHF
                 </div>
               );
             })}
