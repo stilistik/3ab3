@@ -28,16 +28,17 @@ export const BalanceChart = () => {
   if (loading || error) return null;
 
   const createChartData = (transactions, color) => {
-    const data = transactions.edges.map((el, index) => {
+    const data = transactions.edges.reverse().map((el, index) => {
       const { date, balance } = el.node;
       return {
-        x: date,
+        x: index,
         y: balance,
+        date: date,
       };
     });
     console.log(data);
 
-    return [{ id: 'balance', color: color, data: data.reverse() }];
+    return [{ id: 'balance', color: color, data: data }];
   };
 
   const { balance, transactions } = data.currentUser;

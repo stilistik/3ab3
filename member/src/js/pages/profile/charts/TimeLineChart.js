@@ -20,8 +20,6 @@ const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
 );
 
 export const TimeLineChart = ({ data }) => {
-  const colors = data.map((serie) => serie.color);
-
   const computeAreaBaseline = (data) => {
     const globalMin = Math.min(
       ...data.map((serie) => Math.min(...serie.data.map((datum) => datum.y)))
@@ -37,14 +35,15 @@ export const TimeLineChart = ({ data }) => {
   return (
     <ResponsiveLine
       data={data}
-      colors={colors}
-      margin={{ top: 30, right: 30, bottom: 40, left: 60 }}
+      colors={{ datum: 'color' }}
+      margin={{ top: 30, right: 50, bottom: 40, left: 60 }}
       xScale={{
-        type: 'time',
-        format: '%Y-%m-%dT%H:%M:%S.%LZ',
-        precision: 'millisecond',
+        type: 'linear',
+        min: 'auto',
+        max: 'auto',
+        stacked: false,
+        reverse: false,
       }}
-      xFormat="time:%Y-%m-%d"
       yScale={{
         type: 'linear',
         min: 'auto',
@@ -56,19 +55,26 @@ export const TimeLineChart = ({ data }) => {
       axisTop={null}
       axisRight={null}
       axisBottom={{
-        format: '%b %d',
-        tickValues: 'every 2 minutes',
-        legend: 'date',
-        legendOffset: -12,
+        format: (value) => {
+          const datum = data[0].data.find((el) => el.x === value);
+          if (datum)
+            return new Date(datum.date).toLocaleDateString('de-DE', {
+              dateStyle: 'medium',
+            });
+        },
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
       }}
       axisLeft={{
         orient: 'left',
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'count',
-        legendOffset: -40,
-        legendPosition: 'middle',
+        legend: 'CHF',
+        legendOffset: 10,
+        legendPosition: 'end',
+        legendOrientation: 'horizontal',
       }}
       enableSlices="x"
       sliceTooltip={({ slice }) => {
@@ -83,6 +89,7 @@ export const TimeLineChart = ({ data }) => {
             }}
           >
             {slice.points.map((point) => {
+              const date = new Date(point.data.date);
               const serieId =
                 point.serieId.charAt(0).toUpperCase() + point.serieId.slice(1);
               return (
@@ -93,11 +100,9 @@ export const TimeLineChart = ({ data }) => {
                     padding: '3px 0',
                   }}
                 >
-                  <div style={{ color: '#333' }}>
-                    {point.data.x.toDateString()}
-                  </div>
+                  <div style={{ color: '#333' }}>{date.toDateString()}</div>
                   <div style={{ color: '#555', fontSize: 12 }}>
-                    {point.data.x.toLocaleTimeString('de-DE', {
+                    {date.toLocaleTimeString('de-DE', {
                       timeStyle: 'medium',
                     })}
                   </div>
