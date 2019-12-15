@@ -13,6 +13,7 @@ import {
   Select,
   MenuItem,
 } from '@material-ui/core';
+import { Tag } from 'Components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
@@ -126,9 +127,9 @@ const TablePagination = ({ page, count, pageSize, ...rest }) => {
 const AmountCell = ({ transaction }) => {
   const amount =
     transaction.type === 'PAYMENT'
-      ? transaction.payment.amount
-      : transaction.purchase.total;
-  return <TableCell align="right">{amount.toFixed(2)} CHF</TableCell>;
+      ? '+' + transaction.payment.amount.toFixed(2)
+      : '-' + transaction.purchase.total.toFixed(2);
+  return <TableCell align="right">{amount} CHF</TableCell>;
 };
 
 const TransactionTable = () => {
@@ -173,7 +174,18 @@ const TransactionTable = () => {
               <TableCell component="th" scope="row">
                 {new Date(transaction.date).toDateString()}
               </TableCell>
-              <TableCell align="right">{transaction.type}</TableCell>
+              <TableCell align="right">
+                {transaction.type === 'PURCHASE' && (
+                  <Tag outlined color="#f5222d">
+                    {transaction.type}
+                  </Tag>
+                )}
+                {transaction.type === 'PAYMENT' && (
+                  <Tag outlined color="#43a047">
+                    {transaction.type}
+                  </Tag>
+                )}
+              </TableCell>
               <AmountCell transaction={transaction} />
             </TableRow>
           ))}

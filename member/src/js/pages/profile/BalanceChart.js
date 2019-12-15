@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import TimeLineChart from './charts/TimeLineChart';
 import { Paper } from '@material-ui/core';
+import { Utils } from 'Utils';
 
 export const BALANCE_QUERY = gql`
   query {
@@ -42,11 +43,7 @@ export const BalanceChart = () => {
   };
 
   const { balance, transactions } = data.currentUser;
-
-  let color;
-  if (balance < 30) color = '#5BA05E';
-  else if (balance >= 30 && balance <= 60) color = '#FFA000';
-  else color = '#CC4949';
+  const { color } = Utils.getBalanceColorClass(balance);
 
   console.log(color);
 

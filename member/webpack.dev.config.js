@@ -80,6 +80,7 @@ module.exports = {
       Redux: path.resolve(__dirname, 'src/js/redux'),
       Apollo: path.resolve(__dirname, 'src/js/apollo'),
       Style: path.resolve(__dirname, 'src/js/style'),
+      Utils: path.resolve(__dirname, 'src/js/utils'),
     },
     extensions: ['*', '.js', '.jsx'],
   },

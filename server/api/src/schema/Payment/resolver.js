@@ -13,7 +13,7 @@ module.exports = {
     async createPayment(root, args, context) {
       const { userId, amount, date } = args.input;
       const user = await context.prisma.user({ id: userId });
-      const balance = user.balance - amount;
+      const balance = user.balance + amount;
       const payment = await context.prisma.createPayment({
         user: {
           connect: { id: userId },

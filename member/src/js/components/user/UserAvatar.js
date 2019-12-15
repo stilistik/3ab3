@@ -5,7 +5,7 @@ import classnames from 'classnames';
 export const UserAvatar = ({ user, classes, className, style }) => {
   const stringToHSL = (str) => {
     var hash = 0;
-    if (this.length == 0) return hash;
+    if (str.length == 0) return hash;
     for (var i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
       hash = hash & hash; // Convert to 32bit integer
@@ -29,7 +29,7 @@ export const UserAvatar = ({ user, classes, className, style }) => {
     return (
       <Avatar
         className={avatarClass}
-        style={{ background: color, ...this.props.style }}
+        style={{ background: color, ...style }}
       >
         <Typography className={classes.typo} style={{ color: 'white' }}>
           {letter}

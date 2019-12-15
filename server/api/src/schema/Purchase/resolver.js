@@ -32,7 +32,7 @@ module.exports = {
 
       // compute new user balance
       const user = await context.prisma.user({ id: userId });
-      let balance = user.balance + total;
+      let balance = user.balance - total;
 
       // create input for the item nodes
       const itemInput = cart.map((el) => {

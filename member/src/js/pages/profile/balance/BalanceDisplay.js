@@ -2,6 +2,7 @@ import React from 'react';
 import { UserAvatar } from 'Components';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
+import { Utils } from 'Utils';
 import { graphql } from 'react-apollo';
 
 import styles from './BalanceDisplay.css';
@@ -19,10 +20,7 @@ export const BALANCE_DISPLAY_QUERY = gql`
 
 const BalanceDisplay = ({ user }) => {
   if (!user) return null;
-  let cls;
-  if (user.balance < 30) cls = 'low';
-  else if (user.balance >= 30 && user.balance <= 60) cls = 'medium';
-  else cls = 'high';
+  const { cls } = Utils.getBalanceColorClass(user.balance);
 
   const balance = user.balance.toFixed(2);
 
