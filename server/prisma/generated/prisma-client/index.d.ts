@@ -887,6 +887,8 @@ export type PostOrderByInput =
   | "text_DESC"
   | "image_ASC"
   | "image_DESC"
+  | "link_ASC"
+  | "link_DESC"
   | "date_ASC"
   | "date_DESC"
   | "createdAt_ASC"
@@ -1524,6 +1526,20 @@ export interface PostWhereInput {
   image_not_starts_with?: String;
   image_ends_with?: String;
   image_not_ends_with?: String;
+  link?: String;
+  link_not?: String;
+  link_in?: String[] | String;
+  link_not_in?: String[] | String;
+  link_lt?: String;
+  link_lte?: String;
+  link_gt?: String;
+  link_gte?: String;
+  link_contains?: String;
+  link_not_contains?: String;
+  link_starts_with?: String;
+  link_not_starts_with?: String;
+  link_ends_with?: String;
+  link_not_ends_with?: String;
   author?: UserWhereInput;
   likedBy_every?: UserWhereInput;
   likedBy_some?: UserWhereInput;
@@ -2331,6 +2347,7 @@ export interface PostCreateManyWithoutAuthorInput {
 export interface PostCreateWithoutAuthorInput {
   text: String;
   image?: String;
+  link?: String;
   likedBy?: UserCreateManyWithoutLikedPostsInput;
   comments?: CommentCreateManyWithoutPostInput;
   date: DateTimeInput;
@@ -2419,6 +2436,7 @@ export interface PostCreateManyWithoutLikedByInput {
 export interface PostCreateWithoutLikedByInput {
   text: String;
   image?: String;
+  link?: String;
   author: UserCreateOneWithoutPostsInput;
   comments?: CommentCreateManyWithoutPostInput;
   date: DateTimeInput;
@@ -2522,6 +2540,7 @@ export interface PostCreateOneWithoutCommentsInput {
 export interface PostCreateWithoutCommentsInput {
   text: String;
   image?: String;
+  link?: String;
   author: UserCreateOneWithoutPostsInput;
   likedBy?: UserCreateManyWithoutLikedPostsInput;
   date: DateTimeInput;
@@ -3089,6 +3108,7 @@ export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
 export interface PostUpdateWithoutAuthorDataInput {
   text?: String;
   image?: String;
+  link?: String;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
   comments?: CommentUpdateManyWithoutPostInput;
   date?: DateTimeInput;
@@ -3237,6 +3257,7 @@ export interface PostUpdateWithWhereUniqueWithoutLikedByInput {
 export interface PostUpdateWithoutLikedByDataInput {
   text?: String;
   image?: String;
+  link?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
   comments?: CommentUpdateManyWithoutPostInput;
   date?: DateTimeInput;
@@ -3418,6 +3439,7 @@ export interface PostUpdateOneWithoutCommentsInput {
 export interface PostUpdateWithoutCommentsDataInput {
   text?: String;
   image?: String;
+  link?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
   date?: DateTimeInput;
@@ -4273,6 +4295,20 @@ export interface PostScalarWhereInput {
   image_not_starts_with?: String;
   image_ends_with?: String;
   image_not_ends_with?: String;
+  link?: String;
+  link_not?: String;
+  link_in?: String[] | String;
+  link_not_in?: String[] | String;
+  link_lt?: String;
+  link_lte?: String;
+  link_gt?: String;
+  link_gte?: String;
+  link_contains?: String;
+  link_not_contains?: String;
+  link_starts_with?: String;
+  link_not_starts_with?: String;
+  link_ends_with?: String;
+  link_not_ends_with?: String;
   date?: DateTimeInput;
   date_not?: DateTimeInput;
   date_in?: DateTimeInput[] | DateTimeInput;
@@ -4294,6 +4330,7 @@ export interface PostUpdateManyWithWhereNestedInput {
 export interface PostUpdateManyDataInput {
   text?: String;
   image?: String;
+  link?: String;
   date?: DateTimeInput;
 }
 
@@ -4713,6 +4750,7 @@ export interface PaymentUpdateManyMutationInput {
 export interface PostCreateInput {
   text: String;
   image?: String;
+  link?: String;
   author: UserCreateOneWithoutPostsInput;
   likedBy?: UserCreateManyWithoutLikedPostsInput;
   comments?: CommentCreateManyWithoutPostInput;
@@ -4722,6 +4760,7 @@ export interface PostCreateInput {
 export interface PostUpdateInput {
   text?: String;
   image?: String;
+  link?: String;
   author?: UserUpdateOneRequiredWithoutPostsInput;
   likedBy?: UserUpdateManyWithoutLikedPostsInput;
   comments?: CommentUpdateManyWithoutPostInput;
@@ -4731,6 +4770,7 @@ export interface PostUpdateInput {
 export interface PostUpdateManyMutationInput {
   text?: String;
   image?: String;
+  link?: String;
   date?: DateTimeInput;
 }
 
@@ -5798,6 +5838,7 @@ export interface Post {
   id: ID_Output;
   text: String;
   image?: String;
+  link?: String;
   date: DateTimeOutput;
 }
 
@@ -5805,6 +5846,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
   image: () => Promise<String>;
+  link: () => Promise<String>;
   author: <T = UserPromise>() => T;
   likedBy: <T = FragmentableArray<User>>(
     args?: {
@@ -5837,6 +5879,7 @@ export interface PostSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
   image: () => Promise<AsyncIterator<String>>;
+  link: () => Promise<AsyncIterator<String>>;
   author: <T = UserSubscription>() => T;
   likedBy: <T = Promise<AsyncIterator<UserSubscription>>>(
     args?: {
@@ -7531,6 +7574,7 @@ export interface PostPreviousValues {
   id: ID_Output;
   text: String;
   image?: String;
+  link?: String;
   date: DateTimeOutput;
 }
 
@@ -7540,6 +7584,7 @@ export interface PostPreviousValuesPromise
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
   image: () => Promise<String>;
+  link: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
 }
 
@@ -7549,6 +7594,7 @@ export interface PostPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
   image: () => Promise<AsyncIterator<String>>;
+  link: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 

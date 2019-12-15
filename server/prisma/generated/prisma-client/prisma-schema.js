@@ -2245,6 +2245,7 @@ type Post {
   id: ID!
   text: String!
   image: String
+  link: String
   author: User!
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -2260,6 +2261,7 @@ type PostConnection {
 input PostCreateInput {
   text: String!
   image: String
+  link: String
   author: UserCreateOneWithoutPostsInput!
   likedBy: UserCreateManyWithoutLikedPostsInput
   comments: CommentCreateManyWithoutPostInput
@@ -2284,6 +2286,7 @@ input PostCreateOneWithoutCommentsInput {
 input PostCreateWithoutAuthorInput {
   text: String!
   image: String
+  link: String
   likedBy: UserCreateManyWithoutLikedPostsInput
   comments: CommentCreateManyWithoutPostInput
   date: DateTime!
@@ -2292,6 +2295,7 @@ input PostCreateWithoutAuthorInput {
 input PostCreateWithoutCommentsInput {
   text: String!
   image: String
+  link: String
   author: UserCreateOneWithoutPostsInput!
   likedBy: UserCreateManyWithoutLikedPostsInput
   date: DateTime!
@@ -2300,6 +2304,7 @@ input PostCreateWithoutCommentsInput {
 input PostCreateWithoutLikedByInput {
   text: String!
   image: String
+  link: String
   author: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostInput
   date: DateTime!
@@ -2317,6 +2322,8 @@ enum PostOrderByInput {
   text_DESC
   image_ASC
   image_DESC
+  link_ASC
+  link_DESC
   date_ASC
   date_DESC
   createdAt_ASC
@@ -2329,6 +2336,7 @@ type PostPreviousValues {
   id: ID!
   text: String!
   image: String
+  link: String
   date: DateTime!
 }
 
@@ -2375,6 +2383,20 @@ input PostScalarWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   date: DateTime
   date_not: DateTime
   date_in: [DateTime!]
@@ -2409,6 +2431,7 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   text: String
   image: String
+  link: String
   author: UserUpdateOneRequiredWithoutPostsInput
   likedBy: UserUpdateManyWithoutLikedPostsInput
   comments: CommentUpdateManyWithoutPostInput
@@ -2418,12 +2441,14 @@ input PostUpdateInput {
 input PostUpdateManyDataInput {
   text: String
   image: String
+  link: String
   date: DateTime
 }
 
 input PostUpdateManyMutationInput {
   text: String
   image: String
+  link: String
   date: DateTime
 }
 
@@ -2468,6 +2493,7 @@ input PostUpdateOneWithoutCommentsInput {
 input PostUpdateWithoutAuthorDataInput {
   text: String
   image: String
+  link: String
   likedBy: UserUpdateManyWithoutLikedPostsInput
   comments: CommentUpdateManyWithoutPostInput
   date: DateTime
@@ -2476,6 +2502,7 @@ input PostUpdateWithoutAuthorDataInput {
 input PostUpdateWithoutCommentsDataInput {
   text: String
   image: String
+  link: String
   author: UserUpdateOneRequiredWithoutPostsInput
   likedBy: UserUpdateManyWithoutLikedPostsInput
   date: DateTime
@@ -2484,6 +2511,7 @@ input PostUpdateWithoutCommentsDataInput {
 input PostUpdateWithoutLikedByDataInput {
   text: String
   image: String
+  link: String
   author: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostInput
   date: DateTime
@@ -2559,6 +2587,20 @@ input PostWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   author: UserWhereInput
   likedBy_every: UserWhereInput
   likedBy_some: UserWhereInput

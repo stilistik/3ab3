@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
+import LinkValidator from './LinkValidator';
 import {
   Card,
   CardActions,
@@ -9,6 +10,8 @@ import {
   TextField,
 } from '@material-ui/core';
 import { Icon, UserAvatar, ImageContainer } from 'Components';
+import YoutubeVideo from './YoutubeVideo';
+import { PostImage } from './Post';
 import ImageInput from './ImageInput';
 
 import styles from './CreatePostForm.css';
@@ -23,78 +26,86 @@ const QUERY = gql`
   }
 `;
 
-class CreatePostForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: '',
-      file: null,
-      src: null,
-    };
-  }
+const IDLE_TO_UPDATE = 200;
 
-  onChange = (e) => {
-    this.setState({ value: e.target.value });
+const CreatePostForm = (props) => {
+  let timer = React.useRef(null);
+  const [text, setText] = React.useState('');
+  const [image, setImage] = React.useState(null);
+  const [src, setSrc] = React.useState(null);
+  const [link, setLink] = React.useState(null);
+
+  const { loading, error, data } = useQuery(QUERY);
+  if (loading || error) return null;
+  const user = data.currentUser;
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      const link = LinkValidator.findLinks(value)[0];
+      if (link) setLink(link);
+      else setLink(null);
+    }, IDLE_TO_UPDATE);
+    setText(value);
   };
 
-  onImageChange = (e) => {
+  const onImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (e) => this.setState({ src: e.target.result });
+    reader.onload = (e) => setSrc(e.target.result);
     reader.readAsDataURL(file);
-    this.setState({ file });
+    setImage(file);
   };
 
-  onSubmit = async () => {
-    if (this.state.value.length === 0 && !this.state.file) return;
-    await this.props.onSubmit({
-      userId: this.props.user.id,
-      text: this.state.value,
-      image: this.state.file,
+  const onSubmit = async () => {
+    if (text.length === 0 && !file) return;
+    await props.onSubmit({
+      userId: user.id,
+      text: text.replace(link.url, ''),
+      image,
+      link: link.url,
     });
-    this.setState({ value: '', file: null, src: null });
+    setText('');
+    setImage(null);
+    setSrc(null);
+    setLink(null);
   };
 
-  render() {
-    if (!this.props.user) return null;
-    return (
-      <Card>
-        <CardContent className={styles.card}>
-          <div className={styles.content}>
-            <UserAvatar user={this.props.user} className={styles.avatar} />
-            <TextField
-              value={this.state.value}
-              onChange={this.onChange}
-              multiline
-              placeholder="Write something..."
-              style={{ width: '100%' }}
-            />
-            <ImageInput onChange={this.onImageChange} />
-          </div>
-          {this.state.src ? (
-            <ImageContainer
-              image={this.state.src}
-              classes={{ root: styles.preview }}
-            />
-          ) : null}
-        </CardContent>
-        <CardActions>
-          <Button
-            variant="contained"
-            size="small"
-            color="primary"
+  return (
+    <Card>
+      <CardContent className={styles.content}>
+        <div className={styles.form}>
+          <UserAvatar user={user} className={styles.avatar} />
+          <TextField
+            value={text}
+            onChange={onChange}
+            multiline
+            placeholder="Write something..."
             style={{ width: '100%' }}
-            onClick={this.onSubmit}
-          >
-            Post <Icon type="send" style={{ marginLeft: '10px' }} />
-          </Button>
-        </CardActions>
-      </Card>
-    );
-  }
-}
+          />
+          <ImageInput onChange={onImageChange} />
+        </div>
+        {src && (
+          <ImageContainer image={src} classes={{ root: styles.preview }} />
+        )}
+        {link && link.type === 'YOUTUBE' && <YoutubeVideo url={link.url} />}
+        {link && link.type === 'IMAGE' && <PostImage url={link.url} />}
+      </CardContent>
+      <CardActions>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          style={{ width: '100%' }}
+          onClick={onSubmit}
+        >
+          Post <Icon type="send" style={{ marginLeft: '10px' }} />
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
-export default graphql(QUERY, {
-  props: ({ data }) => ({ user: data.currentUser }),
-})(CreatePostForm);
+export default CreatePostForm;

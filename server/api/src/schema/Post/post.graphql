@@ -2,6 +2,7 @@ type Post implements Node @isAuthenticated {
   id: ID!
   text: String!
   image: String
+  link: String
   author: User!
   likedBy: [User!]!
   comments: [Comment!]!
@@ -22,6 +23,7 @@ input PostInput {
   userId: ID!
   text: String
   image: Upload
+  link: String
 }
 
 extend type Query {
@@ -35,5 +37,5 @@ extend type Mutation {
   deletePost(postId: ID!): Post!
   likePost(userId: ID!, postId: ID!): Post!
   unlikePost(userId: ID!, postId: ID!): Post!
-  commentPost(postId: ID!, text: String! ): Post!
+  commentPost(postId: ID!, text: String!): Post!
 }

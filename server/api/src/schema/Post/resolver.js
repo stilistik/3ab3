@@ -22,7 +22,7 @@ module.exports = {
   },
   Mutation: {
     async createPost(root, args, context) {
-      const { userId, image, text } = args.input;
+      const { userId, image, text, link } = args.input;
       const date = new Date().toISOString();
       if (image) {
         const file = await uploadFile(image, context);
@@ -40,6 +40,7 @@ module.exports = {
             connect: { id: userId },
           },
           date,
+          link,
           text,
         });
       }

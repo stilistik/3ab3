@@ -12,6 +12,8 @@ import LikePost from './LikePost';
 import DeletePost from './DeletePost';
 import PostStats from './PostStats';
 import PostComments from './PostComments';
+import LinkValidator from './LinkValidator';
+import YoutubeVideo from './YoutubeVideo';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -39,9 +41,9 @@ const PostHeader = ({ post, refetch }) => {
   );
 };
 
-const PostImage = ({ image }) => {
-  if (!image) return <Divider />;
-  return <img src={global.API_URL + image} width="100%" />;
+export const PostImage = ({ url }) => {
+  if (!url) return <Divider />;
+  return <img src={url} width="100%" />;
 };
 
 const PostText = ({ text }) => {
@@ -53,42 +55,34 @@ const PostText = ({ text }) => {
   );
 };
 
-class Post extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-    };
-  }
+const Post = ({ post, refetch }) => {
+  const [show, setShow] = React.useState(false);
 
-  onComment = () => {
-    this.setState({ show: true });
+  const onComment = () => {
+    setShow(true);
   };
 
-  onLike = () => {
-    return;
-  };
+  const link = LinkValidator.validateLink(post.link);
 
-  render() {
-    const { post } = this.props;
-    return (
-      <Card>
-        <PostHeader post={post} refetch={this.props.refetch} />
-        <CardContent className={styles.content}>
-          <PostText text={post.text} />
-          <PostImage image={post.image} />
-        </CardContent>
-        <PostStats postId={post.id} onComment={this.onComment} />
-        <CardActions>
-          <LikePost post={post} />
-          <Button size="small" color="primary" onClick={this.onComment}>
-            <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
-          </Button>
-        </CardActions>
-        {this.state.show ? <PostComments postId={post.id} /> : null}
-      </Card>
-    );
-  }
-}
+  return (
+    <Card>
+      <PostHeader post={post} refetch={refetch} />
+      <CardContent className={styles.content}>
+        <PostText text={post.text} />
+        {post.image && <PostImage url={global.API_URL + post.image} />}
+        {link && link.type === 'IMAGE' && <PostImage url={link.url} />}
+        {link && link.type === 'YOUTUBE' && <YoutubeVideo url={link.url} />}
+      </CardContent>
+      <PostStats postId={post.id} onComment={onComment} />
+      <CardActions>
+        <LikePost post={post} />
+        <Button size="small" color="primary" onClick={onComment}>
+          <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
+        </Button>
+      </CardActions>
+      {show ? <PostComments postId={post.id} /> : null}
+    </Card>
+  );
+};
 
 export default Post;

@@ -1,9 +1,10 @@
-.card {
-  padding: 16px 16px 0px 16px;
+.content {
+  padding: 0px;
 }
 
-.content {
+.form {
   display: flex;
+  padding: 16px;
 }
 
 .avatar {
@@ -15,4 +16,5 @@
   height: 150px;
   background-size: cover;
   background-repeat: no-repeat;
+  margin-top: 10px;
 }
