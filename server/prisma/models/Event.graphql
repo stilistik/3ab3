@@ -4,9 +4,10 @@ type Event {
   description: String!
   date: DateTime!
   image: String!
-  comments: [Comment!]! @relation(name: "EventComments", onDelete: CASCADE)
+  supporters: [User!]! @relation(name: "EventSupporters")
   likedBy: [User!]! @relation(name: "LikedEvents")
   owner: User! @relation(name: "EventOwner")
+  comments: [Comment!]! @relation(name: "EventComments", onDelete: CASCADE)
   committee: Committee! @relation(name: "EventCommittee", onDelete: CASCADE)
   todos: [Todo!]! @relation(name: "EventTodo", onDelete: CASCADE)
 }

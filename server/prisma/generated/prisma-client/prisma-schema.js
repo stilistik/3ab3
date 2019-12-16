@@ -750,9 +750,10 @@ type Event {
   description: String!
   date: DateTime!
   image: String!
-  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  supporters(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   committee: Committee!
   todos(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo!]
 }
@@ -768,9 +769,10 @@ input EventCreateInput {
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyWithoutEventInput
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
+  comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
 }
@@ -800,6 +802,7 @@ input EventCreateWithoutCommentsInput {
   description: String!
   date: DateTime!
   image: String!
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   committee: CommitteeCreateOneWithoutEventInput!
@@ -811,9 +814,10 @@ input EventCreateWithoutCommitteeInput {
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyWithoutEventInput
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
+  comments: CommentCreateManyWithoutEventInput
   todos: TodoCreateManyWithoutEventInput
 }
 
@@ -822,8 +826,9 @@ input EventCreateWithoutLikedByInput {
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyWithoutEventInput
+  supporters: UserCreateManyInput
   owner: UserCreateOneInput!
+  comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
 }
@@ -833,9 +838,10 @@ input EventCreateWithoutTodosInput {
   description: String!
   date: DateTime!
   image: String!
-  comments: CommentCreateManyWithoutEventInput
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
+  comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
 }
 
@@ -962,9 +968,10 @@ input EventUpdateInput {
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyWithoutEventInput
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
+  comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
 }
@@ -1028,6 +1035,7 @@ input EventUpdateWithoutCommentsDataInput {
   description: String
   date: DateTime
   image: String
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
@@ -1039,9 +1047,10 @@ input EventUpdateWithoutCommitteeDataInput {
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyWithoutEventInput
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
+  comments: CommentUpdateManyWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
 }
 
@@ -1050,8 +1059,9 @@ input EventUpdateWithoutLikedByDataInput {
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyWithoutEventInput
+  supporters: UserUpdateManyInput
   owner: UserUpdateOneRequiredInput
+  comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
 }
@@ -1061,9 +1071,10 @@ input EventUpdateWithoutTodosDataInput {
   description: String
   date: DateTime
   image: String
-  comments: CommentUpdateManyWithoutEventInput
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
+  comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
 }
 
@@ -1158,13 +1169,16 @@ input EventWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
-  comments_every: CommentWhereInput
-  comments_some: CommentWhereInput
-  comments_none: CommentWhereInput
+  supporters_every: UserWhereInput
+  supporters_some: UserWhereInput
+  supporters_none: UserWhereInput
   likedBy_every: UserWhereInput
   likedBy_some: UserWhereInput
   likedBy_none: UserWhereInput
   owner: UserWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
   committee: CommitteeWhereInput
   todos_every: TodoWhereInput
   todos_some: TodoWhereInput

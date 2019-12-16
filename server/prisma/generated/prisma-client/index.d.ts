@@ -1673,13 +1673,16 @@ export interface EventWhereInput {
   image_not_starts_with?: String;
   image_ends_with?: String;
   image_not_ends_with?: String;
-  comments_every?: CommentWhereInput;
-  comments_some?: CommentWhereInput;
-  comments_none?: CommentWhereInput;
+  supporters_every?: UserWhereInput;
+  supporters_some?: UserWhereInput;
+  supporters_none?: UserWhereInput;
   likedBy_every?: UserWhereInput;
   likedBy_some?: UserWhereInput;
   likedBy_none?: UserWhereInput;
   owner?: UserWhereInput;
+  comments_every?: CommentWhereInput;
+  comments_some?: CommentWhereInput;
+  comments_none?: CommentWhereInput;
   committee?: CommitteeWhereInput;
   todos_every?: TodoWhereInput;
   todos_some?: TodoWhereInput;
@@ -2475,23 +2478,48 @@ export interface EventCreateWithoutLikedByInput {
   description: String;
   date: DateTimeInput;
   image: String;
-  comments?: CommentCreateManyWithoutEventInput;
+  supporters?: UserCreateManyInput;
   owner: UserCreateOneInput;
+  comments?: CommentCreateManyWithoutEventInput;
   committee: CommitteeCreateOneWithoutEventInput;
   todos?: TodoCreateManyWithoutEventInput;
 }
 
-export interface CommentCreateManyWithoutEventInput {
-  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
+export interface UserCreateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  purchases?: PurchaseCreateManyWithoutUserInput;
+  payments?: PaymentCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+  items?: ItemCreateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostCreateManyWithoutAuthorInput;
+  likedPosts?: PostCreateManyWithoutLikedByInput;
+  likedEvents?: EventCreateManyWithoutLikedByInput;
+  comments?: CommentCreateManyWithoutAuthorInput;
+  likedComments?: CommentCreateManyWithoutLikedByInput;
+  invitations?: InvitationCreateManyWithoutUserInput;
+}
+
+export interface CommentCreateManyWithoutAuthorInput {
+  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
-export interface CommentCreateWithoutEventInput {
+export interface CommentCreateWithoutAuthorInput {
   text: String;
   date: DateTimeInput;
-  author: UserCreateOneWithoutCommentsInput;
   likedBy?: UserCreateManyWithoutLikedCommentsInput;
   post?: PostCreateOneWithoutCommentsInput;
+  event?: EventCreateOneWithoutCommentsInput;
 }
 
 export interface UserCreateManyWithoutLikedCommentsInput {
@@ -2519,46 +2547,48 @@ export interface UserCreateWithoutLikedCommentsInput {
   invitations?: InvitationCreateManyWithoutUserInput;
 }
 
-export interface CommentCreateManyWithoutAuthorInput {
-  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface InvitationCreateManyWithoutUserInput {
+  create?:
+    | InvitationCreateWithoutUserInput[]
+    | InvitationCreateWithoutUserInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
 }
 
-export interface CommentCreateWithoutAuthorInput {
-  text: String;
-  date: DateTimeInput;
-  likedBy?: UserCreateManyWithoutLikedCommentsInput;
-  post?: PostCreateOneWithoutCommentsInput;
-  event?: EventCreateOneWithoutCommentsInput;
+export interface InvitationCreateWithoutUserInput {
+  committee: CommitteeCreateOneWithoutInvitationsInput;
+  status?: InvitationStatus;
 }
 
-export interface PostCreateOneWithoutCommentsInput {
-  create?: PostCreateWithoutCommentsInput;
-  connect?: PostWhereUniqueInput;
+export interface CommitteeCreateOneWithoutInvitationsInput {
+  create?: CommitteeCreateWithoutInvitationsInput;
+  connect?: CommitteeWhereUniqueInput;
 }
 
-export interface PostCreateWithoutCommentsInput {
-  text: String;
-  image?: String;
-  link?: String;
-  author: UserCreateOneWithoutPostsInput;
-  likedBy?: UserCreateManyWithoutLikedPostsInput;
-  date: DateTimeInput;
+export interface CommitteeCreateWithoutInvitationsInput {
+  creator: UserCreateOneInput;
+  members?: UserCreateManyInput;
+  event: EventCreateOneWithoutCommitteeInput;
 }
 
-export interface EventCreateOneWithoutCommentsInput {
-  create?: EventCreateWithoutCommentsInput;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface EventCreateOneWithoutCommitteeInput {
+  create?: EventCreateWithoutCommitteeInput;
   connect?: EventWhereUniqueInput;
 }
 
-export interface EventCreateWithoutCommentsInput {
+export interface EventCreateWithoutCommitteeInput {
   title: String;
   description: String;
   date: DateTimeInput;
   image: String;
+  supporters?: UserCreateManyInput;
   likedBy?: UserCreateManyWithoutLikedEventsInput;
   owner: UserCreateOneInput;
-  committee: CommitteeCreateOneWithoutEventInput;
+  comments?: CommentCreateManyWithoutEventInput;
   todos?: TodoCreateManyWithoutEventInput;
 }
 
@@ -2602,87 +2632,35 @@ export interface CommentCreateWithoutLikedByInput {
   event?: EventCreateOneWithoutCommentsInput;
 }
 
-export interface InvitationCreateManyWithoutUserInput {
-  create?:
-    | InvitationCreateWithoutUserInput[]
-    | InvitationCreateWithoutUserInput;
-  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+export interface PostCreateOneWithoutCommentsInput {
+  create?: PostCreateWithoutCommentsInput;
+  connect?: PostWhereUniqueInput;
 }
 
-export interface InvitationCreateWithoutUserInput {
-  committee: CommitteeCreateOneWithoutInvitationsInput;
-  status?: InvitationStatus;
+export interface PostCreateWithoutCommentsInput {
+  text: String;
+  image?: String;
+  link?: String;
+  author: UserCreateOneWithoutPostsInput;
+  likedBy?: UserCreateManyWithoutLikedPostsInput;
+  date: DateTimeInput;
 }
 
-export interface CommitteeCreateOneWithoutInvitationsInput {
-  create?: CommitteeCreateWithoutInvitationsInput;
-  connect?: CommitteeWhereUniqueInput;
-}
-
-export interface CommitteeCreateWithoutInvitationsInput {
-  creator: UserCreateOneInput;
-  members?: UserCreateManyInput;
-  event: EventCreateOneWithoutCommitteeInput;
-}
-
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  purchases?: PurchaseCreateManyWithoutUserInput;
-  payments?: PaymentCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-  items?: ItemCreateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostCreateManyWithoutAuthorInput;
-  likedPosts?: PostCreateManyWithoutLikedByInput;
-  likedEvents?: EventCreateManyWithoutLikedByInput;
-  comments?: CommentCreateManyWithoutAuthorInput;
-  likedComments?: CommentCreateManyWithoutLikedByInput;
-  invitations?: InvitationCreateManyWithoutUserInput;
-}
-
-export interface UserCreateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface EventCreateOneWithoutCommitteeInput {
-  create?: EventCreateWithoutCommitteeInput;
+export interface EventCreateOneWithoutCommentsInput {
+  create?: EventCreateWithoutCommentsInput;
   connect?: EventWhereUniqueInput;
 }
 
-export interface EventCreateWithoutCommitteeInput {
+export interface EventCreateWithoutCommentsInput {
   title: String;
   description: String;
   date: DateTimeInput;
   image: String;
-  comments?: CommentCreateManyWithoutEventInput;
+  supporters?: UserCreateManyInput;
   likedBy?: UserCreateManyWithoutLikedEventsInput;
   owner: UserCreateOneInput;
+  committee: CommitteeCreateOneWithoutEventInput;
   todos?: TodoCreateManyWithoutEventInput;
-}
-
-export interface TodoCreateManyWithoutEventInput {
-  create?: TodoCreateWithoutEventInput[] | TodoCreateWithoutEventInput;
-  connect?: TodoWhereUniqueInput[] | TodoWhereUniqueInput;
-}
-
-export interface TodoCreateWithoutEventInput {
-  due: DateTimeInput;
-  text: String;
-  done?: Boolean;
-  assigned?: UserCreateOneInput;
-  link?: String;
-  doneBy?: UserCreateOneInput;
-  doneAt?: DateTimeInput;
 }
 
 export interface CommitteeCreateOneWithoutEventInput {
@@ -2729,6 +2707,34 @@ export interface UserCreateWithoutInvitationsInput {
   likedEvents?: EventCreateManyWithoutLikedByInput;
   comments?: CommentCreateManyWithoutAuthorInput;
   likedComments?: CommentCreateManyWithoutLikedByInput;
+}
+
+export interface TodoCreateManyWithoutEventInput {
+  create?: TodoCreateWithoutEventInput[] | TodoCreateWithoutEventInput;
+  connect?: TodoWhereUniqueInput[] | TodoWhereUniqueInput;
+}
+
+export interface TodoCreateWithoutEventInput {
+  due: DateTimeInput;
+  text: String;
+  done?: Boolean;
+  assigned?: UserCreateOneInput;
+  link?: String;
+  doneBy?: UserCreateOneInput;
+  doneAt?: DateTimeInput;
+}
+
+export interface CommentCreateManyWithoutEventInput {
+  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+}
+
+export interface CommentCreateWithoutEventInput {
+  text: String;
+  date: DateTimeInput;
+  author: UserCreateOneWithoutCommentsInput;
+  likedBy?: UserCreateManyWithoutLikedCommentsInput;
+  post?: PostCreateOneWithoutCommentsInput;
 }
 
 export interface CommentCreateManyWithoutPostInput {
@@ -3316,41 +3322,84 @@ export interface EventUpdateWithoutLikedByDataInput {
   description?: String;
   date?: DateTimeInput;
   image?: String;
-  comments?: CommentUpdateManyWithoutEventInput;
+  supporters?: UserUpdateManyInput;
   owner?: UserUpdateOneRequiredInput;
+  comments?: CommentUpdateManyWithoutEventInput;
   committee?: CommitteeUpdateOneRequiredWithoutEventInput;
   todos?: TodoUpdateManyWithoutEventInput;
 }
 
-export interface CommentUpdateManyWithoutEventInput {
-  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  update?:
+    | UserUpdateWithWhereUniqueNestedInput[]
+    | UserUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueNestedInput[]
+    | UserUpsertWithWhereUniqueNestedInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateDataInput;
+}
+
+export interface UserUpdateDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  purchases?: PurchaseUpdateManyWithoutUserInput;
+  payments?: PaymentUpdateManyWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+  items?: ItemUpdateManyWithoutUserInput;
+  role?: UserRole;
+  balance?: Float;
+  posts?: PostUpdateManyWithoutAuthorInput;
+  likedPosts?: PostUpdateManyWithoutLikedByInput;
+  likedEvents?: EventUpdateManyWithoutLikedByInput;
+  comments?: CommentUpdateManyWithoutAuthorInput;
+  likedComments?: CommentUpdateManyWithoutLikedByInput;
+  invitations?: InvitationUpdateManyWithoutUserInput;
+}
+
+export interface CommentUpdateManyWithoutAuthorInput {
+  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
   delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
   update?:
-    | CommentUpdateWithWhereUniqueWithoutEventInput[]
-    | CommentUpdateWithWhereUniqueWithoutEventInput;
+    | CommentUpdateWithWhereUniqueWithoutAuthorInput[]
+    | CommentUpdateWithWhereUniqueWithoutAuthorInput;
   upsert?:
-    | CommentUpsertWithWhereUniqueWithoutEventInput[]
-    | CommentUpsertWithWhereUniqueWithoutEventInput;
+    | CommentUpsertWithWhereUniqueWithoutAuthorInput[]
+    | CommentUpsertWithWhereUniqueWithoutAuthorInput;
   deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
   updateMany?:
     | CommentUpdateManyWithWhereNestedInput[]
     | CommentUpdateManyWithWhereNestedInput;
 }
 
-export interface CommentUpdateWithWhereUniqueWithoutEventInput {
+export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
   where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutEventDataInput;
+  data: CommentUpdateWithoutAuthorDataInput;
 }
 
-export interface CommentUpdateWithoutEventDataInput {
+export interface CommentUpdateWithoutAuthorDataInput {
   text?: String;
   date?: DateTimeInput;
-  author?: UserUpdateOneRequiredWithoutCommentsInput;
   likedBy?: UserUpdateManyWithoutLikedCommentsInput;
   post?: PostUpdateOneWithoutCommentsInput;
+  event?: EventUpdateOneWithoutCommentsInput;
 }
 
 export interface UserUpdateManyWithoutLikedCommentsInput {
@@ -3396,77 +3445,77 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface CommentUpdateManyWithoutAuthorInput {
-  create?: CommentCreateWithoutAuthorInput[] | CommentCreateWithoutAuthorInput;
-  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface InvitationUpdateManyWithoutUserInput {
+  create?:
+    | InvitationCreateWithoutUserInput[]
+    | InvitationCreateWithoutUserInput;
+  delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  set?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
+  disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   update?:
-    | CommentUpdateWithWhereUniqueWithoutAuthorInput[]
-    | CommentUpdateWithWhereUniqueWithoutAuthorInput;
+    | InvitationUpdateWithWhereUniqueWithoutUserInput[]
+    | InvitationUpdateWithWhereUniqueWithoutUserInput;
   upsert?:
-    | CommentUpsertWithWhereUniqueWithoutAuthorInput[]
-    | CommentUpsertWithWhereUniqueWithoutAuthorInput;
-  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+    | InvitationUpsertWithWhereUniqueWithoutUserInput[]
+    | InvitationUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   updateMany?:
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput;
+    | InvitationUpdateManyWithWhereNestedInput[]
+    | InvitationUpdateManyWithWhereNestedInput;
 }
 
-export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutAuthorDataInput;
+export interface InvitationUpdateWithWhereUniqueWithoutUserInput {
+  where: InvitationWhereUniqueInput;
+  data: InvitationUpdateWithoutUserDataInput;
 }
 
-export interface CommentUpdateWithoutAuthorDataInput {
-  text?: String;
-  date?: DateTimeInput;
-  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
-  post?: PostUpdateOneWithoutCommentsInput;
-  event?: EventUpdateOneWithoutCommentsInput;
+export interface InvitationUpdateWithoutUserDataInput {
+  committee?: CommitteeUpdateOneRequiredWithoutInvitationsInput;
+  status?: InvitationStatus;
 }
 
-export interface PostUpdateOneWithoutCommentsInput {
-  create?: PostCreateWithoutCommentsInput;
-  update?: PostUpdateWithoutCommentsDataInput;
-  upsert?: PostUpsertWithoutCommentsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: PostWhereUniqueInput;
+export interface CommitteeUpdateOneRequiredWithoutInvitationsInput {
+  create?: CommitteeCreateWithoutInvitationsInput;
+  update?: CommitteeUpdateWithoutInvitationsDataInput;
+  upsert?: CommitteeUpsertWithoutInvitationsInput;
+  connect?: CommitteeWhereUniqueInput;
 }
 
-export interface PostUpdateWithoutCommentsDataInput {
-  text?: String;
-  image?: String;
-  link?: String;
-  author?: UserUpdateOneRequiredWithoutPostsInput;
-  likedBy?: UserUpdateManyWithoutLikedPostsInput;
-  date?: DateTimeInput;
+export interface CommitteeUpdateWithoutInvitationsDataInput {
+  creator?: UserUpdateOneRequiredInput;
+  members?: UserUpdateManyInput;
+  event?: EventUpdateOneRequiredWithoutCommitteeInput;
 }
 
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export interface EventUpdateOneWithoutCommentsInput {
-  create?: EventCreateWithoutCommentsInput;
-  update?: EventUpdateWithoutCommentsDataInput;
-  upsert?: EventUpsertWithoutCommentsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface EventUpdateOneRequiredWithoutCommitteeInput {
+  create?: EventCreateWithoutCommitteeInput;
+  update?: EventUpdateWithoutCommitteeDataInput;
+  upsert?: EventUpsertWithoutCommitteeInput;
   connect?: EventWhereUniqueInput;
 }
 
-export interface EventUpdateWithoutCommentsDataInput {
+export interface EventUpdateWithoutCommitteeDataInput {
   title?: String;
   description?: String;
   date?: DateTimeInput;
   image?: String;
+  supporters?: UserUpdateManyInput;
   likedBy?: UserUpdateManyWithoutLikedEventsInput;
   owner?: UserUpdateOneRequiredInput;
-  committee?: CommitteeUpdateOneRequiredWithoutEventInput;
+  comments?: CommentUpdateManyWithoutEventInput;
   todos?: TodoUpdateManyWithoutEventInput;
 }
 
@@ -3546,115 +3595,101 @@ export interface CommentUpdateWithoutLikedByDataInput {
   event?: EventUpdateOneWithoutCommentsInput;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutLikedByInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutLikedByDataInput;
-  create: CommentCreateWithoutLikedByInput;
+export interface PostUpdateOneWithoutCommentsInput {
+  create?: PostCreateWithoutCommentsInput;
+  update?: PostUpdateWithoutCommentsDataInput;
+  upsert?: PostUpsertWithoutCommentsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: PostWhereUniqueInput;
 }
 
-export interface CommentScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
+export interface PostUpdateWithoutCommentsDataInput {
   text?: String;
-  text_not?: String;
-  text_in?: String[] | String;
-  text_not_in?: String[] | String;
-  text_lt?: String;
-  text_lte?: String;
-  text_gt?: String;
-  text_gte?: String;
-  text_contains?: String;
-  text_not_contains?: String;
-  text_starts_with?: String;
-  text_not_starts_with?: String;
-  text_ends_with?: String;
-  text_not_ends_with?: String;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  AND?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  OR?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  NOT?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-}
-
-export interface CommentUpdateManyWithWhereNestedInput {
-  where: CommentScalarWhereInput;
-  data: CommentUpdateManyDataInput;
-}
-
-export interface CommentUpdateManyDataInput {
-  text?: String;
+  image?: String;
+  link?: String;
+  author?: UserUpdateOneRequiredWithoutPostsInput;
+  likedBy?: UserUpdateManyWithoutLikedPostsInput;
   date?: DateTimeInput;
 }
 
-export interface InvitationUpdateManyWithoutUserInput {
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface EventUpdateOneWithoutCommentsInput {
+  create?: EventCreateWithoutCommentsInput;
+  update?: EventUpdateWithoutCommentsDataInput;
+  upsert?: EventUpsertWithoutCommentsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: EventWhereUniqueInput;
+}
+
+export interface EventUpdateWithoutCommentsDataInput {
+  title?: String;
+  description?: String;
+  date?: DateTimeInput;
+  image?: String;
+  supporters?: UserUpdateManyInput;
+  likedBy?: UserUpdateManyWithoutLikedEventsInput;
+  owner?: UserUpdateOneRequiredInput;
+  committee?: CommitteeUpdateOneRequiredWithoutEventInput;
+  todos?: TodoUpdateManyWithoutEventInput;
+}
+
+export interface CommitteeUpdateOneRequiredWithoutEventInput {
+  create?: CommitteeCreateWithoutEventInput;
+  update?: CommitteeUpdateWithoutEventDataInput;
+  upsert?: CommitteeUpsertWithoutEventInput;
+  connect?: CommitteeWhereUniqueInput;
+}
+
+export interface CommitteeUpdateWithoutEventDataInput {
+  creator?: UserUpdateOneRequiredInput;
+  members?: UserUpdateManyInput;
+  invitations?: InvitationUpdateManyWithoutCommitteeInput;
+}
+
+export interface InvitationUpdateManyWithoutCommitteeInput {
   create?:
-    | InvitationCreateWithoutUserInput[]
-    | InvitationCreateWithoutUserInput;
+    | InvitationCreateWithoutCommitteeInput[]
+    | InvitationCreateWithoutCommitteeInput;
   delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   set?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
   update?:
-    | InvitationUpdateWithWhereUniqueWithoutUserInput[]
-    | InvitationUpdateWithWhereUniqueWithoutUserInput;
+    | InvitationUpdateWithWhereUniqueWithoutCommitteeInput[]
+    | InvitationUpdateWithWhereUniqueWithoutCommitteeInput;
   upsert?:
-    | InvitationUpsertWithWhereUniqueWithoutUserInput[]
-    | InvitationUpsertWithWhereUniqueWithoutUserInput;
+    | InvitationUpsertWithWhereUniqueWithoutCommitteeInput[]
+    | InvitationUpsertWithWhereUniqueWithoutCommitteeInput;
   deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
   updateMany?:
     | InvitationUpdateManyWithWhereNestedInput[]
     | InvitationUpdateManyWithWhereNestedInput;
 }
 
-export interface InvitationUpdateWithWhereUniqueWithoutUserInput {
+export interface InvitationUpdateWithWhereUniqueWithoutCommitteeInput {
   where: InvitationWhereUniqueInput;
-  data: InvitationUpdateWithoutUserDataInput;
+  data: InvitationUpdateWithoutCommitteeDataInput;
 }
 
-export interface InvitationUpdateWithoutUserDataInput {
-  committee?: CommitteeUpdateOneRequiredWithoutInvitationsInput;
+export interface InvitationUpdateWithoutCommitteeDataInput {
+  user?: UserUpdateOneRequiredWithoutInvitationsInput;
   status?: InvitationStatus;
 }
 
-export interface CommitteeUpdateOneRequiredWithoutInvitationsInput {
-  create?: CommitteeCreateWithoutInvitationsInput;
-  update?: CommitteeUpdateWithoutInvitationsDataInput;
-  upsert?: CommitteeUpsertWithoutInvitationsInput;
-  connect?: CommitteeWhereUniqueInput;
-}
-
-export interface CommitteeUpdateWithoutInvitationsDataInput {
-  creator?: UserUpdateOneRequiredInput;
-  members?: UserUpdateManyInput;
-  event?: EventUpdateOneRequiredWithoutCommitteeInput;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
+export interface UserUpdateOneRequiredWithoutInvitationsInput {
+  create?: UserCreateWithoutInvitationsInput;
+  update?: UserUpdateWithoutInvitationsDataInput;
+  upsert?: UserUpsertWithoutInvitationsInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateDataInput {
+export interface UserUpdateWithoutInvitationsDataInput {
   name?: String;
   email?: String;
   password?: String;
@@ -3670,44 +3705,20 @@ export interface UserUpdateDataInput {
   likedEvents?: EventUpdateManyWithoutLikedByInput;
   comments?: CommentUpdateManyWithoutAuthorInput;
   likedComments?: CommentUpdateManyWithoutLikedByInput;
-  invitations?: InvitationUpdateManyWithoutUserInput;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithoutInvitationsInput {
+  update: UserUpdateWithoutInvitationsDataInput;
+  create: UserCreateWithoutInvitationsInput;
 }
 
-export interface UserUpdateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  update?:
-    | UserUpdateWithWhereUniqueNestedInput[]
-    | UserUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueNestedInput[]
-    | UserUpsertWithWhereUniqueNestedInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
+export interface InvitationUpsertWithWhereUniqueWithoutCommitteeInput {
+  where: InvitationWhereUniqueInput;
+  update: InvitationUpdateWithoutCommitteeDataInput;
+  create: InvitationCreateWithoutCommitteeInput;
 }
 
-export interface UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateDataInput;
-}
-
-export interface UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface UserScalarWhereInput {
+export interface InvitationScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -3722,109 +3733,27 @@ export interface UserScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  email?: String;
-  email_not?: String;
-  email_in?: String[] | String;
-  email_not_in?: String[] | String;
-  email_lt?: String;
-  email_lte?: String;
-  email_gt?: String;
-  email_gte?: String;
-  email_contains?: String;
-  email_not_contains?: String;
-  email_starts_with?: String;
-  email_not_starts_with?: String;
-  email_ends_with?: String;
-  email_not_ends_with?: String;
-  password?: String;
-  password_not?: String;
-  password_in?: String[] | String;
-  password_not_in?: String[] | String;
-  password_lt?: String;
-  password_lte?: String;
-  password_gt?: String;
-  password_gte?: String;
-  password_contains?: String;
-  password_not_contains?: String;
-  password_starts_with?: String;
-  password_not_starts_with?: String;
-  password_ends_with?: String;
-  password_not_ends_with?: String;
-  avatar?: String;
-  avatar_not?: String;
-  avatar_in?: String[] | String;
-  avatar_not_in?: String[] | String;
-  avatar_lt?: String;
-  avatar_lte?: String;
-  avatar_gt?: String;
-  avatar_gte?: String;
-  avatar_contains?: String;
-  avatar_not_contains?: String;
-  avatar_starts_with?: String;
-  avatar_not_starts_with?: String;
-  avatar_ends_with?: String;
-  avatar_not_ends_with?: String;
-  role?: UserRole;
-  role_not?: UserRole;
-  role_in?: UserRole[] | UserRole;
-  role_not_in?: UserRole[] | UserRole;
-  balance?: Float;
-  balance_not?: Float;
-  balance_in?: Float[] | Float;
-  balance_not_in?: Float[] | Float;
-  balance_lt?: Float;
-  balance_lte?: Float;
-  balance_gt?: Float;
-  balance_gte?: Float;
-  AND?: UserScalarWhereInput[] | UserScalarWhereInput;
-  OR?: UserScalarWhereInput[] | UserScalarWhereInput;
-  NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
+  status?: InvitationStatus;
+  status_not?: InvitationStatus;
+  status_in?: InvitationStatus[] | InvitationStatus;
+  status_not_in?: InvitationStatus[] | InvitationStatus;
+  AND?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
+  OR?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
+  NOT?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
 }
 
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
+export interface InvitationUpdateManyWithWhereNestedInput {
+  where: InvitationScalarWhereInput;
+  data: InvitationUpdateManyDataInput;
 }
 
-export interface UserUpdateManyDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  role?: UserRole;
-  balance?: Float;
+export interface InvitationUpdateManyDataInput {
+  status?: InvitationStatus;
 }
 
-export interface EventUpdateOneRequiredWithoutCommitteeInput {
-  create?: EventCreateWithoutCommitteeInput;
-  update?: EventUpdateWithoutCommitteeDataInput;
-  upsert?: EventUpsertWithoutCommitteeInput;
-  connect?: EventWhereUniqueInput;
-}
-
-export interface EventUpdateWithoutCommitteeDataInput {
-  title?: String;
-  description?: String;
-  date?: DateTimeInput;
-  image?: String;
-  comments?: CommentUpdateManyWithoutEventInput;
-  likedBy?: UserUpdateManyWithoutLikedEventsInput;
-  owner?: UserUpdateOneRequiredInput;
-  todos?: TodoUpdateManyWithoutEventInput;
+export interface CommitteeUpsertWithoutEventInput {
+  update: CommitteeUpdateWithoutEventDataInput;
+  create: CommitteeCreateWithoutEventInput;
 }
 
 export interface TodoUpdateManyWithoutEventInput {
@@ -3954,6 +3883,214 @@ export interface TodoUpdateManyDataInput {
   doneAt?: DateTimeInput;
 }
 
+export interface EventUpsertWithoutCommentsInput {
+  update: EventUpdateWithoutCommentsDataInput;
+  create: EventCreateWithoutCommentsInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutLikedByInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutLikedByDataInput;
+  create: CommentCreateWithoutLikedByInput;
+}
+
+export interface CommentScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  date?: DateTimeInput;
+  date_not?: DateTimeInput;
+  date_in?: DateTimeInput[] | DateTimeInput;
+  date_not_in?: DateTimeInput[] | DateTimeInput;
+  date_lt?: DateTimeInput;
+  date_lte?: DateTimeInput;
+  date_gt?: DateTimeInput;
+  date_gte?: DateTimeInput;
+  AND?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  OR?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  NOT?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+}
+
+export interface CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput;
+  data: CommentUpdateManyDataInput;
+}
+
+export interface CommentUpdateManyDataInput {
+  text?: String;
+  date?: DateTimeInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutLikedEventsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLikedEventsDataInput;
+  create: UserCreateWithoutLikedEventsInput;
+}
+
+export interface UserScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  password?: String;
+  password_not?: String;
+  password_in?: String[] | String;
+  password_not_in?: String[] | String;
+  password_lt?: String;
+  password_lte?: String;
+  password_gt?: String;
+  password_gte?: String;
+  password_contains?: String;
+  password_not_contains?: String;
+  password_starts_with?: String;
+  password_not_starts_with?: String;
+  password_ends_with?: String;
+  password_not_ends_with?: String;
+  avatar?: String;
+  avatar_not?: String;
+  avatar_in?: String[] | String;
+  avatar_not_in?: String[] | String;
+  avatar_lt?: String;
+  avatar_lte?: String;
+  avatar_gt?: String;
+  avatar_gte?: String;
+  avatar_contains?: String;
+  avatar_not_contains?: String;
+  avatar_starts_with?: String;
+  avatar_not_starts_with?: String;
+  avatar_ends_with?: String;
+  avatar_not_ends_with?: String;
+  role?: UserRole;
+  role_not?: UserRole;
+  role_in?: UserRole[] | UserRole;
+  role_not_in?: UserRole[] | UserRole;
+  balance?: Float;
+  balance_not?: Float;
+  balance_in?: Float[] | Float;
+  balance_not_in?: Float[] | Float;
+  balance_lt?: Float;
+  balance_lte?: Float;
+  balance_gt?: Float;
+  balance_gte?: Float;
+  AND?: UserScalarWhereInput[] | UserScalarWhereInput;
+  OR?: UserScalarWhereInput[] | UserScalarWhereInput;
+  NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface UserUpdateManyDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  role?: UserRole;
+  balance?: Float;
+}
+
+export interface CommentUpdateManyWithoutEventInput {
+  create?: CommentCreateWithoutEventInput[] | CommentCreateWithoutEventInput;
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  set?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  update?:
+    | CommentUpdateWithWhereUniqueWithoutEventInput[]
+    | CommentUpdateWithWhereUniqueWithoutEventInput;
+  upsert?:
+    | CommentUpsertWithWhereUniqueWithoutEventInput[]
+    | CommentUpsertWithWhereUniqueWithoutEventInput;
+  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  updateMany?:
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutEventInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutEventDataInput;
+}
+
+export interface CommentUpdateWithoutEventDataInput {
+  text?: String;
+  date?: DateTimeInput;
+  author?: UserUpdateOneRequiredWithoutCommentsInput;
+  likedBy?: UserUpdateManyWithoutLikedCommentsInput;
+  post?: PostUpdateOneWithoutCommentsInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutEventInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutEventDataInput;
+  create: CommentCreateWithoutEventInput;
+}
+
 export interface EventUpsertWithoutCommitteeInput {
   update: EventUpdateWithoutCommitteeDataInput;
   create: EventCreateWithoutCommitteeInput;
@@ -3970,132 +4107,10 @@ export interface InvitationUpsertWithWhereUniqueWithoutUserInput {
   create: InvitationCreateWithoutUserInput;
 }
 
-export interface InvitationScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  status?: InvitationStatus;
-  status_not?: InvitationStatus;
-  status_in?: InvitationStatus[] | InvitationStatus;
-  status_not_in?: InvitationStatus[] | InvitationStatus;
-  AND?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
-  OR?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
-  NOT?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
-}
-
-export interface InvitationUpdateManyWithWhereNestedInput {
-  where: InvitationScalarWhereInput;
-  data: InvitationUpdateManyDataInput;
-}
-
-export interface InvitationUpdateManyDataInput {
-  status?: InvitationStatus;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutLikedEventsInput {
+export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedEventsDataInput;
-  create: UserCreateWithoutLikedEventsInput;
-}
-
-export interface CommitteeUpdateOneRequiredWithoutEventInput {
-  create?: CommitteeCreateWithoutEventInput;
-  update?: CommitteeUpdateWithoutEventDataInput;
-  upsert?: CommitteeUpsertWithoutEventInput;
-  connect?: CommitteeWhereUniqueInput;
-}
-
-export interface CommitteeUpdateWithoutEventDataInput {
-  creator?: UserUpdateOneRequiredInput;
-  members?: UserUpdateManyInput;
-  invitations?: InvitationUpdateManyWithoutCommitteeInput;
-}
-
-export interface InvitationUpdateManyWithoutCommitteeInput {
-  create?:
-    | InvitationCreateWithoutCommitteeInput[]
-    | InvitationCreateWithoutCommitteeInput;
-  delete?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
-  connect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
-  set?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
-  disconnect?: InvitationWhereUniqueInput[] | InvitationWhereUniqueInput;
-  update?:
-    | InvitationUpdateWithWhereUniqueWithoutCommitteeInput[]
-    | InvitationUpdateWithWhereUniqueWithoutCommitteeInput;
-  upsert?:
-    | InvitationUpsertWithWhereUniqueWithoutCommitteeInput[]
-    | InvitationUpsertWithWhereUniqueWithoutCommitteeInput;
-  deleteMany?: InvitationScalarWhereInput[] | InvitationScalarWhereInput;
-  updateMany?:
-    | InvitationUpdateManyWithWhereNestedInput[]
-    | InvitationUpdateManyWithWhereNestedInput;
-}
-
-export interface InvitationUpdateWithWhereUniqueWithoutCommitteeInput {
-  where: InvitationWhereUniqueInput;
-  data: InvitationUpdateWithoutCommitteeDataInput;
-}
-
-export interface InvitationUpdateWithoutCommitteeDataInput {
-  user?: UserUpdateOneRequiredWithoutInvitationsInput;
-  status?: InvitationStatus;
-}
-
-export interface UserUpdateOneRequiredWithoutInvitationsInput {
-  create?: UserCreateWithoutInvitationsInput;
-  update?: UserUpdateWithoutInvitationsDataInput;
-  upsert?: UserUpsertWithoutInvitationsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpdateWithoutInvitationsDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  purchases?: PurchaseUpdateManyWithoutUserInput;
-  payments?: PaymentUpdateManyWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-  items?: ItemUpdateManyWithoutUserInput;
-  role?: UserRole;
-  balance?: Float;
-  posts?: PostUpdateManyWithoutAuthorInput;
-  likedPosts?: PostUpdateManyWithoutLikedByInput;
-  likedEvents?: EventUpdateManyWithoutLikedByInput;
-  comments?: CommentUpdateManyWithoutAuthorInput;
-  likedComments?: CommentUpdateManyWithoutLikedByInput;
-}
-
-export interface UserUpsertWithoutInvitationsInput {
-  update: UserUpdateWithoutInvitationsDataInput;
-  create: UserCreateWithoutInvitationsInput;
-}
-
-export interface InvitationUpsertWithWhereUniqueWithoutCommitteeInput {
-  where: InvitationWhereUniqueInput;
-  update: InvitationUpdateWithoutCommitteeDataInput;
-  create: InvitationCreateWithoutCommitteeInput;
-}
-
-export interface CommitteeUpsertWithoutEventInput {
-  update: CommitteeUpdateWithoutEventDataInput;
-  create: CommitteeCreateWithoutEventInput;
-}
-
-export interface EventUpsertWithoutCommentsInput {
-  update: EventUpdateWithoutCommentsDataInput;
-  create: EventCreateWithoutCommentsInput;
+  update: UserUpdateWithoutLikedCommentsDataInput;
+  create: UserCreateWithoutLikedCommentsInput;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
@@ -4104,16 +4119,10 @@ export interface CommentUpsertWithWhereUniqueWithoutAuthorInput {
   create: CommentCreateWithoutAuthorInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
+export interface UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedCommentsDataInput;
-  create: UserCreateWithoutLikedCommentsInput;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutEventInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutEventDataInput;
-  create: CommentCreateWithoutEventInput;
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
 export interface EventUpsertWithWhereUniqueWithoutLikedByInput {
@@ -4641,9 +4650,10 @@ export interface EventCreateInput {
   description: String;
   date: DateTimeInput;
   image: String;
-  comments?: CommentCreateManyWithoutEventInput;
+  supporters?: UserCreateManyInput;
   likedBy?: UserCreateManyWithoutLikedEventsInput;
   owner: UserCreateOneInput;
+  comments?: CommentCreateManyWithoutEventInput;
   committee: CommitteeCreateOneWithoutEventInput;
   todos?: TodoCreateManyWithoutEventInput;
 }
@@ -4653,9 +4663,10 @@ export interface EventUpdateInput {
   description?: String;
   date?: DateTimeInput;
   image?: String;
-  comments?: CommentUpdateManyWithoutEventInput;
+  supporters?: UserUpdateManyInput;
   likedBy?: UserUpdateManyWithoutLikedEventsInput;
   owner?: UserUpdateOneRequiredInput;
+  comments?: CommentUpdateManyWithoutEventInput;
   committee?: CommitteeUpdateOneRequiredWithoutEventInput;
   todos?: TodoUpdateManyWithoutEventInput;
 }
@@ -4969,9 +4980,10 @@ export interface EventCreateWithoutTodosInput {
   description: String;
   date: DateTimeInput;
   image: String;
-  comments?: CommentCreateManyWithoutEventInput;
+  supporters?: UserCreateManyInput;
   likedBy?: UserCreateManyWithoutLikedEventsInput;
   owner: UserCreateOneInput;
+  comments?: CommentCreateManyWithoutEventInput;
   committee: CommitteeCreateOneWithoutEventInput;
 }
 
@@ -4998,9 +5010,10 @@ export interface EventUpdateWithoutTodosDataInput {
   description?: String;
   date?: DateTimeInput;
   image?: String;
-  comments?: CommentUpdateManyWithoutEventInput;
+  supporters?: UserUpdateManyInput;
   likedBy?: UserUpdateManyWithoutLikedEventsInput;
   owner?: UserUpdateOneRequiredInput;
+  comments?: CommentUpdateManyWithoutEventInput;
   committee?: CommitteeUpdateOneRequiredWithoutEventInput;
 }
 
@@ -5920,10 +5933,10 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   image: () => Promise<String>;
-  comments: <T = FragmentableArray<Comment>>(
+  supporters: <T = FragmentableArray<User>>(
     args?: {
-      where?: CommentWhereInput;
-      orderBy?: CommentOrderByInput;
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -5943,6 +5956,17 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
     }
   ) => T;
   owner: <T = UserPromise>() => T;
+  comments: <T = FragmentableArray<Comment>>(
+    args?: {
+      where?: CommentWhereInput;
+      orderBy?: CommentOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   committee: <T = CommitteePromise>() => T;
   todos: <T = FragmentableArray<Todo>>(
     args?: {
@@ -5965,10 +5989,10 @@ export interface EventSubscription
   description: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   image: () => Promise<AsyncIterator<String>>;
-  comments: <T = Promise<AsyncIterator<CommentSubscription>>>(
+  supporters: <T = Promise<AsyncIterator<UserSubscription>>>(
     args?: {
-      where?: CommentWhereInput;
-      orderBy?: CommentOrderByInput;
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -5988,6 +6012,17 @@ export interface EventSubscription
     }
   ) => T;
   owner: <T = UserSubscription>() => T;
+  comments: <T = Promise<AsyncIterator<CommentSubscription>>>(
+    args?: {
+      where?: CommentWhereInput;
+      orderBy?: CommentOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   committee: <T = CommitteeSubscription>() => T;
   todos: <T = Promise<AsyncIterator<TodoSubscription>>>(
     args?: {
