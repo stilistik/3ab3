@@ -1,22 +1,22 @@
 endpoint: http://localhost:4466
 datamodel:
-  - models/Client.prisma
-  - models/User.prisma
-  - models/Product.prisma
-  - models/Item.prisma
-  - models/Purchase.prisma
-  - models/Payment.prisma
-  - models/Transaction.prisma
-  - models/Event.prisma
-  - models/Production.prisma
-  - models/File.prisma
-  - models/Post.prisma
-  - models/Comment.prisma
-  - models/Committee.prisma
-  - models/Invitation.prisma
-  - models/Todo.prisma
-  - models/Question.prisma
-  - models/TodoTemplate.prisma
+  - models/Client.graphql
+  - models/User.graphql
+  - models/Product.graphql
+  - models/Item.graphql
+  - models/Purchase.graphql
+  - models/Payment.graphql
+  - models/Transaction.graphql
+  - models/Event.graphql
+  - models/Production.graphql
+  - models/File.graphql
+  - models/Post.graphql
+  - models/Comment.graphql
+  - models/Committee.graphql
+  - models/Invitation.graphql
+  - models/Todo.graphql
+  - models/Question.graphql
+  - models/TodoTemplate.graphql
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/
