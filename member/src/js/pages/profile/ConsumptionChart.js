@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import PercentagePieChart from './charts/PercentagePieChart';
+import { PercentagePieChart } from 'Components';
 import { Paper } from '@material-ui/core';
 
 const CONSUMPTIONS_QUERY = gql`

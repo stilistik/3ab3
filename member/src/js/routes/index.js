@@ -6,7 +6,7 @@ import UnauthRoute from './UnauthRoute';
 
 import Login from 'Pages/login';
 import Home from 'Pages/home';
-import Dashboard from 'Pages/dashboard';
+import { Dashboard } from 'Pages/dashboard';
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, CreateEvent, EditEvent } from 'Pages/events';

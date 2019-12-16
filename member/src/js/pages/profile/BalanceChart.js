@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import TimeLineChart from './charts/TimeLineChart';
+import { TimeLineChart } from 'Components';
 import { Paper } from '@material-ui/core';
 import { Utils } from 'Utils';
 
