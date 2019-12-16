@@ -4,6 +4,7 @@ import NumberInput from './NumberInput';
 import RadioGroup from './RadioGroup';
 import MultipleChoiceGrid from './MultipleChoiceGrid';
 import SearchSelectInput from './SearchSelectInput';
+import QuickNumberInput from './QuickNumberInput';
 
 export {
   MultiSelectInput,
@@ -12,4 +13,5 @@ export {
   RadioGroup,
   MultipleChoiceGrid,
   SearchSelectInput,
+  QuickNumberInput,
 };

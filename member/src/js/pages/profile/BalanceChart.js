@@ -37,8 +37,6 @@ export const BalanceChart = () => {
         date: date,
       };
     });
-    console.log(data);
-
     return [{ id: 'balance', color: color, data: data }];
   };
 

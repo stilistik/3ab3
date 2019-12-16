@@ -41,6 +41,11 @@ class AppMenu extends React.Component {
             onClick={() => this.onClick('dashboard')}
           />
           <MenuItem
+            text={<span className={styles.item}>Checklist</span>}
+            icon="shoppingCart"
+            onClick={() => this.onClick('checklist')}
+          />
+          <MenuItem
             text={<span className={styles.item}>Members</span>}
             icon="group"
             onClick={() => this.onClick('members')}

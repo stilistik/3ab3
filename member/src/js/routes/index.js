@@ -7,6 +7,7 @@ import UnauthRoute from './UnauthRoute';
 import Login from 'Pages/login';
 import Home from 'Pages/home';
 import { Dashboard } from 'Pages/dashboard';
+import { Checklist } from 'Pages/checklist';
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, CreateEvent, EditEvent } from 'Pages/events';
@@ -18,8 +19,9 @@ const Routes = ({ props }) => {
   return (
     <Switch>
       <UnauthRoute path="/login" component={Login} props={props} />
-      <AuthRoute path="/dashboard" component={Dashboard} props={props} />
       <AuthRoute path="/home" component={Home} props={props} />
+      <AuthRoute path="/dashboard" component={Dashboard} props={props} />
+      <AuthRoute path="/checklist" component={Checklist} props={props} />
       <AuthRoute path="/account" component={Account} props={props} />
       <AuthRoute path="/profile" component={Profile} props={props} />
       <AuthRoute path="/products" component={Products} props={props} />

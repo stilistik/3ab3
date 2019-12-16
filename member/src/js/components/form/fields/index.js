@@ -5,6 +5,7 @@ export * from './CheckboxField';
 export * from './SelectField';
 export * from './TagField';
 export * from './NumberField';
+export * from './QuickNumberField';
 export * from './SearchSelectField';
 export * from './MultiSelectField';
 export * from './DateField';

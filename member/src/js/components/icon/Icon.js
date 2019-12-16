@@ -81,6 +81,7 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -148,6 +149,7 @@ const muiIconTypes = {
   search: SearchIcon,
   send: SendIcon,
   share: ShareIcon,
+  shoppingCart: ShoppingCartIcon,
   sortAlpha: SortAlphaIcon,
   sort: SortIcon,
   storage: StorageIcon,
