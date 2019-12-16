@@ -5,9 +5,8 @@ export class LinkValidator {
     const urls = input.split(/\s+/).filter((el) => validator.isURL(el));
     const links = [];
     for (let url of urls) {
-      if (this.isImageLink(url)) links.push({ type: 'IMAGE', url });
-      else if (this.isVideoLink(url)) links.push({ type: 'VIDEO', url });
-      else if (this.isYoutubeLink(url)) links.push({ type: 'YOUTUBE', url });
+      const link = this.validateLink(url);
+      links.push(link);
     }
     return links;
   };
@@ -17,6 +16,8 @@ export class LinkValidator {
     if (this.isImageLink(url)) return { type: 'IMAGE', url };
     else if (this.isVideoLink(url)) return { type: 'VIDEO', url };
     else if (this.isYoutubeLink(url)) return { type: 'YOUTUBE', url };
+    else if (this.isSpotifySong(url)) return { type: 'SPOTIFY', url };
+    else return { type: 'UNKNOWN', url };
   };
 
   static isImageLink = (url) => {
@@ -32,6 +33,12 @@ export class LinkValidator {
   static isYoutubeLink = (url) => {
     return (
       url.match(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/) != null
+    );
+  };
+
+  static isSpotifySong = (url) => {
+    return (
+      url.match(/^(http(s)?:\/\/)?((w){3}.)?open.spotify?(\.com)?\/.+/) != null
     );
   };
 }

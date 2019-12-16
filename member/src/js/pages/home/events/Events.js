@@ -36,7 +36,7 @@ const Events = () => {
     <div className={styles.container}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <CreateButton onClick={onCreate} />
+          <CreateButton onClick={onCreate} disableLine />
         </Grid>
         {events.map((event) => {
           return (

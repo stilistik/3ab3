@@ -14,8 +14,10 @@ import PostStats from './PostStats';
 import PostComments from './PostComments';
 import LinkValidator from './LinkValidator';
 import YoutubeVideo from './YoutubeVideo';
+import SpotifyPlayer from './SpotifyPlayer';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import { ReactTinyLink } from 'react-tiny-link';
 
 import styles from './Post.css';
 
@@ -55,6 +57,47 @@ const PostText = ({ text }) => {
   );
 };
 
+export const PostLink = ({ link }) => {
+  if (!link) return null;
+  switch (link.type) {
+    case 'IMAGE':
+      return <PostImage url={link.url} />;
+    case 'YOUTUBE':
+      return <YoutubeVideo url={link.url} />;
+    case 'SPOTIFY':
+      return <SpotifyPlayer url={link.url} />;
+    default:
+      return (
+        <div
+          style={{
+            overflow: 'hidden',
+            position: 'relative',
+            width: '100%',
+            height: 125,
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: '-1px',
+              left: '-1px',
+              width: 'calc(100% + 2px)',
+              height: 127,
+            }}
+          >
+            <ReactTinyLink
+              cardSize="small"
+              showGraphic={true}
+              maxLine={2}
+              minLine={1}
+              url={link.url}
+            />
+          </div>
+        </div>
+      );
+  }
+};
+
 const Post = ({ post, refetch }) => {
   const [show, setShow] = React.useState(false);
 
@@ -70,8 +113,7 @@ const Post = ({ post, refetch }) => {
       <CardContent className={styles.content}>
         <PostText text={post.text} />
         {post.image && <PostImage url={global.API_URL + post.image} />}
-        {link && link.type === 'IMAGE' && <PostImage url={link.url} />}
-        {link && link.type === 'YOUTUBE' && <YoutubeVideo url={link.url} />}
+        <PostLink link={link} />
       </CardContent>
       <PostStats postId={post.id} onComment={onComment} />
       <CardActions>

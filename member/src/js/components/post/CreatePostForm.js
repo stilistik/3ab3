@@ -10,8 +10,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { Icon, UserAvatar, ImageContainer } from 'Components';
-import YoutubeVideo from './YoutubeVideo';
-import { PostImage } from './Post';
+import { PostImage, PostLink } from './Post';
 import ImageInput from './ImageInput';
 
 import styles from './CreatePostForm.css';
@@ -60,18 +59,20 @@ const CreatePostForm = (props) => {
   };
 
   const onSubmit = async () => {
-    if (text.length === 0 && !file) return;
+    if (text.length === 0 && !file && !link) return;
     await props.onSubmit({
       userId: user.id,
-      text: text.replace(link.url, ''),
-      image,
-      link: link.url,
+      text: link ? text.replace(link.url, '') : text,
+      image: image,
+      link: link ? link.url : null,
     });
     setText('');
     setImage(null);
     setSrc(null);
     setLink(null);
   };
+
+  console.log(link);
 
   return (
     <Card>
@@ -90,8 +91,7 @@ const CreatePostForm = (props) => {
         {src && (
           <ImageContainer image={src} classes={{ root: styles.preview }} />
         )}
-        {link && link.type === 'YOUTUBE' && <YoutubeVideo url={link.url} />}
-        {link && link.type === 'IMAGE' && <PostImage url={link.url} />}
+        <PostLink link={link} />
       </CardContent>
       <CardActions>
         <Button
