@@ -12,6 +12,7 @@ import {
   Hidden,
   Select,
   MenuItem,
+  Button,
 } from '@material-ui/core';
 import { Tag } from 'Components';
 import gql from 'graphql-tag';
@@ -20,6 +21,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import { PurchaseReceipt } from './PurchaseReceipt';
 
 const TRANSACTIONS = gql`
   query($first: Int!, $skip: Int) {
@@ -36,6 +38,7 @@ const TRANSACTIONS = gql`
               amount
             }
             purchase {
+              id
               total
             }
           }
@@ -132,6 +135,30 @@ const AmountCell = ({ transaction }) => {
   return <TableCell align="right">{amount} CHF</TableCell>;
 };
 
+const ReceiptCell = ({ transaction }) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  console.log(transaction);
+
+  return (
+    <TableCell align="left">
+      {transaction.type === 'PURCHASE' && (
+        <React.Fragment>
+          <Button onClick={handleOpen}>Receipt</Button>
+          <PurchaseReceipt
+            open={open}
+            handleClose={handleClose}
+            purchaseId={transaction.purchase.id}
+          />
+        </React.Fragment>
+      )}
+    </TableCell>
+  );
+};
+
 const TransactionTable = () => {
   const [pageSize, setPageSize] = React.useState(10);
   const [page, setPage] = React.useState(0);
@@ -164,6 +191,7 @@ const TransactionTable = () => {
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
+            <TableCell align="left">Receipt</TableCell>
             <TableCell align="right">Type</TableCell>
             <TableCell align="right">Amount</TableCell>
           </TableRow>
@@ -174,6 +202,7 @@ const TransactionTable = () => {
               <TableCell component="th" scope="row">
                 {new Date(transaction.date).toDateString()}
               </TableCell>
+              <ReceiptCell transaction={transaction} />
               <TableCell align="right">
                 {transaction.type === 'PURCHASE' && (
                   <Tag outlined color="#f5222d">
@@ -193,7 +222,7 @@ const TransactionTable = () => {
         <TableFooter>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
-            colSpan={3}
+            colSpan={4}
             count={count}
             pageSize={pageSize}
             page={page}
