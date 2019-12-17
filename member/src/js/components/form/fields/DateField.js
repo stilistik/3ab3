@@ -41,7 +41,12 @@ export const DateInput = ({ id, name, value, label, ...rest }) => {
 
 export const DateField = (props) => {
   return (
-    <Field fieldType="date" type="date" defaultValue="" {...props}>
+    <Field
+      fieldType="date"
+      type="date"
+      defaultValue={new Date().toISOString()}
+      {...props}
+    >
       <DateInput />
     </Field>
   );
