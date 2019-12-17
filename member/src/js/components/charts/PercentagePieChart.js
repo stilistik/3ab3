@@ -15,8 +15,8 @@ export const PercentagePieChart = ({ data }) => (
     radialLabelsTextXOffset={6}
     radialLabelsTextColor="#333333"
     radialLabelsLinkOffset={0}
-    radialLabelsLinkDiagonalLength={16}
-    radialLabelsLinkHorizontalLength={24}
+    radialLabelsLinkDiagonalLength={8}
+    radialLabelsLinkHorizontalLength={12}
     radialLabelsLinkStrokeWidth={1}
     radialLabelsLinkColor={{ from: 'color' }}
     slicesLabelsSkipAngle={10}

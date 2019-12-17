@@ -16,7 +16,7 @@ const CONSUMPTIONS_QUERY = gql`
   }
 `;
 
-const Products = () => {
+const ConsumptionChart = () => {
   const { loading, error, data } = useQuery(CONSUMPTIONS_QUERY);
 
   if (loading || error) return null;
@@ -38,4 +38,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ConsumptionChart;

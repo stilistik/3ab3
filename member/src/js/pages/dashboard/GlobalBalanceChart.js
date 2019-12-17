@@ -1,5 +1,6 @@
 import React from 'react';
 import { TimeLineChart } from 'Components';
+import { Paper } from '@material-ui/core';
 
 const data = [
   {
@@ -92,8 +93,8 @@ const data = [
 
 export const GlobalBalanceChart = () => {
   return (
-    <div style={{ width: '100%', height: '300px', marginTop: 20 }}>
+    <Paper style={{ width: '100%', height: '300px', color: 'white' }}>
       <TimeLineChart data={data} />
-    </div>
+    </Paper>
   );
 };

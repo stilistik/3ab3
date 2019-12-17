@@ -1,25 +1,34 @@
 import React from 'react';
 import { Typography, Grid, Divider, Paper } from '@material-ui/core';
-import { DefaultGrid } from 'Components';
+import { DefaultGrid, Container } from 'Components';
 import { GlobalBalanceChart } from './GlobalBalanceChart';
+import GlobalConsumptionChart from './GlobalConsumptionChart';
 
 import styles from './Dashboard.less';
 
 export const Dashboard = () => {
   return (
-    <DefaultGrid overflow>
-      <Grid container>
-        <Grid item xs={12}>
-          <div className={styles.header}>
+    <Container>
+      <DefaultGrid overflow>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
             <Typography variant="h5" className={styles.typo}>
               DASHBOARD
             </Typography>
             <Divider />
+          </Grid>
+          <Grid item xs={12}>
             <GlobalBalanceChart />
-          </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <span>Balance Table</span>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <GlobalConsumptionChart />
+          </Grid>
         </Grid>
-      </Grid>
-    </DefaultGrid>
+      </DefaultGrid>
+    </Container>
   );
 };
 
