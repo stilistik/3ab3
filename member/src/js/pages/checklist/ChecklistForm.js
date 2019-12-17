@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Avatar } from '@material-ui/core';
 import {
   Form,
   DateField,
@@ -18,6 +18,7 @@ const QUERY = gql`
       name
       price
       index
+      thumbnail
     }
   }
 `;
@@ -49,11 +50,22 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
           {products.map((product) => {
             return (
               <Grid key={product.id} item xs={12} sm={6} md={4}>
-                <QuickNumberField
-                  id={product.id}
-                  label={product.name}
-                  required={false}
-                />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar
+                    src={global.API_URL + product.thumbnail}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      marginBottom: 15,
+                      marginRight: 10,
+                    }}
+                  />
+                  <QuickNumberField
+                    id={product.id}
+                    label={product.name}
+                    required={false}
+                  />
+                </div>
               </Grid>
             );
           })}
