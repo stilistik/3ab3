@@ -14,7 +14,7 @@ import {
   MenuItem,
   Button,
 } from '@material-ui/core';
-import { Tag } from 'Components';
+import { Tag, Icon } from 'Components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
@@ -129,10 +129,16 @@ const TablePagination = ({ page, count, pageSize, ...rest }) => {
 
 const AmountCell = ({ transaction }) => {
   const amount =
-    transaction.type === 'PAYMENT'
-      ? '+' + transaction.payment.amount.toFixed(2)
-      : '-' + transaction.purchase.total.toFixed(2);
-  return <TableCell align="right">{amount} CHF</TableCell>;
+    transaction.type === 'PAYMENT' ? (
+      <Tag outlined color="#43a047">
+        {'+' + transaction.payment.amount.toFixed(2) + ' CHF'}
+      </Tag>
+    ) : (
+      <Tag outlined color="#f5222d">
+        {'-' + transaction.purchase.total.toFixed(2) + ' CHF'}
+      </Tag>
+    );
+  return <TableCell align="right">{amount}</TableCell>;
 };
 
 const ReceiptCell = ({ transaction }) => {
@@ -147,7 +153,9 @@ const ReceiptCell = ({ transaction }) => {
     <TableCell align="left">
       {transaction.type === 'PURCHASE' && (
         <React.Fragment>
-          <Button onClick={handleOpen}>Receipt</Button>
+          <IconButton onClick={handleOpen}>
+            <Icon type="assignment" />
+          </IconButton>
           <PurchaseReceipt
             open={open}
             handleClose={handleClose}
@@ -192,7 +200,6 @@ const TransactionTable = () => {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell align="left">Receipt</TableCell>
-            <TableCell align="right">Type</TableCell>
             <TableCell align="right">Amount</TableCell>
           </TableRow>
         </TableHead>
@@ -203,18 +210,6 @@ const TransactionTable = () => {
                 {new Date(transaction.date).toDateString()}
               </TableCell>
               <ReceiptCell transaction={transaction} />
-              <TableCell align="right">
-                {transaction.type === 'PURCHASE' && (
-                  <Tag outlined color="#f5222d">
-                    {transaction.type}
-                  </Tag>
-                )}
-                {transaction.type === 'PAYMENT' && (
-                  <Tag outlined color="#43a047">
-                    {transaction.type}
-                  </Tag>
-                )}
-              </TableCell>
               <AmountCell transaction={transaction} />
             </TableRow>
           ))}
@@ -222,7 +217,7 @@ const TransactionTable = () => {
         <TableFooter>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
-            colSpan={4}
+            colSpan={3}
             count={count}
             pageSize={pageSize}
             page={page}
