@@ -18,6 +18,8 @@ type User {
   likedComments: [Comment!]! @relation(name: "LikedComments")
   invitations: [Invitation!]!
     @relation(name: "UserInvitation", onDelete: CASCADE)
+  isOnline: Boolean! @default(value: false)
+  lastOnline: DateTime
 }
 
 enum UserRole {

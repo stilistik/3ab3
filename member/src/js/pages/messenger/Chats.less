@@ -1,3 +1,5 @@
+@import '../../../index.less';
+
 .outer {
   height: calc(100vh - 64px);
   display: flex;
@@ -25,10 +27,21 @@
 
 .chat {
   border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chatInner {
+  display: flex;
+  align-items: center;
 
   > *:not(:last-child) {
     margin-right: 10px;
   }
+}
+
+.badge {
+  background-color: @success-color;
 }
 
 .selected {

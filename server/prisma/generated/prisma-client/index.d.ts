@@ -850,7 +850,11 @@ export type UserOrderByInput =
   | "role_ASC"
   | "role_DESC"
   | "balance_ASC"
-  | "balance_DESC";
+  | "balance_DESC"
+  | "isOnline_ASC"
+  | "isOnline_DESC"
+  | "lastOnline_ASC"
+  | "lastOnline_DESC";
 
 export type CommentOrderByInput =
   | "id_ASC"
@@ -1304,6 +1308,16 @@ export interface UserWhereInput {
   invitations_every?: Maybe<InvitationWhereInput>;
   invitations_some?: Maybe<InvitationWhereInput>;
   invitations_none?: Maybe<InvitationWhereInput>;
+  isOnline?: Maybe<Boolean>;
+  isOnline_not?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
+  lastOnline_not?: Maybe<DateTimeInput>;
+  lastOnline_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastOnline_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastOnline_lt?: Maybe<DateTimeInput>;
+  lastOnline_lte?: Maybe<DateTimeInput>;
+  lastOnline_gt?: Maybe<DateTimeInput>;
+  lastOnline_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -2193,6 +2207,8 @@ export interface UserCreateWithoutCommentsInput {
   supportedEvents?: Maybe<EventCreateManyWithoutSupportersInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PurchaseCreateManyWithoutUserInput {
@@ -2256,6 +2272,8 @@ export interface UserCreateWithoutItemsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PaymentCreateManyWithoutUserInput {
@@ -2307,6 +2325,8 @@ export interface UserCreateWithoutTransactionsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface ItemCreateManyWithoutUserInput {
@@ -2358,6 +2378,8 @@ export interface UserCreateWithoutLikedPostsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface TransactionCreateManyWithoutUserInput {
@@ -2409,6 +2431,8 @@ export interface UserCreateWithoutPaymentsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PostCreateManyWithoutLikedByInput {
@@ -2449,6 +2473,8 @@ export interface UserCreateWithoutPostsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface EventCreateManyWithoutLikedByInput {
@@ -2495,6 +2521,8 @@ export interface UserCreateWithoutSupportedEventsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentCreateManyWithoutAuthorInput {
@@ -2536,6 +2564,8 @@ export interface UserCreateWithoutLikedCommentsInput {
   supportedEvents?: Maybe<EventCreateManyWithoutSupportersInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface EventCreateManyWithoutSupportersInput {
@@ -2581,6 +2611,8 @@ export interface UserCreateWithoutLikedEventsInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentCreateManyWithoutLikedByInput {
@@ -2652,6 +2684,8 @@ export interface UserCreateInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface InvitationCreateManyWithoutUserInput {
@@ -2775,6 +2809,8 @@ export interface UserCreateWithoutInvitationsInput {
   supportedEvents?: Maybe<EventCreateManyWithoutSupportersInput>;
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentCreateManyWithoutPostInput {
@@ -2826,6 +2862,8 @@ export interface UserCreateWithoutPurchasesInput {
   comments?: Maybe<CommentCreateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentCreateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationCreateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface TransactionCreateOneWithoutPurchaseInput {
@@ -2874,6 +2912,8 @@ export interface UserUpdateWithoutCommentsDataInput {
   supportedEvents?: Maybe<EventUpdateManyWithoutSupportersInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PurchaseUpdateManyWithoutUserInput {
@@ -2987,6 +3027,8 @@ export interface UserUpdateWithoutItemsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PaymentUpdateManyWithoutUserInput {
@@ -3063,6 +3105,8 @@ export interface UserUpdateWithoutTransactionsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface ItemUpdateManyWithoutUserInput {
@@ -3226,6 +3270,8 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface TransactionUpdateManyWithoutUserInput {
@@ -3308,6 +3354,8 @@ export interface UserUpdateWithoutPaymentsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PostUpdateManyWithoutLikedByInput {
@@ -3370,6 +3418,8 @@ export interface UserUpdateWithoutPostsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface EventUpdateManyWithoutLikedByInput {
@@ -3456,6 +3506,8 @@ export interface UserUpdateWithoutSupportedEventsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentUpdateManyWithoutAuthorInput {
@@ -3538,6 +3590,8 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   supportedEvents?: Maybe<EventUpdateManyWithoutSupportersInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface EventUpdateManyWithoutSupportersInput {
@@ -3623,6 +3677,8 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentUpdateManyWithoutLikedByInput {
@@ -3730,6 +3786,8 @@ export interface UserUpdateDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface InvitationUpdateManyWithoutUserInput {
@@ -3892,6 +3950,16 @@ export interface UserScalarWhereInput {
   balance_lte?: Maybe<Float>;
   balance_gt?: Maybe<Float>;
   balance_gte?: Maybe<Float>;
+  isOnline?: Maybe<Boolean>;
+  isOnline_not?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
+  lastOnline_not?: Maybe<DateTimeInput>;
+  lastOnline_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastOnline_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastOnline_lt?: Maybe<DateTimeInput>;
+  lastOnline_lte?: Maybe<DateTimeInput>;
+  lastOnline_gt?: Maybe<DateTimeInput>;
+  lastOnline_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
@@ -3909,6 +3977,8 @@ export interface UserUpdateManyDataInput {
   avatar?: Maybe<String>;
   role?: Maybe<UserRole>;
   balance?: Maybe<Float>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface EventUpdateOneRequiredWithoutCommitteeInput {
@@ -4278,6 +4348,8 @@ export interface UserUpdateWithoutInvitationsDataInput {
   supportedEvents?: Maybe<EventUpdateManyWithoutSupportersInput>;
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpsertWithoutInvitationsInput {
@@ -4610,6 +4682,8 @@ export interface UserUpdateWithoutPurchasesDataInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpsertWithoutPurchasesInput {
@@ -5333,6 +5407,8 @@ export interface UserUpdateInput {
   comments?: Maybe<CommentUpdateManyWithoutAuthorInput>;
   likedComments?: Maybe<CommentUpdateManyWithoutLikedByInput>;
   invitations?: Maybe<InvitationUpdateManyWithoutUserInput>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -5342,6 +5418,8 @@ export interface UserUpdateManyMutationInput {
   avatar?: Maybe<String>;
   role?: Maybe<UserRole>;
   balance?: Maybe<Float>;
+  isOnline?: Maybe<Boolean>;
+  lastOnline?: Maybe<DateTimeInput>;
 }
 
 export interface ClientSubscriptionWhereInput {
@@ -5769,6 +5847,8 @@ export interface User {
   avatar?: String;
   role: UserRole;
   balance: Float;
+  isOnline: Boolean;
+  lastOnline?: DateTimeOutput;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -5878,6 +5958,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  isOnline: () => Promise<Boolean>;
+  lastOnline: () => Promise<DateTimeOutput>;
 }
 
 export interface UserSubscription
@@ -5989,6 +6071,8 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  isOnline: () => Promise<AsyncIterator<Boolean>>;
+  lastOnline: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserNullablePromise
@@ -6100,6 +6184,8 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  isOnline: () => Promise<Boolean>;
+  lastOnline: () => Promise<DateTimeOutput>;
 }
 
 export interface Purchase {
@@ -8776,6 +8862,8 @@ export interface UserPreviousValues {
   avatar?: String;
   role: UserRole;
   balance: Float;
+  isOnline: Boolean;
+  lastOnline?: DateTimeOutput;
 }
 
 export interface UserPreviousValuesPromise
@@ -8788,6 +8876,8 @@ export interface UserPreviousValuesPromise
   avatar: () => Promise<String>;
   role: () => Promise<UserRole>;
   balance: () => Promise<Float>;
+  isOnline: () => Promise<Boolean>;
+  lastOnline: () => Promise<DateTimeOutput>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -8800,6 +8890,8 @@ export interface UserPreviousValuesSubscription
   avatar: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
   balance: () => Promise<AsyncIterator<Float>>;
+  isOnline: () => Promise<AsyncIterator<Boolean>>;
+  lastOnline: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 /*

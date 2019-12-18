@@ -6,7 +6,12 @@ type User {
   avatar: String
   purchases: [Purchase!]!
   payments: [Payment!]!
-  transactions(type: TransactionType, first: Int!, skip: Int, after: String): TransactionConnection
+  transactions(
+    type: TransactionType
+    first: Int!
+    skip: Int
+    after: String
+  ): TransactionConnection
   items: [Item!]!
   balance: Float!
   role: UserRole!
@@ -19,11 +24,13 @@ type User {
   likedComments: [Comment!]!
   invitations: [Invitation!]!
   pendingInvitations: [Invitation!]!
+  isOnline: Boolean!
+  lastOnline: DateTime
 }
 
 enum UserRole {
-  SUPER,
-  ADMIN,
+  SUPER
+  ADMIN
   MEMBER
 }
 
@@ -52,4 +59,5 @@ extend type Mutation {
   editUser(userId: ID!, input: UserInput!): User! @hasRole
   editSelf(input: EditSelfInput!): User!
   uploadAvatar(file: Upload!): User!
+  setOnlineStatus(userId: ID! isOnline: Boolean!): User!
 }

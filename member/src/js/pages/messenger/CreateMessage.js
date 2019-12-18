@@ -19,7 +19,8 @@ export const CreateMessage = ({ currentUser, selectedUser }) => {
   const [value, setValue] = React.useState('');
   const [createMessage] = useMutation(MUTATION);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async () => {
+    if (!value) return;
     try {
       await createMessage({
         variables: {
@@ -40,12 +41,19 @@ export const CreateMessage = ({ currentUser, selectedUser }) => {
           },
         ],
       });
+      setValue('');
     } catch (error) {
       Message.error(error.message);
     }
   };
 
   const onChange = (e) => setValue(e.target.value);
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSubmit();
+    }
+  };
 
   return (
     <div className={styles.form}>
@@ -55,6 +63,7 @@ export const CreateMessage = ({ currentUser, selectedUser }) => {
         className={styles.input}
         multiline
         disableUnderline
+        onKeyDown={onKeyDown}
       />
       <IconButton type="submit" onClick={onSubmit}>
         <Icon type="send" />

@@ -77,6 +77,24 @@ module.exports = {
         data: { avatar: file.uri },
       });
     },
+    setOnlineStatus(root, args, context) {
+      if (args.isOnline) {
+        return context.prisma.updateUser({
+          where: { id },
+          data: {
+            isOnline: true,
+          },
+        });
+      } else {
+        return context.prisma.updateUser({
+          where: { id },
+          data: {
+            isOnline: false,
+            lastOnline: new Date().toISOString(),
+          }
+        })
+      }
+    },
   },
   User: {
     items(root, args, context) {

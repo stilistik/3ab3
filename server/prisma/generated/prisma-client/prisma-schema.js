@@ -4396,6 +4396,8 @@ type User {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   likedComments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation!]
+  isOnline: Boolean!
+  lastOnline: DateTime
 }
 
 type UserConnection {
@@ -4422,6 +4424,8 @@ input UserCreateInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateManyInput {
@@ -4506,6 +4510,8 @@ input UserCreateWithoutCommentsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutInvitationsInput {
@@ -4525,6 +4531,8 @@ input UserCreateWithoutInvitationsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutItemsInput {
@@ -4544,6 +4552,8 @@ input UserCreateWithoutItemsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutLikedCommentsInput {
@@ -4563,6 +4573,8 @@ input UserCreateWithoutLikedCommentsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutLikedEventsInput {
@@ -4582,6 +4594,8 @@ input UserCreateWithoutLikedEventsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutLikedPostsInput {
@@ -4601,6 +4615,8 @@ input UserCreateWithoutLikedPostsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutPaymentsInput {
@@ -4620,6 +4636,8 @@ input UserCreateWithoutPaymentsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutPostsInput {
@@ -4639,6 +4657,8 @@ input UserCreateWithoutPostsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutPurchasesInput {
@@ -4658,6 +4678,8 @@ input UserCreateWithoutPurchasesInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutSupportedEventsInput {
@@ -4677,6 +4699,8 @@ input UserCreateWithoutSupportedEventsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserCreateWithoutTransactionsInput {
@@ -4696,6 +4720,8 @@ input UserCreateWithoutTransactionsInput {
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 type UserEdge {
@@ -4718,6 +4744,10 @@ enum UserOrderByInput {
   role_DESC
   balance_ASC
   balance_DESC
+  isOnline_ASC
+  isOnline_DESC
+  lastOnline_ASC
+  lastOnline_DESC
 }
 
 type UserPreviousValues {
@@ -4728,6 +4758,8 @@ type UserPreviousValues {
   avatar: String
   role: UserRole!
   balance: Float!
+  isOnline: Boolean!
+  lastOnline: DateTime
 }
 
 enum UserRole {
@@ -4819,6 +4851,16 @@ input UserScalarWhereInput {
   balance_lte: Float
   balance_gt: Float
   balance_gte: Float
+  isOnline: Boolean
+  isOnline_not: Boolean
+  lastOnline: DateTime
+  lastOnline_not: DateTime
+  lastOnline_in: [DateTime!]
+  lastOnline_not_in: [DateTime!]
+  lastOnline_lt: DateTime
+  lastOnline_lte: DateTime
+  lastOnline_gt: DateTime
+  lastOnline_gte: DateTime
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -4860,6 +4902,8 @@ input UserUpdateDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateInput {
@@ -4880,6 +4924,8 @@ input UserUpdateInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateManyDataInput {
@@ -4889,6 +4935,8 @@ input UserUpdateManyDataInput {
   avatar: String
   role: UserRole
   balance: Float
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateManyInput {
@@ -4910,6 +4958,8 @@ input UserUpdateManyMutationInput {
   avatar: String
   role: UserRole
   balance: Float
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateManyWithoutLikedCommentsInput {
@@ -5047,6 +5097,8 @@ input UserUpdateWithoutCommentsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutInvitationsDataInput {
@@ -5066,6 +5118,8 @@ input UserUpdateWithoutInvitationsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutItemsDataInput {
@@ -5085,6 +5139,8 @@ input UserUpdateWithoutItemsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutLikedCommentsDataInput {
@@ -5104,6 +5160,8 @@ input UserUpdateWithoutLikedCommentsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutLikedEventsDataInput {
@@ -5123,6 +5181,8 @@ input UserUpdateWithoutLikedEventsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutLikedPostsDataInput {
@@ -5142,6 +5202,8 @@ input UserUpdateWithoutLikedPostsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutPaymentsDataInput {
@@ -5161,6 +5223,8 @@ input UserUpdateWithoutPaymentsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -5180,6 +5244,8 @@ input UserUpdateWithoutPostsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutPurchasesDataInput {
@@ -5199,6 +5265,8 @@ input UserUpdateWithoutPurchasesDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutSupportedEventsDataInput {
@@ -5218,6 +5286,8 @@ input UserUpdateWithoutSupportedEventsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithoutTransactionsDataInput {
@@ -5237,6 +5307,8 @@ input UserUpdateWithoutTransactionsDataInput {
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -5450,6 +5522,16 @@ input UserWhereInput {
   invitations_every: InvitationWhereInput
   invitations_some: InvitationWhereInput
   invitations_none: InvitationWhereInput
+  isOnline: Boolean
+  isOnline_not: Boolean
+  lastOnline: DateTime
+  lastOnline_not: DateTime
+  lastOnline_in: [DateTime!]
+  lastOnline_not_in: [DateTime!]
+  lastOnline_lt: DateTime
+  lastOnline_lte: DateTime
+  lastOnline_gt: DateTime
+  lastOnline_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

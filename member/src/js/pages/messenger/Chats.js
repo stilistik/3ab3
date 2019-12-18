@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { List, ListItem, Typography, Divider } from '@material-ui/core';
+import { List, ListItem, Typography, Badge } from '@material-ui/core';
 import { UserAvatar } from 'Components';
 import classnames from 'classnames';
 
@@ -13,6 +13,7 @@ const QUERY = gql`
       id
       name
       avatar
+      isOnline
     }
   }
 `;
@@ -41,8 +42,18 @@ export const Chats = ({ onSelectUser, selectedUser, currentUser }) => {
                 className={cls}
                 onClick={() => onSelectUser(user.id)}
               >
-                <UserAvatar user={user} />
-                {user.name}
+                <div className={styles.chatInner}>
+                  <UserAvatar user={user} />
+                  <span>{user.name}</span>
+                </div>
+                <div className={styles.status}>
+                  {user.isOnline && (
+                    <Badge
+                      variant="dot"
+                      classes={{ badge: styles.badge }}
+                    />
+                  )}
+                </div>
               </ListItem>
             );
           })}
