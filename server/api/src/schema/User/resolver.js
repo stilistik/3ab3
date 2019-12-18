@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const verifyAndDecodeToken = require('../../auth/verify');
+const { verifyAndDecodeToken } = require('../../auth/verify');
 const { AuthenticationError } = require('../../auth/errors');
 const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
 

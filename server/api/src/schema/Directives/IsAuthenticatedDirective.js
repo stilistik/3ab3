@@ -5,7 +5,7 @@ const {
 } = require('graphql');
 const { SchemaDirectiveVisitor } = require('apollo-server-express');
 const { AuthenticationError } = require('../../auth/errors');
-const verifyAndDecodeToken = require('../../auth/verify');
+const { verifyAndDecodeToken } = require('../../auth/verify');
 
 class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   static getDirectiveDeclaration() {

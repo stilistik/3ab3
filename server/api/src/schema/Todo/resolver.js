@@ -1,4 +1,4 @@
-const verifyAndDecodeToken = require('../../auth/verify');
+const { verifyAndDecodeToken } = require('../../auth/verify');
 
 module.exports = {
   Mutation: {

@@ -1,4 +1,4 @@
-const verifyAndDecodeToken = require('../../auth/verify');
+const { verifyAndDecodeToken } = require('../../auth/verify');
 const { uploadFile } = require('../../helper/file.helper.js');
 const { AuthenticationError } = require('../../auth/errors');
 

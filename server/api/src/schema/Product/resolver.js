@@ -1,5 +1,5 @@
 const { uploadFile } = require('../../helper/file.helper.js');
-const verifyAndDecodeToken = require('../../auth/verify');
+const { verifyAndDecodeToken } = require('../../auth/verify');
 
 module.exports = {
   Query: {

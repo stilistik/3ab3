@@ -8,7 +8,7 @@ const {
   AuthorizationError,
   AuthenticationError,
 } = require('../../auth/errors');
-const verifyAndDecodeToken = require('../../auth/verify');
+const { verifyAndDecodeToken } = require('../../auth/verify');
 
 class HasRoleDirective extends SchemaDirectiveVisitor {
   static getDirectiveDeclaration(directiveName, schema) {
