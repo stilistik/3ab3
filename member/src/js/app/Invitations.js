@@ -104,7 +104,7 @@ class Invitations extends React.Component {
             badgeContent={pending.length}
             classes={{ badge: styles.badge }}
           >
-            <Icon type="mail" className={styles.icon} />
+            <Icon type="notifications" className={styles.icon} />
           </Badge>
         </IconButton>
         {renderMenu}

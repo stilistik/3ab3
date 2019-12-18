@@ -84,6 +84,7 @@ import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -141,6 +142,7 @@ const muiIconTypes = {
   menuBook: MenuBookIcon,
   moreHoriz: MoreHorizIcon,
   moreVert: MoreVertIcon,
+  notifications: NotificationsIcon,
   payment: PaymentIcon,
   person: PersonIcon,
   personAdd: PersonAddIcon,
