@@ -17,7 +17,7 @@ import YoutubeVideo from './YoutubeVideo';
 import SpotifyPlayer from './SpotifyPlayer';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import { ReactTinyLink } from 'react-tiny-link';
+import Microlink from '@microlink/react';
 
 import styles from './Post.css';
 
@@ -68,32 +68,10 @@ export const PostLink = ({ link }) => {
       return <SpotifyPlayer url={link.url} />;
     default:
       return (
-        <div
-          style={{
-            overflow: 'hidden',
-            position: 'relative',
-            width: '100%',
-            height: 125,
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              top: '-1px',
-              left: '-1px',
-              width: 'calc(100% + 2px)',
-              height: 127,
-            }}
-          >
-            <ReactTinyLink
-              cardSize="small"
-              showGraphic={true}
-              maxLine={2}
-              minLine={1}
-              url={link.url}
-            />
-          </div>
-        </div>
+        <Microlink
+          url={link.url}
+          style={{ borderLeft: 'none', borderRight: 'none' }}
+        />
       );
   }
 };
