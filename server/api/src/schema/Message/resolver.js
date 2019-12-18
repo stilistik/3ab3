@@ -37,9 +37,12 @@ module.exports = {
     },
   },
   Subscription: {
-    messageBetween: {
+    onNewMessage: {
       subscribe(root, args, context) {
         return context.prisma.$subscribe.message({
+          node: {
+            AND: [{ to: { id: args.toId } }, { from: { id: args.fromId } }],
+          },
           mutation_in: ['CREATED'],
         });
       },

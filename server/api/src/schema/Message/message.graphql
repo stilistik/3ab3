@@ -30,7 +30,13 @@ input MessageInput {
 }
 
 extend type Query {
-  messages(first: Int!, after: String, skip: Int, fromId: ID!, toId:ID!): MessageConnection!
+  messages(
+    first: Int!
+    after: String
+    skip: Int
+    fromId: ID!
+    toId: ID!
+  ): MessageConnection!
 }
 
 extend type Mutation {
@@ -38,5 +44,5 @@ extend type Mutation {
 }
 
 extend type Subscription {
-  messageBetween(fromId: ID!, toId:ID): MessageSubscriptionPayload!
+  onNewMessage(fromId: ID!, toId: ID): MessageSubscriptionPayload!
 }

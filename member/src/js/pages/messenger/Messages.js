@@ -27,8 +27,27 @@ export const MESSAGES = gql`
   }
 `;
 
+const NEW_MESSAGES_SUBSCRIPTION = gql`
+  subscription($fromId: ID!, $toId: ID!) {
+    onNewMessage(fromId: $fromId, toId: $toId) {
+      node {
+        id
+        text
+        link
+        date
+        from {
+          id
+        }
+        to {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const MessagesQuery = ({ selectedUser, currentUser }) => {
-  const { loading, error, data } = useQuery(MESSAGES, {
+  const { subscribeToMore, loading, error, data } = useQuery(MESSAGES, {
     variables: {
       fromId: currentUser.id,
       toId: selectedUser,
@@ -57,12 +76,38 @@ export const MessagesQuery = ({ selectedUser, currentUser }) => {
       messages={messages}
       selectedUser={selectedUser}
       currentUser={currentUser}
+      subscribe={() =>
+        subscribeToMore({
+          document: NEW_MESSAGES_SUBSCRIPTION,
+          variables: { toId: currentUser.id, fromId: selectedUser },
+          updateQuery: (prev, { subscriptionData }) => {
+            if (!subscriptionData.data) return prev;
+            console.log(prev, subscriptionData.data);
+            const newMessage = {
+              ...subscriptionData.data.onNewMessage,
+              __typename: 'MessageEdge',
+            };
+            const newObject = Object.assign({}, prev, {
+              messages: {
+                edges: [newMessage, ...prev.messages.edges],
+                __typename: 'MessageConnection',
+              },
+            });
+            return newObject;
+          },
+        })
+      }
     />
   );
 };
 
-const Messages = ({ messages, selectedUser, currentUser }) => {
+const Messages = ({ messages, selectedUser, currentUser, subscribe }) => {
   const container = React.createRef(null);
+
+  React.useEffect(() => {
+    subscribe();
+  }, []);
+
   React.useLayoutEffect(() => {
     const element = container.current;
     if (element) element.scrollTop = element.scrollHeight;

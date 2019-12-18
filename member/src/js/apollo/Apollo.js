@@ -21,6 +21,9 @@ const wsLink = new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
+    connectionParams: {
+      authorization: 'Bearer ' + window.localStorage.getItem('access_token'),
+    },
   },
 });
 
@@ -62,7 +65,7 @@ export const createApolloClient = (cache = {}) => {
   return new ApolloClient({
     ssrMode: typeof window !== 'undefined',
     cache: new InMemoryCache({
-      dataIdFromObject: (obj) => obj.uuid,
+      dataIdFromObject: (obj) => obj.id,
     }).restore(cache),
     link: link,
   });
