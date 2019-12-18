@@ -82,6 +82,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -123,6 +125,7 @@ const muiIconTypes = {
   gridOn: GridOnIcon,
   gridOff: GridOffIcon,
   group: GroupIcon,
+  groupAdd: GroupAddIcon,
   help: HelpIcon,
   highlight: HighlightIcon,
   home: HomeIcon,
@@ -139,6 +142,8 @@ const muiIconTypes = {
   moreHoriz: MoreHorizIcon,
   moreVert: MoreVertIcon,
   payment: PaymentIcon,
+  person: PersonIcon,
+  personAdd: PersonAddIcon,
   photo: PhotoIcon,
   pieChart: PieChartIcon,
   processor: ProcessorIcon,
