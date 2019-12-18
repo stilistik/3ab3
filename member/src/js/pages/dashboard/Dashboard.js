@@ -3,6 +3,7 @@ import { Typography, Grid, Divider, Paper } from '@material-ui/core';
 import { DefaultGrid, Container } from 'Components';
 import { GlobalBalanceChart } from './GlobalBalanceChart';
 import GlobalConsumptionChart from './GlobalConsumptionChart';
+import BalanceTable from './BalanceTable';
 
 import styles from './Dashboard.less';
 
@@ -21,7 +22,7 @@ export const Dashboard = () => {
             <GlobalBalanceChart />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <span>Balance Table</span>
+            <BalanceTable />
           </Grid>
           <Grid item xs={12} sm={6}>
             <GlobalConsumptionChart />
