@@ -93,6 +93,17 @@ module.exports = {
       });
     },
   },
+  Subscription: {
+    postCreated: {
+      subscribe(root, args, context, info) {
+        return context.prisma.$subscribe
+          .post({
+            mutation_in: ['CREATED'],
+          })
+          .node();
+      },
+    },
+  },
   Post: {
     comments(root, args, context) {
       return context.prisma.post({ id: root.id }).comments();

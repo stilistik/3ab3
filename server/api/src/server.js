@@ -7,8 +7,11 @@ const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
 const auth = require('./auth');
 const cors = require('cors');
+const { verifyAndDecodeToken } = require('./auth/verify');
 
 const API_PATH = '/api';
+const SUB_PATH = '/sub';
+const PORT = 4000;
 
 const prisma = new Prisma({
   endpoint: 'http://prisma:4466',
@@ -31,12 +34,30 @@ app.post('/oauth/token', auth.oauth2.token);
 const apollo = new ApolloServer({
   schema: schema,
   introspection: true,
-  context: ({ req }) => {
-    return {
-      headers: req.headers,
-      request: req,
-      prisma: prisma,
-    };
+  context: ({ req, connection }) => {
+    if (connection) {
+      return connection.context;
+    } else {
+      return {
+        headers: req.headers,
+        request: req,
+        prisma: prisma,
+      };
+    }
+  },
+  subscriptions: {
+    onConnect: (connectionParams, webSocket) => {
+      if (connectionParams.authToken) {
+        return verifyAndDecodeToken(connectionParams.authToken)
+          .then(({ id }) => prisma.user({ id: id }))
+          .then((user) => {
+            return {
+              currentUser: user,
+            };
+          });
+      }
+      throw new Error('Missing auth token!');
+    },
   },
   playground: {
     settings: {
@@ -44,14 +65,24 @@ const apollo = new ApolloServer({
     },
   },
 });
-apollo.applyMiddleware({ cors: false, app, path: API_PATH });
+apollo.applyMiddleware({
+  cors: false,
+  app,
+  path: API_PATH,
+  subscriptionsPath: SUB_PATH,
+});
+apollo.installSubscriptionHandlers(app);
 
 // Reject any unimplemented requests
 app.use('/', (req, res) => {
   res.sendStatus(404);
 });
 
-app.listen({ port: 4000 }, () =>
-  // eslint-disable-next-line no-console
-  console.log(`🚀 Server ready at http://localhost:4000`)
-);
+app.listen(PORT, () => {
+  console.log(
+    `🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`
+  );
+  console.log(
+    `🚀 Subscriptions ready at ws://localhost:${PORT}${apollo.subscriptionsPath}`
+  );
+});

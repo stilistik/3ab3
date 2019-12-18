@@ -26,6 +26,17 @@ input PostInput {
   link: String
 }
 
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type PostSubscriptionPayload {
+  mutation: MutationType!
+  node: Post
+}
+
 extend type Query {
   posts: [Post!]!
   post(postId: ID!): Post!
@@ -38,4 +49,8 @@ extend type Mutation {
   likePost(userId: ID!, postId: ID!): Post!
   unlikePost(userId: ID!, postId: ID!): Post!
   commentPost(postId: ID!, text: String!): Post!
+}
+
+extend type Subscription {
+  postCreated: PostSubscriptionPayload!
 }

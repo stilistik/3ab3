@@ -47,11 +47,19 @@ const Query = `
     _empty: String
   }
 `;
+
 const Mutation = `
   type Mutation {
     _empty: String
   }
 `;
+
+const Subscription = `
+  type Subscription {
+    _empty: String
+  }
+`;
+
 
 // Default resolvers
 const resolvers = {
@@ -67,6 +75,7 @@ module.exports = makeExecutableSchema({
     Scalar,
     Query,
     Mutation,
+    Subscription,
     Pagination.typeDef,
     User.typeDef,
     Client.typeDef,
