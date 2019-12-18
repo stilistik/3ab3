@@ -27,7 +27,7 @@ const DesktopProfile = () => {
         <Grid item xs={12} sm={6}>
           <ConsumptionChart />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <Typography variant="h5">HISTORY</Typography>
           <Divider />
           <br />
