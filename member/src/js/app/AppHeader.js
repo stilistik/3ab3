@@ -5,6 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
 import Invitations from './Invitations';
+import Messages from './Messages';
 import BalanceButton from './BalanceButton';
 import { DefaultGrid } from 'Components';
 import { Logo } from './Logo.js';
@@ -35,6 +36,7 @@ class AppHeader extends React.Component {
             </IconButton>
             <Logo />
             <BalanceButton />
+            <Messages />
             <Invitations />
             <ProfileMenu />
           </Toolbar>

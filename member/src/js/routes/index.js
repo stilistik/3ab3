@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 
 import AuthRoute from './AuthRoute';
 import UnauthRoute from './UnauthRoute';
@@ -8,6 +8,7 @@ import Login from 'Pages/login';
 import Home from 'Pages/home';
 import { Dashboard } from 'Pages/dashboard';
 import { Checklist } from 'Pages/checklist';
+import { Messenger } from 'Pages/messenger'
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, CreateEvent, EditEvent } from 'Pages/events';
@@ -44,7 +45,9 @@ const Routes = ({ props }) => {
         props={props}
       />
       <AuthRoute path="/templates" component={Templates} props={props} />
-      <AuthRoute path="/" component={Home} props={props} />
+      <AuthRoute path="/messenger" component={Messenger} props={props} />
+
+      <Redirect to="/home" />
     </Switch>
   );
 };

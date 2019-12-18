@@ -1,0 +1,36 @@
+.outer {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+}
+
+.container {
+  flex-grow: 100;
+  width: 100%;
+  overflow: scroll;
+}
+
+.list {
+  width: 100%;
+}
+
+.chats {
+  border-right: 1px solid #eee;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.chat {
+  border-radius: 5px;
+
+  > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.selected {
+  background-color: #eee;
+}

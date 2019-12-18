@@ -6,6 +6,16 @@ module.exports = {
   Query: {
     messages(root, args, context) {
       return context.prisma.messagesConnection({
+        where: {
+          OR: [
+            {
+              AND: [{ from: { id: args.fromId } }, { to: { id: args.toId } }],
+            },
+            {
+              AND: [{ to: { id: args.fromId } }, { from: { id: args.toId } }],
+            },
+          ],
+        },
         orderBy: 'date_DESC',
         first: args.first,
         after: args.after,
