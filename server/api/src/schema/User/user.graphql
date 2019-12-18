@@ -14,6 +14,7 @@ type User @isAuthenticated {
   events: [Event!]!
   likedPosts: [Post!]!
   likedEvents: [Event!]!
+  supportedEvents: [Event!]!
   comments: [Comment!]!
   likedComments: [Comment!]!
   invitations: [Invitation!]!

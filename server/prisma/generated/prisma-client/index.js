@@ -13,6 +13,10 @@ var models = [
     embedded: false
   },
   {
+    name: "UserRole",
+    embedded: false
+  },
+  {
     name: "Product",
     embedded: false
   },
@@ -30,6 +34,10 @@ var models = [
   },
   {
     name: "Transaction",
+    embedded: false
+  },
+  {
+    name: "TransactionType",
     embedded: false
   },
   {
@@ -61,6 +69,10 @@ var models = [
     embedded: false
   },
   {
+    name: "InvitationStatus",
+    embedded: false
+  },
+  {
     name: "Todo",
     embedded: false
   },
@@ -70,18 +82,6 @@ var models = [
   },
   {
     name: "TodoTemplate",
-    embedded: false
-  },
-  {
-    name: "UserRole",
-    embedded: false
-  },
-  {
-    name: "TransactionType",
-    embedded: false
-  },
-  {
-    name: "InvitationStatus",
     embedded: false
   }
 ];

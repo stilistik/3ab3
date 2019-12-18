@@ -13,13 +13,15 @@ type User {
   posts: [Post!]! @relation(name: "PostAuthor", onDelete: CASCADE)
   likedPosts: [Post!]! @relation(name: "LikedPosts")
   likedEvents: [Event!]! @relation(name: "LikedEvents")
+  supportedEvents: [Event!]! @relation(name: "SupportedEvents")
   comments: [Comment!]! @relation(name: "CommentAuthor", onDelete: CASCADE)
   likedComments: [Comment!]! @relation(name: "LikedComments")
-  invitations: [Invitation!]! @relation(name: "UserInvitation", onDelete: CASCADE)
+  invitations: [Invitation!]!
+    @relation(name: "UserInvitation", onDelete: CASCADE)
 }
 
 enum UserRole {
-  SUPER,
-  ADMIN,
+  SUPER
+  ADMIN
   MEMBER
 }

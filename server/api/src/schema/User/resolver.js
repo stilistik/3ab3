@@ -127,5 +127,8 @@ module.exports = {
         where: { status: 'PENDING' },
       });
     },
+    supportedEvents(root, args, context) {
+      return context.prisma.user({ id: root.id }).supportedEvents();
+    },
   },
 };

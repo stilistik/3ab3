@@ -11,6 +11,7 @@ import { Icon, ImageContainer } from 'Components';
 import LikeEvent from './LikeEvent';
 import EventComments from './EventComments';
 import EventStats from './EventStats';
+import SupportEvent from './SupportEvent';
 import { requestRoute } from 'History';
 
 import styles from './EventCard.less';
@@ -90,14 +91,7 @@ export const EventCard = ({ event }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Button
-        onClick={onSupport}
-        onMouseDown={(e) => e.stopPropagation()}
-        variant="outlined"
-        className={styles.supportBtn}
-      >
-        <Icon type="groupAdd" />
-      </Button>
+      <SupportEvent className={styles.supportBtn} event={event} />
       <EventStats eventId={event.id} onComment={onComment} />
       <CardActions>
         <LikeEvent event={event} />
