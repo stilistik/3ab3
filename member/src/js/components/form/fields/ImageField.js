@@ -55,8 +55,6 @@ const ImageInput = ({ id, error, label, value, ...rest }) => {
     setSrc(e.target.result);
   };
 
-  console.log(value);
-
   return (
     <div className={rest.className} style={rest.style}>
       <div className={styles.imagefield}>

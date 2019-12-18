@@ -147,8 +147,6 @@ const ReceiptCell = ({ transaction }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log(transaction);
-
   return (
     <TableCell align="left">
       {transaction.type === 'PURCHASE' && (

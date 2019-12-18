@@ -19,7 +19,6 @@ export const EditProductForm = ({ product }) => {
 
   const onSubmit = async (values) => {
     const { thumbnail, ...rest } = values;
-    console.log(thumbnail);
 
     try {
       await updateProduct({

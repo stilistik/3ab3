@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from 'react-apollo';
 import { CircularProgress, IconButton } from '@material-ui/core';
-import { Icon } from 'Components';
+import { Icon, Message } from 'Components';
 import classnames from 'classnames';
 
 import styles from './SupportEvent.less';
@@ -98,8 +98,6 @@ const SupportEvent = (props) => {
 
   const checkSupport = () => {
     const { supportedEvents } = data.currentUser;
-    console.log(supportedEvents);
-
     return supportedEvents.find((event) => event.id === props.event.id) && true;
   };
 
@@ -129,11 +127,9 @@ const SupportEvent = (props) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      Message.error(error.message);
     }
   };
-
-  console.log(supported);
 
   const buttonClass = classnames({ [styles.supported]: supported });
   return (

@@ -71,9 +71,7 @@ const CreatePostForm = (props) => {
     setSrc(null);
     setLink(null);
   };
-
-  console.log(link);
-
+  
   return (
     <Card>
       <CardContent className={styles.content}>

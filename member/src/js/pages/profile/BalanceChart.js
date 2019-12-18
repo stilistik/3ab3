@@ -46,8 +46,6 @@ export const BalanceChart = () => {
   const { balance, transactions } = data.currentUser;
   const { color } = Utils.getBalanceColorClass(balance);
 
-  console.log(color);
-
   return (
     <Paper style={{ width: '100%', height: '340px', color: 'white' }}>
       <TimeLineChart data={createChartData(transactions, color)} />
