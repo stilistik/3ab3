@@ -1,3 +1,4 @@
+const http = require('http');
 const { Prisma } = require('./generated/prisma-client');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -7,7 +8,7 @@ const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
 const auth = require('./auth');
 const cors = require('cors');
-const { verifyAndDecodeToken } = require('./auth/verify');
+const { verifyTokenInConnection } = require('./auth/verify');
 
 const API_PATH = '/api';
 const SUB_PATH = '/sub';
@@ -36,7 +37,10 @@ const apollo = new ApolloServer({
   introspection: true,
   context: ({ req, connection }) => {
     if (connection) {
-      return connection.context;
+      return {
+        connection: connection.context,
+        prisma: prisma,
+      };
     } else {
       return {
         headers: req.headers,
@@ -46,15 +50,14 @@ const apollo = new ApolloServer({
     }
   },
   subscriptions: {
-    onConnect: (connectionParams, webSocket) => {
-      if (connectionParams.authToken) {
-        return verifyAndDecodeToken(connectionParams.authToken)
-          .then(({ id }) => prisma.user({ id: id }))
-          .then((user) => {
-            return {
-              currentUser: user,
-            };
-          });
+    onConnect: async (connectionParams, webSocket) => {
+      if (connectionParams) {
+        const { id } = verifyTokenInConnection(connectionParams);
+        const user = await prisma.user({ id: id });
+        if (user)
+          return {
+            currentUser: user,
+          };
       }
       throw new Error('Missing auth token!');
     },
@@ -71,14 +74,16 @@ apollo.applyMiddleware({
   path: API_PATH,
   subscriptionsPath: SUB_PATH,
 });
-apollo.installSubscriptionHandlers(app);
 
 // Reject any unimplemented requests
 app.use('/', (req, res) => {
   res.sendStatus(404);
 });
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+apollo.installSubscriptionHandlers(httpServer);
+
+httpServer.listen(PORT, () => {
   console.log(
     `🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`
   );

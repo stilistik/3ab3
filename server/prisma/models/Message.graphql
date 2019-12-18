@@ -1,0 +1,8 @@
+type Message {
+  id: ID! @unique
+  text: String!
+  link: String
+  from: User! @relation(name: "MessageFrom")
+  to: User! @relation(name: "MessageTo")
+  date: DateTime!
+}

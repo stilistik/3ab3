@@ -1,0 +1,42 @@
+type Message implements Node {
+  id: ID!
+  text: String!
+  link: String
+  from: User!
+  to: User!
+  date: DateTime!
+}
+
+type MessageEdge implements Edge {
+  cursor: String!
+  node: Message
+}
+
+type MessageConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [MessageEdge]
+}
+
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  node: Message
+}
+
+input MessageInput {
+  fromId: ID!
+  toId: ID!
+  text: String!
+  link: String
+}
+
+extend type Query {
+  messages(first: Int!, after: String, skip: Int, fromId: ID!, toId:ID!): MessageConnection!
+}
+
+extend type Mutation {
+  createMessage(input: MessageInput): Message!
+}
+
+extend type Subscription {
+  messageBetween(fromId: ID!, toId:ID): MessageSubscriptionPayload!
+}

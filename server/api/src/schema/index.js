@@ -27,6 +27,7 @@ const Invitation = require('./Invitation');
 const Todo = require('./Todo');
 const TodoTemplate = require('./TodoTemplate');
 const Question = require('./Question');
+const Message = require('./Message');
 
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
@@ -59,7 +60,6 @@ const Subscription = `
     _empty: String
   }
 `;
-
 
 // Default resolvers
 const resolvers = {
@@ -95,6 +95,7 @@ module.exports = makeExecutableSchema({
     Todo.typeDef,
     TodoTemplate.typeDef,
     Question.typeDef,
+    Message.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -115,7 +116,8 @@ module.exports = makeExecutableSchema({
     Invitation.resolvers,
     Todo.resolvers,
     TodoTemplate.resolvers,
-    Question.resolvers
+    Question.resolvers,
+    Message.resolvers
   ),
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,

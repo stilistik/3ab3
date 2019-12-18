@@ -17,10 +17,10 @@ datamodel:
   - models/Todo.graphql
   - models/Question.graphql
   - models/TodoTemplate.graphql
+  - models/Message.graphql
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/
 hooks:
   post-deploy:
     - node ./seed.js
-    - prisma generate
