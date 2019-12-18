@@ -89,6 +89,26 @@ module.exports = {
         },
       });
     },
+    supportEvent(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          supporters: {
+            connect: { id: args.userId },
+          },
+        },
+      });
+    },
+    unsupportEvent(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          supporters: {
+            disconnect: { id: args.userId },
+          },
+        },
+      });
+    },
   },
   Event: {
     comments(root, args, context) {
@@ -107,6 +127,9 @@ module.exports = {
       return context.prisma.event({ id: root.id }).todos({
         orderBy: 'due_ASC',
       });
+    },
+    supporters(root, args, context) {
+      return context.prisma.event({ id: root.id }).supporters();
     },
   },
 };
