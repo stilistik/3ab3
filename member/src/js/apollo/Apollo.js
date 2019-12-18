@@ -3,10 +3,12 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, split } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { connect } from 'react-redux';
 import { AuthLink } from './AuthLink';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
 
 // eslint-disable-next-line
 global.API_URL = `${window.location.protocol}//${window.location.hostname}:4000`;
@@ -14,6 +16,26 @@ global.API_URL = `${window.location.protocol}//${window.location.hostname}:4000`
 const uploadLink = createUploadLink({
   uri: global.API_URL + '/api',
 });
+
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:4000/graphql`,
+  options: {
+    reconnect: true,
+  },
+});
+
+const terminatingLink = split(
+  // split based on operation type
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  uploadLink
+);
 
 const authLink = new AuthLink();
 
@@ -34,7 +56,7 @@ const errorLink = onError(
     }
   }
 );
-const link = ApolloLink.from([errorLink, authLink, uploadLink]);
+const link = ApolloLink.from([errorLink, authLink, terminatingLink]);
 
 export const createApolloClient = (cache = {}) => {
   return new ApolloClient({
