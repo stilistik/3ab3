@@ -5,7 +5,6 @@ import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 import { ApolloLink, split } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { connect } from 'react-redux';
 import { AuthLink } from './AuthLink';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';

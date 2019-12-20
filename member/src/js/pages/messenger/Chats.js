@@ -6,6 +6,7 @@ import { UserAvatar } from 'Components';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import classnames from 'classnames';
+import { useInterval } from 'Utils';
 
 import styles from './Chats.less';
 
@@ -25,7 +26,12 @@ const QUERY = gql`
 `;
 
 export const Chats = ({ onSelectUser, selectedUser, currentUser }) => {
-  const { loading, error, data } = useQuery(QUERY);
+  const { loading, error, data, refetch } = useQuery(QUERY);
+
+  useInterval(() => {
+    refetch();
+  }, 2000);
+
   if (loading || error) return null;
 
   const users = data.users.filter((el) => el.id !== currentUser.id);
