@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { Message } from './Message';
+import { MessageGroup } from './Message';
 import { CreateMessage } from './CreateMessage';
 
 import styles from './Messages.less';
@@ -46,6 +46,43 @@ const NEW_MESSAGES_SUBSCRIPTION = gql`
   }
 `;
 
+const groupMessages = (messages, currentUserId) => {
+  let lastDate = null;
+  const thresh = 1000 * 60; // 5 min in ms
+
+  const sorted = messages
+    .map((el) => {
+      const { date, ...rest } = el.node;
+      let diff = 0;
+      if (lastDate) diff = new Date(lastDate) - new Date(date);
+      lastDate = date;
+      return {
+        date: diff > thresh ? date : null,
+        fromCurrentUser: rest.from.id === currentUserId,
+        ...rest,
+      };
+    })
+    .reverse();
+
+  const groups = [];
+  let group = [];
+  let prevFromId = null;
+  for (let message of sorted) {
+    if (message.date || prevFromId !== message.from.id) {
+      if (group.length) {
+        const groupId = group
+          .map((el) => el.id)
+          .reduce((acc, curr) => acc + curr, '');
+        groups.push({ id: groupId, messages: group });
+        group = [];
+      }
+    }
+    group.push(message);
+    prevFromId = message.from.id;
+  }
+  return groups;
+};
+
 export const MessagesQuery = ({ selectedUser, currentUser }) => {
   const { subscribeToMore, loading, error, data } = useQuery(MESSAGES, {
     variables: {
@@ -57,23 +94,11 @@ export const MessagesQuery = ({ selectedUser, currentUser }) => {
 
   if (loading || error) return null;
 
-  let lastDate = null;
-  const thresh = 1000 * 60; // 5 min in ms
-  const messages = data.messages.edges
-    .map((el) => {
-      const { date, ...rest } = el.node;
-      let diff = 0;
-      if (lastDate) diff = new Date(lastDate) - new Date(date);
-      lastDate = date;
-      return {
-        date: diff > thresh ? date : null,
-        ...rest,
-      };
-    })
-    .reverse();
+  const messageGroups = groupMessages(data.messages.edges, currentUser.id);
+
   return (
     <Messages
-      messages={messages}
+      messageGroups={messageGroups}
       selectedUser={selectedUser}
       currentUser={currentUser}
       subscribe={() =>
@@ -101,7 +126,8 @@ export const MessagesQuery = ({ selectedUser, currentUser }) => {
   );
 };
 
-const Messages = ({ messages, selectedUser, currentUser, subscribe }) => {
+
+const Messages = ({ messageGroups, selectedUser, currentUser, subscribe }) => {
   const container = React.createRef(null);
 
   React.useEffect(() => {
@@ -111,20 +137,14 @@ const Messages = ({ messages, selectedUser, currentUser, subscribe }) => {
   React.useLayoutEffect(() => {
     const element = container.current;
     if (element) element.scrollTop = element.scrollHeight;
-  }, [messages]);
+  }, [messageGroups]);
 
   return (
     <div className={styles.outer}>
       <div className={styles.container} ref={container}>
         <div className={styles.content}>
-          {messages.map((message) => {
-            return (
-              <Message
-                key={message.id}
-                {...message}
-                fromCurrentUser={message.from.id === currentUser.id}
-              />
-            );
+          {messageGroups.map((group) => {
+            return <MessageGroup key={group.id} messages={group.messages} />;
           })}
         </div>
       </div>

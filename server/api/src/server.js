@@ -51,7 +51,6 @@ const apollo = new ApolloServer({
   },
   subscriptions: {
     onConnect: async (connectionParams, websocket) => {
-      console.log(websocket);
       if (connectionParams) {
         const { id } = verifyTokenInConnection(connectionParams);
         const user = await prisma.updateUser({
