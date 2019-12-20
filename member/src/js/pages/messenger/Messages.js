@@ -64,12 +64,14 @@ const groupMessages = (messages, currentUserId) => {
     })
     .reverse();
 
+  console.log(sorted);
+
   const groups = [];
   let group = [];
   let prevFromId = null;
   for (let message of sorted) {
     if (message.date || prevFromId !== message.from.id) {
-      if (group.length) {
+      if (group.length > 0) {
         const groupId = group
           .map((el) => el.id)
           .reduce((acc, curr) => acc + curr, '');
@@ -80,6 +82,10 @@ const groupMessages = (messages, currentUserId) => {
     group.push(message);
     prevFromId = message.from.id;
   }
+  const groupId = group
+    .map((el) => el.id)
+    .reduce((acc, curr) => acc + curr, '');
+  groups.push({ id: groupId, messages: group });
   return groups;
 };
 
@@ -125,7 +131,6 @@ export const MessagesQuery = ({ selectedUser, currentUser }) => {
     />
   );
 };
-
 
 const Messages = ({ messageGroups, selectedUser, currentUser, subscribe }) => {
   const container = React.createRef(null);
