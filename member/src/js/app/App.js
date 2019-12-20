@@ -6,7 +6,7 @@ import { login } from 'Redux/actions';
 import AppCore from './AppCore';
 import Auth from './Auth';
 import Routes from 'Routes';
-import { Notifier } from 'Components';
+import { Notifier, EmojiProvider } from 'Components';
 import history from 'History';
 import Apollo from 'Apollo';
 
@@ -27,16 +27,18 @@ const UnauthenticatedApp = () => {
 const AuthenticatedApp = () => {
   return (
     <div className={styles.container}>
-      <Apollo>
-        <CssBaseline />
-        <AppCore />
-        <Auth>
-          <Router history={history}>
-            <Routes props={{ app: { isAuthenticated: true } }} />
-          </Router>
-        </Auth>
-        <Notifier />
-      </Apollo>
+      <EmojiProvider>
+        <Apollo>
+          <CssBaseline />
+          <AppCore />
+          <Auth>
+            <Router history={history}>
+              <Routes props={{ app: { isAuthenticated: true } }} />
+            </Router>
+          </Auth>
+          <Notifier />
+        </Apollo>
+      </EmojiProvider>
     </div>
   );
 };

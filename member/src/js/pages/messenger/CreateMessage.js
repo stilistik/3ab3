@@ -1,8 +1,9 @@
 import React from 'react';
-import { Message, Icon } from 'Components';
+import { Message, Icon, EmojiPicker } from 'Components';
 import { IconButton, Input } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { ClickAwayListener } from '@material-ui/core';
 import { MESSAGES } from './Messages';
 
 import styles from './CreateMessage.less';
@@ -15,7 +16,19 @@ const MUTATION = gql`
   }
 `;
 
+const PickerContainer = ({ open, handleSelect, handleClose }) => {
+  if (!open) return null;
+  return (
+    <ClickAwayListener onClickAway={handleClose}>
+      <div>
+        <EmojiPicker handleSelect={handleSelect} handleClose={handleClose} />
+      </div>
+    </ClickAwayListener>
+  );
+};
+
 export const CreateMessage = ({ currentUser, selectedUser }) => {
+  const [pickerOpen, setPickerOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [createMessage] = useMutation(MUTATION);
 
@@ -55,19 +68,40 @@ export const CreateMessage = ({ currentUser, selectedUser }) => {
     }
   };
 
+  const handlePickerOpen = () => setPickerOpen(true);
+  const handlePickerClose = () => setPickerOpen(false);
+  const handelEmojiSelect = (emoji) => {
+    const newValue = value + String.fromCodePoint(emoji.unicode);
+    setValue(newValue);
+  };
+
   return (
-    <div className={styles.form}>
-      <Input
-        value={value}
-        onChange={onChange}
-        className={styles.input}
-        multiline
-        disableUnderline
-        onKeyDown={onKeyDown}
+    <React.Fragment>
+      <PickerContainer
+        open={pickerOpen}
+        handleClose={handlePickerClose}
+        handleSelect={handelEmojiSelect}
       />
-      <IconButton type="submit" onClick={onSubmit}>
-        <Icon type="send" />
-      </IconButton>
-    </div>
+      <div className={styles.form}>
+        <IconButton onClick={() => {}} className={styles.iconBtn}>
+          <Icon type="gif" className={styles.gifIcon} />
+        </IconButton>
+        <IconButton onClick={handlePickerOpen}>
+          <Icon type="mood" />
+        </IconButton>
+        <Input
+          placeholder="Type a message"
+          value={value}
+          onChange={onChange}
+          className={styles.input}
+          multiline
+          disableUnderline
+          onKeyDown={onKeyDown}
+        />
+        <IconButton type="submit" onClick={onSubmit}>
+          <Icon type="send" />
+        </IconButton>
+      </div>
+    </React.Fragment>
   );
 };

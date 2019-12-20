@@ -85,6 +85,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoodIcon from '@material-ui/icons/Mood';
+import GifIcon from '@material-ui/icons/Gif';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -123,6 +125,7 @@ const muiIconTypes = {
   folder: FolderIcon,
   fullscreen: FullScreenIcon,
   fullscreenExit: FullScreenExitIcon,
+  gif: GifIcon,
   gridOn: GridOnIcon,
   gridOff: GridOffIcon,
   group: GroupIcon,
@@ -140,6 +143,7 @@ const muiIconTypes = {
   localBar: LocalBarIcon,
   mail: MailIcon,
   menuBook: MenuBookIcon,
+  mood: MoodIcon,
   moreHoriz: MoreHorizIcon,
   moreVert: MoreVertIcon,
   notifications: NotificationsIcon,

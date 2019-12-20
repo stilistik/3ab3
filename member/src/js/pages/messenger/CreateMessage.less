@@ -1,6 +1,9 @@
 .form {
   display: flex;
   margin-bottom: 5px;
+  > *:not(:last-child) {
+    margin-right: 10px;
+  }
 }
 
 .input {
@@ -8,7 +11,19 @@
   align-items: center;
   border-radius: 10px;
   background: #eee;
-  margin-right: 10px;
   padding: 5px 10px;
   flex-grow: 100;
+}
+
+.iconBtn {
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+}
+
+.gifIcon {
+  font-size: 40px;
 }
