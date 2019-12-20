@@ -50,8 +50,8 @@ const apollo = new ApolloServer({
     }
   },
   subscriptions: {
-    onConnect: async (connectionParams) => {
-      console.log(connectionParams);
+    onConnect: async (connectionParams, websocket) => {
+      console.log(websocket);
       if (connectionParams) {
         const { id } = verifyTokenInConnection(connectionParams);
         const user = await prisma.updateUser({
@@ -65,6 +65,9 @@ const apollo = new ApolloServer({
           };
       }
       throw new Error('Missing auth token!');
+    },
+    onOperation: async (connectionParams) => {
+      console.log('operation', connectionParams);
     },
     onDisconnect: async (_, context) => {
       const initialContext = await context.initPromise;

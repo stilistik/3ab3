@@ -8,8 +8,38 @@ import Auth from './Auth';
 import Routes from 'Routes';
 import { Notifier } from 'Components';
 import history from 'History';
+import Apollo from 'Apollo';
 
-import './App.css';
+import styles from './App.css';
+
+const UnauthenticatedApp = () => {
+  return (
+    <div className={styles.container}>
+      <CssBaseline />
+      <Router history={history}>
+        <Routes props={{ app: { isAuthenticated: false } }} />
+      </Router>
+      <Notifier />
+    </div>
+  );
+};
+
+const AuthenticatedApp = () => {
+  return (
+    <div className={styles.container}>
+      <Apollo>
+        <CssBaseline />
+        <AppCore />
+        <Auth>
+          <Router history={history}>
+            <Routes props={{ app: { isAuthenticated: true } }} />
+          </Router>
+        </Auth>
+        <Notifier />
+      </Apollo>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -25,32 +55,14 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class App extends React.Component {
-  componentDidMount = () => {
+const App = ({ login, isAuthenticated }) => {
+  React.useEffect(() => {
     const access_token = window.localStorage.getItem('access_token');
-    if (access_token) this.props.login(access_token);
-  };
+    if (access_token) login(access_token);
+  }, []);
 
-  render() {
-    const props = {
-      app: {
-        isAuthenticated: this.props.isAuthenticated,
-      },
-    };
-
-    return (
-      <div styleName="container">
-        <CssBaseline />
-        <AppCore isAuthenticated={this.props.isAuthenticated} />
-        <Auth>
-          <Router history={history}>
-            <Routes props={props} />
-          </Router>
-        </Auth>
-        <Notifier />
-      </div>
-    );
-  }
-}
+  if (isAuthenticated) return <AuthenticatedApp />;
+  else return <UnauthenticatedApp />;
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

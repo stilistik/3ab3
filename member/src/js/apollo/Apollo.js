@@ -13,6 +13,14 @@ import { getMainDefinition } from 'apollo-utilities';
 // eslint-disable-next-line
 global.API_URL = `${window.location.protocol}//${window.location.hostname}:4000`;
 
+const getToken = () => {
+  return new Promise((resolve, reject) => {
+    const token = window.localStorage.getItem('access_token');
+    if (token) resolve(token);
+    else reject(null);
+  });
+};
+
 const uploadLink = createUploadLink({
   uri: global.API_URL + '/api',
 });
@@ -21,8 +29,11 @@ const wsLink = new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
-    connectionParams: {
-      authorization: 'Bearer ' + window.localStorage.getItem('access_token'),
+    connectionParams: async () => {
+      const token = await getToken();
+      return {
+        Authorization: token ? `Bearer ${token}` : '',
+      };
     },
   },
 });
@@ -59,9 +70,10 @@ const errorLink = onError(
     }
   }
 );
+
 const link = ApolloLink.from([errorLink, authLink, terminatingLink]);
 
-export const createApolloClient = (cache = {}) => {
+const createApolloClient = (cache = {}) => {
   return new ApolloClient({
     ssrMode: typeof window !== 'undefined',
     cache: new InMemoryCache({
@@ -71,23 +83,19 @@ export const createApolloClient = (cache = {}) => {
   });
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-  };
+const client = createApolloClient();
+
+const Apollo = ({ children }) => {
+  React.useEffect(() => {
+    wsLink.subscriptionClient.client.onopen();
+    console.log('[Apollo]: initialized');
+    return () => {
+      console.log('[Apollo] initialized');
+      wsLink.subscriptionClient.client.onclose();
+    };
+  }, []);
+
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
-class Apollo extends React.Component {
-  render() {
-    if (this.props.isAuthenticated) {
-      const client = createApolloClient();
-      return (
-        <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
-      );
-    } else {
-      return this.props.children;
-    }
-  }
-}
-
-export default connect(mapStateToProps)(Apollo);
+export default Apollo;

@@ -3,9 +3,14 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { List, ListItem, Typography, Badge } from '@material-ui/core';
 import { UserAvatar } from 'Components';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 import classnames from 'classnames';
 
 import styles from './Chats.less';
+
+TimeAgo.addLocale(en);
+const timeAgo = new TimeAgo('en-EN');
 
 const QUERY = gql`
   query {
@@ -14,6 +19,7 @@ const QUERY = gql`
       name
       avatar
       isOnline
+      lastOnline
     }
   }
 `;
@@ -47,11 +53,14 @@ export const Chats = ({ onSelectUser, selectedUser, currentUser }) => {
                   <span>{user.name}</span>
                 </div>
                 <div className={styles.status}>
-                  {user.isOnline && (
-                    <Badge
-                      variant="dot"
-                      classes={{ badge: styles.badge }}
-                    />
+                  {user.isOnline ? (
+                    <Badge variant="dot" classes={{ badge: styles.badge }} />
+                  ) : (
+                    user.lastOnline && (
+                      <span className={styles.lastOnline}>
+                        {timeAgo.format(new Date(user.lastOnline), 'twitter')}
+                      </span>
+                    )
                   )}
                 </div>
               </ListItem>
