@@ -64,8 +64,6 @@ const groupMessages = (messages, currentUserId) => {
     })
     .reverse();
 
-  console.log(sorted);
-
   const groups = [];
   let group = [];
   let prevFromId = null;
@@ -113,7 +111,6 @@ export const MessagesQuery = ({ selectedUser, currentUser }) => {
           variables: { toId: currentUser.id, fromId: selectedUser },
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData.data) return prev;
-            console.log(prev, subscriptionData.data);
             const newMessage = {
               ...subscriptionData.data.onNewMessage,
               __typename: 'MessageEdge',

@@ -41,14 +41,7 @@ module.exports = {
       subscribe(root, args, context) {
         return context.prisma.$subscribe.message({
           node: {
-            OR: [
-              {
-                AND: [{ from: { id: args.fromId } }, { to: { id: args.toId } }],
-              },
-              {
-                AND: [{ to: { id: args.fromId } }, { from: { id: args.toId } }],
-              },
-            ],
+            AND: [{ to: { id: args.toId } }, { from: { id: args.fromId } }],
           },
           mutation_in: ['CREATED'],
         });
