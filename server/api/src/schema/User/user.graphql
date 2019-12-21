@@ -26,6 +26,7 @@ type User {
   pendingInvitations: [Invitation!]!
   isOnline: Boolean!
   lastOnline: DateTime
+  chats: [Chat!]!
 }
 
 enum UserRole {

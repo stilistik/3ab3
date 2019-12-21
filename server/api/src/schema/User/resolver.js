@@ -91,8 +91,8 @@ module.exports = {
           data: {
             isOnline: false,
             lastOnline: new Date().toISOString(),
-          }
-        })
+          },
+        });
       }
     },
   },
@@ -147,6 +147,9 @@ module.exports = {
     },
     supportedEvents(root, args, context) {
       return context.prisma.user({ id: root.id }).supportedEvents();
+    },
+    chats(root, args, context) {
+      return context.prisma.user({ id: root.id }).chats();
     },
   },
 };

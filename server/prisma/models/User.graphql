@@ -20,6 +20,8 @@ type User {
     @relation(name: "UserInvitation", onDelete: CASCADE)
   isOnline: Boolean! @default(value: false)
   lastOnline: DateTime
+  ownChats: [Chat!]! @relation(name: "ChatCreator")
+  chats: [Chat!]! @relation(name: "ChatMember")
 }
 
 enum UserRole {

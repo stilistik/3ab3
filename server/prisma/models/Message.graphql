@@ -3,6 +3,6 @@ type Message {
   text: String!
   link: String
   from: User! @relation(name: "MessageFrom")
-  to: User! @relation(name: "MessageTo")
+  chat: Chat! @relation(name: "ChatMessage")
   date: DateTime!
 }

@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateClient {
+/* GraphQL */ `type AggregateChat {
+  count: Int!
+}
+
+type AggregateClient {
   count: Int!
 }
 
@@ -77,6 +81,298 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
+}
+
+type Chat {
+  id: ID!
+  title: String!
+  creator: User!
+  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+  lastSeen: Json
+  usersTyping: Json
+}
+
+type ChatConnection {
+  pageInfo: PageInfo!
+  edges: [ChatEdge]!
+  aggregate: AggregateChat!
+}
+
+input ChatCreateInput {
+  title: String!
+  creator: UserCreateOneWithoutOwnChatsInput!
+  members: UserCreateManyWithoutChatsInput
+  messages: MessageCreateManyWithoutChatInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatCreateManyWithoutCreatorInput {
+  create: [ChatCreateWithoutCreatorInput!]
+  connect: [ChatWhereUniqueInput!]
+}
+
+input ChatCreateManyWithoutMembersInput {
+  create: [ChatCreateWithoutMembersInput!]
+  connect: [ChatWhereUniqueInput!]
+}
+
+input ChatCreateOneWithoutMessagesInput {
+  create: ChatCreateWithoutMessagesInput
+  connect: ChatWhereUniqueInput
+}
+
+input ChatCreateWithoutCreatorInput {
+  title: String!
+  members: UserCreateManyWithoutChatsInput
+  messages: MessageCreateManyWithoutChatInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatCreateWithoutMembersInput {
+  title: String!
+  creator: UserCreateOneWithoutOwnChatsInput!
+  messages: MessageCreateManyWithoutChatInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatCreateWithoutMessagesInput {
+  title: String!
+  creator: UserCreateOneWithoutOwnChatsInput!
+  members: UserCreateManyWithoutChatsInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+type ChatEdge {
+  node: Chat!
+  cursor: String!
+}
+
+enum ChatOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  lastSeen_ASC
+  lastSeen_DESC
+  usersTyping_ASC
+  usersTyping_DESC
+}
+
+type ChatPreviousValues {
+  id: ID!
+  title: String!
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [ChatScalarWhereInput!]
+  OR: [ChatScalarWhereInput!]
+  NOT: [ChatScalarWhereInput!]
+}
+
+type ChatSubscriptionPayload {
+  mutation: MutationType!
+  node: Chat
+  updatedFields: [String!]
+  previousValues: ChatPreviousValues
+}
+
+input ChatSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChatWhereInput
+  AND: [ChatSubscriptionWhereInput!]
+  OR: [ChatSubscriptionWhereInput!]
+  NOT: [ChatSubscriptionWhereInput!]
+}
+
+input ChatUpdateInput {
+  title: String
+  creator: UserUpdateOneRequiredWithoutOwnChatsInput
+  members: UserUpdateManyWithoutChatsInput
+  messages: MessageUpdateManyWithoutChatInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatUpdateManyDataInput {
+  title: String
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatUpdateManyMutationInput {
+  title: String
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatUpdateManyWithoutCreatorInput {
+  create: [ChatCreateWithoutCreatorInput!]
+  delete: [ChatWhereUniqueInput!]
+  connect: [ChatWhereUniqueInput!]
+  set: [ChatWhereUniqueInput!]
+  disconnect: [ChatWhereUniqueInput!]
+  update: [ChatUpdateWithWhereUniqueWithoutCreatorInput!]
+  upsert: [ChatUpsertWithWhereUniqueWithoutCreatorInput!]
+  deleteMany: [ChatScalarWhereInput!]
+  updateMany: [ChatUpdateManyWithWhereNestedInput!]
+}
+
+input ChatUpdateManyWithoutMembersInput {
+  create: [ChatCreateWithoutMembersInput!]
+  delete: [ChatWhereUniqueInput!]
+  connect: [ChatWhereUniqueInput!]
+  set: [ChatWhereUniqueInput!]
+  disconnect: [ChatWhereUniqueInput!]
+  update: [ChatUpdateWithWhereUniqueWithoutMembersInput!]
+  upsert: [ChatUpsertWithWhereUniqueWithoutMembersInput!]
+  deleteMany: [ChatScalarWhereInput!]
+  updateMany: [ChatUpdateManyWithWhereNestedInput!]
+}
+
+input ChatUpdateManyWithWhereNestedInput {
+  where: ChatScalarWhereInput!
+  data: ChatUpdateManyDataInput!
+}
+
+input ChatUpdateOneRequiredWithoutMessagesInput {
+  create: ChatCreateWithoutMessagesInput
+  update: ChatUpdateWithoutMessagesDataInput
+  upsert: ChatUpsertWithoutMessagesInput
+  connect: ChatWhereUniqueInput
+}
+
+input ChatUpdateWithoutCreatorDataInput {
+  title: String
+  members: UserUpdateManyWithoutChatsInput
+  messages: MessageUpdateManyWithoutChatInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatUpdateWithoutMembersDataInput {
+  title: String
+  creator: UserUpdateOneRequiredWithoutOwnChatsInput
+  messages: MessageUpdateManyWithoutChatInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatUpdateWithoutMessagesDataInput {
+  title: String
+  creator: UserUpdateOneRequiredWithoutOwnChatsInput
+  members: UserUpdateManyWithoutChatsInput
+  lastSeen: Json
+  usersTyping: Json
+}
+
+input ChatUpdateWithWhereUniqueWithoutCreatorInput {
+  where: ChatWhereUniqueInput!
+  data: ChatUpdateWithoutCreatorDataInput!
+}
+
+input ChatUpdateWithWhereUniqueWithoutMembersInput {
+  where: ChatWhereUniqueInput!
+  data: ChatUpdateWithoutMembersDataInput!
+}
+
+input ChatUpsertWithoutMessagesInput {
+  update: ChatUpdateWithoutMessagesDataInput!
+  create: ChatCreateWithoutMessagesInput!
+}
+
+input ChatUpsertWithWhereUniqueWithoutCreatorInput {
+  where: ChatWhereUniqueInput!
+  update: ChatUpdateWithoutCreatorDataInput!
+  create: ChatCreateWithoutCreatorInput!
+}
+
+input ChatUpsertWithWhereUniqueWithoutMembersInput {
+  where: ChatWhereUniqueInput!
+  update: ChatUpdateWithoutMembersDataInput!
+  create: ChatCreateWithoutMembersInput!
+}
+
+input ChatWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  creator: UserWhereInput
+  members_every: UserWhereInput
+  members_some: UserWhereInput
+  members_none: UserWhereInput
+  messages_every: MessageWhereInput
+  messages_some: MessageWhereInput
+  messages_none: MessageWhereInput
+  AND: [ChatWhereInput!]
+  OR: [ChatWhereInput!]
+  NOT: [ChatWhereInput!]
+}
+
+input ChatWhereUniqueInput {
+  id: ID
 }
 
 type Client {
@@ -1912,6 +2208,8 @@ input ItemWhereUniqueInput {
   id: ID
 }
 
+scalar Json
+
 scalar Long
 
 type Message {
@@ -1919,7 +2217,7 @@ type Message {
   text: String!
   link: String
   from: User!
-  to: User!
+  chat: Chat!
   date: DateTime!
 }
 
@@ -1933,7 +2231,19 @@ input MessageCreateInput {
   text: String!
   link: String
   from: UserCreateOneInput!
-  to: UserCreateOneInput!
+  chat: ChatCreateOneWithoutMessagesInput!
+  date: DateTime!
+}
+
+input MessageCreateManyWithoutChatInput {
+  create: [MessageCreateWithoutChatInput!]
+  connect: [MessageWhereUniqueInput!]
+}
+
+input MessageCreateWithoutChatInput {
+  text: String!
+  link: String
+  from: UserCreateOneInput!
   date: DateTime!
 }
 
@@ -1960,6 +2270,62 @@ type MessagePreviousValues {
   date: DateTime!
 }
 
+input MessageScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [MessageScalarWhereInput!]
+  OR: [MessageScalarWhereInput!]
+  NOT: [MessageScalarWhereInput!]
+}
+
 type MessageSubscriptionPayload {
   mutation: MutationType!
   node: Message
@@ -1982,7 +2348,13 @@ input MessageUpdateInput {
   text: String
   link: String
   from: UserUpdateOneRequiredInput
-  to: UserUpdateOneRequiredInput
+  chat: ChatUpdateOneRequiredWithoutMessagesInput
+  date: DateTime
+}
+
+input MessageUpdateManyDataInput {
+  text: String
+  link: String
   date: DateTime
 }
 
@@ -1990,6 +2362,41 @@ input MessageUpdateManyMutationInput {
   text: String
   link: String
   date: DateTime
+}
+
+input MessageUpdateManyWithoutChatInput {
+  create: [MessageCreateWithoutChatInput!]
+  delete: [MessageWhereUniqueInput!]
+  connect: [MessageWhereUniqueInput!]
+  set: [MessageWhereUniqueInput!]
+  disconnect: [MessageWhereUniqueInput!]
+  update: [MessageUpdateWithWhereUniqueWithoutChatInput!]
+  upsert: [MessageUpsertWithWhereUniqueWithoutChatInput!]
+  deleteMany: [MessageScalarWhereInput!]
+  updateMany: [MessageUpdateManyWithWhereNestedInput!]
+}
+
+input MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput!
+  data: MessageUpdateManyDataInput!
+}
+
+input MessageUpdateWithoutChatDataInput {
+  text: String
+  link: String
+  from: UserUpdateOneRequiredInput
+  date: DateTime
+}
+
+input MessageUpdateWithWhereUniqueWithoutChatInput {
+  where: MessageWhereUniqueInput!
+  data: MessageUpdateWithoutChatDataInput!
+}
+
+input MessageUpsertWithWhereUniqueWithoutChatInput {
+  where: MessageWhereUniqueInput!
+  update: MessageUpdateWithoutChatDataInput!
+  create: MessageCreateWithoutChatInput!
 }
 
 input MessageWhereInput {
@@ -2036,7 +2443,7 @@ input MessageWhereInput {
   link_ends_with: String
   link_not_ends_with: String
   from: UserWhereInput
-  to: UserWhereInput
+  chat: ChatWhereInput
   date: DateTime
   date_not: DateTime
   date_in: [DateTime!]
@@ -2055,6 +2462,12 @@ input MessageWhereUniqueInput {
 }
 
 type Mutation {
+  createChat(data: ChatCreateInput!): Chat!
+  updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+  updateManyChats(data: ChatUpdateManyMutationInput!, where: ChatWhereInput): BatchPayload!
+  upsertChat(where: ChatWhereUniqueInput!, create: ChatCreateInput!, update: ChatUpdateInput!): Chat!
+  deleteChat(where: ChatWhereUniqueInput!): Chat
+  deleteManyChats(where: ChatWhereInput): BatchPayload!
   createClient(data: ClientCreateInput!): Client!
   updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
   updateManyClients(data: ClientUpdateManyMutationInput!, where: ClientWhereInput): BatchPayload!
@@ -3391,6 +3804,9 @@ input PurchaseWhereUniqueInput {
 }
 
 type Query {
+  chat(where: ChatWhereUniqueInput!): Chat
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat]!
+  chatsConnection(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatConnection!
   client(where: ClientWhereUniqueInput!): Client
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client]!
   clientsConnection(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClientConnection!
@@ -3572,6 +3988,7 @@ input QuestionWhereUniqueInput {
 }
 
 type Subscription {
+  chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   committee(where: CommitteeSubscriptionWhereInput): CommitteeSubscriptionPayload
@@ -4398,6 +4815,8 @@ type User {
   invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation!]
   isOnline: Boolean!
   lastOnline: DateTime
+  ownChats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
 }
 
 type UserConnection {
@@ -4426,10 +4845,17 @@ input UserCreateInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateManyInput {
   create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutChatsInput {
+  create: [UserCreateWithoutChatsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -4473,6 +4899,11 @@ input UserCreateOneWithoutItemsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutOwnChatsInput {
+  create: UserCreateWithoutOwnChatsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutPaymentsInput {
   create: UserCreateWithoutPaymentsInput
   connect: UserWhereUniqueInput
@@ -4491,6 +4922,29 @@ input UserCreateOneWithoutPurchasesInput {
 input UserCreateOneWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutChatsInput {
+  name: String!
+  email: String!
+  password: String!
+  avatar: String
+  purchases: PurchaseCreateManyWithoutUserInput
+  payments: PaymentCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  role: UserRole
+  balance: Float
+  posts: PostCreateManyWithoutAuthorInput
+  likedPosts: PostCreateManyWithoutLikedByInput
+  likedEvents: EventCreateManyWithoutLikedByInput
+  supportedEvents: EventCreateManyWithoutSupportersInput
+  comments: CommentCreateManyWithoutAuthorInput
+  likedComments: CommentCreateManyWithoutLikedByInput
+  invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
 }
 
 input UserCreateWithoutCommentsInput {
@@ -4512,6 +4966,8 @@ input UserCreateWithoutCommentsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutInvitationsInput {
@@ -4533,6 +4989,8 @@ input UserCreateWithoutInvitationsInput {
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutItemsInput {
@@ -4554,6 +5012,8 @@ input UserCreateWithoutItemsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutLikedCommentsInput {
@@ -4575,6 +5035,8 @@ input UserCreateWithoutLikedCommentsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutLikedEventsInput {
@@ -4596,6 +5058,8 @@ input UserCreateWithoutLikedEventsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutLikedPostsInput {
@@ -4617,6 +5081,31 @@ input UserCreateWithoutLikedPostsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
+}
+
+input UserCreateWithoutOwnChatsInput {
+  name: String!
+  email: String!
+  password: String!
+  avatar: String
+  purchases: PurchaseCreateManyWithoutUserInput
+  payments: PaymentCreateManyWithoutUserInput
+  transactions: TransactionCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+  role: UserRole
+  balance: Float
+  posts: PostCreateManyWithoutAuthorInput
+  likedPosts: PostCreateManyWithoutLikedByInput
+  likedEvents: EventCreateManyWithoutLikedByInput
+  supportedEvents: EventCreateManyWithoutSupportersInput
+  comments: CommentCreateManyWithoutAuthorInput
+  likedComments: CommentCreateManyWithoutLikedByInput
+  invitations: InvitationCreateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutPaymentsInput {
@@ -4638,6 +5127,8 @@ input UserCreateWithoutPaymentsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -4659,6 +5150,8 @@ input UserCreateWithoutPostsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutPurchasesInput {
@@ -4680,6 +5173,8 @@ input UserCreateWithoutPurchasesInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutSupportedEventsInput {
@@ -4701,6 +5196,8 @@ input UserCreateWithoutSupportedEventsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 input UserCreateWithoutTransactionsInput {
@@ -4722,6 +5219,8 @@ input UserCreateWithoutTransactionsInput {
   invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatCreateManyWithoutCreatorInput
+  chats: ChatCreateManyWithoutMembersInput
 }
 
 type UserEdge {
@@ -4904,6 +5403,8 @@ input UserUpdateDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateInput {
@@ -4926,6 +5427,8 @@ input UserUpdateInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateManyDataInput {
@@ -4960,6 +5463,18 @@ input UserUpdateManyMutationInput {
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
+}
+
+input UserUpdateManyWithoutChatsInput {
+  create: [UserCreateWithoutChatsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutChatsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutChatsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithoutLikedCommentsInput {
@@ -5052,6 +5567,13 @@ input UserUpdateOneRequiredWithoutItemsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutOwnChatsInput {
+  create: UserCreateWithoutOwnChatsInput
+  update: UserUpdateWithoutOwnChatsDataInput
+  upsert: UserUpsertWithoutOwnChatsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutPaymentsInput {
   create: UserCreateWithoutPaymentsInput
   update: UserUpdateWithoutPaymentsDataInput
@@ -5080,6 +5602,29 @@ input UserUpdateOneRequiredWithoutTransactionsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutChatsDataInput {
+  name: String
+  email: String
+  password: String
+  avatar: String
+  purchases: PurchaseUpdateManyWithoutUserInput
+  payments: PaymentUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  role: UserRole
+  balance: Float
+  posts: PostUpdateManyWithoutAuthorInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
+  likedEvents: EventUpdateManyWithoutLikedByInput
+  supportedEvents: EventUpdateManyWithoutSupportersInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  likedComments: CommentUpdateManyWithoutLikedByInput
+  invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+}
+
 input UserUpdateWithoutCommentsDataInput {
   name: String
   email: String
@@ -5099,6 +5644,8 @@ input UserUpdateWithoutCommentsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutInvitationsDataInput {
@@ -5120,6 +5667,8 @@ input UserUpdateWithoutInvitationsDataInput {
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutItemsDataInput {
@@ -5141,6 +5690,8 @@ input UserUpdateWithoutItemsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutLikedCommentsDataInput {
@@ -5162,6 +5713,8 @@ input UserUpdateWithoutLikedCommentsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutLikedEventsDataInput {
@@ -5183,6 +5736,8 @@ input UserUpdateWithoutLikedEventsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutLikedPostsDataInput {
@@ -5204,6 +5759,31 @@ input UserUpdateWithoutLikedPostsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
+}
+
+input UserUpdateWithoutOwnChatsDataInput {
+  name: String
+  email: String
+  password: String
+  avatar: String
+  purchases: PurchaseUpdateManyWithoutUserInput
+  payments: PaymentUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+  role: UserRole
+  balance: Float
+  posts: PostUpdateManyWithoutAuthorInput
+  likedPosts: PostUpdateManyWithoutLikedByInput
+  likedEvents: EventUpdateManyWithoutLikedByInput
+  supportedEvents: EventUpdateManyWithoutSupportersInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  likedComments: CommentUpdateManyWithoutLikedByInput
+  invitations: InvitationUpdateManyWithoutUserInput
+  isOnline: Boolean
+  lastOnline: DateTime
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutPaymentsDataInput {
@@ -5225,6 +5805,8 @@ input UserUpdateWithoutPaymentsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -5246,6 +5828,8 @@ input UserUpdateWithoutPostsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutPurchasesDataInput {
@@ -5267,6 +5851,8 @@ input UserUpdateWithoutPurchasesDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutSupportedEventsDataInput {
@@ -5288,6 +5874,8 @@ input UserUpdateWithoutSupportedEventsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithoutTransactionsDataInput {
@@ -5309,11 +5897,18 @@ input UserUpdateWithoutTransactionsDataInput {
   invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
+  ownChats: ChatUpdateManyWithoutCreatorInput
+  chats: ChatUpdateManyWithoutMembersInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   data: UserUpdateDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutChatsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutChatsDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
@@ -5356,6 +5951,11 @@ input UserUpsertWithoutItemsInput {
   create: UserCreateWithoutItemsInput!
 }
 
+input UserUpsertWithoutOwnChatsInput {
+  update: UserUpdateWithoutOwnChatsDataInput!
+  create: UserCreateWithoutOwnChatsInput!
+}
+
 input UserUpsertWithoutPaymentsInput {
   update: UserUpdateWithoutPaymentsDataInput!
   create: UserCreateWithoutPaymentsInput!
@@ -5380,6 +5980,12 @@ input UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutChatsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutChatsDataInput!
+  create: UserCreateWithoutChatsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
@@ -5532,6 +6138,12 @@ input UserWhereInput {
   lastOnline_lte: DateTime
   lastOnline_gt: DateTime
   lastOnline_gte: DateTime
+  ownChats_every: ChatWhereInput
+  ownChats_some: ChatWhereInput
+  ownChats_none: ChatWhereInput
+  chats_every: ChatWhereInput
+  chats_some: ChatWhereInput
+  chats_none: ChatWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

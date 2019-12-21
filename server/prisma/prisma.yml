@@ -18,6 +18,7 @@ datamodel:
   - models/Question.graphql
   - models/TodoTemplate.graphql
   - models/Message.graphql
+  - models/Chat.graphql
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/

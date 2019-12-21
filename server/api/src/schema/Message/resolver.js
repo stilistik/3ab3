@@ -1,21 +1,8 @@
-const { verifyAndDecodeToken } = require('../../auth/verify');
-const { uploadFile } = require('../../helper/file.helper.js');
-const { AuthenticationError } = require('../../auth/errors');
-
 module.exports = {
   Query: {
     messages(root, args, context) {
       return context.prisma.messagesConnection({
-        where: {
-          OR: [
-            {
-              AND: [{ from: { id: args.fromId } }, { to: { id: args.toId } }],
-            },
-            {
-              AND: [{ to: { id: args.fromId } }, { from: { id: args.toId } }],
-            },
-          ],
-        },
+        where: { chat: { id: args.chatId } },
         orderBy: 'date_DESC',
         first: args.first,
         after: args.after,
@@ -29,7 +16,7 @@ module.exports = {
       const { input } = args;
       return context.prisma.createMessage({
         from: { connect: { id: input.fromId } },
-        to: { connect: { id: input.toId } },
+        chat: { connect: { id: input.chatId } },
         date: date,
         link: input.link,
         text: input.text,
@@ -40,9 +27,7 @@ module.exports = {
     onNewMessage: {
       subscribe(root, args, context) {
         return context.prisma.$subscribe.message({
-          node: {
-            AND: [{ to: { id: args.toId } }, { from: { id: args.fromId } }],
-          },
+          node: { chat: { id: args.chatId } },
           mutation_in: ['CREATED'],
         });
       },
@@ -55,8 +40,8 @@ module.exports = {
     from(root, args, context) {
       return context.prisma.message({ id: root.id }).from();
     },
-    to(root, args, context) {
-      return context.prisma.message({ id: root.id }).to();
+    chat(root, args, context) {
+      return context.prisma.message({ id: root.id }).chat();
     },
   },
 };

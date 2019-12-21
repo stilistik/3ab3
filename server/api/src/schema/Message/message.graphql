@@ -3,7 +3,7 @@ type Message implements Node {
   text: String!
   link: String
   from: User!
-  to: User!
+  chat: Chat!
   date: DateTime!
 }
 
@@ -23,19 +23,18 @@ type MessageSubscriptionPayload {
 }
 
 input MessageInput {
+  chatId: ID!
   fromId: ID!
-  toId: ID!
   text: String!
   link: String
 }
 
 extend type Query {
   messages(
+    chatId: ID!
     first: Int!
     after: String
     skip: Int
-    fromId: ID!
-    toId: ID!
   ): MessageConnection!
 }
 
@@ -44,5 +43,5 @@ extend type Mutation {
 }
 
 extend type Subscription {
-  onNewMessage(fromId: ID!, toId: ID): MessageSubscriptionPayload!
+  onNewMessage(chatId: ID!): MessageSubscriptionPayload!
 }

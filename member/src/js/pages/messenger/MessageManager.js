@@ -4,20 +4,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { Messages } from './Messages';
 
 export const MESSAGES = gql`
-  query Messages(
-    $fromId: ID!
-    $toId: ID!
-    $first: Int!
-    $after: String
-    $skip: Int
-  ) {
-    messages(
-      fromId: $fromId
-      toId: $toId
-      first: $first
-      after: $after
-      skip: $skip
-    ) {
+  query Messages($chatId: ID!, $first: Int!, $after: String, $skip: Int) {
+    messages(chatId: $chatId, first: $first, after: $after, skip: $skip) {
       edges {
         cursor
         node {
@@ -28,7 +16,7 @@ export const MESSAGES = gql`
           from {
             id
           }
-          to {
+          chat {
             id
           }
         }
@@ -38,8 +26,8 @@ export const MESSAGES = gql`
 `;
 
 const NEW_MESSAGES_SUBSCRIPTION = gql`
-  subscription($fromId: ID!, $toId: ID!) {
-    onNewMessage(fromId: $fromId, toId: $toId) {
+  subscription($chatId: ID!) {
+    onNewMessage(chatId: $chatId) {
       node {
         id
         text
@@ -48,7 +36,7 @@ const NEW_MESSAGES_SUBSCRIPTION = gql`
         from {
           id
         }
-        to {
+        chat {
           id
         }
       }
@@ -97,8 +85,8 @@ const groupMessages = (messages, currentUserId) => {
   return groups;
 };
 
-export const MessageManager = ({ selectedUser, currentUser }) => {
-  if (!selectedUser) return null;
+export const MessageManager = ({ selectedChat, currentUser }) => {
+  if (!selectedChat) return null;
 
   const cursor = React.useRef(null);
   let fetching = React.useRef(false);
@@ -107,8 +95,7 @@ export const MessageManager = ({ selectedUser, currentUser }) => {
     MESSAGES,
     {
       variables: {
-        fromId: currentUser.id,
-        toId: selectedUser,
+        chatId: selectedChat.id,
         first: 30,
       },
     }
@@ -119,7 +106,7 @@ export const MessageManager = ({ selectedUser, currentUser }) => {
   const onSubscribe = () => {
     subscribeToMore({
       document: NEW_MESSAGES_SUBSCRIPTION,
-      variables: { toId: currentUser.id, fromId: selectedUser },
+      variables: { chatId: selectedChat.id },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const { onNewMessage } = subscriptionData.data;
@@ -145,8 +132,7 @@ export const MessageManager = ({ selectedUser, currentUser }) => {
 
     await fetchMore({
       variables: {
-        fromId: currentUser.id,
-        toId: selectedUser,
+        chatId: selectedChat.id,
         after: cursor.current,
         first: 10,
       },
@@ -178,9 +164,8 @@ export const MessageManager = ({ selectedUser, currentUser }) => {
 
   return (
     <Messages
-      key={currentUser.id + selectedUser}
       messageGroups={groups}
-      selectedUser={selectedUser}
+      selectedChat={selectedChat}
       currentUser={currentUser}
       subscribe={onSubscribe}
       loadMore={onLoadMore}

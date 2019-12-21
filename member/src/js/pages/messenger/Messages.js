@@ -9,7 +9,7 @@ import styles from './Messages.less';
 
 export const Messages = ({
   messageGroups,
-  selectedUser,
+  selectedChat,
   currentUser,
   subscribe,
   loadMore,
@@ -64,7 +64,7 @@ export const Messages = ({
         })}
       </ScrollContainer>
       <CreateMessage
-        selectedUser={selectedUser}
+        selectedChat={selectedChat}
         currentUser={currentUser}
         onCreateMessage={onCreateMessage}
       />

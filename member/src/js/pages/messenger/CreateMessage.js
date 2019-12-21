@@ -18,7 +18,7 @@ const MUTATION = gql`
       from {
         id
       }
-      to {
+      chat {
         id
       }
     }
@@ -38,46 +38,12 @@ const PickerContainer = ({ open, handleSelect, handleClose }) => {
 
 export const CreateMessage = ({
   currentUser,
-  selectedUser,
+  selectedChat,
   onCreateMessage,
 }) => {
   const [pickerOpen, setPickerOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
-  const [createMessage] = useMutation(MUTATION, {
-    update(cache, { data: { createMessage } }) {
-      if (!createMessage) return;
-      const newEdge = {
-        cursor: createMessage.id,
-        node: { ...createMessage, __typename: 'Message' },
-        __typename: 'MessageEdge',
-      };
-      const prev = cache.readQuery({
-        query: MESSAGES,
-        variables: {
-          fromId: currentUser.id,
-          toId: selectedUser,
-          first: 30,
-        },
-      });
-
-      const newObject = Object.assign({}, prev, {
-        messages: {
-          edges: [newEdge, ...prev.messages.edges],
-          __typename: 'MessageConnection',
-        },
-      });
-      
-      cache.writeQuery({
-        query: MESSAGES,
-        variables: {
-          fromId: currentUser.id,
-          toId: selectedUser,
-          first: 30,
-        },
-        data: newObject,
-      });
-    },
-  });
+  const [createMessage] = useMutation(MUTATION);
 
   const onSubmit = async () => {
     if (!value) return;
@@ -86,7 +52,7 @@ export const CreateMessage = ({
         variables: {
           input: {
             fromId: currentUser.id,
-            toId: selectedUser,
+            chatId: selectedChat.id,
             text: value,
           },
         },

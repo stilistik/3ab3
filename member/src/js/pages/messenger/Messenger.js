@@ -6,7 +6,6 @@ import { Grid } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
-
 const USER = gql`
   query {
     currentUser {
@@ -16,26 +15,26 @@ const USER = gql`
 `;
 
 export const Messenger = () => {
-  const [selectedUser, setSelectedUser] = React.useState(null);
+  const [selectedChat, setSelectedChat] = React.useState({});
 
   const { loading, error, data } = useQuery(USER);
   if (loading || error) return null;
 
-  const onSelectUser = (userId) => setSelectedUser(userId);
+  const onSelectChat = (chat) => setSelectedChat(chat);
   return (
     <DefaultGrid>
       <Grid container spacing={3} style={{ padding: '0px 24px' }}>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <ChatManager
-            onSelectUser={onSelectUser}
-            selectedUser={selectedUser}
+            selectedChat={selectedChat}
+            onSelectChat={onSelectChat}
             currentUser={data.currentUser}
           />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <MessageManager
             currentUser={data.currentUser}
-            selectedUser={selectedUser}
+            selectedChat={selectedChat}
           />
         </Grid>
       </Grid>

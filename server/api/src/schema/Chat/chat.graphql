@@ -1,0 +1,34 @@
+type Chat implements Node {
+  id: ID!
+  title: String!
+  creator: User!
+  members: [User!]!
+  messages: [Message!]!
+}
+
+type ChatEdge implements Edge {
+  cursor: String!
+  node: Chat
+}
+
+type ChatsConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [ChatEdge]
+}
+
+input ChatInput {
+  title: String!
+  creatorId: ID!
+  memberIds: [ID!]!
+}
+
+
+extend type Query {
+  chats(first: Int!, after: String, skip: Int): ChatsConnection!
+}
+
+extend type Mutation {
+  createChat(input: ChatInput!): Chat!
+
+}
+

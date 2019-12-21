@@ -1,0 +1,9 @@
+type Chat {
+  id: ID! @unique
+  title: String!
+  creator: User! @relation(name: "ChatCreator")
+  members: [User!]! @relation(name: "ChatMember")
+  messages: [Message!]! @relation(name: "ChatMessage", onDelete: CASCADE)
+  lastSeen: Json
+  usersTyping: Json
+}

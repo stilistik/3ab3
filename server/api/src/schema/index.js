@@ -28,6 +28,7 @@ const Todo = require('./Todo');
 const TodoTemplate = require('./TodoTemplate');
 const Question = require('./Question');
 const Message = require('./Message');
+const Chat = require('./Chat');
 
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
@@ -96,6 +97,7 @@ module.exports = makeExecutableSchema({
     TodoTemplate.typeDef,
     Question.typeDef,
     Message.typeDef,
+    Chat.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -117,7 +119,8 @@ module.exports = makeExecutableSchema({
     Todo.resolvers,
     TodoTemplate.resolvers,
     Question.resolvers,
-    Message.resolvers
+    Message.resolvers,
+    Chat.resolvers
   ),
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,
