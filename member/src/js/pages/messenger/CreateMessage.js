@@ -4,7 +4,7 @@ import { IconButton, Input } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { ClickAwayListener } from '@material-ui/core';
-import { MESSAGES } from './Messages';
+import { MESSAGES } from './MessageManager';
 
 import styles from './CreateMessage.less';
 
@@ -12,6 +12,15 @@ const MUTATION = gql`
   mutation($input: MessageInput) {
     createMessage(input: $input) {
       id
+      text
+      link
+      date
+      from {
+        id
+      }
+      to {
+        id
+      }
     }
   }
 `;
@@ -27,10 +36,52 @@ const PickerContainer = ({ open, handleSelect, handleClose }) => {
   );
 };
 
-export const CreateMessage = ({ currentUser, selectedUser }) => {
+export const CreateMessage = ({
+  currentUser,
+  selectedUser,
+  onCreateMessage,
+}) => {
   const [pickerOpen, setPickerOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
-  const [createMessage] = useMutation(MUTATION);
+  const [createMessage] = useMutation(MUTATION, {
+    update(cache, { data: { createMessage } }) {
+      if (!createMessage) return;
+      console.log(createMessage);
+
+      const newEdge = {
+        cursor: createMessage.id,
+        node: { ...createMessage, __typename: 'Message' },
+        __typename: 'MessageEdge',
+      };
+      const prev = cache.readQuery({
+        query: MESSAGES,
+        variables: {
+          fromId: currentUser.id,
+          toId: selectedUser,
+          first: 30,
+        },
+      });
+
+      const newObject = Object.assign({}, prev, {
+        messages: {
+          edges: [newEdge, ...prev.messages.edges],
+          __typename: 'MessageConnection',
+        },
+      });
+
+      console.log(newObject);
+
+      cache.writeQuery({
+        query: MESSAGES,
+        variables: {
+          fromId: currentUser.id,
+          toId: selectedUser,
+          first: 30,
+        },
+        data: newObject,
+      });
+    },
+  });
 
   const onSubmit = async () => {
     if (!value) return;
@@ -43,18 +94,9 @@ export const CreateMessage = ({ currentUser, selectedUser }) => {
             text: value,
           },
         },
-        refetchQueries: () => [
-          {
-            query: MESSAGES,
-            variables: {
-              fromId: currentUser.id,
-              toId: selectedUser,
-              first: 20,
-            },
-          },
-        ],
       });
       setValue('');
+      onCreateMessage();
     } catch (error) {
       Message.error(error.message);
     }
@@ -104,4 +146,8 @@ export const CreateMessage = ({ currentUser, selectedUser }) => {
       </div>
     </React.Fragment>
   );
+};
+
+CreateMessage.defaultProps = {
+  onCreateMessage: () => {},
 };

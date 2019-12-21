@@ -1,41 +1,14 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 import { List, ListItem, Typography, Badge } from '@material-ui/core';
 import { UserAvatar } from 'Components';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import classnames from 'classnames';
-import { useInterval } from 'Utils';
 
 import styles from './Chats.less';
 
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-EN');
-
-const QUERY = gql`
-  query {
-    users {
-      id
-      name
-      avatar
-      isOnline
-      lastOnline
-    }
-  }
-`;
-
-export const ChatData = (props) => {
-  const { loading, error, data, refetch } = useQuery(QUERY);
-
-  useInterval(() => {
-    refetch();
-  }, 2000);
-
-  if (loading || error) return null;
-  const users = data.users.filter((el) => el.id !== props.currentUser.id);
-  return <Chats users={users} {...props} />;
-};
 
 export const Chats = ({ onSelectUser, selectedUser, users }) => {
   React.useEffect(() => {

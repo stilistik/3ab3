@@ -40,10 +40,10 @@ const Auth = ({ children, ...rest }) => {
 
   useInterval(() => {
     refetch()
-      .then((response) => {
+      .then(() => {
         setErrorCount(0);
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorCount(errorCount + 1);
       });
   }, 1000);

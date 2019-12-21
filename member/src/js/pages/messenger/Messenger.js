@@ -1,12 +1,11 @@
 import React from 'react';
-import { DefaultGrid, Container } from 'Components';
-import { ChatData } from './Chats';
-import Messages from './Messages';
+import { DefaultGrid } from 'Components';
+import { ChatManager } from './ChatManager';
+import { MessageManager } from './MessageManager';
 import { Grid } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
-import styles from './Messenger.less';
 
 const USER = gql`
   query {
@@ -27,14 +26,14 @@ export const Messenger = () => {
     <DefaultGrid>
       <Grid container spacing={3} style={{ padding: '0px 24px' }}>
         <Grid item xs={3}>
-          <ChatData
+          <ChatManager
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
             currentUser={data.currentUser}
           />
         </Grid>
         <Grid item xs={9}>
-          <Messages
+          <MessageManager
             currentUser={data.currentUser}
             selectedUser={selectedUser}
           />
