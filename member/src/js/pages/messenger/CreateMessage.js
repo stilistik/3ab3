@@ -46,8 +46,6 @@ export const CreateMessage = ({
   const [createMessage] = useMutation(MUTATION, {
     update(cache, { data: { createMessage } }) {
       if (!createMessage) return;
-      console.log(createMessage);
-
       const newEdge = {
         cursor: createMessage.id,
         node: { ...createMessage, __typename: 'Message' },
@@ -68,9 +66,7 @@ export const CreateMessage = ({
           __typename: 'MessageConnection',
         },
       });
-
-      console.log(newObject);
-
+      
       cache.writeQuery({
         query: MESSAGES,
         variables: {

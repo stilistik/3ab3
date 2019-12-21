@@ -169,13 +169,17 @@ export const MessageManager = ({ selectedUser, currentUser }) => {
     fetching.current = false;
   };
 
+  let groups = [];
   const { edges } = data.messages;
-  cursor.current = edges[edges.length - 1].cursor;
-  const messageGroups = groupMessages(edges, currentUser.id);
+  if (edges.length) {
+    cursor.current = edges[edges.length - 1].cursor;
+    groups = groupMessages(edges, currentUser.id);
+  }
 
   return (
     <Messages
-      messageGroups={messageGroups}
+      key={currentUser.id + selectedUser}
+      messageGroups={groups}
       selectedUser={selectedUser}
       currentUser={currentUser}
       subscribe={onSubscribe}

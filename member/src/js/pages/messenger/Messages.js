@@ -14,11 +14,12 @@ export const Messages = ({
   subscribe,
   loadMore,
 }) => {
-  const [down, setDown] = React.useState(false);
+  const [down, setDown] = React.useState(true);
   const [request, setRequest] = React.useState(null);
 
   React.useEffect(() => {
     subscribe();
+    setRequest('bottom');
   }, []);
 
   const onDown = () => {
@@ -27,8 +28,13 @@ export const Messages = ({
 
   const onScroll = (element, pos, height) => {
     // if not at bottom, show scroll down button
-    if (pos > height - 5) setDown(true);
-    else setDown(false);
+    console.log(pos, height);
+
+    if (pos === height) {
+      setDown(true);
+    } else {
+      setDown(false);
+    }
 
     // if near top, fetch more messages
     if (pos < 100) loadMore();

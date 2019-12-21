@@ -13,7 +13,6 @@ export const ScrollContainer = ({ children, request, setRequest, ...rest }) => {
 
   React.useEffect(() => {
     ref.current.addEventListener('scroll', onScroll);
-    scrollTo('bottom');
     return () => ref.current.removeEventListener('scroll', onScroll);
   }, []);
 
