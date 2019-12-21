@@ -41,7 +41,7 @@ const Auth = ({ children, ...rest }) => {
   useInterval(() => {
     refetch()
       .then((response) => {
-        console.log(response);
+        setErrorCount(0);
       })
       .catch((error) => {
         setErrorCount(errorCount + 1);
