@@ -25,7 +25,7 @@ const QUERY = gql`
   }
 `;
 
-export const Chats = ({ onSelectUser, selectedUser, currentUser }) => {
+export const ChatData = (props) => {
   const { loading, error, data, refetch } = useQuery(QUERY);
 
   useInterval(() => {
@@ -33,8 +33,15 @@ export const Chats = ({ onSelectUser, selectedUser, currentUser }) => {
   }, 2000);
 
   if (loading || error) return null;
+  const users = data.users.filter((el) => el.id !== props.currentUser.id);
+  return <Chats users={users} {...props} />;
+};
 
-  const users = data.users.filter((el) => el.id !== currentUser.id);
+export const Chats = ({ onSelectUser, selectedUser, users }) => {
+  React.useEffect(() => {
+    if (!selectedUser) onSelectUser(users[0].id);
+  }, []);
+
   return (
     <div className={styles.outer}>
       <Typography variant="h4" className={styles.header}>

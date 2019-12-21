@@ -1,6 +1,6 @@
 import React from 'react';
 import { DefaultGrid, Container } from 'Components';
-import { Chats } from './Chats';
+import { ChatData } from './Chats';
 import Messages from './Messages';
 import { Grid } from '@material-ui/core';
 import gql from 'graphql-tag';
@@ -27,7 +27,7 @@ export const Messenger = () => {
     <DefaultGrid>
       <Grid container spacing={3} style={{ padding: '0px 24px' }}>
         <Grid item xs={3}>
-          <Chats
+          <ChatData
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
             currentUser={data.currentUser}

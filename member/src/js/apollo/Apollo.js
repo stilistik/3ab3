@@ -86,11 +86,13 @@ const client = createApolloClient();
 
 const Apollo = ({ children }) => {
   React.useEffect(() => {
-    wsLink.subscriptionClient.client.onopen();
+    if (wsLink.subscriptionClient.client)
+      wsLink.subscriptionClient.client.onopen();
     console.log('[Apollo]: initialized');
     return () => {
       console.log('[Apollo] initialized');
-      wsLink.subscriptionClient.client.onclose();
+      if (wsLink.subscriptionClient.client)
+        wsLink.subscriptionClient.client.onclose();
     };
   }, []);
 

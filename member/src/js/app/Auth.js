@@ -1,8 +1,9 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { logout } from 'Redux/actions';
+import { useInterval } from 'Utils';
 
 const QUERY = gql`
   query {
@@ -26,25 +27,30 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class Auth extends React.Component {
-  render() {
-    if (!this.props.isAuthenticated) return this.props.children;
-    return (
-      <Query query={QUERY}>
-        {({ loading, error }) => {
-          if (loading) return null;
-          if (error) {
-            this.props.logout();
-            return null;
-          }
-          return this.props.children;
-        }}
-      </Query>
-    );
-  }
-}
+const Logout = ({ children, logout }) => {
+  React.useEffect(() => {
+    logout();
+  }, []);
+  return children;
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Auth);
+const Auth = ({ children, ...rest }) => {
+  const [errorCount, setErrorCount] = React.useState(0);
+  const { refetch } = useQuery(QUERY);
+
+  useInterval(() => {
+    refetch()
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        setErrorCount(errorCount + 1);
+      });
+  }, 1000);
+
+  if (errorCount > 5) return <Logout {...rest}>{children}</Logout>;
+
+  return children;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
