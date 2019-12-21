@@ -28,8 +28,6 @@ export const Messages = ({
 
   const onScroll = (element, pos, height) => {
     // if not at bottom, show scroll down button
-    console.log(pos, height);
-
     if (pos === height) {
       setDown(true);
     } else {
