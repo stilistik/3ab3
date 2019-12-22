@@ -9,6 +9,7 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 import styles from './Messages.less';
+import { UNREAD_MESSAGES } from './Chat';
 
 const DownButton = ({ show, onClick }) => {
   return (
@@ -105,6 +106,12 @@ export const Messages = ({
         userId: currentUser.id,
         chatId: selectedChat.id,
       },
+      refetchQueries: () => [
+        {
+          query: UNREAD_MESSAGES,
+          variables: { userId: currentUser.id, chatId: selectedChat.id },
+        },
+      ],
     });
   };
 

@@ -13,26 +13,59 @@ import styles from './Chats.less';
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-EN');
 
-const UNREAD_MESSAGES = gql`
+export const UNREAD_MESSAGES = gql`
   query($userId: ID!, $chatId: ID!) {
     unreadMessagesCount(userId: $userId, chatId: $chatId)
   }
 `;
 
+const NEW_MESSAGES_SUBSCRIPTION = gql`
+  subscription($chatId: ID!) {
+    onNewMessage(chatId: $chatId) {
+      node {
+        id
+        date
+        from {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const Chat = ({ onSelectChat, chat, currentUser, selected }) => {
-  const { loading, error, data, refetch } = useQuery(UNREAD_MESSAGES, {
+  const unsubscribe = React.useRef(null);
+  const { subscribeToMore, loading, error, data } = useQuery(UNREAD_MESSAGES, {
     variables: { userId: currentUser.id, chatId: chat.id },
   });
 
-  useInterval(() => {
-    refetch();
-  }, 2000);
+  const subscribe = () => {
+    unsubscribe.current = subscribeToMore({
+      document: NEW_MESSAGES_SUBSCRIPTION,
+      variables: { chatId: chat.id },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        let count = prev.unreadMessagesCount;
+        const { onNewMessage } = subscriptionData.data;
+        if (onNewMessage.node.from.id === currentUser.id) return prev;
+        const userLastSeen = chat.lastSeen[currentUser.id];
+        if (new Date(onNewMessage.node.date) - new Date(userLastSeen) > 0) {
+          count++;
+        }
+        return { unreadMessagesCount: count };
+      },
+    });
+  };
+
+  React.useEffect(() => {
+    subscribe();
+    return () => unsubscribe.current();
+  }, []);
 
   if (loading || error) return null;
 
   const user = chat.members.filter((el) => el.id !== currentUser.id)[0];
   const unread = data.unreadMessagesCount;
-  console.log(unread);
 
   const cls = classnames(styles.chat, {
     [styles.selected]: selected,
