@@ -55,8 +55,9 @@ export const Messages = ({
   subscribe,
   unsubscribe,
   loadMore,
+  down,
+  setDown,
 }) => {
-  const [down, setDown] = React.useState(true);
   const [request, setRequest] = React.useState(null);
   const [disableAnim, setDisableAnim] = React.useState(true);
   const [userLastSeen] = useMutation(USER_LAST_SEEN);
@@ -85,6 +86,7 @@ export const Messages = ({
   const onScroll = (element, pos, height) => {
     // if not at bottom, show scroll down button
     if (pos === height) {
+      onUserLastSeen();
       setDown(true);
     } else {
       setDown(false);

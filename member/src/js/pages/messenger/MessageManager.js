@@ -82,7 +82,12 @@ const groupMessages = (messages, currentUserId) => {
   return groups;
 };
 
-export const MessageManager = ({ selectedChat, currentUser }) => {
+export const MessageManager = ({
+  selectedChat,
+  currentUser,
+  down,
+  setDown,
+}) => {
   if (!selectedChat) return null;
   const unsubscribe = React.useRef(null);
   const cursor = React.useRef(null);
@@ -177,6 +182,8 @@ export const MessageManager = ({ selectedChat, currentUser }) => {
       subscribe={onSubscribe}
       unsubscribe={onUnsubscribe}
       loadMore={onLoadMore}
+      down={down}
+      setDown={setDown}
     />
   );
 };

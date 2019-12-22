@@ -15,7 +15,11 @@ const USER = gql`
 `;
 
 export const Messenger = () => {
+  // the currently selected chat entry
   const [selectedChat, setSelectedChat] = React.useState(null);
+
+  // stores wheather the current chat is scrolled all the way down
+  const [down, setDown] = React.useState(true);
 
   const { loading, error, data } = useQuery(USER);
   if (loading || error) return null;
@@ -29,12 +33,15 @@ export const Messenger = () => {
             selectedChat={selectedChat}
             onSelectChat={onSelectChat}
             currentUser={data.currentUser}
+            down={down}
           />
         </Grid>
         <Grid item xs={8}>
           <MessageManager
             currentUser={data.currentUser}
             selectedChat={selectedChat}
+            down={down}
+            setDown={setDown}
           />
         </Grid>
       </Grid>

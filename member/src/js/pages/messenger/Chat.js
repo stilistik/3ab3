@@ -33,18 +33,26 @@ const NEW_MESSAGES_SUBSCRIPTION = gql`
   }
 `;
 
-export const Chat = ({ onSelectChat, chat, currentUser, selected }) => {
+export const Chat = ({ onSelectChat, chat, currentUser, selected, down }) => {
   const unsubscribe = React.useRef(null);
+  const lastDown = React.useRef(null);
   const { subscribeToMore, loading, error, data } = useQuery(UNREAD_MESSAGES, {
     variables: { userId: currentUser.id, chatId: chat.id },
   });
+
+  // for some reason we need to store this in a ref to stop unread message subscription trigger 
+  // when the user is scrolled down in the chat
+  lastDown.current = down;
 
   const subscribe = () => {
     unsubscribe.current = subscribeToMore({
       document: NEW_MESSAGES_SUBSCRIPTION,
       variables: { chatId: chat.id },
       updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
+        if (!subscriptionData.data || lastDown.current) {
+          console.log(down);
+          return prev;
+        }
         let count = prev.unreadMessagesCount;
         const { onNewMessage } = subscriptionData.data;
         if (onNewMessage.node.from.id === currentUser.id) return prev;
