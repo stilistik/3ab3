@@ -27,6 +27,7 @@ export const CHATS_QUERY = gql`
         lastMessage {
           date
         }
+        lastSeen
       }
     }
   }
@@ -106,6 +107,7 @@ export const ChatList = (props) => {
 
   let chats = filterChats(data.currentUser.chats, search);
   chats = sortChats(chats);
+  console.log(chats);
 
   return (
     <div className={styles.outer}>

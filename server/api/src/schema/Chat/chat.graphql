@@ -5,6 +5,8 @@ type Chat implements Node {
   members: [User!]!
   messages(first: Int!, skip: Int, after: String): MessageConnection!
   lastMessage: Message
+  lastSeen: JSON
+  usersTyping: JSON
 }
 
 type ChatEdge implements Edge {
@@ -25,8 +27,10 @@ input ChatInput {
 
 extend type Query {
   chats(first: Int!, after: String, skip: Int): ChatsConnection!
+  unreadMessagesCount(userId: ID!, chatId: ID!): Int!
 }
 
 extend type Mutation {
   createChat(input: ChatInput!): Chat!
+  userLastSeen(userId: ID!, chatId: ID!): Chat!
 }

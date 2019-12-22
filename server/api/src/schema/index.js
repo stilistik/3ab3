@@ -5,7 +5,7 @@ const {
   GraphQLDateTime,
 } = require('graphql-iso-date');
 const { GraphQLUpload } = require('apollo-server-express');
-
+const GraphQLJSON = require('graphql-type-json');
 const { makeExecutableSchema } = require('apollo-server-express');
 
 const Pagination = require('./Pagination');
@@ -42,6 +42,7 @@ const Scalar = `
   scalar Time
   scalar DateTime
   scalar Upload
+  scalar JSON
 `;
 
 const Query = `
@@ -68,6 +69,7 @@ const resolvers = {
   Time: GraphQLTime,
   DateTime: GraphQLDateTime,
   Upload: GraphQLUpload,
+  JSON: GraphQLJSON,
 };
 
 module.exports = makeExecutableSchema({

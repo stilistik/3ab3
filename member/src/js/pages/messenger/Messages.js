@@ -5,6 +5,8 @@ import { CreateMessage } from './CreateMessage';
 import { ScrollContainer } from './ScrollContainer';
 import { Button } from '@material-ui/core';
 import { Icon } from 'Components';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
 
 import styles from './Messages.less';
 
@@ -35,6 +37,14 @@ const DownButton = ({ show, onClick }) => {
   );
 };
 
+const USER_LAST_SEEN = gql`
+  mutation($userId: ID!, $chatId: ID!) {
+    userLastSeen(userId: $userId, chatId: $chatId) {
+      id
+    }
+  }
+`;
+
 export const Messages = ({
   messageGroups,
   selectedChat,
@@ -47,12 +57,14 @@ export const Messages = ({
   const [down, setDown] = React.useState(true);
   const [request, setRequest] = React.useState(null);
   const [disableAnim, setDisableAnim] = React.useState(true);
+  const [userLastSeen] = useMutation(USER_LAST_SEEN);
 
   React.useEffect(() => {
     // refresh the messages of current chat on mount
     refetch();
     subscribe();
     setDisableAnim(false);
+    onUserLastSeen();
     return () => unsubscribe();
   }, []);
 
@@ -65,6 +77,7 @@ export const Messages = ({
 
   const onDown = () => {
     setRequest('bottom');
+    onUserLastSeen();
   };
 
   const onScroll = (element, pos, height) => {
@@ -84,6 +97,15 @@ export const Messages = ({
 
   const onCreateMessage = () => {
     setRequest('bottom');
+  };
+
+  const onUserLastSeen = () => {
+    userLastSeen({
+      variables: {
+        userId: currentUser.id,
+        chatId: selectedChat.id,
+      },
+    });
   };
 
   return (
