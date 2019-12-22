@@ -87,6 +87,8 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoodIcon from '@material-ui/icons/Mood';
 import GifIcon from '@material-ui/icons/Gif';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -96,8 +98,10 @@ const muiIconTypes = {
   add: AddIcon,
   addComment: AddCommentIcon,
   apps: AppsIcon,
+  arrowBack: ArrowBackIcon,
   arrowDropDown: ArrowDropDownIcon,
   arrowDropUp: ArrowDropUpIcon,
+  arrowForward: ArrowForwardIcon,
   arrowLeft: ArrowLeftIcon,
   arrowRight: ArrowRightIcon,
   assessment: AssessmentIcon,

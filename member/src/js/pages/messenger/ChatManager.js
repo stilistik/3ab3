@@ -1,5 +1,7 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
+import { Grid, Button, Typography } from '@material-ui/core';
+import { Icon } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useInterval } from 'Utils';
@@ -27,6 +29,19 @@ export const CHATS_QUERY = gql`
   }
 `;
 
+const CreateChatButton = ({ onClick }) => {
+  return (
+    <Button
+      className={styles.createButton}
+      color="secondary"
+      variant="outlined"
+      onClick={onClick}
+    >
+      <Icon type="add" />
+    </Button>
+  );
+};
+
 const buildSearchableChats = (chats) => {
   let searchable = {};
   for (let chat of chats) {
@@ -47,7 +62,7 @@ const buildSearchableChats = (chats) => {
   return searchable;
 };
 
-export const ChatManager = (props) => {
+export const ChatList = (props) => {
   const [search, setSearch] = React.useState('');
   const { loading, error, data, refetch } = useQuery(CHATS_QUERY);
 
@@ -56,6 +71,10 @@ export const ChatManager = (props) => {
   }, 2000);
 
   if (loading || error) return null;
+
+  const onCreateChat = () => {
+    props.onViewChange(1);
+  };
 
   const filterChats = (chats, search) => {
     if (!search) return chats;
@@ -74,7 +93,6 @@ export const ChatManager = (props) => {
   };
 
   const chats = filterChats(data.currentUser.chats, search);
-  console.log(chats);
 
   return (
     <div className={styles.outer}>
@@ -82,10 +100,28 @@ export const ChatManager = (props) => {
         <Typography variant="h4">
           <strong>Chats</strong>
         </Typography>
-        <CreateChat />
+        <CreateChatButton onClick={onCreateChat} />
       </div>
       <SearchChat search={search} setSearch={setSearch} {...props} />
       <Chats chats={chats} {...props} />
     </div>
+  );
+};
+
+export const ChatManager = (props) => {
+  const [value, setValue] = React.useState(0);
+  return (
+    <SwipeableViews axis="x" index={value} disabled>
+      <Grid container>
+        <Grid item xs={12}>
+          <ChatList onViewChange={setValue} {...props} />
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <CreateChat onViewChange={setValue} {...props} />
+        </Grid>
+      </Grid>
+    </SwipeableViews>
   );
 };

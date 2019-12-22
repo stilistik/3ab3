@@ -15,7 +15,7 @@ const USER = gql`
 `;
 
 export const Messenger = () => {
-  const [selectedChat, setSelectedChat] = React.useState({});
+  const [selectedChat, setSelectedChat] = React.useState(null);
 
   const { loading, error, data } = useQuery(USER);
   if (loading || error) return null;
