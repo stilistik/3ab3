@@ -1,3 +1,5 @@
+import { Message } from 'Components';
+
 export const requestToken = async (email, password, messageHandler) => {
   const auth_details = new Buffer(
     'Ng37FZ3ZtZ5MvaKJsJdbqWKdP87IMPDtpa/izWqtB5BDZZ8myPzsPAWpO0bEaPMV:JNtTf4T+lag='
@@ -14,33 +16,23 @@ export const requestToken = async (email, password, messageHandler) => {
     },
     method: 'POST',
     body: JSON.stringify(payload),
-  }).catch(async () => {
+  }).catch(() => {
     // catch unknown authentication errors
-    messageHandler({
-      type: 'error',
-      text: 'Unable to fetch from login server. Maybe the server is offline...',
-    });
+    Message.error(
+      'Unable to fetch from login server. Maybe the server is offline...'
+    );
     return null;
   });
   if (!response.ok) {
     // wrong login credentials
     if (response.status === 502) {
-      this.props.app.handleMessages({
-        type: 'error',
-        text: 'Login server gateway error.',
-      });
+      Message.error('Login server gateway error.');
       return null;
     } else if (response.status === 403) {
-      messageHandler({
-        type: 'error',
-        text: 'Failed to login with your credentials.',
-      });
+      Message.error('Failed to login with your credentials.');
       return null;
     } else {
-      messageHandler({
-        type: 'error',
-        text: 'Unknown error while logging in.',
-      });
+      Message.error('Unknown error while logging in.');
       return null;
     }
   } else {

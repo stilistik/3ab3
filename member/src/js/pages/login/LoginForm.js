@@ -13,9 +13,6 @@ const mapDispatchToProps = (dispatch) => {
     login: (access_token) => {
       dispatch(login(access_token));
     },
-    messageHandler: (message) => {
-      dispatch(showMessage(message));
-    },
   };
 };
 
@@ -32,7 +29,6 @@ class LoginForm extends React.Component {
     const response = await requestToken(
       values.email,
       values.password,
-      this.props.messageHandler
     );
     if (response) {
       this.props.login(response.access_token);
