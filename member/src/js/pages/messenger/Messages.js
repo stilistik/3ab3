@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import styles from './Messages.less';
 import { UNREAD_MESSAGES } from './Chat';
+import { TOTAL_UNREAD_MESSAGES } from 'App/Messages';
 
 const DownButton = ({ show, onClick }) => {
   return (
@@ -110,6 +111,9 @@ export const Messages = ({
         {
           query: UNREAD_MESSAGES,
           variables: { userId: currentUser.id, chatId: selectedChat.id },
+        },
+        {
+          query: TOTAL_UNREAD_MESSAGES,
         },
       ],
     });

@@ -27,6 +27,7 @@ type User {
   isOnline: Boolean!
   lastOnline: DateTime
   chats: [Chat!]!
+  unreadMessages: Int!
 }
 
 enum UserRole {

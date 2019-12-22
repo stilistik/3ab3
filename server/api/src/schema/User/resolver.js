@@ -151,5 +151,28 @@ module.exports = {
     chats(root, args, context) {
       return context.prisma.user({ id: root.id }).chats();
     },
+    async unreadMessages(root, args, context) {
+      const chats = await context.prisma.user({ id: root.id }).chats();
+      console.log(chats);
+
+      const totals = await Promise.all(
+        chats.map((chat) => {
+          const { lastSeen } = chat;
+          let userLastSeen = new Date().toISOString();
+          if (lastSeen && lastSeen[root.id]) userLastSeen = lastSeen[root.id];
+          return context.prisma
+            .messagesConnection({
+              where: {
+                AND: [{ chat: { id: chat.id } }, { date_gt: userLastSeen }],
+              },
+            })
+            .aggregate()
+            .count();
+        })
+      );
+      console.log(totals);
+
+      return totals.reduce((acc, curr) => acc + curr, 0);
+    },
   },
 };

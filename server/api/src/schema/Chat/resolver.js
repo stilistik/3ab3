@@ -54,19 +54,6 @@ module.exports = {
       });
     },
   },
-  Subscription: {
-    onUnreadMessage: {
-      subscribe(root, args, context) {
-        return context.prisma.$subscribe.message({
-          node: { chat: { id: args.chatId } },
-          mutation_in: ['CREATED'],
-        });
-      },
-      resolve: (payload, args, context) => {
-        return payload;
-      },
-    },
-  },
   Chat: {
     members(root, args, context) {
       return context.prisma.chat({ id: root.id }).members();
