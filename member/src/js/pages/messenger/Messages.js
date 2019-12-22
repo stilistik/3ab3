@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MessageGroup } from './Message';
 import { CreateMessage } from './CreateMessage';
 import { ScrollContainer } from './ScrollContainer';
@@ -6,6 +7,33 @@ import { Button } from '@material-ui/core';
 import { Icon } from 'Components';
 
 import styles from './Messages.less';
+
+const DownButton = ({ show, onClick }) => {
+  return (
+    <TransitionGroup>
+      {show ? (
+        <CSSTransition
+          classNames={{
+            enter: styles['down-enter'],
+            enterActive: styles['down-enter-active'],
+            exit: styles['down-exit'],
+            exitActive: styles['down-exit-active'],
+          }}
+          timeout={{ enter: 300, exit: 300 }}
+        >
+          <Button
+            className={styles.down}
+            variant="contained"
+            color="secondary"
+            onClick={onClick}
+          >
+            <Icon type="down" />
+          </Button>
+        </CSSTransition>
+      ) : null}
+    </TransitionGroup>
+  );
+};
 
 export const Messages = ({
   messageGroups,
@@ -18,11 +46,13 @@ export const Messages = ({
 }) => {
   const [down, setDown] = React.useState(true);
   const [request, setRequest] = React.useState(null);
+  const [disableAnim, setDisableAnim] = React.useState(true);
 
   React.useEffect(() => {
     // refresh the messages of current chat on mount
     refetch();
     subscribe();
+    setDisableAnim(false);
     return () => unsubscribe();
   }, []);
 
@@ -30,6 +60,7 @@ export const Messages = ({
     // if the messages change and we are at the bottom of
     // the container, we want to stay there
     if (down) setRequest('bottom');
+    setDisableAnim(false);
   }, [messageGroups]);
 
   const onDown = () => {
@@ -45,7 +76,10 @@ export const Messages = ({
     }
 
     // if near top, fetch more messages
-    if (pos < 100) loadMore();
+    if (pos < 100) {
+      loadMore();
+      setDisableAnim(true);
+    }
   };
 
   const onCreateMessage = () => {
@@ -54,23 +88,20 @@ export const Messages = ({
 
   return (
     <div className={styles.outer}>
-      {!down && (
-        <Button
-          className={styles.down}
-          variant="contained"
-          color="secondary"
-          onClick={onDown}
-        >
-          <Icon type="down" />
-        </Button>
-      )}
+      <DownButton show={!down} onClick={onDown} />
       <ScrollContainer
         onScroll={onScroll}
         request={request}
         setRequest={setRequest}
       >
-        {messageGroups.map((group) => {
-          return <MessageGroup key={group.id} messages={group.messages} />;
+        {messageGroups.map((group, idx) => {
+          return (
+            <MessageGroup
+              key={idx}
+              disableAnimations={disableAnim}
+              {...group}
+            />
+          );
         })}
       </ScrollContainer>
       <CreateMessage

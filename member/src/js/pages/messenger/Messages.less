@@ -1,3 +1,5 @@
+@import '../../../index.less';
+
 .outer {
   position: relative;
   height: calc(100vh - 64px);
@@ -13,4 +15,23 @@
   width: 50px;
   min-width: 50px;
   border-radius: 25px;
+  z-index: 1000;
+}
+
+.down-enter {
+  transform: scale(0);
+}
+
+.down-enter.down-enter-active {
+  transform: scale(1);
+  transition: @standard-transition;
+}
+
+.down-exit {
+  transform: scale(1);
+}
+
+.down-exit.down-exit-active {
+  transform: scale(0);
+  transition: @standard-transition;
 }

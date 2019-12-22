@@ -7,7 +7,7 @@
     margin: 1px;
   }
 
-  .fromCurrent:not(:first-child) {
+  .fromCurrent:not(:nth-child(2)) {
     .message {
       border-top-right-radius: 0px;
     }
@@ -18,7 +18,7 @@
     }
   }
 
-  .fromOther:not(:first-child) {
+  .fromOther:not(:nth-child(2)) {
     .message {
       border-top-left-radius: 0px;
     }
@@ -53,6 +53,16 @@
     max-width: 70%;
     background: #eee;
   }
+
+  .message-enter {
+    transform: scale(0);
+    transform-origin: left 0%;
+  }
+
+  .message-enter.message-enter-active {
+    transform: scale(1);
+    transition: @standard-transition;
+  }
 }
 
 .fromCurrent {
@@ -67,5 +77,15 @@
     max-width: 70%;
     background: @primary-color;
     color: white;
+  }
+
+  .message-enter {
+    transform: scale(0);
+    transform-origin: right 0%;
+  }
+
+  .message-enter.message-enter-active {
+    transform: scale(1);
+    transition: @standard-transition;
   }
 }

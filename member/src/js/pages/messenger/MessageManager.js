@@ -45,43 +45,40 @@ const NEW_MESSAGES_SUBSCRIPTION = gql`
 `;
 
 const groupMessages = (messages, currentUserId) => {
-  let lastDate = null;
-  const thresh = 1000 * 60; // 5 min in ms
-
   const sorted = messages
-    .map((el) => {
-      const { date, ...rest } = el.node;
-      let diff = 0;
-      if (lastDate) diff = new Date(lastDate) - new Date(date);
-      lastDate = date;
+    .map((edge) => {
+      const { node } = edge;
       return {
-        date: diff > thresh ? date : null,
-        fromCurrentUser: rest.from.id === currentUserId,
-        ...rest,
+        fromCurrentUser: node.from.id === currentUserId,
+        ...node,
       };
     })
     .reverse();
 
+  const dateThresholdExceeded = (nextDate, prevDate) => {
+    const thresh = 1000 * 60 * 5; // 5min
+    return new Date(nextDate) - new Date(prevDate) > thresh;
+  };
+
   const groups = [];
   let group = [];
   let prevFromId = null;
+  let prevDate = null;
   for (let message of sorted) {
-    if (message.date || prevFromId !== message.from.id) {
-      if (group.length > 0) {
-        const groupId = group
-          .map((el) => el.id)
-          .reduce((acc, curr) => acc + curr, '');
-        groups.push({ id: groupId, messages: group });
-        group = [];
-      }
+    if (dateThresholdExceeded(message.date, prevDate) && group.length) {
+      groups.push({ messages: group, groupDate: message.date });
+      group = [];
+    }
+    if (prevFromId !== message.from.id && group.length) {
+      groups.push({ messages: group, groupDate: message.date });
+      group = [];
     }
     group.push(message);
     prevFromId = message.from.id;
+    prevDate = message.date;
   }
-  const groupId = group
-    .map((el) => el.id)
-    .reduce((acc, curr) => acc + curr, '');
-  groups.push({ id: groupId, messages: group });
+
+  groups.push({ messages: group, groupDate: prevDate });
   return groups;
 };
 
