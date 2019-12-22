@@ -33,8 +33,24 @@ export class Form extends React.Component {
    * @param {Object} fieldProps: The props of the field
    */
   registerField = (id, fieldProps) => {
-    const { initValues, initOpts, updateWithDefault } = this.props;
     this.fields[id] = fieldProps;
+    this.initializeField(id);
+  };
+
+  /**
+   * Called from Field to unregister from this form when the field
+   * unmounts.
+   * @param {String} id: The id of the field
+   */
+  unregisterField = (id) => delete this.fields[id];
+
+  /**
+   * Sets a field to its initial state
+   * @param {String} id: the id of the field
+   */
+  initializeField = (id) => {
+    const fieldProps = this.fields[id];
+    const { initValues, initOpts, updateWithDefault } = this.props;
 
     if (initOpts[id]) {
       // set field init options
@@ -54,11 +70,12 @@ export class Form extends React.Component {
   };
 
   /**
-   * Called from Field to unregister from this form when the field
-   * unmounts.
-   * @param {String} id: The id of the field
+   * Sets the form into its initial state
    */
-  unregisterField = (id) => delete this.fields[id];
+  initializeForm = () => {
+    this.dirty = false;
+    for (let id in this.fields) this.initializeField(id);
+  };
 
   /**
    * Called from Field to update its value. Will validate
@@ -215,6 +232,7 @@ export class Form extends React.Component {
     this.dirty = true;
     if (this.validateForm()) this.props.onSubmit(this.values, this.options);
     else this.setFieldErrors();
+    this.initializeForm();
   };
 
   render() {

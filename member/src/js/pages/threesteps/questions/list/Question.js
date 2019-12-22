@@ -62,7 +62,7 @@ class Question extends React.Component {
     const { text, description, templates } = this.props.question;
     return (
       <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<Icon type="expand" />}>
+        <ExpansionPanelSummary expandIcon={<Icon type="down" />}>
           <Typography variant="h6" className={styles.header}>
             {text}
           </Typography>

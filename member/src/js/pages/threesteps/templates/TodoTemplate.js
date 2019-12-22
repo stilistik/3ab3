@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip, Avatar } from '@material-ui/core';
 
-import styles from './TodoTemplate.css';
+import styles from './TodoTemplate.less';
 
 class TodoTemplate extends React.Component {
   render() {
@@ -12,7 +12,7 @@ class TodoTemplate extends React.Component {
         <Chip
           className={isSelected ? styles.selected : ''}
           classes={{ root: styles.chip, label: styles.chiplabel }}
-          avatar={<Avatar className={styles.avatar}>{offsetDays}</Avatar>}
+          avatar={<Avatar className={styles.chipAvatar}>{offsetDays}</Avatar>}
           label={text}
           onClick={onClick ? () => onClick(id) : null}
         />

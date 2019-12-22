@@ -1,5 +1,11 @@
 import React from 'react';
-import { DefaultGrid, TextField, ChipArea, Form, Icon } from 'Components';
+import {
+  DefaultGrid,
+  TextField,
+  MultiSelectField,
+  Form,
+  Icon,
+} from 'Components';
 import { Paper, Grid, Button, Typography, Fab } from '@material-ui/core';
 import { requestRoute } from 'History';
 
@@ -7,15 +13,19 @@ import styles from './CreateQuestionForm.css';
 
 class CreateQuestionForm extends React.Component {
   onSubmit = (values) => {
-    this.props.onSubmit(values);
+    const { templates, ...rest } = values;
+    this.props.onSubmit({
+      templateIds: templates.map((el) => el.value),
+      ...rest,
+    });
   };
 
   createOptions = (templates) => {
     return templates.map((template) => {
       return {
-        id: template.id,
+        value: template.id,
         avatar: template.offsetDays,
-        text: template.text,
+        label: template.text,
       };
     });
   };
@@ -29,58 +39,55 @@ class CreateQuestionForm extends React.Component {
     return (
       <DefaultGrid overflow>
         <div className={styles.container}>
-          <Paper className={styles.paper}>
-            <Form onSubmit={this.onSubmit}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="h3">Question</Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Paper className={styles.paper}>
+                <Form onSubmit={this.onSubmit}>
+                  <Typography variant="h3">Create Question</Typography>
                   <br />
                   <TextField
                     id="text"
-                    name="Question"
+                    label="Title"
                     type="text"
                     required={true}
                     className={styles.field}
                   />
                   <TextField
                     id="description"
-                    name="Description"
+                    label="Description"
                     type="text"
                     required={true}
                     className={styles.field}
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <div className={styles.todoheader}>
-                    <Typography variant="h3">Todos</Typography>
-                    <Fab
-                      color="primary"
+                  <div className={styles.center}>
+                    <MultiSelectField
+                      id="templates"
+                      label="Todos"
+                      type="select"
+                      required={true}
+                      className={styles.field}
+                      options={options}
+                    />
+                    <Button
+                      className={styles.createButton}
+                      color="secondary"
+                      variant="outlined"
                       size="small"
                       onClick={this.onCreateTemplate}
-                      style={{ marginRight: '5px' }}
                     >
                       <Icon type="add" />
-                    </Fab>
+                    </Button>
                   </div>
-                  <br />
-                  <ChipArea
-                    id="templateIds"
-                    type="select"
-                    required={true}
-                    className={styles.field}
-                    options={options}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+                  <div className={styles.center}>
                     <Button variant="contained" color="primary" type="submit">
                       Submit
                     </Button>
                   </div>
-                </Grid>
-              </Grid>
-            </Form>
-          </Paper>
+                </Form>
+              </Paper>
+            </Grid>
+          </Grid>
         </div>
       </DefaultGrid>
     );

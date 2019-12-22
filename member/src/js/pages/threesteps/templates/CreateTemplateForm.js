@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Field, TextField } from 'Components';
+import { Form, NumberField, TextField } from 'Components';
 import { Button, Paper, Typography } from '@material-ui/core';
 
 import styles from './CreateTemplateForm.css';
@@ -22,15 +22,13 @@ class CreateTemplateForm extends React.Component {
         <Form onSubmit={this.onSubmit} className={styles.form}>
           <TextField
             id="text"
-            name="Todo"
-            type="text"
+            label="Todo"
             required={true}
             className={styles.field}
           />
-          <Field
+          <NumberField
             id="offsetDays"
-            name="Offset Days"
-            type="number"
+            label="Offset Days"
             required={true}
             className={styles.field}
           />
