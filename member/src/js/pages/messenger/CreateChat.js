@@ -112,7 +112,7 @@ export const CreateChat = ({ currentUser, onViewChange }) => {
 
   return (
     <div className={styles.outer}>
-      <div className={styles.header}>
+      <div className={styles.header} style={{ marginBottom: 10 }}>
         <BackButton onClick={onBack} />
         <Typography variant="h4" style={{ marginRight: 20 }}>
           <strong>Create</strong>
