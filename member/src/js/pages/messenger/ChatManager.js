@@ -24,6 +24,9 @@ export const CHATS_QUERY = gql`
           avatar
           isOnline
         }
+        lastMessage {
+          date
+        }
       }
     }
   }
@@ -92,7 +95,17 @@ export const ChatList = (props) => {
     return result;
   };
 
-  const chats = filterChats(data.currentUser.chats, search);
+  const sortChats = (chats) => {
+    return chats.sort((a, b) => {
+      if (!a.lastMessage && !b.lastMessage) return 0;
+      else if (a.lastMessage && !b.lastMessage) return -1;
+      else if (!a.lastMessage && b.lastMessage) return 1;
+      else return new Date(b.lastMessage.date) - new Date(a.lastMessage.date);
+    });
+  };
+
+  let chats = filterChats(data.currentUser.chats, search);
+  chats = sortChats(chats);
 
   return (
     <div className={styles.outer}>

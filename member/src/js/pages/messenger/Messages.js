@@ -11,16 +11,26 @@ export const Messages = ({
   messageGroups,
   selectedChat,
   currentUser,
+  refetch,
   subscribe,
+  unsubscribe,
   loadMore,
 }) => {
   const [down, setDown] = React.useState(true);
   const [request, setRequest] = React.useState(null);
 
   React.useEffect(() => {
+    // refresh the messages of current chat on mount
+    refetch();
     subscribe();
-    setRequest('bottom');
+    return () => unsubscribe();
   }, []);
+
+  React.useEffect(() => {
+    // if the messages change and we are at the bottom of
+    // the container, we want to stay there
+    if (down) setRequest('bottom');
+  }, [messageGroups]);
 
   const onDown = () => {
     setRequest('bottom');

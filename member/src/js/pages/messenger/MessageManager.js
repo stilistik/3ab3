@@ -87,24 +87,28 @@ const groupMessages = (messages, currentUserId) => {
 
 export const MessageManager = ({ selectedChat, currentUser }) => {
   if (!selectedChat) return null;
-
+  const unsubscribe = React.useRef(null);
   const cursor = React.useRef(null);
   let fetching = React.useRef(false);
 
-  const { fetchMore, subscribeToMore, loading, error, data } = useQuery(
-    MESSAGES,
-    {
-      variables: {
-        chatId: selectedChat.id,
-        first: 30,
-      },
-    }
-  );
+  const {
+    fetchMore,
+    subscribeToMore,
+    refetch,
+    loading,
+    error,
+    data,
+  } = useQuery(MESSAGES, {
+    variables: {
+      chatId: selectedChat.id,
+      first: 30,
+    },
+  });
 
   if (loading || error) return null;
 
   const onSubscribe = () => {
-    subscribeToMore({
+    unsubscribe.current = subscribeToMore({
       document: NEW_MESSAGES_SUBSCRIPTION,
       variables: { chatId: selectedChat.id },
       updateQuery: (prev, { subscriptionData }) => {
@@ -124,6 +128,10 @@ export const MessageManager = ({ selectedChat, currentUser }) => {
         return newObject;
       },
     });
+  };
+
+  const onUnsubscribe = () => {
+    if (unsubscribe.current) unsubscribe.current();
   };
 
   const onLoadMore = async () => {
@@ -164,10 +172,13 @@ export const MessageManager = ({ selectedChat, currentUser }) => {
 
   return (
     <Messages
+      key={selectedChat.id}
       messageGroups={groups}
       selectedChat={selectedChat}
       currentUser={currentUser}
+      refetch={refetch}
       subscribe={onSubscribe}
+      unsubscribe={onUnsubscribe}
       loadMore={onLoadMore}
     />
   );

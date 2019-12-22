@@ -3,7 +3,8 @@ type Chat implements Node {
   title: String!
   creator: User!
   members: [User!]!
-  messages: [Message!]!
+  messages(first: Int!, skip: Int, after: String): MessageConnection!
+  lastMessage: Message
 }
 
 type ChatEdge implements Edge {
@@ -22,13 +23,10 @@ input ChatInput {
   memberIds: [ID!]!
 }
 
-
 extend type Query {
   chats(first: Int!, after: String, skip: Int): ChatsConnection!
 }
 
 extend type Mutation {
   createChat(input: ChatInput!): Chat!
-
 }
-
