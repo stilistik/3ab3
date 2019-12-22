@@ -21,6 +21,9 @@ export const Messenger = () => {
   // stores wheather the current chat is scrolled all the way down
   const [down, setDown] = React.useState(true);
 
+  // stores unread messages count of current chat
+  const [unreadCount, setUnreadCount] = React.useState(0);
+
   const { loading, error, data } = useQuery(USER);
   if (loading || error) return null;
 
@@ -34,6 +37,7 @@ export const Messenger = () => {
             onSelectChat={onSelectChat}
             currentUser={data.currentUser}
             down={down}
+            setUnreadCount={setUnreadCount}
           />
         </Grid>
         <Grid item xs={8}>
@@ -42,6 +46,8 @@ export const Messenger = () => {
             selectedChat={selectedChat}
             down={down}
             setDown={setDown}
+            unreadCount={unreadCount}
+            setUnreadCount={setUnreadCount}
           />
         </Grid>
       </Grid>

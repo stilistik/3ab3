@@ -87,6 +87,8 @@ export const MessageManager = ({
   currentUser,
   down,
   setDown,
+  unreadCount,
+  setUnreadCount,
 }) => {
   if (!selectedChat) return null;
   const unsubscribe = React.useRef(null);
@@ -184,6 +186,8 @@ export const MessageManager = ({
       loadMore={onLoadMore}
       down={down}
       setDown={setDown}
+      unreadCount={unreadCount}
+      setUnreadCount={setUnreadCount}
     />
   );
 };

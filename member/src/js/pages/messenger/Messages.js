@@ -3,7 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MessageGroup } from './Message';
 import { CreateMessage } from './CreateMessage';
 import { ScrollContainer } from './ScrollContainer';
-import { Button } from '@material-ui/core';
+import { Button, Badge } from '@material-ui/core';
 import { Icon } from 'Components';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
@@ -12,7 +12,7 @@ import styles from './Messages.less';
 import { UNREAD_MESSAGES } from './Chat';
 import { TOTAL_UNREAD_MESSAGES } from 'App/Messages';
 
-const DownButton = ({ show, onClick }) => {
+const DownButton = ({ show, onClick, unreadCount }) => {
   return (
     <TransitionGroup>
       {show ? (
@@ -25,14 +25,23 @@ const DownButton = ({ show, onClick }) => {
           }}
           timeout={{ enter: 300, exit: 300 }}
         >
-          <Button
-            className={styles.down}
-            variant="contained"
-            color="secondary"
-            onClick={onClick}
-          >
-            <Icon type="down" />
-          </Button>
+          <div className={styles.down}>
+            <Badge
+              color="error"
+              overlap="circle"
+              badgeContent={String(unreadCount)}
+              invisible={unreadCount === 0}
+            >
+              <Button
+                className={styles.downBtn}
+                variant="contained"
+                color="secondary"
+                onClick={onClick}
+              >
+                <Icon type="down" />
+              </Button>
+            </Badge>
+          </div>
         </CSSTransition>
       ) : null}
     </TransitionGroup>
@@ -57,6 +66,8 @@ export const Messages = ({
   loadMore,
   down,
   setDown,
+  unreadCount,
+  setUnreadCount,
 }) => {
   const [request, setRequest] = React.useState(null);
   const [disableAnim, setDisableAnim] = React.useState(true);
@@ -87,6 +98,7 @@ export const Messages = ({
     // if not at bottom, show scroll down button
     if (pos === height) {
       onUserLastSeen();
+      setUnreadCount(0);
       setDown(true);
     } else {
       setDown(false);
@@ -123,7 +135,7 @@ export const Messages = ({
 
   return (
     <div className={styles.outer}>
-      <DownButton show={!down} onClick={onDown} />
+      <DownButton show={!down} onClick={onDown} unreadCount={unreadCount} />
       <ScrollContainer
         onScroll={onScroll}
         request={request}

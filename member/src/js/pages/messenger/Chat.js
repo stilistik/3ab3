@@ -33,14 +33,27 @@ const NEW_MESSAGES_SUBSCRIPTION = gql`
   }
 `;
 
-export const Chat = ({ onSelectChat, chat, currentUser, selected, down }) => {
+export const Chat = ({
+  onSelectChat,
+  chat,
+  currentUser,
+  selected,
+  down,
+  setUnreadCount,
+}) => {
   const unsubscribe = React.useRef(null);
   const lastDown = React.useRef(null);
   const { subscribeToMore, loading, error, data } = useQuery(UNREAD_MESSAGES, {
     variables: { userId: currentUser.id, chatId: chat.id },
   });
 
-  // for some reason we need to store this in a ref to stop unread message subscription trigger 
+  const count = data ? data.unreadMessagesCount : 0;
+
+  React.useEffect(() => {
+    setUnreadCount(count);
+  }, [count]);
+
+  // for some reason we need to store this in a ref to stop unread message subscription trigger
   // when the user is scrolled down in the chat
   lastDown.current = down;
 
@@ -85,7 +98,7 @@ export const Chat = ({ onSelectChat, chat, currentUser, selected, down }) => {
         <UserAvatar user={user} />
         <span style={{ marginRight: 20 }}>{user.name}</span>
         <Badge
-          color="secondary"
+          color="error"
           badgeContent={String(unread)}
           invisible={unread === 0}
         />
