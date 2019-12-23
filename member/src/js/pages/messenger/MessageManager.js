@@ -82,14 +82,7 @@ const groupMessages = (messages, currentUserId) => {
   return groups;
 };
 
-export const MessageManager = ({
-  selectedChat,
-  currentUser,
-  down,
-  setDown,
-  unreadCount,
-  setUnreadCount,
-}) => {
+export const MessageManager = ({ selectedChat, currentUser, ...rest }) => {
   if (!selectedChat) return null;
   const unsubscribe = React.useRef(null);
   const cursor = React.useRef(null);
@@ -149,7 +142,7 @@ export const MessageManager = ({
         first: 10,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
+        if (!fetchMoreResult.messages.edges.length) return prev;
         const newEdges = fetchMoreResult.messages.edges;
         const pageInfo = fetchMoreResult.messages.pageInfo;
         cursor.current = newEdges[newEdges.length - 1].cursor;
@@ -184,10 +177,7 @@ export const MessageManager = ({
       subscribe={onSubscribe}
       unsubscribe={onUnsubscribe}
       loadMore={onLoadMore}
-      down={down}
-      setDown={setDown}
-      unreadCount={unreadCount}
-      setUnreadCount={setUnreadCount}
+      {...rest}
     />
   );
 };

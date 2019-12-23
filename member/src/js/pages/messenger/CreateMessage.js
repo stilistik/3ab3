@@ -1,9 +1,16 @@
 import React from 'react';
-import { Message, Icon, EmojiPicker, GiphyPicker } from 'Components';
+import {
+  Message,
+  Icon,
+  EmojiPicker,
+  GiphyPicker,
+  LinkValidator,
+} from 'Components';
 import { IconButton, Input } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { ClickAwayListener } from '@material-ui/core';
+import { MessageLink } from './Message';
 
 import styles from './CreateMessage.less';
 
@@ -46,13 +53,17 @@ const GiphyPickerContainer = ({ open, handleSelect, handleClose }) => {
   );
 };
 
+const IDLE_TO_UPDATE = 200;
+
 export const CreateMessage = ({
   currentUser,
   selectedChat,
   onCreateMessage,
 }) => {
+  let timer = React.useRef(null);
   const [picker, setPicker] = React.useState(false);
   const [value, setValue] = React.useState('');
+  const [link, setLink] = React.useState(null);
   const [createMessage] = useMutation(MUTATION);
 
   const onSubmit = async () => {
@@ -63,18 +74,33 @@ export const CreateMessage = ({
           input: {
             fromId: currentUser.id,
             chatId: selectedChat.id,
-            text: value,
+            text: link ? value.replace(link.url, '') : value,
+            link: link ? link.url : null,
           },
         },
       });
       setValue('');
+      setLink(null);
       onCreateMessage();
     } catch (error) {
       Message.error(error.message);
     }
   };
 
-  const onChange = (e) => setValue(e.target.value);
+  const onChange = (e) => {
+    const value = e.target.value;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      LinkValidator.findLinks(value).then((links) => {
+        if (!links.length) return;
+        const link = links[0];
+        if (link) setLink(link);
+        else setLink(null);
+      });
+    }, IDLE_TO_UPDATE);
+    setValue(value);
+  };
+
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -90,8 +116,11 @@ export const CreateMessage = ({
   };
 
   const handelGifSelect = (gif) => {
-    console.log(gif);
+    setLink({ type: 'IMAGE', url: gif.image });
+    handlePickerClose();
   };
+
+  const handleRemove = () => setLink(null);
 
   return (
     <React.Fragment>
@@ -105,6 +134,7 @@ export const CreateMessage = ({
         handleClose={handlePickerClose}
         handleSelect={handelGifSelect}
       />
+      <MessageLink link={link} handleRemove={handleRemove} />
       <div className={styles.form}>
         <IconButton
           onClick={() => setPicker('giphy')}

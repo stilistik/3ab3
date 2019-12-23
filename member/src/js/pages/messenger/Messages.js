@@ -70,6 +70,7 @@ export const Messages = ({
   setUnreadCount,
 }) => {
   const scrollApi = React.useRef(null);
+  const initState = React.useRef(true);
   const [disableAnim, setDisableAnim] = React.useState(true);
   const [userLastSeen] = useMutation(USER_LAST_SEEN);
 
@@ -97,9 +98,9 @@ export const Messages = ({
   const onScroll = (element, pos, height) => {
     // if not at bottom, show scroll down button
     if (pos === height) {
+      setDown(true);
       onUserLastSeen();
       setUnreadCount(0);
-      setDown(true);
     } else {
       setDown(false);
     }
@@ -107,6 +108,7 @@ export const Messages = ({
     // if near top, fetch more messages
     if (pos < 100) {
       loadMore();
+      initState.current = false;
       setDisableAnim(true);
     }
   };
@@ -138,7 +140,11 @@ export const Messages = ({
   return (
     <div className={styles.outer}>
       <DownButton show={!down} onClick={onDown} unreadCount={unreadCount} />
-      <ScrollContainer onScroll={onScroll} getApi={getApi}>
+      <ScrollContainer
+        onScroll={onScroll}
+        getApi={getApi}
+        initState={initState}
+      >
         {messageGroups.map((group, idx) => {
           return (
             <MessageGroup

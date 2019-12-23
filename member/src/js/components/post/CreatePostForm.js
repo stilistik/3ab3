@@ -42,9 +42,11 @@ const CreatePostForm = (props) => {
     const value = e.target.value;
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      const link = LinkValidator.findLinks(value)[0];
-      if (link) setLink(link);
-      else setLink(null);
+      LinkValidator.findLinks(value).then((links) => {
+        const link = links[0];
+        if (link) setLink(link);
+        else setLink(null);
+      });
     }, IDLE_TO_UPDATE);
     setText(value);
   };
@@ -71,7 +73,7 @@ const CreatePostForm = (props) => {
     setSrc(null);
     setLink(null);
   };
-  
+
   return (
     <Card>
       <CardContent className={styles.content}>

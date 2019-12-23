@@ -78,12 +78,18 @@ export const PostLink = ({ link }) => {
 
 const Post = ({ post, refetch }) => {
   const [show, setShow] = React.useState(false);
+  const [validatedLink, setValidatedLink] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!post.link) return;
+    LinkValidator.validateLink(post.link).then((link) => {
+      setValidatedLink(link);
+    });
+  }, [post.link]);
 
   const onComment = () => {
     setShow(true);
   };
-
-  const link = LinkValidator.validateLink(post.link);
 
   return (
     <Card>
@@ -91,7 +97,7 @@ const Post = ({ post, refetch }) => {
       <CardContent className={styles.content}>
         <PostText text={post.text} />
         {post.image && <PostImage url={global.API_URL + post.image} />}
-        <PostLink link={link} />
+        <PostLink link={validatedLink} />
       </CardContent>
       <PostStats postId={post.id} onComment={onComment} />
       <CardActions>
