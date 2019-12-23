@@ -16,3 +16,5 @@ export * from './layout';
 export * from './tag';
 export * from './charts';
 export * from './emojipicker';
+export * from './giphypicker';
+

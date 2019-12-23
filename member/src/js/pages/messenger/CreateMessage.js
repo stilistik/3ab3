@@ -1,10 +1,9 @@
 import React from 'react';
-import { Message, Icon, EmojiPicker } from 'Components';
+import { Message, Icon, EmojiPicker, GiphyPicker } from 'Components';
 import { IconButton, Input } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { ClickAwayListener } from '@material-ui/core';
-import { MESSAGES } from './MessageManager';
 
 import styles from './CreateMessage.less';
 
@@ -25,7 +24,7 @@ const MUTATION = gql`
   }
 `;
 
-const PickerContainer = ({ open, handleSelect, handleClose }) => {
+const EmojiPickerContainer = ({ open, handleSelect, handleClose }) => {
   if (!open) return null;
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -36,12 +35,23 @@ const PickerContainer = ({ open, handleSelect, handleClose }) => {
   );
 };
 
+const GiphyPickerContainer = ({ open, handleSelect, handleClose }) => {
+  if (!open) return null;
+  return (
+    <ClickAwayListener onClickAway={handleClose}>
+      <div>
+        <GiphyPicker handleSelect={handleSelect} handleClose={handleClose} />
+      </div>
+    </ClickAwayListener>
+  );
+};
+
 export const CreateMessage = ({
   currentUser,
   selectedChat,
   onCreateMessage,
 }) => {
-  const [pickerOpen, setPickerOpen] = React.useState(false);
+  const [picker, setPicker] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [createMessage] = useMutation(MUTATION);
 
@@ -72,25 +82,37 @@ export const CreateMessage = ({
     }
   };
 
-  const handlePickerOpen = () => setPickerOpen(true);
-  const handlePickerClose = () => setPickerOpen(false);
+  const handlePickerClose = () => setPicker(null);
+
   const handelEmojiSelect = (emoji) => {
     const newValue = value + String.fromCodePoint(emoji.unicode);
     setValue(newValue);
   };
 
+  const handelGifSelect = (gif) => {
+    console.log(gif);
+  };
+
   return (
     <React.Fragment>
-      <PickerContainer
-        open={pickerOpen}
+      <EmojiPickerContainer
+        open={picker === 'emoji'}
         handleClose={handlePickerClose}
         handleSelect={handelEmojiSelect}
       />
+      <GiphyPickerContainer
+        open={picker === 'giphy'}
+        handleClose={handlePickerClose}
+        handleSelect={handelGifSelect}
+      />
       <div className={styles.form}>
-        <IconButton onClick={() => {}} className={styles.iconBtn}>
+        <IconButton
+          onClick={() => setPicker('giphy')}
+          className={styles.iconBtn}
+        >
           <Icon type="gif" className={styles.gifIcon} />
         </IconButton>
-        <IconButton onClick={handlePickerOpen}>
+        <IconButton onClick={() => setPicker('emoji')}>
           <Icon type="mood" />
         </IconButton>
         <Input
