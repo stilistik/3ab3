@@ -62,10 +62,8 @@ export const Chat = ({
       document: NEW_MESSAGES_SUBSCRIPTION,
       variables: { chatId: chat.id },
       updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data || lastDown.current) {
-          console.log(down);
+        if (!subscriptionData.data || (lastDown.current && selected))
           return prev;
-        }
         let count = prev.unreadMessagesCount;
         const { onNewMessage } = subscriptionData.data;
         if (onNewMessage.node.from.id === currentUser.id) return prev;
