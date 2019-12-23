@@ -107,8 +107,6 @@ export const ChatList = (props) => {
 
   let chats = filterChats(data.currentUser.chats, search);
   chats = sortChats(chats);
-  console.log(chats);
-
   return (
     <div className={styles.outer}>
       <div className={styles.header}>

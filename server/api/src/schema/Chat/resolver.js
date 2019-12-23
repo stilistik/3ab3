@@ -13,7 +13,6 @@ module.exports = {
       let userLastSeen = new Date().toISOString();
       if (lastSeen && lastSeen[args.userId])
         userLastSeen = lastSeen[args.userId];
-      console.log(userLastSeen);
 
       return context.prisma
         .messagesConnection({
@@ -38,7 +37,6 @@ module.exports = {
           ],
         },
       });
-      console.log(chat);
       return chat;
     },
     async userLastSeen(root, args, context) {

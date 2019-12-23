@@ -153,8 +153,6 @@ module.exports = {
     },
     async unreadMessages(root, args, context) {
       const chats = await context.prisma.user({ id: root.id }).chats();
-      console.log(chats);
-
       const totals = await Promise.all(
         chats.map((chat) => {
           const { lastSeen } = chat;
@@ -170,8 +168,6 @@ module.exports = {
             .count();
         })
       );
-      console.log(totals);
-
       return totals.reduce((acc, curr) => acc + curr, 0);
     },
   },
