@@ -69,7 +69,7 @@ export const Messages = ({
   unreadCount,
   setUnreadCount,
 }) => {
-  const [request, setRequest] = React.useState(null);
+  const scrollApi = React.useRef(null);
   const [disableAnim, setDisableAnim] = React.useState(true);
   const [userLastSeen] = useMutation(USER_LAST_SEEN);
 
@@ -85,12 +85,12 @@ export const Messages = ({
   React.useEffect(() => {
     // if the messages change and we are at the bottom of
     // the container, we want to stay there
-    if (down) setRequest('bottom');
+    if (down) scrollApi.current.scrollToBottom();
     setDisableAnim(false);
   }, [messageGroups]);
 
   const onDown = () => {
-    setRequest('bottom');
+    scrollApi.current.scrollToBottom();
     onUserLastSeen();
   };
 
@@ -112,7 +112,7 @@ export const Messages = ({
   };
 
   const onCreateMessage = () => {
-    setRequest('bottom');
+    scrollApi.current.scrollToBottom();
   };
 
   const onUserLastSeen = () => {
@@ -133,14 +133,12 @@ export const Messages = ({
     });
   };
 
+  const getApi = (api) => (scrollApi.current = api);
+
   return (
     <div className={styles.outer}>
       <DownButton show={!down} onClick={onDown} unreadCount={unreadCount} />
-      <ScrollContainer
-        onScroll={onScroll}
-        request={request}
-        setRequest={setRequest}
-      >
+      <ScrollContainer onScroll={onScroll} getApi={getApi}>
         {messageGroups.map((group, idx) => {
           return (
             <MessageGroup

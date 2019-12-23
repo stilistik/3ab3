@@ -2,17 +2,12 @@ import React from 'react';
 
 import styles from './ScrollContainer.less';
 
-export const ScrollContainer = ({ children, request, setRequest, ...rest }) => {
+export const ScrollContainer = ({ children, getApi, ...rest }) => {
   const ref = React.useRef(null);
 
   React.useEffect(() => {
-    if (!request) return;
-    scrollTo(request);
-    setRequest(null);
-  }, [request]);
-
-  React.useEffect(() => {
     ref.current.addEventListener('scroll', onScroll);
+    getApi({ scrollTo, scrollToBottom, scrollToTop }); // pass api to parent
     return () => ref.current.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -26,15 +21,15 @@ export const ScrollContainer = ({ children, request, setRequest, ...rest }) => {
   };
 
   const scrollTo = (value) => {
-    const element = ref.current;
-    if (!element) return;
+    ref.current.scrollTop = value;
+  };
 
-    let pixelValue;
-    if (value === 'bottom') pixelValue = element.scrollHeight;
-    else if (value === 'top') pixelValue = 0;
-    else pixelValue = value;
+  const scrollToBottom = () => {
+    ref.current.scrollTop = ref.current.scrollHeight;
+  };
 
-    element.scrollTop = pixelValue;
+  const scrollToTop = () => {
+    ref.current.scrollTop = 0;
   };
 
   return (
