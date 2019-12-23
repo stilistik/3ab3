@@ -1,9 +1,9 @@
 import React from 'react';
-import EventForm from '../EventForm';
+import EventForm from './EventForm';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { Message } from 'Components';
-import { EVENTS } from '../list/Events';
+import { EVENTS } from './Events';
 
 const MUTATION = gql`
   mutation($input: EventInput!) {

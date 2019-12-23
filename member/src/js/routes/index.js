@@ -11,7 +11,7 @@ import { Checklist } from 'Pages/checklist';
 import { Messenger } from 'Pages/messenger'
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
-import { Events, CreateEvent, EditEvent } from 'Pages/events';
+import { Events, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
 import { Members, CreateMember, EditMember } from 'Pages/members';
 import { Questions, Templates, CreateQuestion } from 'Pages/threesteps';
@@ -36,7 +36,6 @@ const Routes = ({ props }) => {
       <AuthRoute path="/createmember" component={CreateMember} props={props} />
       <AuthRoute path="/editmember" component={EditMember} props={props} />
       <AuthRoute path="/events" component={Events} props={props} />
-      <AuthRoute path="/createevent" component={CreateEvent} props={props} />
       <AuthRoute path="/editevent" component={EditEvent} props={props} />
       <AuthRoute path="/questions" component={Questions} props={props} />
       <AuthRoute
