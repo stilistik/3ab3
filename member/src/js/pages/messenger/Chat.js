@@ -42,7 +42,6 @@ export const Chat = ({
   setUnreadCount,
 }) => {
   const unsubscribe = React.useRef(null);
-  const lastDown = React.useRef(null);
   const { subscribeToMore, loading, error, data } = useQuery(UNREAD_MESSAGES, {
     variables: { userId: currentUser.id, chatId: chat.id },
   });
@@ -50,19 +49,15 @@ export const Chat = ({
   const count = data ? data.unreadMessagesCount : 0;
 
   React.useEffect(() => {
-    setUnreadCount(count);
+    if (selected) setUnreadCount(count);
   }, [count]);
-
-  // for some reason we need to store this in a ref to stop unread message subscription trigger
-  // when the user is scrolled down in the chat
-  lastDown.current = down;
 
   const subscribe = () => {
     unsubscribe.current = subscribeToMore({
       document: NEW_MESSAGES_SUBSCRIPTION,
       variables: { chatId: chat.id },
       updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data || (lastDown.current && selected))
+        if (!subscriptionData.data || (down && selected))
           return prev;
         let count = prev.unreadMessagesCount;
         const { onNewMessage } = subscriptionData.data;

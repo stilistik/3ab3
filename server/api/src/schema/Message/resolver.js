@@ -25,11 +25,21 @@ module.exports = {
   },
   Subscription: {
     onNewMessage: {
-      subscribe(root, args, context) {
-        return context.prisma.$subscribe.message({
-          node: { chat: { id: args.chatId } },
-          mutation_in: ['CREATED'],
-        });
+      async subscribe(root, args, context) {
+        if (args.chatId) {
+          return context.prisma.$subscribe.message({
+            node: { chat: { id: args.chatId } },
+            mutation_in: ['CREATED'],
+          });
+        } else if (args.toId) {
+          const chats = await context.prisma.chats({
+            where: { members_some: { id: args.toId } },
+          });
+          return context.prisma.$subscribe.message({
+            node: { chat: { id_in: chats.map((el) => el.id) } },
+            mutation_in: ['CREATED'],
+          });
+        }
       },
       resolve: (payload) => {
         return payload;

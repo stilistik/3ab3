@@ -43,5 +43,5 @@ extend type Mutation {
 }
 
 extend type Subscription {
-  onNewMessage(chatId: ID!): MessageSubscriptionPayload!
+  onNewMessage(chatId: ID, toId: ID): MessageSubscriptionPayload!
 }
