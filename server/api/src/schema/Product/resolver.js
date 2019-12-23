@@ -31,12 +31,10 @@ module.exports = {
       };
     },
     async consumptions(root, args, context) {
-      const { id } = verifyAndDecodeToken(context);
       const products = await context.prisma.products();
       return products.map(async (product) => {
         const items = await context.prisma.items({
           where: {
-            user: { id: id },
             product: { id: product.id },
           },
         });

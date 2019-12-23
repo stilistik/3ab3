@@ -45,7 +45,7 @@ const BalanceCell = ({ balance }) => {
       </Tag>
     ) : (
       <Tag outlined color="#f5222d">
-        {'-' + balance.toFixed(2) + ' CHF'}
+        {balance.toFixed(2) + ' CHF'}
       </Tag>
     );
   return <TableCell align="right">{amount}</TableCell>;

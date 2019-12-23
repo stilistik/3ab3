@@ -28,6 +28,7 @@ type User {
   lastOnline: DateTime
   chats: [Chat!]!
   unreadMessages: Int!
+  consumptions: [ProductConsumption!]!
 }
 
 enum UserRole {

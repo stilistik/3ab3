@@ -6,11 +6,14 @@ import { Paper } from '@material-ui/core';
 
 const CONSUMPTIONS_QUERY = gql`
   query {
-    consumptions {
-      count
-      product {
-        id
-        name
+    currentUser {
+      id
+      consumptions {
+        count
+        product {
+          id
+          name
+        }
       }
     }
   }
@@ -33,7 +36,9 @@ const ConsumptionChart = () => {
 
   return (
     <Paper style={{ width: '100%', height: '340px', color: 'white' }}>
-      <PercentagePieChart data={createChartData(data.consumptions)} />
+      <PercentagePieChart
+        data={createChartData(data.currentUser.consumptions)}
+      />
     </Paper>
   );
 };

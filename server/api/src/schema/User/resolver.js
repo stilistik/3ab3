@@ -170,5 +170,24 @@ module.exports = {
       );
       return totals.reduce((acc, curr) => acc + curr, 0);
     },
+    async consumptions(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+      const products = await context.prisma.products();
+      return products.map(async (product) => {
+        const items = await context.prisma.items({
+          where: {
+            user: { id: id },
+            product: { id: product.id },
+          },
+        });
+        const count = items.reduce((acc, it) => {
+          return acc + it.amount;
+        }, 0);
+        return {
+          count,
+          product,
+        };
+      });
+    },
   },
 };
