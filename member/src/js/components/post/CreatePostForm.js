@@ -7,10 +7,10 @@ import {
   CardActions,
   CardContent,
   Button,
-  TextField,
+  Input,
 } from '@material-ui/core';
 import { Icon, UserAvatar, ImageContainer } from 'Components';
-import { PostImage, PostLink } from './Post';
+import { PostLink } from './Post';
 import ImageInput from './ImageInput';
 
 import styles from './CreatePostForm.css';
@@ -79,12 +79,13 @@ const CreatePostForm = (props) => {
       <CardContent className={styles.content}>
         <div className={styles.form}>
           <UserAvatar user={user} className={styles.avatar} />
-          <TextField
+          <Input
             value={text}
             onChange={onChange}
             multiline
             placeholder="Write something..."
-            style={{ width: '100%' }}
+            className={styles.input}
+            disableUnderline
           />
           <ImageInput onChange={onImageChange} />
         </div>
@@ -92,18 +93,15 @@ const CreatePostForm = (props) => {
           <ImageContainer image={src} classes={{ root: styles.preview }} />
         )}
         <PostLink link={link} />
-      </CardContent>
-      <CardActions>
         <Button
           variant="contained"
-          size="small"
           color="primary"
-          style={{ width: '100%' }}
           onClick={onSubmit}
+          className={styles.submit}
         >
           Post <Icon type="send" style={{ marginLeft: '10px' }} />
         </Button>
-      </CardActions>
+      </CardContent>
     </Card>
   );
 };
