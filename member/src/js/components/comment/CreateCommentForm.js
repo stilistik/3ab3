@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-import { TextField } from '@material-ui/core';
+import { useQuery } from '@apollo/react-hooks';
+import { Input } from '@material-ui/core';
 import { UserAvatar } from 'Components';
 
 import styles from './CreateCommentForm.css';
@@ -16,51 +16,47 @@ const QUERY = gql`
   }
 `;
 
-class CreateCommentForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
+const CreateCommentForm = (props) => {
+  const [value, setValue] = React.useState('');
+  const { loading, error, data } = useQuery(QUERY);
 
-  onChange = (e) => {
-    this.setState({ value: e.target.value });
+  if (loading || error) return null;
+
+  const onChange = (e) => {
+    setValue(e.target.value);
   };
 
-  onKey = (e) => {
+  const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      this.onSubmit(e);
+      e.preventDefault();
+      submit();
     }
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSubmit({
-      id: this.props.id,
-      text: this.state.value,
+  const submit = () => {
+    if (!value) return;
+    props.onSubmit({
+      id: props.id,
+      text: value,
     });
-    this.setState({ value: '' });
+    setValue('');
   };
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit} className={styles.container}>
-        <UserAvatar user={this.props.user} className={styles.avatar} />
-        <TextField
-          value={this.state.value}
-          onKeyPress={this.onKey}
-          onChange={this.onChange}
-          multiline
-          autoFocus={true}
-          placeholder="Comment"
-          style={{ width: '100%' }}
-        />
-      </form>
-    );
-  }
-}
+  return (
+    <div className={styles.container}>
+      <UserAvatar user={data.currentUser} className={styles.avatar} />
+      <Input
+        className={styles.input}
+        value={value}
+        onKeyDown={onKeyDown}
+        onChange={onChange}
+        multiline
+        disableUnderline
+        autoFocus={true}
+        placeholder="Comment"
+      />
+    </div>
+  );
+};
 
-export default graphql(QUERY, {
-  props: ({ data }) => ({ user: data.currentUser }),
-})(CreateCommentForm);
+export default CreateCommentForm;

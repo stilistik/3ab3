@@ -6,6 +6,16 @@
 
 .avatar {
   margin-right: 15px;
-  width: 30px;
-  height: 30px;
+  width: 1.7em;
+  height: 1.7em;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background: #eee;
+  padding: 5px 10px;
+  flex-grow: 100;
+  margin-right: 5px;
 }

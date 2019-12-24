@@ -5,34 +5,19 @@ import CommentActions from './CommentActions';
 
 import styles from './Comment.less';
 
-class Comment extends React.Component {
-  render() {
-    const { comment } = this.props;
-    const avatar = (
-      <UserAvatar user={comment.author} classes={{ avatar: styles.avatar }} />
-    );
-    const label = (
-      <div className={styles.label}>
-        <span className={styles.user}>{comment.author.name}</span>
-        <span className={styles.text}>{comment.text}</span>
+const Comment = ({ comment }) => {
+  return (
+    <div className={styles.comment}>
+      <div className={styles.content}>
+        <UserAvatar user={comment.author} classes={{ avatar: styles.avatar }} />
+        <div className={styles.text}>
+          <span className={styles.user}>{comment.author.name}</span>
+          <span>{comment.text}</span>
+        </div>
       </div>
-    );
-    return (
-      <div className={styles.comment}>
-        <Chip
-          onClick={this.onClick}
-          classes={{
-            root: styles.chip,
-            label: styles.chiplabel,
-            avatar: styles.chipAvatar,
-          }}
-          avatar={avatar}
-          label={label}
-        />
-        <CommentActions comment={comment} />
-      </div>
-    );
-  }
-}
+      <CommentActions comment={comment} />
+    </div>
+  );
+};
 
 export default Comment;
