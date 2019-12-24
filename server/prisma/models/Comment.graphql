@@ -1,6 +1,7 @@
 type Comment {
   id: ID! @unique
   text: String!
+  link: String
   date: DateTime!
   author: User! @relation(name: "CommentAuthor")
   likedBy: [User!]! @relation(name: "LikedComments")

@@ -84,6 +84,7 @@ module.exports = {
               author: { connect: { id: id } },
               date: date,
               text: args.text,
+              link: args.link,
             },
           },
         },

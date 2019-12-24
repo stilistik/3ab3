@@ -6,8 +6,8 @@ import { Mutation } from 'react-apollo';
 import { CreateCommentForm } from 'Components';
 
 const MUTATION = gql`
-  mutation($eventId: ID!, $text: String!) {
-    commentEvent(eventId: $eventId, text: $text) {
+  mutation($eventId: ID!, $text: String!, $link: String) {
+    commentEvent(eventId: $eventId, text: $text, link: $link) {
       id
     }
   }
@@ -28,6 +28,7 @@ class CommentEvent extends React.Component {
         variables: {
           eventId: values.id,
           text: values.text,
+          link: values.link,
         },
         refetchQueries: () => this.props.refetch,
       });
@@ -55,7 +56,4 @@ class CommentEvent extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CommentEvent);
+export default connect(null, mapDispatchToProps)(CommentEvent);

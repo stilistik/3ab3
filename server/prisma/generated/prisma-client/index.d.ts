@@ -888,6 +888,8 @@ export type CommentOrderByInput =
   | "id_DESC"
   | "text_ASC"
   | "text_DESC"
+  | "link_ASC"
+  | "link_DESC"
   | "date_ASC"
   | "date_DESC";
 
@@ -1498,6 +1500,20 @@ export interface CommentWhereInput {
   text_not_starts_with?: Maybe<String>;
   text_ends_with?: Maybe<String>;
   text_not_ends_with?: Maybe<String>;
+  link?: Maybe<String>;
+  link_not?: Maybe<String>;
+  link_in?: Maybe<String[] | String>;
+  link_not_in?: Maybe<String[] | String>;
+  link_lt?: Maybe<String>;
+  link_lte?: Maybe<String>;
+  link_gt?: Maybe<String>;
+  link_gte?: Maybe<String>;
+  link_contains?: Maybe<String>;
+  link_not_contains?: Maybe<String>;
+  link_starts_with?: Maybe<String>;
+  link_not_starts_with?: Maybe<String>;
+  link_ends_with?: Maybe<String>;
+  link_not_ends_with?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   date_not?: Maybe<DateTimeInput>;
   date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2627,6 +2643,7 @@ export interface CommentCreateManyWithoutAuthorInput {
 
 export interface CommentCreateWithoutAuthorInput {
   text: String;
+  link?: Maybe<String>;
   date: DateTimeInput;
   likedBy?: Maybe<UserCreateManyWithoutLikedCommentsInput>;
   post?: Maybe<PostCreateOneWithoutCommentsInput>;
@@ -2721,6 +2738,7 @@ export interface CommentCreateManyWithoutLikedByInput {
 
 export interface CommentCreateWithoutLikedByInput {
   text: String;
+  link?: Maybe<String>;
   date: DateTimeInput;
   author: UserCreateOneWithoutCommentsInput;
   post?: Maybe<PostCreateOneWithoutCommentsInput>;
@@ -2910,6 +2928,7 @@ export interface CommentCreateManyWithoutEventInput {
 
 export interface CommentCreateWithoutEventInput {
   text: String;
+  link?: Maybe<String>;
   date: DateTimeInput;
   author: UserCreateOneWithoutCommentsInput;
   likedBy?: Maybe<UserCreateManyWithoutLikedCommentsInput>;
@@ -3023,6 +3042,7 @@ export interface CommentCreateManyWithoutPostInput {
 
 export interface CommentCreateWithoutPostInput {
   text: String;
+  link?: Maybe<String>;
   date: DateTimeInput;
   author: UserCreateOneWithoutCommentsInput;
   likedBy?: Maybe<UserCreateManyWithoutLikedCommentsInput>;
@@ -3757,6 +3777,7 @@ export interface CommentUpdateWithWhereUniqueWithoutAuthorInput {
 
 export interface CommentUpdateWithoutAuthorDataInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedCommentsInput>;
   post?: Maybe<PostUpdateOneWithoutCommentsInput>;
@@ -3932,6 +3953,7 @@ export interface CommentUpdateWithWhereUniqueWithoutLikedByInput {
 
 export interface CommentUpdateWithoutLikedByDataInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
   post?: Maybe<PostUpdateOneWithoutCommentsInput>;
@@ -4533,6 +4555,7 @@ export interface CommentUpdateWithWhereUniqueWithoutEventInput {
 
 export interface CommentUpdateWithoutEventDataInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedCommentsInput>;
@@ -4597,6 +4620,20 @@ export interface CommentScalarWhereInput {
   text_not_starts_with?: Maybe<String>;
   text_ends_with?: Maybe<String>;
   text_not_ends_with?: Maybe<String>;
+  link?: Maybe<String>;
+  link_not?: Maybe<String>;
+  link_in?: Maybe<String[] | String>;
+  link_not_in?: Maybe<String[] | String>;
+  link_lt?: Maybe<String>;
+  link_lte?: Maybe<String>;
+  link_gt?: Maybe<String>;
+  link_gte?: Maybe<String>;
+  link_contains?: Maybe<String>;
+  link_not_contains?: Maybe<String>;
+  link_starts_with?: Maybe<String>;
+  link_not_starts_with?: Maybe<String>;
+  link_ends_with?: Maybe<String>;
+  link_not_ends_with?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   date_not?: Maybe<DateTimeInput>;
   date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -4617,6 +4654,7 @@ export interface CommentUpdateManyWithWhereNestedInput {
 
 export interface CommentUpdateManyDataInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
 }
 
@@ -5081,6 +5119,7 @@ export interface CommentUpdateWithWhereUniqueWithoutPostInput {
 
 export interface CommentUpdateWithoutPostDataInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedCommentsInput>;
@@ -5498,6 +5537,7 @@ export interface ClientUpdateManyMutationInput {
 
 export interface CommentCreateInput {
   text: String;
+  link?: Maybe<String>;
   date: DateTimeInput;
   author: UserCreateOneWithoutCommentsInput;
   likedBy?: Maybe<UserCreateManyWithoutLikedCommentsInput>;
@@ -5507,6 +5547,7 @@ export interface CommentCreateInput {
 
 export interface CommentUpdateInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   author?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedCommentsInput>;
@@ -5516,6 +5557,7 @@ export interface CommentUpdateInput {
 
 export interface CommentUpdateManyMutationInput {
   text?: Maybe<String>;
+  link?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
 }
 
@@ -7106,12 +7148,14 @@ export interface PostNullablePromise
 export interface Comment {
   id: ID_Output;
   text: String;
+  link?: String;
   date: DateTimeOutput;
 }
 
 export interface CommentPromise extends Promise<Comment>, Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  link: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   author: <T = UserPromise>() => T;
   likedBy: <T = FragmentableArray<User>>(args?: {
@@ -7132,6 +7176,7 @@ export interface CommentSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  link: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   author: <T = UserSubscription>() => T;
   likedBy: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
@@ -7152,6 +7197,7 @@ export interface CommentNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  link: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   author: <T = UserPromise>() => T;
   likedBy: <T = FragmentableArray<User>>(args?: {
@@ -8937,6 +8983,7 @@ export interface CommentSubscriptionPayloadSubscription
 export interface CommentPreviousValues {
   id: ID_Output;
   text: String;
+  link?: String;
   date: DateTimeOutput;
 }
 
@@ -8945,6 +8992,7 @@ export interface CommentPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  link: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
 }
 
@@ -8953,6 +9001,7 @@ export interface CommentPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  link: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 

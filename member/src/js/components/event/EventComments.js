@@ -21,6 +21,7 @@ export const EVENT_COMMENTS = gql`
             avatar
           }
           text
+          link
           date
         }
       }

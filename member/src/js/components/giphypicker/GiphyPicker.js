@@ -16,11 +16,11 @@ const GifPreview = ({ gif }) => {
   return <img src={gif.preview} className={styles.video} />;
 };
 
-const GiphyList = ({ gifs, handleSelect }) => {
+const GiphyList = ({ gifs, handleSelect, colCount }) => {
   return (
     <div className={styles.listContainer}>
       <div className={styles.list}>
-        <GridList cellHeight={160} cols={3}>
+        <GridList cellHeight={160} cols={colCount}>
           {gifs.map((gif) => (
             <GridListTile
               key={gif.id}
@@ -54,7 +54,7 @@ const GiphySearch = ({ value, onChange, handleClose }) => {
   );
 };
 
-export const GiphyPicker = ({ handleSelect, handleClose }) => {
+export const GiphyPicker = ({ handleSelect, handleClose, colCount }) => {
   const { gifs, pagination, search, setSearch } = useGiphyContext();
 
   const onChange = (e) => setSearch(e.target.value);
@@ -66,7 +66,11 @@ export const GiphyPicker = ({ handleSelect, handleClose }) => {
         onChange={onChange}
         handleClose={handleClose}
       />
-      <GiphyList gifs={gifs} handleSelect={handleSelect} />
+      <GiphyList gifs={gifs} handleSelect={handleSelect} colCount={colCount} />
     </div>
   );
+};
+
+GiphyPicker.defaultProps = {
+  colCount: 3,
 };

@@ -31,8 +31,7 @@ extend type Mutation {
   deleteEvent(eventId: ID!): Event! @hasRole
   likeEvent(eventId: ID!, userId: ID!): Event!
   unlikeEvent(eventId: ID!, userId: ID!): Event!
-  commentEvent(eventId: ID!, text: String!): Event!
+  commentEvent(eventId: ID!, text: String!, link: String): Event!
   supportEvent(eventId: ID!, userId: ID!): Event!
   unsupportEvent(eventId: ID!, userId: ID!): Event!
-
 }

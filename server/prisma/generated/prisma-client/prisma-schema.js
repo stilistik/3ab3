@@ -526,6 +526,7 @@ input ClientWhereUniqueInput {
 type Comment {
   id: ID!
   text: String!
+  link: String
   date: DateTime!
   author: User!
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
@@ -541,6 +542,7 @@ type CommentConnection {
 
 input CommentCreateInput {
   text: String!
+  link: String
   date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   likedBy: UserCreateManyWithoutLikedCommentsInput
@@ -570,6 +572,7 @@ input CommentCreateManyWithoutPostInput {
 
 input CommentCreateWithoutAuthorInput {
   text: String!
+  link: String
   date: DateTime!
   likedBy: UserCreateManyWithoutLikedCommentsInput
   post: PostCreateOneWithoutCommentsInput
@@ -578,6 +581,7 @@ input CommentCreateWithoutAuthorInput {
 
 input CommentCreateWithoutEventInput {
   text: String!
+  link: String
   date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   likedBy: UserCreateManyWithoutLikedCommentsInput
@@ -586,6 +590,7 @@ input CommentCreateWithoutEventInput {
 
 input CommentCreateWithoutLikedByInput {
   text: String!
+  link: String
   date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   post: PostCreateOneWithoutCommentsInput
@@ -594,6 +599,7 @@ input CommentCreateWithoutLikedByInput {
 
 input CommentCreateWithoutPostInput {
   text: String!
+  link: String
   date: DateTime!
   author: UserCreateOneWithoutCommentsInput!
   likedBy: UserCreateManyWithoutLikedCommentsInput
@@ -610,6 +616,8 @@ enum CommentOrderByInput {
   id_DESC
   text_ASC
   text_DESC
+  link_ASC
+  link_DESC
   date_ASC
   date_DESC
 }
@@ -617,6 +625,7 @@ enum CommentOrderByInput {
 type CommentPreviousValues {
   id: ID!
   text: String!
+  link: String
   date: DateTime!
 }
 
@@ -649,6 +658,20 @@ input CommentScalarWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   date: DateTime
   date_not: DateTime
   date_in: [DateTime!]
@@ -682,6 +705,7 @@ input CommentSubscriptionWhereInput {
 
 input CommentUpdateInput {
   text: String
+  link: String
   date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   likedBy: UserUpdateManyWithoutLikedCommentsInput
@@ -691,11 +715,13 @@ input CommentUpdateInput {
 
 input CommentUpdateManyDataInput {
   text: String
+  link: String
   date: DateTime
 }
 
 input CommentUpdateManyMutationInput {
   text: String
+  link: String
   date: DateTime
 }
 
@@ -754,6 +780,7 @@ input CommentUpdateManyWithWhereNestedInput {
 
 input CommentUpdateWithoutAuthorDataInput {
   text: String
+  link: String
   date: DateTime
   likedBy: UserUpdateManyWithoutLikedCommentsInput
   post: PostUpdateOneWithoutCommentsInput
@@ -762,6 +789,7 @@ input CommentUpdateWithoutAuthorDataInput {
 
 input CommentUpdateWithoutEventDataInput {
   text: String
+  link: String
   date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   likedBy: UserUpdateManyWithoutLikedCommentsInput
@@ -770,6 +798,7 @@ input CommentUpdateWithoutEventDataInput {
 
 input CommentUpdateWithoutLikedByDataInput {
   text: String
+  link: String
   date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   post: PostUpdateOneWithoutCommentsInput
@@ -778,6 +807,7 @@ input CommentUpdateWithoutLikedByDataInput {
 
 input CommentUpdateWithoutPostDataInput {
   text: String
+  link: String
   date: DateTime
   author: UserUpdateOneRequiredWithoutCommentsInput
   likedBy: UserUpdateManyWithoutLikedCommentsInput
@@ -857,6 +887,20 @@ input CommentWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
   date: DateTime
   date_not: DateTime
   date_in: [DateTime!]

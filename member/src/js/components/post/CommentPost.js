@@ -6,8 +6,8 @@ import { Mutation } from 'react-apollo';
 import { CreateCommentForm } from 'Components';
 
 const MUTATION = gql`
-  mutation($postId: ID!, $text: String!) {
-    commentPost(postId: $postId, text: $text) {
+  mutation($postId: ID!, $text: String!, $link: String) {
+    commentPost(postId: $postId, text: $text, link: $link) {
       id
     }
   }
@@ -23,11 +23,13 @@ const mapDispatchToProps = (dispatch) => {
 
 class CommentPost extends React.Component {
   onSubmit = async (values) => {
+    console.log(values);
     try {
       await this.createComment({
         variables: {
           postId: values.id,
           text: values.text,
+          link: values.link,
         },
         refetchQueries: () => this.props.refetch,
       });
@@ -55,7 +57,4 @@ class CommentPost extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CommentPost);
+export default connect(null, mapDispatchToProps)(CommentPost);

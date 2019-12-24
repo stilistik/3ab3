@@ -61,9 +61,9 @@ export const CreateMessage = ({
   onCreateMessage,
 }) => {
   let timer = React.useRef(null);
+  const [link, setLink] = React.useState(null);
   const [picker, setPicker] = React.useState(false);
   const [value, setValue] = React.useState('');
-  const [link, setLink] = React.useState(null);
   const [createMessage] = useMutation(MUTATION);
 
   const onSubmit = async () => {

@@ -21,6 +21,7 @@ export const POST_COMMENTS = gql`
             avatar
           }
           text
+          link
           date
         }
       }

@@ -1,6 +1,7 @@
 type Comment implements Node @isAuthenticated {
   id: ID!
   text: String!
+  link: String
   author: User!
   likedBy: [User!]!
   date: DateTime!
