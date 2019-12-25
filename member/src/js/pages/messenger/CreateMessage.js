@@ -67,7 +67,7 @@ export const CreateMessage = ({
   const [createMessage] = useMutation(MUTATION);
 
   const onSubmit = async () => {
-    if (!value) return;
+    if (!value && !link) return;
     try {
       await createMessage({
         variables: {
