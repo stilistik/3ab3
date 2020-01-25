@@ -6,7 +6,6 @@ import en from 'javascript-time-ago/locale/en';
 import classnames from 'classnames';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { useInterval } from 'Utils';
 
 import styles from './Chats.less';
 
@@ -57,8 +56,7 @@ export const Chat = ({
       document: NEW_MESSAGES_SUBSCRIPTION,
       variables: { chatId: chat.id },
       updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data || (down && selected))
-          return prev;
+        if (!subscriptionData.data || (down && selected)) return prev;
         let count = prev.unreadMessagesCount;
         const { onNewMessage } = subscriptionData.data;
         if (onNewMessage.node.from.id === currentUser.id) return prev;

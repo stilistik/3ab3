@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login, showMessage } from 'Redux/actions';
+import { login } from 'Redux/actions';
 import { Typography, Button } from '@material-ui/core';
-import { Form, TextField } from 'Components';
-import { withStyles } from '@material-ui/core/styles';
+import { Form, TextField, Loading, Message } from 'Components';
 import { requestToken } from 'Auth/requestToken';
 
-import styles from './LoginForm.css';
+import styles from './LoginForm.less';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -16,76 +15,63 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
-  }
+const LoginForm = (props) => {
+  const [loading, setLoading] = React.useState(false);
 
-  onSubmit = async (values) => {
-    const response = await requestToken(
-      values.email,
-      values.password,
-    );
-    if (response) {
-      this.props.login(response.access_token);
+  const onSubmit = async (values) => {
+    try {
+      setLoading(true);
+      const response = await requestToken(values.email, values.password);
+      if (response) {
+        props.login(response.access_token);
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      Message.error(error);
+      setLoading(false);
     }
   };
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <div className={styles.header}>
-          <Typography
-            classes={{ root: styles.title }}
-            variant="h3"
-            color="inherit"
-          >
-            Login
-          </Typography>
-        </div>
-        <br />
-        <Form className={styles.form} onSubmit={this.onSubmit}>
-          <TextField
-            id="email"
-            label="Email"
-            type="email"
-            required={true}
-            className={styles.field}
-            InputProps={{ className: styles.input }}
-            InputLabelProps={{ className: styles.label }}
-          />
-          <TextField
-            id="password"
-            label="Password"
-            type="password"
-            required={true}
-            className={styles.field}
-            InputProps={{ className: styles.input }}
-            InputLabelProps={{ className: styles.label }}
-          />
-          <br />
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
-        </Form>
+  return (
+    <div>
+      <div className={styles.header}>
+        <Typography
+          classes={{ root: styles.title }}
+          variant="h3"
+          color="inherit"
+        >
+          Login
+        </Typography>
       </div>
-    );
-  }
-}
+      <br />
+      <Form className={styles.form} onSubmit={onSubmit}>
+        <TextField
+          id="email"
+          label="Email"
+          type="email"
+          required={true}
+          className={styles.field}
+          InputProps={{ className: styles.input }}
+          InputLabelProps={{ className: styles.label }}
+        />
+        <TextField
+          id="password"
+          label="Password"
+          type="password"
+          required={true}
+          className={styles.field}
+          InputProps={{ className: styles.input }}
+          InputLabelProps={{ className: styles.label }}
+        />
+        <br />
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
+        {loading && <Loading color="#bbb" style={{ marginTop: 20 }} />}
+      </Form>
+    </div>
+  );
+};
 
-const StyledLoginForm = withStyles(styles)(LoginForm);
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(StyledLoginForm);
+export default connect(null, mapDispatchToProps)(LoginForm);

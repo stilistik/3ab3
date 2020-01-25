@@ -1,6 +1,5 @@
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
-import { Icon } from 'Components';
+import { Icon, Loading } from 'Components';
 import classnames from 'classnames';
 
 class ImageContainer extends React.Component {
@@ -37,11 +36,7 @@ class ImageContainer extends React.Component {
         style={style}
         ref={(ref) => (this.image = ref)}
       >
-        {this.state.loading ? (
-          <div className={classes.indicator}>
-            <CircularProgress size={60} className={classes.progress} />
-          </div>
-        ) : null}
+        {this.state.loading && <Loading />}
         {this.state.error ? (
           <div className={classes.indicator}>
             <Icon type="camera" className={classes.icon} />

@@ -1,113 +1,68 @@
 import React from 'react';
 import { TweenMax } from 'gsap';
-import { Grid, CssBaseline, CircularProgress } from '@material-ui/core';
+import { Loading } from 'Components';
+import { Grid, CssBaseline } from '@material-ui/core';
 import LoginForm from './LoginForm';
 
-import './LoginPage.css';
+import styles from './LoginPage.less';
 
-class DelayedSpinner extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-    };
-    this.mounted = false;
-  }
+const LoginPage = (props) => {
+  const [loading, setLoading] = React.useState(true);
+  const container = React.useRef(null);
+  const background = React.useRef(null);
 
-  componentDidMount = () => {
-    this.mounted = true;
-    setTimeout(() => {
-      if (this.mounted) this.setState({ show: true });
-    }, this.props.delay);
-  };
+  const onMouseMove = React.useCallback((e) => {
+    parallaxIt(e, '#back', 30);
+  }, []);
 
-  componentWillUnmount = () => (this.mounted = false);
+  React.useEffect(() => {
+    container.current.addEventListener('mousemove', onMouseMove);
+    loadImage();
+    return () =>
+      container.current.removeEventListener('mousemove', onMouseMove);
+  }, []);
 
-  render() {
-    if (!this.state.show) return null;
-    return (
-      <div styleName="spinner">
-        <CircularProgress />
-      </div>
-    );
-  }
-}
-
-class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-    };
-    this.container = null;
-    this.background = null;
-  }
-
-  componentDidMount = () => {
-    this.container.addEventListener('mousemove', this.onMouseMove);
-    this.loadImage();
-  };
-
-  componentWillUnmount = () => {
-    this.container.removeEventListener('mousemove', this.onMouseMove);
-  };
-
-  onMouseMove = (e) => {
-    this.parallaxIt(e, '#back', 30);
-  };
-
-  loadImage = async () => {
-    await this.setState({ loading: true });
+  const loadImage = async () => {
+    setLoading(true);
     const pic = 'drawer.jpg';
     let url = `url(${pic})`;
     let img = new Image();
     img.onload = () => {
-      this.background.style.backgroundImage = url;
-      this.setState({ loading: false });
+      background.current.style.backgroundImage = url;
+      setLoading(false);
     };
     img.src = pic;
   };
 
-  parallaxIt = (e, target, movement) => {
-    const offsetLeft = this.container.getBoundingClientRect().left;
-    const offsetTop = this.container.getBoundingClientRect().top;
-    var relX = e.pageX - offsetLeft;
-    var relY = e.pageY - offsetTop;
+  const parallaxIt = (e, target, movement) => {
+    const rect = container.current.getBoundingClientRect();
+    const { clientWidth: w, clientHeight: h } = container.current;
+    var relX = e.pageX - rect.left;
+    var relY = e.pageY - rect.top;
 
     TweenMax.to(target, 1, {
-      x:
-        ((relX - this.container.clientWidth / 2) / this.container.clientWidth) *
-        movement,
-      y:
-        ((relY - this.container.clientHeight / 2) /
-          this.container.clientHeight) *
-        movement,
+      x: ((relX - w / 2) / w) * movement,
+      y: ((relY - h / 2) / h) * movement,
     });
   };
 
-  render() {
-    return (
-      <div ref={(ref) => (this.container = ref)} styleName="container">
-        <CssBaseline />
-        <div
-          id="back"
-          ref={(ref) => (this.background = ref)}
-          styleName="background"
-        />
-        <Grid styleName="grid" container justify="center">
-          <Grid item xs={9} sm={6} md={4} lg={3} xl={2}>
-            {this.state.loading ? (
-              <DelayedSpinner delay={200} />
-            ) : (
-              <div style={{ position: 'relative' }}>
-                <LoginForm />
-              </div>
-            )}
-          </Grid>
+  return (
+    <div ref={container} className={styles.container}>
+      <CssBaseline />
+      <div id="back" ref={background} className={styles.background} />
+      <Grid className={styles.grid} container justify="center">
+        <Grid item xs={9} sm={6} md={4} lg={3} xl={2}>
+          {loading ? (
+            <Loading />
+          ) : (
+            <div style={{ position: 'relative' }}>
+              <LoginForm />
+            </div>
+          )}
         </Grid>
-      </div>
-    );
-  }
-}
+      </Grid>
+    </div>
+  );
+};
 
 export default LoginPage;
