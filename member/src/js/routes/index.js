@@ -6,9 +6,10 @@ import UnauthRoute from './UnauthRoute';
 
 import Login from 'Pages/login';
 import Home from 'Pages/home';
+import { ResetPassword, RequestReset } from 'Pages/resetpassword';
 import { Dashboard } from 'Pages/dashboard';
 import { Checklist } from 'Pages/checklist';
-import { Messenger } from 'Pages/messenger'
+import { Messenger } from 'Pages/messenger';
 import Account from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, EditEvent } from 'Pages/events';
@@ -20,6 +21,16 @@ const Routes = ({ props }) => {
   return (
     <Switch>
       <UnauthRoute path="/login" component={Login} props={props} />
+      <UnauthRoute
+        path="/reset_password"
+        component={ResetPassword}
+        props={props}
+      />
+      <UnauthRoute
+        path="/request_reset"
+        component={RequestReset}
+        props={props}
+      />
       <AuthRoute path="/home" component={Home} props={props} />
       <AuthRoute path="/dashboard" component={Dashboard} props={props} />
       <AuthRoute path="/checklist" component={Checklist} props={props} />

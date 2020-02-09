@@ -1,6 +1,5 @@
 const prisma = require('../prisma');
 const jwt = require('jsonwebtoken');
-const { ResourceNotFoundError } = require('./errors');
 
 const {
   RESET_TOKEN_SECRET,
@@ -16,6 +15,8 @@ const mailgun = require('mailgun-js')({
 });
 
 module.exports = async function(req, res, next) {
+  console.log(req.body);
+
   try {
     const user = await prisma.user({ email: req.body.email });
 
@@ -49,7 +50,7 @@ module.exports = async function(req, res, next) {
         mailgun.messages().send(data, function(error, body) {
           console.log(error, body);
         });
-        next();
+        res.sendStatus(200);
       } else {
         throw new Error('Could not update user');
       }

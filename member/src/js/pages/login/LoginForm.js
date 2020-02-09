@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Link, Box } from '@material-ui/core';
 import { Form, TextField, Loading, Message } from 'Components';
 import { requestToken } from 'Auth/requestToken';
 
@@ -65,6 +65,9 @@ const LoginForm = (props) => {
           InputLabelProps={{ className: styles.label }}
         />
         <br />
+        <Link className={styles.link} href="/request_reset">
+          Forgot Password?
+        </Link>
         <Button type="submit" variant="contained" color="primary">
           Submit
         </Button>

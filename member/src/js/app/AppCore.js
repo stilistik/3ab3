@@ -1,16 +1,22 @@
 import React from 'react';
-import AppHeader from './AppHeader';
+import { AuthAppHeader, UnauthAppHeader } from './AppHeader';
 import AppMenu from './AppMenu';
 
-const AppCore = () => {
-  const [open, setOpen] = React.useState(false);
-
+export const UnauthAppCore = () => {
   return (
-    <div>
-      <AppHeader setDrawerOpen={setOpen} />
-      <AppMenu drawerOpen={open} setDrawerOpen={setOpen} />
-    </div>
+    <React.Fragment>
+      <UnauthAppHeader />
+    </React.Fragment>
   );
 };
 
-export default AppCore;
+export const AuthAppCore = () => {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <React.Fragment>
+      <AuthAppHeader setDrawerOpen={setOpen} />
+      <AppMenu drawerOpen={open} setDrawerOpen={setOpen} />
+    </React.Fragment>
+  );
+};

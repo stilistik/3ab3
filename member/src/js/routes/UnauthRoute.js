@@ -6,7 +6,9 @@ const UnauthRoute = ({ component: C, props: cProps, ...rest }) => {
     <Route
       {...rest}
       render={() => {
-        const { prevLocation } = rest.location.state;
+        let prevLocation = null;
+        if (rest.location.state)
+          prevLocation = rest.location.state.prevLocation;
         if (!cProps.app.isAuthenticated) {
           return <C {...cProps} />;
         } else if (prevLocation) {

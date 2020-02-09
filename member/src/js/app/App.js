@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
-import AppCore from './AppCore';
+import { AuthAppCore, UnauthAppCore } from './AppCore';
 import Auth from './Auth';
 import Routes from 'Routes';
 import { Notifier, EmojiProvider, GiphyProvider } from 'Components';
@@ -16,6 +16,7 @@ const UnauthenticatedApp = () => {
   return (
     <div className={styles.container}>
       <CssBaseline />
+      <UnauthAppCore />
       <Router history={history}>
         <Routes props={{ app: { isAuthenticated: false } }} />
       </Router>
@@ -31,7 +32,7 @@ const AuthenticatedApp = () => {
         <GiphyProvider>
           <Apollo>
             <CssBaseline />
-            <AppCore />
+            <AuthAppCore />
             <Auth>
               <Router history={history}>
                 <Routes props={{ app: { isAuthenticated: true } }} />

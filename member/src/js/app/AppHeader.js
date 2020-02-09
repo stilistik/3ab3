@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Button, Box } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
@@ -9,6 +9,7 @@ import Messages from './Messages';
 import BalanceButton from './BalanceButton';
 import { DefaultGrid } from 'Components';
 import { Logo } from './Logo.js';
+import { requestRoute } from 'History';
 
 import styles from './AppHeader.css';
 
@@ -20,30 +21,50 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class AppHeader extends React.Component {
-  render() {
-    return (
-      <AppBar position="static">
-        <DefaultGrid>
-          <Toolbar>
-            <IconButton
-              className={styles.button}
-              color="inherit"
-              aria-label="Menu"
-              onClick={() => this.props.setDrawerOpen(true)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Logo />
-            <BalanceButton />
-            <Messages />
-            <Invitations />
-            <ProfileMenu />
-          </Toolbar>
-        </DefaultGrid>
-      </AppBar>
-    );
-  }
-}
+export const UnauthAppHeader = connect(
+  null,
+  mapDispatchToProps
+)(() => {
+  return (
+    <AppBar position="static">
+      <DefaultGrid>
+        <Toolbar>
+          <Logo />
+          <Button
+            className={styles.button}
+            onClick={() => requestRoute('/login')}
+          >
+            Login
+          </Button>
+        </Toolbar>
+      </DefaultGrid>
+    </AppBar>
+  );
+});
 
-export default connect(null, mapDispatchToProps)(AppHeader);
+export const AuthAppHeader = connect(
+  null,
+  mapDispatchToProps
+)((props) => {
+  return (
+    <AppBar position="static">
+      <DefaultGrid>
+        <Toolbar>
+          <IconButton
+            className={styles.button}
+            color="inherit"
+            aria-label="Menu"
+            onClick={() => props.setDrawerOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Logo />
+          <BalanceButton />
+          <Messages />
+          <Invitations />
+          <ProfileMenu />
+        </Toolbar>
+      </DefaultGrid>
+    </AppBar>
+  );
+});
