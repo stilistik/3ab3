@@ -8,4 +8,7 @@ const AuthorizationError = createError('AuthorizationError', {
   message: 'You are not authorized for this resource',
 });
 
-module.exports = { AuthenticationError, AuthorizationError };
+module.exports = {
+  AuthenticationError,
+  AuthorizationError,
+};

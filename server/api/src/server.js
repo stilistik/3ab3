@@ -1,5 +1,4 @@
 const http = require('http');
-const { Prisma } = require('./generated/prisma-client');
 const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
@@ -9,14 +8,11 @@ const schema = require('./schema');
 const auth = require('./auth');
 const cors = require('cors');
 const { verifyTokenInConnection } = require('./auth/verify');
+const prisma = require('./prisma');
 
 const API_PATH = '/api';
 const SUB_PATH = '/sub';
 const PORT = 4000;
-
-const prisma = new Prisma({
-  endpoint: 'http://prisma:4466',
-});
 
 const app = express();
 
@@ -31,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Authentication Endpoints
 app.use(passport.initialize());
 app.post('/oauth/token', auth.oauth2.token);
+
+// Forgot password
+app.post('/oauth/forgot_password', auth.forgot_password);
 
 const apollo = new ApolloServer({
   schema: schema,

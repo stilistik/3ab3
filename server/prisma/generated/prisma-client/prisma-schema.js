@@ -4843,6 +4843,7 @@ type User {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase!]
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
@@ -4873,6 +4874,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -4972,6 +4974,7 @@ input UserCreateWithoutChatsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -4995,6 +4998,7 @@ input UserCreateWithoutCommentsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5018,6 +5022,7 @@ input UserCreateWithoutInvitationsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5041,6 +5046,7 @@ input UserCreateWithoutItemsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5064,6 +5070,7 @@ input UserCreateWithoutLikedCommentsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5087,6 +5094,7 @@ input UserCreateWithoutLikedEventsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5110,6 +5118,7 @@ input UserCreateWithoutLikedPostsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5133,6 +5142,7 @@ input UserCreateWithoutOwnChatsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5156,6 +5166,7 @@ input UserCreateWithoutPaymentsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -5179,6 +5190,7 @@ input UserCreateWithoutPostsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5202,6 +5214,7 @@ input UserCreateWithoutPurchasesInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -5225,6 +5238,7 @@ input UserCreateWithoutSupportedEventsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5248,6 +5262,7 @@ input UserCreateWithoutTransactionsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
@@ -5281,6 +5296,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  resetToken_ASC
+  resetToken_DESC
   avatar_ASC
   avatar_DESC
   role_ASC
@@ -5298,6 +5315,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  resetToken: String
   avatar: String
   role: UserRole!
   balance: Float!
@@ -5368,6 +5386,20 @@ input UserScalarWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  resetToken: String
+  resetToken_not: String
+  resetToken_in: [String!]
+  resetToken_not_in: [String!]
+  resetToken_lt: String
+  resetToken_lte: String
+  resetToken_gt: String
+  resetToken_gte: String
+  resetToken_contains: String
+  resetToken_not_contains: String
+  resetToken_starts_with: String
+  resetToken_not_starts_with: String
+  resetToken_ends_with: String
+  resetToken_not_ends_with: String
   avatar: String
   avatar_not: String
   avatar_in: [String!]
@@ -5431,6 +5463,7 @@ input UserUpdateDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5455,6 +5488,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5479,6 +5513,7 @@ input UserUpdateManyDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   role: UserRole
   balance: Float
@@ -5502,6 +5537,7 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   role: UserRole
   balance: Float
@@ -5650,6 +5686,7 @@ input UserUpdateWithoutChatsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5673,6 +5710,7 @@ input UserUpdateWithoutCommentsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5696,6 +5734,7 @@ input UserUpdateWithoutInvitationsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5719,6 +5758,7 @@ input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5742,6 +5782,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5765,6 +5806,7 @@ input UserUpdateWithoutLikedEventsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5788,6 +5830,7 @@ input UserUpdateWithoutLikedPostsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5811,6 +5854,7 @@ input UserUpdateWithoutOwnChatsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5834,6 +5878,7 @@ input UserUpdateWithoutPaymentsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -5857,6 +5902,7 @@ input UserUpdateWithoutPostsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5880,6 +5926,7 @@ input UserUpdateWithoutPurchasesDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -5903,6 +5950,7 @@ input UserUpdateWithoutSupportedEventsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -5926,6 +5974,7 @@ input UserUpdateWithoutTransactionsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
@@ -6113,6 +6162,20 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  resetToken: String
+  resetToken_not: String
+  resetToken_in: [String!]
+  resetToken_not_in: [String!]
+  resetToken_lt: String
+  resetToken_lte: String
+  resetToken_gt: String
+  resetToken_gte: String
+  resetToken_contains: String
+  resetToken_not_contains: String
+  resetToken_starts_with: String
+  resetToken_not_starts_with: String
+  resetToken_ends_with: String
+  resetToken_not_ends_with: String
   avatar: String
   avatar_not: String
   avatar_in: [String!]
