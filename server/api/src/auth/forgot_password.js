@@ -1,5 +1,6 @@
 const prisma = require('../prisma');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 const {
   RESET_TOKEN_SECRET,
@@ -13,6 +14,8 @@ const mailgun = require('mailgun-js')({
   domain: MAILGUN_DOMAIN,
   host: 'api.eu.mailgun.net',
 });
+
+const logoPath = path.join(__dirname, '../resources/favicon.png');
 
 module.exports = async function(req, res, next) {
   console.log(req.body);
@@ -46,6 +49,7 @@ module.exports = async function(req, res, next) {
           template: 'reset_password',
           'v:username': updatedUser.name,
           'v:link': `http://localhost:3000/reset_password?token=${resetToken}`,
+          inline: logoPath,
         };
         mailgun.messages().send(data, function(error, body) {
           console.log(error, body);
