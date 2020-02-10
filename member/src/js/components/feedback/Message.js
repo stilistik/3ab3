@@ -16,6 +16,7 @@ export const Message = (props) => {
   const { className, message, onClose, variant, ...other } = props;
   return (
     <SnackbarContent
+      style={{ backgroundColor: 'red' }}
       className={classnames(styles[variant], className)}
       message={
         <span className={styles.message}>

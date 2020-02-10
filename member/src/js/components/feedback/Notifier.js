@@ -3,7 +3,7 @@ import { Snackbar } from '@material-ui/core';
 import NotificationComponent from './Notification';
 import MessageComponent from './Message';
 
-const HIDE_DELAY = 100000
+const HIDE_DELAY = 6000;
 
 export let Message = {
   error: () => {},
