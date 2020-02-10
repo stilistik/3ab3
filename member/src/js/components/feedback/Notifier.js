@@ -3,6 +3,8 @@ import { Snackbar } from '@material-ui/core';
 import NotificationComponent from './Notification';
 import MessageComponent from './Message';
 
+const HIDE_DELAY = 100000
+
 export let Message = {
   error: () => {},
   warning: () => {},
@@ -66,7 +68,7 @@ export const Notifier = () => {
           horizontal: 'center',
         }}
         open={Boolean(message)}
-        autoHideDuration={6000}
+        autoHideDuration={HIDE_DELAY}
         onClose={handleMessageClose}
       >
         {message ? (
@@ -83,7 +85,7 @@ export const Notifier = () => {
           horizontal: 'left',
         }}
         open={Boolean(notification)}
-        autoHideDuration={6000}
+        autoHideDuration={HIDE_DELAY}
         onClose={handleNotificationClose}
       >
         {notification ? (
