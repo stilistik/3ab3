@@ -17,7 +17,7 @@ const mailgun = require('mailgun-js')({
 
 const logoPath = path.join(__dirname, '../resources/favicon.png');
 
-const forgotPassword = async (req, res, next) => {
+const requestReset = async (req, res, next) => {
   try {
     const user = await prisma.user({ email: req.body.email });
 
@@ -58,4 +58,13 @@ const forgotPassword = async (req, res, next) => {
   }
 };
 
-module.exports = forgotPassword;
+const resetPassword = (req, res, next) => {
+  console.log(req.body);
+
+  res.sendStatus(200);
+};
+
+module.exports = {
+  requestReset,
+  resetPassword,
+};

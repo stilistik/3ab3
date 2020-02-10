@@ -9,7 +9,7 @@ export const requestToken = async (email, password, messageHandler) => {
     password: password,
     grant_type: 'password',
   };
-  let response = await fetch(global.API_URL + '/oauth/token/', {
+  let response = await fetch(global.API_URL + '/auth/token/', {
     headers: {
       Authorization: 'Basic ' + auth_details,
       'Content-Type': 'application/json',

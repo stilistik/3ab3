@@ -26,10 +26,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Authentication Endpoints
 app.use(passport.initialize());
-app.post('/oauth/token', auth.oauth2.token);
+app.post('/auth/token', auth.oauth2.token);
 
 // Forgot password
-app.post('/oauth/forgot_password', auth.forgot_password);
+app.post('/auth/requestReset', auth.password.requestReset);
+app.post('/auth/resetPassword', auth.password.resetPassword);
 
 const apollo = new ApolloServer({
   schema: schema,

@@ -34,7 +34,7 @@ export const RequestReset = () => {
 
   const onSubmit = async (payload) => {
     setLoading(true);
-    const response = await fetch(global.API_URL + '/oauth/forgot_password', {
+    const response = await fetch(global.API_URL + '/auth/requestReset', {
       headers: {
         'Content-Type': 'application/json',
       },

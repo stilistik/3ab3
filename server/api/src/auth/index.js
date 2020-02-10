@@ -1,9 +1,9 @@
 const init = require('./init');
 const oauth2 = require('./oauth2');
-const forgot_password = require('./forgot_password');
+const password = require('./password');
 
 module.exports = {
   init,
   oauth2,
-  forgot_password,
+  password,
 };

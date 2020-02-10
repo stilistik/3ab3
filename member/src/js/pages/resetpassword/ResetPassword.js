@@ -7,7 +7,7 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
-import { DefaultGrid, Form, TextField } from 'Components';
+import { DefaultGrid, Form, TextField, Message, Container } from 'Components';
 import { getQueryParams } from 'History';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -26,13 +26,22 @@ export const ResetPassword = () => {
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
 
-  React.useEffect(() => {
-    const params = getQueryParams();
-    console.log(params);
-  }, []);
-
-  const onSubmit = () => {
+  const onSubmit = async (payload) => {
     setLoading(true);
+    const params = getQueryParams();
+    const response = await fetch(global.API_URL + '/auth/resetPassword', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({ ...payload, token: params.token }),
+    });
+    if (response.ok) {
+      Message.success('An email with a password reset link was sent do you.');
+    } else {
+      Message.error('Could not find your email in the system');
+    }
+
     setLoading(false);
   };
 
