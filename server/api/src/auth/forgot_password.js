@@ -17,9 +17,7 @@ const mailgun = require('mailgun-js')({
 
 const logoPath = path.join(__dirname, '../resources/favicon.png');
 
-module.exports = async function(req, res, next) {
-  console.log(req.body);
-
+const forgotPassword = async (req, res, next) => {
   try {
     const user = await prisma.user({ email: req.body.email });
 
@@ -33,15 +31,11 @@ module.exports = async function(req, res, next) {
         RESET_TOKEN_SECRET,
         { expiresIn: RESET_TOKEN_EXPIRATION }
       );
-      console.log(resetToken);
-
       const updatedUser = await prisma.updateUser({
         where: { id: user.id },
         data: { resetToken },
       });
       if (updatedUser) {
-        console.log(updatedUser);
-
         const data = {
           from: '3ab3 Member Admin <admin@3ab3.ch>',
           to: updatedUser.email,
@@ -51,9 +45,7 @@ module.exports = async function(req, res, next) {
           'v:link': `http://localhost:3000/reset_password?token=${resetToken}`,
           inline: logoPath,
         };
-        mailgun.messages().send(data, function(error, body) {
-          console.log(error, body);
-        });
+        mailgun.messages().send(data);
         res.sendStatus(200);
       } else {
         throw new Error('Could not update user');
@@ -65,3 +57,5 @@ module.exports = async function(req, res, next) {
     next(err);
   }
 };
+
+module.exports = forgotPassword;
