@@ -26,6 +26,9 @@ const useStyles = makeStyles({
   image: {
     width: '100%',
   },
+  paper: {
+    overflow: 'hidden',
+  },
 });
 
 export const RequestReset = () => {
@@ -54,10 +57,10 @@ export const RequestReset = () => {
       <Box mt="60px">
         <Grid container justify="center">
           <Grid item xs={10} sm={6} md={5} lg={4} xl={4}>
-            <Paper>
+            <Paper className={classes.paper}>
               <img
                 className={classes.image}
-                src="imgs/loechersieb.png"
+                src="imgs/brain.jpg"
                 alt="Not Found"
               />
               <Box p="20px">

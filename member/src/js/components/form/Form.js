@@ -230,9 +230,10 @@ export class Form extends React.Component {
    */
   requestSubmit = () => {
     this.dirty = true;
-    if (this.validateForm()) this.props.onSubmit(this.values, this.options);
-    else this.setFieldErrors();
-    this.initializeForm();
+    if (this.validateForm()) {
+      this.props.onSubmit(this.values, this.options);
+      this.initializeForm();
+    } else this.setFieldErrors();
   };
 
   render() {
