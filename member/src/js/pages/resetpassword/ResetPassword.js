@@ -7,7 +7,14 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
-import { DefaultGrid, Form, TextField, Message, Container } from 'Components';
+import {
+  Loading,
+  DefaultGrid,
+  Form,
+  TextField,
+  Message,
+  Container,
+} from 'Components';
 import { getQueryParams } from 'History';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -37,9 +44,10 @@ export const ResetPassword = () => {
       body: JSON.stringify({ ...payload, token: params.token }),
     });
     if (response.ok) {
-      Message.success('An email with a password reset link was sent do you.');
+      Message.success('Your password has been successfully changed.');
     } else {
-      Message.error('Could not find your email in the system');
+      const json = await response.json();
+      Message.error(json.message);
     }
 
     setLoading(false);
@@ -60,7 +68,22 @@ export const ResetPassword = () => {
                 <Typography variant="h5">RESET PASSWORD</Typography>
                 <Divider />
                 <Box py="20px">
-                  <Form onSubmit={onSubmit} className={classes.form}>
+                  <Form
+                    onSubmit={onSubmit}
+                    className={classes.form}
+                    validators={[
+                      {
+                        ids: ['password', 'confirm'],
+                        func: ({ password, confirm }) => {
+                          if (password !== confirm)
+                            return {
+                              message:
+                                'The passwords you entered are not equal',
+                            };
+                        },
+                      },
+                    ]}
+                  >
                     <TextField
                       id="password"
                       label="Password"

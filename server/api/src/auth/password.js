@@ -1,6 +1,7 @@
 const prisma = require('../prisma');
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 
 const {
   RESET_TOKEN_SECRET,
@@ -54,14 +55,32 @@ const requestReset = async (req, res, next) => {
       throw new Error('User not found');
     }
   } catch (err) {
-    next(err);
+    return res.status(422).send({
+      message: err.message,
+    });
   }
 };
 
-const resetPassword = (req, res, next) => {
-  console.log(req.body);
-
-  res.sendStatus(200);
+const resetPassword = async (req, res, next) => {
+  try {
+    const { password, confirm, token } = req.body;
+    if (password === confirm) {
+      const { id } = jwt.verify(token, RESET_TOKEN_SECRET);
+      await prisma.updateUser({
+        where: { id },
+        data: {
+          password: bcrypt.hashSync(password, 8),
+        },
+      });
+      res.sendStatus(200);
+    } else {
+      throw new Error('Passwords did not match');
+    }
+  } catch (err) {
+    return res.status(422).send({
+      message: err.message,
+    });
+  }
 };
 
 module.exports = {
