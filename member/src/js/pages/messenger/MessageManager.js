@@ -1,7 +1,11 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import { Box, Hidden, Button, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import { Messages } from './Messages';
+import { Icon } from 'Components';
+
+import styles from './MessageManager.less';
 
 export const MESSAGES = gql`
   query Messages($chatId: ID!, $first: Int!, $after: String, $skip: Int) {
@@ -80,6 +84,31 @@ const groupMessages = (messages, currentUserId) => {
 
   groups.push({ messages: group, groupDate: prevDate });
   return groups;
+};
+
+const MobileMessagesHeader = ({ onClick, selectedChat }) => {
+  return (
+    <Box
+      p={1}
+      width="100%"
+      display="flex"
+      alignItems="center"
+      borderBottom={1}
+      color="grey.300"
+    >
+      <Button
+        className={styles.createButton}
+        color="secondary"
+        variant="outlined"
+        onClick={onClick}
+      >
+        <Icon type="left" />
+      </Button>
+      <Box color="text.primary">
+        <Typography variant="h5">{selectedChat.title}</Typography>
+      </Box>
+    </Box>
+  );
 };
 
 export const MessageManager = ({ selectedChat, currentUser, ...rest }) => {
@@ -168,16 +197,26 @@ export const MessageManager = ({ selectedChat, currentUser, ...rest }) => {
   }
 
   return (
-    <Messages
-      key={selectedChat.id}
-      messageGroups={groups}
-      selectedChat={selectedChat}
-      currentUser={currentUser}
-      refetch={refetch}
-      subscribe={onSubscribe}
-      unsubscribe={onUnsubscribe}
-      loadMore={onLoadMore}
-      {...rest}
-    />
+    <Box display="flex" flexDirection="column" width="100%" overflow="hidden">
+      <Hidden smUp>
+        <MobileMessagesHeader
+          onClick={rest.onBack}
+          selectedChat={selectedChat}
+        />
+      </Hidden>
+      <Box flexGrow={10} overflow="auto">
+        <Messages
+          key={selectedChat.id}
+          messageGroups={groups}
+          selectedChat={selectedChat}
+          currentUser={currentUser}
+          refetch={refetch}
+          subscribe={onSubscribe}
+          unsubscribe={onUnsubscribe}
+          loadMore={onLoadMore}
+          {...rest}
+        />
+      </Box>
+    </Box>
   );
 };

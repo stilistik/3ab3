@@ -26,16 +26,12 @@ const MobileHome = () => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Tabs value={value} onChange={onChange} variant="fullWidth">
         <Tab label="Feed" />
         <Tab label="Events" />
       </Tabs>
-      <SwipeableViews
-        axis="x"
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
+      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
         <Grid container>
           <Grid item xs={12}>
             <Feed />
@@ -47,7 +43,7 @@ const MobileHome = () => {
           </Grid>
         </Grid>
       </SwipeableViews>
-    </div>
+    </React.Fragment>
   );
 };
 
