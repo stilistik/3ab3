@@ -59,6 +59,11 @@ export const ResetPassword = () => {
         <Grid container justify="center">
           <Grid item xs={10} sm={6} md={5} lg={4} xl={4}>
             <Paper>
+              <img
+                className={classes.image}
+                src="imgs/brain.jpg"
+                alt="Not Found"
+              />
               <Box p="20px">
                 <Typography variant="h5">RESET PASSWORD</Typography>
                 <Divider />

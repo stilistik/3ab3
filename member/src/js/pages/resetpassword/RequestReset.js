@@ -60,7 +60,7 @@ export const RequestReset = () => {
             <Paper className={classes.paper}>
               <img
                 className={classes.image}
-                src="imgs/brain.jpg"
+                src="imgs/caprio.png"
                 alt="Not Found"
               />
               <Box p="20px">
