@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from './Box';
-import { useObserveResize } from 'Utils/Hooks';
+import { useObserveResize } from 'General/Hooks';
 
 export const LayoutContext = React.createContext({});
 
@@ -44,7 +44,7 @@ export const LayoutProvider = ({
   const [layout, setLayout] = React.useState(null);
 
   const computeLayout = () => {
-    const { clientWidth: width, clientHeight: height } = container.current;
+    const { clientWidth: width } = container.current;
 
     // get maximum box count per row according to minimum size prop
     let maxc = Math.max(Math.floor(width / (size.min + 2 * margin)), 1);
