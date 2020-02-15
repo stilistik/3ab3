@@ -1,7 +1,6 @@
 import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-
-import styles from './ScrollContainer.less';
+import { Box } from 'Components';
 
 export const ScrollContainer = ({ children, getApi, ...rest }) => {
   const container = React.useRef(null);
@@ -44,11 +43,9 @@ export const ScrollContainer = ({ children, getApi, ...rest }) => {
   };
 
   return (
-    <div className={styles.container} ref={container}>
-      <div className={styles.content} ref={content}>
-        {children}
-      </div>
-    </div>
+    <Box.Fill o="scroll" ref={container}>
+      <Box ref={content}>{children}</Box>
+    </Box.Fill>
   );
 };
 

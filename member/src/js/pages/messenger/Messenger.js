@@ -1,9 +1,9 @@
 import React from 'react';
-import { DefaultGrid } from 'Components';
+import { DefaultGrid, Box, Grid } from 'Components';
 import SwipeableViews from 'react-swipeable-views';
 import { ChatManager } from './ChatManager';
 import { MessageManager } from './MessageManager';
-import { Grid, Hidden } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -17,14 +17,14 @@ const USER = gql`
 
 export const DesktopMessenger = (props) => {
   return (
-    <Grid container spacing={3} style={{ padding: '0px 24px' }}>
-      <Grid item xs={4}>
+    <Grid.Fix container spacing={3}>
+      <Grid.Fix item xs={4}>
         <ChatManager {...props} />
-      </Grid>
-      <Grid item xs={8}>
+      </Grid.Fix>
+      <Grid.Fix item xs={8}>
         <MessageManager {...props} />
-      </Grid>
-    </Grid>
+      </Grid.Fix>
+    </Grid.Fix>
   );
 };
 
@@ -92,13 +92,15 @@ export const Messenger = () => {
     setUnreadCount,
   };
   return (
-    <DefaultGrid>
-      <Hidden smUp>
-        <MobileMessenger {...props} />
-      </Hidden>
-      <Hidden xsDown>
-        <DesktopMessenger {...props} />
-      </Hidden>
-    </DefaultGrid>
+    <Box h="100%" o="hidden">
+      <Grid.Default fix>
+        <Hidden smUp>
+          <MobileMessenger {...props} />
+        </Hidden>
+        <Hidden xsDown>
+          <DesktopMessenger {...props} />
+        </Hidden>
+      </Grid.Default>
+    </Box>
   );
 };

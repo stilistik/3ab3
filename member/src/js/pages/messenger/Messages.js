@@ -4,7 +4,7 @@ import { MessageGroup } from './Message';
 import { CreateMessage } from './CreateMessage';
 import { ScrollContainer } from './ScrollContainer';
 import { Button, Badge } from '@material-ui/core';
-import { Icon } from 'Components';
+import { Icon, Box } from 'Components';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -138,7 +138,7 @@ export const Messages = ({
   const getApi = (api) => (scrollApi.current = api);
 
   return (
-    <div className={styles.outer}>
+    <Box.Flex column o="hidden" pos="relative">
       <DownButton show={!down} onClick={onDown} unreadCount={unreadCount} />
       <ScrollContainer
         onScroll={onScroll}
@@ -160,6 +160,6 @@ export const Messages = ({
         currentUser={currentUser}
         onCreateMessage={onCreateMessage}
       />
-    </div>
+    </Box.Flex>
   );
 };

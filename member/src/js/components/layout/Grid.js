@@ -20,26 +20,45 @@ const useContainerStyles = makeStyles((theme) => ({
   }),
 }));
 
-const FlexGridItem = (props) => {
+const FixGridItem = (props) => {
   const classes = useItemStyles(props);
   return <MuiGrid item className={classes.item} {...props} />;
 };
 
-const FlexGridContainer = (props) => {
+const FixGridContainer = (props) => {
   const classes = useContainerStyles(props);
   return <MuiGrid container className={classes.container} {...props} />;
 };
 
-FlexGridContainer.defaultProps = {
+FixGridContainer.defaultProps = {
   spacing: 0,
 };
 
-const FlexGrid = ({ item, container, ...rest }) => {
+const FixGrid = ({ item, container, ...rest }) => {
   if (item && container)
     throw new Error('FlexGrid: Must be either container or item but not both.');
-  if (item) return <FlexGridItem {...rest} />;
-  else if (container) return <FlexGridContainer {...rest} />;
+  if (item) return <FixGridItem {...rest} />;
+  else if (container) return <FixGridContainer {...rest} />;
   else return <MuiGrid {...rest} />;
+};
+
+const DefaultGrid = ({ children, fix, ...rest }) => {
+  if (fix)
+    return (
+      <FixGrid container justify="center" {...rest}>
+        <FixGrid item xs={12} md={10} lg={8} xl={6}>
+          {children}
+        </FixGrid>
+      </FixGrid>
+    );
+  else
+    return (
+      <MuiGrid container justify="center" {...rest}>
+        <MuiGrid item xs={12} md={10} lg={8} xl={6}>
+          {children}
+        </MuiGrid>
+      </MuiGrid>
+    );
 };
 
 export class Grid extends React.Component {
@@ -48,4 +67,5 @@ export class Grid extends React.Component {
   }
 }
 
-Grid.Flex = FlexGrid;
+Grid.Fix = FixGrid;
+Grid.Default = DefaultGrid;

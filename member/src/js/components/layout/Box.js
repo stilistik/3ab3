@@ -175,7 +175,7 @@ const MuiBoxWrapper = React.forwardRef(function MuiBoxWrapper(props, ref) {
 });
 
 export const FlexItem = React.forwardRef(function FlexItem(props, ref) {
-  return <MuiBoxWrapper ref={ref} flex="0 1 auto" {...props} />;
+  return <MuiBoxWrapper ref={ref} flex="0 1 auto" flexGrow={1} {...props} />;
 });
 
 export const FlexBox = React.forwardRef(function FlexBox(props, ref) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from './Box';
-import { useObserveResize } from 'General/Hooks';
+import { useObserveResize } from 'Utils/Hooks';
 
 export const LayoutContext = React.createContext({});
 
