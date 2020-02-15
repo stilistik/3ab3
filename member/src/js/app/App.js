@@ -6,43 +6,45 @@ import { login } from 'Redux/actions';
 import { AuthAppCore, UnauthAppCore } from './AppCore';
 import Auth from './Auth';
 import Routes from 'Routes';
-import { Notifier, EmojiProvider, GiphyProvider } from 'Components';
+import { Notifier, EmojiProvider, GiphyProvider, Box } from 'Components';
 import history from 'History';
 import Apollo from 'Apollo';
 
-import styles from './App.css';
-
 const UnauthenticatedApp = () => {
   return (
-    <div className={styles.container}>
+    <Box.Flex column w="100vw" h="100vh" o="hidden">
       <CssBaseline />
       <UnauthAppCore />
-      <Router history={history}>
-        <Routes props={{ app: { isAuthenticated: false } }} />
-      </Router>
+      <Box.Item w="100%" o="hidden">
+        <Router history={history}>
+          <Routes props={{ app: { isAuthenticated: false } }} />
+        </Router>
+      </Box.Item>
       <Notifier />
-    </div>
+    </Box.Flex>
   );
 };
 
 const AuthenticatedApp = () => {
   return (
-    <div className={styles.container}>
+    <Box.Flex column w="100vw" h="100vh" o="hidden">
       <EmojiProvider>
         <GiphyProvider>
           <Apollo>
             <CssBaseline />
             <AuthAppCore />
             <Auth>
-              <Router history={history}>
-                <Routes props={{ app: { isAuthenticated: true } }} />
-              </Router>
+              <Box.Item w="100%" o="hidden">
+                <Router history={history}>
+                  <Routes props={{ app: { isAuthenticated: true } }} />
+                </Router>
+              </Box.Item>
             </Auth>
             <Notifier />
           </Apollo>
         </GiphyProvider>
       </EmojiProvider>
-    </div>
+    </Box.Flex>
   );
 };
 
