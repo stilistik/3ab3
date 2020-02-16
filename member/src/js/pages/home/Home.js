@@ -1,18 +1,9 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { DefaultGrid } from 'Components';
-import {
-  Grid,
-  Hidden,
-  Tabs,
-  Tab,
-  Typography,
-  Divider,
-} from '@material-ui/core';
+import { Grid, Box } from 'Components';
+import { Hidden, Tabs, Tab, Typography, Divider } from '@material-ui/core';
 import Feed from './feed/FeedManager';
 import Events from './events/Events';
-
-import styles from './Home.css';
 
 const MobileHome = () => {
   const [value, setValue] = React.useState(0);
@@ -32,7 +23,7 @@ const MobileHome = () => {
         <Tab label="Events" />
       </Tabs>
       <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
-        <Grid container>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Feed />
           </Grid>
@@ -49,39 +40,33 @@ const MobileHome = () => {
 
 const DesktopHome = () => {
   return (
-    <Grid container>
-      <Grid item sm={6}>
-        <div className={styles.header}>
-          <Typography variant="h5" className={styles.typo}>
-            FEED
-          </Typography>
+    <Box py="20px">
+      <Grid container spacing={3}>
+        <Grid item sm={6}>
+          <Typography variant="h5">FEED</Typography>
           <Divider />
-        </div>
-        <Feed />
-      </Grid>
-      <Grid item sm={6}>
-        <div className={styles.header}>
-          <Typography variant="h5" className={styles.typo}>
-            EVENTS
-          </Typography>
+          <Feed />
+        </Grid>
+        <Grid item sm={6}>
+          <Typography variant="h5">EVENTS</Typography>
           <Divider />
-        </div>
-        <Events />
+          <Events />
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
 const Home = () => {
   return (
-    <DefaultGrid overflow>
+    <Grid.Default>
       <Hidden smUp>
         <MobileHome />
       </Hidden>
       <Hidden xsDown>
         <DesktopHome />
       </Hidden>
-    </DefaultGrid>
+    </Grid.Default>
   );
 };
 

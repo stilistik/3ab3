@@ -1,5 +1,5 @@
 import React from 'react';
-import { Fab } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Icon } from 'Components';
@@ -64,14 +64,13 @@ class Questionnaire extends React.Component {
           );
         })}
         <div className={styles.submit}>
-          <Fab
-            className={styles.btn}
-            variant="extended"
+          <Button
+            variant="contained"
             color="primary"
             onClick={this.onSubmit}
           >
             <Icon style={{ marginRight: '5px' }} type="done" /> Submit
-          </Fab>
+          </Button>
         </div>
       </div>
     );
@@ -103,7 +102,7 @@ class QuestionnaireMutation extends React.Component {
       due.setDate(due.getDate() - todo.offsetDays);
       return {
         text: todo.text,
-        eventId: this.props.eventId,
+        eventId: event.id,
         due: due.toISOString(),
       };
     });
@@ -136,7 +135,4 @@ class QuestionnaireMutation extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(QuestionnaireMutation);
+export default connect(null, mapDispatchToProps)(QuestionnaireMutation);

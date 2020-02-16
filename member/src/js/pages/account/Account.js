@@ -4,7 +4,7 @@ import AccountForm from './AccountForm';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { DefaultGrid } from 'Components';
+import { Grid } from 'Components';
 
 import styles from './Account.css';
 
@@ -22,7 +22,7 @@ class Account extends React.Component {
   render() {
     if (!this.props.user) return null;
     return (
-      <DefaultGrid>
+      <Grid.Default>
         <div className={styles.container}>
           <div className={styles.avatar}>
             <AvatarUpload style={{ marginRight: '20px' }} />
@@ -32,7 +32,7 @@ class Account extends React.Component {
           </div>
           <AccountForm {...this.props} />
         </div>
-      </DefaultGrid>
+      </Grid.Default>
     );
   }
 }

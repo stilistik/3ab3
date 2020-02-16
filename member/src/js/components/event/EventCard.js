@@ -65,12 +65,10 @@ export const EventCard = ({ event }) => {
   };
 
   const onEdit = () => {
-    requestRoute('/editevent', {
-      id: event.id,
+    requestRoute('/events/edit', {
+      params: { id: event.id },
     });
   };
-
-  const onSupport = () => {};
 
   return (
     <Card className={styles.card}>

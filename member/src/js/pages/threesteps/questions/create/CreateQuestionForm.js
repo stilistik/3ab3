@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  DefaultGrid,
+  Grid,
   TextField,
   MultiSelectField,
   Form,
   Icon,
 } from 'Components';
-import { Paper, Grid, Button, Typography, Fab } from '@material-ui/core';
+import { Paper, Button, Typography } from '@material-ui/core';
 import { requestRoute } from 'History';
 
 import styles from './CreateQuestionForm.css';
@@ -37,7 +37,7 @@ class CreateQuestionForm extends React.Component {
   render() {
     const options = this.createOptions(this.props.templates);
     return (
-      <DefaultGrid overflow>
+      <Grid.Default>
         <div className={styles.container}>
           <Grid container spacing={3}>
             <Grid item xs={6}>
@@ -89,7 +89,7 @@ class CreateQuestionForm extends React.Component {
             </Grid>
           </Grid>
         </div>
-      </DefaultGrid>
+      </Grid.Default>
     );
   }
 }

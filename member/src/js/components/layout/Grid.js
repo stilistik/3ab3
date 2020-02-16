@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Box } from './Box';
 import { Grid as MuiGrid } from '@material-ui/core';
 
 const useItemStyles = makeStyles({
@@ -42,25 +43,23 @@ const FixGrid = ({ item, container, ...rest }) => {
   else return <MuiGrid {...rest} />;
 };
 
-const DefaultGrid = ({ children, fix, ...rest }) => {
-  if (fix)
-    return (
-      <FixGrid container justify="center" {...rest}>
-        <FixGrid item xs={12} md={10} lg={8} xl={6}>
-          {children}
-        </FixGrid>
-      </FixGrid>
-    );
-  else
-    return (
-      <MuiGrid container justify="center" {...rest}>
-        <MuiGrid item xs={12} md={10} lg={8} xl={6}>
-          {children}
-        </MuiGrid>
-      </MuiGrid>
-    );
-};
+const useDefaultStyles = makeStyles({
+  grid: {
+    overflowY: 'auto',
+    height: '100%',
+  },
+});
 
+const DefaultGrid = ({ children, ...rest }) => {
+  const classes = useDefaultStyles();
+  return (
+    <FixGrid container justify="center" className={classes.grid}>
+      <FixGrid item xs={12} md={10} lg={8} xl={6}>
+        {children}
+      </FixGrid>
+    </FixGrid>
+  );
+};
 export class Grid extends React.Component {
   render() {
     return <MuiGrid {...this.props} />;

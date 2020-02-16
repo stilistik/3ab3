@@ -4,7 +4,7 @@ import { requestRoute } from 'History';
 
 class CreateQuestionButton extends React.Component {
   onClick = () => {
-    requestRoute('/createquestion');
+    requestRoute('/questions/create');
   };
 
   render() {

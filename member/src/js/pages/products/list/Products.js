@@ -1,12 +1,9 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Grid } from '@material-ui/core';
-import { DefaultGrid, CreateButton } from 'Components';
+import { Grid, Box, CreateButton } from 'Components';
 import ProductCard from './ProductCard';
 import { requestRoute } from 'History';
-
-import styles from './Products.css';
 
 export const PRODUCTS = gql`
   query {
@@ -22,11 +19,11 @@ export const PRODUCTS = gql`
 
 class Products extends React.Component {
   onCreate = () => {
-    requestRoute('/createproduct');
+    requestRoute('/products/create');
   };
 
   onEdit = (productId) => {
-    requestRoute('/editproduct', {
+    requestRoute('/products/edit', {
       id: productId,
     });
   };
@@ -34,8 +31,8 @@ class Products extends React.Component {
   render() {
     if (!this.props.products) return null;
     return (
-      <DefaultGrid overflow>
-        <div className={styles.container}>
+      <Grid.Default>
+        <Box py="20px">
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <CreateButton onClick={this.onCreate} />
@@ -52,8 +49,8 @@ class Products extends React.Component {
               );
             })}
           </Grid>
-        </div>
-      </DefaultGrid>
+        </Box>
+      </Grid.Default>
     );
   }
 }

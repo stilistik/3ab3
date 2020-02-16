@@ -1,12 +1,12 @@
 import React from 'react';
-import { Grid, Button, Avatar } from '@material-ui/core';
+import { Button, Avatar } from '@material-ui/core';
 import {
+  Grid,
+  Box,
   Form,
   DateField,
   UserSelectField,
   QuickNumberField,
-  Container,
-  Center,
 } from 'Components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -38,7 +38,7 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
 
   const { products } = data;
   return (
-    <Container>
+    <Box py="20px">
       <Form onSubmit={onSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -70,14 +70,14 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
             );
           })}
           <Grid item xs={12}>
-            <Center>
+            <Box.Row jc="center">
               <Button type="submit" variant="contained" color="secondary">
                 Submit
               </Button>
-            </Center>
+            </Box.Row>
           </Grid>
         </Grid>
       </Form>
-    </Container>
+    </Box>
   );
 };

@@ -1,21 +1,17 @@
 import React from 'react';
-import { Typography, Grid, Divider, Paper } from '@material-ui/core';
-import { DefaultGrid, Container } from 'Components';
+import { Typography, Divider } from '@material-ui/core';
+import { Grid, Box } from 'Components';
 import { GlobalBalanceChart } from './GlobalBalanceChart';
 import GlobalConsumptionChart from './GlobalConsumptionChart';
 import BalanceTable from './BalanceTable';
 
-import styles from './Dashboard.less';
-
 export const Dashboard = () => {
   return (
-    <Container>
-      <DefaultGrid overflow>
+    <Grid.Default>
+      <Box py="20px">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h5" className={styles.typo}>
-              DASHBOARD
-            </Typography>
+            <Typography variant="h5">DASHBOARD</Typography>
             <Divider />
           </Grid>
           <Grid item xs={12}>
@@ -28,8 +24,8 @@ export const Dashboard = () => {
             <GlobalConsumptionChart />
           </Grid>
         </Grid>
-      </DefaultGrid>
-    </Container>
+      </Box>
+    </Grid.Default>
   );
 };
 

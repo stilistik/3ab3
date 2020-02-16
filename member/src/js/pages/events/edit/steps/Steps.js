@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
-import { graphql } from 'react-apollo';
+import { Grid, Box, Loading, Error } from 'Components';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Questionnaire from './Questionnaire';
 
@@ -23,24 +23,24 @@ export const QUESTIONS = gql`
   }
 `;
 
-class Steps extends React.Component {
-  render() {
-    const { questions, event } = this.props;
-    if (!questions || !event) return null;
-    return (
-      <div style={{ width: '100%', height: '100%', padding: '20px' }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Questionnaire {...this.props} />
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
-}
+const Steps = ({ eventId }) => {
+  const { loading, error, data } = useQuery(QUESTIONS, {
+    variables: { eventId },
+  });
 
-export default graphql(QUESTIONS, {
-  skip: (props) => !props.eventId,
-  options: (props) => ({ variables: { eventId: props.eventId } }),
-  props: ({ data }) => ({ questions: data.questions, event: data.event }),
-})(Steps);
+  if (error) return <Error message={error.message} />;
+  if (loading) return <Loading />;
+
+  const { questions, event } = data;
+  return (
+    <Box w="100%" o="hidden" py="20px">
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Questionnaire questions={questions} event={event} />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+
+export default Steps;

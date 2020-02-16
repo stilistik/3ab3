@@ -1,20 +1,6 @@
 import React from 'react';
-import {
-  Grid,
-  Divider,
-  Typography,
-  Box,
-  Paper,
-  Button,
-} from '@material-ui/core';
-import {
-  Loading,
-  DefaultGrid,
-  Form,
-  TextField,
-  Message,
-  Container,
-} from 'Components';
+import { Divider, Typography, Box, Paper, Button } from '@material-ui/core';
+import { Grid, Loading, Form, TextField, Message } from 'Components';
 import { getQueryParams } from 'History';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -54,7 +40,7 @@ export const ResetPassword = () => {
   };
 
   return (
-    <DefaultGrid overflow>
+    <Grid.Default>
       <Box mt="60px">
         <Grid container justify="center">
           <Grid item xs={10} sm={6} md={5} lg={4} xl={4}>
@@ -100,17 +86,13 @@ export const ResetPassword = () => {
                       Submit
                     </Button>
                   </Form>
-                  {loading && (
-                    <Container>
-                      <Loading />
-                    </Container>
-                  )}
+                  {loading && <Loading />}
                 </Box>
               </Box>
             </Paper>
           </Grid>
         </Grid>
       </Box>
-    </DefaultGrid>
+    </Grid.Default>
   );
 };

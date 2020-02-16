@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppBar, Toolbar, IconButton, Button, Box } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
 import Invitations from './Invitations';
 import Messages from './Messages';
 import BalanceButton from './BalanceButton';
-import { DefaultGrid } from 'Components';
+import { Grid } from 'Components';
 import { Logo } from './Logo.js';
 import { requestRoute } from 'History';
 
@@ -27,8 +27,8 @@ export const UnauthAppHeader = connect(
 )(() => {
   return (
     <AppBar position="static">
-      <DefaultGrid>
-        <Toolbar>
+      <Grid.Default>
+        <Toolbar disableGutters>
           <Logo />
           <Button
             className={styles.button}
@@ -37,7 +37,7 @@ export const UnauthAppHeader = connect(
             Login
           </Button>
         </Toolbar>
-      </DefaultGrid>
+      </Grid.Default>
     </AppBar>
   );
 });
@@ -48,8 +48,8 @@ export const AuthAppHeader = connect(
 )((props) => {
   return (
     <AppBar position="static">
-      <DefaultGrid>
-        <Toolbar>
+      <Grid.Default>
+        <Toolbar disableGutters>
           <IconButton
             className={styles.button}
             color="inherit"
@@ -64,7 +64,7 @@ export const AuthAppHeader = connect(
           <Invitations />
           <ProfileMenu />
         </Toolbar>
-      </DefaultGrid>
+      </Grid.Default>
     </AppBar>
   );
 });

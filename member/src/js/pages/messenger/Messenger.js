@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultGrid, Box, Grid } from 'Components';
+import { Box, Grid } from 'Components';
 import SwipeableViews from 'react-swipeable-views';
 import { ChatManager } from './ChatManager';
 import { MessageManager } from './MessageManager';
@@ -92,15 +92,13 @@ export const Messenger = () => {
     setUnreadCount,
   };
   return (
-    <Box h="100%" o="hidden">
-      <Grid.Default fix>
-        <Hidden smUp>
-          <MobileMessenger {...props} />
-        </Hidden>
-        <Hidden xsDown>
-          <DesktopMessenger {...props} />
-        </Hidden>
-      </Grid.Default>
-    </Box>
+    <Grid.Default>
+      <Hidden smUp>
+        <MobileMessenger {...props} />
+      </Hidden>
+      <Hidden xsDown>
+        <DesktopMessenger {...props} />
+      </Hidden>
+    </Grid.Default>
   );
 };

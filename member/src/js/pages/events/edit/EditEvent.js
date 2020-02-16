@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultGrid } from 'Components';
+import { Grid } from 'Components';
 import { getQueryParams } from 'History';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab } from '@material-ui/core';
@@ -27,41 +27,32 @@ class EditEvent extends React.Component {
     const { id } = getQueryParams();
     if (!id) return null;
     return (
-      <DefaultGrid overflow>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            height: '100%',
-          }}
+      <Grid.Default>
+        <Tabs
+          value={this.state.value}
+          onChange={this.onChange}
+          variant="fullWidth"
         >
-          <Tabs
-            value={this.state.value}
-            onChange={this.onChange}
-            variant="fullWidth"
-          >
-            <Tab label="Todo" />
-            <Tab label="Committee" />
-            <Tab label="Info" />
-            <Tab label="Steps" />
-          </Tabs>
-          <SwipeableViews
-            axis="x"
-            index={this.state.value}
-            onChangeIndex={this.handleChangeIndex}
-            style={{ flexGrow: 1 }}
-            containerStyle={{ height: '100%' }}
-          >
-            <Todos eventId={id} />
-            <Committee eventId={id} />
-            <div>
-              <h1>Info</h1>
-            </div>
-            <Steps eventId={id} />
-          </SwipeableViews>
-        </div>
-      </DefaultGrid>
+          <Tab label="Todo" />
+          <Tab label="Committee" />
+          <Tab label="Info" />
+          <Tab label="Steps" />
+        </Tabs>
+        <SwipeableViews
+          axis="x"
+          index={this.state.value}
+          onChangeIndex={this.handleChangeIndex}
+          style={{ flexGrow: 1 }}
+          containerStyle={{ height: '100%' }}
+        >
+          <Todos eventId={id} />
+          <Committee eventId={id} />
+          <div>
+            <h1>Info</h1>
+          </div>
+          <Steps eventId={id} />
+        </SwipeableViews>
+      </Grid.Default>
     );
   }
 }

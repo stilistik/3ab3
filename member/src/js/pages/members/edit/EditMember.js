@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultGrid } from 'Components';
+import { Grid } from 'Components';
 import { Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -30,14 +30,14 @@ const EditMember = (props) => {
   if (loading || error) return null;
 
   return (
-    <DefaultGrid overflow>
+    <Grid.Default>
       <div className={styles.container}>
         <Typography variant="h3" className={styles.typo}>
           Edit Member
         </Typography>
         <EditMemberForm {...props} user={data.user} />
       </div>
-    </DefaultGrid>
+    </Grid.Default>
   );
 };
 

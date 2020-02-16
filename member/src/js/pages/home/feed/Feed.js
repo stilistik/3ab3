@@ -1,14 +1,12 @@
 import React from 'react';
-import { Post, CreatePost } from 'Components';
+import { Post, CreatePost, Box } from 'Components';
 import { Grid, Button } from '@material-ui/core';
-
-import styles from './Feed.css';
 
 class Feed extends React.Component {
   render() {
     if (!this.props.posts) return null;
     return (
-      <div className={styles.container}>
+      <Box py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <CreatePost refetch={this.props.refetch} />
@@ -22,15 +20,15 @@ class Feed extends React.Component {
           })}
           {this.props.hasNext ? (
             <Grid item xs={12}>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Box.Row jc="center">
                 <Button onClick={() => this.props.more(this.props.cursor)}>
                   More
                 </Button>
-              </div>
+              </Box.Row>
             </Grid>
           ) : null}
         </Grid>
-      </div>
+      </Box>
     );
   }
 }

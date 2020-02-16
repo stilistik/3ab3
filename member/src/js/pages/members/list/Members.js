@@ -1,13 +1,10 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-import { DefaultGrid } from 'Components';
-import { Grid } from '@material-ui/core';
+import { useQuery } from '@apollo/react-hooks';
+import { Grid, Box, Loading, Error } from 'Components';
 import MemberItem from '../MemberItem';
 import CreateButton from '../create/CreateButton';
 import { requestRoute } from 'History';
-
-import styles from './Members.css';
 
 export const MEMBERS = gql`
   query {
@@ -21,40 +18,40 @@ export const MEMBERS = gql`
   }
 `;
 
-class Members extends React.Component {
-  onCreate = () => {
-    requestRoute('/createmember');
+export const Members = () => {
+  const { loading, error, data } = useQuery(MEMBERS);
+
+  if (error) return <Error message={error.message} />;
+  if (loading) return <Loading />;
+
+  const onCreate = () => {
+    requestRoute('/members/create');
   };
 
-  onEdit = (userId) => {
-    requestRoute('/editmember', {
+  const onEdit = (userId) => {
+    requestRoute('/members/edit', {
       id: userId,
     });
   };
 
-  render() {
-    if (!this.props.users) return null;
-    return (
-      <DefaultGrid overflow>
-        <div className={styles.container}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} lg={4}>
-              <CreateButton onClick={this.onCreate} />
-            </Grid>
-            {this.props.users.map((user) => {
-              return (
-                <Grid key={user.id} item xs={12} sm={6} lg={4}>
-                  <MemberItem user={user} onClick={this.onEdit} />
-                </Grid>
-              );
-            })}
+  return (
+    <Grid.Default>
+      <Box py="20px">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} lg={4}>
+            <CreateButton onClick={onCreate} />
           </Grid>
-        </div>
-      </DefaultGrid>
-    );
-  }
-}
+          {data.users.map((user) => {
+            return (
+              <Grid key={user.id} item xs={12} sm={6} lg={4}>
+                <MemberItem user={user} onClick={onEdit} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+    </Grid.Default>
+  );
+};
 
-export default graphql(MEMBERS, {
-  props: ({ data }) => ({ users: data.users }),
-})(Members);
+export default Members;

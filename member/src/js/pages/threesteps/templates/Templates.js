@@ -1,6 +1,5 @@
 import React from 'react';
-import { DefaultGrid } from 'Components';
-import { Grid } from '@material-ui/core';
+import { Grid } from 'Components';
 import TemplateList from './TemplateList';
 import CreateTemplate from './CreateTemplate';
 
@@ -9,7 +8,7 @@ import styles from './Templates.css';
 class Templates extends React.Component {
   render() {
     return (
-      <DefaultGrid overflow>
+      <Grid.Default>
         <div className={styles.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
@@ -20,7 +19,7 @@ class Templates extends React.Component {
             </Grid>
           </Grid>
         </div>
-      </DefaultGrid>
+      </Grid.Default>
     );
   }
 }

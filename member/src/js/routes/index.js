@@ -20,6 +20,24 @@ import { Questions, Templates, CreateQuestion } from 'Pages/threesteps';
 const Routes = ({ props }) => {
   return (
     <Switch>
+      <AuthRoute path="/products/edit" component={EditProduct} props={props} />
+      <AuthRoute
+        path="/members/create"
+        component={CreateMember}
+        props={props}
+      />
+      <AuthRoute
+        path="/products/create"
+        component={CreateProduct}
+        props={props}
+      />
+      <AuthRoute
+        path="/questions/create"
+        component={CreateQuestion}
+        props={props}
+      />
+      <AuthRoute path="/members/edit" component={EditMember} props={props} />
+      <AuthRoute path="/events/edit" component={EditEvent} props={props} />
       <UnauthRoute path="/login" component={Login} props={props} />
       <UnauthRoute
         path="/reset_password"
@@ -37,23 +55,9 @@ const Routes = ({ props }) => {
       <AuthRoute path="/account" component={Account} props={props} />
       <AuthRoute path="/profile" component={Profile} props={props} />
       <AuthRoute path="/products" component={Products} props={props} />
-      <AuthRoute
-        path="/createproduct"
-        component={CreateProduct}
-        props={props}
-      />
-      <AuthRoute path="/editproduct" component={EditProduct} props={props} />
       <AuthRoute path="/members" component={Members} props={props} />
-      <AuthRoute path="/createmember" component={CreateMember} props={props} />
-      <AuthRoute path="/editmember" component={EditMember} props={props} />
       <AuthRoute path="/events" component={Events} props={props} />
-      <AuthRoute path="/editevent" component={EditEvent} props={props} />
       <AuthRoute path="/questions" component={Questions} props={props} />
-      <AuthRoute
-        path="/createquestion"
-        component={CreateQuestion}
-        props={props}
-      />
       <AuthRoute path="/templates" component={Templates} props={props} />
       <AuthRoute path="/messenger" component={Messenger} props={props} />
 

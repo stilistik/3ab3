@@ -1,8 +1,7 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { DefaultGrid, Container } from 'Components';
+import { Grid} from 'Components';
 import {
-  Grid,
   Typography,
   Divider,
   Hidden,
@@ -16,25 +15,23 @@ import TransactionTable from './TransactionTable';
 
 const DesktopProfile = () => {
   return (
-    <Container>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <CurrentBalance />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <BalanceChart />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <ConsumptionChart />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h5">HISTORY</Typography>
-          <Divider />
-          <br />
-          <TransactionTable />
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <CurrentBalance />
       </Grid>
-    </Container>
+      <Grid item xs={12} sm={6}>
+        <BalanceChart />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <ConsumptionChart />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Typography variant="h5">HISTORY</Typography>
+        <Divider />
+        <br />
+        <TransactionTable />
+      </Grid>
+    </Grid>
   );
 };
 
@@ -92,14 +89,14 @@ const MobileProfile = () => {
 
 const Profile = () => {
   return (
-    <DefaultGrid overflow>
+    <Grid.Default>
       <Hidden smUp>
         <MobileProfile />
       </Hidden>
       <Hidden xsDown>
         <DesktopProfile />
       </Hidden>
-    </DefaultGrid>
+    </Grid.Default>
   );
 };
 

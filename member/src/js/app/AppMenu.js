@@ -1,85 +1,89 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import MenuItem from './MenuItem';
 import { requestRoute } from 'History';
+import { Box } from 'Components';
 
-import styles from './AppMenu.css';
+// preload image
+const image = new Image();
+image.src = '/drawer.jpg';
 
-class AppMenu extends React.Component {
-  componentDidMount = () => {
-    // preload image
-    this.image = new Image();
-    this.image.src = '/drawer.jpg';
-  };
+const useStyles = makeStyles({
+  drawer: {
+    background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), url('/drawer.jpg')`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    width: '260px',
+  },
+  divider: {
+    background: '#898989',
+  },
+});
 
-  onClick = (route) => {
-    this.props.setDrawerOpen(false);
+const AppMenu = (props) => {
+  const classes = useStyles();
+
+  const onClick = (route) => {
+    props.setDrawerOpen(false);
     requestRoute(route);
   };
 
-  createMenuItems = () => {
+  const createMenuItems = () => {
     return (
-      <div>
-        <Divider />
+      <React.Fragment>
         <List>
+          <MenuItem text="Home" icon="home" onClick={() => onClick('/home')} />
           <MenuItem
-            text={<span className={styles.item}>Home</span>}
-            icon="home"
-            onClick={() => this.onClick('home')}
-          />
-          <MenuItem
-            text={<span className={styles.item}>Events</span>}
+            text="Events"
             icon="event"
-            onClick={() => this.onClick('events')}
+            onClick={() => onClick('/events')}
           />
         </List>
-        <Divider className={styles.divider} />
+        <Divider className={classes.divider} />
         <List>
           <MenuItem
-            text={<span className={styles.item}>Dashboard</span>}
+            text="Dashboard"
             icon="dashboard"
-            onClick={() => this.onClick('dashboard')}
+            onClick={() => onClick('/dashboard')}
           />
           <MenuItem
-            text={<span className={styles.item}>Checklist</span>}
+            text="Checklist"
             icon="shoppingCart"
-            onClick={() => this.onClick('checklist')}
+            onClick={() => onClick('/checklist')}
           />
           <MenuItem
-            text={<span className={styles.item}>Members</span>}
+            text="Members"
             icon="group"
-            onClick={() => this.onClick('members')}
+            onClick={() => onClick('/members')}
           />
           <MenuItem
-            text={<span className={styles.item}>Products</span>}
+            text="Products"
             icon="localBar"
-            onClick={() => this.onClick('products')}
+            onClick={() => onClick('/products')}
           />
           <MenuItem
-            text={<span className={styles.item}>Three Steps</span>}
+            text="3 Steps"
             icon="linearScale"
-            onClick={() => this.onClick('questions')}
+            onClick={() => onClick('/questions')}
           />
         </List>
-      </div>
+      </React.Fragment>
     );
   };
 
-  render() {
-    const items = this.createMenuItems();
-    return (
-      <SwipeableDrawer
-        classes={{ paper: styles.drawer }}
-        variant="temporary"
-        anchor="left"
-        open={this.props.drawerOpen}
-        onOpen={() => this.props.setDrawerOpen(true)}
-        onClose={() => this.props.setDrawerOpen(false)}
-      >
-        {items}
-      </SwipeableDrawer>
-    );
-  }
-}
+  return (
+    <SwipeableDrawer
+      classes={{ paper: classes.drawer }}
+      variant="temporary"
+      anchor="left"
+      open={props.drawerOpen}
+      onOpen={() => props.setDrawerOpen(true)}
+      onClose={() => props.setDrawerOpen(false)}
+    >
+      {createMenuItems()}
+    </SwipeableDrawer>
+  );
+};
 
 export default AppMenu;

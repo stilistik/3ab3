@@ -1,24 +1,19 @@
 import React from 'react';
-import { DefaultGrid } from 'Components';
-import { Grid } from '@material-ui/core';
+import { Grid, Box } from 'Components';
 import QuestionList from './QuestionList';
 
-import styles from './Questions.css';
-
-class Questions extends React.Component {
-  render() {
-    return (
-      <DefaultGrid overflow>
-        <div className={styles.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <QuestionList />
-            </Grid>
+const Questions = () => {
+  return (
+    <Grid.Default>
+      <Box py="20px">
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <QuestionList />
           </Grid>
-        </div>
-      </DefaultGrid>
-    );
-  }
-}
+        </Grid>
+      </Box>
+    </Grid.Default>
+  );
+};
 
 export default Questions;

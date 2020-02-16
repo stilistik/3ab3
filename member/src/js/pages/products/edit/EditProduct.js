@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { DefaultGrid } from 'Components';
+import { Grid } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { getQueryParams } from 'History';
@@ -30,14 +30,14 @@ const EditProduct = (props) => {
   if (loading || error) return null;
 
   return (
-    <DefaultGrid overflow>
+    <Grid.Default>
       <div className={styles.container}>
         <Typography variant="h3" className={styles.typo}>
           Edit Product
         </Typography>
         <EditProductForm product={data.product} />
       </div>
-    </DefaultGrid>
+    </Grid.Default>
   );
 };
 

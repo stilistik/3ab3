@@ -1,20 +1,6 @@
 import React from 'react';
-import {
-  Grid,
-  Divider,
-  Typography,
-  Box,
-  Button,
-  Paper,
-} from '@material-ui/core';
-import {
-  DefaultGrid,
-  Form,
-  TextField,
-  Message,
-  Container,
-  Loading,
-} from 'Components';
+import { Divider, Typography, Box, Button, Paper } from '@material-ui/core';
+import { Grid, Form, TextField, Message, Loading } from 'Components';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -53,7 +39,7 @@ export const RequestReset = () => {
   };
 
   return (
-    <DefaultGrid overflow>
+    <Grid.Default>
       <Box mt="60px">
         <Grid container justify="center">
           <Grid item xs={10} sm={6} md={5} lg={4} xl={4}>
@@ -78,17 +64,13 @@ export const RequestReset = () => {
                       Submit
                     </Button>
                   </Form>
-                  {loading && (
-                    <Container>
-                      <Loading />
-                    </Container>
-                  )}
+                  {loading && <Loading />}
                 </Box>
               </Box>
             </Paper>
           </Grid>
         </Grid>
       </Box>
-    </DefaultGrid>
+    </Grid.Default>
   );
 };

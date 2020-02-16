@@ -1,11 +1,9 @@
 import React from 'react';
-import { DefaultGrid, Message } from 'Components';
-import { Typography, Grid, Divider } from '@material-ui/core';
+import { Box, Grid, Message } from 'Components';
+import { Typography, Divider } from '@material-ui/core';
 import { ChecklistForm } from './ChecklistForm';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-
-import styles from './Checklist.less';
 
 const MUTATION = gql`
   mutation($input: PurchaseInput!) {
@@ -36,18 +34,18 @@ export const Checklist = ({ initValues }) => {
   };
 
   return (
-    <DefaultGrid overflow>
-      <Grid container>
-        <Grid item xs={12}>
-          <div className={styles.header}>
-            <Typography variant="h5" className={styles.typo}>
+    <Box py="20px">
+      <Grid.Default>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant="h5">
               CHECKLIST
             </Typography>
             <Divider />
-          </div>
-          <ChecklistForm onSubmit={onSubmit} initValues={initValues} />
+            <ChecklistForm onSubmit={onSubmit} initValues={initValues} />
+          </Grid>
         </Grid>
-      </Grid>
-    </DefaultGrid>
+      </Grid.Default>
+    </Box>
   );
 };
