@@ -1,8 +1,8 @@
 type Todo {
-  id: ID! @unique 
+  id: ID! @unique @id
   due: DateTime! 
   text: String!
-  done: Boolean @default(value: "false")
+  done: Boolean @default(value: false)
   assigned: User @relation(name: "AssignedUser")
   link: String
   doneBy: User @relation(name: "DoneByUser")

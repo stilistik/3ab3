@@ -1,5 +1,5 @@
 type Chat {
-  id: ID! @unique
+  id: ID! @unique @id
   title: String!
   creator: User! @relation(name: "ChatCreator")
   members: [User!]! @relation(name: "ChatMember")

@@ -1,8 +1,8 @@
 type Payment {
-  id: ID! @unique
+  id: ID! @unique @id
   amount: Float!
   user: User!
   date: DateTime!
-  verified: Boolean! @default(value: "false")
-  transaction: Transaction! @relation(name: "PaymentTransaction" onDelete: CASCADE)
+  verified: Boolean! @default(value: false)
+  transaction: Transaction! @relation(link: TABLE, name: "PaymentTransaction" onDelete: CASCADE)
 }

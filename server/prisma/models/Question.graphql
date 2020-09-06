@@ -1,5 +1,5 @@
 type Question {
-  id: ID! @unique
+  id: ID! @unique @id
   text: String!
   description: String!
   templates: [TodoTemplate!]!

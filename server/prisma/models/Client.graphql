@@ -1,7 +1,7 @@
 type Client {
-  id: ID! @unique
+  id: ID! @unique @id
   identity: String! @unique
   secret: String!
   name: String!
-  trusted: Boolean! @default(value: "false")
+  trusted: Boolean! @default(value: false)
 }

@@ -96,6 +96,7 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://localhost:4466`
+  endpoint: `http://localhost:4466`,
+  secret: `${process.env["PRISMA_SERVICE_SECRET"]}`
 });
 exports.prisma = new exports.Prisma();

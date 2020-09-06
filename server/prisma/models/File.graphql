@@ -1,5 +1,5 @@
 type File {
-  id: ID! @unique
+  id: ID! @unique @id
   fileId: String! @unique
   hash: String! @unique
   uri: String! @unique
@@ -7,5 +7,5 @@ type File {
   path: String!
   mimetype: String!
   extension: String!
-  createdAt: DateTime!
+  createdAt: DateTime! @createdAt
 }

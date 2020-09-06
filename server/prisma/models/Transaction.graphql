@@ -1,5 +1,5 @@
 type Transaction {
-  id: ID! @unique
+  id: ID! @unique @id
   user: User!
   date: DateTime!
   type: TransactionType!

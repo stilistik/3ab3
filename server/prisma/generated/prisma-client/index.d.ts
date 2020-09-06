@@ -2288,6 +2288,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface ChatCreateInput {
+  id?: Maybe<ID_Input>;
   title: String;
   creator: UserCreateOneWithoutOwnChatsInput;
   members?: Maybe<UserCreateManyWithoutChatsInput>;
@@ -2302,6 +2303,7 @@ export interface UserCreateOneWithoutOwnChatsInput {
 }
 
 export interface UserCreateWithoutOwnChatsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2333,6 +2335,7 @@ export interface PurchaseCreateManyWithoutUserInput {
 }
 
 export interface PurchaseCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
   items?: Maybe<ItemCreateManyInput>;
   transaction: TransactionCreateOneWithoutPurchaseInput;
   total: Float;
@@ -2345,6 +2348,7 @@ export interface ItemCreateManyInput {
 }
 
 export interface ItemCreateInput {
+  id?: Maybe<ID_Input>;
   product: ProductCreateOneInput;
   user: UserCreateOneWithoutItemsInput;
   price: Float;
@@ -2357,6 +2361,7 @@ export interface ProductCreateOneInput {
 }
 
 export interface ProductCreateInput {
+  id?: Maybe<ID_Input>;
   name: String;
   price: Float;
   index: Int;
@@ -2370,6 +2375,7 @@ export interface UserCreateOneWithoutItemsInput {
 }
 
 export interface UserCreateWithoutItemsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2401,6 +2407,7 @@ export interface PaymentCreateManyWithoutUserInput {
 }
 
 export interface PaymentCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
   amount: Float;
   date: DateTimeInput;
   verified?: Maybe<Boolean>;
@@ -2413,6 +2420,7 @@ export interface TransactionCreateOneWithoutPaymentInput {
 }
 
 export interface TransactionCreateWithoutPaymentInput {
+  id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
@@ -2426,6 +2434,7 @@ export interface UserCreateOneWithoutTransactionsInput {
 }
 
 export interface UserCreateWithoutTransactionsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2455,6 +2464,7 @@ export interface ItemCreateManyWithoutUserInput {
 }
 
 export interface ItemCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
   product: ProductCreateOneInput;
   price: Float;
   amount: Int;
@@ -2466,6 +2476,7 @@ export interface PostCreateManyWithoutAuthorInput {
 }
 
 export interface PostCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
   text: String;
   image?: Maybe<String>;
   link?: Maybe<String>;
@@ -2482,6 +2493,7 @@ export interface UserCreateManyWithoutLikedPostsInput {
 }
 
 export interface UserCreateWithoutLikedPostsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2513,6 +2525,7 @@ export interface TransactionCreateManyWithoutUserInput {
 }
 
 export interface TransactionCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
   date: DateTimeInput;
   type: TransactionType;
   balance: Float;
@@ -2526,6 +2539,7 @@ export interface PaymentCreateOneWithoutTransactionInput {
 }
 
 export interface PaymentCreateWithoutTransactionInput {
+  id?: Maybe<ID_Input>;
   amount: Float;
   user: UserCreateOneWithoutPaymentsInput;
   date: DateTimeInput;
@@ -2538,6 +2552,7 @@ export interface UserCreateOneWithoutPaymentsInput {
 }
 
 export interface UserCreateWithoutPaymentsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2569,6 +2584,7 @@ export interface PostCreateManyWithoutLikedByInput {
 }
 
 export interface PostCreateWithoutLikedByInput {
+  id?: Maybe<ID_Input>;
   text: String;
   image?: Maybe<String>;
   link?: Maybe<String>;
@@ -2583,6 +2599,7 @@ export interface UserCreateOneWithoutPostsInput {
 }
 
 export interface UserCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2614,6 +2631,7 @@ export interface EventCreateManyWithoutLikedByInput {
 }
 
 export interface EventCreateWithoutLikedByInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   date: DateTimeInput;
@@ -2634,6 +2652,7 @@ export interface UserCreateManyWithoutSupportedEventsInput {
 }
 
 export interface UserCreateWithoutSupportedEventsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2665,6 +2684,7 @@ export interface CommentCreateManyWithoutAuthorInput {
 }
 
 export interface CommentCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   date: DateTimeInput;
@@ -2681,6 +2701,7 @@ export interface UserCreateManyWithoutLikedCommentsInput {
 }
 
 export interface UserCreateWithoutLikedCommentsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2712,6 +2733,7 @@ export interface EventCreateManyWithoutSupportersInput {
 }
 
 export interface EventCreateWithoutSupportersInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   date: DateTimeInput;
@@ -2731,6 +2753,7 @@ export interface UserCreateManyWithoutLikedEventsInput {
 }
 
 export interface UserCreateWithoutLikedEventsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2762,6 +2785,7 @@ export interface CommentCreateManyWithoutLikedByInput {
 }
 
 export interface CommentCreateWithoutLikedByInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   date: DateTimeInput;
@@ -2776,6 +2800,7 @@ export interface UserCreateOneWithoutCommentsInput {
 }
 
 export interface UserCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2807,6 +2832,7 @@ export interface InvitationCreateManyWithoutUserInput {
 }
 
 export interface InvitationCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
   committee: CommitteeCreateOneWithoutInvitationsInput;
   status?: Maybe<InvitationStatus>;
 }
@@ -2817,6 +2843,7 @@ export interface CommitteeCreateOneWithoutInvitationsInput {
 }
 
 export interface CommitteeCreateWithoutInvitationsInput {
+  id?: Maybe<ID_Input>;
   creator: UserCreateOneInput;
   members?: Maybe<UserCreateManyInput>;
   event: EventCreateOneWithoutCommitteeInput;
@@ -2828,6 +2855,7 @@ export interface UserCreateOneInput {
 }
 
 export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2860,6 +2888,7 @@ export interface ChatCreateManyWithoutCreatorInput {
 }
 
 export interface ChatCreateWithoutCreatorInput {
+  id?: Maybe<ID_Input>;
   title: String;
   members?: Maybe<UserCreateManyWithoutChatsInput>;
   messages?: Maybe<MessageCreateManyWithoutChatInput>;
@@ -2873,6 +2902,7 @@ export interface UserCreateManyWithoutChatsInput {
 }
 
 export interface UserCreateWithoutChatsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -2904,6 +2934,7 @@ export interface MessageCreateManyWithoutChatInput {
 }
 
 export interface MessageCreateWithoutChatInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   from: UserCreateOneInput;
@@ -2918,6 +2949,7 @@ export interface ChatCreateManyWithoutMembersInput {
 }
 
 export interface ChatCreateWithoutMembersInput {
+  id?: Maybe<ID_Input>;
   title: String;
   creator: UserCreateOneWithoutOwnChatsInput;
   messages?: Maybe<MessageCreateManyWithoutChatInput>;
@@ -2936,6 +2968,7 @@ export interface EventCreateOneWithoutCommitteeInput {
 }
 
 export interface EventCreateWithoutCommitteeInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   date: DateTimeInput;
@@ -2955,6 +2988,7 @@ export interface CommentCreateManyWithoutEventInput {
 }
 
 export interface CommentCreateWithoutEventInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   date: DateTimeInput;
@@ -2969,6 +3003,7 @@ export interface PostCreateOneWithoutCommentsInput {
 }
 
 export interface PostCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
   text: String;
   image?: Maybe<String>;
   link?: Maybe<String>;
@@ -2983,6 +3018,7 @@ export interface TodoCreateManyWithoutEventInput {
 }
 
 export interface TodoCreateWithoutEventInput {
+  id?: Maybe<ID_Input>;
   due: DateTimeInput;
   text: String;
   done?: Maybe<Boolean>;
@@ -2998,6 +3034,7 @@ export interface EventCreateOneWithoutCommentsInput {
 }
 
 export interface EventCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   date: DateTimeInput;
@@ -3015,6 +3052,7 @@ export interface CommitteeCreateOneWithoutEventInput {
 }
 
 export interface CommitteeCreateWithoutEventInput {
+  id?: Maybe<ID_Input>;
   creator: UserCreateOneInput;
   members?: Maybe<UserCreateManyInput>;
   invitations?: Maybe<InvitationCreateManyWithoutCommitteeInput>;
@@ -3029,6 +3067,7 @@ export interface InvitationCreateManyWithoutCommitteeInput {
 }
 
 export interface InvitationCreateWithoutCommitteeInput {
+  id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutInvitationsInput;
   status?: Maybe<InvitationStatus>;
 }
@@ -3039,6 +3078,7 @@ export interface UserCreateOneWithoutInvitationsInput {
 }
 
 export interface UserCreateWithoutInvitationsInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -3070,6 +3110,7 @@ export interface CommentCreateManyWithoutPostInput {
 }
 
 export interface CommentCreateWithoutPostInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   date: DateTimeInput;
@@ -3084,6 +3125,7 @@ export interface PurchaseCreateOneWithoutTransactionInput {
 }
 
 export interface PurchaseCreateWithoutTransactionInput {
+  id?: Maybe<ID_Input>;
   items?: Maybe<ItemCreateManyInput>;
   total: Float;
   user: UserCreateOneWithoutPurchasesInput;
@@ -3096,6 +3138,7 @@ export interface UserCreateOneWithoutPurchasesInput {
 }
 
 export interface UserCreateWithoutPurchasesInput {
+  id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
@@ -3125,6 +3168,7 @@ export interface TransactionCreateOneWithoutPurchaseInput {
 }
 
 export interface TransactionCreateWithoutPurchaseInput {
+  id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
@@ -5574,6 +5618,7 @@ export interface ChatUpdateManyMutationInput {
 }
 
 export interface ClientCreateInput {
+  id?: Maybe<ID_Input>;
   identity: String;
   secret: String;
   name: String;
@@ -5595,6 +5640,7 @@ export interface ClientUpdateManyMutationInput {
 }
 
 export interface CommentCreateInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   date: DateTimeInput;
@@ -5621,6 +5667,7 @@ export interface CommentUpdateManyMutationInput {
 }
 
 export interface CommitteeCreateInput {
+  id?: Maybe<ID_Input>;
   creator: UserCreateOneInput;
   members?: Maybe<UserCreateManyInput>;
   event: EventCreateOneWithoutCommitteeInput;
@@ -5635,6 +5682,7 @@ export interface CommitteeUpdateInput {
 }
 
 export interface EventCreateInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   date: DateTimeInput;
@@ -5668,6 +5716,7 @@ export interface EventUpdateManyMutationInput {
 }
 
 export interface FileCreateInput {
+  id?: Maybe<ID_Input>;
   fileId: String;
   hash: String;
   uri: String;
@@ -5698,6 +5747,7 @@ export interface FileUpdateManyMutationInput {
 }
 
 export interface InvitationCreateInput {
+  id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutInvitationsInput;
   committee: CommitteeCreateOneWithoutInvitationsInput;
   status?: Maybe<InvitationStatus>;
@@ -5726,6 +5776,7 @@ export interface ItemUpdateManyMutationInput {
 }
 
 export interface MessageCreateInput {
+  id?: Maybe<ID_Input>;
   text: String;
   link?: Maybe<String>;
   from: UserCreateOneInput;
@@ -5739,6 +5790,7 @@ export interface ChatCreateOneWithoutMessagesInput {
 }
 
 export interface ChatCreateWithoutMessagesInput {
+  id?: Maybe<ID_Input>;
   title: String;
   creator: UserCreateOneWithoutOwnChatsInput;
   members?: Maybe<UserCreateManyWithoutChatsInput>;
@@ -5781,6 +5833,7 @@ export interface MessageUpdateManyMutationInput {
 }
 
 export interface PaymentCreateInput {
+  id?: Maybe<ID_Input>;
   amount: Float;
   user: UserCreateOneWithoutPaymentsInput;
   date: DateTimeInput;
@@ -5803,6 +5856,7 @@ export interface PaymentUpdateManyMutationInput {
 }
 
 export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
   text: String;
   image?: Maybe<String>;
   link?: Maybe<String>;
@@ -5846,6 +5900,7 @@ export interface ProductUpdateManyMutationInput {
 }
 
 export interface ProductionCreateInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   image: String;
@@ -5870,6 +5925,7 @@ export interface ProductionUpdateManyMutationInput {
 }
 
 export interface PurchaseCreateInput {
+  id?: Maybe<ID_Input>;
   items?: Maybe<ItemCreateManyInput>;
   transaction: TransactionCreateOneWithoutPurchaseInput;
   total: Float;
@@ -5891,6 +5947,7 @@ export interface PurchaseUpdateManyMutationInput {
 }
 
 export interface QuestionCreateInput {
+  id?: Maybe<ID_Input>;
   text: String;
   description: String;
   templates?: Maybe<TodoTemplateCreateManyInput>;
@@ -5904,6 +5961,7 @@ export interface TodoTemplateCreateManyInput {
 }
 
 export interface TodoTemplateCreateInput {
+  id?: Maybe<ID_Input>;
   text: String;
   offsetDays: Int;
 }
@@ -6015,6 +6073,7 @@ export interface QuestionUpdateManyMutationInput {
 }
 
 export interface TodoCreateInput {
+  id?: Maybe<ID_Input>;
   due: DateTimeInput;
   text: String;
   done?: Maybe<Boolean>;
@@ -6031,6 +6090,7 @@ export interface EventCreateOneWithoutTodosInput {
 }
 
 export interface EventCreateWithoutTodosInput {
+  id?: Maybe<ID_Input>;
   title: String;
   description: String;
   date: DateTimeInput;
@@ -6096,6 +6156,7 @@ export interface TodoTemplateUpdateManyMutationInput {
 }
 
 export interface TransactionCreateInput {
+  id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;

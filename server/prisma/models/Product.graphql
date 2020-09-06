@@ -1,8 +1,8 @@
 type Product {
-  id: ID! @unique
+  id: ID! @unique @id
   name: String!
   price: Float!
   index: Int!
   thumbnail: String
-  deleted: Boolean! @default(value: "false")
+  deleted: Boolean! @default(value: false)
 }

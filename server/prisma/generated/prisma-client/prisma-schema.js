@@ -100,6 +100,7 @@ type ChatConnection {
 }
 
 input ChatCreateInput {
+  id: ID
   title: String!
   creator: UserCreateOneWithoutOwnChatsInput!
   members: UserCreateManyWithoutChatsInput
@@ -124,6 +125,7 @@ input ChatCreateOneWithoutMessagesInput {
 }
 
 input ChatCreateWithoutCreatorInput {
+  id: ID
   title: String!
   members: UserCreateManyWithoutChatsInput
   messages: MessageCreateManyWithoutChatInput
@@ -132,6 +134,7 @@ input ChatCreateWithoutCreatorInput {
 }
 
 input ChatCreateWithoutMembersInput {
+  id: ID
   title: String!
   creator: UserCreateOneWithoutOwnChatsInput!
   messages: MessageCreateManyWithoutChatInput
@@ -140,6 +143,7 @@ input ChatCreateWithoutMembersInput {
 }
 
 input ChatCreateWithoutMessagesInput {
+  id: ID
   title: String!
   creator: UserCreateOneWithoutOwnChatsInput!
   members: UserCreateManyWithoutChatsInput
@@ -390,6 +394,7 @@ type ClientConnection {
 }
 
 input ClientCreateInput {
+  id: ID
   identity: String!
   secret: String!
   name: String!
@@ -541,6 +546,7 @@ type CommentConnection {
 }
 
 input CommentCreateInput {
+  id: ID
   text: String!
   link: String
   date: DateTime!
@@ -571,6 +577,7 @@ input CommentCreateManyWithoutPostInput {
 }
 
 input CommentCreateWithoutAuthorInput {
+  id: ID
   text: String!
   link: String
   date: DateTime!
@@ -580,6 +587,7 @@ input CommentCreateWithoutAuthorInput {
 }
 
 input CommentCreateWithoutEventInput {
+  id: ID
   text: String!
   link: String
   date: DateTime!
@@ -589,6 +597,7 @@ input CommentCreateWithoutEventInput {
 }
 
 input CommentCreateWithoutLikedByInput {
+  id: ID
   text: String!
   link: String
   date: DateTime!
@@ -598,6 +607,7 @@ input CommentCreateWithoutLikedByInput {
 }
 
 input CommentCreateWithoutPostInput {
+  id: ID
   text: String!
   link: String
   date: DateTime!
@@ -939,6 +949,7 @@ type CommitteeConnection {
 }
 
 input CommitteeCreateInput {
+  id: ID
   creator: UserCreateOneInput!
   members: UserCreateManyInput
   event: EventCreateOneWithoutCommitteeInput!
@@ -956,12 +967,14 @@ input CommitteeCreateOneWithoutInvitationsInput {
 }
 
 input CommitteeCreateWithoutEventInput {
+  id: ID
   creator: UserCreateOneInput!
   members: UserCreateManyInput
   invitations: InvitationCreateManyWithoutCommitteeInput
 }
 
 input CommitteeCreateWithoutInvitationsInput {
+  id: ID
   creator: UserCreateOneInput!
   members: UserCreateManyInput
   event: EventCreateOneWithoutCommitteeInput!
@@ -1097,6 +1110,7 @@ type EventConnection {
 }
 
 input EventCreateInput {
+  id: ID
   title: String!
   description: String!
   date: DateTime!
@@ -1135,6 +1149,7 @@ input EventCreateOneWithoutTodosInput {
 }
 
 input EventCreateWithoutCommentsInput {
+  id: ID
   title: String!
   description: String!
   date: DateTime!
@@ -1147,6 +1162,7 @@ input EventCreateWithoutCommentsInput {
 }
 
 input EventCreateWithoutCommitteeInput {
+  id: ID
   title: String!
   description: String!
   date: DateTime!
@@ -1159,6 +1175,7 @@ input EventCreateWithoutCommitteeInput {
 }
 
 input EventCreateWithoutLikedByInput {
+  id: ID
   title: String!
   description: String!
   date: DateTime!
@@ -1171,6 +1188,7 @@ input EventCreateWithoutLikedByInput {
 }
 
 input EventCreateWithoutSupportersInput {
+  id: ID
   title: String!
   description: String!
   date: DateTime!
@@ -1183,6 +1201,7 @@ input EventCreateWithoutSupportersInput {
 }
 
 input EventCreateWithoutTodosInput {
+  id: ID
   title: String!
   description: String!
   date: DateTime!
@@ -1591,6 +1610,7 @@ type FileConnection {
 }
 
 input FileCreateInput {
+  id: ID
   fileId: String!
   hash: String!
   uri: String!
@@ -1823,6 +1843,7 @@ type InvitationConnection {
 }
 
 input InvitationCreateInput {
+  id: ID
   user: UserCreateOneWithoutInvitationsInput!
   committee: CommitteeCreateOneWithoutInvitationsInput!
   status: InvitationStatus
@@ -1839,11 +1860,13 @@ input InvitationCreateManyWithoutUserInput {
 }
 
 input InvitationCreateWithoutCommitteeInput {
+  id: ID
   user: UserCreateOneWithoutInvitationsInput!
   status: InvitationStatus
 }
 
 input InvitationCreateWithoutUserInput {
+  id: ID
   committee: CommitteeCreateOneWithoutInvitationsInput!
   status: InvitationStatus
 }
@@ -2033,6 +2056,7 @@ type ItemConnection {
 }
 
 input ItemCreateInput {
+  id: ID
   product: ProductCreateOneInput!
   user: UserCreateOneWithoutItemsInput!
   price: Float!
@@ -2050,6 +2074,7 @@ input ItemCreateManyWithoutUserInput {
 }
 
 input ItemCreateWithoutUserInput {
+  id: ID
   product: ProductCreateOneInput!
   price: Float!
   amount: Int!
@@ -2272,6 +2297,7 @@ type MessageConnection {
 }
 
 input MessageCreateInput {
+  id: ID
   text: String!
   link: String
   from: UserCreateOneInput!
@@ -2285,6 +2311,7 @@ input MessageCreateManyWithoutChatInput {
 }
 
 input MessageCreateWithoutChatInput {
+  id: ID
   text: String!
   link: String
   from: UserCreateOneInput!
@@ -2654,6 +2681,7 @@ type PaymentConnection {
 }
 
 input PaymentCreateInput {
+  id: ID
   amount: Float!
   user: UserCreateOneWithoutPaymentsInput!
   date: DateTime!
@@ -2672,6 +2700,7 @@ input PaymentCreateOneWithoutTransactionInput {
 }
 
 input PaymentCreateWithoutTransactionInput {
+  id: ID
   amount: Float!
   user: UserCreateOneWithoutPaymentsInput!
   date: DateTime!
@@ -2679,6 +2708,7 @@ input PaymentCreateWithoutTransactionInput {
 }
 
 input PaymentCreateWithoutUserInput {
+  id: ID
   amount: Float!
   date: DateTime!
   verified: Boolean
@@ -2902,6 +2932,7 @@ type PostConnection {
 }
 
 input PostCreateInput {
+  id: ID
   text: String!
   image: String
   link: String
@@ -2927,6 +2958,7 @@ input PostCreateOneWithoutCommentsInput {
 }
 
 input PostCreateWithoutAuthorInput {
+  id: ID
   text: String!
   image: String
   link: String
@@ -2936,6 +2968,7 @@ input PostCreateWithoutAuthorInput {
 }
 
 input PostCreateWithoutCommentsInput {
+  id: ID
   text: String!
   image: String
   link: String
@@ -2945,6 +2978,7 @@ input PostCreateWithoutCommentsInput {
 }
 
 input PostCreateWithoutLikedByInput {
+  id: ID
   text: String!
   image: String
   link: String
@@ -3280,6 +3314,7 @@ type ProductConnection {
 }
 
 input ProductCreateInput {
+  id: ID
   name: String!
   price: Float!
   index: Int!
@@ -3313,6 +3348,7 @@ type ProductionConnection {
 }
 
 input ProductionCreateInput {
+  id: ID
   title: String!
   description: String!
   image: String!
@@ -3623,6 +3659,7 @@ type PurchaseConnection {
 }
 
 input PurchaseCreateInput {
+  id: ID
   items: ItemCreateManyInput
   transaction: TransactionCreateOneWithoutPurchaseInput!
   total: Float!
@@ -3641,6 +3678,7 @@ input PurchaseCreateOneWithoutTransactionInput {
 }
 
 input PurchaseCreateWithoutTransactionInput {
+  id: ID
   items: ItemCreateManyInput
   total: Float!
   user: UserCreateOneWithoutPurchasesInput!
@@ -3648,6 +3686,7 @@ input PurchaseCreateWithoutTransactionInput {
 }
 
 input PurchaseCreateWithoutUserInput {
+  id: ID
   items: ItemCreateManyInput
   transaction: TransactionCreateOneWithoutPurchaseInput!
   total: Float!
@@ -3922,6 +3961,7 @@ type QuestionConnection {
 }
 
 input QuestionCreateInput {
+  id: ID
   text: String!
   description: String!
   templates: TodoTemplateCreateManyInput
@@ -4072,6 +4112,7 @@ type TodoConnection {
 }
 
 input TodoCreateInput {
+  id: ID
   due: DateTime!
   text: String!
   done: Boolean
@@ -4088,6 +4129,7 @@ input TodoCreateManyWithoutEventInput {
 }
 
 input TodoCreateWithoutEventInput {
+  id: ID
   due: DateTime!
   text: String!
   done: Boolean
@@ -4223,6 +4265,7 @@ type TodoTemplateConnection {
 }
 
 input TodoTemplateCreateInput {
+  id: ID
   text: String!
   offsetDays: Int!
 }
@@ -4561,6 +4604,7 @@ type TransactionConnection {
 }
 
 input TransactionCreateInput {
+  id: ID
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
@@ -4585,6 +4629,7 @@ input TransactionCreateOneWithoutPurchaseInput {
 }
 
 input TransactionCreateWithoutPaymentInput {
+  id: ID
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
@@ -4593,6 +4638,7 @@ input TransactionCreateWithoutPaymentInput {
 }
 
 input TransactionCreateWithoutPurchaseInput {
+  id: ID
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
@@ -4601,6 +4647,7 @@ input TransactionCreateWithoutPurchaseInput {
 }
 
 input TransactionCreateWithoutUserInput {
+  id: ID
   date: DateTime!
   type: TransactionType!
   balance: Float!
@@ -4871,6 +4918,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -4971,6 +5019,7 @@ input UserCreateOneWithoutTransactionsInput {
 }
 
 input UserCreateWithoutChatsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -4995,6 +5044,7 @@ input UserCreateWithoutChatsInput {
 }
 
 input UserCreateWithoutCommentsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5019,6 +5069,7 @@ input UserCreateWithoutCommentsInput {
 }
 
 input UserCreateWithoutInvitationsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5043,6 +5094,7 @@ input UserCreateWithoutInvitationsInput {
 }
 
 input UserCreateWithoutItemsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5067,6 +5119,7 @@ input UserCreateWithoutItemsInput {
 }
 
 input UserCreateWithoutLikedCommentsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5091,6 +5144,7 @@ input UserCreateWithoutLikedCommentsInput {
 }
 
 input UserCreateWithoutLikedEventsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5115,6 +5169,7 @@ input UserCreateWithoutLikedEventsInput {
 }
 
 input UserCreateWithoutLikedPostsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5139,6 +5194,7 @@ input UserCreateWithoutLikedPostsInput {
 }
 
 input UserCreateWithoutOwnChatsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5163,6 +5219,7 @@ input UserCreateWithoutOwnChatsInput {
 }
 
 input UserCreateWithoutPaymentsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5187,6 +5244,7 @@ input UserCreateWithoutPaymentsInput {
 }
 
 input UserCreateWithoutPostsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5211,6 +5269,7 @@ input UserCreateWithoutPostsInput {
 }
 
 input UserCreateWithoutPurchasesInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5235,6 +5294,7 @@ input UserCreateWithoutPurchasesInput {
 }
 
 input UserCreateWithoutSupportedEventsInput {
+  id: ID
   name: String!
   email: String!
   password: String!
@@ -5259,6 +5319,7 @@ input UserCreateWithoutSupportedEventsInput {
 }
 
 input UserCreateWithoutTransactionsInput {
+  id: ID
   name: String!
   email: String!
   password: String!

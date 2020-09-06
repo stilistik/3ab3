@@ -1,5 +1,5 @@
 type Comment {
-  id: ID! @unique
+  id: ID! @unique @id
   text: String!
   link: String
   date: DateTime!

@@ -1,7 +1,7 @@
 type Purchase {
-  id: ID! @unique
+  id: ID! @unique @id
   items: [Item!]!
-  transaction: Transaction! @relation(name: "PurchaseTransaction" onDelete: CASCADE)
+  transaction: Transaction! @relation(link: TABLE, name: "PurchaseTransaction" onDelete: CASCADE)
   total: Float!
   user: User!
   date: DateTime!

@@ -1,5 +1,5 @@
 type Invitation {
-  id: ID! @unique
+  id: ID! @unique @id
   user: User! @relation(name: "UserInvitation")
   committee: Committee!
   status: InvitationStatus! @default(value: PENDING)

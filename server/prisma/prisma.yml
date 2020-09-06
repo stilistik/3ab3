@@ -25,3 +25,4 @@ generate:
 hooks:
   post-deploy:
     - node ./seed.js
+secret: ${env:PRISMA_SERVICE_SECRET}
