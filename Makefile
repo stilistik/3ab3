@@ -1,12 +1,13 @@
 init:
-	yarn --cwd soil/api install
-	yarn --cwd soil/prisma install
+	yarn --cwd server/api install
+	yarn --cwd server/prisma install
+	yarn --cwd member install
 
-migrations:
+dev/server:
+	docker-compose up--build
+
+dev/reset:
 	cd server/prisma && prisma reset -f && prisma deploy
 
-member-client: 
+dev/client: 
 	cd member && yarn start
-
-prod-server:
-	docker-compose up --build
