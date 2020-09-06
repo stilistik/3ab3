@@ -19,6 +19,7 @@ services:
       - STORAGE_ROOT
       - MAILGUN_DOMAIN
       - MAILGUN_API_SECRET
+      - PRISMA_SERVICE_SECRET
 
   prisma:
     container_name: prisma
