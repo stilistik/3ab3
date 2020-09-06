@@ -28,7 +28,7 @@ const LoginForm = (props) => {
         setLoading(false);
       }
     } catch (error) {
-      Message.error(error);
+      Message.error(error.message);
       setLoading(false);
     }
   };
