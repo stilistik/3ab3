@@ -46,7 +46,7 @@ const Auth = ({ children, ...rest }) => {
       .catch(() => {
         setErrorCount(errorCount + 1);
       });
-  }, 1000);
+  }, 10000);
 
   if (errorCount > 5) return <Logout {...rest}>{children}</Logout>;
 
