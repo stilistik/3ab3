@@ -29,8 +29,9 @@ export const Members = () => {
   };
 
   const onEdit = (userId) => {
+    console.log(userId);
     requestRoute('/members/edit', {
-      id: userId,
+      params: { id: userId },
     });
   };
 
