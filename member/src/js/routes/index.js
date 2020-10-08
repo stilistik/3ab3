@@ -15,7 +15,6 @@ import Profile from 'Pages/profile';
 import { Events, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
 import { Members, CreateMember, EditMember } from 'Pages/members';
-import { Questions, Templates, CreateQuestion } from 'Pages/threesteps';
 
 const Routes = ({ props }) => {
   return (
@@ -29,11 +28,6 @@ const Routes = ({ props }) => {
       <AuthRoute
         path="/products/create"
         component={CreateProduct}
-        props={props}
-      />
-      <AuthRoute
-        path="/questions/create"
-        component={CreateQuestion}
         props={props}
       />
       <AuthRoute path="/members/edit" component={EditMember} props={props} />
@@ -57,8 +51,6 @@ const Routes = ({ props }) => {
       <AuthRoute path="/products" component={Products} props={props} />
       <AuthRoute path="/members" component={Members} props={props} />
       <AuthRoute path="/events" component={Events} props={props} />
-      <AuthRoute path="/questions" component={Questions} props={props} />
-      <AuthRoute path="/templates" component={Templates} props={props} />
       <AuthRoute path="/messenger" component={Messenger} props={props} />
 
       <Redirect to="/home" />

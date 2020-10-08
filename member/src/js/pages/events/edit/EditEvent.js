@@ -3,9 +3,7 @@ import { Grid } from 'Components';
 import { getQueryParams } from 'History';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab } from '@material-ui/core';
-import Committee from './committee/Committee';
 import Todos from './todo/Todos';
-import Steps from './steps/Steps';
 
 class EditEvent extends React.Component {
   constructor(props) {
@@ -34,9 +32,7 @@ class EditEvent extends React.Component {
           variant="fullWidth"
         >
           <Tab label="Todo" />
-          <Tab label="Committee" />
           <Tab label="Info" />
-          <Tab label="Steps" />
         </Tabs>
         <SwipeableViews
           axis="x"
@@ -46,11 +42,9 @@ class EditEvent extends React.Component {
           containerStyle={{ height: '100%' }}
         >
           <Todos eventId={id} />
-          <Committee eventId={id} />
           <div>
             <h1>Info</h1>
           </div>
-          <Steps eventId={id} />
         </SwipeableViews>
       </Grid.Default>
     );

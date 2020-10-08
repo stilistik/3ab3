@@ -62,11 +62,6 @@ const AppMenu = (props) => {
             icon="localBar"
             onClick={() => onClick('/products')}
           />
-          <MenuItem
-            text="3 Steps"
-            icon="linearScale"
-            onClick={() => onClick('/questions')}
-          />
         </List>
       </React.Fragment>
     );
