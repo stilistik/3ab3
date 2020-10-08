@@ -4,7 +4,6 @@ import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
-import Invitations from './Invitations';
 import Messages from './Messages';
 import BalanceButton from './BalanceButton';
 import { Grid } from 'Components';
@@ -61,7 +60,6 @@ export const AuthAppHeader = connect(
           <Logo />
           <BalanceButton />
           <Messages />
-          <Invitations />
           <ProfileMenu />
         </Toolbar>
       </Grid.Default>
