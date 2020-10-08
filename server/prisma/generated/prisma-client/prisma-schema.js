@@ -1101,6 +1101,7 @@ type Event {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   committee: Committee!
   todos(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo!]
+  published: Boolean!
 }
 
 type EventConnection {
@@ -1121,6 +1122,7 @@ input EventCreateInput {
   comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventCreateManyWithoutLikedByInput {
@@ -1159,6 +1161,7 @@ input EventCreateWithoutCommentsInput {
   owner: UserCreateOneInput!
   committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventCreateWithoutCommitteeInput {
@@ -1172,6 +1175,7 @@ input EventCreateWithoutCommitteeInput {
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
   todos: TodoCreateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventCreateWithoutLikedByInput {
@@ -1185,6 +1189,7 @@ input EventCreateWithoutLikedByInput {
   comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventCreateWithoutSupportersInput {
@@ -1198,6 +1203,7 @@ input EventCreateWithoutSupportersInput {
   comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventCreateWithoutTodosInput {
@@ -1211,6 +1217,7 @@ input EventCreateWithoutTodosInput {
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
   committee: CommitteeCreateOneWithoutEventInput!
+  published: Boolean
 }
 
 type EventEdge {
@@ -1229,6 +1236,8 @@ enum EventOrderByInput {
   date_DESC
   image_ASC
   image_DESC
+  published_ASC
+  published_DESC
 }
 
 type EventPreviousValues {
@@ -1237,6 +1246,7 @@ type EventPreviousValues {
   description: String!
   date: DateTime!
   image: String!
+  published: Boolean!
 }
 
 input EventScalarWhereInput {
@@ -1304,6 +1314,8 @@ input EventScalarWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  published: Boolean
+  published_not: Boolean
   AND: [EventScalarWhereInput!]
   OR: [EventScalarWhereInput!]
   NOT: [EventScalarWhereInput!]
@@ -1338,6 +1350,7 @@ input EventUpdateInput {
   comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventUpdateManyDataInput {
@@ -1345,6 +1358,7 @@ input EventUpdateManyDataInput {
   description: String
   date: DateTime
   image: String
+  published: Boolean
 }
 
 input EventUpdateManyMutationInput {
@@ -1352,6 +1366,7 @@ input EventUpdateManyMutationInput {
   description: String
   date: DateTime
   image: String
+  published: Boolean
 }
 
 input EventUpdateManyWithoutLikedByInput {
@@ -1416,6 +1431,7 @@ input EventUpdateWithoutCommentsDataInput {
   owner: UserUpdateOneRequiredInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventUpdateWithoutCommitteeDataInput {
@@ -1428,6 +1444,7 @@ input EventUpdateWithoutCommitteeDataInput {
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventUpdateWithoutLikedByDataInput {
@@ -1440,6 +1457,7 @@ input EventUpdateWithoutLikedByDataInput {
   comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventUpdateWithoutSupportersDataInput {
@@ -1452,6 +1470,7 @@ input EventUpdateWithoutSupportersDataInput {
   comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
+  published: Boolean
 }
 
 input EventUpdateWithoutTodosDataInput {
@@ -1464,6 +1483,7 @@ input EventUpdateWithoutTodosDataInput {
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
   committee: CommitteeUpdateOneRequiredWithoutEventInput
+  published: Boolean
 }
 
 input EventUpdateWithWhereUniqueWithoutLikedByInput {
@@ -1582,6 +1602,8 @@ input EventWhereInput {
   todos_every: TodoWhereInput
   todos_some: TodoWhereInput
   todos_none: TodoWhereInput
+  published: Boolean
+  published_not: Boolean
   AND: [EventWhereInput!]
   OR: [EventWhereInput!]
   NOT: [EventWhereInput!]

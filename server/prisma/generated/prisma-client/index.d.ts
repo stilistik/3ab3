@@ -925,7 +925,9 @@ export type EventOrderByInput =
   | "date_ASC"
   | "date_DESC"
   | "image_ASC"
-  | "image_DESC";
+  | "image_DESC"
+  | "published_ASC"
+  | "published_DESC";
 
 export type ChatOrderByInput =
   | "id_ASC"
@@ -1628,6 +1630,8 @@ export interface EventWhereInput {
   todos_every?: Maybe<TodoWhereInput>;
   todos_some?: Maybe<TodoWhereInput>;
   todos_none?: Maybe<TodoWhereInput>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
   AND?: Maybe<EventWhereInput[] | EventWhereInput>;
   OR?: Maybe<EventWhereInput[] | EventWhereInput>;
   NOT?: Maybe<EventWhereInput[] | EventWhereInput>;
@@ -2641,6 +2645,7 @@ export interface EventCreateWithoutLikedByInput {
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
   committee: CommitteeCreateOneWithoutEventInput;
   todos?: Maybe<TodoCreateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface UserCreateManyWithoutSupportedEventsInput {
@@ -2743,6 +2748,7 @@ export interface EventCreateWithoutSupportersInput {
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
   committee: CommitteeCreateOneWithoutEventInput;
   todos?: Maybe<TodoCreateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface UserCreateManyWithoutLikedEventsInput {
@@ -2978,6 +2984,7 @@ export interface EventCreateWithoutCommitteeInput {
   owner: UserCreateOneInput;
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
   todos?: Maybe<TodoCreateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface CommentCreateManyWithoutEventInput {
@@ -3044,6 +3051,7 @@ export interface EventCreateWithoutCommentsInput {
   owner: UserCreateOneInput;
   committee: CommitteeCreateOneWithoutEventInput;
   todos?: Maybe<TodoCreateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface CommitteeCreateOneWithoutEventInput {
@@ -3774,6 +3782,7 @@ export interface EventUpdateWithoutLikedByDataInput {
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
   committee?: Maybe<CommitteeUpdateOneRequiredWithoutEventInput>;
   todos?: Maybe<TodoUpdateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyWithoutSupportedEventsInput {
@@ -3953,6 +3962,7 @@ export interface EventUpdateWithoutSupportersDataInput {
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
   committee?: Maybe<CommitteeUpdateOneRequiredWithoutEventInput>;
   todos?: Maybe<TodoUpdateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyWithoutLikedEventsInput {
@@ -4624,6 +4634,7 @@ export interface EventUpdateWithoutCommitteeDataInput {
   owner?: Maybe<UserUpdateOneRequiredInput>;
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
   todos?: Maybe<TodoUpdateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateManyWithoutEventInput {
@@ -4961,6 +4972,7 @@ export interface EventUpdateWithoutCommentsDataInput {
   owner?: Maybe<UserUpdateOneRequiredInput>;
   committee?: Maybe<CommitteeUpdateOneRequiredWithoutEventInput>;
   todos?: Maybe<TodoUpdateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface CommitteeUpdateOneRequiredWithoutEventInput {
@@ -5145,6 +5157,8 @@ export interface EventScalarWhereInput {
   image_not_starts_with?: Maybe<String>;
   image_ends_with?: Maybe<String>;
   image_not_ends_with?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
   AND?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
   OR?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
   NOT?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
@@ -5160,6 +5174,7 @@ export interface EventUpdateManyDataInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  published?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
@@ -5693,6 +5708,7 @@ export interface EventCreateInput {
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
   committee: CommitteeCreateOneWithoutEventInput;
   todos?: Maybe<TodoCreateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface EventUpdateInput {
@@ -5706,6 +5722,7 @@ export interface EventUpdateInput {
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
   committee?: Maybe<CommitteeUpdateOneRequiredWithoutEventInput>;
   todos?: Maybe<TodoUpdateManyWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface EventUpdateManyMutationInput {
@@ -5713,6 +5730,7 @@ export interface EventUpdateManyMutationInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  published?: Maybe<Boolean>;
 }
 
 export interface FileCreateInput {
@@ -6100,6 +6118,7 @@ export interface EventCreateWithoutTodosInput {
   owner: UserCreateOneInput;
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
   committee: CommitteeCreateOneWithoutEventInput;
+  published?: Maybe<Boolean>;
 }
 
 export interface TodoUpdateInput {
@@ -6130,6 +6149,7 @@ export interface EventUpdateWithoutTodosDataInput {
   owner?: Maybe<UserUpdateOneRequiredInput>;
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
   committee?: Maybe<CommitteeUpdateOneRequiredWithoutEventInput>;
+  published?: Maybe<Boolean>;
 }
 
 export interface EventUpsertWithoutTodosInput {
@@ -7345,6 +7365,7 @@ export interface Event {
   description: String;
   date: DateTimeOutput;
   image: String;
+  published: Boolean;
 }
 
 export interface EventPromise extends Promise<Event>, Fragmentable {
@@ -7391,6 +7412,7 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  published: () => Promise<Boolean>;
 }
 
 export interface EventSubscription
@@ -7439,6 +7461,7 @@ export interface EventSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface EventNullablePromise
@@ -7487,6 +7510,7 @@ export interface EventNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  published: () => Promise<Boolean>;
 }
 
 export interface Committee {
@@ -9203,6 +9227,7 @@ export interface EventPreviousValues {
   description: String;
   date: DateTimeOutput;
   image: String;
+  published: Boolean;
 }
 
 export interface EventPreviousValuesPromise
@@ -9213,6 +9238,7 @@ export interface EventPreviousValuesPromise
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   image: () => Promise<String>;
+  published: () => Promise<Boolean>;
 }
 
 export interface EventPreviousValuesSubscription
@@ -9223,6 +9249,7 @@ export interface EventPreviousValuesSubscription
   description: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   image: () => Promise<AsyncIterator<String>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface FileSubscriptionPayload {

@@ -10,6 +10,7 @@ type Event {
   owner: User! @isAuthenticated
   committee: Committee! @isAuthenticated
   todos: [Todo!]! @isAuthenticated
+  published: Boolean! @isAuthenticated
 }
 
 input EventInput {
@@ -27,11 +28,12 @@ extend type Query {
 }
 
 extend type Mutation {
-  createEvent(input: EventInput!): Event! @hasRole @isAuthenticated
-  deleteEvent(eventId: ID!): Event! @hasRole @isAuthenticated
+  createEvent(input: EventInput!): Event! @isAuthenticated
+  deleteEvent(eventId: ID!): Event! @isAuthenticated
   likeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   unlikeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   commentEvent(eventId: ID!, text: String!, link: String): Event! @isAuthenticated
   supportEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   unsupportEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
+  publishEvent(eventId: ID!): Event! @isAuthenticated @hasRole
 }

@@ -10,4 +10,5 @@ type Event {
   comments: [Comment!]! @relation(link: TABLE, name: "EventComments", onDelete: CASCADE)
   committee: Committee! @relation(link: TABLE, name: "EventCommittee", onDelete: CASCADE)
   todos: [Todo!]! @relation(link: TABLE, name: "EventTodo", onDelete: CASCADE)
+  published: Boolean! @default(value: false)
 }
