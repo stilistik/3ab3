@@ -8,15 +8,10 @@ datamodel:
   - models/Payment.graphql
   - models/Transaction.graphql
   - models/Event.graphql
-  - models/Production.graphql
   - models/File.graphql
   - models/Post.graphql
   - models/Comment.graphql
-  - models/Committee.graphql
-  - models/Invitation.graphql
   - models/Todo.graphql
-  - models/Question.graphql
-  - models/TodoTemplate.graphql
   - models/Message.graphql
   - models/Chat.graphql
 generate:

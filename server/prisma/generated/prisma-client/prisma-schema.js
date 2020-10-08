@@ -15,19 +15,11 @@ type AggregateComment {
   count: Int!
 }
 
-type AggregateCommittee {
-  count: Int!
-}
-
 type AggregateEvent {
   count: Int!
 }
 
 type AggregateFile {
-  count: Int!
-}
-
-type AggregateInvitation {
   count: Int!
 }
 
@@ -51,23 +43,11 @@ type AggregateProduct {
   count: Int!
 }
 
-type AggregateProduction {
-  count: Int!
-}
-
 type AggregatePurchase {
   count: Int!
 }
 
-type AggregateQuestion {
-  count: Int!
-}
-
 type AggregateTodo {
-  count: Int!
-}
-
-type AggregateTodoTemplate {
   count: Int!
 }
 
@@ -934,159 +914,6 @@ input CommentWhereUniqueInput {
   id: ID
 }
 
-type Committee {
-  id: ID!
-  creator: User!
-  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  event: Event!
-  invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation!]
-}
-
-type CommitteeConnection {
-  pageInfo: PageInfo!
-  edges: [CommitteeEdge]!
-  aggregate: AggregateCommittee!
-}
-
-input CommitteeCreateInput {
-  id: ID
-  creator: UserCreateOneInput!
-  members: UserCreateManyInput
-  event: EventCreateOneWithoutCommitteeInput!
-  invitations: InvitationCreateManyWithoutCommitteeInput
-}
-
-input CommitteeCreateOneWithoutEventInput {
-  create: CommitteeCreateWithoutEventInput
-  connect: CommitteeWhereUniqueInput
-}
-
-input CommitteeCreateOneWithoutInvitationsInput {
-  create: CommitteeCreateWithoutInvitationsInput
-  connect: CommitteeWhereUniqueInput
-}
-
-input CommitteeCreateWithoutEventInput {
-  id: ID
-  creator: UserCreateOneInput!
-  members: UserCreateManyInput
-  invitations: InvitationCreateManyWithoutCommitteeInput
-}
-
-input CommitteeCreateWithoutInvitationsInput {
-  id: ID
-  creator: UserCreateOneInput!
-  members: UserCreateManyInput
-  event: EventCreateOneWithoutCommitteeInput!
-}
-
-type CommitteeEdge {
-  node: Committee!
-  cursor: String!
-}
-
-enum CommitteeOrderByInput {
-  id_ASC
-  id_DESC
-}
-
-type CommitteePreviousValues {
-  id: ID!
-}
-
-type CommitteeSubscriptionPayload {
-  mutation: MutationType!
-  node: Committee
-  updatedFields: [String!]
-  previousValues: CommitteePreviousValues
-}
-
-input CommitteeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: CommitteeWhereInput
-  AND: [CommitteeSubscriptionWhereInput!]
-  OR: [CommitteeSubscriptionWhereInput!]
-  NOT: [CommitteeSubscriptionWhereInput!]
-}
-
-input CommitteeUpdateInput {
-  creator: UserUpdateOneRequiredInput
-  members: UserUpdateManyInput
-  event: EventUpdateOneRequiredWithoutCommitteeInput
-  invitations: InvitationUpdateManyWithoutCommitteeInput
-}
-
-input CommitteeUpdateOneRequiredWithoutEventInput {
-  create: CommitteeCreateWithoutEventInput
-  update: CommitteeUpdateWithoutEventDataInput
-  upsert: CommitteeUpsertWithoutEventInput
-  connect: CommitteeWhereUniqueInput
-}
-
-input CommitteeUpdateOneRequiredWithoutInvitationsInput {
-  create: CommitteeCreateWithoutInvitationsInput
-  update: CommitteeUpdateWithoutInvitationsDataInput
-  upsert: CommitteeUpsertWithoutInvitationsInput
-  connect: CommitteeWhereUniqueInput
-}
-
-input CommitteeUpdateWithoutEventDataInput {
-  creator: UserUpdateOneRequiredInput
-  members: UserUpdateManyInput
-  invitations: InvitationUpdateManyWithoutCommitteeInput
-}
-
-input CommitteeUpdateWithoutInvitationsDataInput {
-  creator: UserUpdateOneRequiredInput
-  members: UserUpdateManyInput
-  event: EventUpdateOneRequiredWithoutCommitteeInput
-}
-
-input CommitteeUpsertWithoutEventInput {
-  update: CommitteeUpdateWithoutEventDataInput!
-  create: CommitteeCreateWithoutEventInput!
-}
-
-input CommitteeUpsertWithoutInvitationsInput {
-  update: CommitteeUpdateWithoutInvitationsDataInput!
-  create: CommitteeCreateWithoutInvitationsInput!
-}
-
-input CommitteeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  creator: UserWhereInput
-  members_every: UserWhereInput
-  members_some: UserWhereInput
-  members_none: UserWhereInput
-  event: EventWhereInput
-  invitations_every: InvitationWhereInput
-  invitations_some: InvitationWhereInput
-  invitations_none: InvitationWhereInput
-  AND: [CommitteeWhereInput!]
-  OR: [CommitteeWhereInput!]
-  NOT: [CommitteeWhereInput!]
-}
-
-input CommitteeWhereUniqueInput {
-  id: ID
-}
-
 scalar DateTime
 
 type Event {
@@ -1099,7 +926,6 @@ type Event {
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  committee: Committee!
   todos(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo!]
   published: Boolean!
 }
@@ -1120,7 +946,6 @@ input EventCreateInput {
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
-  committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
   published: Boolean
 }
@@ -1140,11 +965,6 @@ input EventCreateOneWithoutCommentsInput {
   connect: EventWhereUniqueInput
 }
 
-input EventCreateOneWithoutCommitteeInput {
-  create: EventCreateWithoutCommitteeInput
-  connect: EventWhereUniqueInput
-}
-
 input EventCreateOneWithoutTodosInput {
   create: EventCreateWithoutTodosInput
   connect: EventWhereUniqueInput
@@ -1159,21 +979,6 @@ input EventCreateWithoutCommentsInput {
   supporters: UserCreateManyWithoutSupportedEventsInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
-  committee: CommitteeCreateOneWithoutEventInput!
-  todos: TodoCreateManyWithoutEventInput
-  published: Boolean
-}
-
-input EventCreateWithoutCommitteeInput {
-  id: ID
-  title: String!
-  description: String!
-  date: DateTime!
-  image: String!
-  supporters: UserCreateManyWithoutSupportedEventsInput
-  likedBy: UserCreateManyWithoutLikedEventsInput
-  owner: UserCreateOneInput!
-  comments: CommentCreateManyWithoutEventInput
   todos: TodoCreateManyWithoutEventInput
   published: Boolean
 }
@@ -1187,7 +992,6 @@ input EventCreateWithoutLikedByInput {
   supporters: UserCreateManyWithoutSupportedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
-  committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
   published: Boolean
 }
@@ -1201,7 +1005,6 @@ input EventCreateWithoutSupportersInput {
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
-  committee: CommitteeCreateOneWithoutEventInput!
   todos: TodoCreateManyWithoutEventInput
   published: Boolean
 }
@@ -1216,7 +1019,6 @@ input EventCreateWithoutTodosInput {
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
-  committee: CommitteeCreateOneWithoutEventInput!
   published: Boolean
 }
 
@@ -1348,7 +1150,6 @@ input EventUpdateInput {
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
-  committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
   published: Boolean
 }
@@ -1398,13 +1199,6 @@ input EventUpdateManyWithWhereNestedInput {
   data: EventUpdateManyDataInput!
 }
 
-input EventUpdateOneRequiredWithoutCommitteeInput {
-  create: EventCreateWithoutCommitteeInput
-  update: EventUpdateWithoutCommitteeDataInput
-  upsert: EventUpsertWithoutCommitteeInput
-  connect: EventWhereUniqueInput
-}
-
 input EventUpdateOneRequiredWithoutTodosInput {
   create: EventCreateWithoutTodosInput
   update: EventUpdateWithoutTodosDataInput
@@ -1429,20 +1223,6 @@ input EventUpdateWithoutCommentsDataInput {
   supporters: UserUpdateManyWithoutSupportedEventsInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
-  committee: CommitteeUpdateOneRequiredWithoutEventInput
-  todos: TodoUpdateManyWithoutEventInput
-  published: Boolean
-}
-
-input EventUpdateWithoutCommitteeDataInput {
-  title: String
-  description: String
-  date: DateTime
-  image: String
-  supporters: UserUpdateManyWithoutSupportedEventsInput
-  likedBy: UserUpdateManyWithoutLikedEventsInput
-  owner: UserUpdateOneRequiredInput
-  comments: CommentUpdateManyWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
   published: Boolean
 }
@@ -1455,7 +1235,6 @@ input EventUpdateWithoutLikedByDataInput {
   supporters: UserUpdateManyWithoutSupportedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
-  committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
   published: Boolean
 }
@@ -1468,7 +1247,6 @@ input EventUpdateWithoutSupportersDataInput {
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
-  committee: CommitteeUpdateOneRequiredWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
   published: Boolean
 }
@@ -1482,7 +1260,6 @@ input EventUpdateWithoutTodosDataInput {
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
-  committee: CommitteeUpdateOneRequiredWithoutEventInput
   published: Boolean
 }
 
@@ -1499,11 +1276,6 @@ input EventUpdateWithWhereUniqueWithoutSupportersInput {
 input EventUpsertWithoutCommentsInput {
   update: EventUpdateWithoutCommentsDataInput!
   create: EventCreateWithoutCommentsInput!
-}
-
-input EventUpsertWithoutCommitteeInput {
-  update: EventUpdateWithoutCommitteeDataInput!
-  create: EventCreateWithoutCommitteeInput!
 }
 
 input EventUpsertWithoutTodosInput {
@@ -1598,7 +1370,6 @@ input EventWhereInput {
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
-  committee: CommitteeWhereInput
   todos_every: TodoWhereInput
   todos_some: TodoWhereInput
   todos_none: TodoWhereInput
@@ -1849,218 +1620,6 @@ input FileWhereUniqueInput {
   fileId: String
   hash: String
   uri: String
-}
-
-type Invitation {
-  id: ID!
-  user: User!
-  committee: Committee!
-  status: InvitationStatus!
-}
-
-type InvitationConnection {
-  pageInfo: PageInfo!
-  edges: [InvitationEdge]!
-  aggregate: AggregateInvitation!
-}
-
-input InvitationCreateInput {
-  id: ID
-  user: UserCreateOneWithoutInvitationsInput!
-  committee: CommitteeCreateOneWithoutInvitationsInput!
-  status: InvitationStatus
-}
-
-input InvitationCreateManyWithoutCommitteeInput {
-  create: [InvitationCreateWithoutCommitteeInput!]
-  connect: [InvitationWhereUniqueInput!]
-}
-
-input InvitationCreateManyWithoutUserInput {
-  create: [InvitationCreateWithoutUserInput!]
-  connect: [InvitationWhereUniqueInput!]
-}
-
-input InvitationCreateWithoutCommitteeInput {
-  id: ID
-  user: UserCreateOneWithoutInvitationsInput!
-  status: InvitationStatus
-}
-
-input InvitationCreateWithoutUserInput {
-  id: ID
-  committee: CommitteeCreateOneWithoutInvitationsInput!
-  status: InvitationStatus
-}
-
-type InvitationEdge {
-  node: Invitation!
-  cursor: String!
-}
-
-enum InvitationOrderByInput {
-  id_ASC
-  id_DESC
-  status_ASC
-  status_DESC
-}
-
-type InvitationPreviousValues {
-  id: ID!
-  status: InvitationStatus!
-}
-
-input InvitationScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  status: InvitationStatus
-  status_not: InvitationStatus
-  status_in: [InvitationStatus!]
-  status_not_in: [InvitationStatus!]
-  AND: [InvitationScalarWhereInput!]
-  OR: [InvitationScalarWhereInput!]
-  NOT: [InvitationScalarWhereInput!]
-}
-
-enum InvitationStatus {
-  PENDING
-  ACCEPTED
-  DECLINED
-}
-
-type InvitationSubscriptionPayload {
-  mutation: MutationType!
-  node: Invitation
-  updatedFields: [String!]
-  previousValues: InvitationPreviousValues
-}
-
-input InvitationSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: InvitationWhereInput
-  AND: [InvitationSubscriptionWhereInput!]
-  OR: [InvitationSubscriptionWhereInput!]
-  NOT: [InvitationSubscriptionWhereInput!]
-}
-
-input InvitationUpdateInput {
-  user: UserUpdateOneRequiredWithoutInvitationsInput
-  committee: CommitteeUpdateOneRequiredWithoutInvitationsInput
-  status: InvitationStatus
-}
-
-input InvitationUpdateManyDataInput {
-  status: InvitationStatus
-}
-
-input InvitationUpdateManyMutationInput {
-  status: InvitationStatus
-}
-
-input InvitationUpdateManyWithoutCommitteeInput {
-  create: [InvitationCreateWithoutCommitteeInput!]
-  delete: [InvitationWhereUniqueInput!]
-  connect: [InvitationWhereUniqueInput!]
-  set: [InvitationWhereUniqueInput!]
-  disconnect: [InvitationWhereUniqueInput!]
-  update: [InvitationUpdateWithWhereUniqueWithoutCommitteeInput!]
-  upsert: [InvitationUpsertWithWhereUniqueWithoutCommitteeInput!]
-  deleteMany: [InvitationScalarWhereInput!]
-  updateMany: [InvitationUpdateManyWithWhereNestedInput!]
-}
-
-input InvitationUpdateManyWithoutUserInput {
-  create: [InvitationCreateWithoutUserInput!]
-  delete: [InvitationWhereUniqueInput!]
-  connect: [InvitationWhereUniqueInput!]
-  set: [InvitationWhereUniqueInput!]
-  disconnect: [InvitationWhereUniqueInput!]
-  update: [InvitationUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [InvitationUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [InvitationScalarWhereInput!]
-  updateMany: [InvitationUpdateManyWithWhereNestedInput!]
-}
-
-input InvitationUpdateManyWithWhereNestedInput {
-  where: InvitationScalarWhereInput!
-  data: InvitationUpdateManyDataInput!
-}
-
-input InvitationUpdateWithoutCommitteeDataInput {
-  user: UserUpdateOneRequiredWithoutInvitationsInput
-  status: InvitationStatus
-}
-
-input InvitationUpdateWithoutUserDataInput {
-  committee: CommitteeUpdateOneRequiredWithoutInvitationsInput
-  status: InvitationStatus
-}
-
-input InvitationUpdateWithWhereUniqueWithoutCommitteeInput {
-  where: InvitationWhereUniqueInput!
-  data: InvitationUpdateWithoutCommitteeDataInput!
-}
-
-input InvitationUpdateWithWhereUniqueWithoutUserInput {
-  where: InvitationWhereUniqueInput!
-  data: InvitationUpdateWithoutUserDataInput!
-}
-
-input InvitationUpsertWithWhereUniqueWithoutCommitteeInput {
-  where: InvitationWhereUniqueInput!
-  update: InvitationUpdateWithoutCommitteeDataInput!
-  create: InvitationCreateWithoutCommitteeInput!
-}
-
-input InvitationUpsertWithWhereUniqueWithoutUserInput {
-  where: InvitationWhereUniqueInput!
-  update: InvitationUpdateWithoutUserDataInput!
-  create: InvitationCreateWithoutUserInput!
-}
-
-input InvitationWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  user: UserWhereInput
-  committee: CommitteeWhereInput
-  status: InvitationStatus
-  status_not: InvitationStatus
-  status_in: [InvitationStatus!]
-  status_not_in: [InvitationStatus!]
-  AND: [InvitationWhereInput!]
-  OR: [InvitationWhereInput!]
-  NOT: [InvitationWhereInput!]
-}
-
-input InvitationWhereUniqueInput {
-  id: ID
 }
 
 type Item {
@@ -2573,11 +2132,6 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
-  createCommittee(data: CommitteeCreateInput!): Committee!
-  updateCommittee(data: CommitteeUpdateInput!, where: CommitteeWhereUniqueInput!): Committee
-  upsertCommittee(where: CommitteeWhereUniqueInput!, create: CommitteeCreateInput!, update: CommitteeUpdateInput!): Committee!
-  deleteCommittee(where: CommitteeWhereUniqueInput!): Committee
-  deleteManyCommittees(where: CommitteeWhereInput): BatchPayload!
   createEvent(data: EventCreateInput!): Event!
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
@@ -2590,12 +2144,6 @@ type Mutation {
   upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
   deleteFile(where: FileWhereUniqueInput!): File
   deleteManyFiles(where: FileWhereInput): BatchPayload!
-  createInvitation(data: InvitationCreateInput!): Invitation!
-  updateInvitation(data: InvitationUpdateInput!, where: InvitationWhereUniqueInput!): Invitation
-  updateManyInvitations(data: InvitationUpdateManyMutationInput!, where: InvitationWhereInput): BatchPayload!
-  upsertInvitation(where: InvitationWhereUniqueInput!, create: InvitationCreateInput!, update: InvitationUpdateInput!): Invitation!
-  deleteInvitation(where: InvitationWhereUniqueInput!): Invitation
-  deleteManyInvitations(where: InvitationWhereInput): BatchPayload!
   createItem(data: ItemCreateInput!): Item!
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
@@ -2626,36 +2174,18 @@ type Mutation {
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteManyProducts(where: ProductWhereInput): BatchPayload!
-  createProduction(data: ProductionCreateInput!): Production!
-  updateProduction(data: ProductionUpdateInput!, where: ProductionWhereUniqueInput!): Production
-  updateManyProductions(data: ProductionUpdateManyMutationInput!, where: ProductionWhereInput): BatchPayload!
-  upsertProduction(where: ProductionWhereUniqueInput!, create: ProductionCreateInput!, update: ProductionUpdateInput!): Production!
-  deleteProduction(where: ProductionWhereUniqueInput!): Production
-  deleteManyProductions(where: ProductionWhereInput): BatchPayload!
   createPurchase(data: PurchaseCreateInput!): Purchase!
   updatePurchase(data: PurchaseUpdateInput!, where: PurchaseWhereUniqueInput!): Purchase
   updateManyPurchases(data: PurchaseUpdateManyMutationInput!, where: PurchaseWhereInput): BatchPayload!
   upsertPurchase(where: PurchaseWhereUniqueInput!, create: PurchaseCreateInput!, update: PurchaseUpdateInput!): Purchase!
   deletePurchase(where: PurchaseWhereUniqueInput!): Purchase
   deleteManyPurchases(where: PurchaseWhereInput): BatchPayload!
-  createQuestion(data: QuestionCreateInput!): Question!
-  updateQuestion(data: QuestionUpdateInput!, where: QuestionWhereUniqueInput!): Question
-  updateManyQuestions(data: QuestionUpdateManyMutationInput!, where: QuestionWhereInput): BatchPayload!
-  upsertQuestion(where: QuestionWhereUniqueInput!, create: QuestionCreateInput!, update: QuestionUpdateInput!): Question!
-  deleteQuestion(where: QuestionWhereUniqueInput!): Question
-  deleteManyQuestions(where: QuestionWhereInput): BatchPayload!
   createTodo(data: TodoCreateInput!): Todo!
   updateTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
   updateManyTodoes(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
   upsertTodo(where: TodoWhereUniqueInput!, create: TodoCreateInput!, update: TodoUpdateInput!): Todo!
   deleteTodo(where: TodoWhereUniqueInput!): Todo
   deleteManyTodoes(where: TodoWhereInput): BatchPayload!
-  createTodoTemplate(data: TodoTemplateCreateInput!): TodoTemplate!
-  updateTodoTemplate(data: TodoTemplateUpdateInput!, where: TodoTemplateWhereUniqueInput!): TodoTemplate
-  updateManyTodoTemplates(data: TodoTemplateUpdateManyMutationInput!, where: TodoTemplateWhereInput): BatchPayload!
-  upsertTodoTemplate(where: TodoTemplateWhereUniqueInput!, create: TodoTemplateCreateInput!, update: TodoTemplateUpdateInput!): TodoTemplate!
-  deleteTodoTemplate(where: TodoTemplateWhereUniqueInput!): TodoTemplate
-  deleteManyTodoTemplates(where: TodoTemplateWhereInput): BatchPayload!
   createTransaction(data: TransactionCreateInput!): Transaction!
   updateTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
   updateManyTransactions(data: TransactionUpdateManyMutationInput!, where: TransactionWhereInput): BatchPayload!
@@ -3354,169 +2884,6 @@ type ProductEdge {
   cursor: String!
 }
 
-type Production {
-  id: ID!
-  title: String!
-  description: String!
-  image: String!
-  index: Int!
-  show: Boolean!
-}
-
-type ProductionConnection {
-  pageInfo: PageInfo!
-  edges: [ProductionEdge]!
-  aggregate: AggregateProduction!
-}
-
-input ProductionCreateInput {
-  id: ID
-  title: String!
-  description: String!
-  image: String!
-  index: Int!
-  show: Boolean
-}
-
-type ProductionEdge {
-  node: Production!
-  cursor: String!
-}
-
-enum ProductionOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  description_ASC
-  description_DESC
-  image_ASC
-  image_DESC
-  index_ASC
-  index_DESC
-  show_ASC
-  show_DESC
-}
-
-type ProductionPreviousValues {
-  id: ID!
-  title: String!
-  description: String!
-  image: String!
-  index: Int!
-  show: Boolean!
-}
-
-type ProductionSubscriptionPayload {
-  mutation: MutationType!
-  node: Production
-  updatedFields: [String!]
-  previousValues: ProductionPreviousValues
-}
-
-input ProductionSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ProductionWhereInput
-  AND: [ProductionSubscriptionWhereInput!]
-  OR: [ProductionSubscriptionWhereInput!]
-  NOT: [ProductionSubscriptionWhereInput!]
-}
-
-input ProductionUpdateInput {
-  title: String
-  description: String
-  image: String
-  index: Int
-  show: Boolean
-}
-
-input ProductionUpdateManyMutationInput {
-  title: String
-  description: String
-  image: String
-  index: Int
-  show: Boolean
-}
-
-input ProductionWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
-  index: Int
-  index_not: Int
-  index_in: [Int!]
-  index_not_in: [Int!]
-  index_lt: Int
-  index_lte: Int
-  index_gt: Int
-  index_gte: Int
-  show: Boolean
-  show_not: Boolean
-  AND: [ProductionWhereInput!]
-  OR: [ProductionWhereInput!]
-  NOT: [ProductionWhereInput!]
-}
-
-input ProductionWhereUniqueInput {
-  id: ID
-}
-
 enum ProductOrderByInput {
   id_ASC
   id_DESC
@@ -3918,18 +3285,12 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
-  committee(where: CommitteeWhereUniqueInput!): Committee
-  committees(where: CommitteeWhereInput, orderBy: CommitteeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Committee]!
-  committeesConnection(where: CommitteeWhereInput, orderBy: CommitteeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommitteeConnection!
   event(where: EventWhereUniqueInput!): Event
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
   file(where: FileWhereUniqueInput!): File
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
   filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
-  invitation(where: InvitationWhereUniqueInput!): Invitation
-  invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation]!
-  invitationsConnection(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InvitationConnection!
   item(where: ItemWhereUniqueInput!): Item
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
@@ -3945,21 +3306,12 @@ type Query {
   product(where: ProductWhereUniqueInput!): Product
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
-  production(where: ProductionWhereUniqueInput!): Production
-  productions(where: ProductionWhereInput, orderBy: ProductionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Production]!
-  productionsConnection(where: ProductionWhereInput, orderBy: ProductionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductionConnection!
   purchase(where: PurchaseWhereUniqueInput!): Purchase
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase]!
   purchasesConnection(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseConnection!
-  question(where: QuestionWhereUniqueInput!): Question
-  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question]!
-  questionsConnection(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuestionConnection!
   todo(where: TodoWhereUniqueInput!): Todo
   todoes(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo]!
   todoesConnection(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoConnection!
-  todoTemplate(where: TodoTemplateWhereUniqueInput!): TodoTemplate
-  todoTemplates(where: TodoTemplateWhereInput, orderBy: TodoTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TodoTemplate]!
-  todoTemplatesConnection(where: TodoTemplateWhereInput, orderBy: TodoTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoTemplateConnection!
   transaction(where: TransactionWhereUniqueInput!): Transaction
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
   transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
@@ -3969,148 +3321,19 @@ type Query {
   node(id: ID!): Node
 }
 
-type Question {
-  id: ID!
-  text: String!
-  description: String!
-  templates(where: TodoTemplateWhereInput, orderBy: TodoTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TodoTemplate!]
-}
-
-type QuestionConnection {
-  pageInfo: PageInfo!
-  edges: [QuestionEdge]!
-  aggregate: AggregateQuestion!
-}
-
-input QuestionCreateInput {
-  id: ID
-  text: String!
-  description: String!
-  templates: TodoTemplateCreateManyInput
-}
-
-type QuestionEdge {
-  node: Question!
-  cursor: String!
-}
-
-enum QuestionOrderByInput {
-  id_ASC
-  id_DESC
-  text_ASC
-  text_DESC
-  description_ASC
-  description_DESC
-}
-
-type QuestionPreviousValues {
-  id: ID!
-  text: String!
-  description: String!
-}
-
-type QuestionSubscriptionPayload {
-  mutation: MutationType!
-  node: Question
-  updatedFields: [String!]
-  previousValues: QuestionPreviousValues
-}
-
-input QuestionSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: QuestionWhereInput
-  AND: [QuestionSubscriptionWhereInput!]
-  OR: [QuestionSubscriptionWhereInput!]
-  NOT: [QuestionSubscriptionWhereInput!]
-}
-
-input QuestionUpdateInput {
-  text: String
-  description: String
-  templates: TodoTemplateUpdateManyInput
-}
-
-input QuestionUpdateManyMutationInput {
-  text: String
-  description: String
-}
-
-input QuestionWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  templates_every: TodoTemplateWhereInput
-  templates_some: TodoTemplateWhereInput
-  templates_none: TodoTemplateWhereInput
-  AND: [QuestionWhereInput!]
-  OR: [QuestionWhereInput!]
-  NOT: [QuestionWhereInput!]
-}
-
-input QuestionWhereUniqueInput {
-  id: ID
-}
-
 type Subscription {
   chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
-  committee(where: CommitteeSubscriptionWhereInput): CommitteeSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
-  invitation(where: InvitationSubscriptionWhereInput): InvitationSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
-  production(where: ProductionSubscriptionWhereInput): ProductionSubscriptionPayload
   purchase(where: PurchaseSubscriptionWhereInput): PurchaseSubscriptionPayload
-  question(where: QuestionSubscriptionWhereInput): QuestionSubscriptionPayload
   todo(where: TodoSubscriptionWhereInput): TodoSubscriptionPayload
-  todoTemplate(where: TodoTemplateSubscriptionWhereInput): TodoTemplateSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -4272,203 +3495,6 @@ input TodoSubscriptionWhereInput {
   AND: [TodoSubscriptionWhereInput!]
   OR: [TodoSubscriptionWhereInput!]
   NOT: [TodoSubscriptionWhereInput!]
-}
-
-type TodoTemplate {
-  id: ID!
-  text: String!
-  offsetDays: Int!
-}
-
-type TodoTemplateConnection {
-  pageInfo: PageInfo!
-  edges: [TodoTemplateEdge]!
-  aggregate: AggregateTodoTemplate!
-}
-
-input TodoTemplateCreateInput {
-  id: ID
-  text: String!
-  offsetDays: Int!
-}
-
-input TodoTemplateCreateManyInput {
-  create: [TodoTemplateCreateInput!]
-  connect: [TodoTemplateWhereUniqueInput!]
-}
-
-type TodoTemplateEdge {
-  node: TodoTemplate!
-  cursor: String!
-}
-
-enum TodoTemplateOrderByInput {
-  id_ASC
-  id_DESC
-  text_ASC
-  text_DESC
-  offsetDays_ASC
-  offsetDays_DESC
-}
-
-type TodoTemplatePreviousValues {
-  id: ID!
-  text: String!
-  offsetDays: Int!
-}
-
-input TodoTemplateScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  offsetDays: Int
-  offsetDays_not: Int
-  offsetDays_in: [Int!]
-  offsetDays_not_in: [Int!]
-  offsetDays_lt: Int
-  offsetDays_lte: Int
-  offsetDays_gt: Int
-  offsetDays_gte: Int
-  AND: [TodoTemplateScalarWhereInput!]
-  OR: [TodoTemplateScalarWhereInput!]
-  NOT: [TodoTemplateScalarWhereInput!]
-}
-
-type TodoTemplateSubscriptionPayload {
-  mutation: MutationType!
-  node: TodoTemplate
-  updatedFields: [String!]
-  previousValues: TodoTemplatePreviousValues
-}
-
-input TodoTemplateSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: TodoTemplateWhereInput
-  AND: [TodoTemplateSubscriptionWhereInput!]
-  OR: [TodoTemplateSubscriptionWhereInput!]
-  NOT: [TodoTemplateSubscriptionWhereInput!]
-}
-
-input TodoTemplateUpdateDataInput {
-  text: String
-  offsetDays: Int
-}
-
-input TodoTemplateUpdateInput {
-  text: String
-  offsetDays: Int
-}
-
-input TodoTemplateUpdateManyDataInput {
-  text: String
-  offsetDays: Int
-}
-
-input TodoTemplateUpdateManyInput {
-  create: [TodoTemplateCreateInput!]
-  update: [TodoTemplateUpdateWithWhereUniqueNestedInput!]
-  upsert: [TodoTemplateUpsertWithWhereUniqueNestedInput!]
-  delete: [TodoTemplateWhereUniqueInput!]
-  connect: [TodoTemplateWhereUniqueInput!]
-  set: [TodoTemplateWhereUniqueInput!]
-  disconnect: [TodoTemplateWhereUniqueInput!]
-  deleteMany: [TodoTemplateScalarWhereInput!]
-  updateMany: [TodoTemplateUpdateManyWithWhereNestedInput!]
-}
-
-input TodoTemplateUpdateManyMutationInput {
-  text: String
-  offsetDays: Int
-}
-
-input TodoTemplateUpdateManyWithWhereNestedInput {
-  where: TodoTemplateScalarWhereInput!
-  data: TodoTemplateUpdateManyDataInput!
-}
-
-input TodoTemplateUpdateWithWhereUniqueNestedInput {
-  where: TodoTemplateWhereUniqueInput!
-  data: TodoTemplateUpdateDataInput!
-}
-
-input TodoTemplateUpsertWithWhereUniqueNestedInput {
-  where: TodoTemplateWhereUniqueInput!
-  update: TodoTemplateUpdateDataInput!
-  create: TodoTemplateCreateInput!
-}
-
-input TodoTemplateWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  offsetDays: Int
-  offsetDays_not: Int
-  offsetDays_in: [Int!]
-  offsetDays_not_in: [Int!]
-  offsetDays_lt: Int
-  offsetDays_lte: Int
-  offsetDays_gt: Int
-  offsetDays_gte: Int
-  AND: [TodoTemplateWhereInput!]
-  OR: [TodoTemplateWhereInput!]
-  NOT: [TodoTemplateWhereInput!]
-}
-
-input TodoTemplateWhereUniqueInput {
-  id: ID
 }
 
 input TodoUpdateInput {
@@ -4911,6 +3937,7 @@ type User {
   id: ID!
   name: String!
   email: String!
+  role: UserRole!
   password: String!
   resetToken: String
   avatar: String
@@ -4918,7 +3945,6 @@ type User {
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
-  role: UserRole!
   balance: Float!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   likedPosts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
@@ -4926,7 +3952,6 @@ type User {
   supportedEvents(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   likedComments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  invitations(where: InvitationWhereInput, orderBy: InvitationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invitation!]
   isOnline: Boolean!
   lastOnline: DateTime
   ownChats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
@@ -4943,6 +3968,7 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -4950,7 +3976,6 @@ input UserCreateInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4958,16 +3983,10 @@ input UserCreateInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
-}
-
-input UserCreateManyInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateManyWithoutChatsInput {
@@ -5005,11 +4024,6 @@ input UserCreateOneWithoutCommentsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutInvitationsInput {
-  create: UserCreateWithoutInvitationsInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreateOneWithoutItemsInput {
   create: UserCreateWithoutItemsInput
   connect: UserWhereUniqueInput
@@ -5044,6 +4058,7 @@ input UserCreateWithoutChatsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5051,7 +4066,6 @@ input UserCreateWithoutChatsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -5059,7 +4073,6 @@ input UserCreateWithoutChatsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5069,6 +4082,7 @@ input UserCreateWithoutCommentsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5076,38 +4090,11 @@ input UserCreateWithoutCommentsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
   supportedEvents: EventCreateManyWithoutSupportersInput
-  likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
-  isOnline: Boolean
-  lastOnline: DateTime
-  ownChats: ChatCreateManyWithoutCreatorInput
-  chats: ChatCreateManyWithoutMembersInput
-}
-
-input UserCreateWithoutInvitationsInput {
-  id: ID
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  avatar: String
-  purchases: PurchaseCreateManyWithoutUserInput
-  payments: PaymentCreateManyWithoutUserInput
-  transactions: TransactionCreateManyWithoutUserInput
-  items: ItemCreateManyWithoutUserInput
-  role: UserRole
-  balance: Float
-  posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyWithoutLikedByInput
-  likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
-  comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
   lastOnline: DateTime
@@ -5119,13 +4106,13 @@ input UserCreateWithoutItemsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -5133,7 +4120,6 @@ input UserCreateWithoutItemsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5144,6 +4130,7 @@ input UserCreateWithoutLikedCommentsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5151,14 +4138,12 @@ input UserCreateWithoutLikedCommentsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5169,6 +4154,7 @@ input UserCreateWithoutLikedEventsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5176,14 +4162,12 @@ input UserCreateWithoutLikedEventsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5194,6 +4178,7 @@ input UserCreateWithoutLikedPostsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5201,14 +4186,12 @@ input UserCreateWithoutLikedPostsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedEvents: EventCreateManyWithoutLikedByInput
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5219,6 +4202,7 @@ input UserCreateWithoutOwnChatsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5226,7 +4210,6 @@ input UserCreateWithoutOwnChatsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -5234,7 +4217,6 @@ input UserCreateWithoutOwnChatsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   chats: ChatCreateManyWithoutMembersInput
@@ -5244,13 +4226,13 @@ input UserCreateWithoutPaymentsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -5258,7 +4240,6 @@ input UserCreateWithoutPaymentsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5269,6 +4250,7 @@ input UserCreateWithoutPostsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5276,14 +4258,12 @@ input UserCreateWithoutPostsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5294,13 +4274,13 @@ input UserCreateWithoutPurchasesInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -5308,7 +4288,6 @@ input UserCreateWithoutPurchasesInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5319,6 +4298,7 @@ input UserCreateWithoutSupportedEventsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
@@ -5326,14 +4306,12 @@ input UserCreateWithoutSupportedEventsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5344,13 +4322,13 @@ input UserCreateWithoutTransactionsInput {
   id: ID
   name: String!
   email: String!
+  role: UserRole
   password: String!
   resetToken: String
   avatar: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -5358,7 +4336,6 @@ input UserCreateWithoutTransactionsInput {
   supportedEvents: EventCreateManyWithoutSupportersInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
-  invitations: InvitationCreateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
@@ -5377,14 +4354,14 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  role_ASC
+  role_DESC
   password_ASC
   password_DESC
   resetToken_ASC
   resetToken_DESC
   avatar_ASC
   avatar_DESC
-  role_ASC
-  role_DESC
   balance_ASC
   balance_DESC
   isOnline_ASC
@@ -5397,10 +4374,10 @@ type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  role: UserRole!
   password: String!
   resetToken: String
   avatar: String
-  role: UserRole!
   balance: Float!
   isOnline: Boolean!
   lastOnline: DateTime
@@ -5455,6 +4432,10 @@ input UserScalarWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  role: UserRole
+  role_not: UserRole
+  role_in: [UserRole!]
+  role_not_in: [UserRole!]
   password: String
   password_not: String
   password_in: [String!]
@@ -5497,10 +4478,6 @@ input UserScalarWhereInput {
   avatar_not_starts_with: String
   avatar_ends_with: String
   avatar_not_ends_with: String
-  role: UserRole
-  role_not: UserRole
-  role_in: [UserRole!]
-  role_not_in: [UserRole!]
   balance: Float
   balance_not: Float
   balance_in: [Float!]
@@ -5545,6 +4522,7 @@ input UserSubscriptionWhereInput {
 input UserUpdateDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5552,7 +4530,6 @@ input UserUpdateDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5560,7 +4537,6 @@ input UserUpdateDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5570,6 +4546,7 @@ input UserUpdateDataInput {
 input UserUpdateInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5577,7 +4554,6 @@ input UserUpdateInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5585,7 +4561,6 @@ input UserUpdateInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5595,34 +4570,22 @@ input UserUpdateInput {
 input UserUpdateManyDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
-  role: UserRole
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
-  role: UserRole
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
@@ -5716,13 +4679,6 @@ input UserUpdateOneRequiredWithoutCommentsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutInvitationsInput {
-  create: UserCreateWithoutInvitationsInput
-  update: UserUpdateWithoutInvitationsDataInput
-  upsert: UserUpsertWithoutInvitationsInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneRequiredWithoutItemsInput {
   create: UserCreateWithoutItemsInput
   update: UserUpdateWithoutItemsDataInput
@@ -5768,6 +4724,7 @@ input UserUpdateOneRequiredWithoutTransactionsInput {
 input UserUpdateWithoutChatsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5775,7 +4732,6 @@ input UserUpdateWithoutChatsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5783,7 +4739,6 @@ input UserUpdateWithoutChatsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5792,6 +4747,7 @@ input UserUpdateWithoutChatsDataInput {
 input UserUpdateWithoutCommentsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5799,37 +4755,11 @@ input UserUpdateWithoutCommentsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   supportedEvents: EventUpdateManyWithoutSupportersInput
-  likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
-  isOnline: Boolean
-  lastOnline: DateTime
-  ownChats: ChatUpdateManyWithoutCreatorInput
-  chats: ChatUpdateManyWithoutMembersInput
-}
-
-input UserUpdateWithoutInvitationsDataInput {
-  name: String
-  email: String
-  password: String
-  resetToken: String
-  avatar: String
-  purchases: PurchaseUpdateManyWithoutUserInput
-  payments: PaymentUpdateManyWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-  items: ItemUpdateManyWithoutUserInput
-  role: UserRole
-  balance: Float
-  posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyWithoutLikedByInput
-  likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
-  comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
   lastOnline: DateTime
@@ -5840,13 +4770,13 @@ input UserUpdateWithoutInvitationsDataInput {
 input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5854,7 +4784,6 @@ input UserUpdateWithoutItemsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5864,6 +4793,7 @@ input UserUpdateWithoutItemsDataInput {
 input UserUpdateWithoutLikedCommentsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5871,14 +4801,12 @@ input UserUpdateWithoutLikedCommentsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5888,6 +4816,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
 input UserUpdateWithoutLikedEventsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5895,14 +4824,12 @@ input UserUpdateWithoutLikedEventsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5912,6 +4839,7 @@ input UserUpdateWithoutLikedEventsDataInput {
 input UserUpdateWithoutLikedPostsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5919,14 +4847,12 @@ input UserUpdateWithoutLikedPostsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5936,6 +4862,7 @@ input UserUpdateWithoutLikedPostsDataInput {
 input UserUpdateWithoutOwnChatsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5943,7 +4870,6 @@ input UserUpdateWithoutOwnChatsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5951,7 +4877,6 @@ input UserUpdateWithoutOwnChatsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   chats: ChatUpdateManyWithoutMembersInput
@@ -5960,13 +4885,13 @@ input UserUpdateWithoutOwnChatsDataInput {
 input UserUpdateWithoutPaymentsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5974,7 +4899,6 @@ input UserUpdateWithoutPaymentsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -5984,6 +4908,7 @@ input UserUpdateWithoutPaymentsDataInput {
 input UserUpdateWithoutPostsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -5991,14 +4916,12 @@ input UserUpdateWithoutPostsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -6008,13 +4931,13 @@ input UserUpdateWithoutPostsDataInput {
 input UserUpdateWithoutPurchasesDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -6022,7 +4945,6 @@ input UserUpdateWithoutPurchasesDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -6032,6 +4954,7 @@ input UserUpdateWithoutPurchasesDataInput {
 input UserUpdateWithoutSupportedEventsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
@@ -6039,14 +4962,12 @@ input UserUpdateWithoutSupportedEventsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
@@ -6056,13 +4977,13 @@ input UserUpdateWithoutSupportedEventsDataInput {
 input UserUpdateWithoutTransactionsDataInput {
   name: String
   email: String
+  role: UserRole
   password: String
   resetToken: String
   avatar: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
-  role: UserRole
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -6070,16 +4991,10 @@ input UserUpdateWithoutTransactionsDataInput {
   supportedEvents: EventUpdateManyWithoutSupportersInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
-  invitations: InvitationUpdateManyWithoutUserInput
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
-}
-
-input UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutChatsInput {
@@ -6117,11 +5032,6 @@ input UserUpsertWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput!
 }
 
-input UserUpsertWithoutInvitationsInput {
-  update: UserUpdateWithoutInvitationsDataInput!
-  create: UserCreateWithoutInvitationsInput!
-}
-
 input UserUpsertWithoutItemsInput {
   update: UserUpdateWithoutItemsDataInput!
   create: UserCreateWithoutItemsInput!
@@ -6150,12 +5060,6 @@ input UserUpsertWithoutPurchasesInput {
 input UserUpsertWithoutTransactionsInput {
   update: UserUpdateWithoutTransactionsDataInput!
   create: UserCreateWithoutTransactionsInput!
-}
-
-input UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutChatsInput {
@@ -6231,6 +5135,10 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  role: UserRole
+  role_not: UserRole
+  role_in: [UserRole!]
+  role_not_in: [UserRole!]
   password: String
   password_not: String
   password_in: [String!]
@@ -6285,10 +5193,6 @@ input UserWhereInput {
   items_every: ItemWhereInput
   items_some: ItemWhereInput
   items_none: ItemWhereInput
-  role: UserRole
-  role_not: UserRole
-  role_in: [UserRole!]
-  role_not_in: [UserRole!]
   balance: Float
   balance_not: Float
   balance_in: [Float!]
@@ -6315,9 +5219,6 @@ input UserWhereInput {
   likedComments_every: CommentWhereInput
   likedComments_some: CommentWhereInput
   likedComments_none: CommentWhereInput
-  invitations_every: InvitationWhereInput
-  invitations_some: InvitationWhereInput
-  invitations_none: InvitationWhereInput
   isOnline: Boolean
   isOnline_not: Boolean
   lastOnline: DateTime

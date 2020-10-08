@@ -45,10 +45,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Production",
-    embedded: false
-  },
-  {
     name: "File",
     embedded: false
   },
@@ -61,27 +57,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Committee",
-    embedded: false
-  },
-  {
-    name: "Invitation",
-    embedded: false
-  },
-  {
-    name: "InvitationStatus",
-    embedded: false
-  },
-  {
     name: "Todo",
-    embedded: false
-  },
-  {
-    name: "Question",
-    embedded: false
-  },
-  {
-    name: "TodoTemplate",
     embedded: false
   },
   {
