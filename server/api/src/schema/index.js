@@ -17,16 +17,11 @@ const Purchase = require('./Purchase');
 const Payment = require('./Payment');
 const Transaction = require('./Transaction');
 const Event = require('./Event');
-const Production = require('./Production');
 const File = require('./File');
 const Email = require('./Email');
 const Post = require('./Post');
 const Comment = require('./Comment');
-const Committee = require('./Committee');
-const Invitation = require('./Invitation');
 const Todo = require('./Todo');
-const TodoTemplate = require('./TodoTemplate');
-const Question = require('./Question');
 const Message = require('./Message');
 const Chat = require('./Chat');
 
@@ -88,16 +83,11 @@ module.exports = makeExecutableSchema({
     Payment.typeDef,
     Transaction.typeDef,
     Event.typeDef,
-    Production.typeDef,
     File.typeDef,
     Email.typeDef,
     Post.typeDef,
     Comment.typeDef,
-    Committee.typeDef,
-    Invitation.typeDef,
     Todo.typeDef,
-    TodoTemplate.typeDef,
-    Question.typeDef,
     Message.typeDef,
     Chat.typeDef,
   ],
@@ -111,16 +101,11 @@ module.exports = makeExecutableSchema({
     Payment.resolvers,
     Transaction.resolvers,
     Event.resolvers,
-    Production.resolvers,
     File.resolvers,
     Email.resolvers,
     Post.resolvers,
     Comment.resolvers,
-    Committee.resolvers,
-    Invitation.resolvers,
     Todo.resolvers,
-    TodoTemplate.resolvers,
-    Question.resolvers,
     Message.resolvers,
     Chat.resolvers
   ),

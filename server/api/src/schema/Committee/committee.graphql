@@ -1,7 +1,0 @@
-type Committee {
-  id: ID!
-  creator: User!
-  members: [User!]!
-  event: Event!
-  invitations: [Invitation!]!
-}

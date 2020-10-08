@@ -22,8 +22,6 @@ type User {
   supportedEvents: [Event!]!
   comments: [Comment!]!
   likedComments: [Comment!]!
-  invitations: [Invitation!]!
-  pendingInvitations: [Invitation!]!
   isOnline: Boolean!
   lastOnline: DateTime
   chats: [Chat!]!

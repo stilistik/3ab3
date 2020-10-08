@@ -8,7 +8,6 @@ type Event {
   supporters: [User!]! @isAuthenticated
   likedBy: [User!]! @isAuthenticated
   owner: User! @isAuthenticated
-  committee: Committee! @isAuthenticated
   todos: [Todo!]! @isAuthenticated
   published: Boolean! @isAuthenticated
 }

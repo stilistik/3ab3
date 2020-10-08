@@ -137,14 +137,6 @@ module.exports = {
     likedEvents(root, args, context) {
       return context.prisma.user({ id: root.id }).likedEvents();
     },
-    invitations(root, args, context) {
-      return context.prisma.user({ id: root.id }).invitations();
-    },
-    pendingInvitations(root, args, context) {
-      return context.prisma.user({ id: root.id }).invitations({
-        where: { status: 'PENDING' },
-      });
-    },
     supportedEvents(root, args, context) {
       return context.prisma.user({ id: root.id }).supportedEvents();
     },
