@@ -21,8 +21,9 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
     Object.keys(fields).forEach((fieldName) => {
       const field = fields[fieldName];
       const { resolve = defaultFieldResolver } = field;
-      field.resolve = async (...args) => {
+      field.resolve = async function(...args) {
         const context = args[2];
+        console.log(context.headers);
         verifyAndDecodeToken(context);
         return resolve.apply(this, args);
       };
@@ -31,7 +32,8 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
 
   visitFieldDefinition(field) {
     const { resolve = defaultFieldResolver } = field;
-    field.resolve = async function(result, args, context) {
+    field.resolve = async function(...args) {
+      const context = args[2];
       const { id } = verifyAndDecodeToken(context);
       const user = await context.prisma.user({ id: id });
       if (user) {
