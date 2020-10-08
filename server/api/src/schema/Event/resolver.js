@@ -105,6 +105,14 @@ module.exports = {
         },
       });
     },
+    publishEvent(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          published: true,
+        },
+      });
+    },
   },
   Event: {
     comments(root, args, context) {
