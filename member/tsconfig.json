@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "module": "esnext",
+    "target": "es6",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "lib": ["es5", "es2015", "es2016", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "Domains/*": ["src/js/domains/*"],
+      "Common/*": ["src/js/common/*"],
+      "Pages/*": ["src/js/pages/*"],
+      "App/*": ["src/js/app/*"],
+      "Graphql/*": ["src/js/graphql/*"],
+      "Testing/*": ["src/js/testing/*"]
+    }
+  },
+  "include": ["src"]
+}
