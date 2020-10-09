@@ -3,7 +3,8 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   supporters: [User!]! @relation(link: TABLE, name: "SupportedEvents")
   likedBy: [User!]! @relation(link: TABLE, name: "LikedEvents")
   owner: User! @relation(link: TABLE, name: "EventOwner")
