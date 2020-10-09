@@ -8,6 +8,7 @@ const {
   RESET_TOKEN_EXPIRATION,
   MAILGUN_API_SECRET,
   MAILGUN_DOMAIN,
+  MEMBER_CLIENT_URL,
 } = process.env;
 
 const mailgun = require('mailgun-js')({
@@ -43,7 +44,7 @@ const requestReset = async (req, res, next) => {
           subject: 'Reset Password',
           template: 'reset_password',
           'v:username': updatedUser.name,
-          'v:link': `http://localhost:3000/reset_password?token=${resetToken}`,
+          'v:link': `${MEMBER_CLIENT_URL}/reset_password?token=${resetToken}`,
           inline: logoPath,
         };
         mailgun.messages().send(data);

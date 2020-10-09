@@ -3,8 +3,6 @@ type User {
   name: String!
   email: String! @unique
   role: UserRole! @default(value: MEMBER)
-  password: String!
-  resetToken: String
   avatar: String
   purchases: [Purchase!]!
   payments: [Payment!]!

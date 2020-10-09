@@ -673,10 +673,6 @@ export type UserOrderByInput =
   | "email_DESC"
   | "role_ASC"
   | "role_DESC"
-  | "password_ASC"
-  | "password_DESC"
-  | "resetToken_ASC"
-  | "resetToken_DESC"
   | "avatar_ASC"
   | "avatar_DESC"
   | "balance_ASC"
@@ -990,34 +986,6 @@ export interface UserWhereInput {
   role_not?: Maybe<UserRole>;
   role_in?: Maybe<UserRole[] | UserRole>;
   role_not_in?: Maybe<UserRole[] | UserRole>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetToken_not?: Maybe<String>;
-  resetToken_in?: Maybe<String[] | String>;
-  resetToken_not_in?: Maybe<String[] | String>;
-  resetToken_lt?: Maybe<String>;
-  resetToken_lte?: Maybe<String>;
-  resetToken_gt?: Maybe<String>;
-  resetToken_gte?: Maybe<String>;
-  resetToken_contains?: Maybe<String>;
-  resetToken_not_contains?: Maybe<String>;
-  resetToken_starts_with?: Maybe<String>;
-  resetToken_not_starts_with?: Maybe<String>;
-  resetToken_ends_with?: Maybe<String>;
-  resetToken_not_ends_with?: Maybe<String>;
   avatar?: Maybe<String>;
   avatar_not?: Maybe<String>;
   avatar_in?: Maybe<String[] | String>;
@@ -1847,8 +1815,6 @@ export interface UserCreateWithoutOwnChatsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -1918,8 +1884,6 @@ export interface UserCreateWithoutItemsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -1976,8 +1940,6 @@ export interface UserCreateWithoutTransactionsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2034,8 +1996,6 @@ export interface UserCreateWithoutLikedPostsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2092,8 +2052,6 @@ export interface UserCreateWithoutPaymentsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2138,8 +2096,6 @@ export interface UserCreateWithoutPostsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2191,8 +2147,6 @@ export interface UserCreateWithoutSupportedEventsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2239,8 +2193,6 @@ export interface UserCreateWithoutLikedCommentsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2291,8 +2243,6 @@ export interface UserCreateWithoutLikedEventsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2337,8 +2287,6 @@ export interface UserCreateWithoutCommentsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2382,8 +2330,6 @@ export interface UserCreateWithoutChatsInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2426,8 +2372,6 @@ export interface UserCreateInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
@@ -2569,8 +2513,6 @@ export interface UserCreateWithoutPurchasesInput {
   name: String;
   email: String;
   role?: Maybe<UserRole>;
-  password: String;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2622,8 +2564,6 @@ export interface UserUpdateWithoutOwnChatsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -2739,8 +2679,6 @@ export interface UserUpdateWithoutItemsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -2819,8 +2757,6 @@ export interface UserUpdateWithoutTransactionsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -2986,8 +2922,6 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3072,8 +3006,6 @@ export interface UserUpdateWithoutPaymentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3138,8 +3070,6 @@ export interface UserUpdateWithoutPostsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3229,8 +3159,6 @@ export interface UserUpdateWithoutSupportedEventsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3316,8 +3244,6 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3406,8 +3332,6 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3473,8 +3397,6 @@ export interface UserUpdateWithoutCommentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3556,8 +3478,6 @@ export interface UserUpdateWithoutChatsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -3628,34 +3548,6 @@ export interface UserScalarWhereInput {
   role_not?: Maybe<UserRole>;
   role_in?: Maybe<UserRole[] | UserRole>;
   role_not_in?: Maybe<UserRole[] | UserRole>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetToken_not?: Maybe<String>;
-  resetToken_in?: Maybe<String[] | String>;
-  resetToken_not_in?: Maybe<String[] | String>;
-  resetToken_lt?: Maybe<String>;
-  resetToken_lte?: Maybe<String>;
-  resetToken_gt?: Maybe<String>;
-  resetToken_gte?: Maybe<String>;
-  resetToken_contains?: Maybe<String>;
-  resetToken_not_contains?: Maybe<String>;
-  resetToken_starts_with?: Maybe<String>;
-  resetToken_not_starts_with?: Maybe<String>;
-  resetToken_ends_with?: Maybe<String>;
-  resetToken_not_ends_with?: Maybe<String>;
   avatar?: Maybe<String>;
   avatar_not?: Maybe<String>;
   avatar_in?: Maybe<String[] | String>;
@@ -3702,8 +3594,6 @@ export interface UserUpdateManyDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
@@ -3756,8 +3646,6 @@ export interface UserUpdateDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -4555,8 +4443,6 @@ export interface UserUpdateWithoutPurchasesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -5192,8 +5078,6 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
@@ -5216,8 +5100,6 @@ export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
   avatar?: Maybe<String>;
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
@@ -5486,8 +5368,6 @@ export interface User {
   name: String;
   email: String;
   role: UserRole;
-  password: String;
-  resetToken?: String;
   avatar?: String;
   balance: Float;
   isOnline: Boolean;
@@ -5499,8 +5379,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   role: () => Promise<UserRole>;
-  password: () => Promise<String>;
-  resetToken: () => Promise<String>;
   avatar: () => Promise<String>;
   purchases: <T = FragmentableArray<Purchase>>(args?: {
     where?: PurchaseWhereInput;
@@ -5622,8 +5500,6 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
-  password: () => Promise<AsyncIterator<String>>;
-  resetToken: () => Promise<AsyncIterator<String>>;
   avatar: () => Promise<AsyncIterator<String>>;
   purchases: <T = Promise<AsyncIterator<PurchaseSubscription>>>(args?: {
     where?: PurchaseWhereInput;
@@ -5745,8 +5621,6 @@ export interface UserNullablePromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   role: () => Promise<UserRole>;
-  password: () => Promise<String>;
-  resetToken: () => Promise<String>;
   avatar: () => Promise<String>;
   purchases: <T = FragmentableArray<Purchase>>(args?: {
     where?: PurchaseWhereInput;
@@ -8081,8 +7955,6 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   role: UserRole;
-  password: String;
-  resetToken?: String;
   avatar?: String;
   balance: Float;
   isOnline: Boolean;
@@ -8096,8 +7968,6 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   role: () => Promise<UserRole>;
-  password: () => Promise<String>;
-  resetToken: () => Promise<String>;
   avatar: () => Promise<String>;
   balance: () => Promise<Float>;
   isOnline: () => Promise<Boolean>;
@@ -8111,8 +7981,6 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
-  password: () => Promise<AsyncIterator<String>>;
-  resetToken: () => Promise<AsyncIterator<String>>;
   avatar: () => Promise<AsyncIterator<String>>;
   balance: () => Promise<AsyncIterator<Float>>;
   isOnline: () => Promise<AsyncIterator<Boolean>>;

@@ -1,37 +1,58 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
-import { Typography, Button, Link, Box } from '@material-ui/core';
+import { Typography, Fab } from '@material-ui/core';
 import { Form, TextField, Loading, Message } from 'Components';
-import { requestToken } from 'Auth/requestToken';
+import { requestEmail } from 'Auth/requestEmail';
 
 import styles from './LoginForm.less';
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (access_token) => {
-      dispatch(login(access_token));
-    },
-  };
-};
-
-const LoginForm = (props) => {
+const EmailForm = ({ setEmailSent }) => {
   const [loading, setLoading] = React.useState(false);
 
   const onSubmit = async (values) => {
     try {
       setLoading(true);
-      const response = await requestToken(values.email, values.password);
-      if (response) {
-        props.login(response.access_token);
-      } else {
-        setLoading(false);
+      const success = await requestEmail(values.email);
+      if (success) {
+        setEmailSent(true);
       }
     } catch (error) {
       Message.error(error.message);
-      setLoading(false);
     }
   };
+
+  return (
+    <Form className={styles.form} onSubmit={onSubmit}>
+      <TextField
+        id="email"
+        label="Email"
+        type="email"
+        required={true}
+        className={styles.field}
+        InputProps={{ className: styles.input }}
+        InputLabelProps={{ className: styles.label }}
+      />
+      <Fab
+        size="large"
+        type="submit"
+        variant="contained"
+        color="primary"
+        style={{ marginTop: 20 }}
+      >
+        Request Login Link
+      </Fab>
+      {loading && <Loading color="#bbb" style={{ marginTop: 20 }} />}
+    </Form>
+  );
+};
+
+const Notification = () => {
+  return <div>email has been sent to you</div>;
+};
+
+export const LoginForm = () => {
+  const [emailSent, setEmailSent] = React.useState(false);
 
   return (
     <div>
@@ -45,36 +66,7 @@ const LoginForm = (props) => {
         </Typography>
       </div>
       <br />
-      <Form className={styles.form} onSubmit={onSubmit}>
-        <TextField
-          id="email"
-          label="Email"
-          type="email"
-          required={true}
-          className={styles.field}
-          InputProps={{ className: styles.input }}
-          InputLabelProps={{ className: styles.label }}
-        />
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          required={true}
-          className={styles.field}
-          InputProps={{ className: styles.input }}
-          InputLabelProps={{ className: styles.label }}
-        />
-        <br />
-        <Link className={styles.link} href="/request_reset">
-          Forgot Password?
-        </Link>
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-        {loading && <Loading color="#bbb" style={{ marginTop: 20 }} />}
-      </Form>
+      {emailSent ? <Notification /> : <EmailForm setEmailSent={setEmailSent} />}
     </div>
   );
 };
-
-export default connect(null, mapDispatchToProps)(LoginForm);

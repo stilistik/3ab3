@@ -7,7 +7,7 @@ dev/server.run:
 	docker-compose up --build
 
 dev/server.reset:
-	cd server/prisma && prisma reset -f && prisma deploy
+	cd server/prisma && prisma reset -f && prisma deploy && prisma seed
 
 dev/server.migrate:
 	cd server/prisma && prisma deploy

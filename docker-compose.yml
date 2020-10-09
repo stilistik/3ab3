@@ -16,10 +16,13 @@ services:
       - ACCESS_TOKEN_EXPIRATION
       - RESET_TOKEN_SECRET
       - RESET_TOKEN_EXPIRATION
+      - LOGIN_TOKEN_SECRET
+      - LOGIN_TOKEN_EXPIRATION
       - STORAGE_ROOT
       - MAILGUN_DOMAIN
       - MAILGUN_API_SECRET
       - PRISMA_SERVICE_SECRET
+      - MEMBER_CLIENT_URL
 
   prisma:
     container_name: prisma

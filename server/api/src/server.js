@@ -26,11 +26,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Authentication Endpoints
 app.use(passport.initialize());
-app.post('/auth/token', auth.oauth2.token);
+// app.post('/auth/token', auth.oauth2.token);
+app.post('/auth/passwordless/request', auth.passwordless.requestEmail);
+app.post('/auth/passwordless/login', auth.passwordless.requestToken);
 
 // Forgot password
-app.post('/auth/requestReset', auth.password.requestReset);
-app.post('/auth/resetPassword', auth.password.resetPassword);
+// app.post('/auth/requestReset', auth.password.requestReset);
+// app.post('/auth/resetPassword', auth.password.resetPassword);
 
 const apollo = new ApolloServer({
   schema: schema,
@@ -106,6 +108,8 @@ httpServer.listen(PORT, () => {
     `🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`
   );
   console.log(
-    `🚀 Subscriptions ready at ws://localhost:${PORT}${apollo.subscriptionsPath}`
+    `🚀 Subscriptions ready at ws://localhost:${PORT}${
+      apollo.subscriptionsPath
+    }`
   );
 });

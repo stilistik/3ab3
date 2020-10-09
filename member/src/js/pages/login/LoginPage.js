@@ -2,11 +2,11 @@ import React from 'react';
 import { TweenMax } from 'gsap';
 import { Loading } from 'Components';
 import { Grid, CssBaseline } from '@material-ui/core';
-import LoginForm from './LoginForm';
+import { LoginForm } from './LoginForm';
 
 import styles from './LoginPage.less';
 
-const LoginPage = (props) => {
+export const LoginPage = () => {
   const [loading, setLoading] = React.useState(true);
   const container = React.useRef(null);
   const background = React.useRef(null);
@@ -64,5 +64,3 @@ const LoginPage = (props) => {
     </div>
   );
 };
-
-export default LoginPage;

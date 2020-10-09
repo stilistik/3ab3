@@ -4,7 +4,7 @@ import { Switch, Redirect } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import UnauthRoute from './UnauthRoute';
 
-import Login from 'Pages/login';
+import { LoginPage, Authenticate } from 'Pages/login';
 import Home from 'Pages/home';
 import { ResetPassword, RequestReset } from 'Pages/resetpassword';
 import { Dashboard } from 'Pages/dashboard';
@@ -32,7 +32,8 @@ const Routes = ({ props }) => {
       />
       <AuthRoute path="/members/edit" component={EditMember} props={props} />
       <AuthRoute path="/events/edit" component={EditEvent} props={props} />
-      <UnauthRoute path="/login" component={Login} props={props} />
+      <UnauthRoute path="/login" component={LoginPage} props={props} />
+      <UnauthRoute path="/auth" component={Authenticate} props={props} />
       <UnauthRoute
         path="/reset_password"
         component={ResetPassword}
