@@ -921,7 +921,8 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   supporters(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
@@ -941,7 +942,8 @@ input EventCreateInput {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   supporters: UserCreateManyWithoutSupportedEventsInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
@@ -975,7 +977,8 @@ input EventCreateWithoutCommentsInput {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   supporters: UserCreateManyWithoutSupportedEventsInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
@@ -988,7 +991,8 @@ input EventCreateWithoutLikedByInput {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   supporters: UserCreateManyWithoutSupportedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
@@ -1001,7 +1005,8 @@ input EventCreateWithoutSupportersInput {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
@@ -1014,7 +1019,8 @@ input EventCreateWithoutTodosInput {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   supporters: UserCreateManyWithoutSupportedEventsInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
@@ -1038,6 +1044,8 @@ enum EventOrderByInput {
   date_DESC
   image_ASC
   image_DESC
+  flyer_ASC
+  flyer_DESC
   published_ASC
   published_DESC
 }
@@ -1047,7 +1055,8 @@ type EventPreviousValues {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
+  image: String
+  flyer: String
   published: Boolean!
 }
 
@@ -1116,6 +1125,20 @@ input EventScalarWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  flyer: String
+  flyer_not: String
+  flyer_in: [String!]
+  flyer_not_in: [String!]
+  flyer_lt: String
+  flyer_lte: String
+  flyer_gt: String
+  flyer_gte: String
+  flyer_contains: String
+  flyer_not_contains: String
+  flyer_starts_with: String
+  flyer_not_starts_with: String
+  flyer_ends_with: String
+  flyer_not_ends_with: String
   published: Boolean
   published_not: Boolean
   AND: [EventScalarWhereInput!]
@@ -1146,6 +1169,7 @@ input EventUpdateInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   supporters: UserUpdateManyWithoutSupportedEventsInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
@@ -1159,6 +1183,7 @@ input EventUpdateManyDataInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   published: Boolean
 }
 
@@ -1167,6 +1192,7 @@ input EventUpdateManyMutationInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   published: Boolean
 }
 
@@ -1220,6 +1246,7 @@ input EventUpdateWithoutCommentsDataInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   supporters: UserUpdateManyWithoutSupportedEventsInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
@@ -1232,6 +1259,7 @@ input EventUpdateWithoutLikedByDataInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   supporters: UserUpdateManyWithoutSupportedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
@@ -1244,6 +1272,7 @@ input EventUpdateWithoutSupportersDataInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
@@ -1256,6 +1285,7 @@ input EventUpdateWithoutTodosDataInput {
   description: String
   date: DateTime
   image: String
+  flyer: String
   supporters: UserUpdateManyWithoutSupportedEventsInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
@@ -1360,6 +1390,20 @@ input EventWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  flyer: String
+  flyer_not: String
+  flyer_in: [String!]
+  flyer_not_in: [String!]
+  flyer_lt: String
+  flyer_lte: String
+  flyer_gt: String
+  flyer_gte: String
+  flyer_contains: String
+  flyer_not_contains: String
+  flyer_starts_with: String
+  flyer_not_starts_with: String
+  flyer_ends_with: String
+  flyer_not_ends_with: String
   supporters_every: UserWhereInput
   supporters_some: UserWhereInput
   supporters_none: UserWhereInput

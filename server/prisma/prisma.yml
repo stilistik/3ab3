@@ -17,7 +17,6 @@ datamodel:
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/
-hooks:
-  post-deploy:
-    - node ./seed.js
+seed:
+  run: node ./seed.js
 secret: ${env:PRISMA_SERVICE_SECRET}

@@ -721,6 +721,8 @@ export type EventOrderByInput =
   | "date_DESC"
   | "image_ASC"
   | "image_DESC"
+  | "flyer_ASC"
+  | "flyer_DESC"
   | "published_ASC"
   | "published_DESC";
 
@@ -1376,6 +1378,20 @@ export interface EventWhereInput {
   image_not_starts_with?: Maybe<String>;
   image_ends_with?: Maybe<String>;
   image_not_ends_with?: Maybe<String>;
+  flyer?: Maybe<String>;
+  flyer_not?: Maybe<String>;
+  flyer_in?: Maybe<String[] | String>;
+  flyer_not_in?: Maybe<String[] | String>;
+  flyer_lt?: Maybe<String>;
+  flyer_lte?: Maybe<String>;
+  flyer_gt?: Maybe<String>;
+  flyer_gte?: Maybe<String>;
+  flyer_contains?: Maybe<String>;
+  flyer_not_contains?: Maybe<String>;
+  flyer_starts_with?: Maybe<String>;
+  flyer_not_starts_with?: Maybe<String>;
+  flyer_ends_with?: Maybe<String>;
+  flyer_not_ends_with?: Maybe<String>;
   supporters_every?: Maybe<UserWhereInput>;
   supporters_some?: Maybe<UserWhereInput>;
   supporters_none?: Maybe<UserWhereInput>;
@@ -2153,7 +2169,8 @@ export interface EventCreateWithoutLikedByInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  image: String;
+  image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserCreateManyWithoutSupportedEventsInput>;
   owner: UserCreateOneInput;
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
@@ -2253,7 +2270,8 @@ export interface EventCreateWithoutSupportersInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  image: String;
+  image?: Maybe<String>;
+  flyer?: Maybe<String>;
   likedBy?: Maybe<UserCreateManyWithoutLikedEventsInput>;
   owner: UserCreateOneInput;
   comments?: Maybe<CommentCreateManyWithoutEventInput>;
@@ -2469,7 +2487,8 @@ export interface EventCreateWithoutCommentsInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  image: String;
+  image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserCreateManyWithoutSupportedEventsInput>;
   likedBy?: Maybe<UserCreateManyWithoutLikedEventsInput>;
   owner: UserCreateOneInput;
@@ -3170,6 +3189,7 @@ export interface EventUpdateWithoutLikedByDataInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserUpdateManyWithoutSupportedEventsInput>;
   owner?: Maybe<UserUpdateOneRequiredInput>;
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
@@ -3347,6 +3367,7 @@ export interface EventUpdateWithoutSupportersDataInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedEventsInput>;
   owner?: Maybe<UserUpdateOneRequiredInput>;
   comments?: Maybe<CommentUpdateManyWithoutEventInput>;
@@ -3967,6 +3988,7 @@ export interface EventUpdateWithoutCommentsDataInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserUpdateManyWithoutSupportedEventsInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedEventsInput>;
   owner?: Maybe<UserUpdateOneRequiredInput>;
@@ -4301,6 +4323,20 @@ export interface EventScalarWhereInput {
   image_not_starts_with?: Maybe<String>;
   image_ends_with?: Maybe<String>;
   image_not_ends_with?: Maybe<String>;
+  flyer?: Maybe<String>;
+  flyer_not?: Maybe<String>;
+  flyer_in?: Maybe<String[] | String>;
+  flyer_not_in?: Maybe<String[] | String>;
+  flyer_lt?: Maybe<String>;
+  flyer_lte?: Maybe<String>;
+  flyer_gt?: Maybe<String>;
+  flyer_gte?: Maybe<String>;
+  flyer_contains?: Maybe<String>;
+  flyer_not_contains?: Maybe<String>;
+  flyer_starts_with?: Maybe<String>;
+  flyer_not_starts_with?: Maybe<String>;
+  flyer_ends_with?: Maybe<String>;
+  flyer_not_ends_with?: Maybe<String>;
   published?: Maybe<Boolean>;
   published_not?: Maybe<Boolean>;
   AND?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
@@ -4318,6 +4354,7 @@ export interface EventUpdateManyDataInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   published?: Maybe<Boolean>;
 }
 
@@ -4829,7 +4866,8 @@ export interface EventCreateInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  image: String;
+  image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserCreateManyWithoutSupportedEventsInput>;
   likedBy?: Maybe<UserCreateManyWithoutLikedEventsInput>;
   owner: UserCreateOneInput;
@@ -4843,6 +4881,7 @@ export interface EventUpdateInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserUpdateManyWithoutSupportedEventsInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedEventsInput>;
   owner?: Maybe<UserUpdateOneRequiredInput>;
@@ -4856,6 +4895,7 @@ export interface EventUpdateManyMutationInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   published?: Maybe<Boolean>;
 }
 
@@ -5070,7 +5110,8 @@ export interface EventCreateWithoutTodosInput {
   title: String;
   description: String;
   date: DateTimeInput;
-  image: String;
+  image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserCreateManyWithoutSupportedEventsInput>;
   likedBy?: Maybe<UserCreateManyWithoutLikedEventsInput>;
   owner: UserCreateOneInput;
@@ -5101,6 +5142,7 @@ export interface EventUpdateWithoutTodosDataInput {
   description?: Maybe<String>;
   date?: Maybe<DateTimeInput>;
   image?: Maybe<String>;
+  flyer?: Maybe<String>;
   supporters?: Maybe<UserUpdateManyWithoutSupportedEventsInput>;
   likedBy?: Maybe<UserUpdateManyWithoutLikedEventsInput>;
   owner?: Maybe<UserUpdateOneRequiredInput>;
@@ -6199,7 +6241,8 @@ export interface Event {
   title: String;
   description: String;
   date: DateTimeOutput;
-  image: String;
+  image?: String;
+  flyer?: String;
   published: Boolean;
 }
 
@@ -6209,6 +6252,7 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   image: () => Promise<String>;
+  flyer: () => Promise<String>;
   supporters: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -6257,6 +6301,7 @@ export interface EventSubscription
   description: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   image: () => Promise<AsyncIterator<String>>;
+  flyer: () => Promise<AsyncIterator<String>>;
   supporters: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -6305,6 +6350,7 @@ export interface EventNullablePromise
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   image: () => Promise<String>;
+  flyer: () => Promise<String>;
   supporters: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -7502,7 +7548,8 @@ export interface EventPreviousValues {
   title: String;
   description: String;
   date: DateTimeOutput;
-  image: String;
+  image?: String;
+  flyer?: String;
   published: Boolean;
 }
 
@@ -7514,6 +7561,7 @@ export interface EventPreviousValuesPromise
   description: () => Promise<String>;
   date: () => Promise<DateTimeOutput>;
   image: () => Promise<String>;
+  flyer: () => Promise<String>;
   published: () => Promise<Boolean>;
 }
 
@@ -7525,6 +7573,7 @@ export interface EventPreviousValuesSubscription
   description: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   image: () => Promise<AsyncIterator<String>>;
+  flyer: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
 }
 
