@@ -26,13 +26,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Authentication Endpoints
 app.use(passport.initialize());
-// app.post('/auth/token', auth.oauth2.token);
-app.post('/auth/passwordless/request', auth.passwordless.requestEmail);
-app.post('/auth/passwordless/login', auth.passwordless.requestToken);
 
-// Forgot password
-// app.post('/auth/requestReset', auth.password.requestReset);
-// app.post('/auth/resetPassword', auth.password.resetPassword);
+app.post(
+  '/auth/passwordless/request',
+  passport.authenticate('basic', { session: false }),
+  auth.passwordless.requestEmail
+);
+app.post(
+  '/auth/passwordless/login',
+  passport.authenticate('basic', { session: false }),
+  auth.passwordless.requestToken
+);
 
 const apollo = new ApolloServer({
   schema: schema,

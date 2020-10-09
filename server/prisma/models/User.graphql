@@ -4,6 +4,7 @@ type User {
   email: String! @unique
   role: UserRole! @default(value: MEMBER)
   avatar: String
+  loginToken: String
   purchases: [Purchase!]!
   payments: [Payment!]!
   transactions: [Transaction!]!

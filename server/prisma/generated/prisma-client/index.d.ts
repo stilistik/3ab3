@@ -675,6 +675,8 @@ export type UserOrderByInput =
   | "role_DESC"
   | "avatar_ASC"
   | "avatar_DESC"
+  | "loginToken_ASC"
+  | "loginToken_DESC"
   | "balance_ASC"
   | "balance_DESC"
   | "isOnline_ASC"
@@ -1000,6 +1002,20 @@ export interface UserWhereInput {
   avatar_not_starts_with?: Maybe<String>;
   avatar_ends_with?: Maybe<String>;
   avatar_not_ends_with?: Maybe<String>;
+  loginToken?: Maybe<String>;
+  loginToken_not?: Maybe<String>;
+  loginToken_in?: Maybe<String[] | String>;
+  loginToken_not_in?: Maybe<String[] | String>;
+  loginToken_lt?: Maybe<String>;
+  loginToken_lte?: Maybe<String>;
+  loginToken_gt?: Maybe<String>;
+  loginToken_gte?: Maybe<String>;
+  loginToken_contains?: Maybe<String>;
+  loginToken_not_contains?: Maybe<String>;
+  loginToken_starts_with?: Maybe<String>;
+  loginToken_not_starts_with?: Maybe<String>;
+  loginToken_ends_with?: Maybe<String>;
+  loginToken_not_ends_with?: Maybe<String>;
   purchases_every?: Maybe<PurchaseWhereInput>;
   purchases_some?: Maybe<PurchaseWhereInput>;
   purchases_none?: Maybe<PurchaseWhereInput>;
@@ -1816,6 +1832,7 @@ export interface UserCreateWithoutOwnChatsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -1885,6 +1902,7 @@ export interface UserCreateWithoutItemsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -1941,6 +1959,7 @@ export interface UserCreateWithoutTransactionsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
@@ -1997,6 +2016,7 @@ export interface UserCreateWithoutLikedPostsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2053,6 +2073,7 @@ export interface UserCreateWithoutPaymentsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
@@ -2097,6 +2118,7 @@ export interface UserCreateWithoutPostsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2148,6 +2170,7 @@ export interface UserCreateWithoutSupportedEventsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2194,6 +2217,7 @@ export interface UserCreateWithoutLikedCommentsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2244,6 +2268,7 @@ export interface UserCreateWithoutLikedEventsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2288,6 +2313,7 @@ export interface UserCreateWithoutCommentsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2331,6 +2357,7 @@ export interface UserCreateWithoutChatsInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2373,6 +2400,7 @@ export interface UserCreateInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
@@ -2514,6 +2542,7 @@ export interface UserCreateWithoutPurchasesInput {
   email: String;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
@@ -2565,6 +2594,7 @@ export interface UserUpdateWithoutOwnChatsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -2680,6 +2710,7 @@ export interface UserUpdateWithoutItemsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -2758,6 +2789,7 @@ export interface UserUpdateWithoutTransactionsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
@@ -2923,6 +2955,7 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3007,6 +3040,7 @@ export interface UserUpdateWithoutPaymentsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
@@ -3071,6 +3105,7 @@ export interface UserUpdateWithoutPostsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3160,6 +3195,7 @@ export interface UserUpdateWithoutSupportedEventsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3245,6 +3281,7 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3333,6 +3370,7 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3398,6 +3436,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3479,6 +3518,7 @@ export interface UserUpdateWithoutChatsDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -3562,6 +3602,20 @@ export interface UserScalarWhereInput {
   avatar_not_starts_with?: Maybe<String>;
   avatar_ends_with?: Maybe<String>;
   avatar_not_ends_with?: Maybe<String>;
+  loginToken?: Maybe<String>;
+  loginToken_not?: Maybe<String>;
+  loginToken_in?: Maybe<String[] | String>;
+  loginToken_not_in?: Maybe<String[] | String>;
+  loginToken_lt?: Maybe<String>;
+  loginToken_lte?: Maybe<String>;
+  loginToken_gt?: Maybe<String>;
+  loginToken_gte?: Maybe<String>;
+  loginToken_contains?: Maybe<String>;
+  loginToken_not_contains?: Maybe<String>;
+  loginToken_starts_with?: Maybe<String>;
+  loginToken_not_starts_with?: Maybe<String>;
+  loginToken_ends_with?: Maybe<String>;
+  loginToken_not_ends_with?: Maybe<String>;
   balance?: Maybe<Float>;
   balance_not?: Maybe<Float>;
   balance_in?: Maybe<Float[] | Float>;
@@ -3595,6 +3649,7 @@ export interface UserUpdateManyDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
@@ -3647,6 +3702,7 @@ export interface UserUpdateDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -4444,6 +4500,7 @@ export interface UserUpdateWithoutPurchasesDataInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
@@ -5079,6 +5136,7 @@ export interface UserUpdateInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
@@ -5101,6 +5159,7 @@ export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
+  loginToken?: Maybe<String>;
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
@@ -5369,6 +5428,7 @@ export interface User {
   email: String;
   role: UserRole;
   avatar?: String;
+  loginToken?: String;
   balance: Float;
   isOnline: Boolean;
   lastOnline?: DateTimeOutput;
@@ -5380,6 +5440,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
+  loginToken: () => Promise<String>;
   purchases: <T = FragmentableArray<Purchase>>(args?: {
     where?: PurchaseWhereInput;
     orderBy?: PurchaseOrderByInput;
@@ -5501,6 +5562,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
   avatar: () => Promise<AsyncIterator<String>>;
+  loginToken: () => Promise<AsyncIterator<String>>;
   purchases: <T = Promise<AsyncIterator<PurchaseSubscription>>>(args?: {
     where?: PurchaseWhereInput;
     orderBy?: PurchaseOrderByInput;
@@ -5622,6 +5684,7 @@ export interface UserNullablePromise
   email: () => Promise<String>;
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
+  loginToken: () => Promise<String>;
   purchases: <T = FragmentableArray<Purchase>>(args?: {
     where?: PurchaseWhereInput;
     orderBy?: PurchaseOrderByInput;
@@ -7956,6 +8019,7 @@ export interface UserPreviousValues {
   email: String;
   role: UserRole;
   avatar?: String;
+  loginToken?: String;
   balance: Float;
   isOnline: Boolean;
   lastOnline?: DateTimeOutput;
@@ -7969,6 +8033,7 @@ export interface UserPreviousValuesPromise
   email: () => Promise<String>;
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
+  loginToken: () => Promise<String>;
   balance: () => Promise<Float>;
   isOnline: () => Promise<Boolean>;
   lastOnline: () => Promise<DateTimeOutput>;
@@ -7982,6 +8047,7 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
   avatar: () => Promise<AsyncIterator<String>>;
+  loginToken: () => Promise<AsyncIterator<String>>;
   balance: () => Promise<AsyncIterator<Float>>;
   isOnline: () => Promise<AsyncIterator<Boolean>>;
   lastOnline: () => Promise<AsyncIterator<DateTimeOutput>>;

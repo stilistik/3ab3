@@ -3983,6 +3983,7 @@ type User {
   email: String!
   role: UserRole!
   avatar: String
+  loginToken: String
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase!]
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
@@ -4012,6 +4013,7 @@ input UserCreateInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4100,6 +4102,7 @@ input UserCreateWithoutChatsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4122,6 +4125,7 @@ input UserCreateWithoutCommentsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4144,6 +4148,7 @@ input UserCreateWithoutItemsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4166,6 +4171,7 @@ input UserCreateWithoutLikedCommentsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4188,6 +4194,7 @@ input UserCreateWithoutLikedEventsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4210,6 +4217,7 @@ input UserCreateWithoutLikedPostsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4232,6 +4240,7 @@ input UserCreateWithoutOwnChatsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4254,6 +4263,7 @@ input UserCreateWithoutPaymentsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
@@ -4276,6 +4286,7 @@ input UserCreateWithoutPostsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4298,6 +4309,7 @@ input UserCreateWithoutPurchasesInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
@@ -4320,6 +4332,7 @@ input UserCreateWithoutSupportedEventsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
@@ -4342,6 +4355,7 @@ input UserCreateWithoutTransactionsInput {
   email: String!
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
@@ -4374,6 +4388,8 @@ enum UserOrderByInput {
   role_DESC
   avatar_ASC
   avatar_DESC
+  loginToken_ASC
+  loginToken_DESC
   balance_ASC
   balance_DESC
   isOnline_ASC
@@ -4388,6 +4404,7 @@ type UserPreviousValues {
   email: String!
   role: UserRole!
   avatar: String
+  loginToken: String
   balance: Float!
   isOnline: Boolean!
   lastOnline: DateTime
@@ -4460,6 +4477,20 @@ input UserScalarWhereInput {
   avatar_not_starts_with: String
   avatar_ends_with: String
   avatar_not_ends_with: String
+  loginToken: String
+  loginToken_not: String
+  loginToken_in: [String!]
+  loginToken_not_in: [String!]
+  loginToken_lt: String
+  loginToken_lte: String
+  loginToken_gt: String
+  loginToken_gte: String
+  loginToken_contains: String
+  loginToken_not_contains: String
+  loginToken_starts_with: String
+  loginToken_not_starts_with: String
+  loginToken_ends_with: String
+  loginToken_not_ends_with: String
   balance: Float
   balance_not: Float
   balance_in: [Float!]
@@ -4506,6 +4537,7 @@ input UserUpdateDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4528,6 +4560,7 @@ input UserUpdateInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4550,6 +4583,7 @@ input UserUpdateManyDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
@@ -4560,6 +4594,7 @@ input UserUpdateManyMutationInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
@@ -4700,6 +4735,7 @@ input UserUpdateWithoutChatsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4721,6 +4757,7 @@ input UserUpdateWithoutCommentsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4742,6 +4779,7 @@ input UserUpdateWithoutItemsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4763,6 +4801,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4784,6 +4823,7 @@ input UserUpdateWithoutLikedEventsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4805,6 +4845,7 @@ input UserUpdateWithoutLikedPostsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4826,6 +4867,7 @@ input UserUpdateWithoutOwnChatsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4847,6 +4889,7 @@ input UserUpdateWithoutPaymentsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
@@ -4868,6 +4911,7 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4889,6 +4933,7 @@ input UserUpdateWithoutPurchasesDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
@@ -4910,6 +4955,7 @@ input UserUpdateWithoutSupportedEventsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -4931,6 +4977,7 @@ input UserUpdateWithoutTransactionsDataInput {
   email: String
   role: UserRole
   avatar: String
+  loginToken: String
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
@@ -5103,6 +5150,20 @@ input UserWhereInput {
   avatar_not_starts_with: String
   avatar_ends_with: String
   avatar_not_ends_with: String
+  loginToken: String
+  loginToken_not: String
+  loginToken_in: [String!]
+  loginToken_not_in: [String!]
+  loginToken_lt: String
+  loginToken_lte: String
+  loginToken_gt: String
+  loginToken_gte: String
+  loginToken_contains: String
+  loginToken_not_contains: String
+  loginToken_starts_with: String
+  loginToken_not_starts_with: String
+  loginToken_ends_with: String
+  loginToken_not_ends_with: String
   purchases_every: PurchaseWhereInput
   purchases_some: PurchaseWhereInput
   purchases_none: PurchaseWhereInput

@@ -22,6 +22,7 @@ passport.use(
       clientSecret,
       registeredClient.secret
     );
+    
     if (!validateSecret) {
       return done(null, false);
     }

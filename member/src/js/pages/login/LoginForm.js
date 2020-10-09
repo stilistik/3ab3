@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { login } from 'Redux/actions';
 import { Typography, Fab } from '@material-ui/core';
 import { Form, TextField, Loading, Message } from 'Components';
 import { requestEmail } from 'Auth/requestEmail';

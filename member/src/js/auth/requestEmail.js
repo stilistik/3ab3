@@ -2,6 +2,9 @@ import { Message } from 'Components';
 
 export const requestEmail = async (email) => {
   try {
+    const auth_details = Buffer.from(
+      'Ng37FZ3ZtZ5MvaKJsJdbqWKdP87IMPDtpa/izWqtB5BDZZ8myPzsPAWpO0bEaPMV:JNtTf4T+lag='
+    ).toString('base64');
     const payload = {
       email: email,
     };
@@ -9,6 +12,7 @@ export const requestEmail = async (email) => {
       global.API_URL + '/auth/passwordless/request',
       {
         headers: {
+          Authorization: 'Basic ' + auth_details,
           'Content-Type': 'application/json',
         },
         method: 'POST',
