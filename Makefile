@@ -3,11 +3,14 @@ init:
 	yarn --cwd server/prisma install
 	yarn --cwd member install
 
-dev/server:
+dev/server.run:
 	docker-compose up --build
 
-dev/reset:
+dev/server.reset:
 	cd server/prisma && prisma reset -f && prisma deploy
 
-dev/client: 
+dev/server.migrate:
+	cd server/prisma && prisma deploy
+
+dev/client.run: 
 	cd member && yarn start
