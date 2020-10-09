@@ -12,14 +12,30 @@ module.exports = {
     futureEvents(root, args, context) {
       return context.prisma.events({
         where: {
-          date_gte: args.now,
+          date_gte: new Date().toISOString(),
         },
       });
     },
     pastEvents(root, args, context) {
       return context.prisma.events({
         where: {
-          date_lt: args.now,
+          date_lt: new Date().toISOString(),
+        },
+      });
+    },
+    futurePublishedEvents(root, args, context) {
+      return context.prisma.events({
+        where: {
+          date_gte: new Date().toISOString(),
+          published: true,
+        },
+      });
+    },
+    pastPublishedEvents(root, args, context) {
+      return context.prisma.events({
+        where: {
+          date_lt: new Date().toISOString(),
+          published: true,
         },
       });
     },

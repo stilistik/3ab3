@@ -20,10 +20,12 @@ input EventInput {
 }
 
 extend type Query {
-  events: [Event!]!
-  event(eventId: ID!): Event!
-  futureEvents(now: DateTime!): [Event!]!
-  pastEvents(now: DateTime!): [Event!]!
+  events: [Event!]! @isAuthenticated
+  event(eventId: ID!): Event! @isAuthenticated
+  futureEvents: [Event!]! @isAuthenticated
+  pastEvents: [Event!]! @isAuthenticated
+  futurePublishedEvents: [Event!]!
+  pastPublishedEvents: [Event!]!
 }
 
 extend type Mutation {
