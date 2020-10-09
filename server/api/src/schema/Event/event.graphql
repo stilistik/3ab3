@@ -3,8 +3,8 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
-  image: String!
-  flyer: String!
+  image: String
+  flyer: String
   comments: [Comment!]! @isAuthenticated
   supporters: [User!]! @isAuthenticated
   likedBy: [User!]! @isAuthenticated
