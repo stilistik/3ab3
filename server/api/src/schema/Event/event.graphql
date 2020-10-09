@@ -4,6 +4,7 @@ type Event {
   description: String!
   date: DateTime!
   image: String!
+  flyer: String!
   comments: [Comment!]! @isAuthenticated
   supporters: [User!]! @isAuthenticated
   likedBy: [User!]! @isAuthenticated
@@ -17,6 +18,7 @@ input EventInput {
   description: String!
   date: DateTime!
   image: Upload
+  flyer: Upload
 }
 
 extend type Query {
