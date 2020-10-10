@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../redux/actions';
 import { requestRoute, updateParams } from '../../history';
 
-export const Authenticate: React.FC = () => {
+export const Authenticating: React.FC = () => {
   const [error, setError] = React.useState(false);
   const dispatch = useDispatch();
   const { token: emailToken } = getQueryParams();
