@@ -73,15 +73,9 @@ export const LoginForm = () => {
 
   return (
     <div>
-      <div className={styles.header}>
-        <Typography
-          classes={{ root: styles.title }}
-          variant="h3"
-          color="inherit"
-        >
-          Login
-        </Typography>
-      </div>
+      <Box className={styles.header} color="#f2f2f2">
+        <Typography variant="h3">Login</Typography>
+      </Box>
       <br />
       {emailSent ? <Notification /> : <EmailForm setEmailSent={setEmailSent} />}
     </div>

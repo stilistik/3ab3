@@ -9,6 +9,7 @@ import Routes from 'Routes';
 import { Notifier, EmojiProvider, GiphyProvider, Box } from 'Components';
 import history from 'History';
 import Apollo from 'Apollo';
+import { UnauthBackground } from './UnauthBackground';
 
 const UnauthenticatedApp = () => {
   return (
@@ -16,9 +17,11 @@ const UnauthenticatedApp = () => {
       <CssBaseline />
       <UnauthAppCore />
       <Box.Item w="100%" o="hidden">
-        <Router history={history}>
-          <Routes props={{ app: { isAuthenticated: false } }} />
-        </Router>
+        <UnauthBackground>
+          <Router history={history}>
+            <Routes props={{ app: { isAuthenticated: false } }} />
+          </Router>
+        </UnauthBackground>
       </Box.Item>
       <Notifier />
     </Box.Flex>

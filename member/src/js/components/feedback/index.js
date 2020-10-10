@@ -1,6 +1,7 @@
 export * from './Notifier';
-export * from './Loading';
 export * from './AnimatedCheckmark';
+export * from './AnimatedError';
 
 import Error from './Error';
-export { Error };
+import Loading from './Loading';
+export { Error, Loading };
