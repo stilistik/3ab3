@@ -1,10 +1,12 @@
 import React from 'react';
-import { Loading } from 'Components';
+import { Loading, Box } from 'Components';
 import { requestToken } from 'Auth/requestToken';
 import { getQueryParams } from 'History';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/actions';
 import { requestRoute } from '../../history';
+
+import styles from './LoginPage.less';
 
 export const Authenticate = () => {
   const [error, setError] = React.useState(false);
@@ -20,6 +22,18 @@ export const Authenticate = () => {
       .catch((error) => setError(true));
   }, []);
 
-  if (error) return <h1>error</h1>;
-  return <Loading />;
+  return (
+    <div className={styles.container}>
+      <Box.Center>
+        {error ? (
+          <span>
+            Something went wrong during the authentication. Try requesting
+            another link.
+          </span>
+        ) : (
+          <Loading />
+        )}
+      </Box.Center>
+    </div>
+  );
 };

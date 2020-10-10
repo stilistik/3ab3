@@ -1,6 +1,14 @@
 import React from 'react';
 import { Typography, Fab } from '@material-ui/core';
-import { Form, TextField, Loading, Message } from 'Components';
+import {
+  Form,
+  TextField,
+  Loading,
+  Message,
+  Icon,
+  Box,
+  AnimatedCheckmark,
+} from 'Components';
 import { requestEmail } from 'Auth/requestEmail';
 
 import styles from './LoginForm.less';
@@ -34,11 +42,12 @@ const EmailForm = ({ setEmailSent }) => {
       <Fab
         size="large"
         type="submit"
-        variant="contained"
         color="primary"
+        variant="extended"
         style={{ marginTop: 20 }}
       >
-        Request Login Link
+        <Icon type="mail" />
+        <Box ml={1}>Request Login Link</Box>
       </Fab>
       {loading && <Loading color="#bbb" style={{ marginTop: 20 }} />}
     </Form>
@@ -46,7 +55,17 @@ const EmailForm = ({ setEmailSent }) => {
 };
 
 const Notification = () => {
-  return <div>email has been sent to you</div>;
+  return (
+    <Box.Center>
+      <div>
+        <AnimatedCheckmark />
+        <Box color="#f2f2f2" fs={16}>
+          <p>If your email is valid, you will receive a login link shortly.</p>
+          <p>Check your inbox!</p>
+        </Box>
+      </div>
+    </Box.Center>
+  );
 };
 
 export const LoginForm = () => {

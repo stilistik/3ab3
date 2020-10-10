@@ -89,6 +89,7 @@ import MoodIcon from '@material-ui/icons/Mood';
 import GifIcon from '@material-ui/icons/Gif';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import NavigationIcon from '@material-ui/icons/Navigation';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -150,6 +151,7 @@ const muiIconTypes = {
   mood: MoodIcon,
   moreHoriz: MoreHorizIcon,
   moreVert: MoreVertIcon,
+  navigation: NavigationIcon,
   notifications: NotificationsIcon,
   payment: PaymentIcon,
   person: PersonIcon,
