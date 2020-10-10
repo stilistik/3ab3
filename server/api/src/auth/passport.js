@@ -5,11 +5,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Prisma } = require('../generated/prisma-client');
 
-const prisma = new Prisma({
-  endpoint: 'http://prisma:4466',
-});
+const { ACCESS_TOKEN_SECRET, PRISMA_ENDPOINT } = process.env;
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const prisma = new Prisma({
+  endpoint: PRISMA_ENDPOINT,
+});
 
 passport.use(
   new BasicStrategy(async (clientId, clientSecret, done) => {
@@ -22,7 +22,7 @@ passport.use(
       clientSecret,
       registeredClient.secret
     );
-    
+
     if (!validateSecret) {
       return done(null, false);
     }

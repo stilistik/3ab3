@@ -3,8 +3,11 @@ init:
 	yarn --cwd server/prisma install
 	yarn --cwd member install
 
+dev/services.run:
+	docker-compose -f docker-compose.dev.yml up --build prisma postgres 
+
 dev/server.run:
-	docker-compose up --build
+	cd server/api && yarn start:dev
 
 dev/server.reset:
 	cd server/prisma && prisma reset -f && prisma deploy && prisma seed
@@ -14,3 +17,7 @@ dev/server.migrate:
 
 dev/client.run: 
 	cd member && yarn start
+
+prod/server.run:
+	docker-compose up --build
+
