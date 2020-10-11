@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Typography } from '@material-ui/core';
 import classnames from 'classnames';
+import { getBackendUrl } from 'Apollo/Utils';
 
 export const UserAvatar = ({ user, classes, className, style }) => {
   const stringToHSL = (str) => {
@@ -19,7 +20,7 @@ export const UserAvatar = ({ user, classes, className, style }) => {
   const avatarClass = classnames(className, classes.avatar);
 
   if (user.avatar) {
-    const url = global.API_URL + user.avatar;
+    const url = getBackendUrl() + user.avatar;
     return (
       <Avatar src={url} alt="Not Found" className={avatarClass} style={style} />
     );

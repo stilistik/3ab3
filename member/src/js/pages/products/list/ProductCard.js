@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { Icon, ImageContainer } from 'Components';
 import DeleteProduct from '../delete/DeleteProduct';
+import { getBackendUrl } from 'Apollo/Utils';
 
 import styles from './ProductCard.css';
 
@@ -26,7 +27,7 @@ class ProductCard extends React.Component {
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
           <ImageContainer
-            image={global.API_URL + this.props.product.thumbnail}
+            image={getBackendUrl() + this.props.product.thumbnail}
             classes={{
               root: styles.image,
               progress: styles.progress,

@@ -1,6 +1,7 @@
-import { Message } from 'Components';
+import { Message } from 'Components/index';
+import { getBackendUrl } from 'Apollo/Utils';
 
-export const requestToken = async (emailToken) => {
+export const requestToken = async (emailToken: string) => {
   try {
     const auth_details = Buffer.from(
       'Ng37FZ3ZtZ5MvaKJsJdbqWKdP87IMPDtpa/izWqtB5BDZZ8myPzsPAWpO0bEaPMV:JNtTf4T+lag='
@@ -8,7 +9,7 @@ export const requestToken = async (emailToken) => {
     const payload = {
       token: emailToken,
     };
-    const response = await fetch(global.API_URL + '/auth/passwordless/login', {
+    const response = await fetch(getBackendUrl() + '/auth/passwordless/login', {
       headers: {
         Authorization: 'Basic ' + auth_details,
         'Content-Type': 'application/json',

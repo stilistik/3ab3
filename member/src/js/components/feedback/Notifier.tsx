@@ -3,23 +3,35 @@ import { Snackbar } from '@material-ui/core';
 import NotificationComponent from './Notification';
 import MessageComponent from './Message';
 
-const HIDE_DELAY = 6000;
+interface IMessage {
+  error: (msg: string) => void;
+  warning: (msg: string) => void;
+  success: (msg: string) => void;
+  info: (msg: string) => void;
+}
 
-export let Message = {
+interface INotification {
+  error: (title: string, msg: string) => void;
+  warning: (title: string, msg: string) => void;
+  success: (title: string, msg: string) => void;
+  info: (title: string, msg: string) => void;
+}
+
+export const Message: IMessage = {
+  error: (_msg) => {},
+  warning: (_msg) => {},
+  success: (_msg) => {},
+  info: (_msg) => {},
+};
+
+export const Notification: INotification = {
   error: () => {},
   warning: () => {},
   success: () => {},
   info: () => {},
 };
 
-export let Notification = {
-  error: () => {},
-  warning: () => {},
-  success: () => {},
-  info: () => {},
-};
-
-export const Notifier = () => {
+export const Notifier: React.FC = () => {
   const [message, setMessage] = React.useState(null);
   const [notification, setNotification] = React.useState(null);
 
@@ -68,15 +80,11 @@ export const Notifier = () => {
           horizontal: 'center',
         }}
         open={Boolean(message)}
-        autoHideDuration={HIDE_DELAY}
+        autoHideDuration={6000}
         onClose={handleMessageClose}
       >
         {message ? (
-          <MessageComponent
-            onClose={handleMessageClose}
-            variant={message.variant}
-            message={message.message}
-          />
+          <MessageComponent onClose={handleMessageClose} variant={message.variant} message={message.message} />
         ) : null}
       </Snackbar>
       <Snackbar
@@ -85,7 +93,7 @@ export const Notifier = () => {
           horizontal: 'left',
         }}
         open={Boolean(notification)}
-        autoHideDuration={HIDE_DELAY}
+        autoHideDuration={6000}
         onClose={handleNotificationClose}
       >
         {notification ? (

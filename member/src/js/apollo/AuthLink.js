@@ -1,4 +1,5 @@
 import { ApolloLink, Observable } from 'apollo-link';
+import { getBackendUrl } from './Utils';
 
 const refreshToken = () => {
   return new Promise((resolve) => {
@@ -9,7 +10,7 @@ const refreshToken = () => {
       refresh_token: window.localStorage.getItem('refresh_token'),
       grant_type: 'refresh_token',
     };
-    fetch(global.API_URL + '/oauth/token/', {
+    fetch(getBackendUrl() + '/oauth/token/', {
       headers: {
         Authorization: 'Basic ' + auth_details,
         'Content-Type': 'application/json',

@@ -1,6 +1,13 @@
 export type SerializableObject = { [key: string]: Serializable };
 export type SerializableArray = Array<Serializable>;
-export type Serializable = string | number | boolean | null | SerializableObject | SerializableArray;
+export type Serializable =
+  | string
+  | number
+  | boolean
+  | null
+  | SerializableObject
+  | SerializableArray
+  | File;
 
 export interface FieldProps {
   id: string;

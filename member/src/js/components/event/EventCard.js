@@ -74,7 +74,7 @@ export const EventCard = ({ event }) => {
     <Card className={styles.card}>
       <CardActionArea className={styles.area} onClick={onEdit}>
         <ImageContainer
-          image={global.API_URL + event.image}
+          image={getBackendUrl() + event.image}
           classes={{
             root: styles.image,
             progress: styles.progress,

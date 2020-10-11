@@ -8,9 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { AuthLink } from './AuthLink';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
-
-// eslint-disable-next-line
-global.API_URL = `${window.location.protocol}//${window.location.hostname}:4000`;
+import { getBackendUrl } from './Utils';
 
 const getToken = () => {
   return new Promise((resolve, reject) => {
@@ -21,7 +19,7 @@ const getToken = () => {
 };
 
 const uploadLink = createUploadLink({
-  uri: global.API_URL + '/api',
+  uri: getBackendUrl() + '/api',
 });
 
 const wsLink = new WebSocketLink({

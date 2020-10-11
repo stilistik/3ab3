@@ -12,7 +12,7 @@ export const Authenticating: React.FC = () => {
   const { token: emailToken } = getQueryParams();
 
   React.useEffect(() => {
-    requestToken(emailToken)
+    requestToken(emailToken as string)
       .then(({ access_token }: { access_token: string }) => {
         dispatch(login(access_token));
         requestRoute('/home');

@@ -7,3 +7,4 @@ export * from './SearchSelectField';
 export * from './MultiSelectField';
 export * from './TagField';
 export * from './NumberField';
+export * from './ImageField';

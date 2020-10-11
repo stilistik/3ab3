@@ -13,6 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "Components/*": ["src/js/components/*"],
+      "Apollo/*": ["src/js/apollo/*"],
       "Auth/*": ["src/js/auth/*"],
       "History/*": ["src/js/history/*"],
       "Pages/*": ["src/js/pages/*"],

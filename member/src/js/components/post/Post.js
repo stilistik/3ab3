@@ -18,6 +18,7 @@ import SpotifyPlayer from './SpotifyPlayer';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Microlink from '@microlink/react';
+import { getBackendUrl } from 'Apollo/Utils';
 
 import styles from './Post.css';
 
@@ -96,7 +97,7 @@ const Post = ({ post, refetch }) => {
       <PostHeader post={post} refetch={refetch} />
       <CardContent className={styles.content}>
         <PostText text={post.text} />
-        {post.image && <PostImage url={global.API_URL + post.image} />}
+        {post.image && <PostImage url={getBackendUrl() + post.image} />}
         <PostLink link={validatedLink} />
       </CardContent>
       <PostStats postId={post.id} onComment={onComment} />
