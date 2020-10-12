@@ -1,0 +1,10 @@
+overwrite: true
+schema:
+  - API_URL:
+      headers:
+        Authorization: 'Bearer ACCESS_TOKEN'
+generates:
+  src/js/graphql/types.ts:
+    schema: ./schema.graphql
+    plugins:
+      - typescript

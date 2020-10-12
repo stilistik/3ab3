@@ -1,0 +1,10 @@
+overwrite: true
+schema:
+  - http://localhost:4000/api:
+      headers:
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrZzZiY203ZDAwMXQwNzk1OWwwdnFkNTQiLCJ0aW1lc3RhbXAiOjE2MDI1MTg0MDc3MjYsImlhdCI6MTYwMjUxODQwNywiZXhwIjoxNjE4MDcwNDA3fQ.bXDIvlxmXpS-LK2f4ONpkbnyMXF-d1uHmic2KEWhuyo'
+generates:
+  src/js/graphql/types.ts:
+    schema: ./schema.graphql
+    plugins:
+      - typescript

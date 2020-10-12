@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config webpack_dev.config.js --mode development --hot --inline",
-    "build": "webpack --config webpack.prod.config.js -p"
+    "build": "webpack --config webpack.prod.config.js -p",
+    "generate": "graphql-codegen"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -33,6 +34,8 @@
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
+    "@graphql-codegen/cli": "^1.17.10",
+    "@graphql-codegen/typescript": "^1.17.10",
     "@types/classnames": "^2.2.10",
     "@types/history": "^4.7.8",
     "@types/lodash": "^4.14.161",
