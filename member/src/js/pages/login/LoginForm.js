@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Fab } from '@material-ui/core';
+import { Typography, Fab, makeStyles } from '@material-ui/core';
 import {
   Form,
   TextField,
@@ -13,8 +13,24 @@ import { requestEmail } from 'Auth/requestEmail';
 
 import styles from './LoginForm.less';
 
+const useStyles = makeStyles({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
+  input: {
+    color: '#f2f2f2',
+    '&:before': { borderBottomColor: '#919191' },
+    '&&:hover:before': { borderBottomColor: '#919191' },
+    '&:after': { borderBottomColor: '#f2f2f2' },
+  },
+  label: { color: '#f2f2f2', '&.Mui-focused': { color: '#f2f2f2' } },
+});
+
 const EmailForm = ({ setEmailSent }) => {
   const [loading, setLoading] = React.useState(false);
+  const styles = useStyles();
 
   const onSubmit = async (values) => {
     try {
@@ -35,9 +51,10 @@ const EmailForm = ({ setEmailSent }) => {
         label="Email"
         type="email"
         required={true}
-        className={styles.field}
-        InputProps={{ className: styles.input }}
-        InputLabelProps={{ className: styles.label }}
+        classes={{
+          input: { root: styles.input, underline: styles.underline },
+          label: { root: styles.label },
+        }}
       />
       <Fab
         size="large"
