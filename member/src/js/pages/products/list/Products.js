@@ -24,7 +24,7 @@ class Products extends React.Component {
 
   onEdit = (productId) => {
     requestRoute('/products/edit', {
-      id: productId,
+      params: { id: productId },
     });
   };
 

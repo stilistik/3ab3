@@ -7,6 +7,7 @@ import { getQueryParams } from 'History';
 import EditProductForm from './EditProductForm';
 
 import styles from './EditProduct.less';
+import { updateParams } from 'History/';
 
 export const QUERY = gql`
   query($productId: ID!) {
@@ -21,6 +22,10 @@ export const QUERY = gql`
 `;
 
 const EditProduct = (props) => {
+  React.useEffect(() => {
+    return () => updateParams({ id: undefined });
+  }, []);
+
   const { id } = getQueryParams();
   const { loading, error, data } = useQuery(QUERY, {
     variables: { productId: id },
