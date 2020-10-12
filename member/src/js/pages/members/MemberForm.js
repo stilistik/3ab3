@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
-import { TextField, Form } from 'Components';
+import { TextField, Form, UserRoleField } from 'Components';
 
 import styles from './MemberForm.css';
 
@@ -30,13 +30,7 @@ const MemberForm = ({ initValues, ...rest }) => {
             required={true}
             className={styles.field}
           />
-          <TextField
-            id="password"
-            label="Password"
-            type="password"
-            required={true}
-            className={styles.field}
-          />
+          <UserRoleField id="role" label="Role" required={true} />
           <br />
           <Button
             type="submit"

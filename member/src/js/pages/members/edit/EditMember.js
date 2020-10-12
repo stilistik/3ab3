@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { getQueryParams } from 'History';
 import EditMemberForm from './EditMemberForm';
+import { updateParams } from 'History/';
 
 import styles from './EditMember.css';
 
@@ -15,12 +16,17 @@ const QUERY = gql`
       name
       email
       avatar
+      role
     }
   }
 `;
 
 const EditMember = (props) => {
   const { id } = getQueryParams();
+
+  React.useEffect(() => {
+    return () => updateParams({ id: undefined });
+  }, []);
 
   const { loading, error, data } = useQuery(QUERY, {
     variables: { userId: id },
