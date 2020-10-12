@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { logout } from 'Redux/actions';
 import ProfileMenu from './ProfileMenu';
 import Messages from './Messages';
 import BalanceButton from './BalanceButton';
-import { Grid } from 'Components';
+import { Grid, Box } from 'Components';
 import { Logo } from './Logo.js';
 import { requestRoute } from 'History';
 
@@ -29,12 +29,6 @@ export const UnauthAppHeader = connect(
       <Grid.Default>
         <Toolbar disableGutters>
           <Logo />
-          <Button
-            className={styles.button}
-            onClick={() => requestRoute('/login')}
-          >
-            Login
-          </Button>
         </Toolbar>
       </Grid.Default>
     </AppBar>
@@ -58,9 +52,11 @@ export const AuthAppHeader = connect(
             <MenuIcon />
           </IconButton>
           <Logo onClick={() => requestRoute('/home')} />
-          <BalanceButton />
-          <Messages />
-          <ProfileMenu />
+          <Box.Row cmrnl={1}>
+            <BalanceButton />
+            <Messages />
+            <ProfileMenu />
+          </Box.Row>
         </Toolbar>
       </Grid.Default>
     </AppBar>
