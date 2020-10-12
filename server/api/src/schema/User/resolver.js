@@ -29,6 +29,11 @@ module.exports = {
       const { __type } = await context.prisma.$graphql(query, variables);
       return __type.enumValues.map((el) => el.name);
     },
+    usersWithDebt(root, args, context) {
+      return context.prisma.users({
+        where: { balance_lte: args.threshold },
+      });
+    },
   },
   Mutation: {
     createUser(root, args, context) {

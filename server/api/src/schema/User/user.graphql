@@ -46,16 +46,17 @@ input EditSelfInput {
 }
 
 extend type Query {
-  users: [User!]!
+  users: [User!]! @isAuthenticated
   roles: [String!]! @isAuthenticated
-  user(userId: ID!): User!
-  currentUser: User!
+  user(userId: ID!): User! @isAuthenticated
+  currentUser: User! @isAuthenticated
+  usersWithDebt(threshold: Int!): [User!]! @hasRole
 }
 
 extend type Mutation {
   createUser(input: UserInput!): User! @hasRole
   editUser(userId: ID!, input: UserInput!): User! @hasRole
-  editSelf(input: EditSelfInput!): User!
-  uploadAvatar(file: Upload!): User!
+  editSelf(input: EditSelfInput!): User! @isAuthenticated
+  uploadAvatar(file: Upload!): User! @isAuthenticated
   setOnlineStatus(userId: ID! isOnline: Boolean!): User!
 }
