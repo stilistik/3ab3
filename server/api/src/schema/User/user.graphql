@@ -2,7 +2,6 @@ type User {
   id: ID!
   email: String!
   name: String!
-  password: String!
   avatar: String
   purchases: [Purchase!]!
   payments: [Payment!]!
@@ -38,14 +37,12 @@ enum UserRole {
 input UserInput {
   name: String!
   email: String!
-  password: String!
   role: UserRole
 }
 
 input EditSelfInput {
   name: String!
   email: String!
-  password: String!
 }
 
 extend type Query {

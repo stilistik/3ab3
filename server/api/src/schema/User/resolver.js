@@ -24,7 +24,6 @@ module.exports = {
       const input = {
         name: args.input.name,
         email: args.input.email,
-        password: bcrypt.hashSync(args.input.password, 8),
         role: args.input.role,
       };
       return context.prisma.createUser(input);
@@ -33,7 +32,6 @@ module.exports = {
       const input = {
         name: args.input.name,
         email: args.input.email,
-        password: bcrypt.hashSync(args.input.password, 8),
         role: args.input.role,
       };
       return context.prisma.updateUser({
@@ -46,7 +44,6 @@ module.exports = {
       const input = {
         name: args.input.name,
         email: args.input.email,
-        password: bcrypt.hashSync(args.input.password, 8),
       };
       return context.prisma.updateUser({
         where: { id },
