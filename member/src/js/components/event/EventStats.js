@@ -6,6 +6,7 @@ import { SocialStats } from 'Components';
 export const EVENT_STATS = gql`
   query($eventId: ID!) {
     event(eventId: $eventId) {
+      id
       likedBy {
         id
         name
