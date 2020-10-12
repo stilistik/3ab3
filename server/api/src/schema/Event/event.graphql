@@ -1,4 +1,4 @@
-type Event {
+type Event implements Node {
   id: ID!
   title: String!
   description: String!
@@ -13,6 +13,16 @@ type Event {
   published: Boolean! @isAuthenticated
 }
 
+type EventEdge implements Edge {
+  cursor: String!
+  node: Event
+}
+
+type EventsConnection implements Connection {
+  pageInfo: PageInfo!
+  edges: [EventEdge]
+}
+
 input EventInput {
   title: String!
   description: String!
@@ -22,6 +32,7 @@ input EventInput {
 }
 
 extend type Query {
+  futureEventFeed(first: Int = 10, after: String): EventsConnection!
   events: [Event!]! @isAuthenticated
   event(eventId: ID!): Event! @isAuthenticated
   futureEvents: [Event!]! @isAuthenticated
@@ -35,7 +46,8 @@ extend type Mutation {
   deleteEvent(eventId: ID!): Event! @isAuthenticated
   likeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   unlikeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
-  commentEvent(eventId: ID!, text: String!, link: String): Event! @isAuthenticated
+  commentEvent(eventId: ID!, text: String!, link: String): Event!
+    @isAuthenticated
   supportEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   unsupportEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   publishEvent(eventId: ID!): Event! @isAuthenticated @hasRole

@@ -3,8 +3,15 @@ const { verifyAndDecodeToken } = require('../../auth/verify');
 
 module.exports = {
   Query: {
+    futureEventFeed(root, args, context) {
+      return context.prisma.eventsConnection({
+        orderBy: 'date_ASC',
+        first: args.first,
+        after: args.after,
+      });
+    },
     events(root, args, context) {
-      return context.prisma.events();
+      return context.prisma.events({ orderBy: 'date_DESC' });
     },
     event(root, args, context) {
       return context.prisma.event({ id: args.eventId });
@@ -14,6 +21,7 @@ module.exports = {
         where: {
           date_gte: new Date().toISOString(),
         },
+        orderBy: 'date_ASC',
       });
     },
     pastEvents(root, args, context) {
@@ -29,6 +37,7 @@ module.exports = {
           date_gte: new Date().toISOString(),
           published: true,
         },
+        orderBy: 'date_ASC',
       });
     },
     pastPublishedEvents(root, args, context) {

@@ -6,13 +6,46 @@ import {
   Accordion,
   AccordionSummary,
 } from '@material-ui/core';
-import CreateEventForm from './CreateEventForm';
+import EventForm from './EventForm';
+import gql from 'graphql-tag';
+import { useMutation } from 'react-apollo';
 
 import styles from './CreateEvent.less';
 
-export const CreateEvent = () => {
+const MUTATION = gql`
+  mutation($input: EventInput!) {
+    createEvent(input: $input) {
+      id
+    }
+  }
+`;
+
+export const CreateEvent = ({ refetch }) => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const [createEvent] = useMutation(MUTATION);
+
+  const handleSubmit = async (values) => {
+    try {
+      await createEvent({
+        variables: {
+          input: values,
+        },
+        refetchQueries: () => refetch,
+      });
+      setExpanded(false);
+    } catch (error) {
+      Message.error(error.message);
+      return;
+    }
+    Message.success('Event successfully created');
+  };
+
   return (
-    <Accordion>
+    <Accordion
+      expanded={expanded}
+      onChange={() => setExpanded((expanded) => !expanded)}
+    >
       <AccordionSummary
         className={styles.summary}
         expandIcon={<Icon type="down" />}
@@ -22,7 +55,7 @@ export const CreateEvent = () => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails className={styles.details}>
-        <CreateEventForm />
+        <EventForm onSubmit={handleSubmit} />;
       </AccordionDetails>
     </Accordion>
   );

@@ -2,8 +2,8 @@ import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { Grid, Box } from 'Components';
 import { Hidden, Tabs, Tab, Typography, Divider } from '@material-ui/core';
-import Feed from './feed/FeedManager';
-import Events from './events/Events';
+import { PostFeedManager } from './posts/PostFeedManager';
+import { EventFeedManager } from './events/EventFeedManager';
 
 const MobileHome = () => {
   const [value, setValue] = React.useState(0);
@@ -25,12 +25,12 @@ const MobileHome = () => {
       <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Feed />
+            <PostFeedManager />
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <Events />
+            <EventFeedManager />
           </Grid>
         </Grid>
       </SwipeableViews>
@@ -45,12 +45,12 @@ const DesktopHome = () => {
         <Grid item sm={6}>
           <Typography variant="h5">FEED</Typography>
           <Divider />
-          <Feed />
+          <PostFeedManager />
         </Grid>
         <Grid item sm={6}>
           <Typography variant="h5">EVENTS</Typography>
           <Divider />
-          <Events />
+          <EventFeedManager />
         </Grid>
       </Grid>
     </Box>
