@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { SearchSelectField } from '../fields';
 import { SelectOption } from 'Components/inputs';
+import { User } from 'Graphql/types';
 
 const QUERY = gql`
   query {
@@ -13,12 +14,6 @@ const QUERY = gql`
     }
   }
 `;
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
 
 function getOptionFromUser(user: User): SelectOption {
   return {
