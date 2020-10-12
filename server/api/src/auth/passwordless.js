@@ -20,13 +20,18 @@ const mailgun = require('mailgun-js')({
 
 const logoPath = path.join(__dirname, '../resources/favicon.png');
 
-const requestEmail = async (req, res, next) => {
+const requestEmail = async (req, res) => {
   try {
     const user = await prisma.user({ email: req.body.email });
 
-    if (!user) throw new Error('requestEmail: User not found');
+    if (!user) {
+      // if there is no user with the provided email, we still return 200 but
+      // do nothing. this prevents informing potential attackers about the validity
+      // of entered email adresses.
+      return res.sendStatus(200);
+    }
 
-    // Generate token
+    // generate token
     const loginToken = jwt.sign(
       {
         id: user.id,
@@ -41,8 +46,9 @@ const requestEmail = async (req, res, next) => {
       data: { loginToken: loginToken },
     });
 
-    if (!updatedUser)
-      throw new Error('requestEmail: Could not update user with login token');
+    if (!updatedUser) {
+      throw new Error('Could not update user with login token');
+    }
 
     const data = {
       from: '3ab3 Member Admin <admin@3ab3.ch>',
@@ -56,11 +62,11 @@ const requestEmail = async (req, res, next) => {
     mailgun.messages().send(data);
     res.sendStatus(200);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: err.message });
   }
 };
 
-const requestToken = async (req, res, next) => {
+const requestToken = async (req, res) => {
   try {
     const { token } = req.body;
     const { id } = jwt.verify(token, LOGIN_TOKEN_SECRET);
@@ -93,7 +99,7 @@ const requestToken = async (req, res, next) => {
       access_token: accessToken,
     });
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: err.message });
   }
 };
 

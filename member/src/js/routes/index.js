@@ -4,7 +4,7 @@ import { Switch, Redirect } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import UnauthRoute from './UnauthRoute';
 
-import { LoginPage, Authenticating } from 'Pages/login';
+import { LoginForm, LoginEmailSent, Authenticating } from 'Pages/login';
 import Home from 'Pages/home';
 import { Dashboard } from 'Pages/dashboard';
 import { Checklist } from 'Pages/checklist';
@@ -31,7 +31,8 @@ const Routes = ({ props }) => {
       />
       <AuthRoute path="/members/edit" component={EditMember} props={props} />
       <AuthRoute path="/events/edit" component={EditEvent} props={props} />
-      <UnauthRoute path="/login" component={LoginPage} props={props} />
+      <UnauthRoute path="/login" component={LoginForm} props={props} />
+      <UnauthRoute path="/loginsent" component={LoginEmailSent} props={props} />
       <UnauthRoute path="/auth" component={Authenticating} props={props} />
       <AuthRoute path="/home" component={Home} props={props} />
       <AuthRoute path="/dashboard" component={Dashboard} props={props} />

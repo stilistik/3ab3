@@ -9,7 +9,7 @@ export const requestEmail = async (email: string) => {
     const payload = {
       email: email,
     };
-    const response = await fetch(
+    await fetch(
       getBackendUrl() + '/auth/passwordless/request',
       {
         headers: {
@@ -20,11 +20,10 @@ export const requestEmail = async (email: string) => {
         body: JSON.stringify(payload),
       }
     );
-    if (response && response.ok) return true;
-    else return false;
+    return true;
   } catch (error) {
     // catch unknown authentication errors
-    Message.error(error);
+    Message.error(error.message);
     return null;
   }
 };

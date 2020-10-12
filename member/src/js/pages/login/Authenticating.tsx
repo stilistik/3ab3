@@ -5,6 +5,8 @@ import { getQueryParams } from 'History/index';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/actions';
 import { requestRoute, updateParams } from '../../history';
+import { Button } from '@material-ui/core';
+import { LoginPageLayout } from './LoginPageLayout';
 
 export const Authenticating: React.FC = () => {
   const [error, setError] = React.useState(false);
@@ -14,6 +16,7 @@ export const Authenticating: React.FC = () => {
   React.useEffect(() => {
     requestToken(emailToken as string)
       .then(({ access_token }: { access_token: string }) => {
+        if (!access_token) setError(true);
         dispatch(login(access_token));
         requestRoute('/home');
       })
@@ -24,22 +27,26 @@ export const Authenticating: React.FC = () => {
   }, []);
 
   return (
-    <Box pt="10vh">
-      <Grid container justify="center">
-        <Grid item xs={9} sm={6} md={4} lg={3} xl={2}>
-          {error ? (
-            <Box color="#f2f2f2" fontSize="16px">
-              <AnimatedError />
-              <span>
-                Something went wrong during the authentication. Try requesting
-                another link.
-              </span>
-            </Box>
-          ) : (
-            <Loading />
-          )}
-        </Grid>
-      </Grid>
-    </Box>
+    <LoginPageLayout>
+      {error ? (
+        <Box color="#f2f2f2" fontSize="16px">
+          <AnimatedError />
+          <span>
+            Something went wrong during the authentication. Try requesting
+            another link.
+          </span>
+          <Box.Row jc="center" mt={2}>
+            <Button
+              style={{ color: '#f2f2f2' }}
+              onClick={() => requestRoute('/login')}
+            >
+              Go Back
+            </Button>
+          </Box.Row>
+        </Box>
+      ) : (
+        <Loading />
+      )}
+    </LoginPageLayout>
   );
 };

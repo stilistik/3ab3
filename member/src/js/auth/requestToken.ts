@@ -17,12 +17,14 @@ export const requestToken = async (emailToken: string) => {
       method: 'POST',
       body: JSON.stringify(payload),
     });
-    if (response.ok) {
+    if (response && response.ok) {
       return response.json();
+    } else {
+      return null;
     }
   } catch (error) {
     // catch unknown authentication errors
-    Message.error(error);
+    Message.error(error.message);
     return null;
   }
 };
