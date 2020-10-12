@@ -32,13 +32,12 @@ input EventInput {
 }
 
 extend type Query {
-  futureEventFeed(first: Int = 10, after: String): EventsConnection!
-  events: [Event!]! @isAuthenticated
   event(eventId: ID!): Event! @isAuthenticated
-  futureEvents: [Event!]! @isAuthenticated
-  pastEvents: [Event!]! @isAuthenticated
-  futurePublishedEvents: [Event!]!
-  pastPublishedEvents: [Event!]!
+  events(first: Int = 10, after: String): EventsConnection! @isAuthenticated
+  futureEvents(first: Int = 10, after: String): EventsConnection!
+  pastEvents(first: Int = 10, after: String):  EventsConnection! @isAuthenticated
+  futurePublishedEvents(first: Int = 10, after: String):  EventsConnection!
+  pastPublishedEvents(first: Int = 10, after: String):  EventsConnection!
 }
 
 extend type Mutation {

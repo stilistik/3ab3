@@ -1,11 +1,11 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { EventFeed } from './EventFeed';
-import { usePaginatedQuery } from '../usePaginatedQuery';
+import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
 
 export const FEED = gql`
   query($first: Int!, $after: String) {
-    futureEventFeed(first: $first, after: $after) {
+    futureEvents(first: $first, after: $after) {
       pageInfo {
         hasNextPage
       }

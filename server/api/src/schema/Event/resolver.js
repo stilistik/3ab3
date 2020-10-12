@@ -3,49 +3,50 @@ const { verifyAndDecodeToken } = require('../../auth/verify');
 
 module.exports = {
   Query: {
-    futureEventFeed(root, args, context) {
+    event(root, args, context) {
+      return context.prisma.event({ id: args.eventId });
+    },
+    events(root, args, context) {
       return context.prisma.eventsConnection({
+        orderBy: 'date_DESC',
+        first: args.first,
+        after: args.after,
+      });
+    },
+    futureEvents(root, args, context) {
+      return context.prisma.eventsConnection({
+        where: { date_gte: new Date().toISOString() },
         orderBy: 'date_ASC',
         first: args.first,
         after: args.after,
       });
     },
-    events(root, args, context) {
-      return context.prisma.events({ orderBy: 'date_DESC' });
-    },
-    event(root, args, context) {
-      return context.prisma.event({ id: args.eventId });
-    },
-    futureEvents(root, args, context) {
-      return context.prisma.events({
-        where: {
-          date_gte: new Date().toISOString(),
-        },
-        orderBy: 'date_ASC',
-      });
-    },
     pastEvents(root, args, context) {
-      return context.prisma.events({
-        where: {
-          date_lt: new Date().toISOString(),
-        },
+      return context.prisma.eventsConnection({
+        where: { date_lt: new Date().toISOString() },
+        first: args.first,
+        after: args.after,
       });
     },
     futurePublishedEvents(root, args, context) {
-      return context.prisma.events({
+      return context.prisma.eventsConnection({
         where: {
           date_gte: new Date().toISOString(),
           published: true,
         },
         orderBy: 'date_ASC',
+        first: args.first,
+        after: args.after,
       });
     },
     pastPublishedEvents(root, args, context) {
-      return context.prisma.events({
+      return context.prisma.eventsConnection({
         where: {
           date_lt: new Date().toISOString(),
           published: true,
         },
+        first: args.first,
+        after: args.after,
       });
     },
   },

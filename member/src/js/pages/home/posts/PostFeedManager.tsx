@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { PostFeed } from './PostFeed';
-import { usePaginatedQuery } from '../usePaginatedQuery';
+import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
 
 export const FEED = gql`
   query($first: Int!, $after: String) {

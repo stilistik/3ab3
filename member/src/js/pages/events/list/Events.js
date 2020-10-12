@@ -1,26 +1,40 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import { Grid, Box, Loading, Error } from 'Components';
-import { EventCard } from 'Components';
+import { EventCard, Grid, Box } from 'Components';
+import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
+import { Button } from '@material-ui/core';
 
-export const EVENTS = gql`
-  query {
-    events {
-      id
-      title
-      description
-      date
-      image
+export const EVENT_FEED = gql`
+  query($first: Int!, $after: String) {
+    events(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          title
+          description
+          date
+          image
+        }
+      }
     }
   }
 `;
 
 export const Events = () => {
-  const { loading, error, data } = useQuery(EVENTS);
+  const {
+    loading,
+    error,
+    nodes,
+    fetchMore,
+    hasNext,
+    cursor,
+  } = usePaginatedQuery(EVENT_FEED, 3);
 
-  if (error) return <Error message={error.message} />;
-  if (loading) return <Loading />;
+  if (loading || error) return null;
 
   const onEdit = () => {};
   const onDelete = () => {};
@@ -29,7 +43,7 @@ export const Events = () => {
     <Grid.Default>
       <Box py="20px">
         <Grid container spacing={3}>
-          {data.events.map((event) => {
+          {nodes.map((event) => {
             return (
               <Grid key={event.id} item xs={12} lg={6}>
                 <EventCard event={event} onEdit={onEdit} onDelete={onDelete} />
@@ -37,6 +51,11 @@ export const Events = () => {
             );
           })}
         </Grid>
+        {hasNext ? (
+          <Box.Row jc="center" my={2}>
+            <Button onClick={() => fetchMore(cursor)}>More</Button>
+          </Box.Row>
+        ) : null}
       </Box>
     </Grid.Default>
   );
