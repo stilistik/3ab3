@@ -15,8 +15,19 @@ module.exports = {
       const { id } = verifyAndDecodeToken(context);
       return context.prisma.user({ id: id });
     },
-    roles() {
-      return ['MEMBER', 'ADMIN', 'SUPER'];
+    async roles(root, args, context) {
+      const query = `
+        query {
+          __type(name: "UserRole") {
+            enumValues {
+              name
+            }
+          }
+        }
+      `;
+      const variables = {};
+      const { __type } = await context.prisma.$graphql(query, variables);
+      return __type.enumValues.map((el) => el.name);
     },
   },
   Mutation: {
