@@ -4,14 +4,14 @@ services:
     container_name: api
     build: ./server/api/
     expose:
-      - "4000"
+      - '4000'
     volumes:
       - ./server/prisma/generated:/usr/src/app/src/generated
       - /var/local/3ab3/storage/:/usr/src/app/storage
       - ./server/api/src:/usr/src/app/src
     networks:
       - 3ab3
-    command: yarn start
+    command: yarn start:dev
     environment:
       - ACCESS_TOKEN_SECRET
       - ACCESS_TOKEN_EXPIRATION
@@ -21,6 +21,7 @@ services:
       - MAILGUN_DOMAIN
       - MAILGUN_API_SECRET
       - PRISMA_SERVICE_SECRET
+      - PRISMA_ENDPOINT
       - MEMBER_CLIENT_URL
 
   prisma:
@@ -28,7 +29,7 @@ services:
     image: prismagraphql/prisma:1.34
     restart: unless-stopped
     ports:
-    - "$PRISMA_PORT:$PRISMA_PORT"
+      - '$PRISMA_PORT:$PRISMA_PORT'
     environment:
       PRISMA_CONFIG: |
         managementApiSecret: $PRISMA_MANAGEMENT_API_SECRET
@@ -55,6 +56,16 @@ services:
       - POSTGRES_PASSWORD
     volumes:
       - /var/local/3ab3/postgres/:/var/lib/postgresql/data
+    networks:
+      - 3ab3
+
+  proxy:
+    container_name: proxy
+    build: ./server/proxy
+    ports:
+      - '4000:4000'
+    volumes:
+      - /var/local/3ab3/storage/:/usr/src/app/storage
     networks:
       - 3ab3
 

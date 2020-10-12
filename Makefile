@@ -7,8 +7,8 @@ dev/services.run:
 	docker-compose -f docker-compose.dev.yml up --build prisma postgres 
 
 dev/server.run:
-	cd server/api && yarn start:dev
-
+	docker-compose -f docker-compose.dev.yml up --build
+	
 dev/server.reset:
 	cd server/prisma && prisma reset -f && prisma deploy && prisma seed
 
