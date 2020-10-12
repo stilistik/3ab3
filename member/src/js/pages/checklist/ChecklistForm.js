@@ -29,12 +29,13 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
   if (loading || error) return null;
 
   const onSubmit = (values) => {
+    console.log(values);
     const { date, user, ...products } = values;
     const items = Object.keys(products).map((key) => ({
       productId: key,
       amount: products[key],
     }));
-    rest.onSubmit({ date, userId: user.id, items });
+    rest.onSubmit({ date, userId: user, items });
   };
 
   const { products } = data;
@@ -43,7 +44,12 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
       <Form onSubmit={onSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <DateField id="date" label="Date" required={true} />
+            <DateField
+              id="date"
+              label="Date"
+              required={true}
+              defaultValue={new Date().toISOString()}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <UserSelectField id="user" label="Member" required={true} />
@@ -51,22 +57,21 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
           {products.map((product) => {
             return (
               <Grid key={product.id} item xs={12} sm={6} md={4}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Box.Row cmrnl={1}>
                   <Avatar
                     src={getBackendUrl() + product.thumbnail}
                     style={{
-                      width: 60,
-                      height: 60,
-                      marginBottom: 15,
-                      marginRight: 10,
+                      width: 70,
+                      height: 70,
                     }}
                   />
                   <QuickNumberField
                     id={product.id}
                     label={product.name}
                     required={false}
+                    defaultValue={0}
                   />
-                </div>
+                </Box.Row>
               </Grid>
             );
           })}

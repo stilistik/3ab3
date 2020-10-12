@@ -1,84 +1,98 @@
 import React from 'react';
-import { Input, Button, InputProps, makeStyles } from '@material-ui/core';
+import { Input, Button, makeStyles } from '@material-ui/core';
 import { Icon } from '../icon';
+import { getDecimalCount, NumberInputProps } from './NumberInput';
 
 const useStyles = makeStyles({
   inputInput: {
     width: '60px',
-    flexGrow: 10,
+    flexGrow: 1,
+    height: '40px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
   },
+
   adornment: {
     color: '#999',
-    display: 'grid',
-    gridAutoRows: '1fr',
-    gridTemplateColumns: '1fr 35px',
-    columnGap: '5px',
+    height: '30px',
+    display: 'flex',
     alignItems: 'center',
-    fontSize: '14px',
   },
-  spinners: {
-    height: '100 %',
+
+  spinnersEnd: {
+    display: 'flex',
+    '& > *': {
+      marginLeft: '5px',
+    },
+  },
+
+  button: {
+    width: '40px',
+    minWidth: '40px',
+    height: '40px',
+    padding: '0px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '20px',
+    overflow: 'hidden',
+
+    '& span': {
+      marginLeft: '-0.4em',
+    },
+  },
+
+  spinnersStart: {
+    height: '40px',
     width: '30px',
-    marginLeft: '5px',
-    '& > *: not(: first- child)': {
+    display: 'flex',
+    flexDirection: 'column',
+    marginRight: '10px',
+
+    '& > *:not(:first-child)': {
       borderTopRightRadius: '0px',
       borderTopLeftRadius: '0px',
       borderTop: '1px solid #dedede',
     },
-    '& > *: not(: last - child)': {
+    '& > *:not(:last-child)': {
       borderBottomRightRadius: '0px',
       borderBottomLeftRadius: '0px',
     },
   },
-  button: {
-    maxWidth: '100 %',
-    minWidth: '30px',
+
+  spin: {
     width: '30px',
-    height: '50 %',
+    minWidth: '30px',
+    height: '20px',
     padding: '0',
     margin: '0',
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    '& svg': {
+
+    '& svg:': {
       fontSize: '14px',
     },
   },
 });
 
-export function getDecimalCount(number: number) {
-  if (isNaN(number)) return 0;
-  const numStr = String(number);
-  const decimalStr = numStr.split('.')[1];
-  return decimalStr ? decimalStr.length : 0;
-}
-
-export interface NumberInputProps extends Omit<InputProps, 'onChange'> {
-  id?: string;
-  value: number;
-  min?: number;
-  max?: number;
-  step?: number;
-  unit?: string;
-  onChange: (value: number) => void;
-  nullable?: boolean;
-}
-
-export const NumberInput: React.FC<NumberInputProps> = ({
+export const QuickNumberInput: React.FC<NumberInputProps> = ({
   id,
   value,
-  min,
-  max,
-  unit,
-  onChange,
+  min = -Infinity,
+  max = Infinity,
+  unit = '',
   nullable = false,
-  disabled,
+  className,
+  onChange,
   ...rest
 }) => {
-  const [tmpValue, setTmpValue] = React.useState<string | null>(null);
-  const [step, setStep] = React.useState(rest.step);
   const styles = useStyles();
+  const [tmpValue, setTmpValue] = React.useState(null);
+  const [step, setStep] = React.useState(rest.step);
+
   /**
    * Infers the input step from the decimal count of
    * the last value that was input by the user
@@ -158,11 +172,11 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     };
   };
 
-  const increment = () => {
+  const increment = (step: number) => {
     onChange(clamp(value + step));
   };
 
-  const decrement = () => {
+  const decrement = (step: number) => {
     onChange(clamp(value - step));
   };
 
@@ -191,8 +205,8 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowUp') increment();
-    else if (e.key === 'ArrowDown') decrement();
+    if (e.key === 'ArrowUp') increment(1);
+    else if (e.key === 'ArrowDown') decrement(1);
   };
 
   const handleBlur = () => {
@@ -227,27 +241,62 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   return (
     <Input
       id={id}
+      className={className}
+      classes={{
+        input: styles.inputInput,
+      }}
+      disableUnderline={rest.disableUnderline}
       onChange={handleChange}
       value={inputValue}
+      inputProps={{
+        ...rest.inputProps,
+        onKeyDown: handleKeyDown,
+      }}
       onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
-      disabled={disabled}
-      endAdornment={
+      disabled={rest.disabled}
+      startAdornment={
         <div className={styles.adornment}>
-          <span aria-label="number-input-unit">{unit}</span>
-          <div className={styles.spinners}>
-            <Button tabIndex={-1} className={styles.button} onClick={increment} disabled={disabled}>
+          <div className={styles.spinnersStart}>
+            <Button
+              tabIndex={-1}
+              className={styles.spin}
+              onClick={() => increment(1)}
+              disabled={rest.disabled}
+            >
               <Icon type="up" />
             </Button>
-            <Button tabIndex={-1} className={styles.button} onClick={decrement} disabled={disabled}>
+            <Button
+              tabIndex={-1}
+              className={styles.spin}
+              onClick={() => decrement(1)}
+              disabled={rest.disabled}
+            >
               <Icon type="down" />
             </Button>
           </div>
         </div>
       }
-      {...rest}
+      endAdornment={
+        <div className={styles.adornment}>
+          <div className={styles.spinnersEnd}>
+            {[1, 2, 5].map((step) => {
+              return (
+                <Button
+                  key={step}
+                  tabIndex={-1}
+                  className={styles.button}
+                  onClick={() => increment(step)}
+                  variant="outlined"
+                  color="secondary"
+                  disabled={rest.disabled}
+                >
+                  +{step}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      }
     />
   );
 };
-
-export default NumberInput;

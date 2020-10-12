@@ -18,7 +18,13 @@ interface DateFieldClasses {
   input?: string;
 }
 
-export const DateField: React.FC<DateFieldProps> = ({ id, label, classes, className, ...rest }) => {
+export const DateField: React.FC<DateFieldProps> = ({
+  id,
+  label,
+  classes,
+  className,
+  ...rest
+}) => {
   const fieldProps = { id, fieldType: 'date', ...rest };
   const field = useField(fieldProps);
 
@@ -52,7 +58,7 @@ export const DateField: React.FC<DateFieldProps> = ({ id, label, classes, classN
         onChange={handleChange}
         InputProps={{
           endAdornment: field.value && (
-            <Box clone height="30px" width="30px" pointer>
+            <Box clone height="30px" width="30px" p={0} pointer>
               <IconButton onClick={handleReset}>
                 <Icon type="close" />
               </IconButton>
