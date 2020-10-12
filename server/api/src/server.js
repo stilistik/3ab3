@@ -10,6 +10,8 @@ const cors = require('cors');
 const { verifyTokenInConnection } = require('./auth/verify');
 const prisma = require('./prisma');
 
+const { MODE } = process.env;
+
 const API_PATH = '/api';
 const SUB_PATH = '/sub';
 const PORT = 4000;
@@ -26,6 +28,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Authentication Endpoints
 app.use(passport.initialize());
+
+if (MODE === 'development') {
+  app.post('/auth/passwordless/debugsession', auth.passwordless.debugSession);
+}
 
 app.post(
   '/auth/passwordless/request',

@@ -10,6 +10,7 @@ const {
   MAILGUN_API_SECRET,
   MAILGUN_DOMAIN,
   MEMBER_CLIENT_URL,
+  API_MAINTENANCE_PASSWORD,
 } = process.env;
 
 const mailgun = require('mailgun-js')({
@@ -103,7 +104,39 @@ const requestToken = async (req, res) => {
   }
 };
 
+const debugSession = async (req, res) => {
+  try {
+    console.log(req.body);
+
+    if (req.body.password !== API_MAINTENANCE_PASSWORD) {
+      throw new Error('Invalid api maintencance password supplied.');
+    }
+
+    const user = await prisma.user({ email: req.body.email });
+
+    if (!user) {
+      throw new Error('User not found.');
+    }
+
+    const accessToken = jwt.sign(
+      {
+        id: user.id,
+        timestamp: +new Date(),
+      },
+      ACCESS_TOKEN_SECRET,
+      { expiresIn: ACCESS_TOKEN_EXPIRATION }
+    );
+
+    res.status(200).send({
+      access_token: accessToken,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   requestEmail,
   requestToken,
+  debugSession,
 };
