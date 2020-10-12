@@ -2,13 +2,10 @@ import React from 'react';
 import { Post, CreatePost, Box } from 'Components/index';
 import { Grid, Button } from '@material-ui/core';
 import { DocumentNode } from 'graphql';
-
-export interface Post {
-  id: string;
-}
+import { Post as TPost } from 'Graphql/types';
 
 interface PostFeedProps {
-  posts: Post[];
+  posts: TPost[];
   refetch: { query: DocumentNode; variables: any }[];
   hasNext: boolean;
   cursor: string;

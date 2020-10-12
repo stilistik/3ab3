@@ -3,14 +3,7 @@ import { EventCard, Grid, Box } from 'Components/index';
 import { CreateEvent } from './CreateEvent';
 import { Button } from '@material-ui/core';
 import { DocumentNode } from 'graphql';
-
-interface Event {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  image: string;
-}
+import { Event } from 'Graphql/types';
 
 interface EventFeedProps {
   events: Event[];

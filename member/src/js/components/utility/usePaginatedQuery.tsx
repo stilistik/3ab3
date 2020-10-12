@@ -1,21 +1,20 @@
-import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { DocumentNode } from 'graphql';
 
-interface UsePaginatedQueryReturn {
+interface UsePaginatedQueryReturn<T> {
   fetchMore: (cursor: string) => void;
   hasNext: boolean;
   cursor: string | null;
-  nodes: Array<any>;
+  nodes: Array<T>;
   loading: boolean;
   error: Error | null;
 }
 
-export const usePaginatedQuery = (
+export function usePaginatedQuery<T>(
   query: DocumentNode,
   first: number,
   after: string = null
-): UsePaginatedQueryReturn => {
+): UsePaginatedQueryReturn<T> {
   const queryName = (query as any).definitions[0].selectionSet.selections[0]
     .name.value;
 
@@ -57,4 +56,4 @@ export const usePaginatedQuery = (
   }
 
   return { loading, error, fetchMore, hasNext: false, nodes: [], cursor: null };
-};
+}

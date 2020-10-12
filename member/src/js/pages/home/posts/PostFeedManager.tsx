@@ -2,6 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { PostFeed } from './PostFeed';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
+import { Post } from 'Graphql/types';
 
 export const FEED = gql`
   query($first: Int!, $after: String) {
@@ -38,7 +39,7 @@ export const PostFeedManager: React.FC = () => {
     fetchMore,
     hasNext,
     cursor,
-  } = usePaginatedQuery(FEED, 10);
+  } = usePaginatedQuery<Post>(FEED, 10);
 
   if (loading || error) return null;
   return (

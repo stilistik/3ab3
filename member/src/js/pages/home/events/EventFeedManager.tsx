@@ -2,6 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { EventFeed } from './EventFeed';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
+import { Event } from 'Graphql/types';
 
 export const FEED = gql`
   query($first: Int!, $after: String) {
@@ -33,7 +34,7 @@ export const EventFeedManager: React.FC = ({}) => {
     fetchMore,
     hasNext,
     cursor,
-  } = usePaginatedQuery(FEED, 3);
+  } = usePaginatedQuery<Event>(FEED, 3);
 
   if (loading || error) return null;
 
