@@ -2,12 +2,11 @@ import React from 'react';
 import { EventCard, Grid, Box } from 'Components/index';
 import { CreateEvent } from './CreateEvent';
 import { Button } from '@material-ui/core';
-import { DocumentNode } from 'graphql';
 import { Event } from 'Graphql/types';
 
 interface EventFeedProps {
   events: Event[];
-  refetch: { query: DocumentNode; variables: any }[];
+  refetch: () => Promise<any>;
   hasNext: boolean;
   cursor: string;
   more: (cursor: string) => void;

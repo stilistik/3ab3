@@ -1,35 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { PostFeed } from './PostFeed';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
 import { Post } from 'Graphql/types';
-
-export const FEED = gql`
-  query($first: Int!, $after: String) {
-    feed(first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          author {
-            id
-            name
-            avatar
-          }
-          date
-          text
-          image
-          link
-        }
-      }
-    }
-  }
-`;
-
-const COUNT = 10;
+import { POST_FEED } from 'Graphql/queries';
 
 export const PostFeedManager: React.FC = () => {
   const {
@@ -39,7 +12,8 @@ export const PostFeedManager: React.FC = () => {
     fetchMore,
     hasNext,
     cursor,
-  } = usePaginatedQuery<Post>(FEED, 10);
+    refetch
+  } = usePaginatedQuery<Post>(POST_FEED, 10);
 
   if (loading || error) return null;
   return (
@@ -48,7 +22,7 @@ export const PostFeedManager: React.FC = () => {
       more={fetchMore}
       hasNext={hasNext}
       cursor={cursor}
-      refetch={[{ query: FEED, variables: { first: COUNT } }]}
+      refetch={refetch}
     />
   );
 };

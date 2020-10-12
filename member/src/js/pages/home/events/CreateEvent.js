@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'Components';
+import { Icon, Message } from 'Components';
 import {
   Typography,
   AccordionDetails,
@@ -31,8 +31,8 @@ export const CreateEvent = ({ refetch }) => {
         variables: {
           input: values,
         },
-        refetchQueries: () => refetch,
       });
+      await refetch();
       setExpanded(false);
     } catch (error) {
       Message.error(error.message);

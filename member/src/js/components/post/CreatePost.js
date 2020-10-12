@@ -26,8 +26,8 @@ class CreatePost extends React.Component {
     try {
       await this.createPost({
         variables: { input: values },
-        refetchQueries: () => this.props.refetch,
       });
+      await this.props.refetch();
     } catch (error) {
       this.props.message({ type: 'error', text: error.message });
       return;

@@ -1,32 +1,10 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { EventFeed } from './EventFeed';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
 import { Event } from 'Graphql/types';
+import { FUTURE_EVENT_FEED } from 'Graphql/queries';
 
-export const FEED = gql`
-  query($first: Int!, $after: String) {
-    futureEvents(first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          title
-          description
-          date
-          image
-        }
-      }
-    }
-  }
-`;
-
-const COUNT = 10;
-
-export const EventFeedManager: React.FC = ({}) => {
+export const EventFeedManager: React.FC = () => {
   const {
     loading,
     error,
@@ -34,7 +12,8 @@ export const EventFeedManager: React.FC = ({}) => {
     fetchMore,
     hasNext,
     cursor,
-  } = usePaginatedQuery<Event>(FEED, 3);
+    refetch,
+  } = usePaginatedQuery<Event>(FUTURE_EVENT_FEED, 3);
 
   if (loading || error) return null;
 
@@ -44,7 +23,7 @@ export const EventFeedManager: React.FC = ({}) => {
       more={fetchMore}
       hasNext={hasNext}
       cursor={cursor}
-      refetch={[{ query: FEED, variables: { first: COUNT } }]}
+      refetch={refetch}
     />
   );
 };

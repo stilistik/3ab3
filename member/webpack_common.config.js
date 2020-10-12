@@ -96,6 +96,7 @@ module.exports = {
       History: path.resolve(__dirname, 'src/js/history/'),
       Redux: path.resolve(__dirname, 'src/js/redux'),
       Apollo: path.resolve(__dirname, 'src/js/apollo'),
+      Graphql: path.resolve(__dirname, 'src/js/graphql'),
       Style: path.resolve(__dirname, 'src/js/style'),
       Utils: path.resolve(__dirname, 'src/js/utils'),
     },

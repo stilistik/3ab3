@@ -6,7 +6,7 @@ import { Post as TPost } from 'Graphql/types';
 
 interface PostFeedProps {
   posts: TPost[];
-  refetch: { query: DocumentNode; variables: any }[];
+  refetch: () => Promise<any>;
   hasNext: boolean;
   cursor: string;
   more: (cursor: string) => void;

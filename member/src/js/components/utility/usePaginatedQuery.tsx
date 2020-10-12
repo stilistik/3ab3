@@ -8,6 +8,7 @@ interface UsePaginatedQueryReturn<T> {
   nodes: Array<T>;
   loading: boolean;
   error: Error | null;
+  refetch: () => Promise<any>;
 }
 
 export function usePaginatedQuery<T>(
@@ -18,7 +19,7 @@ export function usePaginatedQuery<T>(
   const queryName = (query as any).definitions[0].selectionSet.selections[0]
     .name.value;
 
-  const { loading, error, data, fetchMore: _fetchMore } = useQuery(query, {
+  const { loading, error, data, fetchMore: _fetchMore, refetch } = useQuery(query, {
     variables: { first, after },
   });
 
@@ -52,8 +53,8 @@ export function usePaginatedQuery<T>(
       : null;
     const hasNext = data[queryName].pageInfo.hasNextPage;
 
-    return { fetchMore, hasNext, cursor, nodes, loading: false, error: null };
+    return { fetchMore, refetch, hasNext, cursor, nodes, loading: false, error: null };
   }
 
-  return { loading, error, fetchMore, hasNext: false, nodes: [], cursor: null };
+  return { loading, error, fetchMore, refetch, hasNext: false, nodes: [], cursor: null };
 }
