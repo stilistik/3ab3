@@ -17,14 +17,14 @@ const USER = gql`
 
 export const DesktopMessenger = (props) => {
   return (
-    <Grid.Fix container spacing={3}>
-      <Grid.Fix item xs={4}>
+    <Grid.Flex container spacing={3}>
+      <Grid.Flex item xs={4}>
         <ChatManager {...props} />
-      </Grid.Fix>
-      <Grid.Fix item xs={8}>
+      </Grid.Flex>
+      <Grid.Flex item xs={8}>
         <MessageManager {...props} />
-      </Grid.Fix>
-    </Grid.Fix>
+      </Grid.Flex>
+    </Grid.Flex>
   );
 };
 
