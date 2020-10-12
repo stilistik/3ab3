@@ -29,7 +29,7 @@ class TodoForm extends React.Component {
             style={{ marginBottom: '3px' }}
           />
           <Button variant="contained" color="primary" type="submit">
-            Submit
+            Add Todo
           </Button>
         </Form>
       </Paper>
