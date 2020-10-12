@@ -4,6 +4,7 @@ import { Grid, Box } from 'Components';
 import { GlobalBalanceChart } from './GlobalBalanceChart';
 import GlobalConsumptionChart from './GlobalConsumptionChart';
 import BalanceTable from './BalanceTable';
+import { PaymentReminder } from './PaymentReminder';
 
 export const Dashboard = () => {
   return (
@@ -22,6 +23,9 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <GlobalConsumptionChart />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <PaymentReminder />
           </Grid>
         </Grid>
       </Box>
