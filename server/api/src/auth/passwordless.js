@@ -75,8 +75,6 @@ const requestToken = async (req, res) => {
 
     if (!user) throw new Error('requestToken: User not found');
 
-    console.log(token, user.loginToken);
-
     if (token !== user.loginToken)
       throw new Error('requestToken: invalid login token');
 
@@ -106,8 +104,6 @@ const requestToken = async (req, res) => {
 
 const debugSession = async (req, res) => {
   try {
-    console.log(req.body);
-
     if (req.body.password !== API_MAINTENANCE_PASSWORD) {
       throw new Error('Invalid api maintencance password supplied.');
     }

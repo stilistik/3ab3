@@ -82,12 +82,14 @@ const MobileProfile = () => {
 const Profile = () => {
   return (
     <Grid.Default>
-      <Hidden smUp>
-        <MobileProfile />
-      </Hidden>
-      <Hidden xsDown>
-        <DesktopProfile />
-      </Hidden>
+      <Box py="20px">
+        <Hidden smUp>
+          <MobileProfile />
+        </Hidden>
+        <Hidden xsDown>
+          <DesktopProfile />
+        </Hidden>
+      </Box>
     </Grid.Default>
   );
 };

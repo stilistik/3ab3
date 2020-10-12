@@ -34,18 +34,16 @@ export const Checklist = ({ initValues }) => {
   };
 
   return (
-    <Box py="20px">
-      <Grid.Default>
+    <Grid.Default>
+      <Box py="20px">
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h5">
-              CHECKLIST
-            </Typography>
+            <Typography variant="h5">CHECKLIST</Typography>
             <Divider />
             <ChecklistForm onSubmit={onSubmit} initValues={initValues} />
           </Grid>
         </Grid>
-      </Grid.Default>
-    </Box>
+      </Box>
+    </Grid.Default>
   );
 };
