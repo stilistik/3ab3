@@ -8,20 +8,38 @@ interface LoadingProps {
   type: 'absolute' | 'relative';
   size: 'large' | 'small';
   delay: number;
+  color?: string;
 }
 
-const RelativeLoading: React.FC<LoadingProps> = ({ size }) => {
+const RelativeLoading: React.FC<LoadingProps> = ({ size, color }) => {
   return (
     <Box.Center role="alert" aria-busy={true} aria-label="loading">
-      {size === 'large' ? <RingSpinner /> : <Icon type="loading" />}
+      {size === 'large' ? (
+        <RingSpinner color={color} />
+      ) : (
+        <Icon type="loading" style={{ color: color }} />
+      )}
     </Box.Center>
   );
 };
 
-const AbsoluteLoading: React.FC<LoadingProps> = ({ size }) => {
+const AbsoluteLoading: React.FC<LoadingProps> = ({ size, color }) => {
   return (
-    <Box.Center h="100vh" w="100vw" pos="fixed" top="0px" left="0px" role="alert" aria-label="loading" aria-busy={true}>
-      {size === 'large' ? <RingSpinner /> : <Icon type="loading" />}
+    <Box.Center
+      h="100vh"
+      w="100vw"
+      pos="fixed"
+      top="0px"
+      left="0px"
+      role="alert"
+      aria-label="loading"
+      aria-busy={true}
+    >
+      {size === 'large' ? (
+        <RingSpinner color={color} />
+      ) : (
+        <Icon type="loading" style={{ color: color }} />
+      )}
     </Box.Center>
   );
 };

@@ -10,7 +10,7 @@ const useRingStyles = makeStyles((theme) => ({
       transform: 'rotate(360deg)',
     },
   },
-  loading: {
+  loading: ({ color }: SpinnerProps) => ({
     display: 'inline-block',
     position: 'relative',
     width: '60px',
@@ -25,7 +25,8 @@ const useRingStyles = makeStyles((theme) => ({
       border: '3px solid #fff',
       borderRadius: '50%',
       animation: '$ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
-      borderColor: `${theme.palette.primary.main} transparent transparent transparent`,
+      borderColor: `${color ||
+        theme.palette.primary.main} transparent transparent transparent`,
     },
     '& div:nth-child(1)': {
       animationDelay: '-0.45s',
@@ -36,11 +37,15 @@ const useRingStyles = makeStyles((theme) => ({
     '& div:nth-child(3)': {
       animationDelay: '-0.15s',
     },
-  },
+  }),
 }));
 
-export const RingSpinner = () => {
-  const styles = useRingStyles();
+interface SpinnerProps {
+  color?: string;
+}
+
+export const RingSpinner: React.FC<SpinnerProps> = (props) => {
+  const styles = useRingStyles(props);
   return (
     <div className={styles.loading}>
       <div></div>
@@ -70,7 +75,7 @@ const useChaseStyles = makeStyles((theme) => ({
     position: 'relative',
     animation: '$chase 2.5s infinite linear both',
   },
-  dot: {
+  dot: ({ color }: SpinnerProps) => ({
     width: '100%',
     height: '100%',
     position: 'absolute',
@@ -82,7 +87,7 @@ const useChaseStyles = makeStyles((theme) => ({
       display: 'block',
       width: '25%',
       height: '25%',
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: color || theme.palette.primary.main,
       borderRadius: '100%',
       animation: '$before 2.0s infinite ease-in-out both',
     },
@@ -122,11 +127,11 @@ const useChaseStyles = makeStyles((theme) => ({
         animationDelay: '-0.6s',
       },
     },
-  },
+  }),
 }));
 
-export const ChaseProgress = () => {
-  const styles = useChaseStyles();
+export const ChaseProgress: React.FC<SpinnerProps> = (props) => {
+  const styles = useChaseStyles(props);
   return (
     <div className={styles.chase}>
       <div className={styles.dot}></div>

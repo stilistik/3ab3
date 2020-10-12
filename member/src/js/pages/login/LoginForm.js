@@ -66,7 +66,11 @@ const EmailForm = ({ setEmailSent }) => {
         <Icon type="mail" />
         <Box ml={1}>Request Login Link</Box>
       </Fab>
-      {loading && <Loading color="#bbb" style={{ marginTop: 20 }} />}
+      {loading && (
+        <Box mt={3}>
+          <Loading color="#f2f2f2" />
+        </Box>
+      )}
     </Form>
   );
 };
