@@ -6,8 +6,6 @@ import { FieldError, FieldProps } from '../types';
 import { getBackendUrl } from 'Apollo/Utils';
 import clx from 'classnames';
 
-const styles: any = {};
-
 interface AvatarEmptyProps {
   error?: FieldError;
 }
@@ -50,7 +48,7 @@ interface LabelProps {
 const Label: React.FC<LabelProps> = ({ error, label }) => {
   return (
     <div>
-      <Typography variant="subtitle1" className={styles.typo}>
+      <Typography variant="subtitle1">
         {label}
       </Typography>
       {error ? (
@@ -69,6 +67,7 @@ interface DisplayProps {
 }
 
 const Display: React.FC<DisplayProps> = ({ url, cdn, error }) => {
+  const styles = useAvatarStyles();
   if (url) {
     return <Avatar src={url} className={styles.avatar} />;
   } else if (cdn) {
@@ -118,7 +117,7 @@ export const ImageField: React.FC<ImageFieldProps> = ({
       />
       <label htmlFor={id}>
         <Box clone p={0} mr={2}>
-          <IconButton className={styles.button} component="span">
+          <IconButton component="span">
             <Display
               url={src}
               cdn={field.value as string}
