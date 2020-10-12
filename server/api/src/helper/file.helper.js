@@ -3,7 +3,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const { ValidationError, UserInputError } = require('apollo-server-express');
 
 const UPLOAD_DIR = path.resolve(process.env.STORAGE_ROOT);

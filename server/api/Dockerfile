@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:erbium
 LABEL version="0.0.1"
 LABEL maintainer="Philipp Gerber <philipp@rundumeli.ch>"
 
