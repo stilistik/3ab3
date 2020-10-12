@@ -13,5 +13,5 @@ export const getResourceURL = (path) => {
  * deployment target, it is different for a cloud and on premise deployment.
  */
 export const getBackendUrl = () => {
-  return `${window.location.protocol}//${window.location.hostname}:4000`;
+  `${window.location.protocol}//${window.location.hostname}:4000`;
 };

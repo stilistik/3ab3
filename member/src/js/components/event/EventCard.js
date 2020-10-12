@@ -13,6 +13,7 @@ import EventComments from './EventComments';
 import EventStats from './EventStats';
 import SupportEvent from './SupportEvent';
 import { requestRoute } from 'History';
+import { getBackendUrl } from 'Apollo/Utils';
 
 import styles from './EventCard.less';
 

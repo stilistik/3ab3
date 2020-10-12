@@ -1,9 +1,10 @@
 import React from 'react';
-import { IconButton, Avatar, Typography } from '@material-ui/core';
-import { Icon } from 'Components/index';
+import { IconButton, Avatar, Typography, makeStyles } from '@material-ui/core';
+import { Box, Icon } from 'Components/index';
 import { useField } from '../UseField';
 import { FieldError, FieldProps } from '../types';
 import { getBackendUrl } from 'Apollo/Utils';
+import clx from 'classnames';
 
 const styles: any = {};
 
@@ -11,10 +12,31 @@ interface AvatarEmptyProps {
   error?: FieldError;
 }
 
+const useAvatarStyles = makeStyles((theme) => ({
+  avatar: {
+    width: '100px',
+    height: '100px',
+    backgroundColor: '#bdbdbd',
+    cursor: 'pointer',
+    transition: 'all 0.5s ease',
+  },
+  error: {
+    border: `1px solid ${theme.palette.error.main}`,
+  },
+  icon: {
+    position: 'absolute',
+    color: 'white',
+    zIndex: 10,
+    transform: 'scale3d(1.5, 1.5, 1.5)',
+    transition: 'all 0.5s ease',
+  },
+}));
+
 const AvatarEmpty: React.FC<AvatarEmptyProps> = ({ error }) => {
-  const cls = error ? 'avatar-empty-error' : 'avatar-empty';
+  const styles = useAvatarStyles();
+
   return (
-    <Avatar className={styles[cls]}>
+    <Avatar className={clx(styles.avatar, { [styles.error]: Boolean(error) })}>
       <Icon className={styles.icon} type="upload" />
     </Avatar>
   );
@@ -32,9 +54,9 @@ const Label: React.FC<LabelProps> = ({ error, label }) => {
         {label}
       </Typography>
       {error ? (
-        <Typography variant="subtitle2" className={styles.error}>
-          {error.message}
-        </Typography>
+        <Box color="error.main">
+          <Typography variant="subtitle2">{error.message}</Typography>
+        </Box>
       ) : null}
     </div>
   );
@@ -86,22 +108,26 @@ export const ImageField: React.FC<ImageFieldProps> = ({
   };
 
   return (
-    <div className={className}>
-      <div className={styles.imagefield}>
-        <input
-          accept="image/*"
-          style={{ display: 'none' }}
-          id={id}
-          type="file"
-          onChange={onChange}
-        />
-        <label htmlFor={id}>
+    <Box.Row className={className}>
+      <input
+        accept="image/*"
+        style={{ display: 'none' }}
+        id={id}
+        type="file"
+        onChange={onChange}
+      />
+      <label htmlFor={id}>
+        <Box clone p={0} mr={2}>
           <IconButton className={styles.button} component="span">
-            <Display url={src} cdn={field.value as string} error={field.error} />
+            <Display
+              url={src}
+              cdn={field.value as string}
+              error={field.error}
+            />
           </IconButton>
-        </label>
-        <Label label={label} error={field.error} />
-      </div>
-    </div>
+        </Box>
+      </label>
+      <Label label={label} error={field.error} />
+    </Box.Row>
   );
 };

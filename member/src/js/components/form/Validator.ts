@@ -72,6 +72,9 @@ export default class Validator {
       case 'divider': {
         return null;
       }
+      case 'image': {
+        return null;
+      }
       default: {
         throw Error(`ValidatorError: FieldType ${fieldInstance.fieldType} not supported`);
       }
