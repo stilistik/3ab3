@@ -57,7 +57,7 @@ export const AuthAppHeader = connect(
           >
             <MenuIcon />
           </IconButton>
-          <Logo />
+          <Logo onClick={() => requestRoute('/home')} />
           <BalanceButton />
           <Messages />
           <ProfileMenu />
