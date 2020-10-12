@@ -16,6 +16,7 @@ const ProductForm = ({ initValues, ...rest }) => {
           className={styles.form}
           onSubmit={onSubmit}
           initValues={initValues}
+          initAfterSubmit={true}
         >
           <ImageField
             className={styles.imagefield}

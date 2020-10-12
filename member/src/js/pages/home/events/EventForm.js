@@ -10,7 +10,12 @@ const EventForm = ({ initValues, ...rest }) => {
   };
 
   return (
-    <Form className={styles.form} onSubmit={onSubmit} initValues={initValues}>
+    <Form
+      className={styles.form}
+      onSubmit={onSubmit}
+      initValues={initValues}
+      initAfterSubmit={true}
+    >
       <ImageField
         className={styles.imagefield}
         id="image"

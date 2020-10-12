@@ -60,8 +60,6 @@ export const GlobalBalanceChart = () => {
       };
     });
 
-  console.log(d);
-
   const chartData = [
     {
       id: 'balance',

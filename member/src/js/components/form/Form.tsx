@@ -2,7 +2,14 @@ import React from 'react';
 import { FormContext } from './FormContext';
 import Validator from './Validator';
 import { isEqual } from 'lodash';
-import { FieldOptions, FormInstance, FieldInstance, Serializable, FieldError, FieldChangeEvent } from './types';
+import {
+  FieldOptions,
+  FormInstance,
+  FieldInstance,
+  Serializable,
+  FieldError,
+  FieldChangeEvent,
+} from './types';
 import { SelectOption } from '../inputs/types';
 import { setBy, getBy } from './Utils';
 
@@ -15,10 +22,17 @@ export interface FormProps {
   ) => NestedRecord<FieldError> | null;
   onFieldChange?: (event: FieldChangeEvent) => void; // fires while user types in inputs
   onFieldCommit?: (id: string, value: Serializable) => void; // fires when input blurs
-  onFieldOptionSelected?: (id: string, value: SelectOption | SelectOption[]) => void;
+  onFieldOptionSelected?: (
+    id: string,
+    value: SelectOption | SelectOption[]
+  ) => void;
   onValidChange?: (valid: boolean) => void;
-  onSubmit: (values: { [id: string]: Serializable }, options: { [id: string]: FieldOptions }) => void;
+  onSubmit: (
+    values: { [id: string]: Serializable },
+    options: { [id: string]: FieldOptions }
+  ) => void;
   disableHelpText?: boolean;
+  initAfterSubmit?: boolean;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -33,6 +47,7 @@ export const Form: React.FC<FormProps> = ({
   onFieldOptionSelected,
   validate: customFormValidate,
   disableHelpText = false, // if this is set to true, the help texts for all form fields will not show
+  initAfterSubmit = false, // if this is set to true, the field values will be set to the init values after submit
   children,
   ...rest
 }) => {
@@ -52,7 +67,10 @@ export const Form: React.FC<FormProps> = ({
     instanceRef.current.fieldIds.forEach((id) => {
       const fieldInitValue = getBy(initValues, id);
       const prevFieldInitValue = getBy(initValueRef.current, id);
-      if (initValueRef.current && !isEqual(fieldInitValue, prevFieldInitValue)) {
+      if (
+        initValueRef.current &&
+        !isEqual(fieldInitValue, prevFieldInitValue)
+      ) {
         _updateFieldValue(id, fieldInitValue);
       }
     });
@@ -71,7 +89,11 @@ export const Form: React.FC<FormProps> = ({
     instanceRef.current.fieldIds.push(id);
 
     // store the field instance
-    instanceRef.current.fields = setBy(instanceRef.current.fields, id, fieldInstance);
+    instanceRef.current.fields = setBy(
+      instanceRef.current.fields,
+      id,
+      fieldInstance
+    );
 
     // set init options
     const fieldInitOptions = getBy(initOpts, id);
@@ -92,6 +114,28 @@ export const Form: React.FC<FormProps> = ({
       // set field default value, call handlers
       _updateFieldValue(id, fieldInstance.defaultValue);
     }
+  }
+
+  function initializeForm() {
+    instanceRef.current.fieldIds.forEach((id) => {
+      const fieldInstance = getBy(instanceRef.current.fields, id);
+      const fieldInitValue = getBy(initValues, id);
+
+      // reset errors and validation
+      instanceRef.current.dirty = false;
+      setBy(instanceRef.current.errors, id, null);
+
+      // set init values
+      if (fieldInitValue) {
+        // set field init value, dont onFieldChange handlers
+        _updateFieldValue(id, fieldInitValue);
+      } else if (fieldInstance.defaultValue) {
+        // set field default value, call handlers
+        _updateFieldValue(id, fieldInstance.defaultValue);
+      } else {
+        _updateFieldValue(id, null);
+      }
+    });
   }
 
   /**
@@ -138,7 +182,10 @@ export const Form: React.FC<FormProps> = ({
 
   function handleFieldChange(
     id: string,
-    changes: { value?: NestedRecord<Serializable>; options?: NestedRecord<FieldOptions> } = {
+    changes: {
+      value?: NestedRecord<Serializable>;
+      options?: NestedRecord<FieldOptions>;
+    } = {
       value: null,
       options: null,
     }
@@ -169,7 +216,10 @@ export const Form: React.FC<FormProps> = ({
     if (onFieldCommit) onFieldCommit(id, value);
   }
 
-  function handleFieldOptionSelected(id: string, value: SelectOption | SelectOption[]) {
+  function handleFieldOptionSelected(
+    id: string,
+    value: SelectOption | SelectOption[]
+  ) {
     if (onFieldOptionSelected) onFieldOptionSelected(id, value);
   }
 
@@ -206,8 +256,14 @@ export const Form: React.FC<FormProps> = ({
    * @param {String} id: The id of the field
    */
   function unregisterField(id: string) {
-    instanceRef.current.fieldIds = instanceRef.current.fieldIds.filter((fieldId) => fieldId !== id);
-    instanceRef.current.fields = setBy(instanceRef.current.fields, id, undefined);
+    instanceRef.current.fieldIds = instanceRef.current.fieldIds.filter(
+      (fieldId) => fieldId !== id
+    );
+    instanceRef.current.fields = setBy(
+      instanceRef.current.fields,
+      id,
+      undefined
+    );
   }
 
   /**
@@ -232,9 +288,14 @@ export const Form: React.FC<FormProps> = ({
 
     // run custom field validation
     const customFieldValidate = field.validate;
-    if (!fieldError && customFieldValidate) fieldError = customFieldValidate(value);
+    if (!fieldError && customFieldValidate)
+      fieldError = customFieldValidate(value);
 
-    instanceRef.current.errors = setBy(instanceRef.current.errors, id, fieldError);
+    instanceRef.current.errors = setBy(
+      instanceRef.current.errors,
+      id,
+      fieldError
+    );
 
     if (fieldError) return false;
     else return true;
@@ -269,7 +330,11 @@ export const Form: React.FC<FormProps> = ({
     const fieldOptions = instanceRef.current.options;
     const formErrors = customFormValidate(fieldValues, fieldOptions);
     if (formErrors && Object.keys(formErrors).length > 0) {
-      instanceRef.current.errors = Object.assign({}, instanceRef.current.errors, formErrors);
+      instanceRef.current.errors = Object.assign(
+        {},
+        instanceRef.current.errors,
+        formErrors
+      );
       formValid = false;
     } else {
       instanceRef.current.errors = {};
@@ -314,6 +379,7 @@ export const Form: React.FC<FormProps> = ({
     const formValid = validateForm();
     if (formValid) {
       onSubmit(instanceRef.current.values, instanceRef.current.options);
+      if (initAfterSubmit) initializeForm();
     } else {
       setFieldErrors();
     }
