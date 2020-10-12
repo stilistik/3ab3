@@ -1,13 +1,7 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { Grid} from 'Components';
-import {
-  Typography,
-  Divider,
-  Hidden,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import { Box, Grid } from 'Components';
+import { Typography, Divider, Hidden, Tabs, Tab } from '@material-ui/core';
 import BalanceChart from './BalanceChart';
 import ConsumptionChart from './ConsumptionChart';
 import CurrentBalance from './CurrentBalance';
@@ -53,36 +47,34 @@ const MobileProfile = () => {
         <Tab label="Charts" />
         <Tab label="History" />
       </Tabs>
-      <Container>
-        <SwipeableViews
-          axis="x"
-          index={value}
-          onChangeIndex={handleChangeIndex}
-          slideStyle={{ overflow: 'hidden' }}
-        >
-          <Grid container>
-            <Grid item xs={12}>
-              <CurrentBalance />
-            </Grid>
+      <SwipeableViews
+        axis="x"
+        index={value}
+        onChangeIndex={handleChangeIndex}
+        slideStyle={{ overflow: 'hidden' }}
+      >
+        <Grid container>
+          <Grid item xs={12}>
+            <CurrentBalance />
           </Grid>
-          <Grid container spacing={3} style={{ overflow: 'hidden' }}>
-            <Grid item xs={12}>
-              <BalanceChart />
-            </Grid>
-            <Grid item xs={12}>
-              <ConsumptionChart />
-            </Grid>
+        </Grid>
+        <Grid container spacing={3} style={{ overflow: 'hidden' }}>
+          <Grid item xs={12}>
+            <BalanceChart />
           </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h5">HISTORY</Typography>
-              <Divider />
-              <br />
-              <TransactionTable />
-            </Grid>
+          <Grid item xs={12}>
+            <ConsumptionChart />
           </Grid>
-        </SwipeableViews>
-      </Container>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant="h5">HISTORY</Typography>
+            <Divider />
+            <br />
+            <TransactionTable />
+          </Grid>
+        </Grid>
+      </SwipeableViews>
     </div>
   );
 };
