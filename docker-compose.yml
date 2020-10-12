@@ -11,17 +11,7 @@ services:
     networks:
       - 3ab3
     command: yarn start
-    environment:
-      - ACCESS_TOKEN_SECRET
-      - ACCESS_TOKEN_EXPIRATION
-      - LOGIN_TOKEN_SECRET
-      - LOGIN_TOKEN_EXPIRATION
-      - STORAGE_ROOT
-      - MAILGUN_DOMAIN
-      - MAILGUN_API_SECRET
-      - PRISMA_SERVICE_SECRET
-      - PRISMA_ENDPOINT
-      - MEMBER_CLIENT_URL
+    env_file: .env
 
   prisma:
     container_name: prisma
@@ -50,9 +40,7 @@ services:
     container_name: postgres
     image: postgres:10.5
     restart: unless-stopped
-    environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+    env_file: .env
     volumes:
       - /var/local/3ab3/postgres/:/var/lib/postgresql/data
     networks:
@@ -60,11 +48,13 @@ services:
 
   proxy:
     container_name: proxy
-    build: ./server/proxy
+    image: nginx:alpine
     ports:
       - '4000:4000'
     volumes:
+      - ./server/proxy/nginx.prod.conf:/etc/nginx/nginx.conf
       - /var/local/3ab3/storage/:/usr/src/app/storage
+
     networks:
       - 3ab3
 
