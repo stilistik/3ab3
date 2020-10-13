@@ -1,5 +1,4 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Paper, Slider, Button, Typography } from '@material-ui/core';
 import {
@@ -10,23 +9,8 @@ import {
   UserAvatar,
   Message,
 } from 'Components/index';
-
-const USER_WITH_DEBT = gql`
-  query($threshold: Int!) {
-    usersWithDebt(threshold: $threshold) {
-      id
-      name
-      avatar
-      balance
-    }
-  }
-`;
-
-const SEND_PAYMENT_REMIDER = gql`
-  mutation($userIds: [ID!]!) {
-    sendPaymentReminder(userIds: $userIds)
-  }
-`;
+import { USERS_WITH_DEBT } from 'Graphql/queries';
+import { SEND_PAYMENT_REMIDER } from 'Graphql/mutations';
 
 interface AffectedUserListProps {
   threshold: number;
@@ -35,7 +19,7 @@ interface AffectedUserListProps {
 const AffectedUserList: React.FC<AffectedUserListProps> = ({ threshold }) => {
   const [sendPaymentReminder] = useMutation(SEND_PAYMENT_REMIDER);
 
-  const { loading, error, data } = useQuery(USER_WITH_DEBT, {
+  const { loading, error, data } = useQuery(USERS_WITH_DEBT, {
     variables: { threshold: -threshold },
   });
 
