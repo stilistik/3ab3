@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, Avatar, Typography, makeStyles } from '@material-ui/core';
+import { Avatar, Typography, makeStyles, Button } from '@material-ui/core';
 import { Box, Icon } from 'Components/index';
 import { useField } from '../UseField';
 import { FieldError, FieldProps } from '../types';
@@ -15,7 +15,6 @@ const useAvatarStyles = makeStyles((theme) => ({
     width: '100px',
     height: '100px',
     backgroundColor: '#bdbdbd',
-    cursor: 'pointer',
     transition: 'all 0.5s ease',
   },
   error: {
@@ -48,12 +47,10 @@ interface LabelProps {
 const Label: React.FC<LabelProps> = ({ error, label }) => {
   return (
     <div>
-      <Typography variant="subtitle1">
-        {label}
-      </Typography>
+      <Typography variant="body2">{label}</Typography>
       {error ? (
         <Box color="error.main">
-          <Typography variant="subtitle2">{error.message}</Typography>
+          <Typography variant="body2">{error.message}</Typography>
         </Box>
       ) : null}
     </div>
@@ -115,18 +112,13 @@ export const ImageField: React.FC<ImageFieldProps> = ({
         type="file"
         onChange={onChange}
       />
-      <label htmlFor={id}>
-        <Box clone p={0} mr={2}>
-          <IconButton component="span">
-            <Display
-              url={src}
-              cdn={field.value as string}
-              error={field.error}
-            />
-          </IconButton>
-        </Box>
-      </label>
-      <Label label={label} error={field.error} />
+      <Display url={src} cdn={field.value as string} error={field.error} />
+      <Box ml={2}>
+        <Label label={label} error={field.error} />
+        <label htmlFor={id}>
+          <Button component="span">Upload</Button>
+        </label>
+      </Box>
     </Box.Row>
   );
 };

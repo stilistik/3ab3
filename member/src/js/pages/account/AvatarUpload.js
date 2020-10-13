@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { IconButton } from '@material-ui/core';
-import { ProfileAvatar, Icon } from 'Components';
+import { IconButton, Typography, Button } from '@material-ui/core';
+import { ProfileAvatar, Icon, Box } from 'Components';
 import { PROFILE_AVATAR } from 'Components';
 
 import styles from './AvatarUpload.css';
@@ -67,33 +67,24 @@ class AvatarUpload extends React.Component {
 class AvatarDisplay extends React.Component {
   render() {
     return (
-      <div style={this.props.style}>
+      <Box.Row>
         <input
           accept="image/*"
           style={{ display: 'none' }}
-          id="contained-button-file"
+          id="avatar-upload"
           type="file"
           onChange={(e) => this.props.onChange(e.target.files[0])}
         />
-        <label htmlFor="contained-button-file">
-          <IconButton
-            className={styles.button}
-            style={{ padding: '0px' }}
-            variant="contained"
-            component="span"
-          >
-            <Icon className={styles.icon} type="upload" />
-            <ProfileAvatar
-              classes={{ avatar: styles.avatar, typo: styles.typo }}
-            />
-          </IconButton>
-        </label>
-      </div>
+        <ProfileAvatar classes={{ avatar: styles.avatar, typo: styles.typo }} />
+        <Box ml={2}>
+          <Typography variant="body2">Profile Image</Typography>
+          <label htmlFor="avatar-upload">
+            <Button component="span">Upload</Button>
+          </label>
+        </Box>
+      </Box.Row>
     );
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AvatarUpload);
+export default connect(null, mapDispatchToProps)(AvatarUpload);
