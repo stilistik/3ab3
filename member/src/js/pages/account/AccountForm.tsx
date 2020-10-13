@@ -2,7 +2,14 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import { EDIT_SELF } from 'Graphql/mutations';
-import { Box, Message, TextField, Form } from 'Components/index';
+import {
+  Box,
+  Message,
+  TextField,
+  DateField,
+  Form,
+  FormSubmit,
+} from 'Components/index';
 import { Serializable } from 'Components/form/types';
 import { User } from 'Graphql/types';
 
@@ -29,14 +36,18 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
           <Box cmb={2}>
             <TextField id="name" label="Name" />
             <TextField id="email" label="Email" type="email" />
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
-            >
-              Submit
-            </Button>
+            <TextField id="phone" label="Phone" />
+            <DateField id="birthdate" label="Birthday" />
+            <FormSubmit>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="primary"
+              >
+                Submit
+              </Button>
+            </FormSubmit>
           </Box>
         </Form>
       </Grid>

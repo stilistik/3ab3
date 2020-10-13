@@ -57,13 +57,9 @@ module.exports = {
     },
     editSelf(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
-      const input = {
-        name: args.input.name,
-        email: args.input.email,
-      };
       return context.prisma.updateUser({
         where: { id },
-        data: input,
+        data: args.input,
       });
     },
     async uploadAvatar(root, args, context) {

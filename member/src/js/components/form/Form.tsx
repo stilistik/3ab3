@@ -51,6 +51,7 @@ export const Form: React.FC<FormProps> = ({
   children,
   ...rest
 }) => {
+  const [canSubmit, setCanSubmit] = React.useState(false);
   const instanceRef = React.useRef<FormInstance>({
     fields: {},
     values: {},
@@ -117,6 +118,7 @@ export const Form: React.FC<FormProps> = ({
   }
 
   function initializeForm() {
+    setCanSubmit(false);
     instanceRef.current.fieldIds.forEach((id) => {
       const fieldInstance = getBy(instanceRef.current.fields, id);
       const fieldInitValue = getBy(initValues, id);
@@ -173,6 +175,8 @@ export const Form: React.FC<FormProps> = ({
    * @param {IFieldValue} value: The new value of the field
    */
   function setFieldValue(id: string, value: Serializable) {
+    setCanSubmit(true);
+
     _updateFieldValue(id, value);
 
     // get changes and run field change handler if it exists
@@ -240,6 +244,7 @@ export const Form: React.FC<FormProps> = ({
    * @param {*} opts: The new options state of the field
    */
   function setFieldOptions(id: string, opts: FieldOptions) {
+    setCanSubmit(true);
     _updateFieldOptions(id, opts);
 
     // get changes and run field change handler if it exists
@@ -380,6 +385,7 @@ export const Form: React.FC<FormProps> = ({
     if (formValid) {
       onSubmit(instanceRef.current.values, instanceRef.current.options);
       if (initAfterSubmit) initializeForm();
+      setCanSubmit(false);
     } else {
       setFieldErrors();
     }
@@ -396,6 +402,7 @@ export const Form: React.FC<FormProps> = ({
         onFieldCommit: handleFieldCommit,
         onFieldOptionSelected: handleFieldOptionSelected,
         disableHelpText: disableHelpText,
+        canSubmit,
       }}
     >
       <form noValidate onSubmit={handleSubmit} {...rest}>

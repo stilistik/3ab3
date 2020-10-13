@@ -11,6 +11,7 @@ export interface FormContextValue {
   setFieldOptions: (id: string, opts: FieldOptions) => void;
   requestSubmit: () => void;
   disableHelpText?: boolean;
+  canSubmit: boolean;
 }
 
 export const FormContext = React.createContext<FormContextValue | undefined>(undefined);

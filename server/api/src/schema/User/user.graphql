@@ -43,8 +43,10 @@ input UserInput {
 }
 
 input EditSelfInput {
-  name: String!
-  email: String!
+  name: String
+  email: String
+  phone: String
+  birthdate: DateTime
 }
 
 extend type Query {
@@ -60,5 +62,5 @@ extend type Mutation {
   editUser(userId: ID!, input: UserInput!): User! @hasRole
   editSelf(input: EditSelfInput!): User! @isAuthenticated
   uploadAvatar(file: Upload!): User! @isAuthenticated
-  setOnlineStatus(userId: ID! isOnline: Boolean!): User!
+  setOnlineStatus(userId: ID!, isOnline: Boolean!): User!
 }
