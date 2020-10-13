@@ -32,7 +32,7 @@ export const Events = () => {
     fetchMore,
     hasNext,
     cursor,
-  } = usePaginatedQuery(EVENT_FEED, 3);
+  } = usePaginatedQuery(EVENT_FEED, 10);
 
   if (loading || error) return null;
 
@@ -45,7 +45,7 @@ export const Events = () => {
         <Grid container spacing={3}>
           {nodes.map((event) => {
             return (
-              <Grid key={event.id} item xs={12} lg={6}>
+              <Grid key={event.id} item xs={12} sm={6}>
                 <EventCard event={event} onEdit={onEdit} onDelete={onDelete} />
               </Grid>
             );

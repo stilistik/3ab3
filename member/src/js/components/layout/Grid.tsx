@@ -28,42 +28,47 @@ const useContainerStyles = makeStyles<any, FlexGridProps>((theme) => ({
   }),
 }));
 
-const FlexGridItem: React.FC<FlexGridProps> = React.forwardRef<GridRef, FlexGridProps>(function FlexGridItem(
-  props,
-  ref
-) {
+const FlexGridItem: React.FC<FlexGridProps> = React.forwardRef<
+  GridRef,
+  FlexGridProps
+>(function FlexGridItem(props, ref) {
   const classes = useItemStyles(props);
   return <MuiGrid ref={ref} item className={classes.item} {...props} />;
 });
 
-const FlexGridContainer: React.FC<FlexGridProps> = React.forwardRef<GridRef, FlexGridProps>(function FlexGridContainer(
-  props,
-  ref
-) {
+const FlexGridContainer: React.FC<FlexGridProps> = React.forwardRef<
+  GridRef,
+  FlexGridProps
+>(function FlexGridContainer(props, ref) {
   const classes = useContainerStyles(props);
-  return <MuiGrid ref={ref} container className={classes.container} {...props} />;
+  return (
+    <MuiGrid ref={ref} container className={classes.container} {...props} />
+  );
 });
 
 FlexGridContainer.defaultProps = {
   spacing: 0,
 };
 
-const FlexGrid: React.FC<FlexGridProps> = React.forwardRef<GridRef, FlexGridProps>(function FlexGrid(
-  { item, container, ...rest },
-  ref
-) {
-  if (item && container) throw new Error('FlexGrid: Must be either container or item but not both.');
+const FlexGrid: React.FC<FlexGridProps> = React.forwardRef<
+  GridRef,
+  FlexGridProps
+>(function FlexGrid({ item, container, ...rest }, ref) {
+  if (item && container)
+    throw new Error('FlexGrid: Must be either container or item but not both.');
   if (item) return <FlexGridItem ref={ref} {...rest} />;
   else if (container) return <FlexGridContainer ref={ref} {...rest} />;
   else return <MuiGrid ref={ref} {...rest} />;
 });
 
-const useDefaultStyles = makeStyles({
+const useDefaultStyles = makeStyles((theme) => ({
   grid: {
     overflowY: 'auto',
     height: '100%',
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
-});
+}));
 
 const DefaultGrid: React.FC<FlexGridProps> = ({ children, ...rest }) => {
   const classes = useDefaultStyles();
@@ -76,14 +81,18 @@ const DefaultGrid: React.FC<FlexGridProps> = ({ children, ...rest }) => {
   );
 };
 
-export type GridType = React.ForwardRefExoticComponent<GridProps & React.RefAttributes<HTMLDivElement>> & {
+export type GridType = React.ForwardRefExoticComponent<
+  GridProps & React.RefAttributes<HTMLDivElement>
+> & {
   Flex?: React.FC<FlexGridProps>;
   Default?: React.FC<FlexGridProps>;
 };
 
-export const Grid: GridType = React.forwardRef<GridRef, GridProps>(function Grid(props, ref) {
-  return <MuiGrid ref={ref} {...props} />;
-});
+export const Grid: GridType = React.forwardRef<GridRef, GridProps>(
+  function Grid(props, ref) {
+    return <MuiGrid ref={ref} {...props} />;
+  }
+);
 
 Grid.Flex = FlexGrid;
 Grid.Default = DefaultGrid;

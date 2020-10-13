@@ -27,7 +27,7 @@ class DeleteButton extends React.Component {
     const { anchorEl } = this.state;
     return (
       <div>
-        <IconButton size="small" color="primary" onClick={this.onClick}>
+        <IconButton color="primary" onClick={this.onClick}>
           <Icon type="delete" />
         </IconButton>
         <DeleteConfirm

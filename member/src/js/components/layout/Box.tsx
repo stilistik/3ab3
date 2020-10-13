@@ -7,9 +7,20 @@ export type BoxRef = HTMLDivElement;
 
 type Display = 'none' | 'flex' | 'block' | 'grid';
 type Position = 'relative' | 'absolute' | 'fixed' | 'sticky';
-type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
+type JustifyContent =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around';
 type AlignItems = 'stretch' | 'center' | 'flex-start' | 'flex-end' | 'baseline';
-type AlignContent = 'stretch' | 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around';
+type AlignContent =
+  | 'stretch'
+  | 'center'
+  | 'flex-start'
+  | 'flex-end'
+  | 'space-between'
+  | 'space-around';
 type FlexDirection = 'row' | 'column';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 type Overflow = 'hidden' | 'visible' | 'auto' | 'scroll';
@@ -117,6 +128,9 @@ export interface BoxProps extends MuiBoxProps {
   cptnl?: string | number;
   cmbnl?: string | number;
   cpbnl?: string | number;
+
+  // css overrides
+  css?: React.CSSProperties;
 }
 
 export interface FlexBoxProps extends BoxProps {
@@ -182,54 +196,63 @@ const useStyles = makeStyles<any, BoxProps>((theme: any) => ({
   }),
 }));
 
-export const CenterBox: ForwardRefType & React.FC<BoxProps> = React.forwardRef<BoxRef, BoxProps>(function CenterBox(
-  props,
-  ref
-) {
-  return (
-    <Box ref={ref} width="100%" height="100%" display="flex" alignItems="center" justifyContent="center" {...props} />
-  );
-});
-
-export const FillBox: ForwardRefType & React.FC<BoxProps> = React.forwardRef<BoxRef, BoxProps>(function FillBox(
-  props,
-  ref
-) {
-  return <Box ref={ref} width="100%" height="100%" {...props} />;
-});
-
-export const RowBox: ForwardRefType & React.FC<BoxProps> = React.forwardRef<BoxRef, BoxProps>(function RowBox(
-  props,
-  ref
-) {
-  return <Box ref={ref} display="flex" alignItems="center" {...props} />;
-});
-
-export const FlexItem: ForwardRefType & React.FC<BoxProps> = React.forwardRef<BoxRef, BoxProps>(function FlexItem(
-  props,
-  ref
-) {
-  return <Box ref={ref} flex="0 1 auto" {...props} />;
-});
-
-export const FlexBox: ForwardRefType & React.FC<FlexBoxProps> = React.forwardRef<BoxRef, FlexBoxProps>(function FlexBox(
-  props,
-  ref
-) {
-  const { column, row, ...rest } = props;
-  if (column && row) throw new Error('FlexBox: Must be either row or column type');
+export const CenterBox: ForwardRefType & React.FC<BoxProps> = React.forwardRef<
+  BoxRef,
+  BoxProps
+>(function CenterBox(props, ref) {
   return (
     <Box
       ref={ref}
       width="100%"
       height="100%"
-      overflow="hidden"
       display="flex"
-      flexDirection={column ? 'column' : 'row'}
-      {...rest}
+      alignItems="center"
+      justifyContent="center"
+      {...props}
     />
   );
 });
+
+export const FillBox: ForwardRefType & React.FC<BoxProps> = React.forwardRef<
+  BoxRef,
+  BoxProps
+>(function FillBox(props, ref) {
+  return <Box ref={ref} width="100%" height="100%" {...props} />;
+});
+
+export const RowBox: ForwardRefType & React.FC<BoxProps> = React.forwardRef<
+  BoxRef,
+  BoxProps
+>(function RowBox(props, ref) {
+  return <Box ref={ref} display="flex" alignItems="center" {...props} />;
+});
+
+export const FlexItem: ForwardRefType & React.FC<BoxProps> = React.forwardRef<
+  BoxRef,
+  BoxProps
+>(function FlexItem(props, ref) {
+  return <Box ref={ref} flex="0 1 auto" {...props} />;
+});
+
+export const FlexBox: ForwardRefType &
+  React.FC<FlexBoxProps> = React.forwardRef<BoxRef, FlexBoxProps>(
+  function FlexBox(props, ref) {
+    const { column, row, ...rest } = props;
+    if (column && row)
+      throw new Error('FlexBox: Must be either row or column type');
+    return (
+      <Box
+        ref={ref}
+        width="100%"
+        height="100%"
+        overflow="hidden"
+        display="flex"
+        flexDirection={column ? 'column' : 'row'}
+        {...rest}
+      />
+    );
+  }
+);
 
 // shorthand definitions
 const SHORTHANDS: { [key: string]: string } = {
@@ -317,7 +340,9 @@ const fixBorderColorIssue = (borderColor: string, theme: any) => {
     const name = token[0];
     const tone = token[1];
     if (!theme.palette[name] || !theme.palette[name][tone])
-      throw new Error('Box: borderColor palette or tone not supported by material-ui theme');
+      throw new Error(
+        'Box: borderColor palette or tone not supported by material-ui theme'
+      );
     return theme.palette[name][tone];
   } else if (theme.palette[borderColor]) {
     return theme.palette[borderColor];
@@ -343,7 +368,9 @@ const extractProps = (props: BoxProps) => {
   return [makeStylesProps, muiBoxProps];
 };
 
-type ForwardRefType = React.ForwardRefExoticComponent<BoxProps & React.RefAttributes<HTMLDivElement>>;
+type ForwardRefType = React.ForwardRefExoticComponent<
+  BoxProps & React.RefAttributes<HTMLDivElement>
+>;
 
 export type BoxType = ForwardRefType &
   React.FC<BoxProps> & {
@@ -354,7 +381,10 @@ export type BoxType = ForwardRefType &
     Item?: ForwardRefType & React.FC<BoxProps>;
   };
 
-export const Box: BoxType = React.forwardRef<BoxRef, BoxProps>(function Box(props, ref) {
+export const Box: BoxType = React.forwardRef<BoxRef, BoxProps>(function Box(
+  props,
+  ref
+) {
   const { className, ...rest } = props;
   const [msp, mbp] = extractProps(rest);
   const classes = useStyles(msp);

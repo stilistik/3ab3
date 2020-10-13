@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import clx from 'classnames';
 
 const useRingStyles = makeStyles((theme) => ({
   '@keyframes ring': {
@@ -10,7 +11,13 @@ const useRingStyles = makeStyles((theme) => ({
       transform: 'rotate(360deg)',
     },
   },
-  loading: ({ color }: SpinnerProps) => ({
+  loadingColor: ({ color }: SpinnerProps) => ({
+    '& div': {
+      borderColor: `${color ||
+        theme.palette.primary.main} transparent transparent transparent`,
+    },
+  }),
+  loading: {
     display: 'inline-block',
     position: 'relative',
     width: '60px',
@@ -25,8 +32,6 @@ const useRingStyles = makeStyles((theme) => ({
       border: '3px solid #fff',
       borderRadius: '50%',
       animation: '$ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
-      borderColor: `${color ||
-        theme.palette.primary.main} transparent transparent transparent`,
     },
     '& div:nth-child(1)': {
       animationDelay: '-0.45s',
@@ -37,7 +42,7 @@ const useRingStyles = makeStyles((theme) => ({
     '& div:nth-child(3)': {
       animationDelay: '-0.15s',
     },
-  }),
+  },
 }));
 
 interface SpinnerProps {
@@ -47,7 +52,7 @@ interface SpinnerProps {
 export const RingSpinner: React.FC<SpinnerProps> = (props) => {
   const styles = useRingStyles(props);
   return (
-    <div className={styles.loading}>
+    <div className={clx(styles.loading, styles.loadingColor)}>
       <div></div>
       <div></div>
       <div></div>

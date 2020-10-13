@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { StylesProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -23,7 +23,7 @@ class Style extends React.Component {
   render() {
     return (
       <StylesProvider injectFirst>
-        <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
+        <MuiThemeProvider theme={theme}>{this.props.children}</MuiThemeProvider>
       </StylesProvider>
     );
   }

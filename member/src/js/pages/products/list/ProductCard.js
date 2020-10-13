@@ -7,7 +7,7 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core';
-import { Icon, ImageContainer } from 'Components';
+import { Icon, LazyLoadingImageDiv } from 'Components';
 import DeleteProduct from '../delete/DeleteProduct';
 import { getBackendUrl } from 'Apollo/Utils';
 
@@ -26,14 +26,11 @@ class ProductCard extends React.Component {
     return (
       <Card>
         <CardActionArea className={styles.area} onClick={this.onEdit}>
-          <ImageContainer
-            image={getBackendUrl() + this.props.product.thumbnail}
-            classes={{
-              root: styles.image,
-              progress: styles.progress,
-              icon: styles.icon,
-              indicator: styles.indicator,
-            }}
+          <LazyLoadingImageDiv
+            image={this.props.product.thumbnail}
+            width="100%"
+            height="200px"
+            css={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
           />
           <CardContent>
             <Typography
@@ -50,7 +47,7 @@ class ProductCard extends React.Component {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <IconButton size="small" color="primary" onClick={this.onEdit}>
+          <IconButton color="primary" onClick={this.onEdit}>
             <Icon type="edit" />
           </IconButton>
           <DeleteProduct {...this.props} />

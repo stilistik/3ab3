@@ -7,7 +7,7 @@ import {
   CardActions,
   Button,
 } from '@material-ui/core';
-import { Icon, ImageContainer } from 'Components';
+import { Icon, LazyLoadingImageDiv } from 'Components';
 import LikeEvent from './LikeEvent';
 import EventComments from './EventComments';
 import EventStats from './EventStats';
@@ -74,14 +74,11 @@ export const EventCard = ({ event }) => {
   return (
     <Card className={styles.card}>
       <CardActionArea className={styles.area} onClick={onEdit}>
-        <ImageContainer
-          image={getBackendUrl() + event.image}
-          classes={{
-            root: styles.image,
-            progress: styles.progress,
-            indicator: styles.indicator,
-            icon: styles.icon,
-          }}
+        <LazyLoadingImageDiv
+          src={event.image}
+          width="100%"
+          height="250px"
+          css={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         <CardContent>
           <EventHeader title={event.title} date={event.date} />

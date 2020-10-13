@@ -20,7 +20,7 @@ export const UserAvatar = ({ user, classes, className, style }) => {
   const avatarClass = classnames(className, classes.avatar);
 
   if (user.avatar) {
-    const url = getBackendUrl() + user.avatar;
+    const url = getBackendUrl() + user.avatar + '@100';
     return (
       <Avatar src={url} alt="Not Found" className={avatarClass} style={style} />
     );
@@ -28,10 +28,7 @@ export const UserAvatar = ({ user, classes, className, style }) => {
     const letter = user.name.charAt(0).toUpperCase();
     const color = stringToHSL(user.name);
     return (
-      <Avatar
-        className={avatarClass}
-        style={{ background: color, ...style }}
-      >
+      <Avatar className={avatarClass} style={{ background: color, ...style }}>
         <Typography className={classes.typo} style={{ color: 'white' }}>
           {letter}
         </Typography>
