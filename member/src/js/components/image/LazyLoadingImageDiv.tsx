@@ -2,25 +2,13 @@ import React from 'react';
 import { Icon, BoxProps, Loading, Box } from 'Components/index';
 import { LazyLoadingItem, useLazyLoading } from './LazyLoadingContext';
 import { Typography } from '@material-ui/core';
-import { getBackendUrl } from 'Apollo/Utils';
+import { getResponsiveSrc } from './utils';
 
 interface LazyLoadingImageDivProps extends BoxProps {
   src: string;
   alt?: string;
   backgroundSize?: React.CSSProperties['backgroundSize'];
   backgroundPosition?: React.CSSProperties['backgroundPosition'];
-}
-
-function getResponsiveSrc(src: string, containerWidth: number) {
-  function getImageSizeString(src: string, containerWidth: number) {
-    if (src.includes('.gif')) return '';
-    else {
-      const desiredImgWidth = Math.ceil(containerWidth / 100) * 100;
-      return `@${desiredImgWidth}`;
-    }
-  }
-
-  return getBackendUrl() + src + getImageSizeString(src, containerWidth);
 }
 
 export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({

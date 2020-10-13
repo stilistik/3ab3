@@ -7,7 +7,7 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
-import { Icon, UserAvatar } from 'Components';
+import { Icon, UserAvatar, LazyLoadingImage } from 'Components';
 import LikePost from './LikePost';
 import DeletePost from './DeletePost';
 import PostStats from './PostStats';
@@ -46,7 +46,7 @@ const PostHeader = ({ post, refetch }) => {
 
 export const PostImage = ({ url }) => {
   if (!url) return <Divider />;
-  return <img src={url} width="100%" />;
+  return <LazyLoadingImage src={url} alt="Post Image" width="100%" />;
 };
 
 const PostText = ({ text }) => {
@@ -97,9 +97,7 @@ const Post = ({ post, refetch }) => {
       <PostHeader post={post} refetch={refetch} />
       <CardContent className={styles.content}>
         <PostText text={post.text} />
-        {post.image && (
-          <PostImage url={getBackendUrl() + post.image + '@300'} />
-        )}
+        {post.image && <PostImage url={post.image} />}
         <PostLink link={validatedLink} />
       </CardContent>
       <PostStats postId={post.id} onComment={onComment} />
