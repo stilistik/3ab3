@@ -2,36 +2,10 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { TimeLineChart } from 'Components';
 import { Paper } from '@material-ui/core';
-import gql from 'graphql-tag';
-
-const QUERY = gql`
-  query {
-    users {
-      id
-      balance
-    }
-    transactions(first: 15) {
-      edges {
-        node {
-          id
-          type
-          date
-          purchase {
-            id
-            total
-          }
-          payment {
-            id
-            amount
-          }
-        }
-      }
-    }
-  }
-`;
+import { GLOBAL_BALANCE_CHART } from 'Graphql/queries';
 
 export const GlobalBalanceChart = () => {
-  const { loading, error, data } = useQuery(QUERY);
+  const { loading, error, data } = useQuery(GLOBAL_BALANCE_CHART);
 
   if (loading || error) return null;
   const totalBalance = data.users

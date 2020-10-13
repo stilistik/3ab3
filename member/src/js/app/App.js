@@ -1,12 +1,17 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { login } from 'Redux/actions';
 import { AuthAppCore, UnauthAppCore } from './AppCore';
 import Auth from './Auth';
 import Routes from 'Routes';
-import { Notifier, EmojiProvider, GiphyProvider, Box } from 'Components';
+import {
+  Notifier,
+  EmojiProvider,
+  GiphyProvider,
+  Box,
+  UserProvider,
+} from 'Components';
 import history from 'History';
 import Apollo from 'Apollo';
 import { UnauthBackground } from './UnauthBackground';
@@ -14,7 +19,6 @@ import { UnauthBackground } from './UnauthBackground';
 const UnauthenticatedApp = () => {
   return (
     <Box.Flex column w="100vw" h="100vh" o="hidden">
-      <CssBaseline />
       <UnauthAppCore />
       <Box.Item w="100%" o="hidden">
         <UnauthBackground>
@@ -34,16 +38,17 @@ const AuthenticatedApp = () => {
       <EmojiProvider>
         <GiphyProvider>
           <Apollo>
-            <CssBaseline />
-            <AuthAppCore />
-            <Auth>
-              <Box.Item w="100%" o="hidden">
-                <Router history={history}>
-                  <Routes props={{ app: { isAuthenticated: true } }} />
-                </Router>
-              </Box.Item>
-            </Auth>
-            <Notifier />
+            <UserProvider>
+              <AuthAppCore />
+              <Auth>
+                <Box.Item w="100%" o="hidden">
+                  <Router history={history}>
+                    <Routes props={{ app: { isAuthenticated: true } }} />
+                  </Router>
+                </Box.Item>
+              </Auth>
+              <Notifier />
+            </UserProvider>
           </Apollo>
         </GiphyProvider>
       </EmojiProvider>

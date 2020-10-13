@@ -106,7 +106,8 @@ export const TimeLineChart = ({ data }) => {
                       timeStyle: 'medium',
                     })}
                   </div>
-                  <strong>{serieId}:</strong> {point.data.yFormatted} CHF
+                  <strong>{serieId}:</strong> {point.data.yFormatted.toFixed(2)}{' '}
+                  CHF
                 </div>
               );
             })}

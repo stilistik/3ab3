@@ -8,26 +8,8 @@ import {
   TableBody,
 } from '@material-ui/core';
 import { Tag } from 'Components';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-
-const USERS_QUERY = gql`
-  query {
-    users {
-      id
-      name
-      balance
-      transactions(first: 1) {
-        edges {
-          node {
-            id
-            date
-          }
-        }
-      }
-    }
-  }
-`;
+import { BALANCE_TABLE } from 'Graphql/queries';
 
 const TransactionCell = ({ user }) => {
   const { edges } = user.transactions;
@@ -52,7 +34,7 @@ const BalanceCell = ({ balance }) => {
 };
 
 const BalanceTable = () => {
-  const { loading, error, data } = useQuery(USERS_QUERY);
+  const { loading, error, data } = useQuery(BALANCE_TABLE);
   if (loading || error) return null;
 
   const { users } = data;

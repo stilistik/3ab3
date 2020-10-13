@@ -5,3 +5,11 @@ export const SEND_PAYMENT_REMIDER = gql`
     sendPaymentReminder(userIds: $userIds)
   }
 `;
+
+export const CREATE_PAYMENT = gql`
+  mutation($input: PaymentInput!) {
+    createPayment(input: $input) {
+      id
+    }
+  }
+`;
