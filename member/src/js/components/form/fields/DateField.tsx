@@ -7,6 +7,7 @@ import { useField } from '../UseField';
 import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
 import { DateType } from '@date-io/type';
+import { TextField } from './TextField';
 
 export type DateFieldProps = Omit<FieldProps, 'fieldType'> & {
   classes?: DateFieldClasses;
@@ -52,8 +53,8 @@ export const DateField: React.FC<DateFieldProps> = ({
         allowKeyboardControl={true}
         autoOk={true}
         format="dd MMMM yyyy"
-        emptyLabel={label}
         label={label}
+        error={Boolean(field.error)}
         value={inputValue}
         onChange={handleChange}
         InputProps={{
