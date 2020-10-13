@@ -19,31 +19,51 @@ export const LazyLoadingImage: React.FC<LazyLoadingImageProps> = ({
 }) => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const imgRef = React.useRef<HTMLImageElement>(null);
+  const [responsiveSrc, setResponsiveSrc] = React.useState<string | null>(null);
   const divRef = React.useRef<HTMLDivElement>(null);
   const { registerLazyImage, unregisterLazyImage } = useLazyLoading();
 
   React.useEffect(() => {
     if (!src) return;
-    const img = imgRef.current;
     const div = divRef.current;
 
+    const responsiveSrc = getResponsiveSrc(src, div.clientWidth);
+
     const item: LazyLoadingItem = {
-      element: img,
-      src: getResponsiveSrc(src, div.clientWidth),
+      element: div,
+      type: 'image',
+      src: responsiveSrc,
       setError,
       setLoading,
     };
 
-    console.log(item);
+    setResponsiveSrc(responsiveSrc);
 
     registerLazyImage(item);
     return () => unregisterLazyImage(item);
   }, [src]);
 
   return (
-    <div ref={divRef} style={{ width, height }}>
-      <img ref={imgRef} alt={alt} width="100%" />
-    </div>
+    <Box ref={divRef} width={width} height={height}>
+      {!src ? (
+        <Box.Center>
+          <Box d="flex" fd="column" ai="center" color="typography.main">
+            <Icon type="camera" />
+            <Typography variant="body1">{alt}</Typography>
+          </Box>
+        </Box.Center>
+      ) : error ? (
+        <Box.Center>
+          <Box d="flex" fd="column" ai="center" color="typography.main">
+            <Icon type="close" />
+            <Typography variant="body1">Error loading image</Typography>
+          </Box>
+        </Box.Center>
+      ) : loading ? (
+        <Loading />
+      ) : (
+        <img src={responsiveSrc} alt={alt} width="100%" />
+      )}
+    </Box>
   );
 };

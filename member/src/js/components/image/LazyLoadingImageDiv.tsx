@@ -29,6 +29,7 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
 
     const item: LazyLoadingItem = {
       element: div,
+      type: 'div',
       src: getResponsiveSrc(src, div.clientWidth),
       setError,
       setLoading,

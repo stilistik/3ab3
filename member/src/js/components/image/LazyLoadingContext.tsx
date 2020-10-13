@@ -1,10 +1,11 @@
 import React from 'react';
 
-type LazyLoadingElement = HTMLDivElement | HTMLImageElement;
+type LazyLoadingElement = HTMLDivElement;
 
 export interface LazyLoadingItem {
-  element: LazyLoadingElement;
+  element: HTMLDivElement;
   src: string;
+  type: 'div' | 'image';
   setError: React.Dispatch<React.SetStateAction<boolean>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -27,16 +28,6 @@ export const useLazyLoading = (): LazyLoadingContextValue => {
   return contextValue;
 };
 
-function isImageElement(
-  target: LazyLoadingElement
-): target is HTMLImageElement {
-  return target instanceof HTMLImageElement;
-}
-
-function isDivElement(target: LazyLoadingElement): target is HTMLDivElement {
-  return target instanceof HTMLDivElement;
-}
-
 export const LazyLoadingProvider: React.FC = ({ children }) => {
   const itemsRef = React.useRef<LazyLoadingItem[]>([]);
 
@@ -50,27 +41,18 @@ export const LazyLoadingProvider: React.FC = ({ children }) => {
 
           const element = item.element;
 
-          if (isImageElement(element)) {
-            element.src = item.src;
-            element.onload = () => {
-              item.setLoading(false);
-            };
-            element.onerror = () => {
-              item.setLoading(false);
-              item.setError(true);
-            };
-          } else if (isDivElement(element)) {
-            const tmpImage = new Image();
-            tmpImage.onload = () => {
+          const tmpImage = new Image();
+          tmpImage.onload = () => {
+            if (item.type === 'div') {
               item.element.style.backgroundImage = `url(${item.src})`;
-              item.setLoading(false);
-            };
-            tmpImage.onerror = () => {
-              item.setError(true);
-              item.setLoading(false);
-            };
-            tmpImage.src = item.src;
-          }
+            }
+            item.setLoading(false);
+          };
+          tmpImage.onerror = () => {
+            item.setError(true);
+            item.setLoading(false);
+          };
+          tmpImage.src = item.src;
 
           lazyImageObserverRef.current.unobserve(element);
         }
