@@ -3981,6 +3981,8 @@ type User {
   id: ID!
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole!
   avatar: String
   loginToken: String
@@ -4011,6 +4013,8 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4100,6 +4104,8 @@ input UserCreateWithoutChatsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4123,6 +4129,8 @@ input UserCreateWithoutCommentsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4146,6 +4154,8 @@ input UserCreateWithoutItemsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4169,6 +4179,8 @@ input UserCreateWithoutLikedCommentsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4192,6 +4204,8 @@ input UserCreateWithoutLikedEventsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4215,6 +4229,8 @@ input UserCreateWithoutLikedPostsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4238,6 +4254,8 @@ input UserCreateWithoutOwnChatsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4261,6 +4279,8 @@ input UserCreateWithoutPaymentsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4284,6 +4304,8 @@ input UserCreateWithoutPostsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4307,6 +4329,8 @@ input UserCreateWithoutPurchasesInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4330,6 +4354,8 @@ input UserCreateWithoutSupportedEventsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4353,6 +4379,8 @@ input UserCreateWithoutTransactionsInput {
   id: ID
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4384,6 +4412,10 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  phone_ASC
+  phone_DESC
+  birthdate_ASC
+  birthdate_DESC
   role_ASC
   role_DESC
   avatar_ASC
@@ -4402,6 +4434,8 @@ type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  phone: String
+  birthdate: DateTime
   role: UserRole!
   avatar: String
   loginToken: String
@@ -4459,6 +4493,28 @@ input UserScalarWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  birthdate: DateTime
+  birthdate_not: DateTime
+  birthdate_in: [DateTime!]
+  birthdate_not_in: [DateTime!]
+  birthdate_lt: DateTime
+  birthdate_lte: DateTime
+  birthdate_gt: DateTime
+  birthdate_gte: DateTime
   role: UserRole
   role_not: UserRole
   role_in: [UserRole!]
@@ -4535,6 +4591,8 @@ input UserSubscriptionWhereInput {
 input UserUpdateDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4558,6 +4616,8 @@ input UserUpdateDataInput {
 input UserUpdateInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4581,6 +4641,8 @@ input UserUpdateInput {
 input UserUpdateManyDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4592,6 +4654,8 @@ input UserUpdateManyDataInput {
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4733,6 +4797,8 @@ input UserUpdateOneRequiredWithoutTransactionsInput {
 input UserUpdateWithoutChatsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4755,6 +4821,8 @@ input UserUpdateWithoutChatsDataInput {
 input UserUpdateWithoutCommentsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4777,6 +4845,8 @@ input UserUpdateWithoutCommentsDataInput {
 input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4799,6 +4869,8 @@ input UserUpdateWithoutItemsDataInput {
 input UserUpdateWithoutLikedCommentsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4821,6 +4893,8 @@ input UserUpdateWithoutLikedCommentsDataInput {
 input UserUpdateWithoutLikedEventsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4843,6 +4917,8 @@ input UserUpdateWithoutLikedEventsDataInput {
 input UserUpdateWithoutLikedPostsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4865,6 +4941,8 @@ input UserUpdateWithoutLikedPostsDataInput {
 input UserUpdateWithoutOwnChatsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4887,6 +4965,8 @@ input UserUpdateWithoutOwnChatsDataInput {
 input UserUpdateWithoutPaymentsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4909,6 +4989,8 @@ input UserUpdateWithoutPaymentsDataInput {
 input UserUpdateWithoutPostsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4931,6 +5013,8 @@ input UserUpdateWithoutPostsDataInput {
 input UserUpdateWithoutPurchasesDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4953,6 +5037,8 @@ input UserUpdateWithoutPurchasesDataInput {
 input UserUpdateWithoutSupportedEventsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -4975,6 +5061,8 @@ input UserUpdateWithoutSupportedEventsDataInput {
 input UserUpdateWithoutTransactionsDataInput {
   name: String
   email: String
+  phone: String
+  birthdate: DateTime
   role: UserRole
   avatar: String
   loginToken: String
@@ -5132,6 +5220,28 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  birthdate: DateTime
+  birthdate_not: DateTime
+  birthdate_in: [DateTime!]
+  birthdate_not_in: [DateTime!]
+  birthdate_lt: DateTime
+  birthdate_lte: DateTime
+  birthdate_gt: DateTime
+  birthdate_gte: DateTime
   role: UserRole
   role_not: UserRole
   role_in: [UserRole!]

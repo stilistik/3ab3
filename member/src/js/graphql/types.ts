@@ -864,6 +864,8 @@ export type User = {
   id: Scalars['ID'];
   email: Scalars['String'];
   name: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  birthdate?: Maybe<Scalars['DateTime']>;
   avatar?: Maybe<Scalars['String']>;
   purchases: Array<Purchase>;
   payments: Array<Payment>;

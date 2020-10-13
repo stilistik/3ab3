@@ -671,6 +671,10 @@ export type UserOrderByInput =
   | "name_DESC"
   | "email_ASC"
   | "email_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
+  | "birthdate_ASC"
+  | "birthdate_DESC"
   | "role_ASC"
   | "role_DESC"
   | "avatar_ASC"
@@ -984,6 +988,28 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
+  birthdate_not?: Maybe<DateTimeInput>;
+  birthdate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  birthdate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  birthdate_lt?: Maybe<DateTimeInput>;
+  birthdate_lte?: Maybe<DateTimeInput>;
+  birthdate_gt?: Maybe<DateTimeInput>;
+  birthdate_gte?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   role_not?: Maybe<UserRole>;
   role_in?: Maybe<UserRole[] | UserRole>;
@@ -1830,6 +1856,8 @@ export interface UserCreateWithoutOwnChatsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -1900,6 +1928,8 @@ export interface UserCreateWithoutItemsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -1957,6 +1987,8 @@ export interface UserCreateWithoutTransactionsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2014,6 +2046,8 @@ export interface UserCreateWithoutLikedPostsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2071,6 +2105,8 @@ export interface UserCreateWithoutPaymentsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2116,6 +2152,8 @@ export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2168,6 +2206,8 @@ export interface UserCreateWithoutSupportedEventsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2215,6 +2255,8 @@ export interface UserCreateWithoutLikedCommentsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2266,6 +2308,8 @@ export interface UserCreateWithoutLikedEventsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2311,6 +2355,8 @@ export interface UserCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2355,6 +2401,8 @@ export interface UserCreateWithoutChatsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2398,6 +2446,8 @@ export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2540,6 +2590,8 @@ export interface UserCreateWithoutPurchasesInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2592,6 +2644,8 @@ export interface UserUpdateOneRequiredWithoutOwnChatsInput {
 export interface UserUpdateWithoutOwnChatsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2708,6 +2762,8 @@ export interface UserUpdateOneRequiredWithoutItemsInput {
 export interface UserUpdateWithoutItemsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2787,6 +2843,8 @@ export interface UserUpdateOneRequiredWithoutTransactionsInput {
 export interface UserUpdateWithoutTransactionsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -2953,6 +3011,8 @@ export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
 export interface UserUpdateWithoutLikedPostsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3038,6 +3098,8 @@ export interface UserUpdateOneRequiredWithoutPaymentsInput {
 export interface UserUpdateWithoutPaymentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3103,6 +3165,8 @@ export interface UserUpdateOneRequiredWithoutPostsInput {
 export interface UserUpdateWithoutPostsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3193,6 +3257,8 @@ export interface UserUpdateWithWhereUniqueWithoutSupportedEventsInput {
 export interface UserUpdateWithoutSupportedEventsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3279,6 +3345,8 @@ export interface UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
 export interface UserUpdateWithoutLikedCommentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3368,6 +3436,8 @@ export interface UserUpdateWithWhereUniqueWithoutLikedEventsInput {
 export interface UserUpdateWithoutLikedEventsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3434,6 +3504,8 @@ export interface UserUpdateOneRequiredWithoutCommentsInput {
 export interface UserUpdateWithoutCommentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3516,6 +3588,8 @@ export interface UserUpdateWithWhereUniqueWithoutChatsInput {
 export interface UserUpdateWithoutChatsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3584,6 +3658,28 @@ export interface UserScalarWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
+  birthdate_not?: Maybe<DateTimeInput>;
+  birthdate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  birthdate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  birthdate_lt?: Maybe<DateTimeInput>;
+  birthdate_lte?: Maybe<DateTimeInput>;
+  birthdate_gt?: Maybe<DateTimeInput>;
+  birthdate_gte?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   role_not?: Maybe<UserRole>;
   role_in?: Maybe<UserRole[] | UserRole>;
@@ -3647,6 +3743,8 @@ export interface UserUpdateManyWithWhereNestedInput {
 export interface UserUpdateManyDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -3700,6 +3798,8 @@ export interface UserUpdateOneRequiredInput {
 export interface UserUpdateDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -4498,6 +4598,8 @@ export interface UserUpdateOneRequiredWithoutPurchasesInput {
 export interface UserUpdateWithoutPurchasesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -5134,6 +5236,8 @@ export interface TransactionUpdateManyMutationInput {
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -5157,6 +5261,8 @@ export interface UserUpdateInput {
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
+  birthdate?: Maybe<DateTimeInput>;
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
@@ -5426,6 +5532,8 @@ export interface User {
   id: ID_Output;
   name: String;
   email: String;
+  phone?: String;
+  birthdate?: DateTimeOutput;
   role: UserRole;
   avatar?: String;
   loginToken?: String;
@@ -5438,6 +5546,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  phone: () => Promise<String>;
+  birthdate: () => Promise<DateTimeOutput>;
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
   loginToken: () => Promise<String>;
@@ -5560,6 +5670,8 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  birthdate: () => Promise<AsyncIterator<DateTimeOutput>>;
   role: () => Promise<AsyncIterator<UserRole>>;
   avatar: () => Promise<AsyncIterator<String>>;
   loginToken: () => Promise<AsyncIterator<String>>;
@@ -5682,6 +5794,8 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  phone: () => Promise<String>;
+  birthdate: () => Promise<DateTimeOutput>;
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
   loginToken: () => Promise<String>;
@@ -8017,6 +8131,8 @@ export interface UserPreviousValues {
   id: ID_Output;
   name: String;
   email: String;
+  phone?: String;
+  birthdate?: DateTimeOutput;
   role: UserRole;
   avatar?: String;
   loginToken?: String;
@@ -8031,6 +8147,8 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  phone: () => Promise<String>;
+  birthdate: () => Promise<DateTimeOutput>;
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
   loginToken: () => Promise<String>;
@@ -8045,6 +8163,8 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  birthdate: () => Promise<AsyncIterator<DateTimeOutput>>;
   role: () => Promise<AsyncIterator<UserRole>>;
   avatar: () => Promise<AsyncIterator<String>>;
   loginToken: () => Promise<AsyncIterator<String>>;
@@ -8065,6 +8185,16 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
+/*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
 export type Float = number;
@@ -8078,16 +8208,6 @@ export type Int = number;
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
-
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
 
 export type Json = any;
 
