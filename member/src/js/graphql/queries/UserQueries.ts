@@ -6,6 +6,7 @@ export const CURRENT_USER_QUERY = gql`
       name
       id
       role
+      email
     }
   }
 `;
