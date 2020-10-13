@@ -6,8 +6,6 @@ import { Box, Grid, userCurrentUser } from 'Components/index';
 
 export const Account: React.FC = () => {
   const user = userCurrentUser();
-  console.log(user);
-
   return (
     <Grid.Default>
       <Box py={2} cmb={2}>
