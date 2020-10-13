@@ -97,7 +97,9 @@ const Post = ({ post, refetch }) => {
       <PostHeader post={post} refetch={refetch} />
       <CardContent className={styles.content}>
         <PostText text={post.text} />
-        {post.image && <PostImage url={getBackendUrl() + post.image} />}
+        {post.image && (
+          <PostImage url={getBackendUrl() + post.image + '@300'} />
+        )}
         <PostLink link={validatedLink} />
       </CardContent>
       <PostStats postId={post.id} onComment={onComment} />

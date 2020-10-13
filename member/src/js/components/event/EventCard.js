@@ -78,7 +78,6 @@ export const EventCard = ({ event }) => {
           src={event.image}
           width="100%"
           height="250px"
-          css={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         <CardContent>
           <EventHeader title={event.title} date={event.date} />

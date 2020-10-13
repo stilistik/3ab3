@@ -30,7 +30,6 @@ class ProductCard extends React.Component {
             image={this.props.product.thumbnail}
             width="100%"
             height="200px"
-            css={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
           />
           <CardContent>
             <Typography

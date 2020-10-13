@@ -23,7 +23,6 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
       const { resolve = defaultFieldResolver } = field;
       field.resolve = async function(...args) {
         const context = args[2];
-        console.log(context.headers);
         verifyAndDecodeToken(context);
         return resolve.apply(this, args);
       };

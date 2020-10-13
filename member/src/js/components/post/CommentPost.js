@@ -23,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
 
 class CommentPost extends React.Component {
   onSubmit = async (values) => {
-    console.log(values);
     try {
       await this.createComment({
         variables: {

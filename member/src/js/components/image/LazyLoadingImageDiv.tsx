@@ -7,11 +7,27 @@ import { getBackendUrl } from 'Apollo/Utils';
 interface LazyLoadingImageDivProps extends BoxProps {
   src: string;
   alt?: string;
+  backgroundSize?: React.CSSProperties['backgroundSize'];
+  backgroundPosition?: React.CSSProperties['backgroundPosition'];
+}
+
+function getResponsiveSrc(src: string, containerWidth: number) {
+  function getImageSizeString(src: string, containerWidth: number) {
+    if (src.includes('.gif')) return '';
+    else {
+      const desiredImgWidth = Math.ceil(containerWidth / 100) * 100;
+      return `@${desiredImgWidth}`;
+    }
+  }
+
+  return getBackendUrl() + src + getImageSizeString(src, containerWidth);
 }
 
 export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   src,
   alt = 'No image',
+  backgroundSize = 'cover',
+  backgroundPosition = 'center',
   ...rest
 }) => {
   const [loading, setLoading] = React.useState(true);
@@ -22,13 +38,10 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   React.useEffect(() => {
     if (!src) return;
     const div = divRef.current;
-    const { clientWidth } = div;
-
-    const desiredImgWidth = Math.ceil(clientWidth / 100) * 100;
 
     const item: LazyLoadingItem = {
       element: div,
-      src: getBackendUrl() + src + `@${desiredImgWidth}`,
+      src: getResponsiveSrc(src, div.clientWidth),
       setError,
       setLoading,
     };
@@ -38,7 +51,7 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   }, [src]);
 
   return (
-    <Box ref={divRef} {...rest}>
+    <Box ref={divRef} css={{ backgroundSize, backgroundPosition }} {...rest}>
       {!src ? (
         <Box.Center>
           <Box d="flex" fd="column" ai="center" color="typography.main">
