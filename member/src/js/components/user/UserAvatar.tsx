@@ -2,9 +2,27 @@ import React from 'react';
 import { Avatar, Typography } from '@material-ui/core';
 import classnames from 'classnames';
 import { getBackendUrl } from 'Apollo/Utils';
+import { User } from 'Graphql/types';
 
-export const UserAvatar = ({ user, classes, className, style }) => {
-  const stringToHSL = (str) => {
+interface UserAvatarProps {
+  user: User;
+  classes?: UserAvatarClasses;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+interface UserAvatarClasses {
+  avatar?: string;
+  typo?: string;
+}
+
+export const UserAvatar: React.FC<UserAvatarProps> = ({
+  user,
+  classes = {},
+  className,
+  style,
+}) => {
+  const stringToHSL = (str: string) => {
     var hash = 0;
     if (str.length == 0) return hash;
     for (var i = 0; i < str.length; i++) {
@@ -17,7 +35,7 @@ export const UserAvatar = ({ user, classes, className, style }) => {
 
   if (!user) return null;
 
-  const avatarClass = classnames(className, classes.avatar);
+  const avatarClass = classnames(className, classes?.avatar);
 
   if (user.avatar) {
     const url = getBackendUrl() + user.avatar + '@100';
@@ -29,17 +47,10 @@ export const UserAvatar = ({ user, classes, className, style }) => {
     const color = stringToHSL(user.name);
     return (
       <Avatar className={avatarClass} style={{ background: color, ...style }}>
-        <Typography className={classes.typo} style={{ color: 'white' }}>
+        <Typography className={classes?.typo} style={{ color: 'white' }}>
           {letter}
         </Typography>
       </Avatar>
     );
   }
-};
-
-UserAvatar.defaultProps = {
-  classes: {
-    avatar: '',
-    typo: '',
-  },
 };
