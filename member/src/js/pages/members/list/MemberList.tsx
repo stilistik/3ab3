@@ -1,9 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Box, Loading, Error } from 'Components/index';
+import { Grid, Box, Loading, Error, CreateButton } from 'Components/index';
 import { requestRoute } from 'History/index';
 import MemberItem from '../MemberItem';
-import CreateButton from '../create/CreateButton';
 import { USER_LIST } from 'Graphql/queries';
 import { User } from 'Graphql/types';
 
@@ -27,7 +26,7 @@ export const MemberList: React.FC = () => {
     <Grid.Default>
       <Box py="20px">
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} lg={4}>
+          <Grid item xs={12}>
             <CreateButton onClick={onCreate} />
           </Grid>
           {data.users.map((user: User) => {
