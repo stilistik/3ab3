@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import { EDIT_SELF } from 'Graphql/mutations';
 import {
@@ -30,27 +30,23 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
   };
 
   return (
-    <Grid container>
-      <Grid item xs={12} sm={6}>
-        <Form onSubmit={handleSubmit} initValues={user}>
-          <Box cmb={2}>
-            <TextField id="name" label="Name" />
-            <TextField id="email" label="Email" type="email" />
-            <TextField id="phone" label="Phone" />
-            <DateField id="birthdate" label="Birthday" />
-            <FormSubmit>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="primary"
-              >
-                Submit
-              </Button>
-            </FormSubmit>
-          </Box>
-        </Form>
-      </Grid>
-    </Grid>
+    <Form onSubmit={handleSubmit} initValues={user}>
+      <Box cmb={2}>
+        <TextField id="name" label="Name" />
+        <TextField id="email" label="Email" type="email" />
+        <TextField id="phone" label="Phone" />
+        <DateField id="birthdate" label="Birthday" />
+        <FormSubmit>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            color="primary"
+          >
+            Submit
+          </Button>
+        </FormSubmit>
+      </Box>
+    </Form>
   );
 };
