@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fab, makeStyles } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 import { getBalanceColorClass } from 'Components/utility/Utils';
 import { CURRENT_USER_BALANCE } from 'Graphql/queries';
 

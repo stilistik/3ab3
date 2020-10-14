@@ -1,9 +1,9 @@
 import React from 'react';
 import { Loading, Box, AnimatedError } from 'Components/index';
 import { requestToken } from 'Auth/requestToken';
-import { getQueryParams } from 'History/index';
+import { getQueryParams } from 'App/router/History';
 import { setIsAuthenticated, useStore } from 'App/store';
-import { requestRoute, updateParams } from '../../history';
+import { requestRoute, updateParams } from '../../app/router/History';
 import { Button } from '@material-ui/core';
 import { LoginPageLayout } from './LoginPageLayout';
 

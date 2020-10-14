@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import { MenuItem } from './MenuItem';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 
 // preload image
 const image = new Image();

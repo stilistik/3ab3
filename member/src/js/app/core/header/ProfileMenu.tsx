@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, MenuItem, IconButton, Typography } from '@material-ui/core';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 import { Box, Icon, ProfileAvatar } from 'Components/index';
 
 interface ProfileMenuItemProps {

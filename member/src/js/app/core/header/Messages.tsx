@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Badge, makeStyles } from '@material-ui/core';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 import { Icon } from 'Components/index';
 import { useQuery } from '@apollo/react-hooks';
 import { TOTAL_UNREAD_MESSAGES } from 'Graphql/queries';

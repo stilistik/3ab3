@@ -9,7 +9,7 @@ import {
   Box,
   UserProvider,
 } from 'Components/index';
-import history from 'History/index';
+import history from 'App/router/History';
 import Apollo from './network';
 import { UnauthBackground } from './core/UnauthBackground';
 

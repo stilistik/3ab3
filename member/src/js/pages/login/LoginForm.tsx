@@ -4,7 +4,7 @@ import { makeStyles, Fab } from '@material-ui/core';
 import { LoginHeader } from './LoginHeader';
 import { LoginPageLayout } from './LoginPageLayout';
 import { requestEmail } from 'Auth/requestEmail';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 
 const useStyles = makeStyles({
   form: {

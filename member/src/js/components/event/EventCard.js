@@ -12,8 +12,7 @@ import LikeEvent from './LikeEvent';
 import EventComments from './EventComments';
 import EventStats from './EventStats';
 import SupportEvent from './SupportEvent';
-import { requestRoute } from 'History';
-import { getBackendUrl } from 'App/network/Utils';
+import { requestRoute } from 'App/router/History';
 
 import styles from './EventCard.less';
 
@@ -74,11 +73,7 @@ export const EventCard = ({ event }) => {
   return (
     <Card className={styles.card}>
       <CardActionArea className={styles.area} onClick={onEdit}>
-        <LazyLoadingImageDiv
-          src={event.image}
-          width="100%"
-          height="250px"
-        />
+        <LazyLoadingImageDiv src={event.image} width="100%" height="250px" />
         <CardContent>
           <EventHeader title={event.title} date={event.date} />
           <Typography component="p" className={styles.typo}>

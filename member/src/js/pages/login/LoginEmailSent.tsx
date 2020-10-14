@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { Box, AnimatedCheckmark } from 'Components/index';
 import { LoginPageLayout } from './LoginPageLayout';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 
 export const LoginEmailSent = () => {
   return (

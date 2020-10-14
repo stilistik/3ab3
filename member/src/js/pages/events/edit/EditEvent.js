@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from 'Components';
-import { getQueryParams } from 'History';
+import { getQueryParams } from 'App/router/History';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab } from '@material-ui/core';
 import Todos from './todo/Todos';

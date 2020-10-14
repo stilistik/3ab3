@@ -92,7 +92,6 @@ module.exports = {
       Pages: path.resolve(__dirname, 'src/js/pages'),
       Auth: path.resolve(__dirname, 'src/js/auth/'),
       Components: path.resolve(__dirname, 'src/js/components/'),
-      History: path.resolve(__dirname, 'src/js/history/'),
       Graphql: path.resolve(__dirname, 'src/js/graphql'),
       Style: path.resolve(__dirname, 'src/js/style'),
     },

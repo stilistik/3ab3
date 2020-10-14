@@ -6,7 +6,7 @@ import { MessengerLink } from './Messages';
 import { BalanceButton } from './BalanceButton';
 import { Grid, Box } from 'Components/index';
 import { Logo } from './Logo';
-import { requestRoute } from 'History/index';
+import { requestRoute } from 'App/router/History';
 
 export const UnauthAppHeader: React.FC = () => {
   return (
