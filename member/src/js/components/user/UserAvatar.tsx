@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Typography } from '@material-ui/core';
 import classnames from 'classnames';
-import { getBackendUrl } from 'Apollo/Utils';
+import { getBackendUrl } from 'App/network/Utils';
 import { User } from 'Graphql/types';
 
 interface UserAvatarProps {

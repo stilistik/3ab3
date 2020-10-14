@@ -1,8 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
+import { Message } from 'Components';
 import TodoForm from './TodoForm';
 
 const MUTATION = gql`
@@ -12,14 +11,6 @@ const MUTATION = gql`
     }
   }
 `;
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
 
 class CreateTodo extends React.Component {
   onSubmit = (values) => {
@@ -34,7 +25,7 @@ class CreateTodo extends React.Component {
         refetchQueries: () => this.props.refetch,
       });
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
+      Message.error(error.message);
     }
   };
 
@@ -50,7 +41,4 @@ class CreateTodo extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CreateTodo);
+export default CreateTodo;

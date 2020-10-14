@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
+import { Message } from 'Components';
 import { Mutation } from 'react-apollo';
 import CreatePostForm from './CreatePostForm';
 
@@ -13,13 +12,6 @@ const MUTATION = gql`
   }
 `;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
 
 class CreatePost extends React.Component {
   onSubmit = async (values) => {
@@ -29,8 +21,7 @@ class CreatePost extends React.Component {
       });
       await this.props.refetch();
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
-      return;
+      Message.error(error.message);
     }
   };
 
@@ -46,7 +37,4 @@ class CreatePost extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CreatePost);
+export default CreatePost;

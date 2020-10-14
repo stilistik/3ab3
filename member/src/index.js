@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Style from 'Style';
-import App from 'App';
-import Store from 'Redux/Store';
+import { App } from 'App';
+import { StoreProvider } from 'App/store';
 import { MuiPickersUtilsProvider as Picker } from '@material-ui/pickers';
 import { CssBaseline } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
@@ -13,13 +13,13 @@ import './css/master.less';
 ReactDOM.render(
   <CssBaseline>
     <Style>
-      <Store>
+      <StoreProvider>
         <Picker utils={DateFnsUtils}>
           <LazyLoadingProvider>
             <App />
           </LazyLoadingProvider>
         </Picker>
-      </Store>
+      </StoreProvider>
     </Style>
   </CssBaseline>,
   document.getElementById('root')

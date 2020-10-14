@@ -1,23 +1,23 @@
 import React from 'react';
-import { Loading, Box, Grid, AnimatedError } from 'Components/index';
+import { Loading, Box, AnimatedError } from 'Components/index';
 import { requestToken } from 'Auth/requestToken';
 import { getQueryParams } from 'History/index';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/actions';
+import { setIsAuthenticated, useStore } from 'App/store';
 import { requestRoute, updateParams } from '../../history';
 import { Button } from '@material-ui/core';
 import { LoginPageLayout } from './LoginPageLayout';
 
 export const Authenticating: React.FC = () => {
   const [error, setError] = React.useState(false);
-  const dispatch = useDispatch();
+  const { dispatch } = useStore();
   const { token: emailToken } = getQueryParams();
 
   React.useEffect(() => {
     requestToken(emailToken as string)
       .then(({ access_token }: { access_token: string }) => {
         if (!access_token) setError(true);
-        dispatch(login(access_token));
+        window.localStorage.setItem('access_token', access_token);
+        dispatch(setIsAuthenticated(true));
         requestRoute('/home');
       })
       .catch(() => setError(true));

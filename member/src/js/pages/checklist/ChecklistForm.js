@@ -10,7 +10,7 @@ import {
 } from 'Components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { getBackendUrl } from 'Apollo/Utils';
+import { getBackendUrl } from 'App/network/Utils';
 
 const QUERY = gql`
   query {

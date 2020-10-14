@@ -4,7 +4,7 @@ import { Grid, Button, Typography } from '@material-ui/core';
 import { Icon } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { useInterval } from 'Utils';
+import { useInterval } from 'Components/utility/Hooks';
 import { Chats } from './Chats';
 import { CreateChat } from './CreateChat';
 import { SearchChat } from './SearchChat';

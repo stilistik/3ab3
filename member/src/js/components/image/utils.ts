@@ -1,4 +1,4 @@
-import { getBackendUrl } from 'Apollo/Utils';
+import { getBackendUrl } from 'App/network/Utils';
 
 export function getResponsiveSrc(src: string, containerWidth: number) {
   function getImageSizeString(src: string, containerWidth: number) {

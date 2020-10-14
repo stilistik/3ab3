@@ -13,7 +13,7 @@ const MUTATION = gql`
   }
 `;
 
-export const Checklist = ({ initValues }) => {
+export const Checklist = ({ initValues = {} }) => {
   const [createPurchase] = useMutation(MUTATION);
 
   const onSubmit = async (values) => {

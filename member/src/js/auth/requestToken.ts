@@ -1,5 +1,5 @@
 import { Message } from 'Components/index';
-import { getBackendUrl } from 'Apollo/Utils';
+import { getBackendUrl } from 'App/network/Utils';
 
 export const requestToken = async (emailToken: string) => {
   try {

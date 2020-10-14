@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { TimeLineChart } from 'Components';
 import { Paper } from '@material-ui/core';
-import { Utils } from 'Utils';
+import { getBalanceColorClass } from 'Components/utility/Utils';
 
 export const BALANCE_QUERY = gql`
   query {
@@ -44,7 +44,7 @@ export const BalanceChart = () => {
   };
 
   const { balance, transactions } = data.currentUser;
-  const { color } = Utils.getBalanceColorClass(balance);
+  const { color } = getBalanceColorClass(balance);
 
   return (
     <Paper style={{ width: '100%', height: '340px', color: 'white' }}>

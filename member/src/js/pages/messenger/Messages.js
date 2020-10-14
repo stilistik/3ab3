@@ -7,10 +7,10 @@ import { Button, Badge } from '@material-ui/core';
 import { Icon, Box } from 'Components';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import { UNREAD_MESSAGES } from './Chat';
+import { TOTAL_UNREAD_MESSAGES } from 'Graphql/queries';
 
 import styles from './Messages.less';
-import { UNREAD_MESSAGES } from './Chat';
-import { TOTAL_UNREAD_MESSAGES } from 'App/Messages';
 
 const DownButton = ({ show, onClick, unreadCount }) => {
   return (

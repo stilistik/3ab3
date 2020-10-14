@@ -39,3 +39,11 @@ export const USER_LIST = gql`
   ${USER_FIELDS}
 `;
 
+export const CURRENT_USER_BALANCE = gql`
+  query {
+    currentUser {
+      id
+      balance
+    }
+  }
+`;

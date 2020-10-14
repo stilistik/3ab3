@@ -1,9 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { connect } from 'react-redux';
-import { showMessage } from 'Redux/actions';
 import { Mutation } from 'react-apollo';
-import { CreateCommentForm } from 'Components';
+import { CreateCommentForm, Message } from 'Components';
 
 const MUTATION = gql`
   mutation($eventId: ID!, $text: String!, $link: String) {
@@ -12,14 +10,6 @@ const MUTATION = gql`
     }
   }
 `;
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    message: (message) => {
-      dispatch(showMessage(message));
-    },
-  };
-};
 
 class CommentEvent extends React.Component {
   onSubmit = async (values) => {
@@ -33,8 +23,7 @@ class CommentEvent extends React.Component {
         refetchQueries: () => this.props.refetch,
       });
     } catch (error) {
-      this.props.message({ type: 'error', text: error.message });
-      return;
+      Message.error(error.message);
     }
   };
 
@@ -56,4 +45,4 @@ class CommentEvent extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(CommentEvent);
+export default CommentEvent;

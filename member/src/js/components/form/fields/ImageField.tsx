@@ -3,7 +3,7 @@ import { Avatar, Typography, makeStyles, Button } from '@material-ui/core';
 import { Box, Icon } from 'Components/index';
 import { useField } from '../UseField';
 import { FieldError, FieldProps } from '../types';
-import { getBackendUrl } from 'Apollo/Utils';
+import { getBackendUrl } from 'App/network/Utils';
 import clx from 'classnames';
 
 interface AvatarEmptyProps {

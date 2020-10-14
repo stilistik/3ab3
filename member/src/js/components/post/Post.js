@@ -18,7 +18,7 @@ import SpotifyPlayer from './SpotifyPlayer';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Microlink from '@microlink/react';
-import { getBackendUrl } from 'Apollo/Utils';
+import { getBackendUrl } from 'App/network/Utils';
 
 import styles from './Post.css';
 
