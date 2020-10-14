@@ -1,5 +1,6 @@
 export * from './buttons';
 export * from './charts';
+export * from './dialogs';
 export * from './comment';
 export * from './confirm';
 export * from './dragdrop';
