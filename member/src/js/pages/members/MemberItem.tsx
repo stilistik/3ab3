@@ -43,7 +43,7 @@ export const MemberItem: React.FC<MemberItemProps> = ({ user }) => {
             <DeleteMember user={user} />
           </Box.Row>
         </Box.Row>
-        <Box pt={2}>
+        <Box pt={2} cmb={1}>
           <Typography variant="body2">
             Email: <a href={`mailto:${user.email}`}>{user.email}</a>
           </Typography>

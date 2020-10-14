@@ -2,6 +2,8 @@ import React from 'react';
 
 import LoadingIcon from './LoadingIcon';
 
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -90,12 +92,14 @@ import GifIcon from '@material-ui/icons/Gif';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const customIconTypes = {
   loading: LoadingIcon,
 };
 
 const muiIconTypes = {
+  accountCircle: AccountCircleIcon,
   add: AddIcon,
   addComment: AddCommentIcon,
   apps: AppsIcon,
@@ -126,6 +130,7 @@ const muiIconTypes = {
   error: ErrorIcon,
   errorOutline: ErrorOutlineIcon,
   event: EventIcon,
+  exitToApp: ExitToAppIcon,
   firstPage: FirstPageIcon,
   folder: FolderIcon,
   fullscreen: FullScreenIcon,
@@ -165,6 +170,7 @@ const muiIconTypes = {
   save: SaveIcon,
   search: SearchIcon,
   send: SendIcon,
+  settings: SettingsIcon,
   share: ShareIcon,
   shoppingCart: ShoppingCartIcon,
   sortAlpha: SortAlphaIcon,

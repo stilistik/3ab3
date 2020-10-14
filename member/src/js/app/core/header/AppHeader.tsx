@@ -31,14 +31,16 @@ export const AuthAppHeader: React.FC<AuthAppHeaderProps> = ({
     <AppBar position="static">
       <Grid.Default>
         <Toolbar disableGutters>
-          <IconButton
-            color="inherit"
-            aria-label="Menu"
-            onClick={() => setDrawerOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Logo onClick={() => requestRoute('/home')} />
+          <Box clone ml={-1} mr={1}>
+            <IconButton
+              color="inherit"
+              aria-label="Menu"
+              onClick={() => setDrawerOpen(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
+          <Logo onClick={() => requestRoute('/home')} fg={1} />
           <Box.Row cmrnl={1}>
             <BalanceButton />
             <MessengerLink />

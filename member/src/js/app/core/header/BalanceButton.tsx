@@ -9,6 +9,7 @@ const useStyles = makeStyles({
   button: {
     height: '30px',
     fontWeight: 'bold',
+    color: 'white',
   },
   low: {
     backgroundColor: '#43a047',

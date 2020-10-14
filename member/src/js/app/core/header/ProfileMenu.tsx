@@ -1,14 +1,30 @@
 import React from 'react';
-import {
-  ClickAwayListener,
-  Paper,
-  Popper,
-  MenuList,
-  MenuItem,
-  IconButton,
-} from '@material-ui/core';
+import { Menu, MenuItem, IconButton, Typography } from '@material-ui/core';
 import { requestRoute } from 'History/index';
-import { ProfileAvatar } from 'Components/index';
+import { Box, Icon, ProfileAvatar } from 'Components/index';
+
+interface ProfileMenuItemProps {
+  label: string;
+  icon: string;
+  action: string;
+  onClick: (action: string) => void;
+}
+
+const ProfileMenuItem = React.forwardRef(
+  (
+    { label, action, icon, onClick }: ProfileMenuItemProps,
+    ref: React.MutableRefObject<HTMLLIElement>
+  ): JSX.Element => {
+    return (
+      <MenuItem ref={ref} onClick={() => onClick(action)}>
+        <Box.Row height="30px" cmrnl={2}>
+          <Icon type={icon} />
+          <Typography variant="body1">{label}</Typography>
+        </Box.Row>
+      </MenuItem>
+    );
+  }
+);
 
 export const ProfileMenu: React.FC = () => {
   const [anchor, setAnchor] = React.useState(null);
@@ -42,27 +58,46 @@ export const ProfileMenu: React.FC = () => {
     setAnchor(null);
   };
 
-  const open = Boolean(anchor);
   return (
     <React.Fragment>
       <IconButton style={{ padding: 0 }} onClick={handleMenuOpen}>
         <ProfileAvatar />
       </IconButton>
-      <Popper open={open} anchorEl={anchor}>
-        <Paper>
-          <ClickAwayListener onClickAway={handleClose}>
-            <MenuList>
-              <MenuItem onClick={() => handleClick('profile')}>
-                Profile
-              </MenuItem>
-              <MenuItem onClick={() => handleClick('account')}>
-                Account
-              </MenuItem>
-              <MenuItem onClick={() => handleClick('logout')}>Logout</MenuItem>
-            </MenuList>
-          </ClickAwayListener>
-        </Paper>
-      </Popper>
+      <Menu
+        anchorEl={anchor}
+        getContentAnchorEl={null}
+        keepMounted
+        open={Boolean(anchor)}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        style={{ marginTop: 5 }}
+      >
+        <ProfileMenuItem
+          label="Profile"
+          action="profile"
+          icon="accountCircle"
+          onClick={handleClick}
+        />
+        <ProfileMenuItem
+          label="Account"
+          action="account"
+          icon="settings"
+          onClick={handleClick}
+        />
+        <ProfileMenuItem
+          label="Logout"
+          action="logout"
+          icon="exitToApp"
+          onClick={handleClick}
+        />
+      </Menu>
     </React.Fragment>
   );
 };
