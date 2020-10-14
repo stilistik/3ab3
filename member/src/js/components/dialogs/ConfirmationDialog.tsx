@@ -25,8 +25,8 @@ interface ConfirmationDialogProps {
   show: boolean;
   title?: string;
   children?: React.ReactNode;
-  handleCancel: () => void;
-  handleConfirm: () => void;
+  onCancel: () => void;
+  onConfirm: () => void;
   confirmText?: string;
   confirmColor?: 'inherit' | 'primary' | 'secondary';
   cancelText?: string;
@@ -37,8 +37,8 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   show,
   title,
   children,
-  handleCancel,
-  handleConfirm,
+  onCancel,
+  onConfirm,
   confirmText = 'Confirm',
   confirmColor = 'primary',
   cancelText = 'Cancel',
@@ -48,7 +48,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   return (
     <Dialog
       open={show}
-      onClose={handleCancel}
+      onClose={onCancel}
       onClick={(e) => e.stopPropagation()}
       classes={{
         paper: classes.paper,
@@ -57,12 +57,12 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
       <DialogTitle className={classes.title}>{title}</DialogTitle>
       <DialogContent className={classes.content}>{children}</DialogContent>
       <DialogActions>
-        <Button data-testid="cancel" onClick={handleCancel} color={cancelColor}>
+        <Button data-testid="cancel" onClick={onCancel} color={cancelColor}>
           {cancelText}
         </Button>
         <Button
           data-testid="confirm"
-          onClick={handleConfirm}
+          onClick={onConfirm}
           variant="contained"
           color={confirmColor}
           autoFocus
