@@ -12,18 +12,12 @@ import { Messenger } from 'Pages/messenger';
 import { Account } from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, EditEvent } from 'Pages/events';
-import { Products, CreateProduct, EditProduct } from 'Pages/products';
+import { ProductList } from 'Pages/products';
 import { MemberList } from 'Pages/members';
 
 const Routes = ({ props }) => {
   return (
     <Switch>
-      <AuthRoute path="/products/edit" component={EditProduct} props={props} />
-      <AuthRoute
-        path="/products/create"
-        component={CreateProduct}
-        props={props}
-      />
       <AuthRoute path="/events/edit" component={EditEvent} props={props} />
       <UnauthRoute path="/login" component={LoginForm} props={props} />
       <UnauthRoute path="/loginsent" component={LoginEmailSent} props={props} />
@@ -33,7 +27,7 @@ const Routes = ({ props }) => {
       <AuthRoute path="/checklist" component={Checklist} props={props} />
       <AuthRoute path="/account" component={Account} props={props} />
       <AuthRoute path="/profile" component={Profile} props={props} />
-      <AuthRoute path="/products" component={Products} props={props} />
+      <AuthRoute path="/products" component={ProductList} props={props} />
       <AuthRoute path="/members" component={MemberList} props={props} />
       <AuthRoute path="/events" component={Events} props={props} />
       <AuthRoute path="/messenger" component={Messenger} props={props} />

@@ -1,16 +1,16 @@
 import React from 'react';
 import { IconButton, Typography } from '@material-ui/core';
 import { Icon, ConfirmationDialog, Message } from 'Components/index';
-import { User } from 'Graphql/types';
+import { Product } from 'Graphql/types';
 import { useMutation } from 'react-apollo';
 import { DELETE_USER } from 'Graphql/mutations';
-import { USER_LIST } from 'Graphql/queries';
+import { PRODUCT_LIST } from 'Graphql/queries';
 
-interface DeleteMemberProps {
-  user: User;
+interface DeleteProductProps {
+  product: Product;
 }
 
-export const DeleteMember: React.FC<DeleteMemberProps> = ({ user }) => {
+export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
   const [showDialog, setShowDialog] = React.useState(false);
   const [deleteUser] = useMutation(DELETE_USER);
 
@@ -20,8 +20,8 @@ export const DeleteMember: React.FC<DeleteMemberProps> = ({ user }) => {
 
   const handleDelete = () => {
     deleteUser({
-      variables: { userId: user.id },
-      refetchQueries: () => [{ query: USER_LIST }],
+      variables: { productId: product.id },
+      refetchQueries: () => [{ query: PRODUCT_LIST }],
     })
       .then(() => Message.success('User successfully deleted.'))
       .catch((error) => Message.error(error.message));
@@ -37,11 +37,12 @@ export const DeleteMember: React.FC<DeleteMemberProps> = ({ user }) => {
         show={showDialog}
         onConfirm={handleDelete}
         onCancel={handleCancel}
-        title="Delete User"
+        title="Delete Product"
       >
         <Typography variant="body2">
-          Do you really want to delete the user {user.name}? This is an
-          irreversible action, all user data will be lost. Continue?
+          Do you really want to delete the product {product.name}? This is an
+          irreversible action, all data related to the product will be lost.
+          Continue?
         </Typography>
       </ConfirmationDialog>
     </React.Fragment>

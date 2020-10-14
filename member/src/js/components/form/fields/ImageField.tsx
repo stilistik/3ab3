@@ -76,7 +76,10 @@ const Display: React.FC<DisplayProps> = ({ url, cdn, error }) => {
 
 interface ImageFieldClasses {}
 
-interface ImageFieldProps extends FieldProps {
+interface ImageFieldProps {
+  id: string;
+  label: string;
+  required?: boolean;
   className?: string;
   classes?: ImageFieldClasses;
 }
