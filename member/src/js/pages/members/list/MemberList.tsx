@@ -1,25 +1,14 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Box, Loading, Error } from 'Components';
+import { Grid, Box, Loading, Error } from 'Components/index';
+import { requestRoute } from 'History/index';
 import MemberItem from '../MemberItem';
 import CreateButton from '../create/CreateButton';
-import { requestRoute } from 'History';
+import { USER_LIST } from 'Graphql/queries';
+import { User } from 'Graphql/types';
 
-export const MEMBERS = gql`
-  query {
-    users {
-      id
-      name
-      role
-      email
-      avatar
-    }
-  }
-`;
-
-export const Members = () => {
-  const { loading, error, data } = useQuery(MEMBERS);
+export const MemberList: React.FC = () => {
+  const { loading, error, data } = useQuery(USER_LIST);
 
   if (error) return <Error message={error.message} />;
   if (loading) return <Loading />;
@@ -28,7 +17,7 @@ export const Members = () => {
     requestRoute('/members/create');
   };
 
-  const onEdit = (userId) => {
+  const onEdit = (userId: string) => {
     requestRoute('/members/edit', {
       params: { id: userId },
     });
@@ -41,7 +30,7 @@ export const Members = () => {
           <Grid item xs={12} sm={6} lg={4}>
             <CreateButton onClick={onCreate} />
           </Grid>
-          {data.users.map((user) => {
+          {data.users.map((user: User) => {
             return (
               <Grid key={user.id} item xs={12} sm={6} lg={4}>
                 <MemberItem user={user} onClick={onEdit} />
@@ -53,5 +42,3 @@ export const Members = () => {
     </Grid.Default>
   );
 };
-
-export default Members;

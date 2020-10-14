@@ -8,9 +8,10 @@ const USER_ROLES_QUERY = gql`
     roles
   }
 `;
-interface UserRoleFieldProps {
+interface UserRoleFieldProps  {
   id: string;
   label: string;
+  required?: boolean;
 }
 
 export const UserRoleField: React.FC<UserRoleFieldProps> = (props) => {

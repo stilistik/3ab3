@@ -13,7 +13,7 @@ import { Account } from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
-import { Members, CreateMember, EditMember } from 'Pages/members';
+import { MemberList, CreateMember, EditMember } from 'Pages/members';
 
 const Routes = ({ props }) => {
   return (
@@ -40,7 +40,7 @@ const Routes = ({ props }) => {
       <AuthRoute path="/account" component={Account} props={props} />
       <AuthRoute path="/profile" component={Profile} props={props} />
       <AuthRoute path="/products" component={Products} props={props} />
-      <AuthRoute path="/members" component={Members} props={props} />
+      <AuthRoute path="/members" component={MemberList} props={props} />
       <AuthRoute path="/events" component={Events} props={props} />
       <AuthRoute path="/messenger" component={Messenger} props={props} />
 

@@ -1,21 +1,17 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { Grid } from 'Components';
+import { Grid, Box } from 'Components/index';
 import CreateMemberForm from './CreateMemberForm';
 
-import styles from './CreateMember.css';
-
-const CreateMember = () => {
+export const CreateMember: React.FC = () => {
   return (
     <Grid.Default>
-      <div className={styles.container}>
-        <Typography variant="h3" className={styles.typo}>
+      <Box p={2}>
+        <Typography variant="h3">
           New Member
         </Typography>
         <CreateMemberForm />
-      </div>
+      </Box>
     </Grid.Default>
   );
 };
-
-export default CreateMember;
