@@ -13,23 +13,17 @@ import { Account } from 'Pages/account';
 import Profile from 'Pages/profile';
 import { Events, EditEvent } from 'Pages/events';
 import { Products, CreateProduct, EditProduct } from 'Pages/products';
-import { MemberList, CreateMember, EditMember } from 'Pages/members';
+import { MemberList } from 'Pages/members';
 
 const Routes = ({ props }) => {
   return (
     <Switch>
       <AuthRoute path="/products/edit" component={EditProduct} props={props} />
       <AuthRoute
-        path="/members/create"
-        component={CreateMember}
-        props={props}
-      />
-      <AuthRoute
         path="/products/create"
         component={CreateProduct}
         props={props}
       />
-      <AuthRoute path="/members/edit" component={EditMember} props={props} />
       <AuthRoute path="/events/edit" component={EditEvent} props={props} />
       <UnauthRoute path="/login" component={LoginForm} props={props} />
       <UnauthRoute path="/loginsent" component={LoginEmailSent} props={props} />

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Paper, IconButton, Typography } from '@material-ui/core';
-import { Icon, Tag, Box, UserAvatar } from 'Components/index';
+import { Paper, Typography } from '@material-ui/core';
+import { Tag, Box, UserAvatar } from 'Components/index';
 import { UserRole, User } from 'Graphql/types';
+import { DeleteMember } from './DeleteMember';
+import { EditMember } from './EditMember';
 
 const RoleColors: Record<UserRole, string> = {
   ADMIN: '#0394fc',
@@ -24,16 +26,9 @@ const RoleDisplay: React.FC<RoleDisplayProps> = ({ role }) => {
 
 interface MemberItemProps {
   user: User;
-  onClick: (userId: string) => void;
 }
 
-export const MemberItem: React.FC<MemberItemProps> = ({ user, onClick }) => {
-  const handleEdit = () => {
-    onClick(user.id);
-  };
-
-  const handleDelete = () => {};
-
+export const MemberItem: React.FC<MemberItemProps> = ({ user }) => {
   return (
     <Paper>
       <Box p={2}>
@@ -44,12 +39,8 @@ export const MemberItem: React.FC<MemberItemProps> = ({ user, onClick }) => {
             <RoleDisplay role={user.role} />
           </Box.Row>
           <Box.Row cmrnl={1}>
-            <IconButton onClick={handleEdit}>
-              <Icon type="edit" />
-            </IconButton>
-            <IconButton onClick={handleDelete}>
-              <Icon type="delete" />
-            </IconButton>
+            <EditMember user={user} />
+            <DeleteMember user={user} />
           </Box.Row>
         </Box.Row>
         <Box pt={2}>

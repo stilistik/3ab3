@@ -7,7 +7,7 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Form, FormSubmit } from 'Components/form';
+import { Form, FormProps, FormSubmit } from 'Components/form';
 import { FieldOptions, Serializable } from 'Components/form/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,10 +25,12 @@ const useStyles = makeStyles((theme) => ({
 
 interface FormDialogProps {
   show: boolean;
-  title?: string;
+  title: string;
+  initValues?: FormProps['initValues'];
+  initOpts?: FormProps['initOpts'];
   children?: React.ReactNode;
-  handleCancel: () => void;
-  handleSubmit: (
+  onCancel: () => void;
+  onSubmit: (
     values: NestedRecord<Serializable>,
     options: NestedRecord<FieldOptions>
   ) => void;
@@ -40,29 +42,33 @@ export const FormDialog: React.FC<FormDialogProps> = ({
   show,
   title,
   children,
-  handleCancel,
-  handleSubmit,
+  onCancel,
+  onSubmit,
   submitText = 'Submit',
   cancelText = 'Cancel',
+  initOpts,
+  initValues,
 }) => {
   const classes = useStyles();
   return (
     <Dialog
       open={show}
-      onClose={handleCancel}
+      onClose={onCancel}
       onClick={(e) => e.stopPropagation()}
       classes={{
         paper: classes.paper,
       }}
     >
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={onSubmit} initOpts={initOpts} initValues={initValues}>
         <DialogTitle className={classes.title}>{title}</DialogTitle>
         <DialogContent className={classes.content}>{children}</DialogContent>
         <DialogActions>
+          <Button onClick={onCancel}>{cancelText}</Button>
           <FormSubmit>
-            <Button type="submit">{submitText}</Button>
+            <Button variant="contained" color="primary" type="submit">
+              {submitText}
+            </Button>
           </FormSubmit>
-          <Button onClick={handleCancel}>{cancelText}</Button>
         </DialogActions>
       </Form>
     </Dialog>

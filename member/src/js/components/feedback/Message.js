@@ -2,6 +2,7 @@ import React from 'react';
 import { SnackbarContent, IconButton } from '@material-ui/core';
 import { Icon } from '../icon';
 import classnames from 'classnames';
+import { MessageFormatter } from './MessageFormatter';
 
 import styles from './Message.less';
 
@@ -14,6 +15,7 @@ const variantIcon = {
 
 export const Message = (props) => {
   const { className, message, onClose, variant, ...other } = props;
+  const msg = MessageFormatter.formatMessage(message);
   return (
     <SnackbarContent
       style={{ backgroundColor: 'red' }}
@@ -21,7 +23,7 @@ export const Message = (props) => {
       message={
         <span className={styles.message}>
           <Icon type={variantIcon[variant]} style={{ marginRight: 5 }} />
-          {message}
+          {msg}
         </span>
       }
       action={[
