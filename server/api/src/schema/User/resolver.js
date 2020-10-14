@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const { verifyAndDecodeToken } = require('../../auth/verify');
 const { AuthenticationError } = require('../../auth/errors');
-const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
+const { uploadFile, deleteFile } = require('../../helper/file.helper');
+const { canUserModify } = require('../../helper/access.helper');
 
 module.exports = {
   Query: {
     users(root, args, context) {
-      return context.prisma.users();
+      return context.prisma.users({ where: { deleted: false } });
     },
     user(root, args, context) {
       return context.prisma.user({ id: args.userId });
@@ -39,10 +40,46 @@ module.exports = {
     createUser(root, args, context) {
       return context.prisma.createUser(args.input);
     },
-    editUser(root, args, context) {
+    async editUser(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+
+      const currentUser = await context.prisma.user({ id });
+      const userToUpdate = await context.prisma.user({ id: args.userId });
+
+      if (!canUserModify(currentUser, userToUpdate)) {
+        throw new Error(
+          `User with role ${currentUser.role} cannot modify user with role ${
+            userToUpdate.role
+          }`
+        );
+      }
+
       return context.prisma.updateUser({
         where: { id: args.userId },
         data: args.input,
+      });
+    },
+    async deleteUser(root, args, context) {
+      const { id } = verifyAndDecodeToken(context);
+
+      if (id === args.userId) {
+        throw new Error('You cannot delete yourself.');
+      }
+
+      const currentUser = await context.prisma.user({ id });
+      const userToUpdate = await context.prisma.user({ id: args.userId });
+
+      if (!canUserModify(currentUser, userToUpdate)) {
+        throw new Error(
+          `User with role ${currentUser.role} cannot modify user with role ${
+            userToUpdate.role
+          }`
+        );
+      }
+
+      return context.prisma.updateUser({
+        where: { id: args.userId },
+        data: { deleted: true },
       });
     },
     editSelf(root, args, context) {

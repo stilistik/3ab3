@@ -686,7 +686,9 @@ export type UserOrderByInput =
   | "isOnline_ASC"
   | "isOnline_DESC"
   | "lastOnline_ASC"
-  | "lastOnline_DESC";
+  | "lastOnline_DESC"
+  | "deleted_ASC"
+  | "deleted_DESC";
 
 export type CommentOrderByInput =
   | "id_ASC"
@@ -1096,6 +1098,8 @@ export interface UserWhereInput {
   chats_every?: Maybe<ChatWhereInput>;
   chats_some?: Maybe<ChatWhereInput>;
   chats_none?: Maybe<ChatWhereInput>;
+  deleted?: Maybe<Boolean>;
+  deleted_not?: Maybe<Boolean>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -1875,6 +1879,7 @@ export interface UserCreateWithoutOwnChatsInput {
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface PurchaseCreateManyWithoutUserInput {
@@ -1947,6 +1952,7 @@ export interface UserCreateWithoutItemsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface PaymentCreateManyWithoutUserInput {
@@ -2006,6 +2012,7 @@ export interface UserCreateWithoutTransactionsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ItemCreateManyWithoutUserInput {
@@ -2065,6 +2072,7 @@ export interface UserCreateWithoutLikedPostsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface TransactionCreateManyWithoutUserInput {
@@ -2124,6 +2132,7 @@ export interface UserCreateWithoutPaymentsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface PostCreateManyWithoutLikedByInput {
@@ -2171,6 +2180,7 @@ export interface UserCreateWithoutPostsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface EventCreateManyWithoutLikedByInput {
@@ -2225,6 +2235,7 @@ export interface UserCreateWithoutSupportedEventsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface CommentCreateManyWithoutAuthorInput {
@@ -2274,6 +2285,7 @@ export interface UserCreateWithoutLikedCommentsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface EventCreateManyWithoutSupportersInput {
@@ -2327,6 +2339,7 @@ export interface UserCreateWithoutLikedEventsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface CommentCreateManyWithoutLikedByInput {
@@ -2374,6 +2387,7 @@ export interface UserCreateWithoutCommentsInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ChatCreateManyWithoutCreatorInput {
@@ -2420,6 +2434,7 @@ export interface UserCreateWithoutChatsInput {
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface MessageCreateManyWithoutChatInput {
@@ -2466,6 +2481,7 @@ export interface UserCreateInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ChatCreateManyWithoutMembersInput {
@@ -2609,6 +2625,7 @@ export interface UserCreateWithoutPurchasesInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatCreateManyWithoutCreatorInput>;
   chats?: Maybe<ChatCreateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface TransactionCreateOneWithoutPurchaseInput {
@@ -2663,6 +2680,7 @@ export interface UserUpdateWithoutOwnChatsDataInput {
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface PurchaseUpdateManyWithoutUserInput {
@@ -2781,6 +2799,7 @@ export interface UserUpdateWithoutItemsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface PaymentUpdateManyWithoutUserInput {
@@ -2862,6 +2881,7 @@ export interface UserUpdateWithoutTransactionsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ItemUpdateManyWithoutUserInput {
@@ -3030,6 +3050,7 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface TransactionUpdateManyWithoutUserInput {
@@ -3117,6 +3138,7 @@ export interface UserUpdateWithoutPaymentsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface PostUpdateManyWithoutLikedByInput {
@@ -3184,6 +3206,7 @@ export interface UserUpdateWithoutPostsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface EventUpdateManyWithoutLikedByInput {
@@ -3276,6 +3299,7 @@ export interface UserUpdateWithoutSupportedEventsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateManyWithoutAuthorInput {
@@ -3364,6 +3388,7 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface EventUpdateManyWithoutSupportersInput {
@@ -3455,6 +3480,7 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface CommentUpdateManyWithoutLikedByInput {
@@ -3523,6 +3549,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ChatUpdateManyWithoutCreatorInput {
@@ -3607,6 +3634,7 @@ export interface UserUpdateWithoutChatsDataInput {
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutChatsInput {
@@ -3730,6 +3758,8 @@ export interface UserScalarWhereInput {
   lastOnline_lte?: Maybe<DateTimeInput>;
   lastOnline_gt?: Maybe<DateTimeInput>;
   lastOnline_gte?: Maybe<DateTimeInput>;
+  deleted?: Maybe<Boolean>;
+  deleted_not?: Maybe<Boolean>;
   AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
@@ -3751,6 +3781,7 @@ export interface UserUpdateManyDataInput {
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface MessageUpdateManyWithoutChatInput {
@@ -3818,6 +3849,7 @@ export interface UserUpdateDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ChatUpdateManyWithoutMembersInput {
@@ -4617,6 +4649,7 @@ export interface UserUpdateWithoutPurchasesDataInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithoutPurchasesInput {
@@ -5256,6 +5289,7 @@ export interface UserUpdateInput {
   lastOnline?: Maybe<DateTimeInput>;
   ownChats?: Maybe<ChatUpdateManyWithoutCreatorInput>;
   chats?: Maybe<ChatUpdateManyWithoutMembersInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -5269,6 +5303,7 @@ export interface UserUpdateManyMutationInput {
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
+  deleted?: Maybe<Boolean>;
 }
 
 export interface ChatSubscriptionWhereInput {
@@ -5540,6 +5575,7 @@ export interface User {
   balance: Float;
   isOnline: Boolean;
   lastOnline?: DateTimeOutput;
+  deleted: Boolean;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -5662,6 +5698,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  deleted: () => Promise<Boolean>;
 }
 
 export interface UserSubscription
@@ -5786,6 +5823,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface UserNullablePromise
@@ -5910,6 +5948,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  deleted: () => Promise<Boolean>;
 }
 
 export interface Purchase {
@@ -8139,6 +8178,7 @@ export interface UserPreviousValues {
   balance: Float;
   isOnline: Boolean;
   lastOnline?: DateTimeOutput;
+  deleted: Boolean;
 }
 
 export interface UserPreviousValuesPromise
@@ -8155,6 +8195,7 @@ export interface UserPreviousValuesPromise
   balance: () => Promise<Float>;
   isOnline: () => Promise<Boolean>;
   lastOnline: () => Promise<DateTimeOutput>;
+  deleted: () => Promise<Boolean>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -8171,6 +8212,7 @@ export interface UserPreviousValuesSubscription
   balance: () => Promise<AsyncIterator<Float>>;
   isOnline: () => Promise<AsyncIterator<Boolean>>;
   lastOnline: () => Promise<AsyncIterator<DateTimeOutput>>;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 /*

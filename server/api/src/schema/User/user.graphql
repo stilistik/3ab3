@@ -28,6 +28,7 @@ type User {
   chats: [Chat!]!
   unreadMessages: Int!
   consumptions: [ProductConsumption!]!
+  deleted: Boolean!
 }
 
 enum UserRole {
@@ -63,6 +64,7 @@ extend type Mutation {
   createUser(input: UserInput!): User! @hasRole
   editUser(userId: ID!, input: UserInput!): User! @hasRole
   editSelf(input: EditSelfInput!): User! @isAuthenticated
+  deleteUser(userId: ID!): User! @hasRole
   uploadAvatar(file: Upload!): User! @isAuthenticated
   setOnlineStatus(userId: ID!, isOnline: Boolean!): User!
 }

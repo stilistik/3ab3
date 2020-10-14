@@ -4001,6 +4001,7 @@ type User {
   lastOnline: DateTime
   ownChats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
   chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
+  deleted: Boolean!
 }
 
 type UserConnection {
@@ -4033,6 +4034,7 @@ input UserCreateInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateManyWithoutChatsInput {
@@ -4123,6 +4125,7 @@ input UserCreateWithoutChatsInput {
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutCommentsInput {
@@ -4148,6 +4151,7 @@ input UserCreateWithoutCommentsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutItemsInput {
@@ -4173,6 +4177,7 @@ input UserCreateWithoutItemsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutLikedCommentsInput {
@@ -4198,6 +4203,7 @@ input UserCreateWithoutLikedCommentsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutLikedEventsInput {
@@ -4223,6 +4229,7 @@ input UserCreateWithoutLikedEventsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutLikedPostsInput {
@@ -4248,6 +4255,7 @@ input UserCreateWithoutLikedPostsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutOwnChatsInput {
@@ -4273,6 +4281,7 @@ input UserCreateWithoutOwnChatsInput {
   isOnline: Boolean
   lastOnline: DateTime
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutPaymentsInput {
@@ -4298,6 +4307,7 @@ input UserCreateWithoutPaymentsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutPostsInput {
@@ -4323,6 +4333,7 @@ input UserCreateWithoutPostsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutPurchasesInput {
@@ -4348,6 +4359,7 @@ input UserCreateWithoutPurchasesInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutSupportedEventsInput {
@@ -4373,6 +4385,7 @@ input UserCreateWithoutSupportedEventsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserCreateWithoutTransactionsInput {
@@ -4398,6 +4411,7 @@ input UserCreateWithoutTransactionsInput {
   lastOnline: DateTime
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 type UserEdge {
@@ -4428,6 +4442,8 @@ enum UserOrderByInput {
   isOnline_DESC
   lastOnline_ASC
   lastOnline_DESC
+  deleted_ASC
+  deleted_DESC
 }
 
 type UserPreviousValues {
@@ -4442,6 +4458,7 @@ type UserPreviousValues {
   balance: Float!
   isOnline: Boolean!
   lastOnline: DateTime
+  deleted: Boolean!
 }
 
 enum UserRole {
@@ -4565,6 +4582,8 @@ input UserScalarWhereInput {
   lastOnline_lte: DateTime
   lastOnline_gt: DateTime
   lastOnline_gte: DateTime
+  deleted: Boolean
+  deleted_not: Boolean
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -4611,6 +4630,7 @@ input UserUpdateDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateInput {
@@ -4636,6 +4656,7 @@ input UserUpdateInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateManyDataInput {
@@ -4649,6 +4670,7 @@ input UserUpdateManyDataInput {
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
+  deleted: Boolean
 }
 
 input UserUpdateManyMutationInput {
@@ -4662,6 +4684,7 @@ input UserUpdateManyMutationInput {
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
+  deleted: Boolean
 }
 
 input UserUpdateManyWithoutChatsInput {
@@ -4816,6 +4839,7 @@ input UserUpdateWithoutChatsDataInput {
   isOnline: Boolean
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutCommentsDataInput {
@@ -4840,6 +4864,7 @@ input UserUpdateWithoutCommentsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutItemsDataInput {
@@ -4864,6 +4889,7 @@ input UserUpdateWithoutItemsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutLikedCommentsDataInput {
@@ -4888,6 +4914,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutLikedEventsDataInput {
@@ -4912,6 +4939,7 @@ input UserUpdateWithoutLikedEventsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutLikedPostsDataInput {
@@ -4936,6 +4964,7 @@ input UserUpdateWithoutLikedPostsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutOwnChatsDataInput {
@@ -4960,6 +4989,7 @@ input UserUpdateWithoutOwnChatsDataInput {
   isOnline: Boolean
   lastOnline: DateTime
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutPaymentsDataInput {
@@ -4984,6 +5014,7 @@ input UserUpdateWithoutPaymentsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -5008,6 +5039,7 @@ input UserUpdateWithoutPostsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutPurchasesDataInput {
@@ -5032,6 +5064,7 @@ input UserUpdateWithoutPurchasesDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutSupportedEventsDataInput {
@@ -5056,6 +5089,7 @@ input UserUpdateWithoutSupportedEventsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithoutTransactionsDataInput {
@@ -5080,6 +5114,7 @@ input UserUpdateWithoutTransactionsDataInput {
   lastOnline: DateTime
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
+  deleted: Boolean
 }
 
 input UserUpdateWithWhereUniqueWithoutChatsInput {
@@ -5328,6 +5363,8 @@ input UserWhereInput {
   chats_every: ChatWhereInput
   chats_some: ChatWhereInput
   chats_none: ChatWhereInput
+  deleted: Boolean
+  deleted_not: Boolean
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
