@@ -6,6 +6,7 @@ import { SINGLE_EVENT } from 'Graphql/queries';
 import { Event } from 'Graphql/types';
 import { Paper } from '@material-ui/core';
 import { PaperHeader } from '../PaperHeader';
+import { HelpPopover } from '../HelpPopover';
 
 interface TodosProps {
   event: Event;
@@ -19,6 +20,11 @@ export const Todos: React.FC<TodosProps> = ({ event }) => {
   return (
     <Paper>
       <PaperHeader title="Todos">
+        <HelpPopover>
+          This todo list helps to keep track of tasks that need to be done for
+          the event. Todos have a due date and can also be assigned to members
+          who are responsible for completing them.
+        </HelpPopover>
         <CreateTodo eventId={event.id} refetchQueries={refetchQueries} />
       </PaperHeader>
       <Box.Fill p={2}>

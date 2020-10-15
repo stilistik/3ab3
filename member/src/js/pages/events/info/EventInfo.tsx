@@ -5,6 +5,7 @@ import { Event } from 'Graphql/types';
 import { Paper, Typography } from '@material-ui/core';
 import { PaperHeader } from '../PaperHeader';
 import { EditInfo } from './EditInfo';
+import { HelpPopover } from '../HelpPopover';
 
 interface InfoItemProps {
   label: string;
@@ -34,13 +35,20 @@ export const EventInfo: React.FC<EventInfoProps> = ({ event }) => {
   return (
     <Paper>
       <PaperHeader title="Info">
+        <HelpPopover>
+          This information will be shown on the public website once the event is
+          published.
+        </HelpPopover>
         <EditInfo event={event} refetchQueries={refetchQueries} />
       </PaperHeader>
       <Box.Fill p={2} cmbnl={1}>
         <InfoItem label="Event Name" content={event.title} />
         <InfoItem label="Location" content={event.place} />
         <InfoItem label="Date" content={new Date(event.date).toDateString()} />
-        <InfoItem label="Time" content={new Date(event.date).toLocaleTimeString()} />
+        <InfoItem
+          label="Time"
+          content={new Date(event.date).toLocaleTimeString()}
+        />
         <InfoItem label="Description" content={event.description} />
       </Box.Fill>
     </Paper>

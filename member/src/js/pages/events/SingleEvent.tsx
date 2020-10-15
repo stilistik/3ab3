@@ -42,10 +42,20 @@ export const SingleEvent: React.FC = () => {
             <EventInfo event={event} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <EventImage event={event} fieldId="image" label="Front Image" />
+            <EventImage
+              event={event}
+              fieldId="image"
+              label="Front Image"
+              helpText="This will be the most prominent image to represent the event on the public website."
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <EventImage event={event} fieldId="flyer" label="Event Flyer" />
+            <EventImage
+              event={event}
+              fieldId="flyer"
+              label="Event Flyer"
+              helpText="An image of the event flyer, if there is one."
+            />
           </Grid>
         </Grid>
       </Box>
