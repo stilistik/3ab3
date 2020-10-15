@@ -93,7 +93,6 @@ module.exports = {
       Auth: path.resolve(__dirname, 'src/js/auth/'),
       Components: path.resolve(__dirname, 'src/js/components/'),
       Graphql: path.resolve(__dirname, 'src/js/graphql'),
-      Style: path.resolve(__dirname, 'src/js/style'),
     },
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
   },

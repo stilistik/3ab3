@@ -17,7 +17,6 @@
       "Pages/*": ["src/js/pages/*"],
       "App/*": ["src/js/app/*"],
       "Graphql/*": ["src/js/graphql/*"],
-      "Testing/*": ["src/js/testing/*"]
     }
   },
   "include": ["src"]

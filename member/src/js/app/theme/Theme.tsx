@@ -12,21 +12,14 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    color: '#222',
     fontFamily: '"MontSerrat", sans-serif',
-    fontWeight: 900,
-    useNextVariants: true,
   },
 });
 
-class Style extends React.Component {
-  render() {
-    return (
-      <StylesProvider injectFirst>
-        <MuiThemeProvider theme={theme}>{this.props.children}</MuiThemeProvider>
-      </StylesProvider>
-    );
-  }
-}
-
-export default Style;
+export const Theme: React.FC = ({ children }) => {
+  return (
+    <StylesProvider injectFirst>
+      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+    </StylesProvider>
+  );
+};
