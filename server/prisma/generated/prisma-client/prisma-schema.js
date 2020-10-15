@@ -923,6 +923,7 @@ type Event {
   date: DateTime!
   image: String
   flyer: String
+  committee(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   supporters(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
@@ -944,7 +945,8 @@ input EventCreateInput {
   date: DateTime!
   image: String
   flyer: String
-  supporters: UserCreateManyWithoutSupportedEventsInput
+  committee: UserCreateManyInput
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
@@ -952,13 +954,13 @@ input EventCreateInput {
   published: Boolean
 }
 
-input EventCreateManyWithoutLikedByInput {
-  create: [EventCreateWithoutLikedByInput!]
+input EventCreateManyInput {
+  create: [EventCreateInput!]
   connect: [EventWhereUniqueInput!]
 }
 
-input EventCreateManyWithoutSupportersInput {
-  create: [EventCreateWithoutSupportersInput!]
+input EventCreateManyWithoutLikedByInput {
+  create: [EventCreateWithoutLikedByInput!]
   connect: [EventWhereUniqueInput!]
 }
 
@@ -979,7 +981,8 @@ input EventCreateWithoutCommentsInput {
   date: DateTime!
   image: String
   flyer: String
-  supporters: UserCreateManyWithoutSupportedEventsInput
+  committee: UserCreateManyInput
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   todos: TodoCreateManyWithoutEventInput
@@ -993,21 +996,8 @@ input EventCreateWithoutLikedByInput {
   date: DateTime!
   image: String
   flyer: String
-  supporters: UserCreateManyWithoutSupportedEventsInput
-  owner: UserCreateOneInput!
-  comments: CommentCreateManyWithoutEventInput
-  todos: TodoCreateManyWithoutEventInput
-  published: Boolean
-}
-
-input EventCreateWithoutSupportersInput {
-  id: ID
-  title: String!
-  description: String!
-  date: DateTime!
-  image: String
-  flyer: String
-  likedBy: UserCreateManyWithoutLikedEventsInput
+  committee: UserCreateManyInput
+  supporters: UserCreateManyInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
   todos: TodoCreateManyWithoutEventInput
@@ -1021,7 +1011,8 @@ input EventCreateWithoutTodosInput {
   date: DateTime!
   image: String
   flyer: String
-  supporters: UserCreateManyWithoutSupportedEventsInput
+  committee: UserCreateManyInput
+  supporters: UserCreateManyInput
   likedBy: UserCreateManyWithoutLikedEventsInput
   owner: UserCreateOneInput!
   comments: CommentCreateManyWithoutEventInput
@@ -1164,13 +1155,29 @@ input EventSubscriptionWhereInput {
   NOT: [EventSubscriptionWhereInput!]
 }
 
+input EventUpdateDataInput {
+  title: String
+  description: String
+  date: DateTime
+  image: String
+  flyer: String
+  committee: UserUpdateManyInput
+  supporters: UserUpdateManyInput
+  likedBy: UserUpdateManyWithoutLikedEventsInput
+  owner: UserUpdateOneRequiredInput
+  comments: CommentUpdateManyWithoutEventInput
+  todos: TodoUpdateManyWithoutEventInput
+  published: Boolean
+}
+
 input EventUpdateInput {
   title: String
   description: String
   date: DateTime
   image: String
   flyer: String
-  supporters: UserUpdateManyWithoutSupportedEventsInput
+  committee: UserUpdateManyInput
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
@@ -1185,6 +1192,18 @@ input EventUpdateManyDataInput {
   image: String
   flyer: String
   published: Boolean
+}
+
+input EventUpdateManyInput {
+  create: [EventCreateInput!]
+  update: [EventUpdateWithWhereUniqueNestedInput!]
+  upsert: [EventUpsertWithWhereUniqueNestedInput!]
+  delete: [EventWhereUniqueInput!]
+  connect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  deleteMany: [EventScalarWhereInput!]
+  updateMany: [EventUpdateManyWithWhereNestedInput!]
 }
 
 input EventUpdateManyMutationInput {
@@ -1204,18 +1223,6 @@ input EventUpdateManyWithoutLikedByInput {
   disconnect: [EventWhereUniqueInput!]
   update: [EventUpdateWithWhereUniqueWithoutLikedByInput!]
   upsert: [EventUpsertWithWhereUniqueWithoutLikedByInput!]
-  deleteMany: [EventScalarWhereInput!]
-  updateMany: [EventUpdateManyWithWhereNestedInput!]
-}
-
-input EventUpdateManyWithoutSupportersInput {
-  create: [EventCreateWithoutSupportersInput!]
-  delete: [EventWhereUniqueInput!]
-  connect: [EventWhereUniqueInput!]
-  set: [EventWhereUniqueInput!]
-  disconnect: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutSupportersInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutSupportersInput!]
   deleteMany: [EventScalarWhereInput!]
   updateMany: [EventUpdateManyWithWhereNestedInput!]
 }
@@ -1247,7 +1254,8 @@ input EventUpdateWithoutCommentsDataInput {
   date: DateTime
   image: String
   flyer: String
-  supporters: UserUpdateManyWithoutSupportedEventsInput
+  committee: UserUpdateManyInput
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   todos: TodoUpdateManyWithoutEventInput
@@ -1260,20 +1268,8 @@ input EventUpdateWithoutLikedByDataInput {
   date: DateTime
   image: String
   flyer: String
-  supporters: UserUpdateManyWithoutSupportedEventsInput
-  owner: UserUpdateOneRequiredInput
-  comments: CommentUpdateManyWithoutEventInput
-  todos: TodoUpdateManyWithoutEventInput
-  published: Boolean
-}
-
-input EventUpdateWithoutSupportersDataInput {
-  title: String
-  description: String
-  date: DateTime
-  image: String
-  flyer: String
-  likedBy: UserUpdateManyWithoutLikedEventsInput
+  committee: UserUpdateManyInput
+  supporters: UserUpdateManyInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
   todos: TodoUpdateManyWithoutEventInput
@@ -1286,21 +1282,22 @@ input EventUpdateWithoutTodosDataInput {
   date: DateTime
   image: String
   flyer: String
-  supporters: UserUpdateManyWithoutSupportedEventsInput
+  committee: UserUpdateManyInput
+  supporters: UserUpdateManyInput
   likedBy: UserUpdateManyWithoutLikedEventsInput
   owner: UserUpdateOneRequiredInput
   comments: CommentUpdateManyWithoutEventInput
   published: Boolean
 }
 
+input EventUpdateWithWhereUniqueNestedInput {
+  where: EventWhereUniqueInput!
+  data: EventUpdateDataInput!
+}
+
 input EventUpdateWithWhereUniqueWithoutLikedByInput {
   where: EventWhereUniqueInput!
   data: EventUpdateWithoutLikedByDataInput!
-}
-
-input EventUpdateWithWhereUniqueWithoutSupportersInput {
-  where: EventWhereUniqueInput!
-  data: EventUpdateWithoutSupportersDataInput!
 }
 
 input EventUpsertWithoutCommentsInput {
@@ -1313,16 +1310,16 @@ input EventUpsertWithoutTodosInput {
   create: EventCreateWithoutTodosInput!
 }
 
+input EventUpsertWithWhereUniqueNestedInput {
+  where: EventWhereUniqueInput!
+  update: EventUpdateDataInput!
+  create: EventCreateInput!
+}
+
 input EventUpsertWithWhereUniqueWithoutLikedByInput {
   where: EventWhereUniqueInput!
   update: EventUpdateWithoutLikedByDataInput!
   create: EventCreateWithoutLikedByInput!
-}
-
-input EventUpsertWithWhereUniqueWithoutSupportersInput {
-  where: EventWhereUniqueInput!
-  update: EventUpdateWithoutSupportersDataInput!
-  create: EventCreateWithoutSupportersInput!
 }
 
 input EventWhereInput {
@@ -1404,6 +1401,9 @@ input EventWhereInput {
   flyer_not_starts_with: String
   flyer_ends_with: String
   flyer_not_ends_with: String
+  committee_every: UserWhereInput
+  committee_some: UserWhereInput
+  committee_none: UserWhereInput
   supporters_every: UserWhereInput
   supporters_some: UserWhereInput
   supporters_none: UserWhereInput
@@ -4027,7 +4027,7 @@ input UserCreateInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4035,6 +4035,11 @@ input UserCreateInput {
   ownChats: ChatCreateManyWithoutCreatorInput
   chats: ChatCreateManyWithoutMembersInput
   deleted: Boolean
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateManyWithoutChatsInput {
@@ -4054,11 +4059,6 @@ input UserCreateManyWithoutLikedEventsInput {
 
 input UserCreateManyWithoutLikedPostsInput {
   create: [UserCreateWithoutLikedPostsInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutSupportedEventsInput {
-  create: [UserCreateWithoutSupportedEventsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -4119,7 +4119,7 @@ input UserCreateWithoutChatsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4145,7 +4145,7 @@ input UserCreateWithoutCommentsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
   lastOnline: DateTime
@@ -4170,7 +4170,7 @@ input UserCreateWithoutItemsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4197,7 +4197,7 @@ input UserCreateWithoutLikedCommentsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   isOnline: Boolean
   lastOnline: DateTime
@@ -4222,7 +4222,7 @@ input UserCreateWithoutLikedEventsInput {
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4248,7 +4248,7 @@ input UserCreateWithoutLikedPostsInput {
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4275,7 +4275,7 @@ input UserCreateWithoutOwnChatsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4300,7 +4300,7 @@ input UserCreateWithoutPaymentsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4326,7 +4326,7 @@ input UserCreateWithoutPostsInput {
   balance: Float
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4352,33 +4352,7 @@ input UserCreateWithoutPurchasesInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
-  comments: CommentCreateManyWithoutAuthorInput
-  likedComments: CommentCreateManyWithoutLikedByInput
-  isOnline: Boolean
-  lastOnline: DateTime
-  ownChats: ChatCreateManyWithoutCreatorInput
-  chats: ChatCreateManyWithoutMembersInput
-  deleted: Boolean
-}
-
-input UserCreateWithoutSupportedEventsInput {
-  id: ID
-  name: String!
-  email: String!
-  phone: String
-  birthdate: DateTime
-  role: UserRole
-  avatar: String
-  loginToken: String
-  purchases: PurchaseCreateManyWithoutUserInput
-  payments: PaymentCreateManyWithoutUserInput
-  transactions: TransactionCreateManyWithoutUserInput
-  items: ItemCreateManyWithoutUserInput
-  balance: Float
-  posts: PostCreateManyWithoutAuthorInput
-  likedPosts: PostCreateManyWithoutLikedByInput
-  likedEvents: EventCreateManyWithoutLikedByInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4404,7 +4378,7 @@ input UserCreateWithoutTransactionsInput {
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
-  supportedEvents: EventCreateManyWithoutSupportersInput
+  supportedEvents: EventCreateManyInput
   comments: CommentCreateManyWithoutAuthorInput
   likedComments: CommentCreateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4623,7 +4597,7 @@ input UserUpdateDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4649,7 +4623,7 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4671,6 +4645,18 @@ input UserUpdateManyDataInput {
   isOnline: Boolean
   lastOnline: DateTime
   deleted: Boolean
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyMutationInput {
@@ -4731,18 +4717,6 @@ input UserUpdateManyWithoutLikedPostsInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutLikedPostsInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutLikedPostsInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
-input UserUpdateManyWithoutSupportedEventsInput {
-  create: [UserCreateWithoutSupportedEventsInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSupportedEventsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSupportedEventsInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -4833,7 +4807,7 @@ input UserUpdateWithoutChatsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4858,7 +4832,7 @@ input UserUpdateWithoutCommentsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
   lastOnline: DateTime
@@ -4882,7 +4856,7 @@ input UserUpdateWithoutItemsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4908,7 +4882,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   isOnline: Boolean
   lastOnline: DateTime
@@ -4932,7 +4906,7 @@ input UserUpdateWithoutLikedEventsDataInput {
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4957,7 +4931,7 @@ input UserUpdateWithoutLikedPostsDataInput {
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -4983,7 +4957,7 @@ input UserUpdateWithoutOwnChatsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -5007,7 +4981,7 @@ input UserUpdateWithoutPaymentsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -5032,7 +5006,7 @@ input UserUpdateWithoutPostsDataInput {
   balance: Float
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -5057,32 +5031,7 @@ input UserUpdateWithoutPurchasesDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
-  comments: CommentUpdateManyWithoutAuthorInput
-  likedComments: CommentUpdateManyWithoutLikedByInput
-  isOnline: Boolean
-  lastOnline: DateTime
-  ownChats: ChatUpdateManyWithoutCreatorInput
-  chats: ChatUpdateManyWithoutMembersInput
-  deleted: Boolean
-}
-
-input UserUpdateWithoutSupportedEventsDataInput {
-  name: String
-  email: String
-  phone: String
-  birthdate: DateTime
-  role: UserRole
-  avatar: String
-  loginToken: String
-  purchases: PurchaseUpdateManyWithoutUserInput
-  payments: PaymentUpdateManyWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-  items: ItemUpdateManyWithoutUserInput
-  balance: Float
-  posts: PostUpdateManyWithoutAuthorInput
-  likedPosts: PostUpdateManyWithoutLikedByInput
-  likedEvents: EventUpdateManyWithoutLikedByInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -5107,7 +5056,7 @@ input UserUpdateWithoutTransactionsDataInput {
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
-  supportedEvents: EventUpdateManyWithoutSupportersInput
+  supportedEvents: EventUpdateManyInput
   comments: CommentUpdateManyWithoutAuthorInput
   likedComments: CommentUpdateManyWithoutLikedByInput
   isOnline: Boolean
@@ -5115,6 +5064,11 @@ input UserUpdateWithoutTransactionsDataInput {
   ownChats: ChatUpdateManyWithoutCreatorInput
   chats: ChatUpdateManyWithoutMembersInput
   deleted: Boolean
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutChatsInput {
@@ -5135,11 +5089,6 @@ input UserUpdateWithWhereUniqueWithoutLikedEventsInput {
 input UserUpdateWithWhereUniqueWithoutLikedPostsInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutLikedPostsDataInput!
-}
-
-input UserUpdateWithWhereUniqueWithoutSupportedEventsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSupportedEventsDataInput!
 }
 
 input UserUpsertNestedInput {
@@ -5182,6 +5131,12 @@ input UserUpsertWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput!
 }
 
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
 input UserUpsertWithWhereUniqueWithoutChatsInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutChatsDataInput!
@@ -5204,12 +5159,6 @@ input UserUpsertWithWhereUniqueWithoutLikedPostsInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutLikedPostsDataInput!
   create: UserCreateWithoutLikedPostsInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutSupportedEventsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSupportedEventsDataInput!
-  create: UserCreateWithoutSupportedEventsInput!
 }
 
 input UserWhereInput {

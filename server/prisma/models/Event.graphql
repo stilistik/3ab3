@@ -5,7 +5,8 @@ type Event {
   date: DateTime!
   image: String
   flyer: String
-  supporters: [User!]! @relation(link: TABLE, name: "SupportedEvents")
+  committee: [User!]! @relation(link: TABLE, name: "Committee")
+  supporters: [User!]! @relation(link: TABLE, name: "Supporters")
   likedBy: [User!]! @relation(link: TABLE, name: "LikedEvents")
   owner: User! @relation(link: TABLE, name: "EventOwner")
   comments: [Comment!]! @relation(link: TABLE, name: "EventComments", onDelete: CASCADE)
