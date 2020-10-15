@@ -6445,9 +6445,9 @@ iterall@^1.2.1, iterall@^1.2.2:
   integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
 
 javascript-time-ago@^2.0.7:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/javascript-time-ago/-/javascript-time-ago-2.2.1.tgz#5e9a909a2022d066b0625548c4910ea175c6d344"
-  integrity sha512-tu/dRSEIlePzcQTcZj4sYPvU4YSg75iaqlEypNNSx0tIF4zZQ7sNT4IF9LRv9blG5BPYDjm3QFmyGwOPNLuy3Q==
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/javascript-time-ago/-/javascript-time-ago-2.2.9.tgz#655385bd143971ff97fda01ddbf82ce1d16d97ea"
+  integrity sha512-wJ+nBScsRJ30qJnRWm8DD59G3imYe6fg+T9ddErm4+qxcR2xyBEpYQlDylQEafFIQg6cx/+V4myN4cR2ikQtiw==
   dependencies:
     relative-time-format "^1.0.5"
 
