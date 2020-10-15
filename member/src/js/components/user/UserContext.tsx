@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Loading, Message } from 'Components/index';
+import { Loading } from 'Components/index';
 import { CURRENT_USER_QUERY } from 'Graphql/queries';
 import { User } from 'Graphql/types';
 
 export const UserContext = React.createContext<User | undefined>(undefined);
 
-export const userCurrentUser = (): User => {
+export const useCurrentUser = (): User => {
   const contextValue = React.useContext(UserContext);
   if (contextValue === undefined) {
     throw new Error('useCurrentUser must be used within UserContext provider.');
@@ -21,6 +21,8 @@ export const UserProvider: React.FC = ({ children }) => {
   if (loading) return <Loading type="absolute" />;
 
   return (
-    <UserContext.Provider value={data.currentUser}>{children}</UserContext.Provider>
+    <UserContext.Provider value={data.currentUser}>
+      {children}
+    </UserContext.Provider>
   );
 };

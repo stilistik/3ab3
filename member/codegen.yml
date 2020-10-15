@@ -2,7 +2,7 @@ overwrite: true
 schema:
   - http://localhost:4000/api:
       headers:
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrZzZiY203ZDAwMXQwNzk1OWwwdnFkNTQiLCJ0aW1lc3RhbXAiOjE2MDI1OTU1MDMzOTIsImlhdCI6MTYwMjU5NTUwMywiZXhwIjoxNjE4MTQ3NTAzfQ.q4vNMpGJpUlPy4geAQxkgcG4Ua68vrzTY30j4fCdz5Q'
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrZzZiY203djAwMXkwNzk1bTl1NjM3Y3QiLCJ0aW1lc3RhbXAiOjE2MDI2ODA4MDAyNjEsImlhdCI6MTYwMjY4MDgwMCwiZXhwIjoxNjE4MjMyODAwfQ.Y2ibNK_PaGIqOzJGXi0Y9cVz3T4YAXMnI3hreW2_MPk'
 generates:
   src/js/graphql/types.ts:
     schema: ./schema.graphql

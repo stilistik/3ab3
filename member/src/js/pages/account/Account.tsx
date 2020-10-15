@@ -2,10 +2,10 @@ import React from 'react';
 import AvatarUpload from './AvatarUpload';
 import { AccountForm } from './AccountForm';
 import { Typography, Paper } from '@material-ui/core';
-import { Box, Grid, userCurrentUser } from 'Components/index';
+import { Box, Grid, useCurrentUser } from 'Components/index';
 
 export const Account: React.FC = () => {
-  const user = userCurrentUser();
+  const user = useCurrentUser();
   return (
     <Grid.Default>
       <Box py={2} cmb={2}>

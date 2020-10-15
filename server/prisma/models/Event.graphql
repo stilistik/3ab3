@@ -3,10 +3,11 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
+  place: String
   image: String
   flyer: String
   committee: [User!]! @relation(link: TABLE, name: "Committee")
-  supporters: [User!]! @relation(link: TABLE, name: "Supporters")
+  supporters: [User!]! @relation(link: TABLE, name: "SupportedEvents")
   likedBy: [User!]! @relation(link: TABLE, name: "LikedEvents")
   owner: User! @relation(link: TABLE, name: "EventOwner")
   comments: [Comment!]! @relation(link: TABLE, name: "EventComments", onDelete: CASCADE)

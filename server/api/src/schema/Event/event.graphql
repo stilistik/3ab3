@@ -4,9 +4,11 @@ type Event implements Node {
   description: String!
   date: DateTime!
   image: String
+  place: String
   flyer: String
   comments: [Comment!]! @isAuthenticated
   supporters: [User!]! @isAuthenticated
+  committee: [User!]! @isAuthenticated
   likedBy: [User!]! @isAuthenticated
   owner: User! @isAuthenticated
   todos: [Todo!]! @isAuthenticated

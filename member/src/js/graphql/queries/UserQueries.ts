@@ -47,3 +47,25 @@ export const CURRENT_USER_BALANCE = gql`
     }
   }
 `;
+
+export const CURRENT_USER_SUPPORTED_EVENTS = gql`
+  query {
+    currentUser {
+      id
+      supportedEvents {
+        id
+      }
+    }
+  }
+`;
+
+export const CURRENT_USER_LIKED_EVENTS = gql`
+  query {
+    currentUser {
+      id
+      likedEvents {
+        id
+      }
+    }
+  }
+`;

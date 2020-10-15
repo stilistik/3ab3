@@ -8,7 +8,7 @@ import { Checklist } from 'Pages/checklist';
 import { Messenger } from 'Pages/messenger';
 import { Account } from 'Pages/account';
 import Profile from 'Pages/profile';
-import { Events, EditEvent } from 'Pages/events';
+import { AllEvents, SingleEvent } from 'Pages/events';
 import { ProductList } from 'Pages/products';
 import { MemberList } from 'Pages/members';
 
@@ -32,9 +32,6 @@ export const UnauthenticatedRoutes: React.FC = () => {
 export const AuthenticatedRoutes: React.FC = () => {
   return (
     <Switch>
-      <Route path="/events/edit">
-        <EditEvent />
-      </Route>
       <Route path="/home">
         <Home />
       </Route>
@@ -57,7 +54,10 @@ export const AuthenticatedRoutes: React.FC = () => {
         <MemberList />
       </Route>
       <Route path="/events">
-        <Events />
+        <AllEvents />
+      </Route>
+      <Route path="/event">
+        <SingleEvent />
       </Route>
       <Route path="/messenger">
         <Messenger />

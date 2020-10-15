@@ -5,31 +5,6 @@ import { Grid, Box, Loading, Error } from 'Components';
 import TodoList from './TodoList';
 import CreateTodo from './CreateTodo';
 
-export const TODOS = gql`
-  query($eventId: ID!) {
-    event(eventId: $eventId) {
-      id
-      todos {
-        id
-        text
-        due
-        done
-        doneBy {
-          id
-          avatar
-          name
-        }
-        assigned {
-          id
-          avatar
-          name
-        }
-        doneAt
-      }
-    }
-  }
-`;
-
 const Todos = ({ eventId }) => {
   const { loading, error, data } = useQuery(TODOS, {
     variables: { eventId: eventId },

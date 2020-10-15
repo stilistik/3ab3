@@ -1,30 +1,11 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { EventCard, Grid, Box } from 'Components';
+import { EventCard, Grid, Box } from 'Components/index';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
 import { Button } from '@material-ui/core';
+import { ALL_EVENTS_FEED } from 'Graphql/queries';
+import { Event } from 'Graphql/types';
 
-export const EVENT_FEED = gql`
-  query($first: Int!, $after: String) {
-    events(first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          title
-          description
-          date
-          image
-        }
-      }
-    }
-  }
-`;
-
-export const Events = () => {
+export const AllEvents = () => {
   const {
     loading,
     error,
@@ -32,12 +13,9 @@ export const Events = () => {
     fetchMore,
     hasNext,
     cursor,
-  } = usePaginatedQuery(EVENT_FEED, 10);
+  } = usePaginatedQuery<Event>(ALL_EVENTS_FEED, 10);
 
   if (loading || error) return null;
-
-  const onEdit = () => {};
-  const onDelete = () => {};
 
   return (
     <Grid.Default>
@@ -46,7 +24,7 @@ export const Events = () => {
           {nodes.map((event) => {
             return (
               <Grid key={event.id} item xs={12} sm={6}>
-                <EventCard event={event} onEdit={onEdit} onDelete={onDelete} />
+                <EventCard event={event} />
               </Grid>
             );
           })}
@@ -60,5 +38,3 @@ export const Events = () => {
     </Grid.Default>
   );
 };
-
-export default Events;

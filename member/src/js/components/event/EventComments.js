@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { CommentList } from 'Components';
 import CommentEvent from './CommentEvent';
-import { EVENT_STATS } from './EventStats';
+import { EVENT_STATS } from 'Graphql/queries';
 
 export const EVENT_COMMENTS = gql`
   query($eventId: ID!, $first: Int, $after: String) {

@@ -100,8 +100,10 @@ export type Edge = {
 };
 
 export type EditSelfInput = {
-  name: Scalars['String'];
-  email: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  birthdate?: Maybe<Scalars['DateTime']>;
 };
 
 export type EmailInput = {
@@ -118,9 +120,11 @@ export type Event = Node & {
   description: Scalars['String'];
   date: Scalars['DateTime'];
   image?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
   flyer?: Maybe<Scalars['String']>;
   comments: Array<Comment>;
   supporters: Array<User>;
+  committee: Array<User>;
   likedBy: Array<User>;
   owner: User;
   todos: Array<Todo>;
@@ -209,6 +213,7 @@ export type Mutation = {
   createUser: User;
   editUser: User;
   editSelf: User;
+  deleteUser: User;
   uploadAvatar: User;
   setOnlineStatus: User;
   createProduct: Product;
@@ -264,6 +269,11 @@ export type MutationEditUserArgs = {
 
 export type MutationEditSelfArgs = {
   input: EditSelfInput;
+};
+
+
+export type MutationDeleteUserArgs = {
+  userId: Scalars['ID'];
 };
 
 
@@ -885,6 +895,7 @@ export type User = {
   chats: Array<Chat>;
   unreadMessages: Scalars['Int'];
   consumptions: Array<ProductConsumption>;
+  deleted: Scalars['Boolean'];
 };
 
 
@@ -899,6 +910,8 @@ export type UserInput = {
   name: Scalars['String'];
   email: Scalars['String'];
   role?: Maybe<UserRole>;
+  phone?: Maybe<Scalars['String']>;
+  birthdate?: Maybe<Scalars['DateTime']>;
 };
 
 export enum UserRole {
