@@ -64,16 +64,8 @@ interface EventHeaderProps {
 
 const EventHeader: React.FC<EventHeaderProps> = ({ title, date, place }) => {
   return (
-    <Box
-      d="flex"
-      jc="space-between"
-      w="100%"
-      pb={1}
-      mb={2}
-      borderBottom={1}
-      borderColor="divider"
-    >
-      <Box d="flex">
+    <Box pb={1} mb={2} borderBottom={1} borderColor="divider">
+      <Box.Row>
         <DateDisplay date={date} />
         <div>
           <Typography gutterBottom variant="h5">
@@ -83,7 +75,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({ title, date, place }) => {
             {place}
           </Typography>
         </div>
-      </Box>
+      </Box.Row>
     </Box>
   );
 };
@@ -109,7 +101,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
   };
 
   const onEdit = () => {
-    requestRoute('/events/edit', {
+    requestRoute('/event', {
       params: { id: event.id },
     });
   };
