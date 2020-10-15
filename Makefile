@@ -23,6 +23,8 @@ dev/db.reset:		## Resets the database and starts from scratch
 dev/db.migrate:		## Deploys the latest changes to the database
 	cd server/prisma && prisma deploy
 
+dev/db.force-migrate:		## Forces a migration of changes to the database
+	cd server/prisma && prisma deploy --force
 
 ###@ Production
 
