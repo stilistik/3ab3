@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import history from 'App/router/History';
 
 import { LoginForm, LoginEmailSent, Authenticating } from 'Pages/login';
 import { Home } from 'Pages/home';
@@ -24,7 +25,18 @@ export const UnauthenticatedRoutes: React.FC = () => {
       <Route path="/auth">
         <Authenticating />
       </Route>
-      <Redirect to="/login" />
+
+      {/* Nothing matched, redirect to login */}
+      <Redirect
+        from="/"
+        to={{
+          pathname: '/login',
+          state: {
+            referrer: history.location.pathname,
+            search: history.location.search,
+          },
+        }}
+      />
     </Switch>
   );
 };
@@ -62,7 +74,12 @@ export const AuthenticatedRoutes: React.FC = () => {
       <Route path="/messenger">
         <Messenger />
       </Route>
-      <Redirect to="/home" />
+
+      {/* Nothing matched, redirect to home */}
+      <Redirect
+        from="/"
+        to={{ pathname: '/home', state: history.location.state }}
+      />
     </Switch>
   );
 };

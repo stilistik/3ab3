@@ -3,6 +3,9 @@ import { getQueryParams, updateParams } from 'App/router/History';
 import { useQuery } from 'react-apollo';
 import { Loading, Error, Grid, Box } from 'Components/index';
 import { SINGLE_EVENT } from 'Graphql/queries';
+import { Todos } from './todo/Todos';
+import { Event } from 'Graphql/types';
+import { Divider, Typography } from '@material-ui/core';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
@@ -18,9 +21,23 @@ export const SingleEvent: React.FC = () => {
   if (error) return <Error message={error.message} />;
   if (loading) return <Loading />;
 
+  const event = data.event as Event;
+
   return (
     <Grid.Default>
-      <h1>info</h1>
+      <Box py="20px">
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography variant="h5">
+              {event?.title?.toUpperCase() || 'EVENT'}
+            </Typography>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Todos event={event} />
+          </Grid>
+        </Grid>
+      </Box>
     </Grid.Default>
   );
 };

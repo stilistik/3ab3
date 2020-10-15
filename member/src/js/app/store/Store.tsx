@@ -20,7 +20,7 @@ interface Store {
 }
 
 const initState: Store = {
-  isAuthenticated: false,
+  isAuthenticated: Boolean(window.localStorage.getItem('access_token')),
 };
 
 interface StoreContextValue {

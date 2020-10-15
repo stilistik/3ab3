@@ -1,6 +1,9 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { AuthenticatedScaffold, UnauthenticatedScaffold } from './core/Scaffold';
+import {
+  AuthenticatedScaffold,
+  UnauthenticatedScaffold,
+} from './core/Scaffold';
 import { AuthenticatedRoutes, UnauthenticatedRoutes } from './router';
 import {
   Notifier,
@@ -9,9 +12,10 @@ import {
   Box,
   UserProvider,
 } from 'Components/index';
-import history from 'App/router/History';
+import history, { requestRoute } from 'App/router/History';
 import Apollo from './network';
 import { UnauthBackground } from './core/UnauthBackground';
+import { useStore } from 'App/store';
 
 const UnauthenticatedApp: React.FC = () => {
   return (
@@ -30,6 +34,16 @@ const UnauthenticatedApp: React.FC = () => {
 };
 
 const AuthenticatedApp = () => {
+  // restore location in state after successful login
+  React.useEffect(() => {
+    try {
+      const { state } = history.location as any;
+      if (state) requestRoute(state.referrer, { search: state.search });
+    } catch (error) {
+      requestRoute('/home');
+    }
+  }, []);
+
   return (
     <Box.Flex column w="100vw" h="100vh" o="hidden">
       <EmojiProvider>
@@ -52,13 +66,8 @@ const AuthenticatedApp = () => {
 };
 
 export const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
-  React.useEffect(() => {
-    const access_token = window.localStorage.getItem('access_token');
-    if (access_token) setIsAuthenticated(true);
-  }, []);
-
+  const { state } = useStore();
+  const { isAuthenticated } = state;
   if (isAuthenticated) return <AuthenticatedApp />;
   else return <UnauthenticatedApp />;
 };

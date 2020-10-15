@@ -93,6 +93,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import SettingsIcon from '@material-ui/icons/Settings';
+import UndoIcon from '@material-ui/icons/Undo';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -182,6 +183,7 @@ const muiIconTypes = {
   timeline: TimelineIcon,
   transform: TransformIcon,
   tune: TuneIcon,
+  undo: UndoIcon,
   up: ExpandLessIcon,
   upload: CloudUploadIcon,
   user: PersonIcon,

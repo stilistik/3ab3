@@ -69,6 +69,12 @@ export const SINGLE_EVENT = gql`
   query($eventId: ID!) {
     event(eventId: $eventId) {
       id
+      title
+      date
+      place
+      flyer
+      image
+      description
       todos {
         id
         text
