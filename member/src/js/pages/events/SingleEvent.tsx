@@ -8,6 +8,7 @@ import { Event } from 'Graphql/types';
 import { Divider, Typography } from '@material-ui/core';
 import { EventInfo } from './info/EventInfo';
 import { EventImage } from './images/EventImage';
+import { EventCommittee } from './EventCommittee';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
@@ -36,26 +37,27 @@ export const SingleEvent: React.FC = () => {
             <Divider />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Todos event={event} />
+            <Box cmbnl={3}>
+              <Todos event={event} />
+              <EventInfo event={event} />
+              <EventImage
+                event={event}
+                fieldId="image"
+                label="Front Image"
+                helpText="This will be the most prominent image to represent the event on the public website."
+              />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <EventInfo event={event} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <EventImage
-              event={event}
-              fieldId="image"
-              label="Front Image"
-              helpText="This will be the most prominent image to represent the event on the public website."
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <EventImage
-              event={event}
-              fieldId="flyer"
-              label="Event Flyer"
-              helpText="An image of the event flyer, if there is one."
-            />
+            <Box cmbnl={3}>
+              <EventImage
+                event={event}
+                fieldId="flyer"
+                label="Event Flyer"
+                helpText="An image of the event flyer, if there is one."
+              />
+              <EventCommittee event={event} />
+            </Box>
           </Grid>
         </Grid>
       </Box>

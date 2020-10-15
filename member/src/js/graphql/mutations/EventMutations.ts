@@ -16,6 +16,14 @@ export const EDIT_EVENT = gql`
   }
 `;
 
+export const ADD_COMMITTEE_MEMBERS = gql`
+  mutation($eventId: ID!, $memberIds: [ID!]!) {
+    addCommitteeMembers(eventId: $eventId, memberIds: $memberIds) {
+      id
+    }
+  }
+`;
+
 export const LIKE_EVENT = gql`
   mutation($userId: ID!, $eventId: ID!) {
     likeEvent(userId: $userId, eventId: $eventId) {

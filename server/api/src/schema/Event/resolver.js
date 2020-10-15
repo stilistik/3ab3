@@ -90,6 +90,16 @@ module.exports = {
         data: updateValues,
       });
     },
+    addCommitteeMembers(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          committee: {
+            connect: args.memberIds.map((id) => ({ id: id })),
+          },
+        },
+      });
+    },
     likeEvent(root, args, context) {
       return context.prisma.updateEvent({
         where: { id: args.eventId },
@@ -179,6 +189,9 @@ module.exports = {
     },
     supporters(root, args, context) {
       return context.prisma.event({ id: root.id }).supporters();
+    },
+    committee(root, args, context) {
+      return context.prisma.event({ id: root.id }).committee();
     },
   },
 };

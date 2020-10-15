@@ -26,6 +26,7 @@ function getOptionFromUser(user: User): SelectOption {
 export interface UserSelectFieldProps {
   id: string;
   label: string;
+  required?: boolean;
 }
 
 export const UserSelectField: React.FC<UserSelectFieldProps> = (props) => {
