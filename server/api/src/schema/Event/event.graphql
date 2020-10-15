@@ -29,6 +29,7 @@ input EventInput {
   title: String!
   description: String!
   date: DateTime!
+  place: String
   image: Upload
   flyer: Upload
 }
@@ -37,13 +38,14 @@ extend type Query {
   event(eventId: ID!): Event! @isAuthenticated
   events(first: Int = 10, after: String): EventsConnection! @isAuthenticated
   futureEvents(first: Int = 10, after: String): EventsConnection!
-  pastEvents(first: Int = 10, after: String):  EventsConnection! @isAuthenticated
-  futurePublishedEvents(first: Int = 10, after: String):  EventsConnection!
-  pastPublishedEvents(first: Int = 10, after: String):  EventsConnection!
+  pastEvents(first: Int = 10, after: String): EventsConnection! @isAuthenticated
+  futurePublishedEvents(first: Int = 10, after: String): EventsConnection!
+  pastPublishedEvents(first: Int = 10, after: String): EventsConnection!
 }
 
 extend type Mutation {
   createEvent(input: EventInput!): Event! @isAuthenticated
+  editEvent(eventId: ID!, input: EventInput!): Event! @isAuthenticated
   deleteEvent(eventId: ID!): Event! @isAuthenticated
   likeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   unlikeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated

@@ -8,6 +8,13 @@ export const CREATE_EVENT = gql`
   }
 `;
 
+export const EDIT_EVENT = gql`
+  mutation($eventId: ID!, $input: EventInput!) {
+    editEvent(eventId: $eventId, input: $input) {
+      id
+    }
+  }
+`;
 
 export const LIKE_EVENT = gql`
   mutation($userId: ID!, $eventId: ID!) {

@@ -1,33 +1,35 @@
-import React from 'react';
-import { useMutation } from 'react-apollo';
-import { CREATE_TODO } from 'Graphql/mutations';
 import {
+  Box,
   DateField,
   FormDialog,
   Icon,
-  Box,
   Message,
   TextField,
 } from 'Components/index';
 import { Serializable } from 'Components/form/types';
+import React from 'react';
+import { useMutation } from 'react-apollo';
 import { IconButton } from '@material-ui/core';
+import { EDIT_EVENT } from 'Graphql/mutations';
+import { Event } from 'Graphql/types';
 
-interface CreateTodoProps {
-  eventId: string;
+interface EditInfoProps {
+  event: Event;
   refetchQueries: () => any[];
 }
 
-export const CreateTodo: React.FC<CreateTodoProps> = ({ eventId, refetchQueries }) => {
+export const EditInfo: React.FC<EditInfoProps> = ({
+  event,
+  refetchQueries,
+}) => {
   const [show, setShow] = React.useState(false);
-  const [createTodo] = useMutation(CREATE_TODO);
+  const [editEvent] = useMutation(EDIT_EVENT);
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
-    createTodo({
+    editEvent({
       variables: {
-        input: {
-          eventId: eventId,
-          ...values,
-        },
+        eventId: event.id,
+        input: values,
       },
       refetchQueries,
     }).catch((error) => Message.error(error.message));
@@ -41,17 +43,20 @@ export const CreateTodo: React.FC<CreateTodoProps> = ({ eventId, refetchQueries 
   return (
     <React.Fragment>
       <IconButton onClick={handleClick}>
-        <Icon type="add" />
+        <Icon type="edit" />
       </IconButton>
       <FormDialog
         show={show}
-        title="Create Todo"
+        title="Edit Event Information"
         onSubmit={handleSubmit}
         onCancel={handleCancel}
+        initValues={event}
       >
         <Box cmb={1}>
-          <TextField id="text" label="Todo" required={true} />
-          <DateField id="due" label="Due Date" required={true} />
+          <TextField id="title" label="Title" required={true} />
+          <TextField id="description" label="Description" required={true} />
+          <TextField id="place" label="Place" required={true} />
+          <DateField id="date" label="Date" required={true} />
         </Box>
       </FormDialog>
     </React.Fragment>

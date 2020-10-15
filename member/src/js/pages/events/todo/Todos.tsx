@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from 'Components/index';
-import TodoList from './TodoList';
-import CreateTodo from './CreateTodo';
+import { TodoList } from './TodoList';
+import { CreateTodo } from './CreateTodo';
 import { SINGLE_EVENT } from 'Graphql/queries';
 import { Event } from 'Graphql/types';
 import { Paper } from '@material-ui/core';

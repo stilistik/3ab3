@@ -6,6 +6,7 @@ import { SINGLE_EVENT } from 'Graphql/queries';
 import { Todos } from './todo/Todos';
 import { Event } from 'Graphql/types';
 import { Divider, Typography } from '@material-ui/core';
+import { EventInfo } from './info/EventInfo';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
@@ -35,6 +36,9 @@ export const SingleEvent: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Todos event={event} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <EventInfo event={event} />
           </Grid>
         </Grid>
       </Box>

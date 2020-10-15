@@ -68,6 +68,12 @@ module.exports = {
         });
       }
     },
+    async editEvent(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: args.input,
+      });
+    },
     likeEvent(root, args, context) {
       return context.prisma.updateEvent({
         where: { id: args.eventId },

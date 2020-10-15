@@ -33,5 +33,3 @@ export const TodoList: React.FC<TodoListProps> = ({
     </React.Fragment>
   );
 };
-
-export default TodoList;
