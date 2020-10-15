@@ -1,6 +1,6 @@
 import {
   Box,
-  DateField,
+  DateTimeField,
   FormDialog,
   Icon,
   Message,
@@ -54,9 +54,14 @@ export const EditInfo: React.FC<EditInfoProps> = ({
       >
         <Box cmb={1}>
           <TextField id="title" label="Title" required={true} />
-          <TextField id="description" label="Description" required={true} />
+          <TextField
+            id="description"
+            multiline={true}
+            label="Description"
+            required={true}
+          />
           <TextField id="place" label="Place" required={true} />
-          <DateField id="date" label="Date" required={true} />
+          <DateTimeField id="date" label="Date" required={true} />
         </Box>
       </FormDialog>
     </React.Fragment>

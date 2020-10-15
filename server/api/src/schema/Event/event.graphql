@@ -26,9 +26,9 @@ type EventsConnection implements Connection {
 }
 
 input EventInput {
-  title: String!
-  description: String!
-  date: DateTime!
+  title: String
+  description: String
+  date: DateTime
   place: String
   image: Upload
   flyer: Upload

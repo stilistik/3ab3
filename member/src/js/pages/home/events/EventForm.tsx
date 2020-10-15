@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import {
   ImageField,
   TextField,
-  DateField,
+  DateTimeField,
   Form,
   FormSubmit,
 } from 'Components/index';
@@ -24,7 +24,7 @@ export const EventForm: React.FC<EventFormProps> = ({ event, onSubmit }) => {
       <ImageField id="image" required={true} label="Event Image" />
       <TextField id="title" label="Title" required={true} />
       <TextField id="description" label="Description" required={true} />
-      <DateField id="date" label="Date" type="date" required={true} />
+      <DateTimeField id="date" label="Date" type="date" required={true} />
       <FormSubmit>
         <Button type="submit" variant="contained" size="large" color="primary">
           Create

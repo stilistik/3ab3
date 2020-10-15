@@ -53,25 +53,41 @@ module.exports = {
   Mutation: {
     async createEvent(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
-      if (args.input.image) {
-        const { image, ...rest } = args.input;
+      const { image, flyer, ...rest } = args.input;
+
+      const updateValues = { ...rest };
+
+      if (image) {
         const file = await uploadFile(image, context);
-        return context.prisma.createEvent({
-          image: file.uri,
-          owner: { connect: { id: id } },
-          ...rest,
-        });
-      } else {
-        return context.prisma.createEvent({
-          owner: { connect: { id: id } },
-          ...args.input,
-        });
+        updateValues.image = file.uri;
       }
+      if (flyer) {
+        const file = await uploadFile(image, context);
+        updateValues.flyer = file.uri;
+      }
+
+      return context.prisma.createEvent({
+        owner: { connect: { id: id } },
+        ...updateValues,
+      });
     },
     async editEvent(root, args, context) {
+      const { image, flyer, ...rest } = args.input;
+
+      const updateValues = { ...rest };
+
+      if (image) {
+        const file = await uploadFile(image, context);
+        updateValues.image = file.uri;
+      }
+      if (flyer) {
+        const file = await uploadFile(flyer, context);
+        updateValues.flyer = file.uri;
+      }
+
       return context.prisma.updateEvent({
         where: { id: args.eventId },
-        data: args.input,
+        data: updateValues,
       });
     },
     likeEvent(root, args, context) {

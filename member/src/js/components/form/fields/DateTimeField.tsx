@@ -1,6 +1,6 @@
 import React from 'react';
 import clx from 'classnames';
-import { DatePicker } from '@material-ui/pickers';
+import { DateTimePicker } from '@material-ui/pickers';
 import { IconButton } from '@material-ui/core';
 import { Icon, Box } from 'Components/index';
 import { useField } from '../UseField';
@@ -8,7 +8,7 @@ import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
 import { DateType } from '@date-io/type';
 
-export type DateFieldProps = Omit<FieldProps, 'fieldType'> & {
+export type DateTimeFieldProps = Omit<FieldProps, 'fieldType'> & {
   classes?: DateFieldClasses;
   className?: string;
 };
@@ -18,7 +18,7 @@ interface DateFieldClasses {
   input?: string;
 }
 
-export const DateField: React.FC<DateFieldProps> = ({
+export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   id,
   label,
   classes,
@@ -46,12 +46,12 @@ export const DateField: React.FC<DateFieldProps> = ({
 
   return (
     <FormControl className={cls} error={field.error}>
-      <DatePicker
+      <DateTimePicker
         id={id}
         className={classes?.input}
         allowKeyboardControl={true}
         autoOk={true}
-        format="dd MMMM yyyy"
+        format="dd MMMM yyyy hh:mm"
         label={label}
         error={Boolean(field.error)}
         value={inputValue}

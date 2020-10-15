@@ -7,6 +7,7 @@ import { Todos } from './todo/Todos';
 import { Event } from 'Graphql/types';
 import { Divider, Typography } from '@material-ui/core';
 import { EventInfo } from './info/EventInfo';
+import { EventImage } from './images/EventImage';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
@@ -39,6 +40,12 @@ export const SingleEvent: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <EventInfo event={event} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <EventImage event={event} fieldId="image" label="Front Image" />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <EventImage event={event} fieldId="flyer" label="Event Flyer" />
           </Grid>
         </Grid>
       </Box>

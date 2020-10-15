@@ -8,12 +8,12 @@ interface LazyLoadingImageProps {
   src: string;
   alt?: string;
   width: string;
-  height: string;
+  height?: string;
 }
 
 export const LazyLoadingImage: React.FC<LazyLoadingImageProps> = ({
   src,
-  alt,
+  alt = 'No image',
   width,
   height,
 }) => {
@@ -47,10 +47,12 @@ export const LazyLoadingImage: React.FC<LazyLoadingImageProps> = ({
     <Box ref={divRef} width={width} height={height}>
       {!src ? (
         <Box.Center>
-          <Box d="flex" fd="column" ai="center" color="typography.main">
-            <Icon type="camera" />
-            <Typography variant="body1">{alt}</Typography>
-          </Box>
+          <Box.Center height="200px">
+            <Box d="flex" fd="column" ai="center">
+              <Icon type="camera" />
+              <Typography variant="body1">{alt}</Typography>
+            </Box>
+          </Box.Center>
         </Box.Center>
       ) : error ? (
         <Box.Center>
