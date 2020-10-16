@@ -2,9 +2,10 @@ import React from 'react';
 import { Avatar, Typography, makeStyles, Button } from '@material-ui/core';
 import { Box, Icon } from 'Components/index';
 import { useField } from '../UseField';
-import { FieldError, FieldProps } from '../types';
+import { FieldError } from '../types';
 import { getBackendUrl } from 'App/network/Utils';
 import clx from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 interface AvatarEmptyProps {
   error?: FieldError;
@@ -31,7 +32,7 @@ const useAvatarStyles = makeStyles((theme) => ({
 
 const AvatarEmpty: React.FC<AvatarEmptyProps> = ({ error }) => {
   const styles = useAvatarStyles();
-  
+
   return (
     <Avatar className={clx(styles.avatar, { [styles.error]: Boolean(error) })}>
       <Icon className={styles.icon} type="upload" />
@@ -91,6 +92,7 @@ export const ImageField: React.FC<ImageFieldProps> = ({
   classes,
   ...rest
 }) => {
+  const { t } = useTranslation();
   const [src, setSrc] = React.useState(null);
   const fieldProps = { id, fieldType: 'image', ...rest };
   const field = useField(fieldProps);
@@ -119,7 +121,7 @@ export const ImageField: React.FC<ImageFieldProps> = ({
       <Box ml={2}>
         <Label label={label} error={field.error} />
         <label htmlFor={id}>
-          <Button component="span">Upload</Button>
+          <Button component="span">{t('Upload')}</Button>
         </label>
       </Box>
     </Box.Row>

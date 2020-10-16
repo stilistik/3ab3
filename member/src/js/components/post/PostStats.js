@@ -1,20 +1,7 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { SocialStats } from 'Components';
-
-export const POST_STATS = gql`
-  query($postId: ID!) {
-    post(postId: $postId) {
-      likedBy {
-        id
-        name
-        avatar
-      }
-    }
-    postCommentCount(postId: $postId)
-  }
-`;
+import { POST_STATS } from 'Graphql/queries';
 
 class PostStats extends React.Component {
   render() {

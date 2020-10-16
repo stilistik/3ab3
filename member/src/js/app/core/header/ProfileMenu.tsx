@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, MenuItem, IconButton, Typography } from '@material-ui/core';
 import { requestRoute } from 'App/router/History';
 import { Box, Icon, useCurrentUser, UserAvatar } from 'Components/index';
+import { useTranslation } from 'react-i18next';
 
 interface ProfileMenuItemProps {
   label: string;
@@ -29,6 +30,7 @@ const ProfileMenuItem = React.forwardRef(
 export const ProfileMenu: React.FC = () => {
   const [anchor, setAnchor] = React.useState(null);
   const user = useCurrentUser();
+  const { t } = useTranslation();
 
   const handleMenuOpen = (e: React.MouseEvent) => {
     setAnchor(e.currentTarget);
@@ -81,19 +83,19 @@ export const ProfileMenu: React.FC = () => {
         style={{ marginTop: 5 }}
       >
         <ProfileMenuItem
-          label="Profile"
+          label={t('Profile')}
           action="profile"
           icon="accountCircle"
           onClick={handleClick}
         />
         <ProfileMenuItem
-          label="Account"
+          label={t('Account')}
           action="account"
           icon="settings"
           onClick={handleClick}
         />
         <ProfileMenuItem
-          label="Logout"
+          label={t('Logout')}
           action="logout"
           icon="exitToApp"
           onClick={handleClick}

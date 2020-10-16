@@ -1,5 +1,5 @@
 import React from 'react';
-import LikeComment from './LikeComment';
+import { LikeComment } from './LikeComment';
 import CommentStats from './CommentStats';
 
 import styles from './CommentActions.css';

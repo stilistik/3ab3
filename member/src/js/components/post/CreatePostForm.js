@@ -2,16 +2,11 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import LinkValidator from './LinkValidator';
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Button,
-  Input,
-} from '@material-ui/core';
+import { Card, CardContent, Button, Input } from '@material-ui/core';
 import { Icon, UserAvatar, ImageContainer } from 'Components';
 import { PostLink } from './Post';
 import ImageInput from './ImageInput';
+import { useTranslation } from 'react-i18next';
 
 import styles from './CreatePostForm.css';
 
@@ -33,6 +28,7 @@ const CreatePostForm = (props) => {
   const [image, setImage] = React.useState(null);
   const [src, setSrc] = React.useState(null);
   const [link, setLink] = React.useState(null);
+  const { t } = useTranslation();
 
   const { loading, error, data } = useQuery(QUERY);
   if (loading || error) return null;
@@ -83,7 +79,7 @@ const CreatePostForm = (props) => {
             value={text}
             onChange={onChange}
             multiline
-            placeholder="Write something..."
+            placeholder={t('Write something...')}
             className={styles.input}
             disableUnderline
           />
@@ -99,7 +95,7 @@ const CreatePostForm = (props) => {
           onClick={onSubmit}
           className={styles.submit}
         >
-          Post <Icon type="send" style={{ marginLeft: '10px' }} />
+          {t('Post')} <Icon type="send" style={{ marginLeft: '10px' }} />
         </Button>
       </CardContent>
     </Card>

@@ -12,6 +12,7 @@ import {
 import { MessageLink } from 'Pages/messenger/Message';
 
 import styles from './CreateCommentForm.less';
+import { useTranslation } from 'react-i18next';
 
 const EmojiPickerContainer = ({ open, handleSelect, handleClose }) => {
   if (!open) return null;
@@ -53,6 +54,7 @@ const IDLE_TO_UPDATE = 200;
 
 const CreateCommentForm = (props) => {
   let timer = React.useRef(null);
+  const { t } = useTranslation();
   const [link, setLink] = React.useState(null);
   const [picker, setPicker] = React.useState(null);
   const [value, setValue] = React.useState('');
@@ -129,7 +131,7 @@ const CreateCommentForm = (props) => {
           multiline
           disableUnderline
           autoFocus={true}
-          placeholder="Comment"
+          placeholder={t('Comment')}
           endAdornment={
             <div className={styles.adornment}>
               <Icon

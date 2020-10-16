@@ -3,6 +3,7 @@ import { EventCard, Grid, Box } from 'Components/index';
 import { CreateEvent } from './CreateEvent';
 import { Button } from '@material-ui/core';
 import { Event } from 'Graphql/types';
+import { useTranslation } from 'react-i18next';
 
 interface EventFeedProps {
   events: Event[];
@@ -19,6 +20,8 @@ export const EventFeed: React.FC<EventFeedProps> = ({
   cursor,
   refetch,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box py="20px">
       <Grid container spacing={3}>
@@ -35,7 +38,7 @@ export const EventFeed: React.FC<EventFeedProps> = ({
         {hasNext ? (
           <Grid item xs={12}>
             <Box.Row jc="center">
-              <Button onClick={() => more(cursor)}>More</Button>
+              <Button onClick={() => more(cursor)}>{t('More')}</Button>
             </Box.Row>
           </Grid>
         ) : null}

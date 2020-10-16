@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'App/i18n/i18n';
 import { App } from 'App';
 import { Theme } from 'App/theme';
 import { StoreProvider } from 'App/store';

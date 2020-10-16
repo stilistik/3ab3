@@ -24,3 +24,40 @@ export const POST_FEED = gql`
     }
   }
 `;
+
+export const POST_STATS = gql`
+  query($postId: ID!) {
+    post(postId: $postId) {
+      likedBy {
+        id
+        name
+        avatar
+      }
+    }
+    postCommentCount(postId: $postId)
+  }
+`;
+
+export const POST_COMMENTS = gql`
+  query($postId: ID!, $first: Int, $after: String) {
+    postComments(postId: $postId, first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          author {
+            id
+            name
+            avatar
+          }
+          text
+          link
+          date
+        }
+      }
+    }
+  }
+`;

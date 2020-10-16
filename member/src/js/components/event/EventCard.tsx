@@ -16,6 +16,7 @@ import SupportEvent from './SupportEvent';
 import { requestRoute } from 'App/router/History';
 import { Event } from 'Graphql/types';
 import { Box } from 'Components/layout';
+import { useTranslation } from 'react-i18next';
 
 // import styles from './EventCard.less';
 
@@ -95,6 +96,7 @@ interface EventCardProps {
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const [show, setShow] = React.useState(false);
   const styles = useEventCardStyles();
+  const { t } = useTranslation();
 
   const onComment = () => {
     setShow(true);
@@ -126,7 +128,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <CardActions>
         <LikeEvent event={event} />
         <Button size="small" color="primary" onClick={onComment}>
-          <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
+          <Icon type="addComment" style={{ marginRight: '5px' }} />{' '}
+          {t('Comment')}
         </Button>
       </CardActions>
       {show && <EventComments eventId={event.id} />}

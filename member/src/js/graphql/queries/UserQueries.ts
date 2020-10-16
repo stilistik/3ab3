@@ -70,3 +70,25 @@ export const CURRENT_USER_LIKED_EVENTS = gql`
   }
 `;
 
+export const CURRENT_USER_LIKED_COMMENTS = gql`
+  query {
+    currentUser {
+      id
+      likedComments {
+        id
+      }
+    }
+  }
+`;
+
+
+export const CURRENT_USER_LIKED_POSTS = gql`
+  query {
+    currentUser {
+      id
+      likedPosts {
+        id
+      }
+    }
+  }
+`;

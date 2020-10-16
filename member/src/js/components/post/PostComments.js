@@ -1,33 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { CommentList } from 'Components';
 import CommentPost from './CommentPost';
-import { POST_STATS } from './PostStats';
-
-export const POST_COMMENTS = gql`
-  query($postId: ID!, $first: Int, $after: String) {
-    postComments(postId: $postId, first: $first, after: $after) {
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          author {
-            id
-            name
-            avatar
-          }
-          text
-          link
-          date
-        }
-      }
-    }
-  }
-`;
+import { POST_COMMENTS, POST_STATS } from 'Graphql/queries';
 
 const COUNT = 5;
 

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import { MenuItem } from './MenuItem';
 import { requestRoute } from 'App/router/History';
+import { useTranslation } from 'react-i18next';
 
 // preload image
 const image = new Image();
@@ -30,6 +31,7 @@ export const AppMenu: React.FC<AppMenuProps> = ({
   setDrawerOpen,
 }) => {
   const styles = useStyles();
+  const { t } = useTranslation();
 
   const onClick = (route: string) => {
     setDrawerOpen(false);
@@ -40,9 +42,13 @@ export const AppMenu: React.FC<AppMenuProps> = ({
     return (
       <React.Fragment>
         <List>
-          <MenuItem text="Home" icon="home" onClick={() => onClick('/home')} />
           <MenuItem
-            text="Events"
+            text={t('Home')}
+            icon="home"
+            onClick={() => onClick('/home')}
+          />
+          <MenuItem
+            text={t('Events')}
             icon="event"
             onClick={() => onClick('/events')}
           />
@@ -50,22 +56,22 @@ export const AppMenu: React.FC<AppMenuProps> = ({
         <Divider className={styles.divider} />
         <List>
           <MenuItem
-            text="Dashboard"
+            text={t('Dashboard')}
             icon="dashboard"
             onClick={() => onClick('/dashboard')}
           />
           <MenuItem
-            text="Checklist"
+            text={t('Checklist')}
             icon="shoppingCart"
             onClick={() => onClick('/checklist')}
           />
           <MenuItem
-            text="Members"
+            text={t('Members')}
             icon="group"
             onClick={() => onClick('/members')}
           />
           <MenuItem
-            text="Products"
+            text={t('Products')}
             icon="localBar"
             onClick={() => onClick('/products')}
           />

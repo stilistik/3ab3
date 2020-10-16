@@ -5,3 +5,4 @@ export * from './UserQueries';
 export * from './ProductQueries';
 export * from './MessengerQueries';
 export * from './TodoQueries';
+export * from './CommentQueries';

@@ -1,21 +1,7 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { LikeCounter } from 'Components';
-
-// import styles from './CommentStats.css';
-
-export const COMMENT_STATS = gql`
-  query($commentId: ID!) {
-    comment(commentId: $commentId) {
-      likedBy {
-        id
-        name
-        avatar
-      }
-    }
-  }
-`;
+import { COMMENT_STATS } from 'Graphql/queries';
 
 class CommentStats extends React.Component {
   render() {

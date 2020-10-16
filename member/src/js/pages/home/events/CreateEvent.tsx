@@ -10,6 +10,7 @@ import { EventForm } from './EventForm';
 import { useMutation } from 'react-apollo';
 import { CREATE_EVENT } from 'Graphql/mutations';
 import { Serializable } from 'Components/form/types';
+import { useTranslation } from 'react-i18next';
 
 interface CreateEventProps {
   refetch: () => Promise<any>;
@@ -18,6 +19,7 @@ interface CreateEventProps {
 export const CreateEvent: React.FC<CreateEventProps> = ({ refetch }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [createEvent] = useMutation(CREATE_EVENT);
+  const { t } = useTranslation();
 
   const handleSubmit = async (values: NestedRecord<Serializable>) => {
     try {
@@ -32,7 +34,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({ refetch }) => {
       Message.error(error.message);
       return;
     }
-    Message.success('Event successfully created');
+    Message.success(t('Event successfully created'));
   };
 
   return (
@@ -41,7 +43,7 @@ export const CreateEvent: React.FC<CreateEventProps> = ({ refetch }) => {
       onChange={() => setExpanded((expanded) => !expanded)}
     >
       <AccordionSummary expandIcon={<Icon type="down" />}>
-        <Typography variant="h6">Create Event</Typography>
+        <Typography variant="h6">{t('Create Event')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Box.Fill>

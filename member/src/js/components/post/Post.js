@@ -8,7 +8,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import { Icon, UserAvatar, LazyLoadingImage } from 'Components';
-import LikePost from './LikePost';
+import { LikePost } from './LikePost';
 import DeletePost from './DeletePost';
 import PostStats from './PostStats';
 import PostComments from './PostComments';
@@ -18,7 +18,7 @@ import SpotifyPlayer from './SpotifyPlayer';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Microlink from '@microlink/react';
-import { getBackendUrl } from 'App/network/Utils';
+import { useTranslation } from 'react-i18next';
 
 import styles from './Post.css';
 
@@ -80,6 +80,7 @@ export const PostLink = ({ link }) => {
 const Post = ({ post, refetch }) => {
   const [show, setShow] = React.useState(false);
   const [validatedLink, setValidatedLink] = React.useState(null);
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     if (!post.link) return;
@@ -104,7 +105,8 @@ const Post = ({ post, refetch }) => {
       <CardActions>
         <LikePost post={post} />
         <Button size="small" color="primary" onClick={onComment}>
-          <Icon type="addComment" style={{ marginRight: '5px' }} /> Comment
+          <Icon type="addComment" style={{ marginRight: '5px' }} />{' '}
+          {t('Comment')}
         </Button>
       </CardActions>
       {show ? <PostComments postId={post.id} /> : null}

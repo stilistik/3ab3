@@ -10,6 +10,7 @@ import {
 } from 'Components/index';
 import { Event } from 'Graphql/types';
 import { FieldOptions, Serializable } from 'Components/form/types';
+import { useTranslation } from 'react-i18next';
 
 interface EventFormProps {
   event?: Event;
@@ -20,13 +21,19 @@ interface EventFormProps {
 }
 
 export const EventForm: React.FC<EventFormProps> = ({ event, onSubmit }) => {
+  const { t } = useTranslation();
   return (
     <Form onSubmit={onSubmit} initValues={event} initAfterSubmit={true}>
       <Box cmbnl={1}>
-        <ImageField id="image" required={true} label="Event Image" />
-        <TextField id="title" label="Title" required={true} />
-        <TextField id="description" label="Description" required={true} />
-        <DateTimeField id="date" label="Date & Time" type="date" required={true} />
+        <ImageField id="image" required={true} label={t('Event Image')} />
+        <TextField id="title" label={t('Title')} required={true} />
+        <TextField id="description" label={t('Description')} required={true} />
+        <DateTimeField
+          id="date"
+          label={t('Date & Time')}
+          type="date"
+          required={true}
+        />
         <FormSubmit>
           <Button
             type="submit"
@@ -34,7 +41,7 @@ export const EventForm: React.FC<EventFormProps> = ({ event, onSubmit }) => {
             size="large"
             color="primary"
           >
-            Create
+            {t('Create')}
           </Button>
         </FormSubmit>
       </Box>
