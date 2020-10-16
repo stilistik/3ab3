@@ -9,6 +9,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, FormProps, FormSubmit } from 'Components/form';
 import { FieldOptions, Serializable } from 'Components/form/types';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,6 +51,7 @@ export const FormDialog: React.FC<FormDialogProps> = ({
   initValues,
 }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   return (
     <Dialog
       open={show}
@@ -63,10 +65,10 @@ export const FormDialog: React.FC<FormDialogProps> = ({
         <DialogTitle className={classes.title}>{title}</DialogTitle>
         <DialogContent className={classes.content}>{children}</DialogContent>
         <DialogActions>
-          <Button onClick={onCancel}>{cancelText}</Button>
+          <Button onClick={onCancel}>{t(cancelText)}</Button>
           <FormSubmit>
             <Button variant="contained" color="primary" type="submit">
-              {submitText}
+              {t(submitText)}
             </Button>
           </FormSubmit>
         </DialogActions>

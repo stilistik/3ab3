@@ -11,6 +11,7 @@ import {
 } from 'Components/index';
 import { USERS_WITH_DEBT } from 'Graphql/queries';
 import { SEND_PAYMENT_REMIDER } from 'Graphql/mutations';
+import { useTranslation } from 'react-i18next';
 
 interface AffectedUserListProps {
   threshold: number;
@@ -18,6 +19,7 @@ interface AffectedUserListProps {
 
 const AffectedUserList: React.FC<AffectedUserListProps> = ({ threshold }) => {
   const [sendPaymentReminder] = useMutation(SEND_PAYMENT_REMIDER);
+  const { t } = useTranslation();
 
   const { loading, error, data } = useQuery(USERS_WITH_DEBT, {
     variables: { threshold: -threshold },
@@ -42,7 +44,7 @@ const AffectedUserList: React.FC<AffectedUserListProps> = ({ threshold }) => {
 
     return (
       <Box cmb={1}>
-        <Typography variant="body1">Affected Members</Typography>
+        <Typography variant="body1">{t('Affected Members')}</Typography>
         {usersWithDebt.map((user: any) => (
           <Box.Row key={user.id} cmrnl={1} mb={1}>
             <UserAvatar user={user} classes={{}} className="" style={{}} />
@@ -59,7 +61,7 @@ const AffectedUserList: React.FC<AffectedUserListProps> = ({ threshold }) => {
           onClick={handleSubmit}
           disabled={!usersWithDebt.length}
         >
-          Send Emails
+          {t('Send Emails')}
         </Button>
       </Box>
     );
@@ -107,6 +109,7 @@ const ThresholdSlider: React.FC<ThresholdSliderProps> = ({
 };
 
 export const PaymentReminder = () => {
+  const { t } = useTranslation();
   const [threshold, setThreshold] = React.useState(30);
 
   const handleChange = (value: number) => setThreshold(value);
@@ -114,8 +117,8 @@ export const PaymentReminder = () => {
   return (
     <Paper>
       <Box p={2}>
-        <Typography variant="h6">Payment Notifier</Typography>
-        <Typography variant="body1">Threshold CHF</Typography>
+        <Typography variant="h6">{t('Payment Reminder')}</Typography>
+        <Typography variant="body1">{t('Threshold CHF')}</Typography>
 
         <ThresholdSlider threshold={threshold} onChange={handleChange} />
         <AffectedUserList threshold={threshold} />

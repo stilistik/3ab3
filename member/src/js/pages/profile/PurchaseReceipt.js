@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { useTranslation } from 'react-i18next';
 
 const QUERY = gql`
   query($purchaseId: ID!) {
@@ -30,6 +31,7 @@ const QUERY = gql`
 `;
 
 export const PurchaseReceipt = ({ open, purchaseId, handleClose }) => {
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(QUERY, {
     variables: { purchaseId },
   });
@@ -40,7 +42,7 @@ export const PurchaseReceipt = ({ open, purchaseId, handleClose }) => {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Purchase Receipt</DialogTitle>
+      <DialogTitle>{t('Purchase Receipt')}</DialogTitle>
       <Table>
         <TableBody>
           {items.map((item) => {

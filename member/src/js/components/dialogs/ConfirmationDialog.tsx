@@ -7,6 +7,7 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,6 +46,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   cancelColor = 'inherit',
 }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   return (
     <Dialog
       open={show}
@@ -58,7 +60,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
       <DialogContent className={classes.content}>{children}</DialogContent>
       <DialogActions>
         <Button data-testid="cancel" onClick={onCancel} color={cancelColor}>
-          {cancelText}
+          {t(cancelText)}
         </Button>
         <Button
           data-testid="confirm"
@@ -67,7 +69,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           color={confirmColor}
           autoFocus
         >
-          {confirmText}
+          {t(confirmText)}
         </Button>
       </DialogActions>
     </Dialog>

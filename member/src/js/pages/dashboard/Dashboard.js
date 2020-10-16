@@ -6,14 +6,16 @@ import GlobalConsumptionChart from './GlobalConsumptionChart';
 import BalanceTable from './BalanceTable';
 import { PaymentReminder } from './PaymentReminder';
 import { RegisterPayment } from './RegisterPayment';
+import { useTranslation } from 'react-i18next';
 
 export const Dashboard = () => {
+  const { t } = useTranslation();
   return (
     <Grid.Default>
       <Box py="20px">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h5">DASHBOARD</Typography>
+            <Typography variant="h5">{t('Dashboard').toUpperCase()}</Typography>
             <Divider />
           </Grid>
           <Grid item xs={12}>

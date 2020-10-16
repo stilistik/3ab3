@@ -6,8 +6,10 @@ import BalanceChart from './BalanceChart';
 import ConsumptionChart from './ConsumptionChart';
 import CurrentBalance from './CurrentBalance';
 import TransactionTable from './TransactionTable';
+import { useTranslation } from 'react-i18next';
 
 const DesktopProfile = () => {
+  const { t } = useTranslation();
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -20,7 +22,7 @@ const DesktopProfile = () => {
         <ConsumptionChart />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Typography variant="h5">HISTORY</Typography>
+        <Typography variant="h5">{t('History').toUpperCase()}</Typography>
         <Divider />
         <br />
         <TransactionTable />
@@ -31,6 +33,7 @@ const DesktopProfile = () => {
 
 const MobileProfile = () => {
   const [value, setValue] = React.useState(0);
+  const { t } = useTranslation();
 
   const onChange = (event, value) => {
     setValue(value);
@@ -68,7 +71,7 @@ const MobileProfile = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h5">HISTORY</Typography>
+            <Typography variant="h5">{t('History').toUpperCase()}</Typography>
             <Divider />
             <br />
             <TransactionTable />

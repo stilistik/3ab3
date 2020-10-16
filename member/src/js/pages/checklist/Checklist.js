@@ -4,6 +4,7 @@ import { Typography, Divider } from '@material-ui/core';
 import { ChecklistForm } from './ChecklistForm';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { useTranslation } from 'react-i18next';
 
 const MUTATION = gql`
   mutation($input: PurchaseInput!) {
@@ -14,6 +15,7 @@ const MUTATION = gql`
 `;
 
 export const Checklist = ({ initValues = {} }) => {
+  const { t } = useTranslation();
   const [createPurchase] = useMutation(MUTATION);
 
   const onSubmit = async (values) => {
@@ -27,7 +29,7 @@ export const Checklist = ({ initValues = {} }) => {
           },
         },
       });
-      Message.success('Purchase compeleted!');
+      Message.success(t('Purchase compeleted'));
     } catch (error) {
       Message.error(error.message);
     }
@@ -38,7 +40,7 @@ export const Checklist = ({ initValues = {} }) => {
       <Box py="20px">
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h5">CHECKLIST</Typography>
+            <Typography variant="h5">{t('Checklist').toUpperCase()}</Typography>
             <Divider />
             <ChecklistForm onSubmit={onSubmit} initValues={initValues} />
           </Grid>

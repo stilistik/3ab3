@@ -10,13 +10,14 @@ import {
 import { Tag } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import { BALANCE_TABLE } from 'Graphql/queries';
+import { useTranslation } from 'react-i18next';
 
 const TransactionCell = ({ user }) => {
   const { edges } = user.transactions;
   const transaction = edges.length ? edges[0].node : null;
   if (transaction)
     return <TableCell>{new Date(transaction.date).toDateString()}</TableCell>;
-  else return <TableCell>None</TableCell>;
+  else return <TableCell>{t('None')}</TableCell>;
 };
 
 const BalanceCell = ({ balance }) => {
@@ -34,6 +35,7 @@ const BalanceCell = ({ balance }) => {
 };
 
 const BalanceTable = () => {
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(BALANCE_TABLE);
   if (loading || error) return null;
 
@@ -43,9 +45,9 @@ const BalanceTable = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Last Transaction</TableCell>
-            <TableCell align="right">Amount</TableCell>
+            <TableCell>{t('Name')}</TableCell>
+            <TableCell>{t('Last Transaction')}</TableCell>
+            <TableCell align="right">{t('Amount')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

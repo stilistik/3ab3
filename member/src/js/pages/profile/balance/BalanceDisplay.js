@@ -6,6 +6,7 @@ import { getBalanceColorClass } from 'Components/utility/Utils';
 import { graphql } from 'react-apollo';
 
 import styles from './BalanceDisplay.css';
+import { useTranslation } from 'react-i18next';
 
 export const BALANCE_DISPLAY_QUERY = gql`
   query {
@@ -19,6 +20,8 @@ export const BALANCE_DISPLAY_QUERY = gql`
 `;
 
 const BalanceDisplay = ({ user }) => {
+  const { t } = useTranslation();
+  
   if (!user) return null;
   const { cls } = getBalanceColorClass(user.balance);
 
@@ -28,7 +31,7 @@ const BalanceDisplay = ({ user }) => {
     <div className={styles.balance}>
       <UserAvatar user={user} className={styles.avatar} />
       <Typography className={styles.typo} variant="h6">
-        Balance:
+        {t('Balance')}:
       </Typography>
       <Typography className={styles[cls]} variant="h6">
         {balance} CHF

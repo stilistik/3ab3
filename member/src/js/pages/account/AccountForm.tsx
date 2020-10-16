@@ -14,12 +14,14 @@ import {
 import { Serializable } from 'Components/form/types';
 import { User } from 'Graphql/types';
 import { CURRENT_USER_QUERY, USER_LIST } from 'Graphql/queries';
+import { useTranslation } from 'react-i18next';
 
 interface AccountFormProps {
   user: User;
 }
 
 export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
+  const { t } = useTranslation();
   const [editSelf] = useMutation(EDIT_SELF);
   const handleSubmit = (values: NestedRecord<Serializable>) => {
     editSelf({
@@ -38,11 +40,11 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
   return (
     <Form onSubmit={handleSubmit} initValues={user}>
       <Box cmb={2}>
-        <ImageField id="avatar" label="User Avatar" />
-        <TextField id="name" label="Name" />
-        <TextField id="email" label="Email" type="email" />
-        <TextField id="phone" label="Phone" />
-        <DateField id="birthdate" label="Birthday" />
+        <ImageField id="avatar" label={t("User Avatar")} />
+        <TextField id="name" label={t("Name")} />
+        <TextField id="email" label={t("Email")} type="email" />
+        <TextField id="phone" label={t("Phone")} />
+        <DateField id="birthdate" label={t("Birthday")} />
         <FormSubmit>
           <Button
             type="submit"
@@ -50,7 +52,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
             size="large"
             color="primary"
           >
-            Submit
+            {t('Submit')}
           </Button>
         </FormSubmit>
       </Box>

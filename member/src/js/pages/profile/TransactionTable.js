@@ -12,7 +12,6 @@ import {
   Hidden,
   Select,
   MenuItem,
-  Button,
 } from '@material-ui/core';
 import { Tag, Icon } from 'Components';
 import gql from 'graphql-tag';
@@ -22,6 +21,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { PurchaseReceipt } from './PurchaseReceipt';
+import { useTranslation } from 'react-i18next';
 
 const TRANSACTIONS = gql`
   query($first: Int!, $skip: Int) {
@@ -49,6 +49,8 @@ const TRANSACTIONS = gql`
 `;
 
 const TablePagination = ({ page, count, pageSize, ...rest }) => {
+  const { t } = useTranslation();
+
   const handleFirstPageButtonClick = () => {
     rest.onChangePage(0);
   };
@@ -114,7 +116,9 @@ const TablePagination = ({ page, count, pageSize, ...rest }) => {
             <LastPageIcon />
           </IconButton>
           <Hidden xsDown>
-            <Typography style={{ marginRight: 10 }}>Per page:</Typography>
+            <Typography style={{ marginRight: 10 }}>
+              {t('Per page')}:
+            </Typography>
             <Select onChange={handlePageSizeChange} value={pageSize}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>

@@ -14,6 +14,7 @@ import { useMutation } from 'react-apollo';
 import { EDIT_USER } from 'Graphql/mutations';
 import { USER_LIST } from 'Graphql/queries';
 import { Serializable } from 'Components/form/types';
+import { useTranslation } from 'react-i18next';
 
 interface EditMemberProps {
   user: User;
@@ -22,6 +23,7 @@ interface EditMemberProps {
 export const EditMember: React.FC<EditMemberProps> = ({ user }) => {
   const [showDialog, setShowDialog] = React.useState(false);
   const [editUser] = useMutation(EDIT_USER);
+  const { t } = useTranslation();
 
   const handleClick = () => setShowDialog(true);
 
@@ -32,7 +34,7 @@ export const EditMember: React.FC<EditMemberProps> = ({ user }) => {
       variables: { userId: user.id, input: values },
       refetchQueries: () => [{ query: USER_LIST }],
     })
-      .then(() => Message.success('User successfully edited.'))
+      .then(() => Message.success(t('Member successfully edited')))
       .catch((error) => Message.error(error.message));
     setShowDialog(false);
   };
@@ -43,18 +45,18 @@ export const EditMember: React.FC<EditMemberProps> = ({ user }) => {
         <Icon type="edit" />
       </IconButton>
       <FormDialog
-        title="Edit Member"
+        title={t('Edit Member')}
         show={showDialog}
         onCancel={handleCancel}
         onSubmit={handleSubmit}
         initValues={user}
       >
         <Box cmb={2}>
-          <TextField id="name" label="Name" />
-          <TextField id="email" label="Email" type="email" />
-          <UserRoleField id="role" label="Role" />
-          <TextField id="phone" label="Phone" />
-          <DateField id="birthdate" label="Birthday" />
+          <TextField id="name" label={t('Name')} />
+          <TextField id="email" label={t('Email')} type="email" />
+          <UserRoleField id="role" label={t('Role')} />
+          <TextField id="phone" label={t('Phone')} />
+          <DateField id="birthdate" label={t('Birthday')} />
         </Box>
       </FormDialog>
     </React.Fragment>

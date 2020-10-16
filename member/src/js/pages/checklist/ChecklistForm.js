@@ -11,6 +11,7 @@ import {
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { getBackendUrl } from 'App/network/Utils';
+import { useTranslation } from 'react-i18next';
 
 const QUERY = gql`
   query {
@@ -25,6 +26,7 @@ const QUERY = gql`
 `;
 
 export const ChecklistForm = ({ initValues, ...rest }) => {
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(QUERY);
   if (loading || error) return null;
 
@@ -46,13 +48,13 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
           <Grid item xs={12} sm={6}>
             <DateField
               id="date"
-              label="Date"
+              label={t('Date')}
               required={true}
               defaultValue={new Date().toISOString()}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <UserSelectField id="user" label="Member" required={true} />
+            <UserSelectField id="user" label={t('Member')} required={true} />
           </Grid>
           {products.map((product) => {
             return (
@@ -77,8 +79,8 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
           })}
           <Grid item xs={12}>
             <Box.Row jc="center">
-              <Button type="submit" variant="contained" color="secondary">
-                Submit
+              <Button type="submit" variant="contained" color="primary">
+                {t('Submit')}
               </Button>
             </Box.Row>
           </Grid>

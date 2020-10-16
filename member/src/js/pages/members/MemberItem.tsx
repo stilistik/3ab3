@@ -4,6 +4,7 @@ import { Tag, Box, UserAvatar } from 'Components/index';
 import { UserRole, User } from 'Graphql/types';
 import { DeleteMember } from './DeleteMember';
 import { EditMember } from './EditMember';
+import { useTranslation } from 'react-i18next';
 
 const RoleColors: Record<UserRole, string> = {
   ADMIN: '#0394fc',
@@ -29,6 +30,7 @@ interface MemberItemProps {
 }
 
 export const MemberItem: React.FC<MemberItemProps> = ({ user }) => {
+  const { t } = useTranslation();
   return (
     <Paper>
       <Box p={2}>
@@ -45,11 +47,13 @@ export const MemberItem: React.FC<MemberItemProps> = ({ user }) => {
         </Box.Row>
         <Box pt={2} cmb={1}>
           <Typography variant="body2">
-            Email: <a href={`mailto:${user.email}`}>{user.email}</a>
+            {t('Email')}: <a href={`mailto:${user.email}`}>{user.email}</a>
           </Typography>
-          <Typography variant="body2">Phone: {user.phone || null}</Typography>
           <Typography variant="body2">
-            Birthday:{' '}
+            {t('Phone')}: {user.phone || null}
+          </Typography>
+          <Typography variant="body2">
+            {t('Birthday')}:{' '}
             {user.birthdate
               ? new Date(user.birthdate).toLocaleDateString()
               : null}

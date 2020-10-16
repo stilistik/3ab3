@@ -11,6 +11,7 @@ import { Paper, Button, Typography } from '@material-ui/core';
 import { FieldOptions, Serializable } from 'Components/form/types';
 import { CREATE_PAYMENT } from 'Graphql/mutations';
 import { GLOBAL_BALANCE_CHART, BALANCE_TABLE } from 'Graphql/queries';
+import { useTranslation } from 'react-i18next';
 
 interface PaymentFormProps {
   onSubmit: (
@@ -20,18 +21,19 @@ interface PaymentFormProps {
 }
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
+  const { t } = useTranslation();
   return (
     <Form onSubmit={onSubmit}>
       <Box cmb={1}>
-        <UserSelectField id="user" label="User" />
-        <NumberField id="amount" label="Amount" />
+        <UserSelectField id="user" label={t('Member')} />
+        <NumberField id="amount" label={t('Amount')} />
         <Button
           variant="contained"
           color="primary"
           type="submit"
           style={{ marginTop: 10 }}
         >
-          Register Payment
+          {t('Register Payment')}
         </Button>
       </Box>
     </Form>
@@ -40,6 +42,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
 
 export const RegisterPayment: React.FC = () => {
   const [createPayment] = useMutation(CREATE_PAYMENT);
+  const { t } = useTranslation();
 
   const handleSubmit = (values: any) => {
     createPayment({
@@ -55,14 +58,14 @@ export const RegisterPayment: React.FC = () => {
         { query: BALANCE_TABLE },
       ],
     })
-      .then(() => Message.success('Payment successfully registered.'))
+      .then(() => Message.success(t('Payment successfully registered')))
       .catch((error) => Message.error(error.message));
   };
 
   return (
     <Paper>
       <Box p={2}>
-        <Typography variant="h6">Register Payment</Typography>
+        <Typography variant="h6">{t('Register Payment')}</Typography>
         <PaymentForm onSubmit={handleSubmit} />
       </Box>
     </Paper>
