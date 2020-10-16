@@ -48,6 +48,9 @@ extend type Mutation {
   editEvent(eventId: ID!, input: EventInput!): Event! @isAuthenticated
   addCommitteeMembers(eventId: ID, memberIds: [ID!]!): Event! @isAuthenticated
   removeCommitteeMember(eventId: ID, memberId: ID!): Event! @isAuthenticated
+  setEventPublished(eventId: ID, published: Boolean!): Event!
+    @isAuthenticated
+    @hasRole
   deleteEvent(eventId: ID!): Event! @isAuthenticated
   likeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated
   unlikeEvent(eventId: ID!, userId: ID!): Event! @isAuthenticated

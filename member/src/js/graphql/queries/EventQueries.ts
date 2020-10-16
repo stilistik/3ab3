@@ -75,6 +75,7 @@ export const SINGLE_EVENT = gql`
       flyer
       image
       description
+      published
       committee {
         id
         name

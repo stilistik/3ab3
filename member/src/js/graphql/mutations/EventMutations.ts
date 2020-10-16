@@ -32,6 +32,14 @@ export const REMOVE_COMMITTEE_MEMBER = gql`
   }
 `;
 
+export const SET_EVENT_PUBLISHED = gql`
+  mutation($eventId: ID!, $published: Boolean!) {
+    setEventPublished(eventId: $eventId, published: $published) {
+      id
+    }
+  }
+`;
+
 export const LIKE_EVENT = gql`
   mutation($userId: ID!, $eventId: ID!) {
     likeEvent(userId: $userId, eventId: $eventId) {

@@ -9,6 +9,7 @@ import { Divider, Typography } from '@material-ui/core';
 import { EventInfo } from './info/EventInfo';
 import { EventImage } from './images/EventImage';
 import { EventCommittee } from './EventCommittee';
+import { PublishEvent } from './PublishEvent';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
@@ -57,6 +58,7 @@ export const SingleEvent: React.FC = () => {
                 helpText="An image of the event flyer, if there is one."
               />
               <EventCommittee event={event} />
+              <PublishEvent event={event} />
             </Box>
           </Grid>
         </Grid>

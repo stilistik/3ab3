@@ -110,6 +110,12 @@ module.exports = {
         },
       });
     },
+    setEventPublished(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: { published: args.published },
+      });
+    },
     likeEvent(root, args, context) {
       return context.prisma.updateEvent({
         where: { id: args.eventId },
