@@ -21,7 +21,7 @@ export const PostFeed: React.FC<PostFeedProps> = ({
 }) => {
   if (!posts) return null;
   return (
-    <Box py={3}>
+    <Box py="20px">
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <CreatePost refetch={refetch} />

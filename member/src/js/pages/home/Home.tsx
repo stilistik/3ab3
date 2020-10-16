@@ -17,56 +17,58 @@ const MobileHome: React.FC = () => {
   };
 
   return (
-    <React.Fragment>
+    <Box.Flex column h="100%" w="100%">
       <Tabs value={value} onChange={onChange} variant="fullWidth">
         <Tab label="Feed" />
         <Tab label="Events" />
       </Tabs>
-      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <PostFeedManager />
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12}>
-            <EventFeedManager />
-          </Grid>
-        </Grid>
+      <SwipeableViews
+        axis="x"
+        index={value}
+        onChangeIndex={handleChangeIndex}
+        containerStyle={{ height: '100%' }}
+      >
+        <Box px={2} ox="hidden">
+          <PostFeedManager />
+        </Box>
+        <Box px={2} ox="hidden">
+          <EventFeedManager />
+        </Box>
       </SwipeableViews>
-    </React.Fragment>
+    </Box.Flex>
   );
 };
 
 const DesktopHome: React.FC = () => {
   return (
-    <Box py="20px">
-      <Grid container spacing={3}>
-        <Grid item sm={6}>
-          <Typography variant="h5">FEED</Typography>
-          <Divider />
-          <PostFeedManager />
+    <Grid.Default>
+      <Box py="20px">
+        <Grid container spacing={3}>
+          <Grid item sm={6}>
+            <Typography variant="h5">FEED</Typography>
+            <Divider />
+            <PostFeedManager />
+          </Grid>
+          <Grid item sm={6}>
+            <Typography variant="h5">EVENTS</Typography>
+            <Divider />
+            <EventFeedManager />
+          </Grid>
         </Grid>
-        <Grid item sm={6}>
-          <Typography variant="h5">EVENTS</Typography>
-          <Divider />
-          <EventFeedManager />
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Grid.Default>
   );
 };
 
 export const Home: React.FC = () => {
   return (
-    <Grid.Default>
+    <React.Fragment>
       <Hidden smUp>
         <MobileHome />
       </Hidden>
       <Hidden xsDown>
         <DesktopHome />
       </Hidden>
-    </Grid.Default>
+    </React.Fragment>
   );
 };
-
