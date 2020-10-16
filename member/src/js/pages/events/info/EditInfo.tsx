@@ -12,6 +12,7 @@ import { useMutation } from 'react-apollo';
 import { IconButton } from '@material-ui/core';
 import { EDIT_EVENT } from 'Graphql/mutations';
 import { Event } from 'Graphql/types';
+import { useTranslation } from 'react-i18next';
 
 interface EditInfoProps {
   event: Event;
@@ -24,6 +25,7 @@ export const EditInfo: React.FC<EditInfoProps> = ({
 }) => {
   const [show, setShow] = React.useState(false);
   const [editEvent] = useMutation(EDIT_EVENT);
+  const { t } = useTranslation();
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
     editEvent({
@@ -47,21 +49,21 @@ export const EditInfo: React.FC<EditInfoProps> = ({
       </IconButton>
       <FormDialog
         show={show}
-        title="Edit Event Information"
+        title={t('Edit Event Information')}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         initValues={event}
       >
         <Box cmb={1}>
-          <TextField id="title" label="Title" required={true} />
+          <TextField id="title" label={t('Title')} required={true} />
           <TextField
             id="description"
             multiline={true}
-            label="Description"
+            label={t('Description')}
             required={true}
           />
-          <TextField id="place" label="Place" required={true} />
-          <DateTimeField id="date" label="Date" required={true} />
+          <TextField id="place" label={t('Location')} required={true} />
+          <DateTimeField id="date" label={t('Date')} required={true} />
         </Box>
       </FormDialog>
     </React.Fragment>

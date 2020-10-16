@@ -11,9 +11,11 @@ import { EventImage } from './images/EventImage';
 import { EventCommittee } from './EventCommittee';
 import { PublishEvent } from './PublishEvent';
 import { DeleteEvent } from './DeleteEvent';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     return () => updateParams({ id: undefined });
@@ -45,8 +47,13 @@ export const SingleEvent: React.FC = () => {
               <EventImage
                 event={event}
                 fieldId="image"
-                label="Front Image"
-                helpText="This will be the most prominent image to represent the event on the public website."
+                label={t('Front Image')}
+                helpText={
+                  <Trans i18nKey="frontImageHelpText">
+                    This will be the most prominent image to represent the event
+                    on the public website.
+                  </Trans>
+                }
               />
             </Box>
           </Grid>
@@ -55,8 +62,12 @@ export const SingleEvent: React.FC = () => {
               <EventImage
                 event={event}
                 fieldId="flyer"
-                label="Event Flyer"
-                helpText="An image of the event flyer, if there is one."
+                label={t('Event Flyer')}
+                helpText={
+                  <Trans i18nKey="flyerImageHelpText">
+                    An image of the event flyer, if there is one.
+                  </Trans>
+                }
               />
               <EventCommittee event={event} />
               <PublishEvent event={event} />

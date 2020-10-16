@@ -2,8 +2,10 @@ import React from 'react';
 import { Input } from '@material-ui/core';
 
 import styles from './Chats.less';
+import { useTranslation } from 'react-i18next';
 
 export const SearchChat = ({ search, setSearch }) => {
+  const { t } = useTranslation();
   const onInputChange = (e) => setSearch(e.target.value);
 
   return (
@@ -12,7 +14,7 @@ export const SearchChat = ({ search, setSearch }) => {
       onChange={onInputChange}
       className={styles.userInput}
       disableUnderline
-      placeholder="Search chat"
+      placeholder={t('Search chat')}
     />
   );
 };

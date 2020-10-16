@@ -11,7 +11,7 @@ interface EventImageProps {
   event: Event;
   fieldId: UploadEventImageProps['fieldId'];
   label: string;
-  helpText: string;
+  helpText: React.ReactNode;
 }
 
 export const EventImage: React.FC<EventImageProps> = ({

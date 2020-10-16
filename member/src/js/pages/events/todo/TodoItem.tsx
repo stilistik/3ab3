@@ -6,6 +6,7 @@ import { AssignUser } from './AssignUser';
 import { Todo, User } from 'Graphql/types';
 import { CHECK_TODO, DELETE_TODO, UNCHECK_TODO } from 'Graphql/mutations';
 import clx from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 const useIndicatorStyles = makeStyles((theme) => ({
   circle: {
@@ -113,10 +114,11 @@ interface DoneByProps {
 }
 
 const DoneBy: React.FC<DoneByProps> = ({ done, doneBy, doneAt }) => {
+  const { t } = useTranslation();
   if (!done) return null;
   return (
     <Box.Row cmrnl={2}>
-      <Typography variant="body2">Done by: </Typography>
+      <Typography variant="body2">{t('Done by')}: </Typography>
       <UserAvatar user={doneBy} style={{ width: 30, height: 30 }} />
       <Typography variant="body2">{doneBy.name}</Typography>
       <Typography variant="body2">{new Date(doneAt).toDateString()}</Typography>
@@ -129,9 +131,10 @@ interface AssigneeProps {
 }
 
 const Assignee: React.FC<AssigneeProps> = ({ assigned }) => {
+  const { t } = useTranslation();
   return (
     <Box.Row cmrnl={1}>
-      <Typography variant="body2">Assigned:</Typography>
+      <Typography variant="body2">{t('Assigned')}:</Typography>
       <UserAvatar style={{ width: 30, height: 30 }} user={assigned} />
       <Typography variant="body2">{assigned.name}</Typography>
     </Box.Row>

@@ -6,6 +6,7 @@ import { Paper, Typography } from '@material-ui/core';
 import { PaperHeader } from '../PaperHeader';
 import { EditInfo } from './EditInfo';
 import { HelpPopover } from '../HelpPopover';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface InfoItemProps {
   label: string;
@@ -28,28 +29,35 @@ interface EventInfoProps {
 }
 
 export const EventInfo: React.FC<EventInfoProps> = ({ event }) => {
+  const { t } = useTranslation();
+
   const refetchQueries = () => [
     { query: SINGLE_EVENT, variables: { eventId: event.id } },
   ];
 
   return (
     <Paper>
-      <PaperHeader title="Info">
+      <PaperHeader title={t('Info')}>
         <HelpPopover>
-          This information will be shown on the public website once the event is
-          published.
+          <Trans i18nKey="eventInfoHelpText">
+            This information will be shown on the public website once the event
+            is published.
+          </Trans>
         </HelpPopover>
         <EditInfo event={event} refetchQueries={refetchQueries} />
       </PaperHeader>
       <Box.Fill p={2} cmbnl={1}>
-        <InfoItem label="Event Name" content={event.title} />
-        <InfoItem label="Location" content={event.place} />
-        <InfoItem label="Date" content={new Date(event.date).toDateString()} />
+        <InfoItem label={t('Event Name')} content={event.title} />
+        <InfoItem label={t('Location')} content={event.place} />
         <InfoItem
-          label="Time"
+          label={t('Date')}
+          content={new Date(event.date).toDateString()}
+        />
+        <InfoItem
+          label={t('Time')}
           content={new Date(event.date).toLocaleTimeString()}
         />
-        <InfoItem label="Description" content={event.description} />
+        <InfoItem label={t('Description')} content={event.description} />
       </Box.Fill>
     </Paper>
   );

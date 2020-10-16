@@ -10,6 +10,7 @@ import { CreateChat } from './CreateChat';
 import { SearchChat } from './SearchChat';
 
 import styles from './Chats.less';
+import { useTranslation } from 'react-i18next';
 
 export const CHATS_QUERY = gql`
   query {
@@ -69,6 +70,7 @@ const buildSearchableChats = (chats) => {
 export const ChatList = (props) => {
   const [search, setSearch] = React.useState('');
   const { loading, error, data, refetch } = useQuery(CHATS_QUERY);
+  const { t } = useTranslation();
 
   useInterval(() => {
     refetch();
@@ -111,7 +113,7 @@ export const ChatList = (props) => {
     <div className={styles.outer}>
       <div className={styles.header}>
         <Typography variant="h4">
-          <strong>Chats</strong>
+          <strong>{t('Chats')}</strong>
         </Typography>
         <CreateChatButton onClick={onCreateChat} />
       </div>

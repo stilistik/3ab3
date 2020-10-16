@@ -7,23 +7,27 @@ import { Event } from 'Graphql/types';
 import { Paper } from '@material-ui/core';
 import { PaperHeader } from '../PaperHeader';
 import { HelpPopover } from '../HelpPopover';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface TodosProps {
   event: Event;
 }
 
 export const Todos: React.FC<TodosProps> = ({ event }) => {
+  const { t } = useTranslation();
   const refetchQueries = () => [
     { query: SINGLE_EVENT, variables: { eventId: event.id } },
   ];
 
   return (
     <Paper>
-      <PaperHeader title="Todos">
+      <PaperHeader title={t('Todos')}>
         <HelpPopover>
-          This todo list helps to keep track of tasks that need to be done for
-          the event. Todos have a due date and can also be assigned to members
-          who are responsible for completing them.
+          <Trans i18nKey="todoHelpText">
+            This todo list helps to keep track of tasks that need to be done for
+            the event. Todos have a due date and can also be assigned to members
+            who are responsible for completing them.
+          </Trans>
         </HelpPopover>
         <CreateTodo eventId={event.id} refetchQueries={refetchQueries} />
       </PaperHeader>

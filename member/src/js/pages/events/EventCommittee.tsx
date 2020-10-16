@@ -18,6 +18,7 @@ import {
 } from 'Graphql/mutations';
 import { Serializable } from 'Components/form/types';
 import { SINGLE_EVENT } from 'Graphql/queries';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface AddCommitteeMemberProps {
   event: Event;
@@ -26,6 +27,7 @@ interface AddCommitteeMemberProps {
 const AddCommitteeMember: React.FC<AddCommitteeMemberProps> = ({ event }) => {
   const [addCommitteeMembers] = useMutation(ADD_COMMITTEE_MEMBERS);
   const [show, setShow] = React.useState(false);
+  const { t } = useTranslation();
 
   const handleClick = () => setShow(true);
 
@@ -51,11 +53,11 @@ const AddCommitteeMember: React.FC<AddCommitteeMemberProps> = ({ event }) => {
       </IconButton>
       <FormDialog
         show={show}
-        title="Select Committee Members"
+        title={t('Select Committee Members')}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       >
-        <UserMultiSelectField id="user" label="Member" required={true} />
+        <UserMultiSelectField id="user" label={t('Member')} required={true} />
       </FormDialog>
     </React.Fragment>
   );
@@ -97,19 +99,24 @@ interface EventCommitteeProps {
 }
 
 export const EventCommittee: React.FC<EventCommitteeProps> = ({ event }) => {
+  const { t } = useTranslation();
   return (
     <Paper>
-      <PaperHeader title="Committee">
+      <PaperHeader title={t('Committee')}>
         <HelpPopover>
-          The members in the event committee are authorized to modify the event
-          information on this page.
+          <Trans i18nKey="eventCommitteeHelpText">
+            The members in the event committee are authorized to modify the
+            event information on this page.
+          </Trans>
         </HelpPopover>
         <AddCommitteeMember event={event} />
       </PaperHeader>
       <Box.Fill p={2}>
         {event.committee.length === 0 && (
           <Box.Row height="100px" jc="center">
-            <Typography variant="body1">No committee members yet</Typography>
+            <Typography variant="body1">
+              {t('No committee members yet')}
+            </Typography>
           </Box.Row>
         )}
         {event.committee.map((user) => {

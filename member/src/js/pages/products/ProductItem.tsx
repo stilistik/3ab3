@@ -4,12 +4,14 @@ import { LazyLoadingImageDiv } from 'Components/index';
 import { DeleteProduct } from './DeleteProduct';
 import { EditProduct } from './EditProduct';
 import { Product } from 'Graphql/types';
+import { useTranslation } from 'react-i18next';
 
 interface ProductItemProps {
   product: Product;
 }
 
 export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+  const { t } = useTranslation();
   return (
     <Card>
       <LazyLoadingImageDiv
@@ -22,7 +24,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           {product.name}
         </Typography>
         <Typography variant="body2">
-          Price: {product.price.toFixed(2)} CHF
+          {t('Price')}: {product.price.toFixed(2)} CHF
         </Typography>
       </CardContent>
       <CardActions>

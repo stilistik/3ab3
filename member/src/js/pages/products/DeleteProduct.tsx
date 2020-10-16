@@ -5,6 +5,7 @@ import { Product } from 'Graphql/types';
 import { useMutation } from 'react-apollo';
 import { DELETE_USER } from 'Graphql/mutations';
 import { PRODUCT_LIST } from 'Graphql/queries';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface DeleteProductProps {
   product: Product;
@@ -13,6 +14,7 @@ interface DeleteProductProps {
 export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
   const [showDialog, setShowDialog] = React.useState(false);
   const [deleteUser] = useMutation(DELETE_USER);
+  const { t } = useTranslation();
 
   const handleClick = () => setShowDialog(true);
 
@@ -23,11 +25,12 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
       variables: { productId: product.id },
       refetchQueries: () => [{ query: PRODUCT_LIST }],
     })
-      .then(() => Message.success('User successfully deleted.'))
+      .then(() => Message.success(t('Product successfully deleted')))
       .catch((error) => Message.error(error.message));
     setShowDialog(false);
   };
 
+  const name = product.name;
   return (
     <React.Fragment>
       <IconButton onClick={handleClick}>
@@ -37,12 +40,14 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
         show={showDialog}
         onConfirm={handleDelete}
         onCancel={handleCancel}
-        title="Delete Product"
+        title={t('Delete Product')}
       >
         <Typography variant="body2">
-          Do you really want to delete the product {product.name}? This is an
-          irreversible action, all data related to the product will be lost.
-          Continue?
+          <Trans i18nKey="deleteProductConfirm">
+            Do you really want to delete the product <strong>{{ name }}</strong>
+            ? This is an irreversible action, all data related to the product
+            will be lost. Continue?
+          </Trans>
         </Typography>
       </ConfirmationDialog>
     </React.Fragment>

@@ -12,10 +12,12 @@ import {
   NumberField,
   TextField,
 } from 'Components/index';
+import { useTranslation } from 'react-i18next';
 
 export const CreateProduct: React.FC = () => {
   const [showDialog, setShowDialog] = React.useState(false);
   const [createProduct] = useMutation(CREATE_PRODUCT);
+  const { t } = useTranslation();
 
   const handleClick = () => setShowDialog(true);
 
@@ -26,7 +28,7 @@ export const CreateProduct: React.FC = () => {
       variables: { input: values },
       refetchQueries: () => [{ query: PRODUCT_LIST }],
     })
-      .then(() => Message.success('Product successfully created.'))
+      .then(() => Message.success(t('Product successfully created')))
       .catch((error) => Message.error(error.message));
     setShowDialog(false);
   };
@@ -35,16 +37,25 @@ export const CreateProduct: React.FC = () => {
     <React.Fragment>
       <CreateButton onClick={handleClick} />
       <FormDialog
-        title="Create Product"
+        title={t('Create Product')}
         show={showDialog}
         onCancel={handleCancel}
         onSubmit={handleSubmit}
       >
         <Box cmb={2}>
-          <ImageField id="thumbnail" required={true} label="Product Image" />
-          <TextField id="name" label="Name" required={true} />
-          <NumberField id="price" label="Price" required={true} step={0.5} />
-          <NumberField id="index" label="Index" required={true} />
+          <ImageField
+            id="thumbnail"
+            required={true}
+            label={t('Product Image')}
+          />
+          <TextField id="name" label={t('Name')} required={true} />
+          <NumberField
+            id="price"
+            label={t('Price')}
+            required={true}
+            step={0.5}
+          />
+          <NumberField id="index" label={t('Index')} required={true} />
         </Box>
       </FormDialog>
     </React.Fragment>

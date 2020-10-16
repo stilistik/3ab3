@@ -1,17 +1,16 @@
 import React from 'react';
-import { IconButton, Typography } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import {
   Box,
   Icon,
-  UserAvatar,
   UserSelectField,
   FormDialog,
   Message,
 } from 'Components/index';
 import { useMutation } from 'react-apollo';
-import { User } from 'Graphql/types';
 import { ASSIGN_USER } from 'Graphql/mutations';
 import { Serializable } from 'Components/form/types';
+import { useTranslation } from 'react-i18next';
 
 interface AssignUserProps {
   todoId: string;
@@ -24,6 +23,7 @@ export const AssignUser: React.FC<AssignUserProps> = ({
 }) => {
   const [show, setShow] = React.useState(false);
   const [assignUser] = useMutation(ASSIGN_USER);
+  const { t } = useTranslation();
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
     assignUser({
@@ -47,12 +47,12 @@ export const AssignUser: React.FC<AssignUserProps> = ({
       </IconButton>
       <FormDialog
         show={show}
-        title="Assign User"
+        title={t('Assign Member')}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       >
         <Box cmb={1}>
-          <UserSelectField id="user" label="Select Member" />
+          <UserSelectField id="user" label={t('Select Member')} />
         </Box>
       </FormDialog>
     </React.Fragment>

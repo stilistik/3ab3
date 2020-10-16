@@ -4,6 +4,7 @@ import { Button, Typography, List, ListItem } from '@material-ui/core';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { CHATS_QUERY } from './ChatManager';
+import { useTranslation } from 'react-i18next';
 
 import styles from './Chats.less';
 
@@ -87,6 +88,7 @@ const UserList = ({ currentUser, onSelectUser }) => {
 
 export const CreateChat = ({ currentUser, onViewChange }) => {
   const [createChat] = useMutation(CREATE_CHAT);
+  const { t } = useTranslation();
 
   const onSelectUser = async (user) => {
     try {
@@ -115,7 +117,7 @@ export const CreateChat = ({ currentUser, onViewChange }) => {
       <div className={styles.header} style={{ marginBottom: 10 }}>
         <BackButton onClick={onBack} />
         <Typography variant="h4" style={{ marginRight: 20 }}>
-          <strong>Create</strong>
+          <strong>{t('Create')}</strong>
         </Typography>
       </div>
       <UserList currentUser={currentUser} onSelectUser={onSelectUser} />

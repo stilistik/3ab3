@@ -57,5 +57,55 @@ export const chBE = {
     deleteMemberConfirm:
       'Wosch du würklech z Mitglid <1>{{name}}</1> löschä? Die Handlig isch unwiderrueflech und aui Datä vo däm Mitglid göh drbi verlorä. Witermachä?',
     Confirm: 'Bestätigä',
+    'Create Product': 'Nöiä Artiku',
+    'Edit Product': 'Artiku bearbeitä',
+    'Delete Product': 'Artiku löschä',
+    Price: 'Priis',
+    Index: 'Index',
+    'Product Image': 'Artiku Biud',
+    'Product successfully created': 'Artiku erfougriich erstellt',
+    'Product successfully edited': 'Aritku erfougriich bearbeitet',
+    'Product successfully deleted': 'Aritku erfougriich glöscht',
+    deleteProductConfirm:
+      'Wosch du würklech dr Artiku <1>{{name}}</1> löschä? Die Handlig isch unwiderrueflech und aui Datä vo däm Artiku göh drbi verlorä. Witermachä?',
+    Todos: 'Todo Lischtä',
+    Todo: 'Todo',
+    todoHelpText:
+      'Die Todo Lischtä hiuft d Ufgabe wos fürne Event z erledige git z organisiere. Di einzelne Tasks hei es Fälligkeitsdatum und chöi o amne Mitglid zuegordnet wärde',
+    'Create Todo': 'Nöis Todo',
+    'Due Date': 'Fälligkeitsdatum',
+    'Done by': 'Erledigt vo',
+    'No todos yet': 'No keni Todos',
+    Assigned: 'Verantwortlech',
+    'Assign Member': 'Midglid zueordnä',
+    'Select Member': 'Mitglid uswähle',
+    'Edit Event Information': 'Event Informationä bearbeitä',
+    Location: 'Ort',
+    'Event Name': 'Event Namä',
+    Time: 'Zyt',
+    eventInfoHelpText:
+      'Die Informationä wärde uf dr öffentleche 3ab3 Website azeigt wenn der Event publiziert isch.',
+    'Front Image': 'Titu Biud',
+    'Event Flyer': 'Event Flyer',
+    frontImageHelpText:
+      'Ds isch z prominäntischte Biud wenn dr Event uf dr öffentleche Website publiziert wird.',
+    flyerImageHelpText: 'Es Biud vom Event Flyer, wenns eine git.',
+    Committee: 'Komitee',
+    eventCommitteeHelpText:
+      'D Mitglider vom Event Komitee chöi d Date vom Event uf derä Sitä bearbeitä.',
+    'No committee members yet': 'No keni Komitee Mitglider',
+    'Select Committee Members': 'Komitee Mitglider uswähle',
+    'Publish Event': 'Event publizierä',
+    Publish: 'Publizierä',
+    Unpublish: 'Privatisierä',
+    eventPublishHelpText:
+      'Wenn dr Event publiziert wird, wird er uf dr öffentleche 3ab3 Website <2>www.3ab3.ch</2> azeigt. Nur ä Administrator cha Events publizierä.',
+    'Delete Event': 'Event löschä',
+    deleteEventHelpText:
+      'Ds wird dr Event undwiderrueflech löschä. Aui drmit verbundene Date gö verlore. Nur ä Administrator cha Events löschä',
+    deleteEventConfirm:
+      'Wosch du würklech dr Event <1>{{title}}</1> löschä? Di Handlig isch unwiderrueflech und aui mitem Event verbundene Datä gö verlore. Witermache?',
+    Chats: 'Tschätts',
+    'Search chat': 'Tschätt sueche',
   },
 };

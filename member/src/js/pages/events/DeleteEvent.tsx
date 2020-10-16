@@ -8,6 +8,7 @@ import { DELETE_EVENT } from 'Graphql/mutations';
 import { requestRoute } from 'App/router';
 import { red } from '@material-ui/core/colors';
 import { FUTURE_EVENT_FEED, ALL_EVENTS_FEED } from 'Graphql/queries';
+import { Trans, useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   delete: {
@@ -27,6 +28,7 @@ export const DeleteEvent: React.FC<DeleteEventProps> = ({ event }) => {
   const [show, setShow] = React.useState(false);
   const [deleteEvent] = useMutation(DELETE_EVENT);
   const styles = useStyles();
+  const { t } = useTranslation();
 
   const handleCancel = () => setShow(false);
 
@@ -48,14 +50,17 @@ export const DeleteEvent: React.FC<DeleteEventProps> = ({ event }) => {
       .catch((error) => Message.error(error.message));
   };
 
+  const title = event.title;
   return (
     <React.Fragment>
       <Paper>
-        <PaperHeader title="Delete Event"></PaperHeader>
+        <PaperHeader title={t('Delete Event')}></PaperHeader>
         <Box.Fill p={2} cmbnl={1}>
           <Typography variant="body1">
-            This will irreversibly delete this event and all its related data.
-            Only an admin user can perform this action.
+            <Trans i18nKey="deleteEventHelpText">
+              This will irreversibly delete this event and all its related data.
+              Only an admin user can perform this action.
+            </Trans>
           </Typography>
           <Button
             variant="contained"
@@ -63,7 +68,7 @@ export const DeleteEvent: React.FC<DeleteEventProps> = ({ event }) => {
             disableElevation
             className={styles.delete}
           >
-            Delete Event
+            {t('Delete Event')}
           </Button>
         </Box.Fill>
       </Paper>
@@ -74,9 +79,11 @@ export const DeleteEvent: React.FC<DeleteEventProps> = ({ event }) => {
         onConfirm={handleConfirm}
       >
         <Typography variant="body1">
-          You are about to delete the event <strong>{event.title}</strong>. This
-          is an irreversible action, all data related to the event will be lost.
-          Continue?
+          <Trans i18nKey="deleteEventConfirm">
+            You are about to delete the event <strong>{{ title }}</strong>. This
+            is an irreversible action, all data related to the event will be
+            lost. Continue?
+          </Trans>
         </Typography>
       </ConfirmationDialog>
     </React.Fragment>

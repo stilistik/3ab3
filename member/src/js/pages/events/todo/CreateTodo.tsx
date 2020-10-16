@@ -11,15 +11,20 @@ import {
 } from 'Components/index';
 import { Serializable } from 'Components/form/types';
 import { IconButton } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 interface CreateTodoProps {
   eventId: string;
   refetchQueries: () => any[];
 }
 
-export const CreateTodo: React.FC<CreateTodoProps> = ({ eventId, refetchQueries }) => {
+export const CreateTodo: React.FC<CreateTodoProps> = ({
+  eventId,
+  refetchQueries,
+}) => {
   const [show, setShow] = React.useState(false);
   const [createTodo] = useMutation(CREATE_TODO);
+  const { t } = useTranslation();
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
     createTodo({
@@ -45,13 +50,13 @@ export const CreateTodo: React.FC<CreateTodoProps> = ({ eventId, refetchQueries 
       </IconButton>
       <FormDialog
         show={show}
-        title="Create Todo"
+        title={t('Create Todo')}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       >
         <Box cmb={1}>
-          <TextField id="text" label="Todo" required={true} />
-          <DateField id="due" label="Due Date" required={true} />
+          <TextField id="text" label={t('Todo')} required={true} />
+          <DateField id="due" label={t('Due Date')} required={true} />
         </Box>
       </FormDialog>
     </React.Fragment>
