@@ -29,7 +29,7 @@ export interface SearchSelectFieldClasses {
  * @param classes The classes prop of the SearchSelectField
  * @param hasError Boolean indicating if the field has an error
  */
-function getInputClasses(classes: SearchSelectFieldClasses = {}, hasError: boolean): AutoCompleteClasses {
+export function getInputClasses(classes: SearchSelectFieldClasses = {}, hasError: boolean): AutoCompleteClasses {
   const { root, ...restInputClasses } = classes.autocomplete || {};
   return {
     root: clx(root, { [classes?.error]: hasError }),

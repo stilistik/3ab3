@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { SearchSelectField } from '../fields';
+import { MultiSelectField } from '../fields';
 import { SelectOption } from 'Components/inputs';
 import { User } from 'Graphql/types';
 import { USER_LIST } from 'Graphql/queries';
@@ -13,13 +13,15 @@ function getOptionFromUser(user: User): SelectOption {
   };
 }
 
-export interface UserSelectFieldProps {
+export interface UserMultiSelectFieldProps {
   id: string;
   label: string;
   required?: boolean;
 }
 
-export const UserSelectField: React.FC<UserSelectFieldProps> = (props) => {
+export const UserMultiSelectField: React.FC<UserMultiSelectFieldProps> = (
+  props
+) => {
   const { loading, error, data } = useQuery(USER_LIST);
   if (loading || error) return null;
 
@@ -28,5 +30,5 @@ export const UserSelectField: React.FC<UserSelectFieldProps> = (props) => {
   // generate select field options from workbooks
   const options = users.map((user) => getOptionFromUser(user));
 
-  return <SearchSelectField options={options} {...props} />;
+  return <MultiSelectField options={options} disableCloseOnSelect {...props} />;
 };

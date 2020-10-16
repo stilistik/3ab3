@@ -12,3 +12,4 @@ export * from './QuickNumberField';
 export * from './ImageField';
 export * from './UserSelectField';
 export * from './UserRoleField';
+export * from './UserMultiSelectField';

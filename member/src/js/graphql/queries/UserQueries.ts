@@ -69,3 +69,4 @@ export const CURRENT_USER_LIKED_EVENTS = gql`
     }
   }
 `;
+

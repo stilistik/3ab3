@@ -3,9 +3,9 @@ import {
   Box,
   FormDialog,
   Icon,
-  UserSelectField,
   Message,
   UserAvatar,
+  UserMultiSelectField,
 } from 'Components/index';
 import React from 'react';
 import { HelpPopover } from './HelpPopover';
@@ -32,7 +32,7 @@ const AddCommitteeMember: React.FC<AddCommitteeMemberProps> = ({ event }) => {
     addCommitteeMembers({
       variables: {
         eventId: event.id,
-        memberIds: [values.user],
+        memberIds: values.user,
       },
       refetchQueries: () => [
         { query: SINGLE_EVENT, variables: { eventId: event.id } },
@@ -52,7 +52,7 @@ const AddCommitteeMember: React.FC<AddCommitteeMemberProps> = ({ event }) => {
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       >
-        <UserSelectField id="user" label="Member" required={true} />
+        <UserMultiSelectField id="user" label="Member" required={true} />
       </FormDialog>
     </React.Fragment>
   );
