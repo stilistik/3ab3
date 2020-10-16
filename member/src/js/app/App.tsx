@@ -21,7 +21,7 @@ const UnauthenticatedApp: React.FC = () => {
   return (
     <Box.Flex column w="100vw" h="100vh" o="hidden">
       <UnauthenticatedScaffold />
-      <Box.Item w="100%" o="hidden">
+      <Box.Item fg={1} w="100%" o="hidden">
         <UnauthBackground>
           <Router history={history}>
             <UnauthenticatedRoutes />
@@ -51,7 +51,7 @@ const AuthenticatedApp = () => {
           <Apollo>
             <UserProvider>
               <AuthenticatedScaffold />
-              <Box.Item w="100%" o="hidden">
+              <Box.Item fg={1} w="100%" o="hidden">
                 <Router history={history}>
                   <AuthenticatedRoutes />
                 </Router>
