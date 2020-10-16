@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Message } from 'Components/index';
+import { Box, Icon, Message } from 'Components/index';
 import {
   Typography,
   AccordionDetails,
@@ -44,7 +44,9 @@ export const CreateEvent: React.FC<CreateEventProps> = ({ refetch }) => {
         <Typography variant="h6">Create Event</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <EventForm onSubmit={handleSubmit} />;
+        <Box.Fill>
+          <EventForm onSubmit={handleSubmit} />
+        </Box.Fill>
       </AccordionDetails>
     </Accordion>
   );

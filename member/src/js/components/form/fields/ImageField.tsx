@@ -31,7 +31,7 @@ const useAvatarStyles = makeStyles((theme) => ({
 
 const AvatarEmpty: React.FC<AvatarEmptyProps> = ({ error }) => {
   const styles = useAvatarStyles();
-
+  
   return (
     <Avatar className={clx(styles.avatar, { [styles.error]: Boolean(error) })}>
       <Icon className={styles.icon} type="upload" />

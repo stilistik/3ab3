@@ -1,11 +1,17 @@
 import stringValidator from 'validator';
 import { FieldError, FieldInstance, Serializable } from './types';
 
-const validateTextField = (fieldInstance: FieldInstance, value: Serializable) => {
-  if (fieldInstance.required && (value == null || value === '')) return { message: 'Please fill out this field.' };
+const validateTextField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
+  if (fieldInstance.required && (value == null || value === ''))
+    return { message: 'Please fill out this field.' };
 
   if (typeof value !== 'string')
-    throw new Error(`ValidatorError: field of type 'text' received non string value ${value}`);
+    throw new Error(
+      `ValidatorError: field of type 'text' received non string value ${value}`
+    );
   switch (fieldInstance.type) {
     case 'alpha':
       if (!stringValidator.isAlpha(value))
@@ -24,32 +30,65 @@ const validateTextField = (fieldInstance: FieldInstance, value: Serializable) =>
   }
 };
 
-const validateNumberField = (fieldInstance: FieldInstance, value: Serializable) => {
+const validateNumberField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
   if (fieldInstance.required && (isNaN(Number(value)) || value == null))
     return { message: 'Please fill out this field.' };
 };
 
-const validateSelectField = (fieldInstance: FieldInstance, value: Serializable) => {
-  if (fieldInstance.required && (!value || value === '')) return { message: 'Please fill out this field.' };
-};
-
-const validateMultiSelectField = (fieldInstance: FieldInstance, value: Serializable) => {
-  if (fieldInstance.required && (!value || (Array.isArray(value) && value.length === 0)))
+const validateSelectField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
+  if (fieldInstance.required && (!value || value === ''))
     return { message: 'Please fill out this field.' };
 };
 
-const validateBinaryField = (fieldInstance: FieldInstance, value: Serializable) => {
-  if (typeof value !== 'boolean') return;
-  if (fieldInstance.required && !value) return { message: 'Please confirm this field.' };
+const validateMultiSelectField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
+  if (
+    fieldInstance.required &&
+    (!value || (Array.isArray(value) && value.length === 0))
+  )
+    return { message: 'Please fill out this field.' };
 };
 
-const validateDateField = (fieldInstance: FieldInstance, value: Serializable) => {
-  if (fieldInstance.required && (value == null || value === '')) return { message: 'Please fill out this field.' };
-  if (value && !stringValidator.isISO8601(String(value))) return { message: 'This is not a valid date.' };
+const validateBinaryField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
+  if (typeof value !== 'boolean') return;
+  if (fieldInstance.required && !value)
+    return { message: 'Please confirm this field.' };
+};
+
+const validateDateField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
+  if (fieldInstance.required && (value == null || value === ''))
+    return { message: 'Please fill out this field.' };
+  if (value && !stringValidator.isISO8601(String(value)))
+    return { message: 'This is not a valid date.' };
+};
+
+const validateImageField = (
+  fieldInstance: FieldInstance,
+  value: Serializable
+) => {
+  if (fieldInstance.required && (value == null || value === ''))
+    return { message: 'Please fill out this field.' };
 };
 
 export default class Validator {
-  static validate = (fieldInstance: FieldInstance, value: Serializable): FieldError => {
+  static validate = (
+    fieldInstance: FieldInstance,
+    value: Serializable
+  ): FieldError => {
     switch (fieldInstance.fieldType) {
       case 'text': {
         return validateTextField(fieldInstance, value);
@@ -69,14 +108,16 @@ export default class Validator {
       case 'date': {
         return validateDateField(fieldInstance, value);
       }
+      case 'image': {
+        return validateImageField(fieldInstance, value);
+      }
       case 'divider': {
         return null;
       }
-      case 'image': {
-        return null;
-      }
       default: {
-        throw Error(`ValidatorError: FieldType ${fieldInstance.fieldType} not supported`);
+        throw Error(
+          `ValidatorError: FieldType ${fieldInstance.fieldType} not supported`
+        );
       }
     }
   };
