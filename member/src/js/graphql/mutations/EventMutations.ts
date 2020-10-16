@@ -40,6 +40,14 @@ export const SET_EVENT_PUBLISHED = gql`
   }
 `;
 
+export const DELETE_EVENT = gql`
+  mutation($eventId: ID!) {
+    deleteEvent(eventId: $eventId) {
+      id
+    }
+  }
+`;
+
 export const LIKE_EVENT = gql`
   mutation($userId: ID!, $eventId: ID!) {
     likeEvent(userId: $userId, eventId: $eventId) {

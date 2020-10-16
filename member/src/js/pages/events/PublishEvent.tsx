@@ -38,7 +38,7 @@ export const PublishEvent: React.FC<PublishEventProps> = ({ event }) => {
   return (
     <Paper>
       <PaperHeader title="Publish Event"></PaperHeader>
-      <Box.Fill p={2}>
+      <Box.Fill p={2} cmbnl={1}>
         <Typography variant="body1">
           Publishing the event will make it visible on the public website at{' '}
           <Link color="secondary" href="https://www.3ab3.ch">

@@ -138,8 +138,17 @@ module.exports = {
     },
     async deleteEvent(root, args, context) {
       const toDelete = await context.prisma.event({ id: args.eventId });
-      const img = await context.prisma.file({ uri: toDelete.image });
-      await deleteFile(img.id, context);
+
+      if (toDelete.flyer) {
+        const flyer = await context.prisma.file({ uri: toDelete.flyer });
+        await deleteFile(flyer.id, context);
+      }
+
+      if (toDelete.image) {
+        const image = await context.prisma.file({ uri: toDelete.image });
+        await deleteFile(image.id, context);
+      }
+
       return context.prisma.deleteEvent({ id: args.eventId });
     },
     commentEvent(root, args, context) {

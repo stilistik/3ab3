@@ -10,6 +10,7 @@ import { EventInfo } from './info/EventInfo';
 import { EventImage } from './images/EventImage';
 import { EventCommittee } from './EventCommittee';
 import { PublishEvent } from './PublishEvent';
+import { DeleteEvent } from './DeleteEvent';
 
 export const SingleEvent: React.FC = () => {
   const { id } = getQueryParams();
@@ -59,6 +60,7 @@ export const SingleEvent: React.FC = () => {
               />
               <EventCommittee event={event} />
               <PublishEvent event={event} />
+              <DeleteEvent event={event} />
             </Box>
           </Grid>
         </Grid>
