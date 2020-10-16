@@ -100,6 +100,16 @@ module.exports = {
         },
       });
     },
+    removeCommitteeMember(root, args, context) {
+      return context.prisma.updateEvent({
+        where: { id: args.eventId },
+        data: {
+          committee: {
+            disconnect: { id: args.memberId },
+          },
+        },
+      });
+    },
     likeEvent(root, args, context) {
       return context.prisma.updateEvent({
         where: { id: args.eventId },

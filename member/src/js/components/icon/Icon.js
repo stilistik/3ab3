@@ -19,6 +19,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import GroupIcon from '@material-ui/icons/Group';
@@ -167,6 +168,7 @@ const muiIconTypes = {
   processor: ProcessorIcon,
   refresh: RefreshIcon,
   remove: RemoveIcon,
+  removeCircle: RemoveCircleIcon,
   right: ChevronRightIcon,
   save: SaveIcon,
   search: SearchIcon,
