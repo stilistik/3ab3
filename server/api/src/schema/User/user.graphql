@@ -50,6 +50,7 @@ input EditSelfInput {
   email: String
   phone: String
   birthdate: DateTime
+  avatar: Upload
 }
 
 extend type Query {

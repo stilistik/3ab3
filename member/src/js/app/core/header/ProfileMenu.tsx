@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuItem, IconButton, Typography } from '@material-ui/core';
 import { requestRoute } from 'App/router/History';
-import { Box, Icon, ProfileAvatar } from 'Components/index';
+import { Box, Icon, useCurrentUser, UserAvatar } from 'Components/index';
 
 interface ProfileMenuItemProps {
   label: string;
@@ -28,6 +28,7 @@ const ProfileMenuItem = React.forwardRef(
 
 export const ProfileMenu: React.FC = () => {
   const [anchor, setAnchor] = React.useState(null);
+  const user = useCurrentUser();
 
   const handleMenuOpen = (e: React.MouseEvent) => {
     setAnchor(e.currentTarget);
@@ -50,7 +51,7 @@ export const ProfileMenu: React.FC = () => {
         requestRoute('/account');
         break;
       case 'logout':
-        // this.props.logout();
+        handleLogout();
         break;
       default:
         break;
@@ -61,7 +62,7 @@ export const ProfileMenu: React.FC = () => {
   return (
     <React.Fragment>
       <IconButton style={{ padding: 0 }} onClick={handleMenuOpen}>
-        <ProfileAvatar />
+        <UserAvatar user={user} />
       </IconButton>
       <Menu
         anchorEl={anchor}

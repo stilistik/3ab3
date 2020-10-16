@@ -82,11 +82,29 @@ module.exports = {
         data: { deleted: true },
       });
     },
-    editSelf(root, args, context) {
+    async editSelf(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
+      const user = await context.prisma.user({ id: id });
+
+      const { avatar, ...rest } = args.input;
+      const updateValues = { ...rest };
+
+      if (avatar) {
+        // we want to change the avatar image
+        if (user.avatar) {
+          // user already has an avatar, we need to delete it
+          const oldAvatar = await context.prisma.file({ uri: user.avatar });
+          await deleteFile(oldAvatar.id, context);
+        }
+
+        // store file and create database entry
+        const newAvatar = await uploadFile(avatar, context);
+        updateValues.avatar = newAvatar.uri;
+      }
+
       return context.prisma.updateUser({
         where: { id },
-        data: args.input,
+        data: updateValues,
       });
     },
     async uploadAvatar(root, args, context) {

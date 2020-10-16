@@ -9,9 +9,11 @@ import {
   DateField,
   Form,
   FormSubmit,
+  ImageField,
 } from 'Components/index';
 import { Serializable } from 'Components/form/types';
 import { User } from 'Graphql/types';
+import { CURRENT_USER_QUERY, USER_LIST } from 'Graphql/queries';
 
 interface AccountFormProps {
   user: User;
@@ -24,6 +26,10 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
       variables: {
         input: values,
       },
+      refetchQueries: () => [
+        { query: CURRENT_USER_QUERY },
+        { query: USER_LIST },
+      ],
     })
       .then(() => Message.success('Information successfully updated.'))
       .catch((error) => Message.error(error.message));
@@ -32,6 +38,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
   return (
     <Form onSubmit={handleSubmit} initValues={user}>
       <Box cmb={2}>
+        <ImageField id="avatar" label="User Avatar" />
         <TextField id="name" label="Name" />
         <TextField id="email" label="Email" type="email" />
         <TextField id="phone" label="Phone" />
