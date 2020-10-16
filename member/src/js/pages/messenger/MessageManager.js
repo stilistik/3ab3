@@ -1,11 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Hidden, Button, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import { Messages } from './Messages';
-import { Icon, Box } from 'Components';
-
-import styles from './MessageManager.less';
+import { Box } from 'Components';
 
 export const MESSAGES = gql`
   query Messages($chatId: ID!, $first: Int!, $after: String, $skip: Int) {
@@ -84,22 +81,6 @@ const groupMessages = (messages, currentUserId) => {
 
   groups.push({ messages: group, groupDate: prevDate });
   return groups;
-};
-
-const MobileMessagesHeader = ({ onClick, selectedChat }) => {
-  return (
-    <Box p={1} w="100%" d="flex" ai="center" bb={1} bc="grey.300">
-      <Button
-        className={styles.createButton}
-        color="secondary"
-        variant="outlined"
-        onClick={onClick}
-      >
-        <Icon type="left" />
-      </Button>
-      <Typography variant="h5">{selectedChat.title}</Typography>
-    </Box>
-  );
 };
 
 export const MessageManager = ({ selectedChat, currentUser, ...rest }) => {
@@ -189,12 +170,6 @@ export const MessageManager = ({ selectedChat, currentUser, ...rest }) => {
 
   return (
     <Box.Fill>
-      <Hidden smUp>
-        <MobileMessagesHeader
-          onClick={rest.onBack}
-          selectedChat={selectedChat}
-        />
-      </Hidden>
       <Messages
         key={selectedChat.id}
         messageGroups={groups}

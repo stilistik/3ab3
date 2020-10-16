@@ -155,11 +155,6 @@ export const Messages = ({
           );
         })}
       </ScrollContainer>
-      <CreateMessage
-        selectedChat={selectedChat}
-        currentUser={currentUser}
-        onCreateMessage={onCreateMessage}
-      />
     </Box.Flex>
   );
 };

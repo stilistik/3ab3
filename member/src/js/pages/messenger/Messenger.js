@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Grid } from 'Components';
+import { Icon, Box, Grid } from 'Components';
 import SwipeableViews from 'react-swipeable-views';
 import { ChatManager } from './ChatManager';
 import { MessageManager } from './MessageManager';
-import { Hidden } from '@material-ui/core';
+import { Hidden, Button, Typography, makeStyles } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { CreateMessage } from './CreateMessage';
 
 const USER = gql`
   query {
@@ -17,14 +18,45 @@ const USER = gql`
 
 export const DesktopMessenger = (props) => {
   return (
-    <Grid.Flex container spacing={3}>
-      <Grid.Flex item xs={4}>
-        <ChatManager {...props} />
+    <Grid.Default>
+      <Grid.Flex container spacing={3}>
+        <Grid.Flex item xs={4}>
+          <ChatManager {...props} />
+        </Grid.Flex>
+        <Grid.Flex item xs={8}>
+          <MessageManager {...props} />
+          <CreateMessage {...props} />
+        </Grid.Flex>
       </Grid.Flex>
-      <Grid.Flex item xs={8}>
-        <MessageManager {...props} />
-      </Grid.Flex>
-    </Grid.Flex>
+    </Grid.Default>
+  );
+};
+
+const useStyles = makeStyles({
+  createButton: {
+    width: '50px',
+    minWidth: '50px',
+    height: '50px',
+    minHeight: '50px',
+    borderRadius: '25px',
+    marginRight: '15px',
+  },
+});
+
+const MobileMessagesHeader = ({ onClick, selectedChat }) => {
+  const styles = useStyles();
+  return (
+    <Box p={1} w="100%" d="flex" ai="center" bb={1} bc="grey.300">
+      <Button
+        className={styles.createButton}
+        color="secondary"
+        variant="outlined"
+        onClick={onClick}
+      >
+        <Icon type="left" />
+      </Button>
+      <Typography variant="h5">{selectedChat?.title}</Typography>
+    </Box>
   );
 };
 
@@ -45,24 +77,33 @@ const MobileMessenger = ({ onSelectChat, ...rest }) => {
   };
 
   return (
-    <React.Fragment>
-      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
-        <Grid container>
-          <Grid item xs={12}>
-            <ChatManager onSelectChat={handleSelectChat} {...rest} />
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12}>
+    <Box.Flex column h="100%" w="100%">
+      <SwipeableViews
+        axis="x"
+        index={value}
+        onChangeIndex={handleChangeIndex}
+        containerStyle={{ height: '100%' }}
+      >
+        <Box px={2} ox="hidden">
+          <ChatManager onSelectChat={handleSelectChat} {...rest} />
+        </Box>
+        <Box.Flex column h="100%" w="100%" ox="hidden">
+          <MobileMessagesHeader
+            onSelectChat={handleSelectChat}
+            onClick={handleBack}
+            {...rest}
+          />
+          <Box.Item fg={1} oy="auto">
             <MessageManager
               onBack={handleBack}
               onSelectChat={handleSelectChat}
               {...rest}
             />
-          </Grid>
-        </Grid>
+          </Box.Item>
+          <CreateMessage {...rest} />
+        </Box.Flex>
       </SwipeableViews>
-    </React.Fragment>
+    </Box.Flex>
   );
 };
 
@@ -92,13 +133,13 @@ export const Messenger = () => {
     setUnreadCount,
   };
   return (
-    <Grid.Default>
+    <React.Fragment>
       <Hidden smUp>
         <MobileMessenger {...props} />
       </Hidden>
       <Hidden xsDown>
         <DesktopMessenger {...props} />
       </Hidden>
-    </Grid.Default>
+    </React.Fragment>
   );
 };
