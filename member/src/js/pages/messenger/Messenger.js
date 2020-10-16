@@ -19,15 +19,15 @@ const USER = gql`
 export const DesktopMessenger = (props) => {
   return (
     <Grid.Default>
-      <Grid.Flex container spacing={3}>
-        <Grid.Flex item xs={4}>
-          <ChatManager {...props} />
-        </Grid.Flex>
-        <Grid.Flex item xs={8}>
-          <MessageManager {...props} />
+      <Box.Flex row>
+        <ChatManager {...props} />
+        <Box.Flex column h="100%" w="100%" ox="hidden">
+          <Box.Item fg={1} oy="auto">
+            <MessageManager {...props} />
+          </Box.Item>
           <CreateMessage {...props} />
-        </Grid.Flex>
-      </Grid.Flex>
+        </Box.Flex>
+      </Box.Flex>
     </Grid.Default>
   );
 };
