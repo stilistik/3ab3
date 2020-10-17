@@ -15,17 +15,14 @@ import PostComments from './PostComments';
 import LinkValidator from './LinkValidator';
 import YoutubeVideo from './YoutubeVideo';
 import SpotifyPlayer from './SpotifyPlayer';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
+import { useLanguage } from 'App/intl/LanguageProvider';
 import Microlink from '@microlink/react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './Post.css';
 
-TimeAgo.addLocale(en);
-const timeAgo = new TimeAgo('en-EN');
-
 const PostHeader = ({ post, refetch }) => {
+  const { timeAgo } = useLanguage();
   return (
     <div className={styles.header}>
       <div className={styles.headerleft}>

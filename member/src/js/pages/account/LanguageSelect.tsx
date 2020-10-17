@@ -1,35 +1,29 @@
 import React from 'react';
-import i18n from 'App/i18n/i18n';
+import { Language, useLanguage } from 'App/intl';
 import { Box } from 'Components/index';
 import { MenuItem, Select, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
-function getInitialLanguage() {
-  return window.localStorage.getItem('lang') || 'chBE';
-}
-
 export const LanguageSelect: React.FC = () => {
-  const [lang, setLang] = React.useState(getInitialLanguage());
+  const { language, changeLanguage } = useLanguage();
   const { t } = useTranslation();
 
   const handleChange = (
     e: React.ChangeEvent<{
       name?: string;
-      value: string;
+      value: Language;
     }>
   ) => {
-    const { value } = e.target;
-    i18n.changeLanguage(value);
-    setLang(value);
-    window.localStorage.setItem('lang', value);
+    changeLanguage(e.target.value);
   };
 
   return (
     <Box cmb={1}>
       <Typography variant="body1">{t('Language')}</Typography>
-      <Select value={lang} onChange={handleChange}>
-        <MenuItem value={'chBE'}>Bärndütsch</MenuItem>
-        <MenuItem value={'en'}>English</MenuItem>
+      <Select value={language} onChange={handleChange}>
+        <MenuItem value={Language.deCH}>Bärndütsch</MenuItem>
+        <MenuItem value={Language.en}>English</MenuItem>
+        <MenuItem value={Language.de}>Deutsch</MenuItem>
       </Select>
     </Box>
   );

@@ -1,0 +1,314 @@
+{
+  "locale": "de-CH",
+  "long": {
+    "year": {
+      "previous": "letschts Jahr",
+      "current": "das Jahr",
+      "next": "nächschts Jahr",
+      "past": {
+        "one": "vor {0} Jahr",
+        "other": "vor {0} Jahr"
+      },
+      "future": {
+        "one": "i {0} Jahr",
+        "other": "i {0} Jahr"
+      }
+    },
+    "quarter": {
+      "previous": "Quartau",
+      "current": "das Quartau",
+      "next": "nächschts Quartau",
+      "past": {
+        "one": "vor {0} Quartau",
+        "other": "vor {0} Quartau"
+      },
+      "future": {
+        "one": "i {0} Quartau",
+        "other": "i {0} Quartau"
+      }
+    },
+    "month": {
+      "previous": "letscht Monet",
+      "current": "dä Monet",
+      "next": "nächscht Monet",
+      "past": {
+        "one": "vor {0} Monet",
+        "other": "vor {0} Monet"
+      },
+      "future": {
+        "one": "i {0} Monet",
+        "other": "i {0} Monet"
+      }
+    },
+    "week": {
+      "previous": "letscht Wuchä",
+      "current": "die Wuchä",
+      "next": "nächste Wuchä",
+      "past": {
+        "one": "vor {0} Wuchä",
+        "other": "vor {0} Wuchä"
+      },
+      "future": {
+        "one": "i {0} Wuchä",
+        "other": "i {0} Wuchä"
+      }
+    },
+    "day": {
+      "previous": "gester",
+      "previous-2": "vorgester",
+      "current": "hüt",
+      "next": "morn",
+      "next-2": "übermorn",
+      "past": {
+        "one": "vor {0} Tag",
+        "other": "vor {0} Täg"
+      },
+      "future": {
+        "one": "i {0} Tag",
+        "other": "i {0} Täg"
+      }
+    },
+    "hour": {
+      "current": "i derä Stung",
+      "past": {
+        "one": "vor {0} Stung",
+        "other": "vor {0} Stung"
+      },
+      "future": {
+        "one": "i {0} Stung",
+        "other": "i {0} Stung"
+      }
+    },
+    "minute": {
+      "current": "i derä Minutä",
+      "past": {
+        "one": "vor {0} Minutä",
+        "other": "vor {0} Minutä"
+      },
+      "future": {
+        "one": "i {0} Minutä",
+        "other": "i {0} Minutä"
+      }
+    },
+    "second": {
+      "current": "itz",
+      "past": {
+        "one": "vor {0} Sekundä",
+        "other": "vor {0} Sekundä"
+      },
+      "future": {
+        "one": "i {0} Sekundä",
+        "other": "i {0} Sekundä"
+      }
+    }
+  },
+  "short": {
+    "year": {
+      "previous": "letschts Jahr",
+      "current": "das Jahr",
+      "next": "nächschts Jahr",
+      "past": {
+        "one": "vor {0} Jahr",
+        "other": "vor {0} Jahren"
+      },
+      "future": {
+        "one": "i {0} Jahr",
+        "other": "i {0} Jahren"
+      }
+    },
+    "quarter": {
+      "previous": "letschts Quartau",
+      "current": "das Quartau",
+      "next": "nächschts Quartau",
+      "past": "vor {0} Quart.",
+      "future": "i {0} Quart."
+    },
+    "month": {
+      "previous": "letscht Monet",
+      "current": "dä Monet",
+      "next": "nächscht Monet",
+      "past": {
+        "one": "vor {0} Monet",
+        "other": "vor {0} Monet"
+      },
+      "future": {
+        "one": "i {0} Monet",
+        "other": "i {0} Monet"
+      }
+    },
+    "week": {
+      "previous": "letscht Wuchä",
+      "current": "die Wuchä",
+      "next": "nächste Wuchä",
+      "past": {
+        "one": "vor {0} Wuchä",
+        "other": "vor {0} Wuchä"
+      },
+      "future": {
+        "one": "i {0} Wuchä",
+        "other": "i {0} Wuchä"
+      }
+    },
+    "day": {
+      "previous": "gester",
+      "previous-2": "vorgester",
+      "current": "hüt",
+      "next": "morn",
+      "next-2": "übermorn",
+      "past": {
+        "one": "vor {0} Tag",
+        "other": "vor {0} Täg"
+      },
+      "future": {
+        "one": "i {0} Tag",
+        "other": "i {0} Täg"
+      }
+    },
+    "hour": {
+      "current": "i derä Stung",
+      "past": "vor {0} Std.",
+      "future": "i {0} Std."
+    },
+    "minute": {
+      "current": "i derä Minutä",
+      "past": "vor {0} Min.",
+      "future": "i {0} Min."
+    },
+    "second": {
+      "current": "itz",
+      "past": "vor {0} Sek.",
+      "future": "i {0} Sek."
+    }
+  },
+  "narrow": {
+    "year": {
+      "previous": "letschts Jahr",
+      "current": "das Jahr",
+      "next": "nächschts Jahr",
+      "past": {
+        "one": "vor {0} Jahr",
+        "other": "vor {0} Jahren"
+      },
+      "future": {
+        "one": "i {0} Jahr",
+        "other": "i {0} Jahren"
+      }
+    },
+    "quarter": {
+      "previous": "letschts Quartau",
+      "current": "das Quartau",
+      "next": "nächschts Quartau",
+      "past": "vor {0} Q",
+      "future": "i {0} Q"
+    },
+    "month": {
+      "previous": "letscht Monet",
+      "current": "dä Monet",
+      "next": "nächscht Monet",
+      "past": {
+        "one": "vor {0} Monet",
+        "other": "vor {0} Monet"
+      },
+      "future": {
+        "one": "i {0} Monet",
+        "other": "i {0} Monet"
+      }
+    },
+    "week": {
+      "previous": "letscht Wuchä",
+      "current": "die Wuchä",
+      "next": "nächste Wuchä",
+      "past": "vor {0} Wo.",
+      "future": "i {0} Wo."
+    },
+    "day": {
+      "previous": "gester",
+      "previous-2": "vorgester",
+      "current": "hüt",
+      "next": "morn",
+      "next-2": "übermorn",
+      "past": {
+        "one": "vor {0} Tag",
+        "other": "vor {0} Täg"
+      },
+      "future": {
+        "one": "i {0} Tag",
+        "other": "i {0} Täg"
+      }
+    },
+    "hour": {
+      "current": "i derä Stung",
+      "past": "vor {0} Std.",
+      "future": "i {0} Std."
+    },
+    "minute": {
+      "current": "i derä Minutä",
+      "past": "vor {0} m",
+      "future": "i {0} m"
+    },
+    "second": {
+      "current": "itz",
+      "past": "vor {0} s",
+      "future": "i {0} s"
+    }
+  },
+  "now": {
+    "now": {
+      "current": "itz",
+      "future": "imne Moment",
+      "past": "gad itz"
+    }
+  },
+  "long-time": {
+    "year": {
+      "one": "{0} Jahr",
+      "other": "{0} Jahre"
+    },
+    "month": {
+      "one": "{0} Monet",
+      "other": "{0} Monate"
+    },
+    "week": {
+      "one": "{0} Wuchä",
+      "other": "{0} Wuchä"
+    },
+    "day": {
+      "one": "{0} Tag",
+      "other": "{0} Täg"
+    },
+    "hour": {
+      "one": "{0} Stung",
+      "other": "{0} Stung"
+    },
+    "minute": {
+      "one": "{0} Minutä",
+      "other": "{0} Minutä"
+    },
+    "second": {
+      "one": "{0} Sekundä",
+      "other": "{0} Sekundä"
+    }
+  },
+  "mini-time": {
+    "year": "{0} J.",
+    "month": "{0} Mt.",
+    "week": "{0} Wo.",
+    "day": "{0} T.",
+    "hour": "{0} Std.",
+    "minute": "{0} Min.",
+    "second": "{0} s",
+    "now": "itz"
+  },
+  "tiny": {
+    "deprecated": true,
+    "year": "{0} J.",
+    "month": "{0} Mt.",
+    "week": "{0} Wo.",
+    "day": "{0} T.",
+    "hour": "{0} Std.",
+    "minute": "{0} Min.",
+    "second": "{0} s",
+    "now": "itz"
+  },
+  "quantify": null
+}
