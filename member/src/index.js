@@ -5,25 +5,22 @@ import { LanguageProvider } from 'App/intl';
 import { Theme } from 'App/theme';
 import { StoreProvider } from 'App/store';
 import { MuiPickersUtilsProvider as Picker } from '@material-ui/pickers';
-import { CssBaseline } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { LazyLoadingProvider } from 'Components/image/LazyLoadingContext';
 
 import './css/master.less';
 
 ReactDOM.render(
-  <CssBaseline>
-    <LanguageProvider>
-      <Theme>
-        <StoreProvider>
-          <Picker utils={DateFnsUtils}>
-            <LazyLoadingProvider>
-              <App />
-            </LazyLoadingProvider>
-          </Picker>
-        </StoreProvider>
-      </Theme>
-    </LanguageProvider>
-  </CssBaseline>,
+  <LanguageProvider>
+    <Theme>
+      <StoreProvider>
+        <Picker utils={DateFnsUtils}>
+          <LazyLoadingProvider>
+            <App />
+          </LazyLoadingProvider>
+        </Picker>
+      </StoreProvider>
+    </Theme>
+  </LanguageProvider>,
   document.getElementById('root')
 );

@@ -4,6 +4,7 @@ import { Typography, Paper } from '@material-ui/core';
 import { Box, Grid, useCurrentUser } from 'Components/index';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelect } from './LanguageSelect';
+import { DarkModeToggle } from './DarkModeToggle';
 
 export const Account: React.FC = () => {
   const { t } = useTranslation();
@@ -22,8 +23,9 @@ export const Account: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper>
-              <Box p={2}>
+              <Box p={2} cmbnl={2}>
                 <LanguageSelect />
+                <DarkModeToggle />
               </Box>
             </Paper>
           </Grid>

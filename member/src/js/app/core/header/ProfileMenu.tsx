@@ -20,7 +20,9 @@ const ProfileMenuItem = React.forwardRef(
       <MenuItem ref={ref} onClick={() => onClick(action)}>
         <Box.Row height="30px" cmrnl={2}>
           <Icon type={icon} />
-          <Typography variant="body1">{label}</Typography>
+          <Typography variant="body1" color="textPrimary">
+            {label}
+          </Typography>
         </Box.Row>
       </MenuItem>
     );

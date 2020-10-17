@@ -127,9 +127,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <EventStats eventId={event.id} onComment={onComment} />
       <CardActions>
         <LikeEvent event={event} />
-        <Button size="small" color="primary" onClick={onComment}>
-          <Icon type="addComment" style={{ marginRight: '5px' }} />{' '}
-          {t('Comment')}
+        <Button size="small" onClick={onComment}>
+          <Icon type="addComment" style={{ marginRight: '5px' }} /> {t('Comment')}
         </Button>
       </CardActions>
       {show && <EventComments eventId={event.id} />}

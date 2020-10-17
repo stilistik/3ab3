@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Typography } from '@material-ui/core';
 import { Icon } from 'Components';
 import LikedBy from './LikedBy';
 
@@ -24,7 +24,13 @@ class LikeCounter extends React.Component {
         <Avatar className={classes.circle} onClick={this.onOpen}>
           <Icon type="like" className={classes.icon} />
         </Avatar>
-        <span className={classes.number}>{likedBy.length}</span>
+        <Typography
+          variant="body2"
+          color="textPrimary"
+          style={{ fontSize: 11 }}
+        >
+          {likedBy.length}
+        </Typography>
         <LikedBy
           likedBy={likedBy}
           open={this.state.open}

@@ -18,13 +18,13 @@ export const LanguageSelect: React.FC = () => {
   };
 
   return (
-    <Box cmb={1}>
+    <Box.Row mb={1} cmrnl={2}>
       <Typography variant="body1">{t('Language')}</Typography>
       <Select value={language} onChange={handleChange}>
         <MenuItem value={Language.deCH}>Bärndütsch</MenuItem>
         <MenuItem value={Language.en}>English</MenuItem>
         <MenuItem value={Language.de}>Deutsch</MenuItem>
       </Select>
-    </Box>
+    </Box.Row>
   );
 };

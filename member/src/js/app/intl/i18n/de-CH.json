@@ -98,6 +98,7 @@
     "deleteEventConfirm": "Wosch du würklech dr Event <1>{{title}}</1> löschä? Di Handlig isch unwiderrueflech und aui mitem Event verbundene Datä gö verlore. Witermache?",
     "Chats": "Tschätts",
     "Search chat": "Tschätt sueche",
-    "Language": "Sprach"
+    "Language": "Sprach",
+    "Dark Mode": "Dunku Modus"
   }
 }

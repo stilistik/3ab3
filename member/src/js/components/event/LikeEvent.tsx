@@ -49,7 +49,6 @@ export const LikeEvent: React.FC<LikeEventProps> = ({ event }) => {
     <Button
       size="small"
       className={clx({ [styles.liked]: liked })}
-      color="primary"
       onClick={onClick}
     >
       <Icon type="like" style={{ marginRight: '5px' }} /> {t('Like')}

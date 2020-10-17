@@ -8,6 +8,7 @@ import {
   TableRow,
   TableCell,
   Typography,
+  makeStyles,
 } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -30,8 +31,19 @@ const QUERY = gql`
   }
 `;
 
+const useStyles = makeStyles((theme) => ({
+  footer: {
+    borderTop: `2px solid ${theme.palette.divider}`,
+  },
+  cell: {
+    color: theme.palette.text.primary,
+  },
+}));
+
 export const PurchaseReceipt = ({ open, purchaseId, handleClose }) => {
   const { t } = useTranslation();
+  const styles = useStyles();
+
   const { loading, error, data } = useQuery(QUERY, {
     variables: { purchaseId },
   });
@@ -59,16 +71,15 @@ export const PurchaseReceipt = ({ open, purchaseId, handleClose }) => {
             );
           })}
         </TableBody>
-        <TableFooter style={{ borderTop: '2px solid black' }}>
+        <TableFooter className={styles.footer}>
           <TableRow>
-            <TableCell colSpan={4}>
+            <TableCell colSpan={4} className={styles.cell}>
               <div
                 style={{
                   width: '100%',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  color: '#222',
                 }}
               >
                 <Typography>Total</Typography>

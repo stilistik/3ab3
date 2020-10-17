@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Typography } from '@material-ui/core';
 import { Icon } from 'Components';
 
 import styles from './CommentCounter.css';
@@ -10,7 +10,9 @@ const CommentCounter = ({ count, onComment }) => {
       <Avatar className={styles.circle} onClick={onComment}>
         <Icon type="comment" className={styles.icon} />
       </Avatar>
-      <span className={styles.number}>{count}</span>
+      <Typography variant="body2" color="textPrimary" style={{ fontSize: 11 }}>
+        {count}
+      </Typography>
     </div>
   );
 };

@@ -15,7 +15,9 @@ export const Dashboard = () => {
       <Box py="20px">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h5">{t('Dashboard').toUpperCase()}</Typography>
+            <Typography variant="h5" color="textPrimary">
+              {t('Dashboard').toUpperCase()}
+            </Typography>
             <Divider />
           </Grid>
           <Grid item xs={12}>

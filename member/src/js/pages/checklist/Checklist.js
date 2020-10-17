@@ -40,7 +40,9 @@ export const Checklist = ({ initValues = {} }) => {
       <Box py="20px">
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h5">{t('Checklist').toUpperCase()}</Typography>
+            <Typography variant="h5" color="textPrimary">
+              {t('Checklist').toUpperCase()}
+            </Typography>
             <Divider />
             <ChecklistForm onSubmit={onSubmit} initValues={initValues} />
           </Grid>

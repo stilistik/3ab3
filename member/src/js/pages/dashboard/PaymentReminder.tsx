@@ -100,6 +100,7 @@ const ThresholdSlider: React.FC<ThresholdSliderProps> = ({
         value={value}
         onChange={handleChange}
         onChangeCommitted={handleChangeCommitted}
+        color="secondary"
       />
       <Box.Row ml={1} whiteSpace="nowrap">
         <Typography variant="body2">{value} CHF</Typography>

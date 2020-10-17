@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Message, UserAvatar } from 'Components';
+import { Box, Icon, Message, UserAvatar } from 'Components';
 import { Button, Typography, List, ListItem } from '@material-ui/core';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -77,7 +77,7 @@ const UserList = ({ currentUser, onSelectUser }) => {
           >
             <div className={styles.chatInner}>
               <UserAvatar user={user} />
-              <span>{user.name}</span>
+              <Box color="text.primary">{user.name}</Box>
             </div>
           </ListItem>
         ))}
@@ -116,7 +116,11 @@ export const CreateChat = ({ currentUser, onViewChange }) => {
     <div className={styles.outer}>
       <div className={styles.header} style={{ marginBottom: 10 }}>
         <BackButton onClick={onBack} />
-        <Typography variant="h4" style={{ marginRight: 20 }}>
+        <Typography
+          variant="h4"
+          color="textPrimary"
+          style={{ marginRight: 20 }}
+        >
           <strong>{t('Create')}</strong>
         </Typography>
       </div>

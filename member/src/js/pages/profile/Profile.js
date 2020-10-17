@@ -22,7 +22,9 @@ const DesktopProfile = () => {
         <ConsumptionChart />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Typography variant="h5">{t('History').toUpperCase()}</Typography>
+        <Typography variant="h5" color="textPrimary">
+          {t('History').toUpperCase()}
+        </Typography>
         <Divider />
         <br />
         <TransactionTable />
@@ -71,7 +73,9 @@ const MobileProfile = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h5">{t('History').toUpperCase()}</Typography>
+            <Typography variant="h5" color="textPrimary">
+              {t('History').toUpperCase()}
+            </Typography>
             <Divider />
             <br />
             <TransactionTable />

@@ -19,7 +19,13 @@ import { useStore } from 'App/store';
 
 const UnauthenticatedApp: React.FC = () => {
   return (
-    <Box.Flex column w="100vw" h="100vh" o="hidden">
+    <Box.Flex
+      column
+      w="100vw"
+      h="100vh"
+      o="hidden"
+      bgcolor="background.default"
+    >
       <UnauthenticatedScaffold />
       <Box.Item fg={1} w="100%" o="hidden">
         <UnauthBackground>
@@ -45,7 +51,13 @@ const AuthenticatedApp = () => {
   }, []);
 
   return (
-    <Box.Flex column w="100vw" h="100vh" o="hidden">
+    <Box.Flex
+      column
+      w="100vw"
+      h="100vh"
+      o="hidden"
+      bgcolor="background.default"
+    >
       <EmojiProvider>
         <GiphyProvider>
           <Apollo>

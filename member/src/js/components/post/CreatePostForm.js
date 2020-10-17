@@ -2,13 +2,17 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import LinkValidator from './LinkValidator';
-import { Card, CardContent, Button, Input } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Button,
+  Input,
+  makeStyles,
+} from '@material-ui/core';
 import { Icon, UserAvatar, ImageContainer } from 'Components';
 import { PostLink } from './Post';
 import ImageInput from './ImageInput';
 import { useTranslation } from 'react-i18next';
-
-import styles from './CreatePostForm.css';
 
 const QUERY = gql`
   query {
@@ -22,6 +26,38 @@ const QUERY = gql`
 
 const IDLE_TO_UPDATE = 200;
 
+const useStyles = makeStyles((theme) => ({
+  content: { padding: '15px 10px !important' },
+  form: { display: 'flex' },
+  avatar: { marginRight: '15px' },
+  preview: {
+    width: '150px',
+    height: '150px',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    marginTop: '10px',
+  },
+  input: {
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '10px',
+    background: theme.palette.action.default,
+    padding: '5px 10px',
+    flexGrow: '100',
+    marginRight: '5px',
+    '&:hover': {
+      background: theme.palette.action.hover,
+    },
+  },
+  inputFocused: {
+    background: theme.palette.action.hover,
+  },
+  submit: {
+    width: '100%',
+    marginTop: '10px',
+  },
+}));
+
 const CreatePostForm = (props) => {
   let timer = React.useRef(null);
   const [text, setText] = React.useState('');
@@ -29,6 +65,7 @@ const CreatePostForm = (props) => {
   const [src, setSrc] = React.useState(null);
   const [link, setLink] = React.useState(null);
   const { t } = useTranslation();
+  const styles = useStyles();
 
   const { loading, error, data } = useQuery(QUERY);
   if (loading || error) return null;
@@ -81,6 +118,9 @@ const CreatePostForm = (props) => {
             multiline
             placeholder={t('Write something...')}
             className={styles.input}
+            classes={{
+              focused: styles.inputFocused,
+            }}
             disableUnderline
           />
           <ImageInput onChange={onImageChange} />

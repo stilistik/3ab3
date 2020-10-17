@@ -13,6 +13,7 @@ import { BALANCE_TABLE } from 'Graphql/queries';
 import { useTranslation } from 'react-i18next';
 
 const TransactionCell = ({ user }) => {
+  const { t } = useTranslation();
   const { edges } = user.transactions;
   const transaction = edges.length ? edges[0].node : null;
   if (transaction)

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Typography } from '@material-ui/core';
+import { Link, Paper, Typography } from '@material-ui/core';
 import { Tag, Box, UserAvatar } from 'Components/index';
 import { UserRole, User } from 'Graphql/types';
 import { DeleteMember } from './DeleteMember';
@@ -47,7 +47,10 @@ export const MemberItem: React.FC<MemberItemProps> = ({ user }) => {
         </Box.Row>
         <Box pt={2} cmb={1}>
           <Typography variant="body2">
-            {t('Email')}: <a href={`mailto:${user.email}`}>{user.email}</a>
+            {t('Email')}:{' '}
+            <Link color="secondary" href={`mailto:${user.email}`}>
+              {user.email}
+            </Link>
           </Typography>
           <Typography variant="body2">
             {t('Phone')}: {user.phone || null}

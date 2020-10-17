@@ -45,12 +45,16 @@ const DesktopHome: React.FC = () => {
       <Box py="20px">
         <Grid container spacing={3}>
           <Grid item sm={6}>
-            <Typography variant="h5">FEED</Typography>
+            <Typography variant="h5" color="textPrimary">
+              FEED
+            </Typography>
             <Divider />
             <PostFeedManager />
           </Grid>
           <Grid item sm={6}>
-            <Typography variant="h5">EVENTS</Typography>
+            <Typography variant="h5" color="textPrimary">
+              EVENTS
+            </Typography>
             <Divider />
             <EventFeedManager />
           </Grid>

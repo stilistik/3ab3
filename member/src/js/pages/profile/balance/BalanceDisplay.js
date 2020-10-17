@@ -30,7 +30,7 @@ const BalanceDisplay = ({ user }) => {
   return (
     <div className={styles.balance}>
       <UserAvatar user={user} className={styles.avatar} />
-      <Typography className={styles.typo} variant="h6">
+      <Typography variant="h6">
         {t('Balance')}:
       </Typography>
       <Typography className={styles[cls]} variant="h6">

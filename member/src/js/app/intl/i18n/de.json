@@ -98,6 +98,7 @@
     "deleteEventConfirm": "Willst du wirklich den event <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Event verbundenen Daten gehen verloren. Weitermachen?",
     "Chats": "Chats",
     "Search chat": "Chat suchen",
-    "Language": "Sprache"
+    "Language": "Sprache",
+    "Dark Mode": "Dunkel Modus"
   }
 }

@@ -101,7 +101,7 @@ const Post = ({ post, refetch }) => {
       <PostStats postId={post.id} onComment={onComment} />
       <CardActions>
         <LikePost post={post} />
-        <Button size="small" color="primary" onClick={onComment}>
+        <Button size="small" onClick={onComment}>
           <Icon type="addComment" style={{ marginRight: '5px' }} />{' '}
           {t('Comment')}
         </Button>

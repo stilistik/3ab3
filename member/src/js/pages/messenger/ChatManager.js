@@ -112,7 +112,7 @@ export const ChatList = (props) => {
   return (
     <div className={styles.outer}>
       <div className={styles.header}>
-        <Typography variant="h4">
+        <Typography variant="h4" color="textPrimary">
           <strong>{t('Chats')}</strong>
         </Typography>
         <CreateChatButton onClick={onCreateChat} />

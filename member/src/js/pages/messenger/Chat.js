@@ -1,16 +1,40 @@
 import React from 'react';
 import { UserAvatar } from 'Components';
-import { ListItem, Badge } from '@material-ui/core';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
+import { ListItem, Badge, makeStyles } from '@material-ui/core';
 import classnames from 'classnames';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { useLanguage } from 'App/intl';
 
-import styles from './Chats.less';
+// import styles from './Chats.less';
 
-TimeAgo.addLocale(en);
-const timeAgo = new TimeAgo('en-EN');
+const useStyles = makeStyles((theme) => ({
+  chat: {
+    borderRadius: '15px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '5px',
+    paddingLeft: '10px',
+    color: theme.palette.text.primary,
+  },
+  chatInner: {
+    display: 'flex',
+    alignItems: 'center',
+    '& > *:not(:last-child)': {
+      marginRight: '10px',
+    },
+  },
+  badge: {
+    backgroundColor: theme.palette.success.main,
+  },
+  lastOnline: {
+    color: '#999',
+    fontSize: '12px',
+  },
+  selected: {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
 
 export const UNREAD_MESSAGES = gql`
   query($userId: ID!, $chatId: ID!) {
@@ -40,6 +64,8 @@ export const Chat = ({
   down,
   setUnreadCount,
 }) => {
+  const styles = useStyles();
+  const { timeAgo } = useLanguage();
   const unsubscribe = React.useRef(null);
   const { subscribeToMore, loading, error, data } = useQuery(UNREAD_MESSAGES, {
     variables: { userId: currentUser.id, chatId: chat.id },

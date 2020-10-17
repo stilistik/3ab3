@@ -1,25 +1,30 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import { useTheme } from '@material-ui/core';
 
-const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
-  <g>
-    <circle
-      fill="#fff"
-      r={size / 2}
-      strokeWidth={borderWidth}
-      stroke={borderColor}
-    />
-    <circle
-      r={size / 5}
-      strokeWidth={borderWidth}
-      stroke={borderColor}
-      fill={color}
-      fillOpacity={0.35}
-    />
-  </g>
-);
+const CustomSymbol = ({ size, color, borderWidth, borderColor }) => {
+  const theme = useTheme();
+  return (
+    <g>
+      <circle
+        fill={theme.palette.background.paper}
+        r={size / 2}
+        strokeWidth={borderWidth}
+        stroke={borderColor}
+      />
+      <circle
+        r={size / 5}
+        strokeWidth={borderWidth}
+        stroke={borderColor}
+        fill={color}
+        fillOpacity={0.35}
+      />
+    </g>
+  );
+};
 
 export const TimeLineChart = ({ data }) => {
+  const theme = useTheme();
   const computeAreaBaseline = (data) => {
     const globalMin = Math.min(
       ...data.map((serie) => Math.min(...serie.data.map((datum) => datum.y)))
@@ -75,6 +80,9 @@ export const TimeLineChart = ({ data }) => {
         legendOffset: 10,
         legendPosition: 'end',
         legendOrientation: 'horizontal',
+      }}
+      theme={{
+        textColor: theme.palette.text.primary,
       }}
       enableSlices="x"
       sliceTooltip={({ slice }) => {

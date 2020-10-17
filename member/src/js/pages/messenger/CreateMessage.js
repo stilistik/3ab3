@@ -6,13 +6,46 @@ import {
   GiphyPicker,
   LinkValidator,
 } from 'Components';
-import { IconButton, Input } from '@material-ui/core';
+import { IconButton, Input, makeStyles } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { ClickAwayListener } from '@material-ui/core';
 import { MessageLink } from './Message';
 
-import styles from './CreateMessage.less';
+const useStyles = makeStyles((theme) => ({
+  form: {
+    display: 'flex',
+    marginBottom: '5px',
+    '& > *:not(:last-child)': {
+      marginRight: '10px',
+    },
+  },
+  input: {
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '10px',
+    background: theme.palette.action.default,
+    padding: '5px 10px',
+    flexGrow: '100',
+    '&:hover': {
+      background: theme.palette.action.hover,
+    },
+  },
+  inputFocused: {
+    background: theme.palette.action.hover,
+  },
+  iconBtn: {
+    padding: '0px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '48px',
+    height: '48px',
+  },
+  gifIcon: {
+    fontSize: '40px',
+  },
+}));
 
 const MUTATION = gql`
   mutation($input: MessageInput) {
@@ -65,6 +98,7 @@ export const CreateMessage = ({
   const [picker, setPicker] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [createMessage] = useMutation(MUTATION);
+  const styles = useStyles();
 
   const onSubmit = async () => {
     if (!value && !link) return;
@@ -153,6 +187,9 @@ export const CreateMessage = ({
           multiline
           disableUnderline
           onKeyDown={onKeyDown}
+          classes={{
+            focused: styles.inputFocused,
+          }}
         />
         <IconButton type="submit" onClick={onSubmit}>
           <Icon type="send" />

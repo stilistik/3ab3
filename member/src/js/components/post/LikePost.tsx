@@ -49,7 +49,6 @@ export const LikePost: React.FC<LikePostProps> = ({ post }) => {
     <Button
       size="small"
       className={clx({ [styles.liked]: liked })}
-      color="primary"
       onClick={onClick}
     >
       <Icon type="like" style={{ marginRight: '5px' }} /> {t('Like')}
