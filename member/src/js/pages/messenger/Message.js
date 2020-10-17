@@ -1,11 +1,89 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
 import classnames from 'classnames';
-import { IconButton } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import { YoutubeVideo, SpotifyPlayer, LinkValidator, Icon } from 'Components';
 import Microlink from '@microlink/react';
 
-import styles from './Message.less';
+export const useMessageStyles = makeStyles((theme) => ({
+  message: {
+    padding: '10px',
+    borderRadius: '15px',
+  },
+  date: {
+    display: 'flex',
+    justifyContent: 'center',
+    fontSize: '12px',
+    color: '#777',
+  },
+  messageGroup: {
+    margin: '10px',
+    '& $message': {
+      margin: '1px',
+      overflow: 'hidden',
+    },
+    '& $fromCurrent:not(:nth-child(2))': {
+      '& $message': {
+        borderTopRightRadius: '0px',
+      },
+    },
+    '& $fromCurrent:not(:last-child)': {
+      '& $message': {
+        borderBottomRightRadius: '0px',
+      },
+    },
+    '& $fromOther:not(:nth-child(2))': {
+      '& $message': {
+        borderTopLeftRadius: '0px',
+      },
+    },
+    '& $fromOther:not(:last-child)': {
+      '& $message': {
+        borderBottomLeftRadius: '0px',
+      },
+    },
+  },
+  container: {},
+  fromOther: {
+    width: '100%',
+    '& $container': {
+      display: 'flex',
+    },
+    '& $message': {
+      maxWidth: '70%',
+      background: theme.palette.action.hover,
+      color: theme.palette.text.primary,
+    },
+    '& $message-enter': {
+      transform: 'scale(0)',
+      transformOrigin: 'left 0%',
+    },
+    '& $message-enter.message-enter-active': {
+      transform: 'scale(1)',
+      transition: 'all 0.3s ease',
+    },
+  },
+  fromCurrent: {
+    width: '100%',
+    '& $container': {
+      display: 'flex',
+      flexDirection: 'row-reverse',
+    },
+    '& $message': {
+      maxWidth: '70%',
+      background: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
+    },
+    '& $message-enter': {
+      transform: 'scale(0)',
+      transformOrigin: 'right 0%',
+    },
+    '& $message-enter.message-enter-active': {
+      transform: 'scale(1)',
+      transition: 'all 0.3s ease',
+    },
+  },
+}));
 
 const duration = 200;
 
@@ -29,7 +107,20 @@ const MessageImage = ({ url }) => {
   );
 };
 
+const useMessageLinkStyles = makeStyles({
+  messageLink: {
+    position: 'relative',
+  },
+  messageLinkRemove: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    color: 'white',
+  },
+});
+
 export const MessageLink = ({ link, handleRemove }) => {
+  const styles = useMessageLinkStyles();
   if (!link) return null;
   const type = link.type;
   return (
@@ -69,6 +160,7 @@ const Scale = ({ in: inProp, children, ...rest }) => (
 );
 
 export const MessageGroup = ({ messages, groupDate, ...rest }) => {
+  const styles = useMessageStyles();
   return (
     <div className={styles.messageGroup}>
       {groupDate && (
@@ -92,6 +184,7 @@ export const Message = ({
 }) => {
   const [show, setShow] = React.useState(Boolean(disableAnimations));
   const [validatedLink, setValidatedLink] = React.useState(null);
+  const styles = useMessageStyles();
 
   React.useEffect(() => {
     if (!link) return;

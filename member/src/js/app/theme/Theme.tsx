@@ -10,8 +10,13 @@ const ThemeContext = React.createContext(undefined);
 const useDarkMode = () => {
   const localStorageValue = window.localStorage.getItem('dark') === 'true';
   const osPreference = useMediaQuery('(prefers-color-scheme: dark');
-  const state = React.useState(localStorageValue || osPreference);
-  return state;
+  const [dark, setDark] = React.useState(localStorageValue || osPreference);
+
+  React.useEffect(() => {
+    window.localStorage.setItem('dark', String(dark));
+  }, [dark]);
+
+  return [dark, setDark];
 };
 
 export const useThemeContext = () => {
@@ -35,6 +40,7 @@ export const Theme: React.FC = ({ children }) => {
       },
     });
   }, [dark]);
+
   return (
     <ThemeContext.Provider value={{ dark, setDark }}>
       <StylesProvider injectFirst>

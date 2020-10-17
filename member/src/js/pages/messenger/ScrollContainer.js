@@ -43,7 +43,7 @@ export const ScrollContainer = ({ children, getApi, ...rest }) => {
   };
 
   return (
-    <Box.Fill o="scroll" ref={container}>
+    <Box.Fill o="scroll" ox="hidden" ref={container}>
       <Box ref={content}>{children}</Box>
     </Box.Fill>
   );

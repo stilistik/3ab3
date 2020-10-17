@@ -6,8 +6,6 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { useLanguage } from 'App/intl';
 
-// import styles from './Chats.less';
-
 const useStyles = makeStyles((theme) => ({
   chat: {
     borderRadius: '15px',

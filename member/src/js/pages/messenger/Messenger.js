@@ -55,7 +55,9 @@ const MobileMessagesHeader = ({ onClick, selectedChat }) => {
       >
         <Icon type="left" />
       </Button>
-      <Typography variant="h5">{selectedChat?.title}</Typography>
+      <Typography variant="h5" color="textPrimary">
+        {selectedChat?.title}
+      </Typography>
     </Box>
   );
 };
@@ -87,7 +89,7 @@ const MobileMessenger = ({ onSelectChat, ...rest }) => {
         <Box px={2} ox="hidden">
           <ChatManager onSelectChat={handleSelectChat} {...rest} />
         </Box>
-        <Box.Flex column h="100%" w="100%" ox="hidden">
+        <Box.Flex column h="100%" w="100%">
           <MobileMessagesHeader
             onSelectChat={handleSelectChat}
             onClick={handleBack}

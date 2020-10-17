@@ -1,13 +1,25 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { Grid, Box } from 'Components/index';
-import { Hidden, Tabs, Tab, Typography, Divider } from '@material-ui/core';
+import {
+  Hidden,
+  Tabs,
+  Tab,
+  Typography,
+  Divider,
+  makeStyles
+} from '@material-ui/core';
 import { PostFeedManager } from './posts/PostFeedManager';
 import { EventFeedManager } from './events/EventFeedManager';
 
+const useStyles = makeStyles((theme) => ({
+  tabs: { color: theme.palette.text.primary },
+}));
+
 const MobileHome: React.FC = () => {
   const [value, setValue] = React.useState(0);
-
+  const styles = useStyles();
+  
   const onChange = (_event: React.ChangeEvent<{}>, value: any) => {
     setValue(value);
   };
@@ -18,7 +30,12 @@ const MobileHome: React.FC = () => {
 
   return (
     <Box.Flex column h="100%" w="100%">
-      <Tabs value={value} onChange={onChange} variant="fullWidth">
+      <Tabs
+        value={value}
+        onChange={onChange}
+        variant="fullWidth"
+        className={styles.tabs}
+      >
         <Tab label="Feed" />
         <Tab label="Events" />
       </Tabs>

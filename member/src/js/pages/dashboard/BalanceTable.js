@@ -7,7 +7,7 @@ import {
   TableCell,
   TableBody,
 } from '@material-ui/core';
-import { Tag } from 'Components';
+import { Tag, Loading, Error } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import { BALANCE_TABLE } from 'Graphql/queries';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,9 @@ const BalanceCell = ({ balance }) => {
 const BalanceTable = () => {
   const { t } = useTranslation();
   const { loading, error, data } = useQuery(BALANCE_TABLE);
-  if (loading || error) return null;
+
+  if (loading) return <Loading />;
+  if (error) return <Error message={error.message} />;
 
   const { users } = data;
   return (

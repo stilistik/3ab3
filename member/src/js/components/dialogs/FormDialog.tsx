@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
   content: {
-    minWidth: '600px',
     overflow: 'visible',
   },
 }));
