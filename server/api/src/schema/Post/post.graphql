@@ -1,4 +1,4 @@
-type Post implements Node @isAuthenticated {
+type Post implements Node {
   id: ID!
   text: String!
   image: String

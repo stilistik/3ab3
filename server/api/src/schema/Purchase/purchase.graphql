@@ -1,4 +1,4 @@
-type Purchase @isAuthenticated {
+type Purchase {
   id: ID!
   transaction: Transaction!
   items: [Item!]!

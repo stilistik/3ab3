@@ -33,6 +33,7 @@ passport.use(
 
 passport.use(
   new BearerStrategy(async (accessToken, done) => {
+    console.log(accessToken);
     try {
       const token = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
       const foundUser = await prisma.user({ id: token.id });

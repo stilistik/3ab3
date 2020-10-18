@@ -28,7 +28,6 @@ const Chat = require('./Chat');
 const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
 
 const Directives = `
-  directive @isAuthenticated on OBJECT | FIELD_DEFINITION
   directive @hasRole(requires: UserRole = ADMIN) on OBJECT | FIELD_DEFINITION
 `;
 

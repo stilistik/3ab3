@@ -40,7 +40,7 @@ app.post(
   auth.passwordless.requestToken
 );
 
-app.use(API_PATH, passport.authenticate('basic', { session: false }));
+app.use(API_PATH, passport.authenticate('bearer', { session: false }));
 
 const apollo = new ApolloServer({
   schema: schema,

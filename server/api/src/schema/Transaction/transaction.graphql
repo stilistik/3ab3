@@ -1,4 +1,4 @@
-type Transaction implements Node @isAuthenticated {
+type Transaction implements Node {
   id: ID!
   user: User!
   date: DateTime!

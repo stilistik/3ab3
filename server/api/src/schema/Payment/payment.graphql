@@ -1,4 +1,4 @@
-type Payment @isAuthenticated {
+type Payment {
   id: ID!
   transaction: Transaction!
   amount: Float!

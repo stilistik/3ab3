@@ -1,4 +1,4 @@
-type Comment implements Node @isAuthenticated {
+type Comment implements Node {
   id: ID!
   text: String!
   link: String
