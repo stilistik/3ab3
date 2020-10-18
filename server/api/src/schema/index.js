@@ -25,7 +25,7 @@ const Todo = require('./Todo');
 const Message = require('./Message');
 const Chat = require('./Chat');
 
-const { IsAuthenticatedDirective, HasRoleDirective } = require('./Directives');
+const { HasRoleDirective } = require('./Directives');
 
 const Directives = `
   directive @hasRole(requires: UserRole = ADMIN) on OBJECT | FIELD_DEFINITION
@@ -109,7 +109,6 @@ module.exports = makeExecutableSchema({
     Chat.resolvers
   ),
   schemaDirectives: {
-    isAuthenticated: IsAuthenticatedDirective,
     hasRole: HasRoleDirective,
   },
   resolverValidationOptions: {
