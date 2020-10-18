@@ -1,5 +1,6 @@
 const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
 const { verifyAndDecodeToken } = require('../../auth/verify');
+const { canUserModifyEvent } = require('../../helper/authorization.helper');
 
 module.exports = {
   Query: {
@@ -72,6 +73,12 @@ module.exports = {
       });
     },
     async editEvent(root, args, context) {
+      const canModify = await canUserModifyEvent(args, context);
+
+      if (!canModify) {
+        throw new Error('User is unauthorized to modify event.');
+      }
+
       const { image, flyer, ...rest } = args.input;
 
       const updateValues = { ...rest };

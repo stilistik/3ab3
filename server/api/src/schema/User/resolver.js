@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const { verifyAndDecodeToken } = require('../../auth/verify');
 const { AuthenticationError } = require('../../auth/errors');
 const { uploadFile, deleteFile } = require('../../helper/file.helper');
-const { canUserModify } = require('../../helper/access.helper');
+const { canUserModifyUser } = require('../../helper/authorization.helper');
 
 module.exports = {
   Query: {
@@ -46,7 +46,7 @@ module.exports = {
       const currentUser = await context.prisma.user({ id });
       const userToUpdate = await context.prisma.user({ id: args.userId });
 
-      if (!canUserModify(currentUser, userToUpdate)) {
+      if (!canUserModifyUser(currentUser, userToUpdate)) {
         throw new Error(
           `User with role ${currentUser.role} cannot modify user with role ${
             userToUpdate.role
@@ -69,7 +69,7 @@ module.exports = {
       const currentUser = await context.prisma.user({ id });
       const userToUpdate = await context.prisma.user({ id: args.userId });
 
-      if (!canUserModify(currentUser, userToUpdate)) {
+      if (!canUserModifyUser(currentUser, userToUpdate)) {
         throw new Error(
           `User with role ${currentUser.role} cannot modify user with role ${
             userToUpdate.role

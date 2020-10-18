@@ -35,7 +35,7 @@ export const SingleEvent: React.FC = () => {
       <Box py="20px">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h5">
+            <Typography variant="h5" color="textPrimary">
               {event?.title?.toUpperCase() || 'EVENT'}
             </Typography>
             <Divider />
