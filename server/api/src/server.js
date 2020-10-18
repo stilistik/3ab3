@@ -10,11 +10,7 @@ const cors = require('cors');
 const { verifyTokenInConnection } = require('./auth/verify');
 const prisma = require('./prisma');
 
-const { MODE } = process.env;
-
-const API_PATH = '/api';
-const SUB_PATH = '/sub';
-const PORT = 4000;
+const { MODE, API_PATH, API_SUB_PATH, API_PORT } = process.env;
 
 const app = express();
 
@@ -43,6 +39,8 @@ app.post(
   passport.authenticate('basic', { session: false }),
   auth.passwordless.requestToken
 );
+
+app.use(API_PATH, passport.authenticate('basic', { session: false }));
 
 const apollo = new ApolloServer({
   schema: schema,
@@ -102,7 +100,7 @@ apollo.applyMiddleware({
   cors: false,
   app,
   path: API_PATH,
-  subscriptionsPath: SUB_PATH,
+  subscriptionsPath: API_SUB_PATH,
 });
 
 // Reject any unimplemented requests
@@ -113,12 +111,12 @@ app.use('/', (req, res) => {
 const httpServer = http.createServer(app);
 apollo.installSubscriptionHandlers(httpServer);
 
-httpServer.listen(PORT, () => {
+httpServer.listen(API_PORT, () => {
   console.log(
-    `🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`
+    `🚀 Server ready at http://localhost:${API_PORT}${apollo.graphqlPath}`
   );
   console.log(
-    `🚀 Subscriptions ready at ws://localhost:${PORT}${
+    `🚀 Subscriptions ready at ws://localhost:${API_PORT}${
       apollo.subscriptionsPath
     }`
   );
