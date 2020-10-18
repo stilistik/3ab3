@@ -10,8 +10,8 @@ export const createDarkPalette = () => {
       main: '#1a77ad',
     },
     action: {
-      default: 'rgba(255, 255, 255, 0.04)',
-      hover: 'rgba(255, 255, 255, 0.08)',
+      default: 'rgba(255, 255, 255, 0.06)',
+      hover: 'rgba(255, 255, 255, 0.12)',
     },
     navigation: {
       main: '#3c3e42',

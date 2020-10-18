@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { Input, ClickAwayListener } from '@material-ui/core';
+import { Input, ClickAwayListener, makeStyles } from '@material-ui/core';
 import {
   UserAvatar,
   EmojiPicker,
@@ -10,9 +10,46 @@ import {
   LinkValidator,
 } from 'Components';
 import { MessageLink } from 'Pages/messenger/Message';
-
-import styles from './CreateCommentForm.less';
 import { useTranslation } from 'react-i18next';
+
+// import styles from './CreateCommentForm.less';
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: '16px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  avatar: {
+    marginRight: '15px',
+    width: '1.7em',
+    height: '1.7em',
+  },
+  input: {
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '10px',
+    background: theme.palette.action.default,
+    padding: '5px 10px',
+    flexGrow: '100',
+    marginRight: '5px',
+    '&:hover': {
+      background: theme.palette.action.hover,
+    },
+  },
+  inputFocused: {
+    background: theme.palette.action.hover,
+  },
+  adornment: {
+    display: 'flex',
+    alignItems: 'center',
+    '& > *:not(:last-child)': {
+      marginRight: '7px',
+    },
+    '& > *': {
+      cursor: 'pointer',
+    },
+  },
+}));
 
 const EmojiPickerContainer = ({ open, handleSelect, handleClose }) => {
   if (!open) return null;
@@ -55,6 +92,7 @@ const IDLE_TO_UPDATE = 200;
 const CreateCommentForm = (props) => {
   let timer = React.useRef(null);
   const { t } = useTranslation();
+  const styles = useStyles();
   const [link, setLink] = React.useState(null);
   const [picker, setPicker] = React.useState(null);
   const [value, setValue] = React.useState('');
@@ -125,6 +163,9 @@ const CreateCommentForm = (props) => {
         <UserAvatar user={data.currentUser} className={styles.avatar} />
         <Input
           className={styles.input}
+          classes={{
+            focused: styles.inputFocused
+          }}
           value={value}
           onKeyDown={onKeyDown}
           onChange={onChange}
@@ -134,16 +175,8 @@ const CreateCommentForm = (props) => {
           placeholder={t('Comment')}
           endAdornment={
             <div className={styles.adornment}>
-              <Icon
-                type="gif"
-                onClick={() => setPicker('giphy')}
-                className={styles.gifIcon}
-              />
-              <Icon
-                type="mood"
-                onClick={() => setPicker('emoji')}
-                className={styles.moodIcon}
-              />
+              <Icon type="gif" onClick={() => setPicker('giphy')} />
+              <Icon type="mood" onClick={() => setPicker('emoji')} />
             </div>
           }
         />

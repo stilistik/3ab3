@@ -2,10 +2,39 @@ import React from 'react';
 import { UserAvatar, LinkValidator } from 'Components';
 import CommentActions from './CommentActions';
 import { MessageLink } from 'Pages/messenger/Message';
+import { makeStyles } from '@material-ui/core';
 
-import styles from './Comment.less';
+const useStyles = makeStyles((theme) => ({
+  comment: {
+    padding: '0px 16px',
+    marginBottom: '7px',
+    maxWidth: '100%',
+  },
+  content: {
+    display: 'flex',
+    alignItems: 'flex-start',
+  },
+  user: {
+    color: '#1a77ad',
+    fontWeight: 'bold',
+    marginRight: '8px',
+  },
+  avatar: {
+    width: '1.7em',
+    height: '1.7em',
+  },
+  text: {
+    whiteSpace: 'normal',
+    alignSelf: 'center',
+    padding: '0.35em 0.7em',
+    marginLeft: '10px',
+    background: theme.palette.action.hover,
+    borderRadius: '15px',
+  },
+}));
 
 const Comment = ({ comment }) => {
+  const styles = useStyles();
   const [validatedLink, setValidatedLink] = React.useState(null);
 
   React.useEffect(() => {

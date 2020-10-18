@@ -119,7 +119,7 @@ module.exports = {
       if (user.avatar) {
         // user already has an avatar, we need to delete it
         const oldAvatar = await context.prisma.file({ uri: user.avatar });
-        await deleteFile(oldAvatar.id, context);
+        if (oldAvatar) await deleteFile(oldAvatar.id, context);
       }
 
       // store file and create database entry

@@ -10,7 +10,8 @@ export const createLightPalette = () => {
       main: '#1a77ad',
     },
     action: {
-      default: 'rgba(0, 0, 0, 0.02)',
+      default: 'rgba(0, 0, 0, 0.04)',
+      hover: 'rgba(0, 0, 0, 0.08)',
     },
     background: {
       default: '#f2f3f5'
