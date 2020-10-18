@@ -7,8 +7,12 @@ import { TOTAL_UNREAD_MESSAGES } from 'Graphql/queries';
 import { NEW_MESSAGES_SUBSCRIPTION } from 'Graphql/subscriptions';
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
-    color: 'white',
+  button: {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.action.hover,
+    '&:hover': {
+      backgroundColor: theme.palette.action.selected,
+    },
   },
   badge: {
     color: 'white',
@@ -37,13 +41,13 @@ const MessageButton: React.FC<MessageButtonProps> = ({
   }, []);
 
   return (
-    <IconButton onClick={onClick}>
+    <IconButton onClick={onClick} className={styles.button}>
       <Badge
         badgeContent={String(count)}
         classes={{ badge: styles.badge }}
         invisible={count === 0}
       >
-        <Icon type="mail" className={styles.icon} />
+        <Icon type="mail" />
       </Badge>
     </IconButton>
   );
@@ -51,7 +55,7 @@ const MessageButton: React.FC<MessageButtonProps> = ({
 
 export const MessengerLink: React.FC = () => {
   const unsubscribe = React.useRef(null);
-  
+
   const { subscribeToMore, loading, error, data } = useQuery(
     TOTAL_UNREAD_MESSAGES
   );

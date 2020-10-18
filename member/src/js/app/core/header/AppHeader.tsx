@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { ProfileMenu } from './ProfileMenu';
 import { MessengerLink } from './Messages';
@@ -8,9 +8,17 @@ import { Grid, Box } from 'Components/index';
 import { Logo } from './Logo';
 import { requestRoute } from 'App/router/History';
 
+const useStyles = makeStyles((theme) => ({
+  appbar: {
+    backgroundColor: theme.palette.navigation.main,
+    color: theme.palette.navigation.contrastText,
+  },
+}));
+
 export const UnauthAppHeader: React.FC = () => {
+  const styles = useStyles();
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={styles.appbar}>
       <Grid.Default>
         <Toolbar disableGutters>
           <Logo />
@@ -27,8 +35,9 @@ interface AuthAppHeaderProps {
 export const AuthAppHeader: React.FC<AuthAppHeaderProps> = ({
   setDrawerOpen,
 }) => {
+  const styles = useStyles();
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={styles.appbar}>
       <Grid.Default>
         <Toolbar disableGutters>
           <Box clone ml={-1} mr={1}>

@@ -7,8 +7,10 @@ declare module '@material-ui/core/styles/createPalette' {
 
   interface PaletteOptions {
     action?: Partial<TypeAction>;
+    navigation?: PaletteColorOptions;
   }
 
   interface Palette {
+    navigation: PaletteColor;
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Fab, makeStyles } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import { requestRoute } from 'App/router/History';
 import { getBalanceColorClass } from 'Components/utility/Utils';
@@ -10,6 +10,10 @@ const useStyles = makeStyles({
     height: '30px',
     fontWeight: 'bold',
     color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '15px',
+    padding: '0px 10px',
   },
   low: {
     backgroundColor: '#43a047',
@@ -45,14 +49,12 @@ export const BalanceButton: React.FC = () => {
   const { cls } = getBalanceColorClass(user.balance);
   const balance = user.balance.toFixed(2);
   return (
-    <Fab
-      variant="extended"
-      size="small"
+    <Button
       className={styles[cls]}
-      classes={{ extended: styles.button }}
+      classes={{ root: styles.button }}
       onClick={onClick}
     >
       {balance} CHF
-    </Fab>
+    </Button>
   );
 };
