@@ -15,3 +15,11 @@ export const UNLIKE_POST = gql`
     }
   }
 `;
+
+export const DELETE_POST = gql`
+  mutation($postId: ID!) {
+    deletePost(postId: $postId) {
+      id
+    }
+  }
+`;

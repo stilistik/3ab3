@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { Icon, UserAvatar, LazyLoadingImage } from 'Components';
 import { LikePost } from './LikePost';
-import DeletePost from './DeletePost';
+import { DeletePost } from './DeletePost';
 import PostStats from './PostStats';
 import PostComments from './PostComments';
 import LinkValidator from './LinkValidator';
