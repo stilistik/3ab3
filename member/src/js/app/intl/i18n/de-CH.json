@@ -1,5 +1,10 @@
 {
   "translation": {
+    "Login": "Yloggä",
+    "Request Login Link": "Login Link verlangä",
+    "Go Back": "Zrügg",
+    "loginEmailSentText": "<0>Wenn dini Email Adrässe bi üs registriert isch, de bechunsch gli ä Login Link zuegschickt.</0><1>Check dini Mails!</1>",
+    "loginErrorText": "Öpis isch schief gloffe bir Authentifizierig. Probier ä nöie Login Link azfordere.",
     "Create Event": "Nöiä Event",
     "Event successfully created": "Dr event isch erfolgrich erstellt wordä",
     "More": "Meh",

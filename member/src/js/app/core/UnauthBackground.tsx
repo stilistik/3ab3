@@ -4,12 +4,6 @@ import { Box } from 'Components/index';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  container: {
-    position: 'relative',
-    height: '100vh',
-    overflow: 'hidden',
-    backgroundColor: '#f7f7f7',
-  },
   background: {
     position: 'absolute',
     top: '-5vh',

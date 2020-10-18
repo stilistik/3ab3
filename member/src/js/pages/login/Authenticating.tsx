@@ -6,12 +6,14 @@ import { setIsAuthenticated, useStore } from 'App/store';
 import { requestRoute, updateParams } from '../../app/router/History';
 import { Button } from '@material-ui/core';
 import { LoginPageLayout } from './LoginPageLayout';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const Authenticating: React.FC = () => {
   const [error, setError] = React.useState(false);
   const { dispatch } = useStore();
   const { token: emailToken } = getQueryParams();
-
+  const { t } = useTranslation();
+  
   React.useEffect(() => {
     requestToken(emailToken as string)
       .then(({ access_token }: { access_token: string }) => {
@@ -31,16 +33,16 @@ export const Authenticating: React.FC = () => {
       {error ? (
         <Box color="#f2f2f2" fontSize="16px">
           <AnimatedError />
-          <span>
+          <Trans i18nKey="loginErrorText">
             Something went wrong during the authentication. Try requesting
             another link.
-          </span>
+          </Trans>
           <Box.Row jc="center" mt={2}>
             <Button
               style={{ color: '#f2f2f2' }}
               onClick={() => requestRoute('/login')}
             >
-              Go Back
+              {t('Go Back')}
             </Button>
           </Box.Row>
         </Box>

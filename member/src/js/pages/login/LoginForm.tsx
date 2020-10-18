@@ -5,6 +5,7 @@ import { LoginHeader } from './LoginHeader';
 import { LoginPageLayout } from './LoginPageLayout';
 import { requestEmail } from 'Auth/requestEmail';
 import { requestRoute } from 'App/router/History';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   form: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 export const LoginForm = () => {
   const [loading, setLoading] = React.useState(false);
   const styles = useStyles();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: { email: string }) => {
     try {
@@ -41,7 +43,7 @@ export const LoginForm = () => {
       <Form className={styles.form} onSubmit={onSubmit}>
         <TextField
           id="email"
-          label="Email"
+          label={t('Email')}
           type="email"
           required={true}
           classes={{
@@ -57,7 +59,7 @@ export const LoginForm = () => {
           style={{ marginTop: 20 }}
         >
           <Icon type="mail" />
-          <Box ml={1}>Request Login Link</Box>
+          <Box ml={1}>{t('Request Login Link')}</Box>
         </Fab>
         {loading && (
           <Box mt={3}>

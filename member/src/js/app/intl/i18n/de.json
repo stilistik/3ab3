@@ -1,5 +1,10 @@
 {
   "translation": {
+    "Login": "Einloggen",
+    "Request Login Link": "Login Link verlangen",
+    "Go Back": "Zurück",
+    "loginEmailSentText": "<0>Wenn deine Email Adresse bei uns registriert ist, wirst du in Kürze einen Login Link erhalten.</0><1>Check deine Emails!</1>",
+    "loginErrorText": "Etwas ist schief gelaufen bei der Authentifizierung. Versuch einen neuen Login Link anzufordern.",
     "Create Event": "Neuer Event",
     "Event successfully created": "Der Event ist erfolgreich erstellt worden",
     "More": "Mehr",
