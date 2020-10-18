@@ -49,7 +49,9 @@ export const AuthAppHeader: React.FC<AuthAppHeaderProps> = ({
               <MenuIcon />
             </IconButton>
           </Box>
-          <Logo onClick={() => requestRoute('/home')} fg={1} />
+          <Box fg={1}>
+            <Logo onClick={() => requestRoute('/home')} />
+          </Box>
           <Box.Row cmrnl={1}>
             <BalanceButton />
             <MessengerLink />

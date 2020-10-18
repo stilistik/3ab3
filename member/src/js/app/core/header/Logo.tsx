@@ -4,10 +4,18 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   logo: {
+    width: '48px',
+    height: '48px',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingTop: '2px',
     cursor: 'pointer',
     fontSize: '13px',
     fontWeight: 900,
     fontFamily: 'Montserrat',
+    userSelect: 'none',
     '& h1': {
       margin: 0,
       lineHeight: '21px',
