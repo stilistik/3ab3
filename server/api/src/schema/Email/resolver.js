@@ -23,11 +23,13 @@ module.exports = {
       );
 
       users.forEach((user) => {
+        const langSlug = updatedUser.language.replace('-', '').toLowerCase();
+        const template = `payment_reminder_${langSlug}`;
         const data = {
           from: '3ab3 Member Admin <admin@3ab3.ch>',
           to: user.email,
           subject: 'Payment Reminder',
-          template: 'payment_reminder',
+          template: template,
           'v:username': user.name,
           'v:balance': user.balance,
           inline: logoPath,
