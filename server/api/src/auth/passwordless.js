@@ -51,11 +51,13 @@ const requestEmail = async (req, res) => {
       throw new Error('Could not update user with login token');
     }
 
+    const langSlug = updatedUser.language.replace('-', '').toLowerCase();
+    const template = `request_login_${langSlug}`;
     const data = {
       from: '3ab3 Member Admin <admin@3ab3.ch>',
       to: user.email,
       subject: 'Request Login',
-      template: 'request_login',
+      template: template,
       'v:username': user.name,
       'v:link': `${MEMBER_CLIENT_URL}/auth?token=${loginToken}`,
       inline: logoPath,

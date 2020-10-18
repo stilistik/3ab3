@@ -4,6 +4,7 @@ type User {
   name: String!
   phone: String
   birthdate: DateTime
+  language: String
   avatar: String
   purchases: [Purchase!]!
   payments: [Payment!]!
@@ -51,6 +52,7 @@ input EditSelfInput {
   phone: String
   birthdate: DateTime
   avatar: Upload
+  language: String
 }
 
 extend type Query {

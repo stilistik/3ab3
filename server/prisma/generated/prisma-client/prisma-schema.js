@@ -4048,6 +4048,7 @@ type User {
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment!]
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  language: String!
   balance: Float!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   likedPosts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
@@ -4081,6 +4082,7 @@ input UserCreateInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4178,6 +4180,7 @@ input UserCreateWithoutChatsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4204,6 +4207,7 @@ input UserCreateWithoutCommentsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4229,6 +4233,7 @@ input UserCreateWithoutItemsInput {
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4256,6 +4261,7 @@ input UserCreateWithoutLikedCommentsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4282,6 +4288,7 @@ input UserCreateWithoutLikedEventsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4308,6 +4315,7 @@ input UserCreateWithoutLikedPostsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedEvents: EventCreateManyWithoutLikedByInput
@@ -4334,6 +4342,7 @@ input UserCreateWithoutOwnChatsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4359,6 +4368,7 @@ input UserCreateWithoutPaymentsInput {
   purchases: PurchaseCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4386,6 +4396,7 @@ input UserCreateWithoutPostsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   likedPosts: PostCreateManyWithoutLikedByInput
   likedEvents: EventCreateManyWithoutLikedByInput
@@ -4411,6 +4422,7 @@ input UserCreateWithoutPurchasesInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4438,6 +4450,7 @@ input UserCreateWithoutSupportedEventsInput {
   payments: PaymentCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4463,6 +4476,7 @@ input UserCreateWithoutTransactionsInput {
   purchases: PurchaseCreateManyWithoutUserInput
   payments: PaymentCreateManyWithoutUserInput
   items: ItemCreateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostCreateManyWithoutAuthorInput
   likedPosts: PostCreateManyWithoutLikedByInput
@@ -4499,6 +4513,8 @@ enum UserOrderByInput {
   avatar_DESC
   loginToken_ASC
   loginToken_DESC
+  language_ASC
+  language_DESC
   balance_ASC
   balance_DESC
   isOnline_ASC
@@ -4518,6 +4534,7 @@ type UserPreviousValues {
   role: UserRole!
   avatar: String
   loginToken: String
+  language: String!
   balance: Float!
   isOnline: Boolean!
   lastOnline: DateTime
@@ -4627,6 +4644,20 @@ input UserScalarWhereInput {
   loginToken_not_starts_with: String
   loginToken_ends_with: String
   loginToken_not_ends_with: String
+  language: String
+  language_not: String
+  language_in: [String!]
+  language_not_in: [String!]
+  language_lt: String
+  language_lte: String
+  language_gt: String
+  language_gte: String
+  language_contains: String
+  language_not_contains: String
+  language_starts_with: String
+  language_not_starts_with: String
+  language_ends_with: String
+  language_not_ends_with: String
   balance: Float
   balance_not: Float
   balance_in: [Float!]
@@ -4682,6 +4713,7 @@ input UserUpdateDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -4708,6 +4740,7 @@ input UserUpdateInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -4730,6 +4763,7 @@ input UserUpdateManyDataInput {
   role: UserRole
   avatar: String
   loginToken: String
+  language: String
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
@@ -4756,6 +4790,7 @@ input UserUpdateManyMutationInput {
   role: UserRole
   avatar: String
   loginToken: String
+  language: String
   balance: Float
   isOnline: Boolean
   lastOnline: DateTime
@@ -4904,6 +4939,7 @@ input UserUpdateWithoutChatsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -4929,6 +4965,7 @@ input UserUpdateWithoutCommentsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -4953,6 +4990,7 @@ input UserUpdateWithoutItemsDataInput {
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -4979,6 +5017,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5004,6 +5043,7 @@ input UserUpdateWithoutLikedEventsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5029,6 +5069,7 @@ input UserUpdateWithoutLikedPostsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedEvents: EventUpdateManyWithoutLikedByInput
@@ -5054,6 +5095,7 @@ input UserUpdateWithoutOwnChatsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5078,6 +5120,7 @@ input UserUpdateWithoutPaymentsDataInput {
   purchases: PurchaseUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5104,6 +5147,7 @@ input UserUpdateWithoutPostsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   likedPosts: PostUpdateManyWithoutLikedByInput
   likedEvents: EventUpdateManyWithoutLikedByInput
@@ -5128,6 +5172,7 @@ input UserUpdateWithoutPurchasesDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5154,6 +5199,7 @@ input UserUpdateWithoutSupportedEventsDataInput {
   payments: PaymentUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5178,6 +5224,7 @@ input UserUpdateWithoutTransactionsDataInput {
   purchases: PurchaseUpdateManyWithoutUserInput
   payments: PaymentUpdateManyWithoutUserInput
   items: ItemUpdateManyWithoutUserInput
+  language: String
   balance: Float
   posts: PostUpdateManyWithoutAuthorInput
   likedPosts: PostUpdateManyWithoutLikedByInput
@@ -5407,6 +5454,20 @@ input UserWhereInput {
   items_every: ItemWhereInput
   items_some: ItemWhereInput
   items_none: ItemWhereInput
+  language: String
+  language_not: String
+  language_in: [String!]
+  language_not_in: [String!]
+  language_lt: String
+  language_lte: String
+  language_gt: String
+  language_gte: String
+  language_contains: String
+  language_not_contains: String
+  language_starts_with: String
+  language_not_starts_with: String
+  language_ends_with: String
+  language_not_ends_with: String
   balance: Float
   balance_not: Float
   balance_in: [Float!]

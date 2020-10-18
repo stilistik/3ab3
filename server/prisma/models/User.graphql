@@ -11,6 +11,7 @@ type User {
   payments: [Payment!]!
   transactions: [Transaction!]!
   items: [Item!]!
+  language: String! @default(value: "de-CH")
   balance: Float! @default(value: 0)
   posts: [Post!]! @relation(name: "PostAuthor", onDelete: CASCADE)
   likedPosts: [Post!]! @relation(name: "LikedPosts")

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Language, useLanguage } from 'App/intl';
-import { Box } from 'Components/index';
+import { Box, Message } from 'Components/index';
 import { MenuItem, Select, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useMutation } from 'react-apollo';
+import { EDIT_SELF } from 'Graphql/mutations';
 
 export const LanguageSelect: React.FC = () => {
+  const [editSelf] = useMutation(EDIT_SELF);
   const { language, changeLanguage } = useLanguage();
   const { t } = useTranslation();
 
@@ -14,7 +17,13 @@ export const LanguageSelect: React.FC = () => {
       value: Language;
     }>
   ) => {
-    changeLanguage(e.target.value);
+    const language = e.target.value;
+    changeLanguage(language);
+    editSelf({
+      variables: {
+        input: { language },
+      },
+    }).catch((error) => Message.error(error.message));
   };
 
   return (

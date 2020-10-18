@@ -681,6 +681,8 @@ export type UserOrderByInput =
   | "avatar_DESC"
   | "loginToken_ASC"
   | "loginToken_DESC"
+  | "language_ASC"
+  | "language_DESC"
   | "balance_ASC"
   | "balance_DESC"
   | "isOnline_ASC"
@@ -1058,6 +1060,20 @@ export interface UserWhereInput {
   items_every?: Maybe<ItemWhereInput>;
   items_some?: Maybe<ItemWhereInput>;
   items_none?: Maybe<ItemWhereInput>;
+  language?: Maybe<String>;
+  language_not?: Maybe<String>;
+  language_in?: Maybe<String[] | String>;
+  language_not_in?: Maybe<String[] | String>;
+  language_lt?: Maybe<String>;
+  language_lte?: Maybe<String>;
+  language_gt?: Maybe<String>;
+  language_gte?: Maybe<String>;
+  language_contains?: Maybe<String>;
+  language_not_contains?: Maybe<String>;
+  language_starts_with?: Maybe<String>;
+  language_not_starts_with?: Maybe<String>;
+  language_ends_with?: Maybe<String>;
+  language_not_ends_with?: Maybe<String>;
   balance?: Maybe<Float>;
   balance_not?: Maybe<Float>;
   balance_in?: Maybe<Float[] | Float>;
@@ -1888,6 +1904,7 @@ export interface UserCreateWithoutOwnChatsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -1960,6 +1977,7 @@ export interface UserCreateWithoutItemsInput {
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2020,6 +2038,7 @@ export interface UserCreateWithoutTransactionsInput {
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2081,6 +2100,7 @@ export interface UserCreateWithoutLikedPostsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedEvents?: Maybe<EventCreateManyWithoutLikedByInput>;
@@ -2140,6 +2160,7 @@ export interface UserCreateWithoutPaymentsInput {
   purchases?: Maybe<PurchaseCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2189,6 +2210,7 @@ export interface UserCreateWithoutPostsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
   likedEvents?: Maybe<EventCreateManyWithoutLikedByInput>;
@@ -2243,6 +2265,7 @@ export interface UserCreateInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2300,6 +2323,7 @@ export interface UserCreateWithoutLikedEventsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2350,6 +2374,7 @@ export interface UserCreateWithoutLikedCommentsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2397,6 +2422,7 @@ export interface UserCreateWithoutChatsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2445,6 +2471,7 @@ export interface UserCreateWithoutCommentsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2551,6 +2578,7 @@ export interface UserCreateWithoutSupportedEventsInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2644,6 +2672,7 @@ export interface UserCreateWithoutPurchasesInput {
   payments?: Maybe<PaymentCreateManyWithoutUserInput>;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostCreateManyWithoutLikedByInput>;
@@ -2700,6 +2729,7 @@ export interface UserUpdateWithoutOwnChatsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -2818,6 +2848,7 @@ export interface UserUpdateWithoutItemsDataInput {
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -2900,6 +2931,7 @@ export interface UserUpdateWithoutTransactionsDataInput {
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3070,6 +3102,7 @@ export interface UserUpdateWithoutLikedPostsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedEvents?: Maybe<EventUpdateManyWithoutLikedByInput>;
@@ -3157,6 +3190,7 @@ export interface UserUpdateWithoutPaymentsDataInput {
   purchases?: Maybe<PurchaseUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3226,6 +3260,7 @@ export interface UserUpdateWithoutPostsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
   likedEvents?: Maybe<EventUpdateManyWithoutLikedByInput>;
@@ -3318,6 +3353,7 @@ export interface UserUpdateDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3413,6 +3449,7 @@ export interface UserUpdateWithoutLikedEventsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3502,6 +3539,7 @@ export interface UserUpdateWithoutLikedCommentsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3587,6 +3625,7 @@ export interface UserUpdateWithoutChatsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3656,6 +3695,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -3967,6 +4007,7 @@ export interface UserUpdateWithoutSupportedEventsDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -4083,6 +4124,20 @@ export interface UserScalarWhereInput {
   loginToken_not_starts_with?: Maybe<String>;
   loginToken_ends_with?: Maybe<String>;
   loginToken_not_ends_with?: Maybe<String>;
+  language?: Maybe<String>;
+  language_not?: Maybe<String>;
+  language_in?: Maybe<String[] | String>;
+  language_not_in?: Maybe<String[] | String>;
+  language_lt?: Maybe<String>;
+  language_lte?: Maybe<String>;
+  language_gt?: Maybe<String>;
+  language_gte?: Maybe<String>;
+  language_contains?: Maybe<String>;
+  language_not_contains?: Maybe<String>;
+  language_starts_with?: Maybe<String>;
+  language_not_starts_with?: Maybe<String>;
+  language_ends_with?: Maybe<String>;
+  language_not_ends_with?: Maybe<String>;
   balance?: Maybe<Float>;
   balance_not?: Maybe<Float>;
   balance_in?: Maybe<Float[] | Float>;
@@ -4121,6 +4176,7 @@ export interface UserUpdateManyDataInput {
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
@@ -4720,6 +4776,7 @@ export interface UserUpdateWithoutPurchasesDataInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -5369,6 +5426,7 @@ export interface UserUpdateInput {
   payments?: Maybe<PaymentUpdateManyWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
   likedPosts?: Maybe<PostUpdateManyWithoutLikedByInput>;
@@ -5391,6 +5449,7 @@ export interface UserUpdateManyMutationInput {
   role?: Maybe<UserRole>;
   avatar?: Maybe<String>;
   loginToken?: Maybe<String>;
+  language?: Maybe<String>;
   balance?: Maybe<Float>;
   isOnline?: Maybe<Boolean>;
   lastOnline?: Maybe<DateTimeInput>;
@@ -5663,6 +5722,7 @@ export interface User {
   role: UserRole;
   avatar?: String;
   loginToken?: String;
+  language: String;
   balance: Float;
   isOnline: Boolean;
   lastOnline?: DateTimeOutput;
@@ -5714,6 +5774,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  language: () => Promise<String>;
   balance: () => Promise<Float>;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
@@ -5839,6 +5900,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  language: () => Promise<AsyncIterator<String>>;
   balance: () => Promise<AsyncIterator<Float>>;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
     where?: PostWhereInput;
@@ -5964,6 +6026,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  language: () => Promise<String>;
   balance: () => Promise<Float>;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
@@ -8300,6 +8363,7 @@ export interface UserPreviousValues {
   role: UserRole;
   avatar?: String;
   loginToken?: String;
+  language: String;
   balance: Float;
   isOnline: Boolean;
   lastOnline?: DateTimeOutput;
@@ -8317,6 +8381,7 @@ export interface UserPreviousValuesPromise
   role: () => Promise<UserRole>;
   avatar: () => Promise<String>;
   loginToken: () => Promise<String>;
+  language: () => Promise<String>;
   balance: () => Promise<Float>;
   isOnline: () => Promise<Boolean>;
   lastOnline: () => Promise<DateTimeOutput>;
@@ -8334,6 +8399,7 @@ export interface UserPreviousValuesSubscription
   role: () => Promise<AsyncIterator<UserRole>>;
   avatar: () => Promise<AsyncIterator<String>>;
   loginToken: () => Promise<AsyncIterator<String>>;
+  language: () => Promise<AsyncIterator<String>>;
   balance: () => Promise<AsyncIterator<Float>>;
   isOnline: () => Promise<AsyncIterator<Boolean>>;
   lastOnline: () => Promise<AsyncIterator<DateTimeOutput>>;
