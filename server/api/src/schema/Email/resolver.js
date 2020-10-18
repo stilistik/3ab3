@@ -23,7 +23,7 @@ module.exports = {
       );
 
       users.forEach((user) => {
-        const langSlug = updatedUser.language.replace('-', '').toLowerCase();
+        const langSlug = user.language.replace('-', '').toLowerCase();
         const template = `payment_reminder_${langSlug}`;
         const data = {
           from: '3ab3 Member Admin <admin@3ab3.ch>',
