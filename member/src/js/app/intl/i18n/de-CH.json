@@ -104,6 +104,8 @@
     "Chats": "Tschätts",
     "Search chat": "Tschätt sueche",
     "Language": "Sprach",
-    "Dark Mode": "Dunku Modus"
+    "Dark Mode": "Dunku Modus",
+    "deleteConfirmPopoverText": "Wosch ds wük löschä?",
+    "Delete": "Löschä"
   }
 }

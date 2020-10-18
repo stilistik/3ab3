@@ -104,6 +104,8 @@
     "Chats": "Chats",
     "Search chat": "Chat suchen",
     "Language": "Sprache",
-    "Dark Mode": "Dunkel Modus"
+    "Dark Mode": "Dunkel Modus",
+    "deleteConfirmPopoverText": "Willst du das wirklich löschen?",
+    "Delete": "Löschen"
   }
 }
