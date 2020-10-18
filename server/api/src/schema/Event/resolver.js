@@ -97,7 +97,13 @@ module.exports = {
         data: updateValues,
       });
     },
-    addCommitteeMembers(root, args, context) {
+    async addCommitteeMembers(root, args, context) {
+      const canModify = await canUserModifyEvent(args, context);
+
+      if (!canModify) {
+        throw new Error('User is unauthorized to modify event.');
+      }
+
       return context.prisma.updateEvent({
         where: { id: args.eventId },
         data: {
@@ -107,7 +113,13 @@ module.exports = {
         },
       });
     },
-    removeCommitteeMember(root, args, context) {
+    async removeCommitteeMember(root, args, context) {
+      const canModify = await canUserModifyEvent(args, context);
+
+      if (!canModify) {
+        throw new Error('User is unauthorized to modify event.');
+      }
+
       return context.prisma.updateEvent({
         where: { id: args.eventId },
         data: {
@@ -192,14 +204,6 @@ module.exports = {
           supporters: {
             disconnect: { id: args.userId },
           },
-        },
-      });
-    },
-    publishEvent(root, args, context) {
-      return context.prisma.updateEvent({
-        where: { id: args.eventId },
-        data: {
-          published: true,
         },
       });
     },
