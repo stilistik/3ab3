@@ -1,12 +1,62 @@
 import React from 'react';
-import { Button, Input, IconButton } from '@material-ui/core';
+import { Button, Input, IconButton, makeStyles } from '@material-ui/core';
 import { Icon } from 'Components';
 import { useEmojiContext } from './EmojiContext';
 import { List } from 'react-virtualized';
 
-import styles from './EmojiPicker.less';
+const useStyles = makeStyles((theme) => ({
+  container: {
+    width: '100%',
+    maxHeight: '300px',
+    padding: theme.spacing(1),
+  },
+  picker: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    marginBottom: '10px',
+    borderRadius: '10px',
+    background: theme.palette.action.default,
+  },
+  list: {
+    width: '100%',
+  },
+  row: {
+    display: 'flex',
+  },
+  emoji: {
+    minWidth: '10px',
+    minHeight: '10px',
+    height: '45px',
+    width: '55px',
+    fontSize: '30px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    padding: '7px',
+    lineHeight: '30px',
+  },
+  search: {
+    display: 'flex',
+    width: '100%',
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    padding: '10px 20px',
+  },
+  searchInput: {
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '10px',
+    background: theme.palette.action.default,
+    padding: '5px 10px',
+    flexGrow: '100',
+    marginRight: '5px',
+    '&:hover': {
+      background: theme.palette.action.hover,
+    },
+  },
+}));
 
 const Emoji = ({ emoji, onClick }) => {
+  const styles = useStyles();
   if (!emoji.code_points) return null;
   const codepoint = '0x' + emoji.code_points.base;
   const unicode = parseInt(codepoint, 16);
@@ -23,6 +73,7 @@ const Emoji = ({ emoji, onClick }) => {
 };
 
 const EmojiList = ({ emojis, handleSelect }) => {
+  const styles = useStyles();
   const container = React.createRef();
   const [width, setWidth] = React.useState(0);
   const [count, setCount] = React.useState(10);
@@ -92,6 +143,7 @@ const EmojiList = ({ emojis, handleSelect }) => {
 };
 
 const EmojiSearch = ({ value, onChange, handleClose }) => {
+  const styles = useStyles();
   return (
     <div className={styles.search}>
       <Input
@@ -109,6 +161,7 @@ const EmojiSearch = ({ value, onChange, handleClose }) => {
 };
 
 export const EmojiPicker = ({ handleSelect, handleClose }) => {
+  const styles = useStyles();
   const { list, searchable } = useEmojiContext();
   const [value, setValue] = React.useState('');
 
@@ -148,13 +201,15 @@ export const EmojiPicker = ({ handleSelect, handleClose }) => {
   const onChange = (e) => setValue(e.target.value);
 
   return (
-    <div className={styles.picker}>
-      <EmojiSearch
-        value={value}
-        onChange={onChange}
-        handleClose={handleClose}
-      />
-      <EmojiList emojis={emojis} handleSelect={handleSelect} />
+    <div className={styles.container}>
+      <div className={styles.picker}>
+        <EmojiSearch
+          value={value}
+          onChange={onChange}
+          handleClose={handleClose}
+        />
+        <EmojiList emojis={emojis} handleSelect={handleSelect} />
+      </div>
     </div>
   );
 };
