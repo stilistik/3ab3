@@ -19,10 +19,6 @@ const useStyles = makeStyles({
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundImage: `url(drawer.jpg)`,
-    zIndex: -1,
-  },
-  grid: {
-    margintTop: '10vh',
   },
 });
 
