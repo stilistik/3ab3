@@ -7,8 +7,10 @@ import { List } from 'react-virtualized';
 const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
-    maxHeight: '300px',
+    maxHeight: '350px',
     padding: theme.spacing(1),
+    overflow: 'hidden',
+
   },
   picker: {
     width: '100%',
