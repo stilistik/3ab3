@@ -4,6 +4,8 @@ import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import { MenuItem } from './MenuItem';
 import { requestRoute } from 'App/router/History';
 import { useTranslation } from 'react-i18next';
+import { useCurrentUser } from 'Components/index';
+import { UserRole } from 'Graphql/types';
 
 // preload image
 const image = new Image();
@@ -31,12 +33,16 @@ export const AppMenu: React.FC<AppMenuProps> = ({
   setDrawerOpen,
 }) => {
   const styles = useStyles();
+  const user = useCurrentUser();
   const { t } = useTranslation();
 
   const onClick = (route: string) => {
     setDrawerOpen(false);
     requestRoute(route);
   };
+
+  const hasAccess =
+    user.role === UserRole.Admin || user.role === UserRole.Super;
 
   const createMenuItems = () => {
     return (
@@ -53,29 +59,33 @@ export const AppMenu: React.FC<AppMenuProps> = ({
             onClick={() => onClick('/events')}
           />
         </List>
-        <Divider className={styles.divider} />
-        <List>
-          <MenuItem
-            text={t('Dashboard')}
-            icon="dashboard"
-            onClick={() => onClick('/dashboard')}
-          />
-          <MenuItem
-            text={t('Checklist')}
-            icon="shoppingCart"
-            onClick={() => onClick('/checklist')}
-          />
-          <MenuItem
-            text={t('Members')}
-            icon="group"
-            onClick={() => onClick('/members')}
-          />
-          <MenuItem
-            text={t('Products')}
-            icon="localBar"
-            onClick={() => onClick('/products')}
-          />
-        </List>
+        {hasAccess && (
+          <React.Fragment>
+            <Divider className={styles.divider} />
+            <List>
+              <MenuItem
+                text={t('Dashboard')}
+                icon="dashboard"
+                onClick={() => onClick('/dashboard')}
+              />
+              <MenuItem
+                text={t('Checklist')}
+                icon="shoppingCart"
+                onClick={() => onClick('/checklist')}
+              />
+              <MenuItem
+                text={t('Members')}
+                icon="group"
+                onClick={() => onClick('/members')}
+              />
+              <MenuItem
+                text={t('Products')}
+                icon="localBar"
+                onClick={() => onClick('/products')}
+              />
+            </List>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   };
