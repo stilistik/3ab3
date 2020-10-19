@@ -1,5 +1,5 @@
 const { verifyAndDecodeToken } = require('../../auth/verify');
-const { uploadFile } = require('../../helper/file.helper');
+const { uploadFile, createPdfThumbnail } = require('../../helper/file.helper');
 
 module.exports = {
   Query: {
@@ -10,12 +10,15 @@ module.exports = {
   Mutation: {
     async uploadDocument(root, args, context) {
       const { id } = verifyAndDecodeToken(context);
-      const file = await uploadFile(args.file, context);
+
+      const file = await uploadFile(args.input.file, context);
+      const thumbnailFile = await createPdfThumbnail(args.input.file, context);
 
       return context.prisma.createDocument({
-        name: file.name,
+        name: file.filename,
         owner: { connect: { id } },
         file: { connect: { id: file.id } },
+        thumbnail: thumbnailFile.uri,
       });
     },
     editDocument(root, args, context) {
@@ -25,5 +28,9 @@ module.exports = {
       });
     },
   },
-  File: {},
+  Document: {
+    file(root, args, context) {
+      return context.prisma.document({ id: root.id }).file();
+    },
+  },
 };

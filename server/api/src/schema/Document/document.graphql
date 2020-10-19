@@ -4,6 +4,7 @@ type Document {
   name: String!
   createdAt: DateTime!
   owner: User!
+  thumbnail: String
 }
 
 input UploadDocumentInput {

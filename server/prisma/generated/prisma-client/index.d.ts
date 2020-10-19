@@ -810,6 +810,8 @@ export type DocumentOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "thumbnail_ASC"
+  | "thumbnail_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
 
@@ -1784,6 +1786,20 @@ export interface DocumentWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  thumbnail?: Maybe<String>;
+  thumbnail_not?: Maybe<String>;
+  thumbnail_in?: Maybe<String[] | String>;
+  thumbnail_not_in?: Maybe<String[] | String>;
+  thumbnail_lt?: Maybe<String>;
+  thumbnail_lte?: Maybe<String>;
+  thumbnail_gt?: Maybe<String>;
+  thumbnail_gte?: Maybe<String>;
+  thumbnail_contains?: Maybe<String>;
+  thumbnail_not_contains?: Maybe<String>;
+  thumbnail_starts_with?: Maybe<String>;
+  thumbnail_not_starts_with?: Maybe<String>;
+  thumbnail_ends_with?: Maybe<String>;
+  thumbnail_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -5178,6 +5194,7 @@ export interface DocumentCreateInput {
   file: FileCreateOneInput;
   owner: UserCreateOneInput;
   name: String;
+  thumbnail?: Maybe<String>;
 }
 
 export interface FileCreateOneInput {
@@ -5200,6 +5217,7 @@ export interface DocumentUpdateInput {
   file?: Maybe<FileUpdateOneRequiredInput>;
   owner?: Maybe<UserUpdateOneRequiredInput>;
   name?: Maybe<String>;
+  thumbnail?: Maybe<String>;
 }
 
 export interface FileUpdateOneRequiredInput {
@@ -5226,6 +5244,7 @@ export interface FileUpsertNestedInput {
 
 export interface DocumentUpdateManyMutationInput {
   name?: Maybe<String>;
+  thumbnail?: Maybe<String>;
 }
 
 export interface EventCreateInput {
@@ -7131,6 +7150,7 @@ export interface AggregateCommentSubscription
 export interface Document {
   id: ID_Output;
   name: String;
+  thumbnail?: String;
   createdAt: DateTimeOutput;
 }
 
@@ -7139,6 +7159,7 @@ export interface DocumentPromise extends Promise<Document>, Fragmentable {
   file: <T = FilePromise>() => T;
   owner: <T = UserPromise>() => T;
   name: () => Promise<String>;
+  thumbnail: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
 }
 
@@ -7149,6 +7170,7 @@ export interface DocumentSubscription
   file: <T = FileSubscription>() => T;
   owner: <T = UserSubscription>() => T;
   name: () => Promise<AsyncIterator<String>>;
+  thumbnail: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
@@ -7159,6 +7181,7 @@ export interface DocumentNullablePromise
   file: <T = FilePromise>() => T;
   owner: <T = UserPromise>() => T;
   name: () => Promise<String>;
+  thumbnail: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
 }
 
@@ -8065,6 +8088,7 @@ export interface DocumentSubscriptionPayloadSubscription
 export interface DocumentPreviousValues {
   id: ID_Output;
   name: String;
+  thumbnail?: String;
   createdAt: DateTimeOutput;
 }
 
@@ -8073,6 +8097,7 @@ export interface DocumentPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  thumbnail: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
 }
 
@@ -8081,6 +8106,7 @@ export interface DocumentPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  thumbnail: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 

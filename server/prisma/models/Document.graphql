@@ -3,5 +3,6 @@ type Document {
   file: File! @relation(name: "DocumentFile")
   owner: User! @relation(name: "DocumentOwner")
   name: String!
+  thumbnail: String
   createdAt: DateTime! @createdAt
 }

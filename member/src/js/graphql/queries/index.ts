@@ -6,3 +6,4 @@ export * from './ProductQueries';
 export * from './MessengerQueries';
 export * from './TodoQueries';
 export * from './CommentQueries';
+export * from './DocumentQueries';

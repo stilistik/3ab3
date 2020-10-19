@@ -2,6 +2,7 @@ import React from 'react';
 
 import LoadingIcon from './LoadingIcon';
 
+import DescriptionIcon from '@material-ui/icons/Description';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MailIcon from '@material-ui/icons/Mail';
@@ -125,6 +126,7 @@ const muiIconTypes = {
   createFolder: CreateNewFolderIcon,
   dashboard: DashboardIcon,
   delete: DeleteIcon,
+  description: DescriptionIcon,
   done: DoneIcon,
   down: ExpandMoreIcon,
   download: CloudDownloadIcon,

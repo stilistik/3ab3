@@ -12,6 +12,7 @@ import Profile from 'Pages/profile';
 import { AllEvents, SingleEvent } from 'Pages/events';
 import { ProductList } from 'Pages/products';
 import { MemberList } from 'Pages/members';
+import { Documents } from 'Pages/documents';
 
 export const UnauthenticatedRoutes: React.FC = () => {
   return (
@@ -73,6 +74,9 @@ export const AuthenticatedRoutes: React.FC = () => {
       </Route>
       <Route path="/messenger">
         <Messenger />
+      </Route>
+      <Route path="/documents">
+        <Documents />
       </Route>
 
       {/* Nothing matched, redirect to home */}

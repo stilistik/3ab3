@@ -94,9 +94,22 @@ export type Connection = {
 
 
 
+export type Document = {
+  __typename?: 'Document';
+  id: Scalars['ID'];
+  file: File;
+  name: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  owner: User;
+};
+
 export type Edge = {
   cursor: Scalars['String'];
   node?: Maybe<Node>;
+};
+
+export type EditDocumentInput = {
+  name?: Maybe<Scalars['String']>;
 };
 
 export type EditSelfInput = {
@@ -104,6 +117,8 @@ export type EditSelfInput = {
   email?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   birthdate?: Maybe<Scalars['DateTime']>;
+  avatar?: Maybe<Scalars['Upload']>;
+  language?: Maybe<Scalars['String']>;
 };
 
 export type EmailInput = {
@@ -138,9 +153,10 @@ export type EventEdge = Edge & {
 };
 
 export type EventInput = {
-  title: Scalars['String'];
-  description: Scalars['String'];
-  date: Scalars['DateTime'];
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['DateTime']>;
+  place?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['Upload']>;
   flyer?: Maybe<Scalars['Upload']>;
 };
@@ -225,13 +241,16 @@ export type Mutation = {
   deletePayment: Payment;
   verifyPayment: Payment;
   createEvent: Event;
-  deleteEvent: Event;
+  editEvent: Event;
+  addCommitteeMembers: Event;
+  removeCommitteeMember: Event;
   likeEvent: Event;
   unlikeEvent: Event;
   commentEvent: Event;
   supportEvent: Event;
   unsupportEvent: Event;
-  publishEvent: Event;
+  deleteEvent: Event;
+  setEventPublished: Event;
   uploadFile: File;
   deleteFile: File;
   sendEmail: Scalars['Boolean'];
@@ -253,6 +272,8 @@ export type Mutation = {
   createMessage: Message;
   createChat: Chat;
   userLastSeen: Chat;
+  uploadDocument: Document;
+  editDocument: Document;
 };
 
 
@@ -334,8 +355,21 @@ export type MutationCreateEventArgs = {
 };
 
 
-export type MutationDeleteEventArgs = {
+export type MutationEditEventArgs = {
   eventId: Scalars['ID'];
+  input: EventInput;
+};
+
+
+export type MutationAddCommitteeMembersArgs = {
+  eventId?: Maybe<Scalars['ID']>;
+  memberIds: Array<Scalars['ID']>;
+};
+
+
+export type MutationRemoveCommitteeMemberArgs = {
+  eventId?: Maybe<Scalars['ID']>;
+  memberId: Scalars['ID'];
 };
 
 
@@ -370,8 +404,14 @@ export type MutationUnsupportEventArgs = {
 };
 
 
-export type MutationPublishEventArgs = {
+export type MutationDeleteEventArgs = {
   eventId: Scalars['ID'];
+};
+
+
+export type MutationSetEventPublishedArgs = {
+  eventId?: Maybe<Scalars['ID']>;
+  published: Scalars['Boolean'];
 };
 
 
@@ -485,6 +525,17 @@ export type MutationCreateChatArgs = {
 export type MutationUserLastSeenArgs = {
   userId: Scalars['ID'];
   chatId: Scalars['ID'];
+};
+
+
+export type MutationUploadDocumentArgs = {
+  input: UploadDocumentInput;
+};
+
+
+export type MutationEditDocumentArgs = {
+  documentId: Scalars['ID'];
+  input: EditDocumentInput;
 };
 
 export enum MutationType {
@@ -645,6 +696,7 @@ export type Query = {
   messages: MessageConnection;
   chats: ChatsConnection;
   unreadMessagesCount: Scalars['Int'];
+  documents: Array<Document>;
 };
 
 
@@ -869,6 +921,10 @@ export enum TransactionType {
 }
 
 
+export type UploadDocumentInput = {
+  file: Scalars['Upload'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
@@ -876,6 +932,7 @@ export type User = {
   name: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   birthdate?: Maybe<Scalars['DateTime']>;
+  language?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
   purchases: Array<Purchase>;
   payments: Array<Payment>;

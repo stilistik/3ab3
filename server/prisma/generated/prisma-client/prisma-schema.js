@@ -925,6 +925,7 @@ type Document {
   file: File!
   owner: User!
   name: String!
+  thumbnail: String
   createdAt: DateTime!
 }
 
@@ -939,6 +940,7 @@ input DocumentCreateInput {
   file: FileCreateOneInput!
   owner: UserCreateOneInput!
   name: String!
+  thumbnail: String
 }
 
 type DocumentEdge {
@@ -951,6 +953,8 @@ enum DocumentOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  thumbnail_ASC
+  thumbnail_DESC
   createdAt_ASC
   createdAt_DESC
 }
@@ -958,6 +962,7 @@ enum DocumentOrderByInput {
 type DocumentPreviousValues {
   id: ID!
   name: String!
+  thumbnail: String
   createdAt: DateTime!
 }
 
@@ -983,10 +988,12 @@ input DocumentUpdateInput {
   file: FileUpdateOneRequiredInput
   owner: UserUpdateOneRequiredInput
   name: String
+  thumbnail: String
 }
 
 input DocumentUpdateManyMutationInput {
   name: String
+  thumbnail: String
 }
 
 input DocumentWhereInput {
@@ -1020,6 +1027,20 @@ input DocumentWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  thumbnail: String
+  thumbnail_not: String
+  thumbnail_in: [String!]
+  thumbnail_not_in: [String!]
+  thumbnail_lt: String
+  thumbnail_lte: String
+  thumbnail_gt: String
+  thumbnail_gte: String
+  thumbnail_contains: String
+  thumbnail_not_contains: String
+  thumbnail_starts_with: String
+  thumbnail_not_starts_with: String
+  thumbnail_ends_with: String
+  thumbnail_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
