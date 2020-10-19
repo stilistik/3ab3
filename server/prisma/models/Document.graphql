@@ -1,0 +1,7 @@
+type Document {
+  id: ID! @unique @id
+  file: File! @relation(name: "DocumentFile")
+  owner: User! @relation(name: "DocumentOwner")
+  name: String!
+  createdAt: DateTime! @createdAt
+}

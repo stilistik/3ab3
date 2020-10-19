@@ -1,0 +1,24 @@
+type Document {
+  id: ID!
+  file: File!
+  name: String!
+  createdAt: DateTime!
+  owner: User!
+}
+
+input UploadDocumentInput {
+  file: Upload!
+}
+
+input EditDocumentInput {
+  name: String
+}
+
+extend type Query {
+  documents: [Document!]!
+}
+
+extend type Mutation {
+  uploadDocument(input: UploadDocumentInput!): Document!
+  editDocument(documentId: ID!, input: EditDocumentInput!): Document!
+}

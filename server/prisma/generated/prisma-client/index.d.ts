@@ -19,6 +19,7 @@ export interface Exists {
   chat: (where?: ChatWhereInput) => Promise<boolean>;
   client: (where?: ClientWhereInput) => Promise<boolean>;
   comment: (where?: CommentWhereInput) => Promise<boolean>;
+  document: (where?: DocumentWhereInput) => Promise<boolean>;
   event: (where?: EventWhereInput) => Promise<boolean>;
   file: (where?: FileWhereInput) => Promise<boolean>;
   item: (where?: ItemWhereInput) => Promise<boolean>;
@@ -108,6 +109,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CommentConnectionPromise;
+  document: (where: DocumentWhereUniqueInput) => DocumentNullablePromise;
+  documents: (args?: {
+    where?: DocumentWhereInput;
+    orderBy?: DocumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Document>;
+  documentsConnection: (args?: {
+    where?: DocumentWhereInput;
+    orderBy?: DocumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => DocumentConnectionPromise;
   event: (where: EventWhereUniqueInput) => EventNullablePromise;
   events: (args?: {
     where?: EventWhereInput;
@@ -373,6 +393,22 @@ export interface Prisma {
   }) => CommentPromise;
   deleteComment: (where: CommentWhereUniqueInput) => CommentPromise;
   deleteManyComments: (where?: CommentWhereInput) => BatchPayloadPromise;
+  createDocument: (data: DocumentCreateInput) => DocumentPromise;
+  updateDocument: (args: {
+    data: DocumentUpdateInput;
+    where: DocumentWhereUniqueInput;
+  }) => DocumentPromise;
+  updateManyDocuments: (args: {
+    data: DocumentUpdateManyMutationInput;
+    where?: DocumentWhereInput;
+  }) => BatchPayloadPromise;
+  upsertDocument: (args: {
+    where: DocumentWhereUniqueInput;
+    create: DocumentCreateInput;
+    update: DocumentUpdateInput;
+  }) => DocumentPromise;
+  deleteDocument: (where: DocumentWhereUniqueInput) => DocumentPromise;
+  deleteManyDocuments: (where?: DocumentWhereInput) => BatchPayloadPromise;
   createEvent: (data: EventCreateInput) => EventPromise;
   updateEvent: (args: {
     data: EventUpdateInput;
@@ -569,6 +605,9 @@ export interface Subscription {
   comment: (
     where?: CommentSubscriptionWhereInput
   ) => CommentSubscriptionPayloadSubscription;
+  document: (
+    where?: DocumentSubscriptionWhereInput
+  ) => DocumentSubscriptionPayloadSubscription;
   event: (
     where?: EventSubscriptionWhereInput
   ) => EventSubscriptionPayloadSubscription;
@@ -765,6 +804,14 @@ export type ClientOrderByInput =
   | "name_DESC"
   | "trusted_ASC"
   | "trusted_DESC";
+
+export type DocumentOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type FileOrderByInput =
   | "id_ASC"
@@ -1702,16 +1749,53 @@ export type CommentWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type EventWhereUniqueInput = AtLeastOne<{
+export type DocumentWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type FileWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  fileId?: Maybe<String>;
-  hash?: Maybe<String>;
-  uri?: Maybe<String>;
-}>;
+export interface DocumentWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  file?: Maybe<FileWhereInput>;
+  owner?: Maybe<UserWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<DocumentWhereInput[] | DocumentWhereInput>;
+  OR?: Maybe<DocumentWhereInput[] | DocumentWhereInput>;
+  NOT?: Maybe<DocumentWhereInput[] | DocumentWhereInput>;
+}
 
 export interface FileWhereInput {
   id?: Maybe<ID_Input>;
@@ -1838,6 +1922,17 @@ export interface FileWhereInput {
   OR?: Maybe<FileWhereInput[] | FileWhereInput>;
   NOT?: Maybe<FileWhereInput[] | FileWhereInput>;
 }
+
+export type EventWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type FileWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  fileId?: Maybe<String>;
+  hash?: Maybe<String>;
+  uri?: Maybe<String>;
+}>;
 
 export type ItemWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -5078,6 +5173,61 @@ export interface CommentUpdateManyMutationInput {
   date?: Maybe<DateTimeInput>;
 }
 
+export interface DocumentCreateInput {
+  id?: Maybe<ID_Input>;
+  file: FileCreateOneInput;
+  owner: UserCreateOneInput;
+  name: String;
+}
+
+export interface FileCreateOneInput {
+  create?: Maybe<FileCreateInput>;
+  connect?: Maybe<FileWhereUniqueInput>;
+}
+
+export interface FileCreateInput {
+  id?: Maybe<ID_Input>;
+  fileId: String;
+  hash: String;
+  uri: String;
+  filename: String;
+  path: String;
+  mimetype: String;
+  extension: String;
+}
+
+export interface DocumentUpdateInput {
+  file?: Maybe<FileUpdateOneRequiredInput>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+  name?: Maybe<String>;
+}
+
+export interface FileUpdateOneRequiredInput {
+  create?: Maybe<FileCreateInput>;
+  update?: Maybe<FileUpdateDataInput>;
+  upsert?: Maybe<FileUpsertNestedInput>;
+  connect?: Maybe<FileWhereUniqueInput>;
+}
+
+export interface FileUpdateDataInput {
+  fileId?: Maybe<String>;
+  hash?: Maybe<String>;
+  uri?: Maybe<String>;
+  filename?: Maybe<String>;
+  path?: Maybe<String>;
+  mimetype?: Maybe<String>;
+  extension?: Maybe<String>;
+}
+
+export interface FileUpsertNestedInput {
+  update: FileUpdateDataInput;
+  create: FileCreateInput;
+}
+
+export interface DocumentUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
 export interface EventCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
@@ -5119,17 +5269,6 @@ export interface EventUpdateManyMutationInput {
   image?: Maybe<String>;
   flyer?: Maybe<String>;
   published?: Maybe<Boolean>;
-}
-
-export interface FileCreateInput {
-  id?: Maybe<ID_Input>;
-  fileId: String;
-  hash: String;
-  uri: String;
-  filename: String;
-  path: String;
-  mimetype: String;
-  extension: String;
 }
 
 export interface FileUpdateInput {
@@ -5487,6 +5626,21 @@ export interface CommentSubscriptionWhereInput {
   AND?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
   OR?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
   NOT?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
+}
+
+export interface DocumentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<DocumentWhereInput>;
+  AND?: Maybe<
+    DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput
+  >;
+  OR?: Maybe<DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput>;
+  NOT?: Maybe<
+    DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput
+  >;
 }
 
 export interface EventSubscriptionWhereInput {
@@ -6974,58 +7128,38 @@ export interface AggregateCommentSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface EventConnection {
-  pageInfo: PageInfo;
-  edges: EventEdge[];
+export interface Document {
+  id: ID_Output;
+  name: String;
+  createdAt: DateTimeOutput;
 }
 
-export interface EventConnectionPromise
-  extends Promise<EventConnection>,
+export interface DocumentPromise extends Promise<Document>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  file: <T = FilePromise>() => T;
+  owner: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface DocumentSubscription
+  extends Promise<AsyncIterator<Document>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<EventEdge>>() => T;
-  aggregate: <T = AggregateEventPromise>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  file: <T = FileSubscription>() => T;
+  owner: <T = UserSubscription>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface EventConnectionSubscription
-  extends Promise<AsyncIterator<EventConnection>>,
+export interface DocumentNullablePromise
+  extends Promise<Document | null>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateEventSubscription>() => T;
-}
-
-export interface EventEdge {
-  node: Event;
-  cursor: String;
-}
-
-export interface EventEdgePromise extends Promise<EventEdge>, Fragmentable {
-  node: <T = EventPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface EventEdgeSubscription
-  extends Promise<AsyncIterator<EventEdge>>,
-    Fragmentable {
-  node: <T = EventSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateEvent {
-  count: Int;
-}
-
-export interface AggregateEventPromise
-  extends Promise<AggregateEvent>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateEventSubscription
-  extends Promise<AsyncIterator<AggregateEvent>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<ID_Output>;
+  file: <T = FilePromise>() => T;
+  owner: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface File {
@@ -7078,6 +7212,116 @@ export interface FileNullablePromise
   mimetype: () => Promise<String>;
   extension: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface DocumentConnection {
+  pageInfo: PageInfo;
+  edges: DocumentEdge[];
+}
+
+export interface DocumentConnectionPromise
+  extends Promise<DocumentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DocumentEdge>>() => T;
+  aggregate: <T = AggregateDocumentPromise>() => T;
+}
+
+export interface DocumentConnectionSubscription
+  extends Promise<AsyncIterator<DocumentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DocumentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDocumentSubscription>() => T;
+}
+
+export interface DocumentEdge {
+  node: Document;
+  cursor: String;
+}
+
+export interface DocumentEdgePromise
+  extends Promise<DocumentEdge>,
+    Fragmentable {
+  node: <T = DocumentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DocumentEdgeSubscription
+  extends Promise<AsyncIterator<DocumentEdge>>,
+    Fragmentable {
+  node: <T = DocumentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateDocument {
+  count: Int;
+}
+
+export interface AggregateDocumentPromise
+  extends Promise<AggregateDocument>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDocumentSubscription
+  extends Promise<AsyncIterator<AggregateDocument>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface EventConnection {
+  pageInfo: PageInfo;
+  edges: EventEdge[];
+}
+
+export interface EventConnectionPromise
+  extends Promise<EventConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<EventEdge>>() => T;
+  aggregate: <T = AggregateEventPromise>() => T;
+}
+
+export interface EventConnectionSubscription
+  extends Promise<AsyncIterator<EventConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateEventSubscription>() => T;
+}
+
+export interface EventEdge {
+  node: Event;
+  cursor: String;
+}
+
+export interface EventEdgePromise extends Promise<EventEdge>, Fragmentable {
+  node: <T = EventPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface EventEdgeSubscription
+  extends Promise<AsyncIterator<EventEdge>>,
+    Fragmentable {
+  node: <T = EventSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateEvent {
+  count: Int;
+}
+
+export interface AggregateEventPromise
+  extends Promise<AggregateEvent>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateEventSubscription
+  extends Promise<AsyncIterator<AggregateEvent>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface FileConnection {
@@ -7791,6 +8035,53 @@ export interface CommentPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
   link: () => Promise<AsyncIterator<String>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface DocumentSubscriptionPayload {
+  mutation: MutationType;
+  node: Document;
+  updatedFields: String[];
+  previousValues: DocumentPreviousValues;
+}
+
+export interface DocumentSubscriptionPayloadPromise
+  extends Promise<DocumentSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = DocumentPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = DocumentPreviousValuesPromise>() => T;
+}
+
+export interface DocumentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<DocumentSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = DocumentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = DocumentPreviousValuesSubscription>() => T;
+}
+
+export interface DocumentPreviousValues {
+  id: ID_Output;
+  name: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface DocumentPreviousValuesPromise
+  extends Promise<DocumentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface DocumentPreviousValuesSubscription
+  extends Promise<AsyncIterator<DocumentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface EventSubscriptionPayload {
@@ -8513,6 +8804,10 @@ export const models: Model[] = [
   },
   {
     name: "Chat",
+    embedded: false
+  },
+  {
+    name: "Document",
     embedded: false
   }
 ];

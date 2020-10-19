@@ -24,6 +24,7 @@ const Comment = require('./Comment');
 const Todo = require('./Todo');
 const Message = require('./Message');
 const Chat = require('./Chat');
+const Document = require('./Document');
 
 const { HasRoleDirective } = require('./Directives');
 
@@ -89,6 +90,7 @@ module.exports = makeExecutableSchema({
     Todo.typeDef,
     Message.typeDef,
     Chat.typeDef,
+    Document.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -106,7 +108,8 @@ module.exports = makeExecutableSchema({
     Comment.resolvers,
     Todo.resolvers,
     Message.resolvers,
-    Chat.resolvers
+    Chat.resolvers,
+    Document.resolvers
   ),
   schemaDirectives: {
     hasRole: HasRoleDirective,

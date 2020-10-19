@@ -15,6 +15,10 @@ type AggregateComment {
   count: Int!
 }
 
+type AggregateDocument {
+  count: Int!
+}
+
 type AggregateEvent {
   count: Int!
 }
@@ -916,6 +920,123 @@ input CommentWhereUniqueInput {
 
 scalar DateTime
 
+type Document {
+  id: ID!
+  file: File!
+  owner: User!
+  name: String!
+  createdAt: DateTime!
+}
+
+type DocumentConnection {
+  pageInfo: PageInfo!
+  edges: [DocumentEdge]!
+  aggregate: AggregateDocument!
+}
+
+input DocumentCreateInput {
+  id: ID
+  file: FileCreateOneInput!
+  owner: UserCreateOneInput!
+  name: String!
+}
+
+type DocumentEdge {
+  node: Document!
+  cursor: String!
+}
+
+enum DocumentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type DocumentPreviousValues {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+}
+
+type DocumentSubscriptionPayload {
+  mutation: MutationType!
+  node: Document
+  updatedFields: [String!]
+  previousValues: DocumentPreviousValues
+}
+
+input DocumentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DocumentWhereInput
+  AND: [DocumentSubscriptionWhereInput!]
+  OR: [DocumentSubscriptionWhereInput!]
+  NOT: [DocumentSubscriptionWhereInput!]
+}
+
+input DocumentUpdateInput {
+  file: FileUpdateOneRequiredInput
+  owner: UserUpdateOneRequiredInput
+  name: String
+}
+
+input DocumentUpdateManyMutationInput {
+  name: String
+}
+
+input DocumentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  file: FileWhereInput
+  owner: UserWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [DocumentWhereInput!]
+  OR: [DocumentWhereInput!]
+  NOT: [DocumentWhereInput!]
+}
+
+input DocumentWhereUniqueInput {
+  id: ID
+}
+
 type Event {
   id: ID!
   title: String!
@@ -1515,6 +1636,11 @@ input FileCreateInput {
   extension: String!
 }
 
+input FileCreateOneInput {
+  create: FileCreateInput
+  connect: FileWhereUniqueInput
+}
+
 type FileEdge {
   node: File!
   cursor: String!
@@ -1571,6 +1697,16 @@ input FileSubscriptionWhereInput {
   NOT: [FileSubscriptionWhereInput!]
 }
 
+input FileUpdateDataInput {
+  fileId: String
+  hash: String
+  uri: String
+  filename: String
+  path: String
+  mimetype: String
+  extension: String
+}
+
 input FileUpdateInput {
   fileId: String
   hash: String
@@ -1589,6 +1725,18 @@ input FileUpdateManyMutationInput {
   path: String
   mimetype: String
   extension: String
+}
+
+input FileUpdateOneRequiredInput {
+  create: FileCreateInput
+  update: FileUpdateDataInput
+  upsert: FileUpsertNestedInput
+  connect: FileWhereUniqueInput
+}
+
+input FileUpsertNestedInput {
+  update: FileUpdateDataInput!
+  create: FileCreateInput!
 }
 
 input FileWhereInput {
@@ -2234,6 +2382,12 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createDocument(data: DocumentCreateInput!): Document!
+  updateDocument(data: DocumentUpdateInput!, where: DocumentWhereUniqueInput!): Document
+  updateManyDocuments(data: DocumentUpdateManyMutationInput!, where: DocumentWhereInput): BatchPayload!
+  upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
+  deleteDocument(where: DocumentWhereUniqueInput!): Document
+  deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
   createEvent(data: EventCreateInput!): Event!
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
@@ -3387,6 +3541,9 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  document(where: DocumentWhereUniqueInput!): Document
+  documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document]!
+  documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
   event(where: EventWhereUniqueInput!): Event
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
@@ -3427,6 +3584,7 @@ type Subscription {
   chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
