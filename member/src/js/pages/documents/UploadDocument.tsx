@@ -1,7 +1,6 @@
-import { Icon, Message } from 'Components/index';
+import { CreateButton, Icon, Message } from 'Components/index';
 import React from 'react';
 import { useMutation } from 'react-apollo';
-import { IconButton } from '@material-ui/core';
 import { UPLOAD_DOCUMENT } from 'Graphql/mutations';
 import { DOCUMENT_LIST } from 'Graphql/queries';
 
@@ -28,11 +27,11 @@ export const UploadDocument: React.FC = () => {
         type="file"
         onChange={(e) => handleChange(e.target.files[0])}
       />
-      <label htmlFor="upload-document">
-        <IconButton component="span">
-          <Icon type="edit" />
-        </IconButton>
-      </label>
+      <CreateButton
+        onClick={() => {
+          document.getElementById('upload-document').click();
+        }}
+      />
     </React.Fragment>
   );
 };

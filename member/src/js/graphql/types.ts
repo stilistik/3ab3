@@ -101,6 +101,7 @@ export type Document = {
   name: Scalars['String'];
   createdAt: Scalars['DateTime'];
   owner: User;
+  thumbnail?: Maybe<Scalars['String']>;
 };
 
 export type Edge = {

@@ -15,11 +15,13 @@ export const Documents: React.FC = () => {
   return (
     <Grid.Default>
       <Box py="20px">
-        <UploadDocument />
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <UploadDocument />
+          </Grid>
           {data.documents.map((el: Document) => {
             return (
-              <Grid key={el.id} item xs={6} sm={4} md={3} lg={2}>
+              <Grid key={el.id} item xs={6} sm={4} md={3}>
                 <DocumentItem document={el} />
               </Grid>
             );

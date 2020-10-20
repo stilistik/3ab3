@@ -6,6 +6,7 @@ export const DOCUMENT_LIST = gql`
       id
       name
       thumbnail
+      createdAt
       file {
         id
         uri
