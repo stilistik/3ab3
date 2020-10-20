@@ -44,7 +44,7 @@ export const CreateProduct: React.FC = () => {
       >
         <Box cmb={2}>
           <ImageField
-            id="thumbnail"
+            id="image"
             required={true}
             label={t('Product Image')}
           />

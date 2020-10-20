@@ -5,7 +5,6 @@ import { getDecimalCount, NumberInputProps } from './NumberInput';
 
 const useStyles = makeStyles({
   inputInput: {
-    width: '60px',
     flexGrow: 1,
     height: '40px',
     alignItems: 'center',
