@@ -56,6 +56,7 @@ export const FormDialog: React.FC<FormDialogProps> = ({
       open={show}
       onClose={onCancel}
       onClick={(e) => e.stopPropagation()}
+      fullWidth={true}
       classes={{
         paper: classes.paper,
       }}

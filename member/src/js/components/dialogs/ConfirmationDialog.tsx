@@ -51,6 +51,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
       open={show}
       onClose={onCancel}
       onClick={(e) => e.stopPropagation()}
+      fullWidth={true}
       classes={{
         paper: classes.paper,
       }}

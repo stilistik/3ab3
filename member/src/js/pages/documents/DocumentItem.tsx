@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { getBackendUrl } from 'App/network/Utils';
+import { EditDocument } from './EditDocument';
 
 interface DocumentItemProps {
   document: DocumentType;
@@ -17,14 +18,17 @@ export const DocumentItem: React.FC<DocumentItemProps> = ({ document }) => {
   const filePath = getBackendUrl() + document.file.uri;
 
   return (
-    <Card>
+    <Card style={{ position: 'relative' }}>
+      <Box pos="absolute" top={10} right={10}>
+        <EditDocument document={document} />
+      </Box>
+      <LazyLoadingImageDiv
+        width="100%"
+        height="180px"
+        src={document.thumbnail}
+        backgroundPosition="top center"
+      />
       <CardActionArea onClick={() => window.open(filePath, '_blank')}>
-        <LazyLoadingImageDiv
-          width="100%"
-          height="180px"
-          src={document.thumbnail}
-          backgroundPosition="top center"
-        />
         <Box borderTop={1} borderColor="divider">
           <CardContent>
             <Typography

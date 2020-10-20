@@ -7,3 +7,11 @@ export const UPLOAD_DOCUMENT = gql`
     }
   }
 `;
+
+export const EDIT_DOCUMENT = gql`
+  mutation($documentId: ID!, $input: EditDocumentInput!) {
+    editDocument(documentId: $documentId, input: $input) {
+      id
+    }
+  }
+`;
