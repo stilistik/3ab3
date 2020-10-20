@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "module": "esnext",
+    "target": "es6",
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "lib": [
+      "es5",
+      "es2015",
+      "es2016",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "Components/*": [
+        "src/js/components/*"
+      ],
+      "Auth/*": [
+        "src/js/auth/*"
+      ],
+      "Pages/*": [
+        "src/js/pages/*"
+      ],
+      "App/*": [
+        "src/js/app/*"
+      ],
+      "Graphql/*": [
+        "src/js/graphql/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

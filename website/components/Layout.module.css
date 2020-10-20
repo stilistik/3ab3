@@ -1,0 +1,71 @@
+.wrapper {
+  display: grid;
+  grid-template: auto 1fr auto / auto 1fr auto;
+  height: 100vh;
+}
+
+.header {
+  width: 100vw;
+  height: 60px;
+
+  position: fixed;
+
+  display: flex;
+  justify-content: space-evenly;
+  background-color: transparent;
+
+  z-index: 100;
+}
+
+.link {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  color: #8c8c8c;
+}
+
+a.link:link {
+  text-decoration: none;
+}
+a.link:active {
+  text-decoration: none;
+}
+a.link:hover {
+  text-decoration: none;
+}
+a.link:visited {
+  text-decoration: none;
+}
+
+.back {
+  grid-column: 1 / 2;
+  background-color: teal;
+  font-size: xx-large;
+}
+
+.main {
+  grid-column: 2 / 3;
+  height: calc(100vh - 60px);
+  margin-top: 100px;
+
+  z-index: 0;
+}
+
+.forward {
+  grid-column: 3 / 4;
+  background-color: yellow;
+  font-size: xx-large;
+}
+
+.footer {
+  grid-column: 1 / 4;
+}
+
+.logo {
+  margin: 0;
+  height: 95px;
+  width: 95px;
+  -webkit-filter: drop-shadow(3px 3px 0px rgba(254, 178, 0, 1));
+  filter: drop-shadow(3px 3px 0px rgba(254, 178, 0, 1));
+}

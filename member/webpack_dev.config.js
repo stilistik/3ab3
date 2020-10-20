@@ -9,11 +9,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const common = require('./webpack_common.config');
 
+const { MEMBER_CLIENT_PORT } = process.env;
+
 module.exports = merge(common, {
   mode: 'development',
   devServer: {
     contentBase: path.join(__dirname, '/public/'),
-    port: 3000,
+    port: 3001,
     host: '0.0.0.0',
     historyApiFallback: true,
     hotOnly: true,

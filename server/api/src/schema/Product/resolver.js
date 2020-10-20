@@ -75,7 +75,6 @@ module.exports = {
         where: { id: args.productId },
       });
     },
-
     deleteProduct(root, args, context) {
       return context.prisma.updateProduct({
         where: { id: args.productId },
