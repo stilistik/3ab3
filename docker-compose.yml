@@ -1,5 +1,17 @@
 version: '3.6'
 services:
+  next: 
+    container_name: next
+    build: ./website
+    expose: 
+      - '3000'
+    volumes: 
+      - ./website:/usr/src/app
+    networks:
+      - 3ab3
+    command: yarn dev
+    env_file: .env
+
   api:
     container_name: api
     build: ./server/api/
@@ -8,9 +20,10 @@ services:
     volumes:
       - ./server/prisma/generated:/usr/src/app/src/generated
       - /var/local/3ab3/storage/:/usr/src/app/storage
+      - ./server/api/src:/usr/src/app/src
     networks:
       - 3ab3
-    command: yarn start
+    command: yarn start:dev
     env_file: .env
 
   prisma:
@@ -51,10 +64,10 @@ services:
     image: nginx:alpine
     ports:
       - '4000:4000'
+      - '3000:3000'
     volumes:
-      - ./server/proxy/nginx.prod.conf:/etc/nginx/nginx.conf
+      - ./server/proxy/nginx.dev.conf:/etc/nginx/nginx.conf
       - /var/local/3ab3/storage/:/usr/src/app/storage
-
     networks:
       - 3ab3
 
