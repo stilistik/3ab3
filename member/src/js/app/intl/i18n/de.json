@@ -107,6 +107,8 @@
     "Dark Mode": "Dunkel Modus",
     "deleteConfirmPopoverText": "Willst du das wirklich löschen?",
     "Delete": "Löschen",
-    "Documents": "Dokumente"
+    "Documents": "Dokumente",
+    "Edit Document": "Dokument bearbeiten",
+    "Document Title": "Dokument Name"
   }
 }
