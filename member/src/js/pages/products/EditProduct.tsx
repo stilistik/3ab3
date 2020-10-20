@@ -30,8 +30,13 @@ export const EditProduct: React.FC<EditProductProps> = ({ product }) => {
   const handleCancel = () => setShowDialog(false);
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
+    const { thumbnail, ...rest } = values;
+    const input = {
+      thumbnail: thumbnail instanceof File ? thumbnail : null,
+      ...rest,
+    };
     editProduct({
-      variables: { productId: product.id, input: values },
+      variables: { productId: product.id, input: input },
       refetchQueries: () => [{ query: PRODUCT_LIST }],
     })
       .then(() => Message.success(t('Product successfully edited')))
