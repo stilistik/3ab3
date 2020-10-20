@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import Event from '../../components/Event';
 import { InferGetStaticPropsType } from 'next';
-import { prisma } from '../../generated/prisma-client';
+import { prisma } from '../../prisma/prisma';
 
 export const getStaticProps = async () => {
   const events = await prisma.events();
