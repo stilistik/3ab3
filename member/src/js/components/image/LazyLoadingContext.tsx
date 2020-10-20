@@ -31,15 +31,16 @@ export const useLazyLoading = (): LazyLoadingContextValue => {
 export const LazyLoadingProvider: React.FC = ({ children }) => {
   const itemsRef = React.useRef<LazyLoadingItem[]>([]);
 
-  const lazyImageObserverRef = React.useRef<IntersectionObserver>(
+  const observerRef = React.useRef<IntersectionObserver>(
     new IntersectionObserver(function(entries, observer) {
+      console.log(entries);
+      console.log(itemsRef.current);
+
       entries.forEach(function(entry: IntersectionObserverEntry) {
         if (entry.isIntersecting) {
           const item = itemsRef.current.find(
             (item) => item.element === entry.target
           );
-
-          const element = item.element;
 
           const tmpImage = new Image();
           tmpImage.onload = () => {
@@ -53,22 +54,22 @@ export const LazyLoadingProvider: React.FC = ({ children }) => {
             item.setLoading(false);
           };
           tmpImage.src = item.src;
-
-          lazyImageObserverRef.current.unobserve(element);
+          
+          unregisterLazyImage(item);
         }
       });
     })
   );
 
   function registerLazyImage(item: LazyLoadingItem) {
-    lazyImageObserverRef.current.observe(item.element);
+    observerRef.current.observe(item.element);
     itemsRef.current.push(item);
   }
 
   function unregisterLazyImage(item: LazyLoadingItem) {
-    lazyImageObserverRef.current.unobserve(item.element);
+    observerRef.current.unobserve(item.element);
     itemsRef.current = itemsRef.current.filter(
-      (el) => el.element === item.element
+      (el) => el.element !== item.element
     );
   }
 
