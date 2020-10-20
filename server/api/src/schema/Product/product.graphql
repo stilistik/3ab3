@@ -16,7 +16,7 @@ input ProductInput {
   name: String!
   price: Float!
   index: Int!
-  image: Upload
+  thumbnail: Upload
   deleted: Boolean
 }
 

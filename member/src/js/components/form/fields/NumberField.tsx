@@ -1,6 +1,10 @@
 import React from 'react';
 import clx from 'classnames';
-import { InputLabel, InputClassKey, InputLabelClassKey } from '@material-ui/core';
+import {
+  InputLabel,
+  InputClassKey,
+  InputLabelClassKey,
+} from '@material-ui/core';
 import { NumberInput, NumberInputProps } from '../../inputs';
 import { useField, UseFieldReturn } from '../UseField';
 import { FieldProps } from '../types';
@@ -18,8 +22,16 @@ export type NumberFieldProps = Omit<FieldProps, 'fieldType'> &
     onEnterSubmit?: boolean;
     onBlurSubmit?: boolean;
     nullable?: boolean;
-    onBlur?: (e: React.FocusEvent, props: NumberFieldProps, field: UseFieldReturn) => void;
-    onKeyDown?: (e: React.KeyboardEvent, props: NumberFieldProps, field: UseFieldReturn) => void;
+    onBlur?: (
+      e: React.FocusEvent,
+      props: NumberFieldProps,
+      field: UseFieldReturn
+    ) => void;
+    onKeyDown?: (
+      e: React.KeyboardEvent,
+      props: NumberFieldProps,
+      field: UseFieldReturn
+    ) => void;
     'data-cy'?: string;
   };
 
@@ -29,7 +41,11 @@ interface NumberFieldClasses {
   error?: string;
 }
 
-const defaultHandleKeyDown = (e: React.KeyboardEvent, props: NumberFieldProps, field: UseFieldReturn) => {
+const defaultHandleKeyDown = (
+  e: React.KeyboardEvent,
+  props: NumberFieldProps,
+  field: UseFieldReturn
+) => {
   const { onEnterSubmit } = props;
   const { requestSubmit } = field;
   if (onEnterSubmit && requestSubmit && e.key === 'Enter') {
@@ -37,7 +53,11 @@ const defaultHandleKeyDown = (e: React.KeyboardEvent, props: NumberFieldProps, f
   }
 };
 
-const defaultHandleBlur = (e: React.FocusEvent, props: NumberFieldProps, field: UseFieldReturn) => {
+const defaultHandleBlur = (
+  e: React.FocusEvent,
+  props: NumberFieldProps,
+  field: UseFieldReturn
+) => {
   if (props.onBlurSubmit && field.requestSubmit) field.requestSubmit();
   field.onFieldCommit(props.id, field.value);
 };
@@ -64,11 +84,16 @@ export const NumberField: React.FC<NumberFieldProps> = ({
 
   const cls = clx(className, { [classes?.error]: Boolean(field.error) });
   const inputValue = typeof field.value === 'number' ? field.value : null;
+  console.log(field.value);
 
   return (
     <FormControl className={cls} error={field.error}>
       {label && (
-        <InputLabel htmlFor={id} classes={classes?.label} shrink={inputValue != null}>
+        <InputLabel
+          htmlFor={id}
+          classes={classes?.label}
+          shrink={inputValue != null}
+        >
           {label}
         </InputLabel>
       )}

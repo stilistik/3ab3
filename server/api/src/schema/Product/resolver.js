@@ -50,37 +50,32 @@ module.exports = {
   },
   Mutation: {
     async createProduct(root, args, context) {
-      if (args.input.image) {
-        const { image, ...rest } = args.input;
-        const file = await uploadFile(image, context);
-        const input = {
-          thumbnail: file.uri,
-          ...rest,
-        };
-        return context.prisma.createProduct(input);
-      } else {
-        return context.prisma.createProduct(args.input);
+      const { thumbnail, ...rest } = args.input;
+
+      const input = { ...rest };
+
+      if (thumbnail) {
+        const file = await uploadFile(thumbnail, context);
+        input.thumbnail = file.uri;
       }
+
+      return context.prisma.createProduct(input);
     },
     async updateProduct(root, args, context) {
-      if (args.input.image) {
-        const { image, ...rest } = args.input;
-        const file = await uploadFile(image, context);
-        const input = {
-          thumbnail: file.uri,
-          ...rest,
-        };
-        return context.prisma.updateProduct({
-          data: input,
-          where: { id: args.productId },
-        });
-      } else {
-        return context.prisma.updateProduct({
-          data: args.input,
-          where: { id: args.productId },
-        });
+      const { thumbnail, ...rest } = args.input;
+
+      const input = { ...rest };
+
+      if (thumbnail) {
+        const file = await uploadFile(thumbnail, context);
+        input.thumbnail = file.uri;
       }
+      return context.prisma.updateProduct({
+        data: input,
+        where: { id: args.productId },
+      });
     },
+
     deleteProduct(root, args, context) {
       return context.prisma.updateProduct({
         where: { id: args.productId },

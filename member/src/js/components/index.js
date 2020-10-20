@@ -2,7 +2,6 @@ export * from './buttons';
 export * from './charts';
 export * from './dialogs';
 export * from './comment';
-export * from './dragdrop';
 export * from './emojipicker';
 export * from './event';
 export * from './feedback';

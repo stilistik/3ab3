@@ -53,7 +53,7 @@ export const EditProduct: React.FC<EditProductProps> = ({ product }) => {
       >
         <Box cmb={2}>
           <ImageField
-            id="image"
+            id="thumbnail"
             required={true}
             label={t('Product Image')}
           />

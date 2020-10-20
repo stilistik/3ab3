@@ -236,10 +236,20 @@ export const NumberInput: React.FC<NumberInputProps> = ({
         <div className={styles.adornment}>
           <span aria-label="number-input-unit">{unit}</span>
           <div className={styles.spinners}>
-            <Button tabIndex={-1} className={styles.button} onClick={increment} disabled={disabled}>
+            <Button
+              tabIndex={-1}
+              className={styles.button}
+              onClick={increment}
+              disabled={disabled}
+            >
               <Icon type="up" />
             </Button>
-            <Button tabIndex={-1} className={styles.button} onClick={decrement} disabled={disabled}>
+            <Button
+              tabIndex={-1}
+              className={styles.button}
+              onClick={decrement}
+              disabled={disabled}
+            >
               <Icon type="down" />
             </Button>
           </div>

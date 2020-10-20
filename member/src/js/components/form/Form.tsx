@@ -108,7 +108,7 @@ export const Form: React.FC<FormProps> = ({
 
     // set init values
     const fieldInitValues = getBy(initValues, id);
-    if (fieldInitValues) {
+    if (fieldInitValues != null) {
       // set field init value, dont onFieldChange handlers
       _updateFieldValue(id, fieldInitValues);
     } else {
