@@ -24,16 +24,16 @@ export const Dashboard = () => {
             <GlobalBalanceChart />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <BalanceTable />
+            <Box cmbnl={3}>
+              <BalanceTable />
+              <PaymentReminder />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <GlobalConsumptionChart />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <PaymentReminder />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <RegisterPayment />
+            <Box cmbnl={3}>
+              <GlobalConsumptionChart />
+              <RegisterPayment />
+            </Box>
           </Grid>
         </Grid>
       </Box>

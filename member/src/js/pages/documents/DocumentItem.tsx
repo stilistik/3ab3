@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { getBackendUrl } from 'App/network/Utils';
 import { EditDocument } from './EditDocument';
+import { AdminOnly } from 'Components/utility/AdminOnly';
 
 interface DocumentItemProps {
   document: DocumentType;
@@ -19,9 +20,11 @@ export const DocumentItem: React.FC<DocumentItemProps> = ({ document }) => {
 
   return (
     <Card style={{ position: 'relative' }}>
-      <Box pos="absolute" top={10} right={10}>
-        <EditDocument document={document} />
-      </Box>
+      <AdminOnly>
+        <Box pos="absolute" top={10} right={10}>
+          <EditDocument document={document} />
+        </Box>
+      </AdminOnly>
       <LazyLoadingImageDiv
         width="100%"
         height="180px"

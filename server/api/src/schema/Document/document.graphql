@@ -20,6 +20,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  uploadDocument(input: UploadDocumentInput!): Document!
-  editDocument(documentId: ID!, input: EditDocumentInput!): Document!
+  uploadDocument(input: UploadDocumentInput!): Document! @hasRole
+  editDocument(documentId: ID!, input: EditDocumentInput!): Document! @hasRole
 }

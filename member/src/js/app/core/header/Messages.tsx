@@ -8,6 +8,12 @@ import { NEW_MESSAGES_SUBSCRIPTION } from 'Graphql/subscriptions';
 
 const useStyles = makeStyles((theme) => ({
   button: {
+    width: '40px',
+    height: '40px',
+    padding: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.action.hover,
     '&:hover': {

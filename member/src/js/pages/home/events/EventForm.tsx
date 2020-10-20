@@ -24,7 +24,7 @@ export const EventForm: React.FC<EventFormProps> = ({ event, onSubmit }) => {
   const { t } = useTranslation();
   return (
     <Form onSubmit={onSubmit} initValues={event} initAfterSubmit={true}>
-      <Box cmbnl={1}>
+      <Box cmb={1}>
         <ImageField id="image" required={true} label={t('Event Image')} />
         <TextField id="title" label={t('Title')} required={true} />
         <TextField id="description" label={t('Description')} required={true} />
@@ -34,16 +34,18 @@ export const EventForm: React.FC<EventFormProps> = ({ event, onSubmit }) => {
           type="date"
           required={true}
         />
-        <FormSubmit>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            color="primary"
-          >
-            {t('Create')}
-          </Button>
-        </FormSubmit>
+        <Box mt={2}>
+          <FormSubmit>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              color="primary"
+            >
+              {t('Create')}
+            </Button>
+          </FormSubmit>
+        </Box>
       </Box>
     </Form>
   );

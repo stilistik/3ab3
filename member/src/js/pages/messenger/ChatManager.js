@@ -1,7 +1,7 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { Grid, Button, Typography } from '@material-ui/core';
-import { Icon } from 'Components';
+import { Icon, Box } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useInterval } from 'Components/utility/Hooks';
@@ -129,12 +129,16 @@ export const ChatManager = (props) => {
     <SwipeableViews axis="x" index={value} disabled>
       <Grid container>
         <Grid item xs={12}>
-          <ChatList onViewChange={setValue} {...props} />
+          <Box px={1}>
+            <ChatList onViewChange={setValue} {...props} />
+          </Box>
         </Grid>
       </Grid>
       <Grid container>
         <Grid item xs={12}>
-          <CreateChat onViewChange={setValue} {...props} />
+          <Box px={1}>
+            <CreateChat onViewChange={setValue} {...props} />
+          </Box>
         </Grid>
       </Grid>
     </SwipeableViews>

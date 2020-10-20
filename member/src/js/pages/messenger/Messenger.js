@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 const MobileMessagesHeader = ({ onClick, selectedChat }) => {
   const styles = useStyles();
   return (
-    <Box p={1} w="100%" d="flex" ai="center" bb={1} bc="grey.300">
+    <Box p={1} w="100%" d="flex" ai="center" bb={1} bc="divider">
       <Button
         className={styles.createButton}
         color="secondary"
