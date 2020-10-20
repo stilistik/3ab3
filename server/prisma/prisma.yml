@@ -21,6 +21,7 @@ generate:
 hooks:
   post-deploy:
     - cp -r ./generated/ ../api/src/
+    - cp -r ./generated/ ../../website/
 seed:
   run: node ./seed.js
 secret: ${env:PRISMA_SERVICE_SECRET}
