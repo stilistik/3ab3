@@ -84,8 +84,6 @@ export const NumberField: React.FC<NumberFieldProps> = ({
 
   const cls = clx(className, { [classes?.error]: Boolean(field.error) });
   const inputValue = typeof field.value === 'number' ? field.value : null;
-  console.log(field.value);
-
   return (
     <FormControl className={cls} error={field.error}>
       {label && (

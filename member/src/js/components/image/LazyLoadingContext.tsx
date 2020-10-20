@@ -33,9 +33,6 @@ export const LazyLoadingProvider: React.FC = ({ children }) => {
 
   const observerRef = React.useRef<IntersectionObserver>(
     new IntersectionObserver(function(entries, observer) {
-      console.log(entries);
-      console.log(itemsRef.current);
-
       entries.forEach(function(entry: IntersectionObserverEntry) {
         if (entry.isIntersecting) {
           const item = itemsRef.current.find(
