@@ -22,7 +22,7 @@ interface EditProductProps {
 
 export const EditProduct: React.FC<EditProductProps> = ({ product }) => {
   const [showDialog, setShowDialog] = React.useState(false);
-  const [createProduct] = useMutation(EDIT_PRODUCT);
+  const [editProduct] = useMutation(EDIT_PRODUCT);
   const { t } = useTranslation();
 
   const handleClick = () => setShowDialog(true);
@@ -30,8 +30,8 @@ export const EditProduct: React.FC<EditProductProps> = ({ product }) => {
   const handleCancel = () => setShowDialog(false);
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
-    createProduct({
-      variables: { input: values },
+    editProduct({
+      variables: { productId: product.id, input: values },
       refetchQueries: () => [{ query: PRODUCT_LIST }],
     })
       .then(() => Message.success(t('Product successfully edited')))
@@ -53,7 +53,7 @@ export const EditProduct: React.FC<EditProductProps> = ({ product }) => {
       >
         <Box cmb={2}>
           <ImageField
-            id="thumbnail"
+            id="image"
             required={true}
             label={t('Product Image')}
           />
