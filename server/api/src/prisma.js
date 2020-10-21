@@ -1,10 +1,10 @@
 const { Prisma } = require('./generated/prisma-client');
 
-const { PRISMA_ENDPOINT } = process.env
+const { API_PRISMA_ENDPOINT, PRISMA_SERVICE_SECRET } = process.env
 
 const prisma = new Prisma({
-  endpoint: PRISMA_ENDPOINT,
-  secret: process.env.PRISMA_SERVICE_SECRET,
+  endpoint: API_PRISMA_ENDPOINT,
+  secret: PRISMA_SERVICE_SECRET,
 });
 
 module.exports = prisma;

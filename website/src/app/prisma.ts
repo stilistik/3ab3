@@ -1,8 +1,8 @@
 import { Prisma } from '../../generated/prisma-ts-client';
 
-const { PRISMA_ENDPOINT, PRISMA_SERVICE_SECRET } = process.env;
+const { WEBSITE_PRISMA_ENDPOINT, PRISMA_SERVICE_SECRET } = process.env;
 
 export const prisma = new Prisma({
-  endpoint: PRISMA_ENDPOINT,
+  endpoint: WEBSITE_PRISMA_ENDPOINT,
   secret: PRISMA_SERVICE_SECRET,
 });

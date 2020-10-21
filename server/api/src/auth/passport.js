@@ -3,13 +3,9 @@ const { BasicStrategy } = require('passport-http');
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { Prisma } = require('../generated/prisma-client');
+const prisma = require('../prisma');
 
-const { ACCESS_TOKEN_SECRET, PRISMA_ENDPOINT } = process.env;
-
-const prisma = new Prisma({
-  endpoint: PRISMA_ENDPOINT,
-});
+const { ACCESS_TOKEN_SECRET } = process.env;
 
 passport.use(
   new BasicStrategy(async (clientId, clientSecret, done) => {
@@ -33,7 +29,6 @@ passport.use(
 
 passport.use(
   new BearerStrategy(async (accessToken, done) => {
-    console.log(accessToken);
     try {
       const token = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
       const foundUser = await prisma.user({ id: token.id });

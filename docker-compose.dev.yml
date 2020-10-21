@@ -1,16 +1,5 @@
 version: '3.6'
 services:
-  next: 
-    container_name: next
-    build: ./website
-    expose: 
-      - '3000'
-    volumes: 
-      - ./website:/usr/src/app
-    networks:
-      - 3ab3
-    command: yarn dev
-    env_file: .env
 
   api:
     container_name: api
@@ -64,7 +53,6 @@ services:
     image: nginx:alpine
     ports:
       - '4000:4000'
-      - '3000:3000'
     volumes:
       - ./server/proxy/nginx.dev.conf:/etc/nginx/nginx.conf
       - /var/local/3ab3/storage/:/usr/src/app/storage
