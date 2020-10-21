@@ -1,6 +1,5 @@
 version: '3.6'
 services:
-
   api:
     container_name: api
     build: ./server/api/
@@ -13,6 +12,8 @@ services:
     networks:
       - 3ab3
     command: yarn start:dev
+    environment:
+      - PRISMA_HOST=http://prisma
     env_file: .env
 
   prisma:
