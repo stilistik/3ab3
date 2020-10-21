@@ -5,6 +5,7 @@ import { getResponsiveSrc } from './utils';
 interface LazyLoadingImageDivProps {
   src: string;
   alt?: string;
+  className?: string;
   backgroundSize?: React.CSSProperties['backgroundSize'];
   backgroundPosition?: React.CSSProperties['backgroundPosition'];
 }
@@ -14,7 +15,8 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   alt = 'No image',
   backgroundSize = 'cover',
   backgroundPosition = 'center',
-  ...rest
+  className,
+  children,
 }) => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -38,7 +40,14 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   }, [src]);
 
   return (
-    <div ref={divRef} style={{ backgroundSize, backgroundPosition }}>
+    <div
+      ref={divRef}
+      className={className}
+      style={{
+        backgroundSize,
+        backgroundPosition,
+      }}
+    >
       {!src ? (
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-full h-56 flex flex-col justify-center items-center">
@@ -52,6 +61,7 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
           </div>
         </div>
       ) : null}
+      {children}
     </div>
   );
 };

@@ -1,8 +1,13 @@
 import { AppProps } from 'next/app';
+import { LazyLoadingProvider } from 'Components/image/LazyLoadingContext';
 import '../styles/index.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <LazyLoadingProvider>
+      <Component {...pageProps} />
+    </LazyLoadingProvider>
+  );
 }
 
 export default MyApp;
