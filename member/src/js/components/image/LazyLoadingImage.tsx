@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, BoxProps, Loading, Box } from 'Components/index';
+import { Icon, Loading, Box } from 'Components/index';
 import { LazyLoadingItem, useLazyLoading } from './LazyLoadingContext';
 import { Typography } from '@material-ui/core';
 import { getResponsiveSrc } from './utils';
