@@ -19,20 +19,14 @@
     "baseUrl": ".",
     "paths": {
       "Components/*": [
-        "src/js/components/*"
+        "src/components/*"
       ],
-      "Auth/*": [
-        "src/js/auth/*"
-      ],
-      "Pages/*": [
-        "src/js/pages/*"
+      "Ppages/*": [
+        "src/pages/*"
       ],
       "App/*": [
-        "src/js/app/*"
+        "src/app/*"
       ],
-      "Graphql/*": [
-        "src/js/graphql/*"
-      ]
     },
     "skipLibCheck": true,
     "strict": false,

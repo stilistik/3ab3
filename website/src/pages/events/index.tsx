@@ -1,7 +1,7 @@
 import React from 'react';
-import { Layout, Event } from '../../components';
 import { InferGetStaticPropsType } from 'next';
-import { prisma } from '../../prisma/prisma';
+import { Layout, Event } from 'Components/index';
+import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
   const events = await prisma.events();

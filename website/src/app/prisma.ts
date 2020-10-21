@@ -1,4 +1,4 @@
-import { Prisma } from '../generated/prisma-ts-client';
+import { Prisma } from '../../generated/prisma-ts-client';
 
 const { PRISMA_ENDPOINT, PRISMA_SERVICE_SECRET } = process.env;
 
