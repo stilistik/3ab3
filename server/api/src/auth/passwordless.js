@@ -9,7 +9,8 @@ const {
   ACCESS_TOKEN_EXPIRATION,
   MAILGUN_API_SECRET,
   MAILGUN_DOMAIN,
-  MEMBER_CLIENT_URL,
+  MEMBER_CLIENT_HOST,
+  MEMBER_CLIENT_PORT,
   API_MAINTENANCE_PASSWORD,
 } = process.env;
 
@@ -59,7 +60,7 @@ const requestEmail = async (req, res) => {
       subject: 'Request Login',
       template: template,
       'v:username': user.name,
-      'v:link': `${MEMBER_CLIENT_URL}/auth?token=${loginToken}`,
+      'v:link': `${MEMBER_CLIENT_HOST}:${MEMBER_CLIENT_PORT}/auth?token=${loginToken}`,
       inline: logoPath,
     };
     mailgun.messages().send(data);
