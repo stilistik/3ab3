@@ -1,6 +1,5 @@
 import React from 'react';
-import Layout from '../../components/Layout';
-import Event from '../../components/Event';
+import { Layout, Event } from '../../components';
 import { InferGetStaticPropsType } from 'next';
 import { prisma } from '../../prisma/prisma';
 
@@ -15,7 +14,6 @@ export const getStaticProps = async () => {
   };
 };
 
-
 const EventIndex = ({
   events,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -24,7 +22,12 @@ const EventIndex = ({
       {events.map((event) => {
         return (
           <article key={event.id}>
-            <Event title={event.title} date={event.date} img={event.image} origin="Origin"/>
+            <Event
+              title={event.title}
+              date={event.date}
+              img={event.image}
+              origin="Origin"
+            />
           </article>
         );
       })}

@@ -29,7 +29,7 @@ const Header: React.FC = () => {
   );
 };
 
-const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC = ({ children }) => {
   return (
     <div className={styles.wrapper}>
       <Header />
@@ -39,5 +39,3 @@ const Layout: React.FC = ({ children }) => {
     </div>
   );
 };
-
-export default Layout;

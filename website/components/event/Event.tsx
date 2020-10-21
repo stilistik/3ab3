@@ -8,7 +8,7 @@ interface EventProps {
   origin: string;
 }
 
-const Event: React.FC<EventProps> = ({ title, origin, date, img }) => {
+export const Event: React.FC<EventProps> = ({ title, origin, date, img }) => {
   return (
     <div
       className={styles.wrapper}
@@ -34,5 +34,3 @@ const Event: React.FC<EventProps> = ({ title, origin, date, img }) => {
     </div>
   );
 };
-
-export default Event;
