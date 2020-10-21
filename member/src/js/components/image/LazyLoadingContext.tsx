@@ -1,7 +1,5 @@
 import React from 'react';
 
-type LazyLoadingElement = HTMLDivElement;
-
 export interface LazyLoadingItem {
   element: HTMLDivElement;
   src: string;
