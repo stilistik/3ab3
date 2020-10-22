@@ -45,22 +45,10 @@ a.link:visited {
   text-decoration: none;
 }
 
-.back {
-  grid-column: 1 / 2;
-  background-color: teal;
-  font-size: xx-large;
-}
-
 .main {
   grid-column: 2 / 3;
   margin-top: 120px;
   z-index: 0;
-}
-
-.forward {
-  grid-column: 3 / 4;
-  background-color: yellow;
-  font-size: xx-large;
 }
 
 .footer {
@@ -78,4 +66,8 @@ a.link:visited {
   filter: drop-shadow(3px 3px 0px var(--color-primary));
   user-select: none;
   cursor: pointer;
+}
+
+.bodyLink {
+  text-shadow: 10px -10px 0px #ccc;
 }
