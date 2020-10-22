@@ -1,6 +1,7 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
-import { Layout, Event } from 'Components/index';
+import Head from 'next/head';
+import { Event } from 'Components/index';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
@@ -22,6 +23,9 @@ const EventPage = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <React.Fragment>
+      <Head>
+        <title>3ab3 - Events</title>
+      </Head>
       {events.map((event) => {
         return (
           <article key={event.id}>
@@ -37,5 +41,4 @@ const EventPage = ({
     </React.Fragment>
   );
 };
-
 export default EventPage;

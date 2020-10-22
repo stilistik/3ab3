@@ -21,3 +21,8 @@
 .contact {
   --color-primary: #1e5ce6;
 }
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

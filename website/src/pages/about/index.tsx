@@ -1,10 +1,18 @@
 import React from 'react';
-import styles from './Index.module.css';
+import Head from 'next/head';
 
 const AboutPage: React.FC = () => {
   return (
-    <div className={styles.container}>this is the about page</div>
-  )
-}
+    <React.Fragment>
+      <Head>
+        <title>3ab3 - About</title>
+      </Head>
+      <div className="w-full h-full flex items-center justify-center bg-blue-500">
+        <h1>About</h1>
+        <p>This is the About page</p>
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default AboutPage;

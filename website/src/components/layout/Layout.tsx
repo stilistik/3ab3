@@ -2,8 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clx from 'classnames';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, useTransition, animated } from 'react-spring';
 import styles from './Layout.module.css';
+import { AppItem } from 'Ppages/_app';
 
 const Logo: React.FC = () => {
   return (
@@ -96,14 +97,47 @@ const Header: React.FC = () => {
   );
 };
 
-export const Layout: React.FC = ({ children }) => {
+interface TransitionProps {
+  items: AppItem[];
+}
+
+const Transition: React.FC<TransitionProps> = ({ items }) => {
+  const router = useRouter();
+
+  const transitions = useTransition(items, (item) => item.id, {
+    from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
+    enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+    leave: { opacity: 0, transform: 'translate3d(-100%,0,0)' },
+  });
+
+  return (
+    <React.Fragment key={router.asPath}>
+      {transitions.map(({ item, props, key }) => {
+        const { Component, pageProps } = item;
+        return (
+          <animated.div key={key} style={props}>
+            <main className={styles.main}>
+              <Component {...pageProps} />
+            </main>
+          </animated.div>
+        );
+      })}
+    </React.Fragment>
+  );
+};
+
+interface LayoutProps {
+  items: AppItem[];
+}
+
+export const Layout: React.FC<LayoutProps> = ({ items }) => {
   return (
     <div className={styles.wrapper}>
       <Header />
       <BodyLink side="left" pathname="/archive">
         Archiv
       </BodyLink>
-      <main className={styles.main}>{children}</main>
+      <Transition items={items} />
       <BodyLink side="right" pathname="/contact">
         Kontakt
       </BodyLink>
