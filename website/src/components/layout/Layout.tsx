@@ -34,10 +34,17 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ pathname, children }) => {
 
 interface BodyLinkProps {
   side: 'right' | 'left';
+  distance?: number;
+  pathname: string;
 }
 
-const BodyLink: React.FC<BodyLinkProps> = ({ side, children }) => {
-  const point = side === 'left' ? 100 : -100;
+const BodyLink: React.FC<BodyLinkProps> = ({
+  side,
+  pathname,
+  distance = 60,
+  children,
+}) => {
+  const point = side === 'left' ? distance : -distance;
 
   const [props, set] = useSpring(() => ({
     x: point,
@@ -49,25 +56,27 @@ const BodyLink: React.FC<BodyLinkProps> = ({ side, children }) => {
   };
 
   return (
-    <div
-      className={`fixed inset-y-0 ${side}-0 flex items-center justify-center z-10`}
-      style={{ width: 200 }}
-    >
+    <Link href={pathname}>
       <div
-        className="transform rotate-90 cursor-pointer"
-        style={{ fontSize: 180 }}
+        className={`fixed inset-y-0 ${side}-0 flex items-center justify-center z-10`}
+        style={{ width: 200 }}
       >
-        <animated.div
-          style={{ transform: props.x.interpolate(trans) }}
-          onMouseEnter={() => set({ x: 0 })}
-          onMouseLeave={() => set({ x: point })}
+        <div
+          className="transform rotate-90 cursor-pointer"
+          style={{ fontSize: 180 }}
         >
-          <div className="font-black uppercase leading-none select-none">
-            <span className={styles.bodyLink}>{children}</span>
-          </div>
-        </animated.div>
+          <animated.div
+            style={{ transform: props.x.interpolate(trans) }}
+            onMouseEnter={() => set({ x: 0 })}
+            onMouseLeave={() => set({ x: point })}
+          >
+            <div className="font-black uppercase leading-none select-none">
+              <span className={styles.bodyLink}>{children}</span>
+            </div>
+          </animated.div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -80,7 +89,7 @@ const Header: React.FC = () => {
       </div>
       <Logo />
       <div className="mx-10">
-        <HeaderLink pathname="/statutes">Statuten</HeaderLink>
+        <HeaderLink pathname="/about">About</HeaderLink>
         <HeaderLink pathname="/archive">Archiv</HeaderLink>
       </div>
     </header>
@@ -91,9 +100,13 @@ export const Layout: React.FC = ({ children }) => {
   return (
     <div className={styles.wrapper}>
       <Header />
-      <BodyLink side="left">Archiv</BodyLink>
+      <BodyLink side="left" pathname="/archive">
+        Archiv
+      </BodyLink>
       <main className={styles.main}>{children}</main>
-      <BodyLink side="right">Kontakt</BodyLink>
+      <BodyLink side="right" pathname="/contact">
+        Kontakt
+      </BodyLink>
     </div>
   );
 };
