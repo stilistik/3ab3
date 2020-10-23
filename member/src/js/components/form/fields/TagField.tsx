@@ -29,7 +29,7 @@ export const TagField: React.FC<TagFieldProps> = ({ id, required, defaultValue =
   const inputValue = field.value as string[];
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={required}>
       <TagInput id={id} value={inputValue} onChange={handleChange} {...rest} />
     </FormControl>
   );

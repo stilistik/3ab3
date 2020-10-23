@@ -45,7 +45,7 @@ export const DateField: React.FC<DateFieldProps> = ({
   const inputValue = typeof field.value === 'string' ? field.value : null;
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       <DatePicker
         id={id}
         className={classes?.input}

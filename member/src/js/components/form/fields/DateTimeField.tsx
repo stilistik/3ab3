@@ -45,7 +45,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const inputValue = typeof field.value === 'string' ? field.value : null;
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       <DateTimePicker
         id={id}
         className={classes?.input}

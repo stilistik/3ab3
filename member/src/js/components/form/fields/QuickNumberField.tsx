@@ -51,7 +51,7 @@ export const QuickNumberField: React.FC<NumberFieldProps> = ({
   const inputValue = typeof field.value === 'number' ? field.value : null;
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       {label && (
         <InputLabel
           htmlFor={id}
