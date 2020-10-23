@@ -124,9 +124,17 @@ const Transition: React.FC<TransitionProps> = ({ items }) => {
   const router = useRouter();
 
   const [location] = items;
-  const direction =
-    routes.findIndex((el) => el.pathname === location.id) -
-    routes.findIndex((el) => el.pathname === location.prev);
+
+  function getDirection() {
+    const diff =
+      routes.findIndex((el) => el.pathname === location.id) -
+      routes.findIndex((el) => el.pathname === location.prev);
+    if (diff < -1) return 1;
+    if (diff > 1) return -1;
+    return diff;
+  }
+
+  const direction = getDirection();
 
   const transitions = useTransition(items, (item) => item.id, {
     from: { opacity: 0, transform: `translate3d(${direction * 100}%,0,0)` },

@@ -44,8 +44,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     },
   ];
 
-  prevRoute.current = router.asPath;
-
   return (
     <LazyLoadingProvider>
       <Layout items={items} />
