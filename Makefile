@@ -2,6 +2,7 @@ init:
 	yarn --cwd server/api install
 	yarn --cwd server/prisma install
 	yarn --cwd member install
+	yarn --cwd website install
 
 ##@ Development
 
