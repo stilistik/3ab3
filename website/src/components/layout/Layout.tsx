@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import clx from 'classnames';
 import { useSpring, useTransition, animated } from 'react-spring';
 import styles from './Layout.module.css';
-import { AppItem } from 'Ppages/_app';
+import { AppItem } from 'Pages/_app';
 
 const Logo: React.FC = () => {
   return (
@@ -14,6 +14,41 @@ const Logo: React.FC = () => {
         <h1>B3</h1>
       </div>
     </Link>
+  );
+};
+
+interface SlideInProps {
+  direction: 'up' | 'down';
+}
+
+const SlideIn: React.FC<SlideInProps> = ({ direction, children }) => {
+  const router = useRouter();
+
+  const multiplier = direction === 'up' ? 1 : -1;
+
+  const items = [
+    {
+      id: router.asPath,
+      children: children,
+    },
+  ];
+
+  const transitions = useTransition(items, (item) => item.id, {
+    from: { transform: `translate3d(0,${multiplier * 600}%,0)` },
+    enter: { transform: 'translate3d(0,0%,0)' },
+    leave: { transform: `translate3d(0, ${-multiplier * 600}%,0)` },
+  });
+
+  return (
+    <React.Fragment>
+      {transitions.map(({ item, props, key }) => {
+        return (
+          <animated.div key={key} style={{ ...props, position: 'absolute' }}>
+            {item.children}
+          </animated.div>
+        );
+      })}
+    </React.Fragment>
   );
 };
 
@@ -47,7 +82,7 @@ const BodyLink: React.FC<BodyLinkProps> = ({
 }) => {
   const point = side === 'left' ? distance : -distance;
 
-  const [props, set] = useSpring(() => ({
+  const [springProps, set] = useSpring(() => ({
     x: point,
     config: { mass: 5, tension: 350, friction: 40 },
   }));
@@ -62,20 +97,22 @@ const BodyLink: React.FC<BodyLinkProps> = ({
         className={`fixed inset-y-0 ${side}-0 flex items-center justify-center z-10`}
         style={{ width: 200 }}
       >
-        <div
-          className="transform rotate-90 cursor-pointer"
-          style={{ fontSize: '25.5vh' }}
-        >
-          <animated.div
-            style={{ transform: props.x.interpolate(trans) }}
-            onMouseEnter={() => set({ x: 0 })}
-            onMouseLeave={() => set({ x: point })}
+        <SlideIn direction={side === 'left' ? 'up' : 'down'}>
+          <div
+            className="transform rotate-90 cursor-pointer"
+            style={{ fontSize: '25.5vh' }}
           >
-            <div className="font-black uppercase leading-none select-none">
-              <span className={styles.bodyLink}>{children}</span>
-            </div>
-          </animated.div>
-        </div>
+            <animated.div
+              style={{ transform: springProps.x.interpolate(trans) }}
+              onMouseEnter={() => set({ x: 0 })}
+              onMouseLeave={() => set({ x: point })}
+            >
+              <div className="font-black uppercase leading-none select-none">
+                <span className={styles.bodyLink}>{children}</span>
+              </div>
+            </animated.div>
+          </div>
+        </SlideIn>
       </div>
     </Link>
   );
