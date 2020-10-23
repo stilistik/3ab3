@@ -64,7 +64,7 @@ const BodyLink: React.FC<BodyLinkProps> = ({
       >
         <div
           className="transform rotate-90 cursor-pointer"
-          style={{ fontSize: 180 }}
+          style={{ fontSize: '25.5vh' }}
         >
           <animated.div
             style={{ transform: props.x.interpolate(trans) }}
@@ -101,13 +101,37 @@ interface TransitionProps {
   items: AppItem[];
 }
 
+const routes = [
+  {
+    pathname: '/',
+    label: 'Events',
+  },
+  {
+    pathname: '/contact',
+    label: 'Kontakt',
+  },
+  {
+    pathname: '/about',
+    label: 'About',
+  },
+  {
+    pathname: '/archive',
+    label: 'Archiv',
+  },
+];
+
 const Transition: React.FC<TransitionProps> = ({ items }) => {
   const router = useRouter();
 
+  const [location] = items;
+  const direction =
+    routes.findIndex((el) => el.pathname === location.id) -
+    routes.findIndex((el) => el.pathname === location.prev);
+
   const transitions = useTransition(items, (item) => item.id, {
-    from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
+    from: { opacity: 0, transform: `translate3d(${direction * 100}%,0,0)` },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
-    leave: { opacity: 0, transform: 'translate3d(-100%,0,0)' },
+    leave: { opacity: 0, transform: `translate3d(${-direction * 50}%,0,0)` },
   });
 
   return (
@@ -115,10 +139,8 @@ const Transition: React.FC<TransitionProps> = ({ items }) => {
       {transitions.map(({ item, props, key }) => {
         const { Component, pageProps } = item;
         return (
-          <animated.div key={key} style={props}>
-            <main className={styles.main}>
-              <Component {...pageProps} />
-            </main>
+          <animated.div key={key} className={styles.main} style={props}>
+            <Component {...pageProps} />
           </animated.div>
         );
       })}
@@ -131,15 +153,30 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ items }) => {
+  const router = useRouter();
+
+  function clampIndex(value: number): number {
+    if (value < 0) value = routes.length - 1;
+    if (value > routes.length - 1) value = 0;
+    return value;
+  }
+
+  const currentIndex = routes.findIndex((el) => el.pathname === router.asPath);
+  const nextIndex = clampIndex(currentIndex + 1);
+  const prevIndex = clampIndex(currentIndex - 1);
+
+  const prevRoute = routes[prevIndex];
+  const nextRoute = routes[nextIndex];
+
   return (
     <div className={styles.wrapper}>
       <Header />
-      <BodyLink side="left" pathname="/archive">
-        Archiv
+      <BodyLink side="left" pathname={prevRoute.pathname}>
+        {prevRoute.label}
       </BodyLink>
       <Transition items={items} />
-      <BodyLink side="right" pathname="/contact">
-        Kontakt
+      <BodyLink side="right" pathname={nextRoute.pathname}>
+        {nextRoute.label}
       </BodyLink>
     </div>
   );

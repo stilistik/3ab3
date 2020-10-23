@@ -8,6 +8,7 @@ import '../styles/index.css';
 
 export interface AppItem {
   id: string;
+  prev: string;
   Component: NextComponentType<NextPageContext, any, {}>;
   pageProps: any;
 }
@@ -36,11 +37,14 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
   const items: AppItem[] = [
     {
-      id: router.route,
+      id: router.asPath,
+      prev: prevRoute.current,
       Component: Component,
       pageProps: pageProps,
     },
   ];
+
+  prevRoute.current = router.asPath;
 
   return (
     <LazyLoadingProvider>

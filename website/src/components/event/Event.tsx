@@ -11,7 +11,7 @@ interface EventProps {
 
 export const Event: React.FC<EventProps> = ({ title, origin, date, img }) => {
   return (
-    <LazyLoadingImageDiv src={img} className={styles.wrapper}>
+    <LazyLoadingImageDiv src={img} className={styles.wrapper + ' shadow-2xl'}>
       <div className={styles.top}>
         <h3 className={styles.date}>{new Date(date).toLocaleDateString()}</h3>
         <h4 className={styles.time}>
