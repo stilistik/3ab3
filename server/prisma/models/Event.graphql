@@ -3,6 +3,11 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String

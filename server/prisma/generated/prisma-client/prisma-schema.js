@@ -1063,6 +1063,11 @@ type Event {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1086,6 +1091,11 @@ input EventCreateInput {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1123,6 +1133,11 @@ input EventCreateWithoutCommentsInput {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1139,6 +1154,11 @@ input EventCreateWithoutLikedByInput {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1155,6 +1175,11 @@ input EventCreateWithoutSupportersInput {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1171,6 +1196,11 @@ input EventCreateWithoutTodosInput {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1196,6 +1226,16 @@ enum EventOrderByInput {
   description_DESC
   date_ASC
   date_DESC
+  subtitle_ASC
+  subtitle_DESC
+  spotify_ASC
+  spotify_DESC
+  youtube_ASC
+  youtube_DESC
+  facebook_ASC
+  facebook_DESC
+  instagram_ASC
+  instagram_DESC
   place_ASC
   place_DESC
   image_ASC
@@ -1211,6 +1251,11 @@ type EventPreviousValues {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1268,6 +1313,76 @@ input EventScalarWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  subtitle: String
+  subtitle_not: String
+  subtitle_in: [String!]
+  subtitle_not_in: [String!]
+  subtitle_lt: String
+  subtitle_lte: String
+  subtitle_gt: String
+  subtitle_gte: String
+  subtitle_contains: String
+  subtitle_not_contains: String
+  subtitle_starts_with: String
+  subtitle_not_starts_with: String
+  subtitle_ends_with: String
+  subtitle_not_ends_with: String
+  spotify: String
+  spotify_not: String
+  spotify_in: [String!]
+  spotify_not_in: [String!]
+  spotify_lt: String
+  spotify_lte: String
+  spotify_gt: String
+  spotify_gte: String
+  spotify_contains: String
+  spotify_not_contains: String
+  spotify_starts_with: String
+  spotify_not_starts_with: String
+  spotify_ends_with: String
+  spotify_not_ends_with: String
+  youtube: String
+  youtube_not: String
+  youtube_in: [String!]
+  youtube_not_in: [String!]
+  youtube_lt: String
+  youtube_lte: String
+  youtube_gt: String
+  youtube_gte: String
+  youtube_contains: String
+  youtube_not_contains: String
+  youtube_starts_with: String
+  youtube_not_starts_with: String
+  youtube_ends_with: String
+  youtube_not_ends_with: String
+  facebook: String
+  facebook_not: String
+  facebook_in: [String!]
+  facebook_not_in: [String!]
+  facebook_lt: String
+  facebook_lte: String
+  facebook_gt: String
+  facebook_gte: String
+  facebook_contains: String
+  facebook_not_contains: String
+  facebook_starts_with: String
+  facebook_not_starts_with: String
+  facebook_ends_with: String
+  facebook_not_ends_with: String
+  instagram: String
+  instagram_not: String
+  instagram_in: [String!]
+  instagram_not_in: [String!]
+  instagram_lt: String
+  instagram_lte: String
+  instagram_gt: String
+  instagram_gte: String
+  instagram_contains: String
+  instagram_not_contains: String
+  instagram_starts_with: String
+  instagram_not_starts_with: String
+  instagram_ends_with: String
+  instagram_not_ends_with: String
   place: String
   place_not: String
   place_in: [String!]
@@ -1339,6 +1454,11 @@ input EventUpdateInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1355,6 +1475,11 @@ input EventUpdateManyDataInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1365,6 +1490,11 @@ input EventUpdateManyMutationInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1420,6 +1550,11 @@ input EventUpdateWithoutCommentsDataInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1435,6 +1570,11 @@ input EventUpdateWithoutLikedByDataInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1450,6 +1590,11 @@ input EventUpdateWithoutSupportersDataInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1465,6 +1610,11 @@ input EventUpdateWithoutTodosDataInput {
   title: String
   description: String
   date: DateTime
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   place: String
   image: String
   flyer: String
@@ -1559,6 +1709,76 @@ input EventWhereInput {
   date_lte: DateTime
   date_gt: DateTime
   date_gte: DateTime
+  subtitle: String
+  subtitle_not: String
+  subtitle_in: [String!]
+  subtitle_not_in: [String!]
+  subtitle_lt: String
+  subtitle_lte: String
+  subtitle_gt: String
+  subtitle_gte: String
+  subtitle_contains: String
+  subtitle_not_contains: String
+  subtitle_starts_with: String
+  subtitle_not_starts_with: String
+  subtitle_ends_with: String
+  subtitle_not_ends_with: String
+  spotify: String
+  spotify_not: String
+  spotify_in: [String!]
+  spotify_not_in: [String!]
+  spotify_lt: String
+  spotify_lte: String
+  spotify_gt: String
+  spotify_gte: String
+  spotify_contains: String
+  spotify_not_contains: String
+  spotify_starts_with: String
+  spotify_not_starts_with: String
+  spotify_ends_with: String
+  spotify_not_ends_with: String
+  youtube: String
+  youtube_not: String
+  youtube_in: [String!]
+  youtube_not_in: [String!]
+  youtube_lt: String
+  youtube_lte: String
+  youtube_gt: String
+  youtube_gte: String
+  youtube_contains: String
+  youtube_not_contains: String
+  youtube_starts_with: String
+  youtube_not_starts_with: String
+  youtube_ends_with: String
+  youtube_not_ends_with: String
+  facebook: String
+  facebook_not: String
+  facebook_in: [String!]
+  facebook_not_in: [String!]
+  facebook_lt: String
+  facebook_lte: String
+  facebook_gt: String
+  facebook_gte: String
+  facebook_contains: String
+  facebook_not_contains: String
+  facebook_starts_with: String
+  facebook_not_starts_with: String
+  facebook_ends_with: String
+  facebook_not_ends_with: String
+  instagram: String
+  instagram_not: String
+  instagram_in: [String!]
+  instagram_not_in: [String!]
+  instagram_lt: String
+  instagram_lte: String
+  instagram_gt: String
+  instagram_gte: String
+  instagram_contains: String
+  instagram_not_contains: String
+  instagram_starts_with: String
+  instagram_not_starts_with: String
+  instagram_ends_with: String
+  instagram_not_ends_with: String
   place: String
   place_not: String
   place_in: [String!]
