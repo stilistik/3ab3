@@ -62,8 +62,13 @@ export const EditInfo: React.FC<EditInfoProps> = ({
             label={t('Description')}
             required={true}
           />
-          <TextField id="place" label={t('Location')} required={true} />
           <DateTimeField id="date" label={t('Date')} required={true} />
+          <TextField id="place" label={t('Location')} />
+          <TextField id="subtitle" label={t('Subtitle')} />
+          <TextField id="spotify" label={t('Spotify')} />
+          <TextField id="youtube" label={t('Youtube')} />
+          <TextField id="instagram" label={t('Instagram')} />
+          <TextField id="facebook" label={t('Facebook')} />
         </Box>
       </FormDialog>
     </React.Fragment>
