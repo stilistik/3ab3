@@ -628,7 +628,7 @@ export type ProductInput = {
   name: Scalars['String'];
   price: Scalars['Float'];
   index: Scalars['Int'];
-  image?: Maybe<Scalars['Upload']>;
+  thumbnail?: Maybe<Scalars['Upload']>;
   deleted?: Maybe<Scalars['Boolean']>;
 };
 
