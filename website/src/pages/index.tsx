@@ -29,12 +29,7 @@ const EventPage = ({
       {events.map((event) => {
         return (
           <article key={event.id}>
-            <Event
-              title={event.title}
-              date={event.date}
-              img={event.image}
-              origin="Origin"
-            />
+            <EventCard event={event} />
           </article>
         );
       })}
