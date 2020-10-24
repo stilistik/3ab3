@@ -17,7 +17,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const EventIndex = ({
+const EventPage = ({
   events,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -38,4 +38,4 @@ const EventIndex = ({
   );
 };
 
-export default EventIndex;
+export default EventPage;
