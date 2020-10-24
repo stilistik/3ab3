@@ -79,7 +79,7 @@ a.link:visited {
   font-size: 60px;
   line-height: 0.78em;
   -webkit-text-stroke: 1px whitesmoke;
-  filter: drop-shadow(3px 3px 0px rgba(254, 178, 0, 1));
+  filter: drop-shadow(3px 3px 0px var(--color-primary));
   user-select: none;
   cursor: pointer;
 }

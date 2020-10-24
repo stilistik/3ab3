@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  @apply events;
+}
+
+.events {
+  --color-primary: #feb200;
+}
+
+.about {
+  --color-primary: #12e61c;
+}
+
+.archive {
+  --color-primary: #e62979;
+}
+
+.contact {
+  --color-primary: #1e5ce6;
+}
