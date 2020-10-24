@@ -21,7 +21,7 @@ const EventPage = ({
   events,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <Layout>
+    <React.Fragment>
       {events.map((event) => {
         return (
           <article key={event.id}>
@@ -34,7 +34,7 @@ const EventPage = ({
           </article>
         );
       })}
-    </Layout>
+    </React.Fragment>
   );
 };
 
