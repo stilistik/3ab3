@@ -4,7 +4,10 @@ import { Layout, Event } from 'Components/index';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
-  const events = await prisma.events();
+  const events = await prisma.events({ where: { 
+    published: true,
+    date_gte: new Date().toISOString()
+  }});
 
   return {
     props: {
@@ -14,11 +17,11 @@ export const getStaticProps = async () => {
   };
 };
 
-const EventIndex = ({
+const EventPage = ({
   events,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <Layout>
+    <React.Fragment>
       {events.map((event) => {
         return (
           <article key={event.id}>
@@ -31,7 +34,8 @@ const EventIndex = ({
           </article>
         );
       })}
-    </Layout>
+    </React.Fragment>
   );
 };
-export default EventIndex;
+
+export default EventPage;

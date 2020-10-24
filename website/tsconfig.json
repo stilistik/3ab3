@@ -21,7 +21,7 @@
       "Components/*": [
         "src/components/*"
       ],
-      "Ppages/*": [
+      "Pages/*": [
         "src/pages/*"
       ],
       "App/*": [

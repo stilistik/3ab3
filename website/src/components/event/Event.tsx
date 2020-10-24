@@ -15,9 +15,7 @@ export const Event: React.FC<EventProps> = ({ title, origin, date, img }) => {
       <div className={styles.top}>
         <h3 className={styles.date}>{new Date(date).toLocaleDateString()}</h3>
         <h4 className={styles.time}>
-          {' '}
-          Doors:&nbsp;
-          {new Date(date).toLocaleTimeString()}
+          {'Doors: ' + new Date(date).toLocaleTimeString()}
         </h4>
       </div>
 

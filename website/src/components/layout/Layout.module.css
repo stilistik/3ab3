@@ -23,6 +23,15 @@
   font-weight: 900;
   font-size: 24px;
   color: #8c8c8c;
+  padding: 0px 20px;
+  text-shadow: -1.5px -1.5px 0 whitesmoke, 0 -1.5px 0 whitesmoke,
+    1.5px -1.5px 0 whitesmoke, 1.5px 0 0 whitesmoke, 1.5px 1.5px 0 whitesmoke,
+    0 1.5px 0 whitesmoke, -1.5px 1.5px 0 whitesmoke, -1.5px 0 0 whitesmoke;
+  text-transform: uppercase;
+}
+
+.link.active {
+  color: black;
 }
 
 a.link:link {
@@ -63,9 +72,14 @@ a.link:visited {
 }
 
 .logo {
-  margin: 0;
-  height: 95px;
-  width: 95px;
-  -webkit-filter: drop-shadow(3px 3px 0px rgba(254, 178, 0, 1));
-  filter: drop-shadow(3px 3px 0px rgba(254, 178, 0, 1));
+  margin-top: 8px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 0.78em;
+  -webkit-text-stroke: 1px whitesmoke;
+  filter: drop-shadow(3px 3px 0px var(--color-primary));
+  user-select: none;
+  cursor: pointer;
 }
