@@ -3,5 +3,5 @@
  * deployment target, it is different for a cloud and on premise deployment.
  */
 export const getBackendUrl = () => {
-  return `${window.location.protocol}//${window.location.hostname}:4000`;
+  return `${window.location.protocol}//172.25.8.212:4000`;
 };

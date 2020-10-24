@@ -27,17 +27,14 @@ export const useLazyLoading = (): LazyLoadingContextValue => {
 };
 
 export const LazyLoadingProvider: React.FC = ({ children }) => {
-  const itemsRef = React.useRef<LazyLoadingItem[]>([]);
-
-  const observerRef = React.useRef<IntersectionObserver>(null);
+  const [state, setState] = React.useState<LazyLoadingContextValue>(null);
 
   React.useEffect(() => {
-    observerRef.current = new IntersectionObserver(function(entries) {
+    let items: LazyLoadingItem[] = [];
+    const observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry: IntersectionObserverEntry) {
         if (entry.isIntersecting) {
-          const item = itemsRef.current.find(
-            (item) => item.element === entry.target
-          );
+          const item = items.find((item) => item.element === entry.target);
 
           const tmpImage = new Image();
           tmpImage.onload = () => {
@@ -56,26 +53,23 @@ export const LazyLoadingProvider: React.FC = ({ children }) => {
         }
       });
     });
+
+    function registerLazyImage(item: LazyLoadingItem) {
+      observer.observe(item.element);
+      items.push(item);
+    }
+
+    function unregisterLazyImage(item: LazyLoadingItem) {
+      observer.unobserve(item.element);
+      items = items.filter((el) => el.element !== item.element);
+    }
+
+    setState({ registerLazyImage, unregisterLazyImage });
   }, []);
 
-  function registerLazyImage(item: LazyLoadingItem) {
-    if (!observerRef.current) return;
-    observerRef.current.observe(item.element);
-    itemsRef.current.push(item);
-  }
-
-  function unregisterLazyImage(item: LazyLoadingItem) {
-    if (!observerRef.current) return;
-    observerRef.current.unobserve(item.element);
-    itemsRef.current = itemsRef.current.filter(
-      (el) => el.element !== item.element
-    );
-  }
-
+  if (!state) return null;
   return (
-    <LazyLoadingContext.Provider
-      value={{ registerLazyImage, unregisterLazyImage }}
-    >
+    <LazyLoadingContext.Provider value={state}>
       {children}
     </LazyLoadingContext.Provider>
   );

@@ -4,7 +4,10 @@ import { Layout, Event } from 'Components/index';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
-  const events = await prisma.events();
+  const events = await prisma.events({ where: { 
+    published: true,
+    date_gte: new Date().toISOString()
+  }});
 
   return {
     props: {
@@ -34,4 +37,5 @@ const EventIndex = ({
     </Layout>
   );
 };
+
 export default EventIndex;
