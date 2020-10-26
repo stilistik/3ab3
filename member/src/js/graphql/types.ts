@@ -135,6 +135,11 @@ export type Event = Node & {
   title: Scalars['String'];
   description: Scalars['String'];
   date: Scalars['DateTime'];
+  subtitle?: Maybe<Scalars['String']>;
+  spotify?: Maybe<Scalars['String']>;
+  youtube?: Maybe<Scalars['String']>;
+  facebook?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   place?: Maybe<Scalars['String']>;
   flyer?: Maybe<Scalars['String']>;
@@ -160,6 +165,11 @@ export type EventInput = {
   place?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['Upload']>;
   flyer?: Maybe<Scalars['Upload']>;
+  subtitle?: Maybe<Scalars['String']>;
+  spotify?: Maybe<Scalars['String']>;
+  youtube?: Maybe<Scalars['String']>;
+  facebook?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
 };
 
 export type EventsConnection = Connection & {
@@ -628,7 +638,7 @@ export type ProductInput = {
   name: Scalars['String'];
   price: Scalars['Float'];
   index: Scalars['Int'];
-  image?: Maybe<Scalars['Upload']>;
+  thumbnail?: Maybe<Scalars['Upload']>;
   deleted?: Maybe<Scalars['Boolean']>;
 };
 

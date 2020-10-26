@@ -48,6 +48,7 @@ export const EventInfo: React.FC<EventInfoProps> = ({ event }) => {
       </PaperHeader>
       <Box.Fill p={2} cmbnl={1}>
         <InfoItem label={t('Event Name')} content={event.title} />
+        <InfoItem label={t('Subtitle')} content={event.subtitle} />
         <InfoItem label={t('Location')} content={event.place} />
         <InfoItem
           label={t('Date')}
@@ -58,6 +59,10 @@ export const EventInfo: React.FC<EventInfoProps> = ({ event }) => {
           content={new Date(event.date).toLocaleTimeString()}
         />
         <InfoItem label={t('Description')} content={event.description} />
+        <InfoItem label={t('Spotify')} content={event.spotify} />
+        <InfoItem label={t('Youtube')} content={event.youtube} />
+        <InfoItem label={t('Facebook')} content={event.facebook} />
+        <InfoItem label={t('Instagram')} content={event.instagram} />
       </Box.Fill>
     </Paper>
   );

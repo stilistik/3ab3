@@ -40,7 +40,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   const inputValue = options.find((option) => option.value === field.value);
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={required}>
       <SelectInput id={id} label={label} options={options} value={inputValue} onChange={handleChange} {...rest} />
     </FormControl>
   );

@@ -3,6 +3,11 @@ type Event implements Node {
   title: String!
   description: String!
   date: DateTime!
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
   image: String
   place: String
   flyer: String
@@ -32,6 +37,11 @@ input EventInput {
   place: String
   image: Upload
   flyer: Upload
+  subtitle: String
+  spotify: String
+  youtube: String
+  facebook: String
+  instagram: String
 }
 
 extend type Query {

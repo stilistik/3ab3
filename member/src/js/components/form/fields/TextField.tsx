@@ -1,6 +1,11 @@
 import React from 'react';
 import clx from 'classnames';
-import { InputLabel, Input, InputClassKey, InputLabelClassKey } from '@material-ui/core';
+import {
+  InputLabel,
+  Input,
+  InputClassKey,
+  InputLabelClassKey,
+} from '@material-ui/core';
 import { useField, UseFieldReturn } from '../UseField';
 import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
@@ -15,8 +20,16 @@ export type TextFieldProps = Omit<FieldProps, 'fieldType'> & {
   disabled?: boolean;
   onEnterSubmit?: boolean;
   onBlurSubmit?: boolean;
-  onBlur?: (e: React.FocusEvent, props: TextFieldProps, field: UseFieldReturn) => void;
-  onKeyDown?: (e: React.KeyboardEvent, props: TextFieldProps, field: UseFieldReturn) => void;
+  onBlur?: (
+    e: React.FocusEvent,
+    props: TextFieldProps,
+    field: UseFieldReturn
+  ) => void;
+  onKeyDown?: (
+    e: React.KeyboardEvent,
+    props: TextFieldProps,
+    field: UseFieldReturn
+  ) => void;
   'data-cy'?: string;
 };
 
@@ -26,7 +39,11 @@ interface ITextFieldClasses {
   error?: string;
 }
 
-function defaultHandleKeyDown(e: React.KeyboardEvent, props: TextFieldProps, field: UseFieldReturn) {
+function defaultHandleKeyDown(
+  e: React.KeyboardEvent,
+  props: TextFieldProps,
+  field: UseFieldReturn
+) {
   const { onEnterSubmit } = props;
   const { requestSubmit } = field;
   if (onEnterSubmit && requestSubmit && e.key === 'Enter') {
@@ -34,7 +51,11 @@ function defaultHandleKeyDown(e: React.KeyboardEvent, props: TextFieldProps, fie
   }
 }
 
-function defaultHandleBlur(e: React.FocusEvent, props: TextFieldProps, field: UseFieldReturn) {
+function defaultHandleBlur(
+  e: React.FocusEvent,
+  props: TextFieldProps,
+  field: UseFieldReturn
+) {
   if (props.onBlurSubmit && field.requestSubmit) field.requestSubmit();
   field.onFieldCommit(props.id, field.value);
 }
@@ -64,7 +85,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   const inputValue = typeof field.value === 'string' ? field.value : '';
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       {label && (
         <InputLabel htmlFor={id} classes={classes?.label}>
           {label}

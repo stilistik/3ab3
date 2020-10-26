@@ -1,6 +1,11 @@
 import React from 'react';
 import clx from 'classnames';
-import { FormControlLabel, Checkbox, CheckboxClassKey, FormControlLabelClassKey } from '@material-ui/core';
+import {
+  FormControlLabel,
+  Checkbox,
+  CheckboxClassKey,
+  FormControlLabelClassKey,
+} from '@material-ui/core';
 import { useField } from '../UseField';
 import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
@@ -38,17 +43,29 @@ export const CheckboxField: React.FC<CheckboxFieldProps> = ({
   const inputValue = typeof field.value === 'boolean' ? field.value : false;
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       {label ? (
         <FormControlLabel
           classes={classes?.label}
           control={
-            <Checkbox checked={inputValue} onChange={handleChange} color="primary" classes={classes?.input} {...rest} />
+            <Checkbox
+              checked={inputValue}
+              onChange={handleChange}
+              color="primary"
+              classes={classes?.input}
+              {...rest}
+            />
           }
           label={label}
         />
       ) : (
-        <Checkbox checked={inputValue} onChange={handleChange} color="primary" classes={classes?.input} {...rest} />
+        <Checkbox
+          checked={inputValue}
+          onChange={handleChange}
+          color="primary"
+          classes={classes?.input}
+          {...rest}
+        />
       )}
     </FormControl>
   );

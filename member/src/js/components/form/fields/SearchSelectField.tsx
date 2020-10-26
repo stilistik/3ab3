@@ -72,7 +72,7 @@ export const SearchSelectField: React.FC<SearchSelectFieldProps> = ({
   const inputValue = options.find((option) => option.value === field.value) || null;
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       <SearchSelectInput
         value={inputValue}
         options={options}

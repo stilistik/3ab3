@@ -2,8 +2,16 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import { LazyLoadingProvider } from 'Components/image/LazyLoadingContext';
 import { Layout } from 'Components/index';
+import { NextComponentType, NextPageContext } from 'next';
 
 import '../styles/index.css';
+
+export interface AppItem {
+  id: string;
+  prev: string;
+  Component: NextComponentType<NextPageContext, any, {}>;
+  pageProps: any;
+}
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const pathname = router.pathname;
@@ -27,11 +35,18 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     prevRoute.current = pathname;
   }, [pathname]);
 
+  const items: AppItem[] = [
+    {
+      id: router.asPath,
+      prev: prevRoute.current,
+      Component: Component,
+      pageProps: pageProps,
+    },
+  ];
+
   return (
     <LazyLoadingProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Layout items={items} />
     </LazyLoadingProvider>
   );
 }

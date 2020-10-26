@@ -1,7 +1,10 @@
 import React from 'react';
 import clx from 'classnames';
 import { MultiSelectInput, MultiSelectInputProps } from '../../inputs';
-import { AutocompleteClassKey, AutocompleteGetTagProps } from '@material-ui/lab';
+import {
+  AutocompleteClassKey,
+  AutocompleteGetTagProps,
+} from '@material-ui/lab';
 import { FieldProps } from '../types';
 import { SelectOption } from 'Components/inputs';
 import { useField } from '../UseField';
@@ -38,7 +41,10 @@ export interface MultiSelectFieldClasses {
  * @param classes The classes prop of the MultiSelectField
  * @param hasError Boolean indicating if the field has an error
  */
-function getInputClasses(classes: MultiSelectFieldClasses = {}, hasError: boolean): AutoCompleteClasses {
+function getInputClasses(
+  classes: MultiSelectFieldClasses = {},
+  hasError: boolean
+): AutoCompleteClasses {
   const { root, ...restInputClasses } = classes.autocomplete || {};
   return {
     root: clx(root, { [classes?.error]: hasError }),
@@ -58,7 +64,10 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   const fieldProps = { id, fieldType: 'multiselect', defaultValue, ...rest };
   const field = useField(fieldProps);
 
-  function handleChange(e: React.ChangeEvent<any>, selectedOptions: (string | SelectOption)[]) {
+  function handleChange(
+    e: React.ChangeEvent<any>,
+    selectedOptions: (string | SelectOption)[]
+  ) {
     const values = selectedOptions.map((option) => {
       if (isSelectOption(option)) return option.value;
       else return option;
@@ -73,11 +82,18 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   /**
    * Injects a delete handler into the renderTags props
    */
-  function handleRenderTags(value: SelectOption[], getTagProps: AutocompleteGetTagProps) {
+  function handleRenderTags(
+    value: SelectOption[],
+    getTagProps: AutocompleteGetTagProps
+  ) {
     // deletes an item from the value
     function handleRemoveFromValue(toRemove: SelectOption) {
-      const newValue = (field.value as string[]).filter((el) => el !== toRemove.value);
-      const newOptions = options.filter((option) => newValue.includes(option.value));
+      const newValue = (field.value as string[]).filter(
+        (el) => el !== toRemove.value
+      );
+      const newOptions = options.filter((option) =>
+        newValue.includes(option.value)
+      );
       field.onChange(newValue);
       field.onFieldCommit(id, newValue);
       field.onFieldOptionSelected(id, newOptions);
@@ -87,10 +103,12 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 
   const cls = clx(className, { [classes?.error]: Boolean(field.error) });
 
-  const inputValue = options.filter((option) => (field.value as string[]).includes(option.value));
+  const inputValue = options.filter((option) =>
+    (field.value as string[]).includes(option.value)
+  );
 
   return (
-    <FormControl className={cls} error={field.error}>
+    <FormControl className={cls} error={field.error} required={rest.required}>
       <MultiSelectInput
         value={inputValue}
         options={options}
