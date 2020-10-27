@@ -6,6 +6,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TableContainer,
+  makeStyles,
 } from '@material-ui/core';
 import { Tag, Loading, Error } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
@@ -35,8 +37,23 @@ const BalanceCell = ({ balance }) => {
   return <TableCell align="right">{amount}</TableCell>;
 };
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    overflow: 'hidden',
+  },
+  container: {
+    maxHeight: '600px',
+  },
+  stickyHeader: {
+    backgroundColor: theme.palette.background.paper,
+    fontWeight: 'bold',
+    color: theme.palette.text.secondary,
+  },
+}));
+
 const BalanceTable = () => {
   const { t } = useTranslation();
+  const styles = useStyles();
   const { loading, error, data } = useQuery(BALANCE_TABLE);
 
   if (loading) return <Loading />;
@@ -44,27 +61,38 @@ const BalanceTable = () => {
 
   const { users } = data;
   return (
-    <Paper>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>{t('Name')}</TableCell>
-            <TableCell>{t('Last Transaction')}</TableCell>
-            <TableCell align="right">{t('Amount')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => {
-            return (
-              <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
-                <TransactionCell user={user} />
-                <BalanceCell balance={user.balance} />
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+    <Paper className={styles.paper}>
+      <TableContainer className={styles.container}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
+                {t('Name')}
+              </TableCell>
+              <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
+                {t('Last Transaction')}
+              </TableCell>
+              <TableCell
+                align="right"
+                classes={{ stickyHeader: styles.stickyHeader }}
+              >
+                {t('Amount')}
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => {
+              return (
+                <TableRow key={user.id}>
+                  <TableCell>{user.name}</TableCell>
+                  <TransactionCell user={user} />
+                  <BalanceCell balance={user.balance} />
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Paper>
   );
 };
