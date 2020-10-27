@@ -120,7 +120,6 @@ export const PaymentReminder = () => {
       <Box p={2}>
         <Typography variant="h6">{t('Payment Reminder')}</Typography>
         <Typography variant="body1">{t('Threshold CHF')}</Typography>
-
         <ThresholdSlider threshold={threshold} onChange={handleChange} />
         <AffectedUserList threshold={threshold} />
       </Box>

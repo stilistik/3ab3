@@ -8,7 +8,7 @@ import { Dashboard } from 'Pages/dashboard';
 import { Checklist } from 'Pages/checklist';
 import { Messenger } from 'Pages/messenger';
 import { Account } from 'Pages/account';
-import Profile from 'Pages/profile';
+import { Profile } from 'Pages/profile';
 import { AllEvents, SingleEvent } from 'Pages/events';
 import { ProductList } from 'Pages/products';
 import { MemberList } from 'Pages/members';
