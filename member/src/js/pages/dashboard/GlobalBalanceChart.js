@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { TimeLineChart } from 'Components';
 import { Paper } from '@material-ui/core';
+import { getBalanceColorClass } from 'Components/utility/Utils';
 import { GLOBAL_BALANCE_CHART } from 'Graphql/queries';
 
 export const GlobalBalanceChart = () => {
@@ -19,8 +20,8 @@ export const GlobalBalanceChart = () => {
     })
     .reduce((acc, curr) => acc + curr, 0);
 
-
   let value = totalBalance - totalTransactionValue;
+
   const d = data.transactions.edges
     .slice()
     .reverse()
@@ -34,11 +35,14 @@ export const GlobalBalanceChart = () => {
       };
     });
 
+  const lastValue = d.slice(-1)[0];
+  const { color } = getBalanceColorClass(lastValue.y);
+
   const chartData = [
     {
       id: 'balance',
-      color: '#5BA05E',
       data: d,
+      color: color,
     },
   ];
 
