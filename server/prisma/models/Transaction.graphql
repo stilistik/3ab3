@@ -1,6 +1,6 @@
 type Transaction {
   id: ID! @unique @id
-  user: User!
+  user: User! @relation(name: "UserTransactions")
   date: DateTime!
   type: TransactionType!
   balance: Float!

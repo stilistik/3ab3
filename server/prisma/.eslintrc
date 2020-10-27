@@ -3,13 +3,10 @@
     "es6": true,
     "browser": true,
     "node": true,
-    "jest": true,
+    "jest": true
   },
   "plugins": ["prettier"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": 8,
     "sourceType": "module"
@@ -19,6 +16,6 @@
     "no-unused-vars": "warn",
     "no-console": 1,
     "no-unexpected-multiline": "warn",
-    "no-process-env": 0,
-  },
+    "no-process-env": 0
+  }
 }

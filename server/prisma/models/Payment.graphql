@@ -1,7 +1,7 @@
 type Payment {
   id: ID! @unique @id
   amount: Float!
-  user: User!
+  user: User! @relation(name: "UserPayments")
   date: DateTime!
   verified: Boolean! @default(value: false)
   transaction: Transaction! @relation(link: TABLE, name: "PaymentTransaction" onDelete: CASCADE)

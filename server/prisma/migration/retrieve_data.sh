@@ -38,5 +38,15 @@ $CURL_BIN \
     -X GET https://member.3ab3.ch/api/payments/ \
     -o ./generated/payments.json
 
+$CURL_BIN \
+    -d "$DJANGO_TOKEN&username=$YOUR_USER&password=$YOUR_PASS" \
+    -X GET https://member.3ab3.ch/api/checklists/ \
+    -o ./generated/checklists.json
+
+$CURL_BIN \
+    -d "$DJANGO_TOKEN&username=$YOUR_USER&password=$YOUR_PASS" \
+    -X GET https://member.3ab3.ch/api/diverse_debt/ \
+    -o ./generated/diverse_debt.json
+
 echo "logout"
 rm $COOKIES

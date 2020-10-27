@@ -8,9 +8,9 @@ type User {
   avatar: String
   loginToken: String
   purchases: [Purchase!]!
-  payments: [Payment!]!
-  transactions: [Transaction!]!
-  items: [Item!]!
+  payments: [Payment!]! @relation(name: "UserPayments", onDelete: CASCADE)
+  transactions: [Transaction!]! @relation(name: "UserTransactions", onDelete: CASCADE)
+  items: [Item!]! @relation(name: "UserItems", onDelete: CASCADE)
   language: String! @default(value: "de-CH")
   balance: Float! @default(value: 0)
   posts: [Post!]! @relation(name: "PostAuthor", onDelete: CASCADE)
