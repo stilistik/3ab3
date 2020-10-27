@@ -12,6 +12,7 @@ import {
   Hidden,
   Select,
   MenuItem,
+  makeStyles,
 } from '@material-ui/core';
 import { Tag, Icon } from 'Components';
 import gql from 'graphql-tag';
@@ -182,9 +183,18 @@ const ReceiptCell = ({ transaction }) => {
   );
 };
 
+const useStyles = makeStyles((theme) => ({
+  headerCell: {
+    backgroundColor: theme.palette.background.paper,
+    fontWeight: 'bold',
+    color: theme.palette.text.secondary,
+  },
+}));
+
 const TransactionTable = () => {
   const [pageSize, setPageSize] = React.useState(10);
   const [page, setPage] = React.useState(0);
+  const styles = useStyles();
 
   const skip = page * pageSize;
   const { loading, error, data } = useQuery(TRANSACTIONS, {
@@ -211,9 +221,13 @@ const TransactionTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell align="left">Receipt</TableCell>
-              <TableCell align="right">Amount</TableCell>
+              <TableCell className={styles.headerCell}>Date</TableCell>
+              <TableCell className={styles.headerCell} align="left">
+                Receipt
+              </TableCell>
+              <TableCell className={styles.headerCell} align="right">
+                Amount
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
