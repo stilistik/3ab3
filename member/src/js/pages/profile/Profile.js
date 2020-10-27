@@ -22,11 +22,6 @@ const DesktopProfile = () => {
         <ConsumptionChart />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Typography variant="h5" color="textPrimary">
-          {t('History').toUpperCase()}
-        </Typography>
-        <Divider />
-        <br />
         <TransactionTable />
       </Grid>
     </Grid>

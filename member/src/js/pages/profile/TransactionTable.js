@@ -13,6 +13,7 @@ import {
   Select,
   MenuItem,
   makeStyles,
+  TableContainer,
 } from '@material-ui/core';
 import { Tag, Icon } from 'Components';
 import gql from 'graphql-tag';
@@ -184,7 +185,13 @@ const ReceiptCell = ({ transaction }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  headerCell: {
+  paper: {
+    overflow: 'hidden',
+  },
+  container: {
+    maxHeight: '600px',
+  },
+  stickyHeader: {
     backgroundColor: theme.palette.background.paper,
     fontWeight: 'bold',
     color: theme.palette.text.secondary,
@@ -217,42 +224,52 @@ const TransactionTable = () => {
     } = data.currentUser;
     const transactions = edges.map((el) => el.node);
     return (
-      <Paper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className={styles.headerCell}>Date</TableCell>
-              <TableCell className={styles.headerCell} align="left">
-                Receipt
-              </TableCell>
-              <TableCell className={styles.headerCell} align="right">
-                Amount
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {transactions.map((transaction) => (
-              <TableRow key={transaction.id}>
-                <TableCell component="th" scope="row">
-                  {new Date(transaction.date).toDateString()}
+      <Paper className={styles.paper}>
+        <TableContainer className={styles.container}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
+                  Date
                 </TableCell>
-                <ReceiptCell transaction={transaction} />
-                <AmountCell transaction={transaction} />
+                <TableCell
+                  classes={{ stickyHeader: styles.stickyHeader }}
+                  align="left"
+                >
+                  Receipt
+                </TableCell>
+                <TableCell
+                  classes={{ stickyHeader: styles.stickyHeader }}
+                  align="right"
+                >
+                  Amount
+                </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              colSpan={3}
-              count={transactionCount}
-              pageSize={pageSize}
-              page={page}
-              onChangePage={onChangePage}
-              onChangePageSize={onChangePageSize}
-            />
-          </TableFooter>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {transactions.map((transaction) => (
+                <TableRow key={transaction.id}>
+                  <TableCell component="th" scope="row">
+                    {new Date(transaction.date).toDateString()}
+                  </TableCell>
+                  <ReceiptCell transaction={transaction} />
+                  <AmountCell transaction={transaction} />
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                colSpan={3}
+                count={transactionCount}
+                pageSize={pageSize}
+                page={page}
+                onChangePage={onChangePage}
+                onChangePageSize={onChangePageSize}
+              />
+            </TableFooter>
+          </Table>
+        </TableContainer>
       </Paper>
     );
   }
