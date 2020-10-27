@@ -5,7 +5,7 @@ export class LinkValidator {
     const urls = input.split(/\s+/).filter((el) => validator.isURL(el));
     const links = [];
     for (let url of urls) {
-      const link = await this.validateLink(url);
+      const link = await LinkValidator.validateLink(url);
       links.push(link);
     }
     return links;
@@ -13,10 +13,10 @@ export class LinkValidator {
 
   static validateLink = async (url) => {
     if (!url) return null;
-    if (await this.isImageLink(url)) return { type: 'IMAGE', url };
-    else if (this.isVideoLink(url)) return { type: 'VIDEO', url };
-    else if (this.isYoutubeLink(url)) return { type: 'YOUTUBE', url };
-    else if (this.isSpotifySong(url)) return { type: 'SPOTIFY', url };
+    if (await LinkValidator.isImageLink(url)) return { type: 'IMAGE', url };
+    else if (LinkValidator.isVideoLink(url)) return { type: 'VIDEO', url };
+    else if (LinkValidator.isYoutubeLink(url)) return { type: 'YOUTUBE', url };
+    else if (LinkValidator.isSpotifySong(url)) return { type: 'SPOTIFY', url };
     else return { type: 'UNKNOWN', url };
   };
 
