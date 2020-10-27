@@ -6,6 +6,7 @@ type Transaction implements Node {
   type: TransactionType!
   purchase: Purchase
   payment: Payment
+  nanocredit: NanoCredit
 }
 
 type TransactionEdge implements Edge {
@@ -20,11 +21,17 @@ type TransactionConnection implements Connection {
 }
 
 enum TransactionType {
-  PAYMENT,
+  PAYMENT
   PURCHASE
+  NANOCREDIT
 }
 
 extend type Query {
   transaction(transactionId: ID!): Transaction!
-  transactions(type: TransactionType, first: Int!, skip: Int, after: String): TransactionConnection
+  transactions(
+    type: TransactionType
+    first: Int!
+    skip: Int
+    after: String
+  ): TransactionConnection
 }

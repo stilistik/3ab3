@@ -35,6 +35,10 @@ type AggregateMessage {
   count: Int!
 }
 
+type AggregateNanoCredit {
+  count: Int!
+}
+
 type AggregatePayment {
   count: Int!
 }
@@ -2653,6 +2657,12 @@ type Mutation {
   upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   deleteMessage(where: MessageWhereUniqueInput!): Message
   deleteManyMessages(where: MessageWhereInput): BatchPayload!
+  createNanoCredit(data: NanoCreditCreateInput!): NanoCredit!
+  updateNanoCredit(data: NanoCreditUpdateInput!, where: NanoCreditWhereUniqueInput!): NanoCredit
+  updateManyNanoCredits(data: NanoCreditUpdateManyMutationInput!, where: NanoCreditWhereInput): BatchPayload!
+  upsertNanoCredit(where: NanoCreditWhereUniqueInput!, create: NanoCreditCreateInput!, update: NanoCreditUpdateInput!): NanoCredit!
+  deleteNanoCredit(where: NanoCreditWhereUniqueInput!): NanoCredit
+  deleteManyNanoCredits(where: NanoCreditWhereInput): BatchPayload!
   createPayment(data: PaymentCreateInput!): Payment!
   updatePayment(data: PaymentUpdateInput!, where: PaymentWhereUniqueInput!): Payment
   updateManyPayments(data: PaymentUpdateManyMutationInput!, where: PaymentWhereInput): BatchPayload!
@@ -2701,6 +2711,175 @@ enum MutationType {
   CREATED
   UPDATED
   DELETED
+}
+
+type NanoCredit {
+  id: ID!
+  transaction: Transaction!
+  amount: Float!
+  user: User!
+  description: String!
+  date: DateTime!
+}
+
+type NanoCreditConnection {
+  pageInfo: PageInfo!
+  edges: [NanoCreditEdge]!
+  aggregate: AggregateNanoCredit!
+}
+
+input NanoCreditCreateInput {
+  id: ID
+  transaction: TransactionCreateOneWithoutNanocreditInput!
+  amount: Float!
+  user: UserCreateOneInput!
+  description: String!
+  date: DateTime!
+}
+
+input NanoCreditCreateOneWithoutTransactionInput {
+  create: NanoCreditCreateWithoutTransactionInput
+  connect: NanoCreditWhereUniqueInput
+}
+
+input NanoCreditCreateWithoutTransactionInput {
+  id: ID
+  amount: Float!
+  user: UserCreateOneInput!
+  description: String!
+  date: DateTime!
+}
+
+type NanoCreditEdge {
+  node: NanoCredit!
+  cursor: String!
+}
+
+enum NanoCreditOrderByInput {
+  id_ASC
+  id_DESC
+  amount_ASC
+  amount_DESC
+  description_ASC
+  description_DESC
+  date_ASC
+  date_DESC
+}
+
+type NanoCreditPreviousValues {
+  id: ID!
+  amount: Float!
+  description: String!
+  date: DateTime!
+}
+
+type NanoCreditSubscriptionPayload {
+  mutation: MutationType!
+  node: NanoCredit
+  updatedFields: [String!]
+  previousValues: NanoCreditPreviousValues
+}
+
+input NanoCreditSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: NanoCreditWhereInput
+  AND: [NanoCreditSubscriptionWhereInput!]
+  OR: [NanoCreditSubscriptionWhereInput!]
+  NOT: [NanoCreditSubscriptionWhereInput!]
+}
+
+input NanoCreditUpdateInput {
+  transaction: TransactionUpdateOneRequiredWithoutNanocreditInput
+  amount: Float
+  user: UserUpdateOneRequiredInput
+  description: String
+  date: DateTime
+}
+
+input NanoCreditUpdateManyMutationInput {
+  amount: Float
+  description: String
+  date: DateTime
+}
+
+input NanoCreditUpdateOneWithoutTransactionInput {
+  create: NanoCreditCreateWithoutTransactionInput
+  update: NanoCreditUpdateWithoutTransactionDataInput
+  upsert: NanoCreditUpsertWithoutTransactionInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: NanoCreditWhereUniqueInput
+}
+
+input NanoCreditUpdateWithoutTransactionDataInput {
+  amount: Float
+  user: UserUpdateOneRequiredInput
+  description: String
+  date: DateTime
+}
+
+input NanoCreditUpsertWithoutTransactionInput {
+  update: NanoCreditUpdateWithoutTransactionDataInput!
+  create: NanoCreditCreateWithoutTransactionInput!
+}
+
+input NanoCreditWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  transaction: TransactionWhereInput
+  amount: Float
+  amount_not: Float
+  amount_in: [Float!]
+  amount_not_in: [Float!]
+  amount_lt: Float
+  amount_lte: Float
+  amount_gt: Float
+  amount_gte: Float
+  user: UserWhereInput
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
+  AND: [NanoCreditWhereInput!]
+  OR: [NanoCreditWhereInput!]
+  NOT: [NanoCreditWhereInput!]
+}
+
+input NanoCreditWhereUniqueInput {
+  id: ID
 }
 
 interface Node {
@@ -3797,6 +3976,9 @@ type Query {
   message(where: MessageWhereUniqueInput!): Message
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
   messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
+  nanoCredit(where: NanoCreditWhereUniqueInput!): NanoCredit
+  nanoCredits(where: NanoCreditWhereInput, orderBy: NanoCreditOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [NanoCredit]!
+  nanoCreditsConnection(where: NanoCreditWhereInput, orderBy: NanoCreditOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NanoCreditConnection!
   payment(where: PaymentWhereUniqueInput!): Payment
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment]!
   paymentsConnection(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PaymentConnection!
@@ -3830,6 +4012,7 @@ type Subscription {
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
+  nanoCredit(where: NanoCreditSubscriptionWhereInput): NanoCreditSubscriptionPayload
   payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
@@ -4142,6 +4325,7 @@ type Transaction {
   date: DateTime!
   type: TransactionType!
   balance: Float!
+  nanocredit: NanoCredit
   payment: Payment
   purchase: Purchase
 }
@@ -4158,6 +4342,7 @@ input TransactionCreateInput {
   date: DateTime!
   type: TransactionType!
   balance: Float!
+  nanocredit: NanoCreditCreateOneWithoutTransactionInput
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
@@ -4165,6 +4350,11 @@ input TransactionCreateInput {
 input TransactionCreateManyWithoutUserInput {
   create: [TransactionCreateWithoutUserInput!]
   connect: [TransactionWhereUniqueInput!]
+}
+
+input TransactionCreateOneWithoutNanocreditInput {
+  create: TransactionCreateWithoutNanocreditInput
+  connect: TransactionWhereUniqueInput
 }
 
 input TransactionCreateOneWithoutPaymentInput {
@@ -4177,12 +4367,23 @@ input TransactionCreateOneWithoutPurchaseInput {
   connect: TransactionWhereUniqueInput
 }
 
+input TransactionCreateWithoutNanocreditInput {
+  id: ID
+  user: UserCreateOneWithoutTransactionsInput!
+  date: DateTime!
+  type: TransactionType!
+  balance: Float!
+  payment: PaymentCreateOneWithoutTransactionInput
+  purchase: PurchaseCreateOneWithoutTransactionInput
+}
+
 input TransactionCreateWithoutPaymentInput {
   id: ID
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
   balance: Float!
+  nanocredit: NanoCreditCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
 
@@ -4192,6 +4393,7 @@ input TransactionCreateWithoutPurchaseInput {
   date: DateTime!
   type: TransactionType!
   balance: Float!
+  nanocredit: NanoCreditCreateOneWithoutTransactionInput
   payment: PaymentCreateOneWithoutTransactionInput
 }
 
@@ -4200,6 +4402,7 @@ input TransactionCreateWithoutUserInput {
   date: DateTime!
   type: TransactionType!
   balance: Float!
+  nanocredit: NanoCreditCreateOneWithoutTransactionInput
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
@@ -4288,6 +4491,7 @@ input TransactionSubscriptionWhereInput {
 enum TransactionType {
   PAYMENT
   PURCHASE
+  NANOCREDIT
 }
 
 input TransactionUpdateInput {
@@ -4295,6 +4499,7 @@ input TransactionUpdateInput {
   date: DateTime
   type: TransactionType
   balance: Float
+  nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
@@ -4328,6 +4533,13 @@ input TransactionUpdateManyWithWhereNestedInput {
   data: TransactionUpdateManyDataInput!
 }
 
+input TransactionUpdateOneRequiredWithoutNanocreditInput {
+  create: TransactionCreateWithoutNanocreditInput
+  update: TransactionUpdateWithoutNanocreditDataInput
+  upsert: TransactionUpsertWithoutNanocreditInput
+  connect: TransactionWhereUniqueInput
+}
+
 input TransactionUpdateOneRequiredWithoutPaymentInput {
   create: TransactionCreateWithoutPaymentInput
   update: TransactionUpdateWithoutPaymentDataInput
@@ -4342,11 +4554,21 @@ input TransactionUpdateOneRequiredWithoutPurchaseInput {
   connect: TransactionWhereUniqueInput
 }
 
+input TransactionUpdateWithoutNanocreditDataInput {
+  user: UserUpdateOneRequiredWithoutTransactionsInput
+  date: DateTime
+  type: TransactionType
+  balance: Float
+  payment: PaymentUpdateOneWithoutTransactionInput
+  purchase: PurchaseUpdateOneWithoutTransactionInput
+}
+
 input TransactionUpdateWithoutPaymentDataInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
   balance: Float
+  nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
 
@@ -4355,6 +4577,7 @@ input TransactionUpdateWithoutPurchaseDataInput {
   date: DateTime
   type: TransactionType
   balance: Float
+  nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   payment: PaymentUpdateOneWithoutTransactionInput
 }
 
@@ -4362,6 +4585,7 @@ input TransactionUpdateWithoutUserDataInput {
   date: DateTime
   type: TransactionType
   balance: Float
+  nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
@@ -4369,6 +4593,11 @@ input TransactionUpdateWithoutUserDataInput {
 input TransactionUpdateWithWhereUniqueWithoutUserInput {
   where: TransactionWhereUniqueInput!
   data: TransactionUpdateWithoutUserDataInput!
+}
+
+input TransactionUpsertWithoutNanocreditInput {
+  update: TransactionUpdateWithoutNanocreditDataInput!
+  create: TransactionCreateWithoutNanocreditInput!
 }
 
 input TransactionUpsertWithoutPaymentInput {
@@ -4423,6 +4652,7 @@ input TransactionWhereInput {
   balance_lte: Float
   balance_gt: Float
   balance_gte: Float
+  nanocredit: NanoCreditWhereInput
   payment: PaymentWhereInput
   purchase: PurchaseWhereInput
   AND: [TransactionWhereInput!]

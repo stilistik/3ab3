@@ -25,6 +25,7 @@ const Todo = require('./Todo');
 const Message = require('./Message');
 const Chat = require('./Chat');
 const Document = require('./Document');
+const NanoCredit = require('./NanoCredit');
 
 const { HasRoleDirective } = require('./Directives');
 
@@ -91,6 +92,7 @@ module.exports = makeExecutableSchema({
     Message.typeDef,
     Chat.typeDef,
     Document.typeDef,
+    NanoCredit.typeDef,
   ],
   resolvers: merge(
     resolvers,
@@ -109,7 +111,8 @@ module.exports = makeExecutableSchema({
     Todo.resolvers,
     Message.resolvers,
     Chat.resolvers,
-    Document.resolvers
+    Document.resolvers,
+    NanoCredit.resolvers
   ),
   schemaDirectives: {
     hasRole: HasRoleDirective,

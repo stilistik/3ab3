@@ -15,6 +15,7 @@ datamodel:
   - models/Message.graphql
   - models/Chat.graphql
   - models/Document.graphql
+  - models/NanoCredit.graphql
 generate:
   - generator: javascript-client
     output: ./generated/prisma-client/

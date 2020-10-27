@@ -177,7 +177,38 @@ async function migratePurchases(
   console.log('Purchase migration completed.');
 }
 
-async function migrateDiverseDebt() {}
+async function migrateNanoCredits(prisma, oldCredits, usersConsolidated) {
+  console.log('Migrating nanocredits ...');
+  for (let oldCredit of oldCredits) {
+    const user = await prisma.user({
+      id: usersConsolidated.find((el) => el.pk === oldCredit.debitor).id,
+    });
+    const balance = user.balance - oldCredit.amount;
+
+    const date = new Date(oldCredit.date).toISOString();
+    await prisma.createNanoCredit({
+      amount: oldCredit.amount,
+      description: oldCredit.desc,
+      date,
+      user: { connect: { id: user.id } },
+      transaction: {
+        create: {
+          user: { connect: { id: user.id } },
+          date,
+          type: 'NANOCREDIT',
+          balance,
+        },
+      },
+    });
+
+    await prisma.updateUser({
+      where: { id: user.id },
+      data: { balance },
+    });
+  }
+
+  console.log('Nanocredit migration completed.');
+}
 
 async function main() {
   const prisma = new Prisma({
@@ -189,6 +220,7 @@ async function main() {
   const products = await migrateProducts(prisma, data.items);
 
   await migratePayments(prisma, users, data.payments);
+  await migrateNanoCredits(prisma, data.diverse_debt, users);
   await migratePurchases(
     prisma,
     data.consumed,

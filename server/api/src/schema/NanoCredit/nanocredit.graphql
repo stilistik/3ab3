@@ -1,0 +1,8 @@
+type NanoCredit {
+  id: ID!
+  transaction: Transaction!
+  amount: Float!
+  user: User!
+  description: String!
+  date: DateTime!
+}

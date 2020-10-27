@@ -34,6 +34,9 @@ const TRANSACTIONS = gql`
             id
             date
             type
+            nanocredit {
+              amount
+            }
             payment {
               amount
             }
@@ -132,16 +135,26 @@ const TablePagination = ({ page, count, pageSize, ...rest }) => {
 };
 
 const AmountCell = ({ transaction }) => {
-  const amount =
-    transaction.type === 'PAYMENT' ? (
+  let amount = null;
+  if (transaction.type === 'PAYMENT')
+    amount = (
       <Tag outlined color="#43a047">
         {'+' + transaction.payment.amount.toFixed(2) + ' CHF'}
       </Tag>
-    ) : (
+    );
+  else if (transaction.type === 'PURCHASE')
+    amount = (
       <Tag outlined color="#f5222d">
         {'-' + transaction.purchase.total.toFixed(2) + ' CHF'}
       </Tag>
     );
+  else if (transaction.type === 'NANOCREDIT') {
+    amount = (
+      <Tag outlined color="#f5222d">
+        {'-' + transaction.nanocredit.amount.toFixed(2) + ' CHF'}
+      </Tag>
+    );
+  }
   return <TableCell align="right">{amount}</TableCell>;
 };
 

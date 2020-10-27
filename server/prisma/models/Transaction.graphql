@@ -4,11 +4,13 @@ type Transaction {
   date: DateTime!
   type: TransactionType!
   balance: Float!
-  payment: Payment @relation(name: "PaymentTransaction" onDelete: CASCADE)
-  purchase: Purchase @relation(name: "PurchaseTransaction" onDelete: CASCADE)
+  nanocredit: NanoCredit @relation(name: "NanoCreditTransaction", onDelete: CASCADE)
+  payment: Payment @relation(name: "PaymentTransaction", onDelete: CASCADE)
+  purchase: Purchase @relation(name: "PurchaseTransaction", onDelete: CASCADE)
 }
 
 enum TransactionType {
-  PAYMENT,
+  PAYMENT
   PURCHASE
+  NANOCREDIT
 }

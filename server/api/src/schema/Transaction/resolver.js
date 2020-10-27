@@ -20,6 +20,9 @@ module.exports = {
     purchase(root, args, context) {
       return context.prisma.transaction({ id: root.id }).purchase();
     },
+    nanocredit(root, args, context) {
+      return context.prisma.transaction({ id: root.id }).nanocredit();
+    },
   },
   TransactionConnection: {
     count(root, args, context) {
