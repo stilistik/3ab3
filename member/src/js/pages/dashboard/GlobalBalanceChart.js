@@ -12,39 +12,27 @@ export const GlobalBalanceChart = () => {
   const totalBalance = data.users
     .map((el) => el.balance)
     .reduce((acc, curr) => acc + curr, 0);
+  console.log(totalBalance);
+  const transactions = data.transactions.edges.map((edge) => edge.node);
 
-  const totalTransactionValue = data.transactions.edges
-    .map((el) => {
-      if (el.node.type === 'PURCHASE') return -el.node.purchase.total;
-      else if (el.node.type === 'PAYMENT') return +el.node.payment.amount;
-    })
-    .reduce((acc, curr) => acc + curr, 0);
-
-  let value = totalBalance - totalTransactionValue;
-
-  const d = data.transactions.edges
-    .slice()
-    .reverse()
-    .map((el, idx) => {
-      if (el.node.type === 'PURCHASE') value -= el.node.purchase.total;
-      else if (el.node.type === 'PAYMENT') value += el.node.payment.amount;
-      return {
-        x: idx,
-        y: value,
-        date: new Date(el.node.date),
-      };
+  const createChartData = (transactions, balance) => {
+    const data = [];
+    transactions.forEach((transaction, index) => {
+      data.push({
+        x: transactions.length - index,
+        y: balance,
+        date: transaction.date,
+      });
+      balance -= transaction.change;
     });
 
-  const lastValue = d.slice(-1)[0];
-  const { color } = getBalanceColorClass(lastValue.y);
+    const lastValue = data.slice(-1)[0];
+    const { color } = getBalanceColorClass(lastValue.y);
 
-  const chartData = [
-    {
-      id: 'balance',
-      data: d,
-      color: color,
-    },
-  ];
+    return [{ id: 'balance', color: color, data: data }];
+  };
+
+  const chartData = createChartData(transactions, totalBalance);
 
   return (
     <Paper style={{ width: '100%', height: '300px', color: 'white' }}>

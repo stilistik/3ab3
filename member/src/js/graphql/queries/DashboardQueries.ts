@@ -23,14 +23,7 @@ export const GLOBAL_BALANCE_CHART = gql`
           id
           type
           date
-          purchase {
-            id
-            total
-          }
-          payment {
-            id
-            amount
-          }
+          change
         }
       }
     }
