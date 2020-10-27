@@ -11,8 +11,10 @@ export const TRANSACTIONS = gql`
             id
             date
             type
+            change
             nanocredit {
               amount
+              description
             }
             payment {
               amount
@@ -45,3 +47,23 @@ export const BALANCE_CHART = gql`
     }
   }
 `;
+
+export const PURCHASE_RECEIPT = gql`
+  query($purchaseId: ID!) {
+    purchase(purchaseId: $purchaseId) {
+      id
+      total
+      items {
+        id
+        product {
+          name
+          price
+        }
+        price
+        amount
+      }
+    }
+  }
+`;
+
+

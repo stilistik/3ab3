@@ -15,7 +15,7 @@ export const Account: React.FC = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Paper>
-              <Box p={2}>
+              <Box p={2} cmbnl={2}>
                 <Typography variant="h4">{user.name}</Typography>
                 <AccountForm user={user} />
               </Box>

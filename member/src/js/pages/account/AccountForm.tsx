@@ -41,8 +41,8 @@ export const AccountForm: React.FC<AccountFormProps> = ({ user }) => {
     <Form onSubmit={handleSubmit} initValues={user}>
       <Box cmb={2}>
         <ImageField id="avatar" label={t("User Avatar")} />
-        <TextField id="name" label={t("Name")} />
-        <TextField id="email" label={t("Email")} type="email" />
+        <TextField id="name" label={t("Name")} required />
+        <TextField id="email" label={t("Email")} type="email" required />
         <TextField id="phone" label={t("Phone")} />
         <DateField id="birthdate" label={t("Birthday")} />
         <FormSubmit>

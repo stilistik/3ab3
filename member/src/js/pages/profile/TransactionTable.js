@@ -15,13 +15,14 @@ import {
   makeStyles,
   TableContainer,
 } from '@material-ui/core';
-import { Tag, Icon } from 'Components';
+import { Tag, Box, Icon } from 'Components';
 import { useQuery } from '@apollo/react-hooks';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { PurchaseReceipt } from './PurchaseReceipt';
+import { NanoCreditReceipt } from './NanoCreditReceipt';
 import { useTranslation } from 'react-i18next';
 import { TRANSACTIONS } from 'Graphql/queries';
 
@@ -109,27 +110,15 @@ const TablePagination = ({ page, count, pageSize, ...rest }) => {
 };
 
 const AmountCell = ({ transaction }) => {
-  let amount = null;
-  if (transaction.type === 'PAYMENT')
-    amount = (
-      <Tag outlined color="#43a047">
-        {'+' + transaction.payment.amount.toFixed(2) + ' CHF'}
+  const color = transaction.change > 0 ? '#43a047' : '#f5222d';
+  const prefix = transaction.change > 0 ? '+' : '';
+  return (
+    <TableCell align="right">
+      <Tag outlined color={color}>
+        {prefix + transaction.change.toFixed(2) + ' CHF'}
       </Tag>
-    );
-  else if (transaction.type === 'PURCHASE')
-    amount = (
-      <Tag outlined color="#f5222d">
-        {'-' + transaction.purchase.total.toFixed(2) + ' CHF'}
-      </Tag>
-    );
-  else if (transaction.type === 'NANOCREDIT') {
-    amount = (
-      <Tag outlined color="#f5222d">
-        {'-' + transaction.nanocredit.amount.toFixed(2) + ' CHF'}
-      </Tag>
-    );
-  }
-  return <TableCell align="right">{amount}</TableCell>;
+    </TableCell>
+  );
 };
 
 const ReceiptCell = ({ transaction }) => {
@@ -140,18 +129,32 @@ const ReceiptCell = ({ transaction }) => {
 
   return (
     <TableCell align="left">
-      {transaction.type === 'PURCHASE' && (
-        <React.Fragment>
-          <IconButton onClick={handleOpen}>
-            <Icon type="assignment" />
-          </IconButton>
-          <PurchaseReceipt
-            open={open}
-            handleClose={handleClose}
-            purchaseId={transaction.purchase.id}
-          />
-        </React.Fragment>
-      )}
+      <Box.Row h="30px">
+        {transaction.type === 'PURCHASE' && (
+          <React.Fragment>
+            <IconButton onClick={handleOpen}>
+              <Icon type="assignment" />
+            </IconButton>
+            <PurchaseReceipt
+              open={open}
+              handleClose={handleClose}
+              purchaseId={transaction.purchase.id}
+            />
+          </React.Fragment>
+        )}
+        {transaction.type === 'NANOCREDIT' && (
+          <React.Fragment>
+            <IconButton onClick={handleOpen}>
+              <Icon type="assignment" />
+            </IconButton>
+            <NanoCreditReceipt
+              open={open}
+              handleClose={handleClose}
+              nanocredit={transaction.nanocredit}
+            />
+          </React.Fragment>
+        )}
+      </Box.Row>
     </TableCell>
   );
 };
