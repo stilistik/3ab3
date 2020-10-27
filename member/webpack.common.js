@@ -1,32 +1,12 @@
 const path = require('path');
+const webpack = require('webpack');
+
+const { API_HOST, API_PORT } = process.env;
 
 module.exports = {
   entry: './src/index.js',
   module: {
     rules: [
-      {
-        /**
-          TYPESCRIPT SOURCE LOADER
-        */
-        test: /\.ts(x?)$/,
-        include: path.resolve(__dirname, './src'),
-        use: [
-          {
-            loader: 'ts-loader',
-          },
-        ],
-      },
-      {
-        /**
-          JAVASCRIPT SOURCE LOADER
-        */
-        test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, './src'),
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/env', '@babel/react'],
-        },
-      },
       {
         /**
           CSS/LESS MODULE LOADER FOR GENERAL PURPOSE
@@ -101,4 +81,10 @@ module.exports = {
     filename: '[hash].[name].bundle.js',
     publicPath: '/',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      __API_HOST__: JSON.stringify(API_HOST),
+      __API_PORT__: JSON.stringify(API_PORT),
+    }),
+  ],
 };
