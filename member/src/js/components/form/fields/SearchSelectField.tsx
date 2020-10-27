@@ -6,6 +6,7 @@ import { FieldProps } from '../types';
 import { SelectOption } from 'Components/inputs';
 import { useField } from '../UseField';
 import { FormControl } from '../FormControl';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 export type SearchSelectFieldProps = Omit<FieldProps, 'fieldType'> &
   Omit<SearchSelectInputProps, 'options'> & {
@@ -29,7 +30,10 @@ export interface SearchSelectFieldClasses {
  * @param classes The classes prop of the SearchSelectField
  * @param hasError Boolean indicating if the field has an error
  */
-export function getInputClasses(classes: SearchSelectFieldClasses = {}, hasError: boolean): AutoCompleteClasses {
+export function getInputClasses(
+  classes: SearchSelectFieldClasses = {},
+  hasError: boolean
+): AutoCompleteClasses {
   const { root, ...restInputClasses } = classes.autocomplete || {};
   return {
     root: clx(root, { [classes?.error]: hasError }),
@@ -39,6 +43,7 @@ export function getInputClasses(classes: SearchSelectFieldClasses = {}, hasError
 
 export const SearchSelectField: React.FC<SearchSelectFieldProps> = ({
   id,
+  label,
   className,
   classes,
   onPersistentSelected,
@@ -58,8 +63,12 @@ export const SearchSelectField: React.FC<SearchSelectFieldProps> = ({
     if (option.onSelect) option.onSelect();
   }
 
-  function handleChange(e: React.ChangeEvent<any>, selectedOption: SelectOption) {
-    if (selectedOption && selectedOption.persistent) handlePersistentOption(selectedOption);
+  function handleChange(
+    e: React.ChangeEvent<any>,
+    selectedOption: SelectOption
+  ) {
+    if (selectedOption && selectedOption.persistent)
+      handlePersistentOption(selectedOption);
     else {
       // store the selected option's value in the form state
       field.onChange(selectedOption.value);
@@ -69,15 +78,17 @@ export const SearchSelectField: React.FC<SearchSelectFieldProps> = ({
   }
 
   const cls = clx(className, { [classes?.error]: Boolean(field.error) });
-  const inputValue = options.find((option) => option.value === field.value) || null;
+  const inputValue =
+    options.find((option) => option.value === field.value) || null;
 
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
+    <FormControl className={cls} error={field.error}>
       <SearchSelectInput
         value={inputValue}
         options={options}
         onChange={handleChange}
         classes={getInputClasses(classes, Boolean(field.error))}
+        label={<FieldInputLabel required={rest.required} label={label} />}
         {...rest}
       />
     </FormControl>

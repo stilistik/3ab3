@@ -9,6 +9,7 @@ import { NumberInput, NumberInputProps } from '../../inputs';
 import { useField, UseFieldReturn } from '../UseField';
 import { FieldProps } from '../types';
 import { FormControl } from '../FormControl';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 export type NumberFieldProps = Omit<FieldProps, 'fieldType'> &
   Omit<NumberInputProps, 'value' | 'onChange'> & {
@@ -85,16 +86,14 @@ export const NumberField: React.FC<NumberFieldProps> = ({
   const cls = clx(className, { [classes?.error]: Boolean(field.error) });
   const inputValue = typeof field.value === 'number' ? field.value : null;
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
-      {label && (
-        <InputLabel
-          htmlFor={id}
-          classes={classes?.label}
-          shrink={inputValue != null}
-        >
-          {label}
-        </InputLabel>
-      )}
+    <FormControl className={cls} error={field.error}>
+      <InputLabel
+        htmlFor={id}
+        classes={classes?.label}
+        shrink={inputValue != null}
+      >
+        <FieldInputLabel required={rest.required} label={label} />
+      </InputLabel>
       <NumberInput
         id={id}
         classes={classes?.input}

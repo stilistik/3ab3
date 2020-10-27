@@ -4,6 +4,7 @@ import { SelectInput, SelectInputProps, SelectOption } from 'Components/inputs';
 import { useField } from '../UseField';
 import { FieldProps } from '../types';
 import { FormControl } from '../FormControl';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 export type SelectFieldProps = Omit<FieldProps, 'fieldType'> &
   Omit<SelectInputProps, 'onChange' | 'value'> & {
@@ -26,7 +27,13 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   defaultValue = '',
   ...rest
 }) => {
-  const fieldProps = { id, required, fieldType: 'select', defaultValue, ...rest };
+  const fieldProps = {
+    id,
+    required,
+    fieldType: 'select',
+    defaultValue,
+    ...rest,
+  };
   const field = useField(fieldProps);
 
   const handleChange = (selectedOption: SelectOption) => {
@@ -40,8 +47,15 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   const inputValue = options.find((option) => option.value === field.value);
 
   return (
-    <FormControl className={cls} error={field.error} required={required}>
-      <SelectInput id={id} label={label} options={options} value={inputValue} onChange={handleChange} {...rest} />
+    <FormControl className={cls} error={field.error}>
+      <SelectInput
+        id={id}
+        label={<FieldInputLabel required={required} label={label} />}
+        options={options}
+        value={inputValue}
+        onChange={handleChange}
+        {...rest}
+      />
     </FormControl>
   );
 };

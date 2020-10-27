@@ -9,6 +9,7 @@ import { FieldProps } from '../types';
 import { SelectOption } from 'Components/inputs';
 import { useField } from '../UseField';
 import { FormControl } from '../FormControl';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 // typeguard for ISelectOption
 function isSelectOption(value: any): value is SelectOption {
@@ -54,6 +55,7 @@ function getInputClasses(
 
 export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   id,
+  label,
   className,
   classes,
   renderTags,
@@ -108,13 +110,14 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   );
 
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
+    <FormControl className={cls} error={field.error}>
       <MultiSelectInput
         value={inputValue}
         options={options}
         onChange={handleChange}
         classes={getInputClasses(classes, Boolean(field.error))}
         renderTags={renderTags ? handleRenderTags : undefined}
+        label={<FieldInputLabel required={rest.required} label={label} />}
         {...rest}
       />
     </FormControl>

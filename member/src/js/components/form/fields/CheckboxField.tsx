@@ -9,6 +9,7 @@ import {
 import { useField } from '../UseField';
 import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 export type CheckboxFieldProps = Omit<FieldProps, 'fieldType'> & {
   className?: string;
@@ -43,7 +44,7 @@ export const CheckboxField: React.FC<CheckboxFieldProps> = ({
   const inputValue = typeof field.value === 'boolean' ? field.value : false;
 
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
+    <FormControl className={cls} error={field.error}>
       {label ? (
         <FormControlLabel
           classes={classes?.label}
@@ -56,7 +57,7 @@ export const CheckboxField: React.FC<CheckboxFieldProps> = ({
               {...rest}
             />
           }
-          label={label}
+          label={<FieldInputLabel required={rest.required} label={label} />}
         />
       ) : (
         <Checkbox

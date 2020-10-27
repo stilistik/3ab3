@@ -8,7 +8,7 @@ interface StaticProps {
 
 export interface SelectInputProps {
   id?: string;
-  label?: string;
+  label?: React.ReactNode;
   options: SelectOption[];
   value: SelectOption;
   onChange: (value: SelectOption) => void;

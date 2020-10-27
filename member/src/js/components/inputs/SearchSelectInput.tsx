@@ -13,7 +13,7 @@ type SearchSelectAutocompleteProps = AutocompleteProps<SelectOption, false, fals
 
 export type SearchSelectInputProps = Omit<SearchSelectAutocompleteProps, 'renderInput'> & {
   id?: string;
-  label: string;
+  label: React.ReactNode;
   renderInput?: (params: AutocompleteRenderInputParams, value: SelectOption) => React.ReactNode;
 };
 

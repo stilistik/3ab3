@@ -5,6 +5,7 @@ import { NumberFieldProps } from './NumberField';
 import { useField, UseFieldReturn } from '../UseField';
 import { FormControl } from '../FormControl';
 import clx from 'classnames';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 const defaultHandleKeyDown = (
   e: React.KeyboardEvent,
@@ -51,16 +52,14 @@ export const QuickNumberField: React.FC<NumberFieldProps> = ({
   const inputValue = typeof field.value === 'number' ? field.value : null;
 
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
-      {label && (
-        <InputLabel
-          htmlFor={id}
-          classes={classes?.label}
-          shrink={inputValue != null}
-        >
-          {label}
-        </InputLabel>
-      )}
+    <FormControl className={cls} error={field.error}>
+      <InputLabel
+        htmlFor={id}
+        classes={classes?.label}
+        shrink={inputValue != null}
+      >
+        <FieldInputLabel required={rest.required} label={label} />
+      </InputLabel>
       <QuickNumberInput
         id={id}
         classes={classes?.input}

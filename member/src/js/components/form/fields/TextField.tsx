@@ -9,6 +9,7 @@ import {
 import { useField, UseFieldReturn } from '../UseField';
 import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 export type TextFieldProps = Omit<FieldProps, 'fieldType'> & {
   className?: string;
@@ -85,12 +86,10 @@ export const TextField: React.FC<TextFieldProps> = ({
   const inputValue = typeof field.value === 'string' ? field.value : '';
 
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
-      {label && (
-        <InputLabel htmlFor={id} classes={classes?.label}>
-          {label}
-        </InputLabel>
-      )}
+    <FormControl className={cls} error={field.error}>
+      <InputLabel htmlFor={id} classes={classes?.label}>
+        <FieldInputLabel required={rest.required} label={label} />
+      </InputLabel>
       <Input
         id={id}
         classes={classes?.input}

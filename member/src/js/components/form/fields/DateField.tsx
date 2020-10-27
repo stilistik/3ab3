@@ -7,6 +7,7 @@ import { useField } from '../UseField';
 import { FormControl } from '../FormControl';
 import { FieldProps } from '../types';
 import { DateType } from '@date-io/type';
+import { FieldInputLabel } from '../FieldInputLabel';
 
 export type DateFieldProps = Omit<FieldProps, 'fieldType'> & {
   classes?: DateFieldClasses;
@@ -45,14 +46,14 @@ export const DateField: React.FC<DateFieldProps> = ({
   const inputValue = typeof field.value === 'string' ? field.value : null;
 
   return (
-    <FormControl className={cls} error={field.error} required={rest.required}>
+    <FormControl className={cls} error={field.error}>
       <DatePicker
         id={id}
         className={classes?.input}
         allowKeyboardControl={true}
         autoOk={true}
         format="dd MMMM yyyy"
-        label={label}
+        label={<FieldInputLabel required={rest.required} label={label} />}
         error={Boolean(field.error)}
         value={inputValue}
         onChange={handleChange}

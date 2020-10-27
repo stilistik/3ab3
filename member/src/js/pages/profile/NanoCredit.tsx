@@ -16,7 +16,7 @@ const NanoCreditForm: React.FC<NanoCreditProps> = ({ onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <Box cmb={1}>
-        <NumberField id="amount" label={t('Amount')} />
+        <NumberField id="amount" label={t('Amount')} required={true} />
         <Button
           variant="contained"
           color="primary"

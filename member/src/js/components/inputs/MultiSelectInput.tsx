@@ -10,14 +10,25 @@ import {
 import { SelectOption } from './types';
 
 // we use the more complicated freeSolo type for the search form
-type MultiSelectAutocompleteProps = AutocompleteProps<SelectOption, true, true, true>;
+type MultiSelectAutocompleteProps = AutocompleteProps<
+  SelectOption,
+  true,
+  true,
+  true
+>;
 
-export type MultiSelectInputProps = Omit<MultiSelectAutocompleteProps, 'renderInput'> & {
+export type MultiSelectInputProps = Omit<
+  MultiSelectAutocompleteProps,
+  'renderInput'
+> & {
   id?: string;
-  label?: string;
+  label?: React.ReactNode;
   disableUnderline?: boolean;
   placeholder?: string;
-  renderInput?: (params: AutocompleteRenderInputParams, value: (string | SelectOption)[]) => React.ReactNode;
+  renderInput?: (
+    params: AutocompleteRenderInputParams,
+    value: (string | SelectOption)[]
+  ) => React.ReactNode;
 };
 
 export const MultiSelectInput: React.FC<MultiSelectInputProps> = ({
@@ -58,11 +69,17 @@ export const MultiSelectInput: React.FC<MultiSelectInputProps> = ({
    * Enhances the default option filtering algorithm of Autocomplete. Makes persistent
    * options always render at the top of the list
    */
-  function filterOptions(options: SelectOption[], state: FilterOptionsState<SelectOption>): SelectOption[] {
+  function filterOptions(
+    options: SelectOption[],
+    state: FilterOptionsState<SelectOption>
+  ): SelectOption[] {
     const defaultFilterOptions = createFilterOptions<SelectOption>();
     const persistentOptions = options.filter((option) => option.persistent);
     const standardOptions = options.filter((option) => !option.persistent);
-    const filteredOptions: SelectOption[] = defaultFilterOptions(standardOptions, state);
+    const filteredOptions: SelectOption[] = defaultFilterOptions(
+      standardOptions,
+      state
+    );
     return [...persistentOptions, ...filteredOptions];
   }
 
@@ -72,7 +89,9 @@ export const MultiSelectInput: React.FC<MultiSelectInputProps> = ({
       value={value}
       multiple={true}
       getOptionLabel={(option: SelectOption) => option.label}
-      getOptionSelected={(option: SelectOption, selected: SelectOption) => option.value === selected.value}
+      getOptionSelected={(option: SelectOption, selected: SelectOption) =>
+        option.value === selected.value
+      }
       renderInput={handleRenderInput}
       filterOptions={filterOptions}
       {...rest}

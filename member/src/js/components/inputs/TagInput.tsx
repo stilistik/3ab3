@@ -17,7 +17,7 @@ function defaultRenderValue(value: string[], handleDelete: (item: string) => voi
 }
 
 export type TagInputProps = Omit<StandardTextFieldProps, 'value' | 'onChange'> & {
-  label?: string;
+  label?: React.ReactNode;
   value: string[];
   onChange: (value: string[]) => void;
   renderValue?: (value: string[], handleDelete: (item: string) => void) => React.ReactNode;
