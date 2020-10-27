@@ -25,6 +25,7 @@ const QUERY = gql`
           name
           price
         }
+        price
         amount
       }
     }
@@ -63,9 +64,9 @@ export const PurchaseReceipt = ({ open, purchaseId, handleClose }) => {
               <TableRow key={item.id}>
                 <TableCell align="left">{item.product.name}</TableCell>
                 <TableCell align="right">{item.amount}</TableCell>
-                <TableCell align="right">{item.product.price} CHF</TableCell>
+                <TableCell align="right">{item.price} CHF</TableCell>
                 <TableCell align="right">
-                  {item.product.price * item.amount} CHF
+                  {(item.price * item.amount).toFixed(2)} CHF
                 </TableCell>
               </TableRow>
             );
