@@ -17,7 +17,7 @@ module.exports = {
             user: { connect: { id } },
             date: date,
             type: 'NANOCREDIT',
-            balance: balance,
+            change: -args.input.amount,
           },
         },
         ...args.input,

@@ -59,7 +59,7 @@ module.exports = {
             user: { connect: { id: userId } },
             date: date,
             type: 'PURCHASE',
-            balance: balance,
+            change: -total,
           },
         },
       });

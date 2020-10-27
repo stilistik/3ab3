@@ -3,7 +3,7 @@ type Transaction {
   user: User! @relation(name: "UserTransactions")
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   nanocredit: NanoCredit @relation(name: "NanoCreditTransaction", onDelete: CASCADE)
   payment: Payment @relation(name: "PaymentTransaction", onDelete: CASCADE)
   purchase: Purchase @relation(name: "PurchaseTransaction", onDelete: CASCADE)

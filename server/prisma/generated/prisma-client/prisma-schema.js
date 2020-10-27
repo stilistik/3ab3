@@ -4324,7 +4324,7 @@ type Transaction {
   user: User!
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   nanocredit: NanoCredit
   payment: Payment
   purchase: Purchase
@@ -4341,7 +4341,7 @@ input TransactionCreateInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   nanocredit: NanoCreditCreateOneWithoutTransactionInput
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
@@ -4372,7 +4372,7 @@ input TransactionCreateWithoutNanocreditInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
@@ -4382,7 +4382,7 @@ input TransactionCreateWithoutPaymentInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   nanocredit: NanoCreditCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
 }
@@ -4392,7 +4392,7 @@ input TransactionCreateWithoutPurchaseInput {
   user: UserCreateOneWithoutTransactionsInput!
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   nanocredit: NanoCreditCreateOneWithoutTransactionInput
   payment: PaymentCreateOneWithoutTransactionInput
 }
@@ -4401,7 +4401,7 @@ input TransactionCreateWithoutUserInput {
   id: ID
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
   nanocredit: NanoCreditCreateOneWithoutTransactionInput
   payment: PaymentCreateOneWithoutTransactionInput
   purchase: PurchaseCreateOneWithoutTransactionInput
@@ -4419,15 +4419,15 @@ enum TransactionOrderByInput {
   date_DESC
   type_ASC
   type_DESC
-  balance_ASC
-  balance_DESC
+  change_ASC
+  change_DESC
 }
 
 type TransactionPreviousValues {
   id: ID!
   date: DateTime!
   type: TransactionType!
-  balance: Float!
+  change: Float!
 }
 
 input TransactionScalarWhereInput {
@@ -4457,14 +4457,14 @@ input TransactionScalarWhereInput {
   type_not: TransactionType
   type_in: [TransactionType!]
   type_not_in: [TransactionType!]
-  balance: Float
-  balance_not: Float
-  balance_in: [Float!]
-  balance_not_in: [Float!]
-  balance_lt: Float
-  balance_lte: Float
-  balance_gt: Float
-  balance_gte: Float
+  change: Float
+  change_not: Float
+  change_in: [Float!]
+  change_not_in: [Float!]
+  change_lt: Float
+  change_lte: Float
+  change_gt: Float
+  change_gte: Float
   AND: [TransactionScalarWhereInput!]
   OR: [TransactionScalarWhereInput!]
   NOT: [TransactionScalarWhereInput!]
@@ -4498,7 +4498,7 @@ input TransactionUpdateInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
   nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
@@ -4507,13 +4507,13 @@ input TransactionUpdateInput {
 input TransactionUpdateManyDataInput {
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
 }
 
 input TransactionUpdateManyMutationInput {
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
 }
 
 input TransactionUpdateManyWithoutUserInput {
@@ -4558,7 +4558,7 @@ input TransactionUpdateWithoutNanocreditDataInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
@@ -4567,7 +4567,7 @@ input TransactionUpdateWithoutPaymentDataInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
   nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
 }
@@ -4576,7 +4576,7 @@ input TransactionUpdateWithoutPurchaseDataInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
   nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   payment: PaymentUpdateOneWithoutTransactionInput
 }
@@ -4584,7 +4584,7 @@ input TransactionUpdateWithoutPurchaseDataInput {
 input TransactionUpdateWithoutUserDataInput {
   date: DateTime
   type: TransactionType
-  balance: Float
+  change: Float
   nanocredit: NanoCreditUpdateOneWithoutTransactionInput
   payment: PaymentUpdateOneWithoutTransactionInput
   purchase: PurchaseUpdateOneWithoutTransactionInput
@@ -4644,14 +4644,14 @@ input TransactionWhereInput {
   type_not: TransactionType
   type_in: [TransactionType!]
   type_not_in: [TransactionType!]
-  balance: Float
-  balance_not: Float
-  balance_in: [Float!]
-  balance_not_in: [Float!]
-  balance_lt: Float
-  balance_lte: Float
-  balance_gt: Float
-  balance_gte: Float
+  change: Float
+  change_not: Float
+  change_in: [Float!]
+  change_not_in: [Float!]
+  change_lt: Float
+  change_lte: Float
+  change_gt: Float
+  change_gte: Float
   nanocredit: NanoCreditWhereInput
   payment: PaymentWhereInput
   purchase: PurchaseWhereInput

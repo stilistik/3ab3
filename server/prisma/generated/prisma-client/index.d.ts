@@ -727,8 +727,8 @@ export type TransactionOrderByInput =
   | "date_DESC"
   | "type_ASC"
   | "type_DESC"
-  | "balance_ASC"
-  | "balance_DESC";
+  | "change_ASC"
+  | "change_DESC";
 
 export type PostOrderByInput =
   | "id_ASC"
@@ -1299,14 +1299,14 @@ export interface TransactionWhereInput {
   type_not?: Maybe<TransactionType>;
   type_in?: Maybe<TransactionType[] | TransactionType>;
   type_not_in?: Maybe<TransactionType[] | TransactionType>;
-  balance?: Maybe<Float>;
-  balance_not?: Maybe<Float>;
-  balance_in?: Maybe<Float[] | Float>;
-  balance_not_in?: Maybe<Float[] | Float>;
-  balance_lt?: Maybe<Float>;
-  balance_lte?: Maybe<Float>;
-  balance_gt?: Maybe<Float>;
-  balance_gte?: Maybe<Float>;
+  change?: Maybe<Float>;
+  change_not?: Maybe<Float>;
+  change_in?: Maybe<Float[] | Float>;
+  change_not_in?: Maybe<Float[] | Float>;
+  change_lt?: Maybe<Float>;
+  change_lte?: Maybe<Float>;
+  change_gt?: Maybe<Float>;
+  change_gte?: Maybe<Float>;
   nanocredit?: Maybe<NanoCreditWhereInput>;
   payment?: Maybe<PaymentWhereInput>;
   purchase?: Maybe<PurchaseWhereInput>;
@@ -2314,7 +2314,7 @@ export interface TransactionCreateWithoutPaymentInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
   nanocredit?: Maybe<NanoCreditCreateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseCreateOneWithoutTransactionInput>;
 }
@@ -2423,7 +2423,7 @@ export interface TransactionCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
   date: DateTimeInput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
   nanocredit?: Maybe<NanoCreditCreateOneWithoutTransactionInput>;
   payment?: Maybe<PaymentCreateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseCreateOneWithoutTransactionInput>;
@@ -3024,7 +3024,7 @@ export interface TransactionCreateWithoutPurchaseInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
   nanocredit?: Maybe<NanoCreditCreateOneWithoutTransactionInput>;
   payment?: Maybe<PaymentCreateOneWithoutTransactionInput>;
 }
@@ -3237,7 +3237,7 @@ export interface TransactionUpdateWithoutPaymentDataInput {
   user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
   nanocredit?: Maybe<NanoCreditUpdateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseUpdateOneWithoutTransactionInput>;
 }
@@ -3480,7 +3480,7 @@ export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
 export interface TransactionUpdateWithoutUserDataInput {
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
   nanocredit?: Maybe<NanoCreditUpdateOneWithoutTransactionInput>;
   payment?: Maybe<PaymentUpdateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseUpdateOneWithoutTransactionInput>;
@@ -5275,14 +5275,14 @@ export interface TransactionScalarWhereInput {
   type_not?: Maybe<TransactionType>;
   type_in?: Maybe<TransactionType[] | TransactionType>;
   type_not_in?: Maybe<TransactionType[] | TransactionType>;
-  balance?: Maybe<Float>;
-  balance_not?: Maybe<Float>;
-  balance_in?: Maybe<Float[] | Float>;
-  balance_not_in?: Maybe<Float[] | Float>;
-  balance_lt?: Maybe<Float>;
-  balance_lte?: Maybe<Float>;
-  balance_gt?: Maybe<Float>;
-  balance_gte?: Maybe<Float>;
+  change?: Maybe<Float>;
+  change_not?: Maybe<Float>;
+  change_in?: Maybe<Float[] | Float>;
+  change_not_in?: Maybe<Float[] | Float>;
+  change_lt?: Maybe<Float>;
+  change_lte?: Maybe<Float>;
+  change_gt?: Maybe<Float>;
+  change_gte?: Maybe<Float>;
   AND?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
   OR?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
   NOT?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
@@ -5296,7 +5296,7 @@ export interface TransactionUpdateManyWithWhereNestedInput {
 export interface TransactionUpdateManyDataInput {
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutLikedPostsInput {
@@ -5398,7 +5398,7 @@ export interface TransactionUpdateWithoutPurchaseDataInput {
   user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
   nanocredit?: Maybe<NanoCreditUpdateOneWithoutTransactionInput>;
   payment?: Maybe<PaymentUpdateOneWithoutTransactionInput>;
 }
@@ -5744,7 +5744,7 @@ export interface TransactionCreateWithoutNanocreditInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
   payment?: Maybe<PaymentCreateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseCreateOneWithoutTransactionInput>;
 }
@@ -5768,7 +5768,7 @@ export interface TransactionUpdateWithoutNanocreditDataInput {
   user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
   payment?: Maybe<PaymentUpdateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseUpdateOneWithoutTransactionInput>;
 }
@@ -5967,7 +5967,7 @@ export interface TransactionCreateInput {
   user: UserCreateOneWithoutTransactionsInput;
   date: DateTimeInput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
   nanocredit?: Maybe<NanoCreditCreateOneWithoutTransactionInput>;
   payment?: Maybe<PaymentCreateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseCreateOneWithoutTransactionInput>;
@@ -5977,7 +5977,7 @@ export interface TransactionUpdateInput {
   user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
   nanocredit?: Maybe<NanoCreditUpdateOneWithoutTransactionInput>;
   payment?: Maybe<PaymentUpdateOneWithoutTransactionInput>;
   purchase?: Maybe<PurchaseUpdateOneWithoutTransactionInput>;
@@ -5986,7 +5986,7 @@ export interface TransactionUpdateInput {
 export interface TransactionUpdateManyMutationInput {
   date?: Maybe<DateTimeInput>;
   type?: Maybe<TransactionType>;
-  balance?: Maybe<Float>;
+  change?: Maybe<Float>;
 }
 
 export interface UserUpdateInput {
@@ -6851,7 +6851,7 @@ export interface Transaction {
   id: ID_Output;
   date: DateTimeOutput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
 }
 
 export interface TransactionPromise extends Promise<Transaction>, Fragmentable {
@@ -6859,7 +6859,7 @@ export interface TransactionPromise extends Promise<Transaction>, Fragmentable {
   user: <T = UserPromise>() => T;
   date: () => Promise<DateTimeOutput>;
   type: () => Promise<TransactionType>;
-  balance: () => Promise<Float>;
+  change: () => Promise<Float>;
   nanocredit: <T = NanoCreditPromise>() => T;
   payment: <T = PaymentPromise>() => T;
   purchase: <T = PurchasePromise>() => T;
@@ -6872,7 +6872,7 @@ export interface TransactionSubscription
   user: <T = UserSubscription>() => T;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   type: () => Promise<AsyncIterator<TransactionType>>;
-  balance: () => Promise<AsyncIterator<Float>>;
+  change: () => Promise<AsyncIterator<Float>>;
   nanocredit: <T = NanoCreditSubscription>() => T;
   payment: <T = PaymentSubscription>() => T;
   purchase: <T = PurchaseSubscription>() => T;
@@ -6885,7 +6885,7 @@ export interface TransactionNullablePromise
   user: <T = UserPromise>() => T;
   date: () => Promise<DateTimeOutput>;
   type: () => Promise<TransactionType>;
-  balance: () => Promise<Float>;
+  change: () => Promise<Float>;
   nanocredit: <T = NanoCreditPromise>() => T;
   payment: <T = PaymentPromise>() => T;
   purchase: <T = PurchasePromise>() => T;
@@ -9241,7 +9241,7 @@ export interface TransactionPreviousValues {
   id: ID_Output;
   date: DateTimeOutput;
   type: TransactionType;
-  balance: Float;
+  change: Float;
 }
 
 export interface TransactionPreviousValuesPromise
@@ -9250,7 +9250,7 @@ export interface TransactionPreviousValuesPromise
   id: () => Promise<ID_Output>;
   date: () => Promise<DateTimeOutput>;
   type: () => Promise<TransactionType>;
-  balance: () => Promise<Float>;
+  change: () => Promise<Float>;
 }
 
 export interface TransactionPreviousValuesSubscription
@@ -9259,7 +9259,7 @@ export interface TransactionPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   type: () => Promise<AsyncIterator<TransactionType>>;
-  balance: () => Promise<AsyncIterator<Float>>;
+  change: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface UserSubscriptionPayload {

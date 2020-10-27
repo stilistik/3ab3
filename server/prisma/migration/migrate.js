@@ -89,7 +89,7 @@ async function migratePayments(prisma, users, oldPayments) {
           user: { connect: { id: payingUser.id } },
           date: new Date(oldPayment.date).toISOString(),
           type: 'PAYMENT',
-          balance: balance,
+          change: oldPayment.amount,
         },
       },
       date: new Date(oldPayment.date).toISOString(),
@@ -163,7 +163,7 @@ async function migratePurchases(
             user: { connect: { id: user.id } },
             date,
             type: 'PURCHASE',
-            balance: balance,
+            change: -total,
           },
         },
       });
@@ -196,7 +196,7 @@ async function migrateNanoCredits(prisma, oldCredits, usersConsolidated) {
           user: { connect: { id: user.id } },
           date,
           type: 'NANOCREDIT',
-          balance,
+          change: -oldCredit.amount,
         },
       },
     });

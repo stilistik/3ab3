@@ -18,7 +18,6 @@ export const TRANSACTIONS = gql`
               amount
             }
             purchase {
-              id
               total
             }
           }
@@ -38,7 +37,7 @@ export const BALANCE_CHART = gql`
           node {
             id
             date
-            balance
+            change
           }
         }
       }

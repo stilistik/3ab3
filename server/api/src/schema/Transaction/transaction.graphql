@@ -2,7 +2,7 @@ type Transaction implements Node {
   id: ID!
   user: User!
   date: DateTime!
-  balance: Float!
+  change: Float!
   type: TransactionType!
   purchase: Purchase
   payment: Payment
