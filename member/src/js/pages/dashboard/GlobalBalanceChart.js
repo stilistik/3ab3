@@ -12,7 +12,6 @@ export const GlobalBalanceChart = () => {
   const totalBalance = data.users
     .map((el) => el.balance)
     .reduce((acc, curr) => acc + curr, 0);
-  console.log(totalBalance);
   const transactions = data.transactions.edges.map((edge) => edge.node);
 
   const createChartData = (transactions, balance) => {
@@ -26,7 +25,7 @@ export const GlobalBalanceChart = () => {
       balance -= transaction.change;
     });
 
-    const lastValue = data.slice(-1)[0];
+    const lastValue = data[0];
     const { color } = getBalanceColorClass(lastValue.y);
 
     return [{ id: 'balance', color: color, data: data }];

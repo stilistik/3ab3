@@ -25,8 +25,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <Box cmb={1}>
-        <UserSelectField id="user" label={t('Member')} />
-        <NumberField id="amount" label={t('Amount')} />
+        <UserSelectField id="user" label={t('Member')} required={true} />
+        <NumberField id="amount" label={t('Amount')} required={true} />
         <Button
           variant="contained"
           color="primary"

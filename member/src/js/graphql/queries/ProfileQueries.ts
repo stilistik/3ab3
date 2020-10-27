@@ -18,6 +18,7 @@ export const TRANSACTIONS = gql`
               amount
             }
             purchase {
+              id
               total
             }
           }
