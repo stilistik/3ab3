@@ -27,8 +27,8 @@ const TRANSACTIONS = gql`
   query($first: Int!, $skip: Int) {
     currentUser {
       id
+      transactionCount
       transactions(first: $first, skip: $skip) {
-        count
         edges {
           node {
             id
@@ -187,12 +187,9 @@ const TransactionTable = () => {
   const [page, setPage] = React.useState(0);
 
   const skip = page * pageSize;
-
   const { loading, error, data } = useQuery(TRANSACTIONS, {
     variables: { first: pageSize, skip: skip },
   });
-
-  if (loading || error) return null;
 
   const onChangePage = (page) => {
     setPage(page);
@@ -203,46 +200,50 @@ const TransactionTable = () => {
     setPageSize(pageSize);
   };
 
-  const {
-    transactions: { count, edges },
-  } = data.currentUser;
-
-  const transactions = edges.map((el) => el.node);
-  return (
-    <Paper>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell align="left">Receipt</TableCell>
-            <TableCell align="right">Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {transactions.map((transaction) => (
-            <TableRow key={transaction.id}>
-              <TableCell component="th" scope="row">
-                {new Date(transaction.date).toDateString()}
-              </TableCell>
-              <ReceiptCell transaction={transaction} />
-              <AmountCell transaction={transaction} />
+  if (data) {
+    const {
+      transactionCount,
+      transactions: { edges },
+    } = data.currentUser;
+    const transactions = edges.map((el) => el.node);
+    return (
+      <Paper>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell align="left">Receipt</TableCell>
+              <TableCell align="right">Amount</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            colSpan={3}
-            count={count}
-            pageSize={pageSize}
-            page={page}
-            onChangePage={onChangePage}
-            onChangePageSize={onChangePageSize}
-          />
-        </TableFooter>
-      </Table>
-    </Paper>
-  );
+          </TableHead>
+          <TableBody>
+            {transactions.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell component="th" scope="row">
+                  {new Date(transaction.date).toDateString()}
+                </TableCell>
+                <ReceiptCell transaction={transaction} />
+                <AmountCell transaction={transaction} />
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              colSpan={3}
+              count={transactionCount}
+              pageSize={pageSize}
+              page={page}
+              onChangePage={onChangePage}
+              onChangePageSize={onChangePageSize}
+            />
+          </TableFooter>
+        </Table>
+      </Paper>
+    );
+  }
+
+  if (loading || error) return null;
 };
 
 export default TransactionTable;

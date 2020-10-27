@@ -24,12 +24,4 @@ module.exports = {
       return context.prisma.transaction({ id: root.id }).nanocredit();
     },
   },
-  TransactionConnection: {
-    count(root, args, context) {
-      return context.prisma
-        .transactionsConnection({ where: { type: args.type } })
-        .aggregate()
-        .count();
-    },
-  },
 };

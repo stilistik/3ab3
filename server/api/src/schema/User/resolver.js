@@ -172,6 +172,14 @@ module.exports = {
         after: args.after,
       });
     },
+    transactionCount(root, args, context) {
+      return context.prisma
+        .transactionsConnection({
+          where: { user: { id: root.id } },
+        })
+        .aggregate()
+        .count();
+    },
     posts(root, args, context) {
       return context.prisma.user({ id: root.id }).posts();
     },

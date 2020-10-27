@@ -14,6 +14,7 @@ type User {
     skip: Int
     after: String
   ): TransactionConnection
+  transactionCount: Int!
   items: [Item!]!
   balance: Float!
   role: UserRole!

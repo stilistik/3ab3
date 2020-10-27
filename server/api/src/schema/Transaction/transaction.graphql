@@ -15,7 +15,6 @@ type TransactionEdge implements Edge {
 }
 
 type TransactionConnection implements Connection {
-  count: Int!
   pageInfo: PageInfo!
   edges: [TransactionEdge]
 }
