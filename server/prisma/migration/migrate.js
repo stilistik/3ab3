@@ -98,7 +98,7 @@ async function migratePayments(prisma, users, oldPayments) {
 
     await prisma.updateUser({
       where: { id: payingUser.id },
-      data: { balance: balance },
+      data: { balance },
     });
 
     consolidated.push(payment);

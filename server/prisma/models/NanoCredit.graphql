@@ -1,6 +1,7 @@
 type NanoCredit {
   id: ID! @unique @id
-  transaction: Transaction! @relation(link: TABLE, name: "NanoCreditTransaction", onDelete: CASCADE)
+  transaction: Transaction!
+    @relation(link: TABLE, name: "NanoCreditTransaction", onDelete: CASCADE)
   amount: Float!
   user: User!
   description: String!

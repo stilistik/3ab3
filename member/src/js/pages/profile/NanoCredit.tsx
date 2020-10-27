@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box, Form, NumberField } from 'Components/index';
+import { Box, Form, Message, NumberField, TextField } from 'Components/index';
 import { Paper, Typography, Button } from '@material-ui/core';
 import { useTranslation, Trans } from 'react-i18next';
 import { Serializable, FieldOptions } from 'Components/form/types';
+import { useMutation } from 'react-apollo';
+import { CREATE_NANOCREDIT } from 'Graphql/mutations';
+import { BALANCE_CHART, CURRENT_USER_BALANCE, TRANSACTIONS } from 'Graphql/queries';
 
 interface NanoCreditProps {
   onSubmit: (
@@ -16,6 +19,7 @@ const NanoCreditForm: React.FC<NanoCreditProps> = ({ onSubmit }) => {
   return (
     <Form onSubmit={onSubmit}>
       <Box cmb={1}>
+        <TextField id="description" label={t('Description')} required={true} />
         <NumberField id="amount" label={t('Amount')} required={true} />
         <Button
           variant="contained"
@@ -32,8 +36,26 @@ const NanoCreditForm: React.FC<NanoCreditProps> = ({ onSubmit }) => {
 
 export const NanoCredit: React.FC = () => {
   const { t } = useTranslation();
+  const [createNanoCredit] = useMutation(CREATE_NANOCREDIT);
 
-  const handleSubmit = (values: NestedRecord<Serializable>) => {};
+  const handleSubmit = (values: NestedRecord<Serializable>) => {
+    createNanoCredit({
+      variables: {
+        input: values,
+      },
+      refetchQueries: () => [
+        { query: CURRENT_USER_BALANCE },
+        { query: TRANSACTIONS, variables: { first: 10, skip: 0 } },
+        { query: BALANCE_CHART },
+      ],
+    })
+      .then(() => {
+        Message.success('success');
+      })
+      .catch((error) => {
+        Message.error(error.message);
+      });
+  };
 
   return (
     <Paper>

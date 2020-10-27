@@ -6,3 +6,12 @@ type NanoCredit {
   description: String!
   date: DateTime!
 }
+
+input NanoCreditInput {
+  amount: Float!
+  description: String!
+}
+
+extend type Mutation {
+  createNanoCredit(input: NanoCreditInput!): NanoCredit!
+}

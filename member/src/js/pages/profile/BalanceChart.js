@@ -1,30 +1,12 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { TimeLineChart } from 'Components';
 import { Paper } from '@material-ui/core';
 import { getBalanceColorClass } from 'Components/utility/Utils';
-
-export const BALANCE_QUERY = gql`
-  query {
-    currentUser {
-      id
-      balance
-      transactions(first: 5) {
-        edges {
-          node {
-            id
-            date
-            balance
-          }
-        }
-      }
-    }
-  }
-`;
+import { BALANCE_CHART } from 'Graphql/queries';
 
 export const BalanceChart = () => {
-  const { loading, error, data } = useQuery(BALANCE_QUERY);
+  const { loading, error, data } = useQuery(BALANCE_CHART);
 
   if (loading || error) return null;
 

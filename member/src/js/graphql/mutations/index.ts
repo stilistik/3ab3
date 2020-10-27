@@ -6,3 +6,4 @@ export * from './TodoMutations';
 export * from './PostMutations';
 export * from './CommentMutations';
 export * from './DocumentMutations';
+export * from './ProfileMutations';

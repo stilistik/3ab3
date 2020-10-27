@@ -16,7 +16,6 @@ import {
   TableContainer,
 } from '@material-ui/core';
 import { Tag, Icon } from 'Components';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -24,34 +23,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { PurchaseReceipt } from './PurchaseReceipt';
 import { useTranslation } from 'react-i18next';
-
-const TRANSACTIONS = gql`
-  query($first: Int!, $skip: Int) {
-    currentUser {
-      id
-      transactionCount
-      transactions(first: $first, skip: $skip) {
-        edges {
-          node {
-            id
-            date
-            type
-            nanocredit {
-              amount
-            }
-            payment {
-              amount
-            }
-            purchase {
-              id
-              total
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { TRANSACTIONS } from 'Graphql/queries';
 
 const TablePagination = ({ page, count, pageSize, ...rest }) => {
   const { t } = useTranslation();
