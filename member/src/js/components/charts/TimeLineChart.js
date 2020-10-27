@@ -69,6 +69,7 @@ export const TimeLineChart = ({ data }) => {
         },
         tickSize: 5,
         tickPadding: 5,
+        tickValues: 5,
         tickRotation: 0,
       }}
       axisLeft={{
