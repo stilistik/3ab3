@@ -11,7 +11,7 @@ function getUserPower(user) {
 }
 
 function canUserModifyUser(modifyingUser, userToBeModified) {
-  return getUserPower(modifyingUser) - getUserPower(userToBeModified) > 0;
+  return getUserPower(modifyingUser) - getUserPower(userToBeModified) >= 0;
 }
 
 async function canUserModifyEvent(args, context) {
