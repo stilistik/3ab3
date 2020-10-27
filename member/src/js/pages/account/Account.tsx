@@ -1,6 +1,6 @@
 import React from 'react';
 import { AccountForm } from './AccountForm';
-import { Typography, Paper } from '@material-ui/core';
+import { Typography, Paper, Divider } from '@material-ui/core';
 import { Box, Grid, useCurrentUser } from 'Components/index';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelect } from './LanguageSelect';
@@ -11,8 +11,14 @@ export const Account: React.FC = () => {
   const user = useCurrentUser();
   return (
     <Grid.Default>
-      <Box py={2} cmb={2}>
+      <Box py="20px">
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography variant="h5" color="textPrimary">
+              {t('Account').toUpperCase()}
+            </Typography>
+            <Divider />
+          </Grid>
           <Grid item xs={12} sm={6}>
             <Paper>
               <Box p={2} cmbnl={2}>
