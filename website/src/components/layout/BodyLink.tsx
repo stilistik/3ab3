@@ -87,21 +87,26 @@ export const BodyLink: React.FC<BodyLinkProps> = ({
   children,
 }) => {
   return (
-    <Link href={pathname}>
-      <div
-        className={`fixed inset-y-0 ${side}-0 flex items-center justify-center z-10`}
-        style={{ width: 200 }}
-      >
-        <VerticalSlide direction={side === 'left' ? 'up' : 'down'}>
-          <div className={styles.link + ' transform rotate-90 cursor-pointer'}>
+    <div
+      className={`fixed inset-y-0 ${side}-0 flex items-center justify-center z-10 pointer-events-none`}
+      style={{ width: 200 }}
+    >
+      <VerticalSlide direction={side === 'left' ? 'up' : 'down'}>
+        <Link href={pathname}>
+          <div
+            className={
+              styles.link +
+              ' transform rotate-90 cursor-pointer pointer-events-auto'
+            }
+          >
             <HorizontalSpring side={side}>
               <div className="font-black uppercase leading-none select-none">
                 <span className={styles.bodyLink}>{children}</span>
               </div>
             </HorizontalSpring>
           </div>
-        </VerticalSlide>
-      </div>
-    </Link>
+        </Link>
+      </VerticalSlide>
+    </div>
   );
 };

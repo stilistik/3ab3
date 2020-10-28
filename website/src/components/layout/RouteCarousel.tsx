@@ -30,7 +30,7 @@ export const RouteCarousel: React.FC<RouteCarouselProps> = ({
 
   const direction = getDirection();
 
-  const transitions = useTransition(items, (item) => item.id, {
+  const transitions = useTransition(items, (item: AppRouterItem) => item.id, {
     from: { opacity: 0, transform: `translate3d(${direction * 100}%,0,0)` },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
     leave: { opacity: 0, transform: `translate3d(${-direction * 50}%,0,0)` },

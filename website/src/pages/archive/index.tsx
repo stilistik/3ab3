@@ -1,22 +1,32 @@
 import React from 'react';
 import Head from 'next/head';
+import { prisma } from 'App/prisma';
+import { InferGetStaticPropsType } from 'next';
+import { Archive } from 'Components/archive/Archive';
 
-import styles from './Index.module.css';
 
-const ArchivePage: React.FC = () => {
+export const getStaticProps = async () => {
+  const events = await prisma.events({
+    where: {
+      published: true,
+    },
+  });
+
+  return {
+    props: { events },
+    revalidate: 1,
+  };
+};
+
+const ArchivePage = ({
+  events,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <React.Fragment>
       <Head>
         <title>3ab3 - Archiv</title>
       </Head>
-      <div
-        className={
-          styles.container + ' w-full h-full flex items-center justify-center'
-        }
-      >
-        <h1>Archiv</h1>
-        <p>This is the Archiv page</p>
-      </div>
+      <Archive events={events} />
     </React.Fragment>
   );
 };

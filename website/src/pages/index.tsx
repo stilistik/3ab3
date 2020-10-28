@@ -5,15 +5,15 @@ import { EventCard } from 'Components/index';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
-  const events = await prisma.events({ where: { 
-    published: true,
-    date_gte: new Date().toISOString()
-  }});
+  const events = await prisma.events({
+    where: {
+      published: true,
+      date_gte: new Date().toISOString(),
+    },
+  });
 
   return {
-    props: {
-      events,
-    },
+    props: { events },
     revalidate: 1,
   };
 };
