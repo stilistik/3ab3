@@ -6,8 +6,10 @@ interface LazyLoadingImageDivProps {
   src: string;
   alt?: string;
   className?: string;
+  onClick?: (e: React.MouseEvent) => void;
   backgroundSize?: React.CSSProperties['backgroundSize'];
   backgroundPosition?: React.CSSProperties['backgroundPosition'];
+  width?: number;
 }
 
 export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
@@ -16,7 +18,9 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   backgroundSize = 'cover',
   backgroundPosition = 'center',
   className,
+  onClick,
   children,
+  width,
 }) => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -30,7 +34,7 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
     const item: LazyLoadingItem = {
       element: div,
       type: 'div',
-      src: getResponsiveSrc(src, div.clientWidth),
+      src: getResponsiveSrc(src, width || div.clientWidth),
       setError,
       setLoading,
     };
@@ -47,6 +51,7 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
         backgroundSize,
         backgroundPosition,
       }}
+      onClick={onClick}
     >
       {!src ? (
         <div className="w-full h-full flex justify-center items-center">
