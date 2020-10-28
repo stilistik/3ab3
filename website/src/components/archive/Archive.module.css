@@ -38,6 +38,7 @@
   line-height: 1em;
   text-align: center;
   filter: drop-shadow(4px 4px 0px var(--color-primary));
+  user-select: none;
 }
 
 .description {
@@ -45,4 +46,23 @@
   line-height: 1em;
   text-transform: none;
   padding: 0px 20px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 64px;
+  font-weight: 900;
+  border: none;
+  filter: drop-shadow(4px 4px 0px var(--color-primary));
+  transform: rotate(45deg);
+}
+
+.closeButton:active {
+  transform: rotate(45deg) scale(0.9);
+}
+
+.closeButton:focus {
+  outline: 0;
 }

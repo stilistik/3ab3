@@ -8,11 +8,20 @@ import styles from './Archive.module.css';
 
 interface ArchiveItemDetailsProps {
   event: Event;
+  onClick: (eventId: string) => void;
 }
 
-const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({ event }) => {
+const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
+  event,
+  onClick,
+}) => {
+  const handleClose = () => onClick(null);
+
   return (
     <div className={styles.details}>
+      <button className={styles.closeButton} onClick={handleClose}>
+        +
+      </button>
       <h1 className={styles.title}>{event.title}</h1>
       <p className={styles.description}>{event.description}</p>
     </div>
@@ -44,7 +53,7 @@ const ArchiveItem: React.FC<ArchiveItemProps> = ({
           width={1200}
         />
       </div>
-      {expanded && <ArchiveItemDetails event={event} />}
+      {expanded && <ArchiveItemDetails event={event} onClick={onClick} />}
     </div>
   );
 };
