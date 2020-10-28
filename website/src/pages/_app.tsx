@@ -6,7 +6,7 @@ import { NextComponentType, NextPageContext } from 'next';
 
 import '../styles/index.css';
 
-export interface AppItem {
+export interface AppRouterItem {
   id: string;
   prev: string;
   Component: NextComponentType<NextPageContext, any, {}>;
@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     prevRoute.current = pathname;
   }, [pathname]);
 
-  const items: AppItem[] = [
+  const items: AppRouterItem[] = [
     {
       id: router.asPath,
       prev: prevRoute.current,

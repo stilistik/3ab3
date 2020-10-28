@@ -1,0 +1,53 @@
+.header {
+  width: 100vw;
+  height: 60px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  padding-top: 10px;
+  z-index: 100;
+}
+
+.link {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  color: #8c8c8c;
+  padding: 0px 20px;
+  text-shadow: -1.5px -1.5px 0 whitesmoke, 0 -1.5px 0 whitesmoke,
+    1.5px -1.5px 0 whitesmoke, 1.5px 0 0 whitesmoke, 1.5px 1.5px 0 whitesmoke,
+    0 1.5px 0 whitesmoke, -1.5px 1.5px 0 whitesmoke, -1.5px 0 0 whitesmoke;
+  text-transform: uppercase;
+}
+
+.link.active {
+  color: black;
+}
+
+a.link:link {
+  text-decoration: none;
+}
+a.link:active {
+  text-decoration: none;
+}
+a.link:hover {
+  text-decoration: none;
+}
+a.link:visited {
+  text-decoration: none;
+}
+
+.logo {
+  margin-top: 8px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 0.78em;
+  -webkit-text-stroke: 1px whitesmoke;
+  filter: drop-shadow(3px 3px 0px var(--color-primary));
+  user-select: none;
+  cursor: pointer;
+}
