@@ -14,8 +14,8 @@
   position: static;
   width: 530px;
   height: 64px;
-
-  background: #1961ff;
+  color: whitesmoke;
+  background-color: var(--color-primary);
   border: 2px solid #ffffff;
   box-sizing: border-box;
   box-shadow: 7.5px 7.5px 0px #000000;
@@ -67,11 +67,3 @@
   line-height: 44px;
 }
 
-.map {
-  position: static;
-  width: 530px;
-  height: 509px;
-  background-color: tomato;
-  border: 2px solid black;
-  filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
-}
