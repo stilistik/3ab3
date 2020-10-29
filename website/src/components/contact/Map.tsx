@@ -1,42 +1,57 @@
 import React from 'react';
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} from 'react-google-maps';
+import GoogleMapReact from 'google-map-react';
+import { Icon } from '@iconify/react';
+import locationIcon from '@iconify/icons-mdi/map-marker';
+
 import mapStyles from './map.styles';
 
 import styles from './Map.module.css';
 
-const MyGoogleMap = withScriptjs<any>(
-  withGoogleMap(function Map() {
-    return (
-      <GoogleMap
-        defaultZoom={16.29}
-        defaultCenter={{ lat: 46.9750078, lng: 7.4245647 }}
-        options={{ styles: mapStyles }}
-      >
-        <Marker position={{ lat: 46.9750078, lng: 7.4247047 }} />
-      </GoogleMap>
-    );
-  })
+interface LocationPinProps {
+  text: string;
+  lat: number;
+  lng: number;
+}
+
+const LocationPin: React.FC<LocationPinProps> = ({ text }) => (
+  <div className={styles.pin}>
+    <div className="grid grid-cols-2">
+      <Icon icon={locationIcon} className={styles.pinIcon} />
+      <p className={styles.pinText}>{text}</p>
+    </div>
+  </div>
 );
 
 export const Map: React.FC = () => {
   const [show, setShow] = React.useState(false);
 
   React.useEffect(() => {
-    setTimeout(() => setShow(true), 1000);
+    const t = setTimeout(() => setShow(true), 1000);
+    return () => clearTimeout(t);
   }, []);
 
-  if (!show) return <div key="bg" className={styles.map} />;
+  const location = {
+    lat: 46.9750078,
+    lng: 7.4247447,
+    address: 'Kulturverein 3ab3',
+  };
+
   return (
-    <MyGoogleMap
-      googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&key=${__GOOGLE_MAPS_API_KEY__}`}
-      loadingElement={<div key="bg" className={styles.map} />}
-      containerElement={<div key="bg" className={styles.map} />}
-      mapElement={<div style={{ height: `100%` }} />}
-    />
+    <div className={styles.map}>
+      {show && (
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: __GOOGLE_MAPS_API_KEY__ }}
+          defaultZoom={16.29}
+          defaultCenter={location}
+          options={{ styles: mapStyles }}
+        >
+          <LocationPin
+            lat={location.lat}
+            lng={location.lng}
+            text={location.address}
+          />
+        </GoogleMapReact>
+      )}
+    </div>
   );
 };
