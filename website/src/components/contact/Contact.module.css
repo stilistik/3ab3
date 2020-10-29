@@ -26,6 +26,14 @@
   font-size: 36px;
 }
 
+.button:focus {
+  outline: 0;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -45,6 +53,10 @@
   border: 2px solid #000000;
   box-sizing: border-box;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
+}
+
+.textInput:focus {
+  outline: 0;
 }
 
 .location {
