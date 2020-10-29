@@ -4,10 +4,14 @@ import clx from 'classnames';
 import styles from './Contact.module.css';
 
 export const Contact: React.FC = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  }
+
   const inputCls = clx(styles.textInput, 'shadow-2xl');
   return (
     <div className={styles.wrapper}>
-      <form method="post" action="#" className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="name">
           <input
             className={inputCls}
