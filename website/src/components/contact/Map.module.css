@@ -1,7 +1,7 @@
 .map {
   width: 530px;
   height: 530px;
-  background-color: tomato;
+  background-color: #eee;
   border: 2px solid black;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
 }

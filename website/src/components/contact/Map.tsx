@@ -24,11 +24,18 @@ const MyGoogleMap = withScriptjs<any>(
 );
 
 export const Map: React.FC = () => {
+  const [show, setShow] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => setShow(true), 1000);
+  }, []);
+
+  if (!show) return <div key="bg" className={styles.map} />;
   return (
     <MyGoogleMap
       googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&key=${__GOOGLE_MAPS_API_KEY__}`}
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div className={styles.map} />}
+      loadingElement={<div key="bg" className={styles.map} />}
+      containerElement={<div key="bg" className={styles.map} />}
       mapElement={<div style={{ height: `100%` }} />}
     />
   );
