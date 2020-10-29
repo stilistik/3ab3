@@ -41,7 +41,9 @@ const ArchiveItem: React.FC<ArchiveItemProps> = ({
 }) => {
   const handleClick = () => onClick(event.id);
 
-  const cls = clx(styles.archiveItem, { [styles.expanded]: expanded });
+  const cls = clx(styles.archiveItem, 'shadow-2xl', {
+    [styles.expanded]: expanded,
+  });
 
   return (
     <div className={cls}>

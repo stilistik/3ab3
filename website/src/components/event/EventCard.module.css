@@ -3,12 +3,17 @@
   height: 720px;
   margin: 0 auto;
   padding: 15px;
-  filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
   margin-bottom: 50px;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 50% 50%;
-  border: 2 px solid black;
+  border: 2px solid black;
+  background-color: whitesmoke;
+  filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
+}
+
+.wrapper > * {
+  filter: none;
 }
 
 .top {
