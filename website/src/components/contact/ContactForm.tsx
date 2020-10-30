@@ -1,36 +1,62 @@
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { SendConfirmModal } from './SendConfirmModal';
-import { LoadingOverlay } from 'Components/utility';
+import { LoadingOverlay, Modal } from 'Components/utility';
 import clx from 'classnames';
 
 import styles from './ContactForm.module.css';
 
+const initState = {
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+};
+
 export const ContactForm: React.FC = () => {
   const recaptchaRef = React.useRef(null);
   const [showConfirm, setShowConfirm] = React.useState(false);
-  const [values, setValues] = React.useState<Record<string, string>>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [showError, setShowError] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
+  const [values, setValues] = React.useState<Record<string, string>>(
+    () => initState
+  );
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  React.useEffect(() => {
+    async function runSubmit() {
+      try {
+        const token = await recaptchaRef.current.executeAsync();
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          body: JSON.stringify({
+            token,
+            ...values,
+          }),
+        });
+        const json = await response.json();
+        if (json.success) {
+          setShowConfirm(true);
+          setValues(initState);
+        }
+      } catch (error) {
+        console.log(error.message);
+        setShowError(true);
+      }
+      setSubmitting(false);
+    }
+
+    function hasValues() {
+      return values.email && values.name && values.subject && values.message;
+    }
+
+    if (submitting && hasValues()) {
+      setTimeout(() => runSubmit(), 1000);
+    } else setSubmitting(false);
+  }, [submitting, values]);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // const token = await recaptchaRef.current.executeAsync();
-    // const response = await fetch('/api/contact', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     token,
-    //     ...values,
-    //   }),
-    // });
-    // const json = await response.json();
-    // if (json.success) {
-    //   setShowConfirm(true);
-    // }
-    setShowConfirm(true);
+    setSubmitting(true);
   };
 
   const handleInputChange = (
@@ -106,7 +132,10 @@ export const ContactForm: React.FC = () => {
         onClose={() => setShowConfirm(false)}
         name={values.name}
       />
-      <LoadingOverlay />
+      <Modal show={showError} onClose={() => setShowError(false)}>
+        <p> an error occured </p>
+      </Modal>
+      {submitting && <LoadingOverlay />}
     </React.Fragment>
   );
 };
