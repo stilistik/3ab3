@@ -1,8 +1,9 @@
 import React from 'react';
 import { Event } from 'App/prisma';
 import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
-import clx from 'classnames';
+import { CloseButton } from 'Components/buttons';
 import { DynamicGrid } from './DynamicGrid';
+import clx from 'classnames';
 
 import styles from './Archive.module.css';
 
@@ -19,9 +20,9 @@ const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
 
   return (
     <div className={styles.details}>
-      <button className={styles.closeButton} onClick={handleClose}>
-        +
-      </button>
+      <div className="absolute top-0 right-0 mt-1 mr-1">
+        <CloseButton onClick={handleClose} />
+      </div>
       <h1 className={styles.title}>{event.title}</h1>
       <p className={styles.description}>{event.description}</p>
     </div>
