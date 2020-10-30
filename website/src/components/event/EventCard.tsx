@@ -4,6 +4,29 @@ import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
 import { Event } from 'App/prisma';
 import styles from './EventCard.module.css';
 
+
+const ShowMore: React.FC = () => {
+  const [isActive, setActive] = React.useState(false);
+
+  console.log(isActive);
+
+  const handleClick = () => {
+    if (isActive == true) {
+      setActive(false);
+    }
+    setActive(true);
+  };
+
+  const moreBtn = clx(styles.topright, styles.more, {
+    [styles.slanted]: isActive,
+  });
+  return (
+    <button onClick={handleClick} className={moreBtn}>
+      +
+    </button>
+  );
+};
+
 interface EventCardProps {
   event: Event;
 }
