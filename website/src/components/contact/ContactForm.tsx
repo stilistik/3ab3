@@ -1,9 +1,10 @@
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { SendConfirmModal } from './SendConfirmModal';
+import { LoadingOverlay } from 'Components/utility';
 import clx from 'classnames';
 
 import styles from './ContactForm.module.css';
-import { SendConfirmModal } from './SendConfirmModal';
 
 export const ContactForm: React.FC = () => {
   const recaptchaRef = React.useRef(null);
@@ -105,6 +106,7 @@ export const ContactForm: React.FC = () => {
         onClose={() => setShowConfirm(false)}
         name={values.name}
       />
+      <LoadingOverlay />
     </React.Fragment>
   );
 };

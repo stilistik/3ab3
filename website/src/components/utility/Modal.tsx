@@ -21,7 +21,6 @@ export const Modal: React.FC<ModalProps> = ({ children, show, onClose }) => {
 
     if (show) {
       element.classList.add(styles.modal);
-
       modalRoot.appendChild(element);
       appRoot.classList.add(styles.backdrop);
     }
