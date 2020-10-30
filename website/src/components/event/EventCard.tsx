@@ -2,8 +2,8 @@ import React from 'react';
 import { AspectRatioBox, Container } from 'Components/utility';
 import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
 import { Event } from 'App/prisma';
-import styles from './EventCard.module.css';
 
+import styles from './EventCard.module.css';
 
 const ShowMore: React.FC = () => {
   const [isActive, setActive] = React.useState(false);
