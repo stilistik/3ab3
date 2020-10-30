@@ -89,8 +89,11 @@ class MyDocument extends Document {
           sizes="128x128"
         />
         <body>
-          <Main />
-          <NextScript />
+          <div id="app-root">
+            <Main />
+            <NextScript />
+          </div>
+          <div id="modal-root" style={{ content: '' }} />
         </body>
       </Html>
     );
