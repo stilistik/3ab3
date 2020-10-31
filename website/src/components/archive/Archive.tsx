@@ -76,7 +76,7 @@ const ArchiveItem: React.FC<ArchiveItemProps> = ({
 
   return (
     <div className={cls}>
-      <div className="overflow-hidden w-full h-full">
+      <div className={styles.image}>
         <LazyLoadingImageDiv
           src={event.image}
           className="w-full h-full"
@@ -96,14 +96,20 @@ interface ArchiveProps {
 export const Archive: React.FC<ArchiveProps> = ({ events }) => {
   const [selected, setSelected] = React.useState<string>(null);
   const handleClick = (eventId: string) => setSelected(eventId);
-  const columns = useMedia(['(max-width: 960px)', '(max-width: 1280px)'], [1, 2], 3);
+  const columns = useMedia(
+    ['(max-width: 960px)', '(max-width: 1280px)'],
+    [1, 2],
+    3
+  );
+
+  const expandedHeight = columns > 2 ? 800 : 1000;
 
   const items = React.useMemo(() => {
     return events.map((event) => {
       const isSelected = selected === event.id;
       return {
         id: event.id,
-        height: isSelected ? 800 : 500,
+        height: isSelected ? expandedHeight : 500,
         fullWidth: isSelected,
         component: (
           <ArchiveItem
