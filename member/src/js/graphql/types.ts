@@ -140,6 +140,7 @@ export type Event = Node & {
   youtube?: Maybe<Scalars['String']>;
   facebook?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
+  soundcloud?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   place?: Maybe<Scalars['String']>;
   flyer?: Maybe<Scalars['String']>;
