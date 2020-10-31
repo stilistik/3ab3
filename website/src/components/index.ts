@@ -5,3 +5,4 @@ export * from './archive';
 export * from './contact';
 export * from './utility';
 export * from './buttons';
+export * from './about';

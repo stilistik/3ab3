@@ -57,6 +57,6 @@ a.link:visited {
 
 .logo h1 {
   line-height: 0.78em;
-  -webkit-text-stroke: 1px whitesmoke;
+  -webkit-text-stroke: 2px whitesmoke;
   filter: drop-shadow(3px 3px 0px var(--color-primary));
 }
