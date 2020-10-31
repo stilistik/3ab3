@@ -3,9 +3,28 @@ import { Event } from 'App/prisma';
 import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
 import { CloseButton } from 'Components/buttons';
 import { DynamicGrid } from './DynamicGrid';
+import { Icon } from '@iconify/react';
+import spotifyIcon from '@iconify/icons-mdi/spotify';
+import instagramIcon from '@iconify/icons-mdi/instagram';
+import facebookIcon from '@iconify/icons-mdi/facebook';
+import youtubeIcon from '@iconify/icons-mdi/youtube';
 import clx from 'classnames';
 
 import styles from './Archive.module.css';
+
+interface SocialLinkProps {
+  icon: object;
+  url?: string;
+}
+
+const SocialLink: React.FC<SocialLinkProps> = ({ icon, url }) => {
+  if (!url) return null;
+  return (
+    <a href={url} target="_blank">
+      <Icon icon={icon} />
+    </a>
+  );
+};
 
 interface ArchiveItemDetailsProps {
   event: Event;
@@ -25,6 +44,12 @@ const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
       </div>
       <h1 className={styles.title}>{event.title}</h1>
       <p className={styles.description}>{event.description}</p>
+      <div className={styles.social}>
+        <SocialLink url={event.spotify} icon={spotifyIcon} />
+        <SocialLink url={event.youtube} icon={youtubeIcon} />
+        <SocialLink url={event.facebook} icon={facebookIcon} />
+        <SocialLink url={event.instagram} icon={instagramIcon} />
+      </div>
     </div>
   );
 };
