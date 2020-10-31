@@ -19,7 +19,12 @@ const InfoItem: React.FC<InfoItemProps> = ({ label, content }) => {
       <Typography variant="body2" color="textSecondary">
         {label}
       </Typography>
-      <Typography variant="body1">{content || '-'}</Typography>
+      <Typography
+        variant="body1"
+        style={{ wordWrap: 'break-word', overflow: 'hidden' }}
+      >
+        {content || '-'}
+      </Typography>
     </React.Fragment>
   );
 };
