@@ -80,6 +80,7 @@ export const SINGLE_EVENT = gql`
       youtube
       facebook
       instagram
+      soundcloud
       committee {
         id
         name

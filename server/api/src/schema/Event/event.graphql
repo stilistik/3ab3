@@ -8,6 +8,7 @@ type Event implements Node {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   image: String
   place: String
   flyer: String
