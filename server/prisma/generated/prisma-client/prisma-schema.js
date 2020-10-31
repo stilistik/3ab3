@@ -1072,6 +1072,7 @@ type Event {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1100,6 +1101,7 @@ input EventCreateInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1142,6 +1144,7 @@ input EventCreateWithoutCommentsInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1163,6 +1166,7 @@ input EventCreateWithoutLikedByInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1184,6 +1188,7 @@ input EventCreateWithoutSupportersInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1205,6 +1210,7 @@ input EventCreateWithoutTodosInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1240,6 +1246,8 @@ enum EventOrderByInput {
   facebook_DESC
   instagram_ASC
   instagram_DESC
+  soundcloud_ASC
+  soundcloud_DESC
   place_ASC
   place_DESC
   image_ASC
@@ -1260,6 +1268,7 @@ type EventPreviousValues {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1387,6 +1396,20 @@ input EventScalarWhereInput {
   instagram_not_starts_with: String
   instagram_ends_with: String
   instagram_not_ends_with: String
+  soundcloud: String
+  soundcloud_not: String
+  soundcloud_in: [String!]
+  soundcloud_not_in: [String!]
+  soundcloud_lt: String
+  soundcloud_lte: String
+  soundcloud_gt: String
+  soundcloud_gte: String
+  soundcloud_contains: String
+  soundcloud_not_contains: String
+  soundcloud_starts_with: String
+  soundcloud_not_starts_with: String
+  soundcloud_ends_with: String
+  soundcloud_not_ends_with: String
   place: String
   place_not: String
   place_in: [String!]
@@ -1463,6 +1486,7 @@ input EventUpdateInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1484,6 +1508,7 @@ input EventUpdateManyDataInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1499,6 +1524,7 @@ input EventUpdateManyMutationInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1559,6 +1585,7 @@ input EventUpdateWithoutCommentsDataInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1579,6 +1606,7 @@ input EventUpdateWithoutLikedByDataInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1599,6 +1627,7 @@ input EventUpdateWithoutSupportersDataInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1619,6 +1648,7 @@ input EventUpdateWithoutTodosDataInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -1783,6 +1813,20 @@ input EventWhereInput {
   instagram_not_starts_with: String
   instagram_ends_with: String
   instagram_not_ends_with: String
+  soundcloud: String
+  soundcloud_not: String
+  soundcloud_in: [String!]
+  soundcloud_not_in: [String!]
+  soundcloud_lt: String
+  soundcloud_lte: String
+  soundcloud_gt: String
+  soundcloud_gte: String
+  soundcloud_contains: String
+  soundcloud_not_contains: String
+  soundcloud_starts_with: String
+  soundcloud_not_starts_with: String
+  soundcloud_ends_with: String
+  soundcloud_not_ends_with: String
   place: String
   place_not: String
   place_in: [String!]

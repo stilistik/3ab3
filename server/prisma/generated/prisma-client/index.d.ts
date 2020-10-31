@@ -813,6 +813,8 @@ export type EventOrderByInput =
   | "facebook_DESC"
   | "instagram_ASC"
   | "instagram_DESC"
+  | "soundcloud_ASC"
+  | "soundcloud_DESC"
   | "place_ASC"
   | "place_DESC"
   | "image_ASC"
@@ -1627,6 +1629,20 @@ export interface EventWhereInput {
   instagram_not_starts_with?: Maybe<String>;
   instagram_ends_with?: Maybe<String>;
   instagram_not_ends_with?: Maybe<String>;
+  soundcloud?: Maybe<String>;
+  soundcloud_not?: Maybe<String>;
+  soundcloud_in?: Maybe<String[] | String>;
+  soundcloud_not_in?: Maybe<String[] | String>;
+  soundcloud_lt?: Maybe<String>;
+  soundcloud_lte?: Maybe<String>;
+  soundcloud_gt?: Maybe<String>;
+  soundcloud_gte?: Maybe<String>;
+  soundcloud_contains?: Maybe<String>;
+  soundcloud_not_contains?: Maybe<String>;
+  soundcloud_starts_with?: Maybe<String>;
+  soundcloud_not_starts_with?: Maybe<String>;
+  soundcloud_ends_with?: Maybe<String>;
+  soundcloud_not_ends_with?: Maybe<String>;
   place?: Maybe<String>;
   place_not?: Maybe<String>;
   place_in?: Maybe<String[] | String>;
@@ -2541,6 +2557,7 @@ export interface EventCreateWithoutLikedByInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -2660,6 +2677,7 @@ export interface EventCreateWithoutSupportersInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -2863,6 +2881,7 @@ export interface EventCreateWithoutCommentsInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -3641,6 +3660,7 @@ export interface EventUpdateWithoutLikedByDataInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -4019,6 +4039,7 @@ export interface EventUpdateWithoutSupportersDataInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -4491,6 +4512,7 @@ export interface EventUpdateWithoutCommentsDataInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -4890,6 +4912,20 @@ export interface EventScalarWhereInput {
   instagram_not_starts_with?: Maybe<String>;
   instagram_ends_with?: Maybe<String>;
   instagram_not_ends_with?: Maybe<String>;
+  soundcloud?: Maybe<String>;
+  soundcloud_not?: Maybe<String>;
+  soundcloud_in?: Maybe<String[] | String>;
+  soundcloud_not_in?: Maybe<String[] | String>;
+  soundcloud_lt?: Maybe<String>;
+  soundcloud_lte?: Maybe<String>;
+  soundcloud_gt?: Maybe<String>;
+  soundcloud_gte?: Maybe<String>;
+  soundcloud_contains?: Maybe<String>;
+  soundcloud_not_contains?: Maybe<String>;
+  soundcloud_starts_with?: Maybe<String>;
+  soundcloud_not_starts_with?: Maybe<String>;
+  soundcloud_ends_with?: Maybe<String>;
+  soundcloud_not_ends_with?: Maybe<String>;
   place?: Maybe<String>;
   place_not?: Maybe<String>;
   place_in?: Maybe<String[] | String>;
@@ -4953,6 +4989,7 @@ export interface EventUpdateManyDataInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -5588,6 +5625,7 @@ export interface EventCreateInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -5609,6 +5647,7 @@ export interface EventUpdateInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -5630,6 +5669,7 @@ export interface EventUpdateManyMutationInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -5900,6 +5940,7 @@ export interface EventCreateWithoutTodosInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -5938,6 +5979,7 @@ export interface EventUpdateWithoutTodosDataInput {
   youtube?: Maybe<String>;
   facebook?: Maybe<String>;
   instagram?: Maybe<String>;
+  soundcloud?: Maybe<String>;
   place?: Maybe<String>;
   image?: Maybe<String>;
   flyer?: Maybe<String>;
@@ -7138,6 +7180,7 @@ export interface Event {
   youtube?: String;
   facebook?: String;
   instagram?: String;
+  soundcloud?: String;
   place?: String;
   image?: String;
   flyer?: String;
@@ -7154,6 +7197,7 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
   youtube: () => Promise<String>;
   facebook: () => Promise<String>;
   instagram: () => Promise<String>;
+  soundcloud: () => Promise<String>;
   place: () => Promise<String>;
   image: () => Promise<String>;
   flyer: () => Promise<String>;
@@ -7218,6 +7262,7 @@ export interface EventSubscription
   youtube: () => Promise<AsyncIterator<String>>;
   facebook: () => Promise<AsyncIterator<String>>;
   instagram: () => Promise<AsyncIterator<String>>;
+  soundcloud: () => Promise<AsyncIterator<String>>;
   place: () => Promise<AsyncIterator<String>>;
   image: () => Promise<AsyncIterator<String>>;
   flyer: () => Promise<AsyncIterator<String>>;
@@ -7282,6 +7327,7 @@ export interface EventNullablePromise
   youtube: () => Promise<String>;
   facebook: () => Promise<String>;
   instagram: () => Promise<String>;
+  soundcloud: () => Promise<String>;
   place: () => Promise<String>;
   image: () => Promise<String>;
   flyer: () => Promise<String>;
@@ -8696,6 +8742,7 @@ export interface EventPreviousValues {
   youtube?: String;
   facebook?: String;
   instagram?: String;
+  soundcloud?: String;
   place?: String;
   image?: String;
   flyer?: String;
@@ -8714,6 +8761,7 @@ export interface EventPreviousValuesPromise
   youtube: () => Promise<String>;
   facebook: () => Promise<String>;
   instagram: () => Promise<String>;
+  soundcloud: () => Promise<String>;
   place: () => Promise<String>;
   image: () => Promise<String>;
   flyer: () => Promise<String>;
@@ -8732,6 +8780,7 @@ export interface EventPreviousValuesSubscription
   youtube: () => Promise<AsyncIterator<String>>;
   facebook: () => Promise<AsyncIterator<String>>;
   instagram: () => Promise<AsyncIterator<String>>;
+  soundcloud: () => Promise<AsyncIterator<String>>;
   place: () => Promise<AsyncIterator<String>>;
   image: () => Promise<AsyncIterator<String>>;
   flyer: () => Promise<AsyncIterator<String>>;

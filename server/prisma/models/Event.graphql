@@ -8,6 +8,7 @@ type Event {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
   place: String
   image: String
   flyer: String
@@ -15,7 +16,8 @@ type Event {
   supporters: [User!]! @relation(link: TABLE, name: "SupportedEvents")
   likedBy: [User!]! @relation(link: TABLE, name: "LikedEvents")
   owner: User! @relation(link: TABLE, name: "EventOwner")
-  comments: [Comment!]! @relation(link: TABLE, name: "EventComments", onDelete: CASCADE)
+  comments: [Comment!]!
+    @relation(link: TABLE, name: "EventComments", onDelete: CASCADE)
   todos: [Todo!]! @relation(link: TABLE, name: "EventTodo", onDelete: CASCADE)
   published: Boolean! @default(value: false)
 }
