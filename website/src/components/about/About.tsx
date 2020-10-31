@@ -3,6 +3,7 @@ import { CardStack } from './CardStack';
 import { Card, CardBackground } from './Card';
 
 import styles from './About.module.css';
+import { Container } from 'Components/utility';
 
 interface CardData {
   title?: string;
@@ -94,45 +95,61 @@ const data: CardData[] = [
   },
 ];
 
+const Text: React.FC = () => {
+  return (
+    <div className={styles.details}>
+      <h1 className={styles.title}>Die Idee</h1>
+      <p className={styles.text}>
+        Der Kulturverein 3ab3 existiert seit dem Januar 2016 und ist in Räumen
+        des Belvedere Bremgarten zuhause. Sämtliche Aktivitäten des Vereins sind
+        selbstverwaltet und sowohl inhaltlich als auch finanziell unabhängig.
+        Hauptzweck des Vereins ist die Umsetzung verrückter Ideen
+        verschiedenster Art. Das Vereinslokal mit seinen Werkstätten und
+        Arbeitsräumen bietet dabei die nötige Infra&shy;struktur. Die
+        Mitglieder&shy;gemein&shy;schaft bietet motivierte Helfer mit viel
+        Erfahrung und noch mehr Lust zum Schaffen. Vermehrt finden im Rahmen des
+        Vereins auch öffentliche Ver&shy;anstaltungen statt, welche, wie alle
+        Aktivitäten des Vereins, stets durch Mitglieder initiiert und
+        durchgeführt werden. Die lockere aber streng demokratische Struktur des
+        Vereins erlaubt jedem Mitglied, sich nach seinen Interessen und
+        Möglichkeiten an den Vereins&shy;aktivitäten zu beteiligen. Die
+        solidarische Zusammenarbeit der Mitglieder&shy;schaft an allen Projekten
+        ermöglicht eine Aktivierung von Kompetenzen und Interessen
+        verschiedenster Art, was zur Produktivität und zur Vielfalt der
+        Vereins&shy;aktivitäten beiträgt.
+      </p>
+    </div>
+  );
+};
+
 export const About: React.FC = () => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.details}>
-        <h1 className={styles.title}>Die Idee</h1>
-        <p className={styles.text}>
-          Der Kulturverein 3ab3 existiert seit dem Januar 2016 und ist in Räumen
-          des Belvedere Bremgarten zuhause. Sämtliche Aktivitäten des Vereins
-          sind selbstverwaltet und sowohl inhaltlich als auch finanziell
-          unabhängig. Hauptzweck des Vereins ist die Umsetzung verrückter Ideen
-          verschiedenster Art. Das Vereinslokal mit seinen Werkstätten und
-          Arbeitsräumen bietet dabei die nötige Infra&shy;struktur. Die
-          Mitglieder&shy;gemein&shy;schaft bietet motivierte Helfer mit viel
-          Erfahrung und noch mehr Lust zum Schaffen. Vermehrt finden im Rahmen
-          des Vereins auch öffentliche Ver&shy;anstaltungen statt, welche, wie
-          alle Aktivitäten des Vereins, stets durch Mitglieder initiiert und
-          durchgeführt werden. Die lockere aber streng demokratische Struktur
-          des Vereins erlaubt jedem Mitglied, sich nach seinen Interessen und
-          Möglichkeiten an den Vereins&shy;aktivitäten zu beteiligen. Die
-          solidarische Zusammenarbeit der Mitglieder&shy;schaft an allen
-          Projekten ermöglicht eine Aktivierung von Kompetenzen und Interessen
-          verschiedenster Art, was zur Produktivität und zur Vielfalt der
-          Vereins&shy;aktivitäten beiträgt.
-        </p>
+    <Container autoHeight>
+      <div className="flex flex-wrap">
+        <div className="w-full sm:w-1/2 px-4">
+          <Text />
+        </div>
+        <div className="w-full sm:w-1/2 px-4">
+          <CardStack
+            cards={data.map((el) => ({
+              front: (
+                <Card
+                  key={el.title + 'front'}
+                  title={el.title}
+                  style={el.style}
+                >
+                  {el.front}
+                </Card>
+              ),
+              back: el.back && (
+                <Card key={el.title + 'back'} style={el.style}>
+                  {el.back}
+                </Card>
+              ),
+            }))}
+          />
+        </div>
       </div>
-      <CardStack
-        cards={data.map((el) => ({
-          front: (
-            <Card key={el.title + 'front'} title={el.title} style={el.style}>
-              {el.front}
-            </Card>
-          ),
-          back: el.back && (
-            <Card key={el.title + 'back'} style={el.style}>
-              {el.back}
-            </Card>
-          ),
-        }))}
-      />
-    </div>
+    </Container>
   );
 };
