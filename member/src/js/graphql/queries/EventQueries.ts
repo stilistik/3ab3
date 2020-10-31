@@ -76,6 +76,10 @@ export const SINGLE_EVENT = gql`
       image
       description
       published
+      spotify
+      youtube
+      facebook
+      instagram
       committee {
         id
         name
