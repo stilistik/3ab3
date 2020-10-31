@@ -126,10 +126,10 @@ export const About: React.FC = () => {
   return (
     <Container>
       <div className="flex flex-wrap">
-        <div className="w-full sm:w-1/2 px-4">
+        <div className="w-full xl:w-1/2 px-4">
           <Text />
         </div>
-        <div className="w-full sm:w-1/2 px-4">
+        <div className={styles.minheight + ' w-full xl:w-1/2 px-4'}>
           <CardStack
             cards={data.map((el) => ({
               front: (
