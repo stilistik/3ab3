@@ -12,6 +12,7 @@ import soundCloudIcon from '@iconify/icons-mdi/soundcloud';
 import clx from 'classnames';
 
 import styles from './Archive.module.css';
+import { Container, useMedia } from 'Components/utility';
 
 interface SocialLinkProps {
   icon: object;
@@ -95,6 +96,7 @@ interface ArchiveProps {
 export const Archive: React.FC<ArchiveProps> = ({ events }) => {
   const [selected, setSelected] = React.useState<string>(null);
   const handleClick = (eventId: string) => setSelected(eventId);
+  const columns = useMedia(['(max-width: 960px)', '(max-width: 1280px)'], [1, 2], 3);
 
   const items = React.useMemo(() => {
     return events.map((event) => {
@@ -115,8 +117,8 @@ export const Archive: React.FC<ArchiveProps> = ({ events }) => {
   }, [selected]);
 
   return (
-    <div className={styles.wrapper}>
-      <DynamicGrid columnCount={3} items={items} />
-    </div>
+    <Container>
+      <DynamicGrid columnCount={columns} items={items} />
+    </Container>
   );
 };

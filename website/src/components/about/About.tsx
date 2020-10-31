@@ -124,7 +124,7 @@ const Text: React.FC = () => {
 
 export const About: React.FC = () => {
   return (
-    <Container autoHeight>
+    <Container>
       <div className="flex flex-wrap">
         <div className="w-full sm:w-1/2 px-4">
           <Text />
