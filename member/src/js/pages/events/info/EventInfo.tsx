@@ -65,6 +65,7 @@ export const EventInfo: React.FC<EventInfoProps> = ({ event }) => {
         />
         <InfoItem label={t('Description')} content={event.description} />
         <InfoItem label={t('Spotify')} content={event.spotify} />
+        <InfoItem label={t('Soundcloud')} content={event.soundcloud} />
         <InfoItem label={t('Youtube')} content={event.youtube} />
         <InfoItem label={t('Facebook')} content={event.facebook} />
         <InfoItem label={t('Instagram')} content={event.instagram} />

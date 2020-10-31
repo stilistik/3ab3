@@ -43,6 +43,7 @@ input EventInput {
   youtube: String
   facebook: String
   instagram: String
+  soundcloud: String
 }
 
 extend type Query {

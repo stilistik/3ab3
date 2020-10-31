@@ -66,6 +66,7 @@ export const EditInfo: React.FC<EditInfoProps> = ({
           <TextField id="place" label={t('Location')} />
           <TextField id="subtitle" label={t('Subtitle')} />
           <TextField id="spotify" label={t('Spotify')} />
+          <TextField id="soundcloud" label={t('Soundcloud')} />
           <TextField id="youtube" label={t('Youtube')} />
           <TextField id="instagram" label={t('Instagram')} />
           <TextField id="facebook" label={t('Facebook')} />
