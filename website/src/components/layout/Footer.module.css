@@ -4,6 +4,19 @@
   background: var(--color-primary);
   border-top: 5px solid black;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+}
+
+.footer > * {
+  margin: 0px 20px;
+}
+
+.footer > span {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.footer > a {
+  font-size: 40px;
 }
