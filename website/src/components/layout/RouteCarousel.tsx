@@ -15,6 +15,8 @@ const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
   const [{ x }, set] = useSpring(() => ({ x: 0 }));
 
   React.useEffect(() => {
+    console.log('test');
+
     hasChangedRef.current = false;
     set({ x: 0 });
   }, [router.asPath]);
@@ -22,7 +24,7 @@ const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
   const bind = useGesture(
     ({ down, delta: [xDelta], direction: [xDir], velocity }) => {
       if (!isMobile) return;
-      const trigger = velocity > 0.2 && Math.abs(xDelta) > 100;
+      const trigger = velocity > 0.2 && Math.abs(xDelta) > 50;
 
       const dir = xDir < 0 ? 1 : -1;
       if (!down && trigger) {
@@ -38,7 +40,7 @@ const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
       }
 
       const x = hasChangedRef.current
-        ? (200 + window.innerWidth) * dir
+        ? (200 + window.innerWidth) * -dir
         : down
         ? xDelta
         : 0;
