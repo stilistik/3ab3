@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSprings, useSpring, animated, interpolate } from 'react-spring';
+import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
 
 import styles from './CardStack.module.css';

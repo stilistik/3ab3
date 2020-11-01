@@ -19,9 +19,9 @@
 }
 
 .container > div > div {
-  width: 45vh;
+  width: 40vh;
   max-width: 400px;
-  height: 85vh;
+  height: 75vh;
   max-height: 700px;
   will-change: transform;
 }

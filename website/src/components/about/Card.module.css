@@ -5,6 +5,7 @@
   padding: 30px;
   overflow: center;
   user-select: none;
+  font-size: 1.55vh;
 }
 
 .card > * {
@@ -12,7 +13,7 @@
 }
 
 .card h2 {
-  font-size: 30px;
+  font-size: 2.5vh;
   font-weight: 900;
   margin-bottom: 20px;
 }
@@ -27,7 +28,7 @@
 }
 
 .header {
-  font-size: 60px;
+  font-size: 5vh;
   font-weight: 900;
   text-shadow: 5px 5px 0px var(--color-primary);
   -webkit-text-stroke: 2px whitesmoke;
