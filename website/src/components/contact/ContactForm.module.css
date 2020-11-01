@@ -6,12 +6,11 @@
   background-color: var(--color-primary);
   border: 2px solid #ffffff;
   box-sizing: border-box;
-  box-shadow: 7.5px 7.5px 0px #000000;
-
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
   font-size: 36px;
+  filter: drop-shadow(7.5px 7.5px 0px black);
 }
 
 .button:focus {

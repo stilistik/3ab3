@@ -118,7 +118,7 @@ export const ContactForm: React.FC = () => {
             style={{ height: `384px` }}
           />
         </label>
-        <button className={styles.button} type="submit">
+        <button className={styles.button + ' shadow-2xl'} type="submit">
           Senden
         </button>
         <ReCAPTCHA

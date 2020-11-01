@@ -37,7 +37,7 @@ export const Map: React.FC = () => {
   };
 
   return (
-    <div className={styles.map}>
+    <div className={styles.map + ' shadow-2xl'}>
       {show && (
         <GoogleMapReact
           bootstrapURLKeys={{ key: __GOOGLE_MAPS_API_KEY__ }}
