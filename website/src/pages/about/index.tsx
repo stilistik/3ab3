@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { About } from 'Components/index';
+import { About, Body, Footer } from 'Components/index';
 
 const AboutPage: React.FC = () => {
   return (
@@ -8,7 +8,10 @@ const AboutPage: React.FC = () => {
       <Head>
         <title>3ab3 - About</title>
       </Head>
-      <About />
+      <Body>
+        <About />
+      </Body>
+      <Footer />
     </React.Fragment>
   );
 };

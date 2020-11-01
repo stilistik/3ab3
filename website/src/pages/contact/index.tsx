@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { Contact } from 'Components/index';
+import { Body, Contact, Footer } from 'Components/index';
 
 const ContactPage: React.FC = () => {
   return (
@@ -8,7 +8,10 @@ const ContactPage: React.FC = () => {
       <Head>
         <title>3ab3 - Kontakt</title>
       </Head>
-      <Contact />
+      <Body>
+        <Contact />
+      </Body>
+      <Footer />
     </React.Fragment>
   );
 };

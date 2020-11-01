@@ -1,7 +1,7 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { EventCard } from 'Components/index';
+import { Body, EventCard, Footer } from 'Components/index';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
@@ -26,13 +26,16 @@ const EventPage = ({
       <Head>
         <title>3ab3 - Events</title>
       </Head>
-      {events.map((event) => {
-        return (
-          <article key={event.id}>
-            <EventCard event={event} />
-          </article>
-        );
-      })}
+      <Body>
+        {events.map((event) => {
+          return (
+            <article key={event.id}>
+              <EventCard event={event} />
+            </article>
+          );
+        })}
+      </Body>
+      <Footer />
     </React.Fragment>
   );
 };
