@@ -6,7 +6,7 @@
 
 @media screen and (max-width: 1920px) {
   .container {
-    max-width: 95vw;
+    max-width: 90vw;
     width: 1080px;
     margin: 0px auto;
   }
@@ -14,7 +14,7 @@
 
 @media screen and (max-width: 1280px) {
   .container {
-    max-width: 95vw;
+    max-width: 90vw;
     width: 810px;
     margin: 0px auto;
   }
@@ -22,7 +22,7 @@
 
 @media screen and (max-width: 960px) {
   .container {
-    max-width: 95vw;
+    max-width: 90vw;
     width: 720px;
     margin: 0px auto;
   }
@@ -30,7 +30,7 @@
 
 @media screen and (max-width: 600px) {
   .container {
-    max-width: 95vw;
+    max-width: 90vw;
     width: 480px;
     margin: 0px auto;
   }

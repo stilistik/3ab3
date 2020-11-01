@@ -81,3 +81,41 @@
   color: var(--color-primary);
   -webkit-text-stroke: 2px black;
 }
+
+@media screen and (max-width: 960px) {
+  .title {
+    font-size: 64px;
+  }
+
+  .date {
+    font-size: 64px;
+    line-height: 64px;
+  }
+
+  .time {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .title {
+    font-size: 45px;
+  }
+
+  .date {
+    font-size: 45px;
+    line-height: 40px;
+  }
+
+  .time {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+}

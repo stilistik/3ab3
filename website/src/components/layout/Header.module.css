@@ -55,6 +55,24 @@ a.link:visited {
   cursor: pointer;
 }
 
+@media screen and (max-width: 960px) {
+  .logo {
+    margin-top: 8px;
+    height: 70px;
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 45px;
+    user-select: none;
+    cursor: pointer;
+  }
+}
+
 .logo h1 {
   line-height: 0.78em;
   -webkit-text-stroke: 2px whitesmoke;

@@ -54,7 +54,7 @@ export const Layout: React.FC<LayoutProps> = ({ items }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Header />
+      <Header routes={routes} />
       <Hidden mdDn>
         <BodyLink side="left" pathname={prevRoute.pathname}>
           {prevRoute.label}

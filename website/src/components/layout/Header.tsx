@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import clx from 'classnames';
 
 import styles from './Header.module.css';
+import { Hidden } from 'Components/utility';
+import { RouteDefinition } from './Layout';
 
 interface HeaderLinkProps {
   pathname: string;
@@ -32,7 +34,7 @@ const Logo: React.FC = () => {
   );
 };
 
-export const Header: React.FC = () => {
+const DesktopHeader: React.FC = () => {
   return (
     <header className={styles.header}>
       <div className="mx-10">
@@ -45,5 +47,51 @@ export const Header: React.FC = () => {
         <HeaderLink pathname="/archive">Archiv</HeaderLink>
       </div>
     </header>
+  );
+};
+
+const MobileHeader: React.FC<HeaderProps> = ({ routes }) => {
+  const router = useRouter();
+
+  function clampIndex(value: number): number {
+    if (value < 0) value = routes.length - 1;
+    if (value > routes.length - 1) value = 0;
+    return value;
+  }
+
+  const currentIndex = routes.findIndex((el) => el.pathname === router.asPath);
+  const nextIndex = clampIndex(currentIndex + 1);
+  const prevIndex = clampIndex(currentIndex - 1);
+
+  const prevRoute = routes[prevIndex];
+  const nextRoute = routes[nextIndex];
+
+  return (
+    <header className={styles.header}>
+      <div className="mx-10">
+        <HeaderLink pathname={prevRoute.pathname}>{prevRoute.label}</HeaderLink>
+      </div>
+      <Logo />
+      <div className="mx-10">
+        <HeaderLink pathname={nextRoute.pathname}>{nextRoute.label}</HeaderLink>
+      </div>
+    </header>
+  );
+};
+
+interface HeaderProps {
+  routes: RouteDefinition[];
+}
+
+export const Header: React.FC<HeaderProps> = ({ routes }) => {
+  return (
+    <React.Fragment>
+      <Hidden smUp>
+        <MobileHeader routes={routes} />
+      </Hidden>
+      <Hidden xsDn>
+        <DesktopHeader />
+      </Hidden>
+    </React.Fragment>
   );
 };
