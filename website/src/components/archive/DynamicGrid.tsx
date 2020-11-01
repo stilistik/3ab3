@@ -55,9 +55,17 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
 }) => {
   const [ref, { width }] = useMeasure();
 
-  const gridItems = React.useMemo(() => {
+  const { gridItems, containerHeight } = React.useMemo(() => {
     const hasFullWidth = items.some((el) => el.fullWidth);
     const fullWidthIndex = items.findIndex((el) => el.fullWidth);
+
+    const normalHeightIndex = items.findIndex((el) => !el.fullWidth);
+    const rowCount = Math.ceil(items.length / columnCount);
+    const containerHeight = hasFullWidth
+      ? rowCount * items[normalHeightIndex].height +
+        items[fullWidthIndex].height +
+        50
+      : rowCount * items[normalHeightIndex].height + 50;
 
     const swapIndex = Math.max(
       0,
@@ -67,24 +75,27 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
     const sortedItems = swapElements(items, swapIndex, fullWidthIndex);
 
     let currentY = 0;
-    return sortedItems.map((item, i) => {
-      const index = hasFullWidth
-        ? i > swapIndex
-          ? i + columnCount - 1
-          : i
-        : i;
+    return {
+      gridItems: sortedItems.map((item, i) => {
+        const index = hasFullWidth
+          ? i > swapIndex
+            ? i + columnCount - 1
+            : i
+          : i;
 
-      const column = index % columnCount;
+        const column = index % columnCount;
 
-      const columnWidth = item.fullWidth ? width : width / columnCount;
-      const xy = [columnWidth * column, currentY];
+        const columnWidth = item.fullWidth ? width : width / columnCount;
+        const xy = [columnWidth * column, currentY];
 
-      // at the end of each row, increment the current y position
-      if (hasFullWidth && i === swapIndex) currentY += item.height;
-      if (index % columnCount === columnCount - 1) currentY += item.height;
+        // at the end of each row, increment the current y position
+        if (hasFullWidth && i === swapIndex) currentY += item.height;
+        if (index % columnCount === columnCount - 1) currentY += item.height;
 
-      return { ...item, xy, width: columnWidth };
-    });
+        return { ...item, xy, width: columnWidth };
+      }),
+      containerHeight,
+    };
   }, [columnCount, items, width]);
 
   const transitions = useTransition(gridItems, (item) => item.id, {
@@ -97,7 +108,7 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
   });
 
   return (
-    <div ref={ref} className={styles.list}>
+    <div ref={ref} className={styles.list} style={{ height: containerHeight }}>
       {transitions.map(({ item, props, key }) => {
         const { xy, ...rest } = props as any;
         return (
