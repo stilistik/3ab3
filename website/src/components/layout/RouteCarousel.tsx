@@ -37,7 +37,10 @@ export const RouteCarousel: React.FC<RouteCarouselProps> = ({
   });
 
   return (
-    <React.Fragment key={router.asPath}>
+    <div
+      className="relative w-screen h-screen overflow-x-hidden"
+      key={router.asPath}
+    >
       {transitions.map(({ item, props, key }) => {
         const { Component, pageProps } = item;
         return (
@@ -46,6 +49,6 @@ export const RouteCarousel: React.FC<RouteCarouselProps> = ({
           </animated.div>
         );
       })}
-    </React.Fragment>
+    </div>
   );
 };

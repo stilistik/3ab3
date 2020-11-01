@@ -1,37 +1,37 @@
 .container {
+  max-width: 95vw;
   width: 1350px;
-  /* height: 900px; */
   margin: 0px auto;
 }
 
 @media screen and (max-width: 1920px) {
   .container {
+    max-width: 95vw;
     width: 1080px;
-    /* height: 720px; */
     margin: 0px auto;
   }
 }
 
 @media screen and (max-width: 1280px) {
   .container {
+    max-width: 95vw;
     width: 810px;
-    /* height: 540px; */
     margin: 0px auto;
   }
 }
 
 @media screen and (max-width: 960px) {
   .container {
+    max-width: 95vw;
     width: 720px;
-    /* height: 480px; */
     margin: 0px auto;
   }
 }
 
 @media screen and (max-width: 600px) {
   .container {
+    max-width: 95vw;
     width: 480px;
-    /* height: 320px; */
     margin: 0px auto;
   }
 }
