@@ -5,3 +5,4 @@ export * from './LoadingOverlay';
 export * from './Container';
 export * from './AspectRatioBox';
 export * from './UseMedia';
+export * from './Hidden';

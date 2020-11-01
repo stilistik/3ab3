@@ -4,6 +4,7 @@ import { AppRouterItem } from 'Pages/_app';
 import { RouteCarousel } from './RouteCarousel';
 import { Header } from './Header';
 import { BodyLink } from './BodyLink';
+import { Hidden } from 'Components/utility/Hidden';
 
 import styles from './Layout.module.css';
 
@@ -54,13 +55,17 @@ export const Layout: React.FC<LayoutProps> = ({ items }) => {
   return (
     <div className={styles.wrapper}>
       <Header />
-      <BodyLink side="left" pathname={prevRoute.pathname}>
-        {prevRoute.label}
-      </BodyLink>
+      <Hidden mdDn>
+        <BodyLink side="left" pathname={prevRoute.pathname}>
+          {prevRoute.label}
+        </BodyLink>
+      </Hidden>
       <RouteCarousel routes={routes} items={items} />
-      <BodyLink side="right" pathname={nextRoute.pathname}>
-        {nextRoute.label}
-      </BodyLink>
+      <Hidden mdDn>
+        <BodyLink side="right" pathname={nextRoute.pathname}>
+          {nextRoute.label}
+        </BodyLink>
+      </Hidden>
     </div>
   );
 };
