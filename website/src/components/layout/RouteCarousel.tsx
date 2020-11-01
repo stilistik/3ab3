@@ -15,8 +15,6 @@ const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
   const [{ x }, set] = useSpring(() => ({ x: 0 }));
 
   React.useEffect(() => {
-    console.log('test');
-
     hasChangedRef.current = false;
     set({ x: 0 });
   }, [router.asPath]);
