@@ -44,7 +44,6 @@ export const Hidden: React.FC<HiddenProps> = ({
     ['xl', 'lg', 'md', 'sm'],
     'xs'
   );
-  console.log(bp);
 
   if (smUp && breakPoints.smUp.includes(bp)) return null;
   if (mdUp && breakPoints.mdUp.includes(bp)) return null;
