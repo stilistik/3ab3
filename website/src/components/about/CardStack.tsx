@@ -36,7 +36,8 @@ export const CardStack: React.FC<CardStackProps> = ({ cards }) => {
   }));
 
   const bind = useGesture(
-    ({ args: [index], down, delta: [xDelta], direction: [xDir], velocity }) => {
+    ({ args: [index], down, delta: [xDelta], direction: [xDir], velocity, event }) => {
+      event.stopPropagation();
       const trigger = velocity > 0.2;
       const dir = xDir < 0 ? -1 : 1;
       if (!down && trigger) gone.add(index);
