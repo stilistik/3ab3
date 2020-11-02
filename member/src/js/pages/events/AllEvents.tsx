@@ -1,9 +1,21 @@
 import React from 'react';
-import { EventCard, Grid, Box } from 'Components/index';
+import { Masonry, EventCard, Grid, Box } from 'Components/index';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
-import { Button } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { ALL_EVENTS_FEED } from 'Graphql/queries';
 import { Event } from 'Graphql/types';
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    display: 'flex',
+    marginLeft: -theme.spacing(3) /* gutter size offset */,
+    width: 'auto',
+  },
+  column: {
+    paddingLeft: theme.spacing(3) /* gutter size */,
+    backgroundClip: 'padding-box',
+  },
+}));
 
 export const AllEvents = () => {
   const {
@@ -14,21 +26,18 @@ export const AllEvents = () => {
     hasNext,
     cursor,
   } = usePaginatedQuery<Event>(ALL_EVENTS_FEED, 10);
+  const styles = useStyles();
 
   if (loading || error) return null;
 
   return (
     <Grid.Default>
       <Box py="20px">
-        <Grid container spacing={3}>
+        <Masonry>
           {nodes.map((event) => {
-            return (
-              <Grid key={event.id} item xs={12} sm={6}>
-                <EventCard event={event} />
-              </Grid>
-            );
+            return <EventCard key={event.id} event={event} />;
           })}
-        </Grid>
+        </Masonry>
         {hasNext ? (
           <Box.Row jc="center" my={2}>
             <Button onClick={() => fetchMore(cursor)}>More</Button>
