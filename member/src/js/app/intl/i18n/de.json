@@ -100,7 +100,7 @@
     "eventPublishHelpText": "Wenn der Event publiziert wird, wird er auf der öffentlechen 3ab3 Website <2>www.3ab3.ch</2> angezeigt. Nur ein Administrator kann Events publizieren.",
     "Delete Event": "Event löschen",
     "deleteEventHelpText": "Diess wird den Event unwiderruflich löschen. Alle damit verbundenen Daten gehen dabei verloren. Nur ein Administrator kann Events löschen",
-    "deleteEventConfirm": "Willst du wirklich den event <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Event verbundenen Daten gehen verloren. Weitermachen?",
+    "deleteEventConfirm": "Willst du wirklich den Event <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Event verbundenen Daten gehen verloren. Weitermachen?",
     "Chats": "Chats",
     "Search chat": "Chat suchen",
     "Language": "Sprache",
@@ -113,6 +113,13 @@
     "Subtitle": "Untertitel",
     "Nano Credit": "Nanokredit",
     "Take out credit": "Kredit aufnehmen",
-    "nanoCreditExplanation": "Hier kannst du einen Nanokredit aufnehmen. Nachdem der Eintrag erstellt ist, kannst du den entsprechenden Betrag aus der Kasse nehmen. Beträge bis zu 50 CHF sind gestattet."
+    "nanoCreditExplanation": "Hier kannst du einen Nanokredit aufnehmen. Nachdem der Eintrag erstellt ist, kannst du den entsprechenden Betrag aus der Kasse nehmen. Beträge bis zu 50 CHF sind gestattet.",
+    "Secret": "Geheimnis",
+    "Front": "Frontseite",
+    "Back": "Rückseite",
+    "Edit Secret": "Geheimnis bearbeiten",
+    "Create Secret": "Geheimnis erstellen",
+    "Delete Secret": "Geheimnis löschen",
+    "deleteSecretConfirm": "Willst du wirklich das Geheimnis <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Geheimnis verbundenen Daten gehen verloren. Weitermachen?"
   }
 }

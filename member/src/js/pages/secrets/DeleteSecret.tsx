@@ -30,7 +30,9 @@ export const DeleteSecret: React.FC<DeleteSecretProps> = ({ secret }) => {
     setShowDialog(false);
   };
 
-  const name = secret.title;
+  const title = secret.title;
+  console.log(title);
+
   return (
     <React.Fragment>
       <IconButton onClick={handleClick}>
@@ -44,7 +46,7 @@ export const DeleteSecret: React.FC<DeleteSecretProps> = ({ secret }) => {
       >
         <Typography variant="body2">
           <Trans i18nKey="deleteSecretConfirm">
-            Do you really want to delete the secret <strong>{{ name }}</strong>
+            Do you really want to delete the secret <strong>{{ title }}</strong>
             ? This is an irreversible action, all data related to the secret
             will be lost. Continue?
           </Trans>
