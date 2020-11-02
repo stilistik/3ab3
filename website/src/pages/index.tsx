@@ -10,6 +10,7 @@ export const getStaticProps = async () => {
       published: true,
       date_gte: new Date().toISOString(),
     },
+    orderBy: 'date_ASC',
   });
 
   return {
