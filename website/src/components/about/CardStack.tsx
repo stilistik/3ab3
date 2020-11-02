@@ -1,3 +1,4 @@
+import { useMedia } from 'Components/utility';
 import React from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
@@ -12,7 +13,12 @@ const to = (i: any) => ({
   delay: i * 100,
 });
 
-const from = (_i: number) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
+const from = (_i: number, isMobile: boolean) => ({
+  x: 0,
+  rot: 0,
+  scale: 1.5,
+  y: isMobile ? 0 : -1000,
+});
 
 const trans = (r: number, s: number) =>
   `rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`;
@@ -29,10 +35,11 @@ interface CardStackProps {
 export const CardStack: React.FC<CardStackProps> = ({ cards }) => {
   const [gone] = React.useState(() => new Set());
   const [flipped] = React.useState(() => new Set());
+  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
 
   const [props, set] = useSprings(cards.length, (i) => ({
     ...to(i),
-    from: from(i),
+    from: from(i, isMobile),
   }));
 
   const bind = useGesture(
@@ -67,7 +74,7 @@ export const CardStack: React.FC<CardStackProps> = ({ cards }) => {
       if (!down && gone.size === cards.length)
         // @ts-ignore
         setTimeout(() => gone.clear() || set((i) => to(i)), 600);
-    },
+    }
   );
 
   const [flipProps, setFlipProps] = useSprings(cards.length, (i) => ({
