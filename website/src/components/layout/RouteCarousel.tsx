@@ -2,11 +2,12 @@ import React from 'react';
 import { NextRouter, useRouter } from 'next/router';
 import { useTransition, useSpring, animated } from 'react-spring';
 import { AppRouterItem } from 'Pages/_app';
-import { RouteDefinition } from './Layout';
+import { RouteDefinition, useLayoutContext } from './Layout';
 import { useGesture } from 'react-use-gesture';
 
 import styles from './RouteCarousel.module.css';
 import { useMedia } from 'Components/utility';
+import { receiveMessageOnPort } from 'worker_threads';
 
 const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);
@@ -54,6 +55,19 @@ const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
   return { x, bind };
 };
 
+const useScroll = () => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const layout = useLayoutContext();
+
+  React.useEffect(() => {
+    const container = ref.current;
+    container.addEventListener('scroll', layout.onScroll);
+    return () => container.removeEventListener('scroll', layout.onScroll);
+  }, [layout]);
+
+  return ref;
+};
+
 interface RouteCarouselProps {
   items: AppRouterItem[];
   routes: RouteDefinition[];
@@ -64,6 +78,7 @@ export const RouteCarousel: React.FC<RouteCarouselProps> = ({
   items,
 }) => {
   const router = useRouter();
+  const containerRef = useScroll();
 
   const [location] = items;
 
@@ -90,6 +105,7 @@ export const RouteCarousel: React.FC<RouteCarouselProps> = ({
     <div
       className="relative w-screen h-screen overflow-x-hidden"
       key={router.asPath}
+      ref={containerRef}
     >
       <animated.div
         style={{

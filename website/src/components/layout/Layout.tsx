@@ -8,6 +8,15 @@ import { Hidden } from 'Components/utility/Hidden';
 
 import styles from './Layout.module.css';
 
+const LayoutContext = React.createContext(undefined);
+
+export const useLayoutContext = () => {
+  const contextValue = React.useContext(LayoutContext);
+  if (contextValue === undefined)
+    throw new Error('useLayout must be used within LayoutContext provider.');
+  return contextValue;
+};
+
 export interface RouteDefinition {
   pathname: string;
   label: string;
@@ -38,6 +47,7 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ items }) => {
   const router = useRouter();
+  const [showHeader, setShowHeader] = React.useState(true);
 
   function clampIndex(value: number): number {
     if (value < 0) value = routes.length - 1;
@@ -52,20 +62,30 @@ export const Layout: React.FC<LayoutProps> = ({ items }) => {
   const prevRoute = routes[prevIndex];
   const nextRoute = routes[nextIndex];
 
+  const onScroll = React.useCallback((e: React.UIEvent<HTMLElement>) => {
+    if (e.currentTarget.scrollTop > 0) {
+      setShowHeader(false);
+    } else {
+      setShowHeader(true);
+    }
+  }, []);
+
   return (
-    <div className={styles.wrapper}>
-      <Header routes={routes} />
-      <Hidden mdDn>
-        <BodyLink side="left" pathname={prevRoute.pathname}>
-          {prevRoute.label}
-        </BodyLink>
-      </Hidden>
-      <RouteCarousel routes={routes} items={items} />
-      <Hidden mdDn>
-        <BodyLink side="right" pathname={nextRoute.pathname}>
-          {nextRoute.label}
-        </BodyLink>
-      </Hidden>
-    </div>
+    <LayoutContext.Provider value={{ onScroll }}>
+      <div className={styles.wrapper}>
+        <Header routes={routes} show={showHeader} />
+        <Hidden mdDn>
+          <BodyLink side="left" pathname={prevRoute.pathname}>
+            {prevRoute.label}
+          </BodyLink>
+        </Hidden>
+        <RouteCarousel routes={routes} items={items} />
+        <Hidden mdDn>
+          <BodyLink side="right" pathname={nextRoute.pathname}>
+            {nextRoute.label}
+          </BodyLink>
+        </Hidden>
+      </div>
+    </LayoutContext.Provider>
   );
 };

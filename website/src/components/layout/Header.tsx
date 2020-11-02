@@ -5,9 +5,9 @@ import clx from 'classnames';
 import { Hidden } from 'Components/utility';
 import { RouteDefinition } from './Layout';
 import { useTransition, animated } from 'react-spring';
+import { Logo } from './Logo';
 
 import styles from './Header.module.css';
-import { Logo } from './Logo';
 
 interface HeaderLinkProps {
   pathname: string;
@@ -25,9 +25,9 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ pathname, children }) => {
   );
 };
 
-const DesktopHeader: React.FC = () => {
+const DesktopHeader: React.FC<HeaderProps> = ({ show }) => {
   return (
-    <header className={styles.header}>
+    <header className={clx(styles.header, { [styles.show]: show })}>
       <div className={styles.left}>
         <HeaderLink pathname="/">Events</HeaderLink>
         <HeaderLink pathname="/contact">Kontakt</HeaderLink>
@@ -41,7 +41,11 @@ const DesktopHeader: React.FC = () => {
   );
 };
 
-const MobileHeader: React.FC<HeaderProps> = ({ routes }) => {
+interface MobileHeaderLinksProps {
+  routes: RouteDefinition[];
+}
+
+const MobileHeaderLinks: React.FC<MobileHeaderLinksProps> = ({ routes }) => {
   const router = useRouter();
 
   function clampIndex(value: number): number {
@@ -69,27 +73,34 @@ const MobileHeader: React.FC<HeaderProps> = ({ routes }) => {
     leave: { opacity: 0 },
     config: { mass: 5, tension: 150, friction: 40 },
   });
-
   return (
-    <header className={styles.header}>
+    <React.Fragment>
+      {transitions.map(({ item, key, props }) => {
+        const { x, ...rest } = props;
+        return (
+          <animated.div
+            key={item.pathname + key}
+            className={item.className}
+            style={{
+              transform: x.interpolate(
+                (x: number) => `translate3d(${x}px, 0px, 0px)`
+              ),
+              ...rest,
+            }}
+          >
+            <HeaderLink pathname={item.pathname}>{item.label}</HeaderLink>
+          </animated.div>
+        );
+      })}
+    </React.Fragment>
+  );
+};
+
+const MobileHeader: React.FC<HeaderProps> = ({ routes, show }) => {
+  return (
+    <header className={clx(styles.header, { [styles.show]: show })}>
       <div className="relative w-full h-full">
-        {transitions.map(({ item, key, props }) => {
-          const { x, ...rest } = props;
-          return (
-            <animated.div
-              key={item.pathname + key}
-              className={item.className}
-              style={{
-                transform: x.interpolate(
-                  (x: number) => `translate3d(${x}px, 0px, 0px)`
-                ),
-                ...rest,
-              }}
-            >
-              <HeaderLink pathname={item.pathname}>{item.label}</HeaderLink>
-            </animated.div>
-          );
-        })}
+        {show && <MobileHeaderLinks routes={routes} />}
         <Logo />
       </div>
     </header>
@@ -98,16 +109,17 @@ const MobileHeader: React.FC<HeaderProps> = ({ routes }) => {
 
 interface HeaderProps {
   routes: RouteDefinition[];
+  show: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ routes }) => {
+export const Header: React.FC<HeaderProps> = (props) => {
   return (
     <React.Fragment>
       <Hidden smUp>
-        <MobileHeader routes={routes} />
+        <MobileHeader {...props} />
       </Hidden>
       <Hidden xsDn>
-        <DesktopHeader />
+        <DesktopHeader {...props} />
       </Hidden>
     </React.Fragment>
   );
