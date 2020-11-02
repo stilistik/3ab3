@@ -3,9 +3,7 @@ const { verifyAndDecodeToken } = require('../../auth/verify');
 module.exports = {
   Mutation: {
     async createNanoCredit(root, args, context) {
-      const { id } = verifyAndDecodeToken(context);
-
-      const user = await context.prisma.user({ id });
+      const user = await context.prisma.user({ id: args.userId });
       const date = new Date().toISOString();
       const balance = user.balance - args.input.amount;
 
@@ -14,7 +12,7 @@ module.exports = {
         date: date,
         transaction: {
           create: {
-            user: { connect: { id } },
+            user: { connect: { id: user.id } },
             date: date,
             type: 'NANOCREDIT',
             change: -args.input.amount,

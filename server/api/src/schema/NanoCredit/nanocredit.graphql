@@ -13,5 +13,5 @@ input NanoCreditInput {
 }
 
 extend type Mutation {
-  createNanoCredit(input: NanoCreditInput!): NanoCredit!
+  createNanoCredit(userId: ID!, input: NanoCreditInput!): NanoCredit!
 }

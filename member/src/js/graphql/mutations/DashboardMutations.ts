@@ -13,3 +13,11 @@ export const CREATE_PAYMENT = gql`
     }
   }
 `;
+
+export const CREATE_NANOCREDIT = gql`
+  mutation($userId: ID!, $input: NanoCreditInput!) {
+    createNanoCredit(userId: $userId, input: $input) {
+      id
+    }
+  }
+`;

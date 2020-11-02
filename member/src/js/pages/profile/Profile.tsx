@@ -6,7 +6,6 @@ import ConsumptionChart from './ConsumptionChart';
 import CurrentBalance from './CurrentBalance';
 import TransactionTable from './TransactionTable';
 import { useTranslation } from 'react-i18next';
-import { NanoCredit } from './NanoCredit';
 
 export const Profile: React.FC = () => {
   const { t } = useTranslation();
@@ -23,17 +22,14 @@ export const Profile: React.FC = () => {
           <Grid item xs={12}>
             <CurrentBalance />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box cmbnl={3}>
-              <BalanceChart />
-              <TransactionTable />
-            </Box>
+          <Grid item xs={12}>
+            <BalanceChart />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Box cmbnl={3}>
-              <ConsumptionChart />
-              <NanoCredit />
-            </Box>
+            <TransactionTable />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ConsumptionChart />
           </Grid>
         </Grid>
       </Box>
