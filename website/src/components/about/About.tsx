@@ -4,6 +4,7 @@ import { Card, CardBackground } from './Card';
 
 import styles from './About.module.css';
 import { Container } from 'Components/utility';
+import { Secret } from 'App/prisma';
 
 interface CardData {
   title?: string;
@@ -121,7 +122,25 @@ const Text: React.FC = () => {
   );
 };
 
-export const About: React.FC = () => {
+interface AboutProps {
+  secrets: Secret[];
+}
+
+export const About: React.FC<AboutProps> = ({ secrets = [] }) => {
+  const frontCard = {
+    front: (
+      <Card
+        title="3ab3 Secrets"
+        key="front"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <CardBackground />
+      </Card>
+    ),
+  };
   return (
     <Container>
       <div className="flex flex-wrap">
@@ -130,22 +149,21 @@ export const About: React.FC = () => {
         </div>
         <div className={styles.minheight + ' w-full xl:w-1/2 px-4'}>
           <CardStack
-            cards={data.map((el) => ({
-              front: (
-                <Card
-                  key={el.title + 'front'}
-                  title={el.title}
-                  style={el.style}
-                >
-                  {el.front}
-                </Card>
-              ),
-              back: el.back && (
-                <Card key={el.title + 'back'} style={el.style}>
-                  {el.back}
-                </Card>
-              ),
-            }))}
+            cards={[
+              ...secrets.map((secret) => ({
+                front: (
+                  <Card key={secret.title + 'front'} title={secret.title}>
+                    <div dangerouslySetInnerHTML={{ __html: secret.front }} />
+                  </Card>
+                ),
+                back: secret.back && (
+                  <Card key={secret.title + 'back'}>
+                    <div dangerouslySetInnerHTML={{ __html: secret.back }} />
+                  </Card>
+                ),
+              })),
+              frontCard,
+            ]}
           />
         </div>
       </div>
