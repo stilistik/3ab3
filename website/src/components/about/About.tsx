@@ -98,7 +98,6 @@ const data: CardData[] = [
 const Text: React.FC = () => {
   return (
     <div className={styles.details}>
-      <h1 className={styles.title}>Die Idee</h1>
       <p className={styles.text}>
         Der Kulturverein 3ab3 existiert seit dem Januar 2016 und ist in Räumen
         des Belvedere Bremgarten zuhause. Sämtliche Aktivitäten des Vereins sind
