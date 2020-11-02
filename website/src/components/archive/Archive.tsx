@@ -109,8 +109,7 @@ export const Archive: React.FC<ArchiveProps> = ({ events }) => {
       const isSelected = selected === event.id;
       return {
         id: event.id,
-        height: isSelected ? expandedHeight : 500,
-        fullWidth: isSelected,
+        selected: isSelected,
         component: (
           <ArchiveItem
             event={event}
@@ -124,7 +123,12 @@ export const Archive: React.FC<ArchiveProps> = ({ events }) => {
 
   return (
     <Container>
-      <DynamicGrid columnCount={columns} items={items} />
+      <DynamicGrid
+        columnCount={columns}
+        items={items}
+        rowHeight={500}
+        expandedRowHeight={expandedHeight}
+      />
     </Container>
   );
 };

@@ -39,33 +39,31 @@ function swapElements<T>(arr: T[], a: number, b: number): T[] {
 
 interface DynamicGridItem {
   id: string;
-  height: number;
-  fullWidth: boolean;
+  selected: boolean;
   component: React.ReactNode;
 }
 
 interface DynamicGridProps {
   items: DynamicGridItem[];
   columnCount: number;
+  rowHeight: number;
+  expandedRowHeight: number;
 }
 
 export const DynamicGrid: React.FC<DynamicGridProps> = ({
   items,
   columnCount,
+  rowHeight,
+  expandedRowHeight,
 }) => {
   const [ref, { width }] = useMeasure();
 
   const { gridItems, containerHeight } = React.useMemo(() => {
-    const hasFullWidth = items.some((el) => el.fullWidth);
-    const fullWidthIndex = items.findIndex((el) => el.fullWidth);
+    const hasFullWidth = items.some((el) => el.selected);
+    const fullWidthIndex = items.findIndex((el) => el.selected);
 
-    const normalHeightIndex = items.findIndex((el) => !el.fullWidth);
     const rowCount = Math.ceil(items.length / columnCount);
-    const containerHeight = hasFullWidth
-      ? rowCount * items[normalHeightIndex].height +
-        items[fullWidthIndex].height +
-        50
-      : rowCount * items[normalHeightIndex].height + 50;
+    const containerHeight = (rowCount - 1) * rowHeight + expandedRowHeight + 50;
 
     const swapIndex = Math.max(
       0,
@@ -85,14 +83,21 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
 
         const column = index % columnCount;
 
-        const columnWidth = item.fullWidth ? width : width / columnCount;
+        const columnWidth = item.selected ? width : width / columnCount;
         const xy = [columnWidth * column, currentY];
 
-        // at the end of each row, increment the current y position
-        if (hasFullWidth && i === swapIndex) currentY += item.height;
-        if (index % columnCount === columnCount - 1) currentY += item.height;
+        console.log(index % columnCount);
 
-        return { ...item, xy, width: columnWidth };
+        // at the end of each row, increment the current y position
+        if (hasFullWidth && item.selected) currentY += expandedRowHeight;
+        else if (index % columnCount === columnCount - 1) currentY += rowHeight;
+
+        return {
+          ...item,
+          xy,
+          height: item.selected ? expandedRowHeight : rowHeight,
+          width: columnWidth,
+        };
       }),
       containerHeight,
     };
