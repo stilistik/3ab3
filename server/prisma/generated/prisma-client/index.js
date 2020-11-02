@@ -75,6 +75,10 @@ var models = [
   {
     name: "NanoCredit",
     embedded: false
+  },
+  {
+    name: "Secret",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

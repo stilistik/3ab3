@@ -55,6 +55,10 @@ type AggregatePurchase {
   count: Int!
 }
 
+type AggregateSecret {
+  count: Int!
+}
+
 type AggregateTodo {
   count: Int!
 }
@@ -2731,6 +2735,12 @@ type Mutation {
   upsertPurchase(where: PurchaseWhereUniqueInput!, create: PurchaseCreateInput!, update: PurchaseUpdateInput!): Purchase!
   deletePurchase(where: PurchaseWhereUniqueInput!): Purchase
   deleteManyPurchases(where: PurchaseWhereInput): BatchPayload!
+  createSecret(data: SecretCreateInput!): Secret!
+  updateSecret(data: SecretUpdateInput!, where: SecretWhereUniqueInput!): Secret
+  updateManySecrets(data: SecretUpdateManyMutationInput!, where: SecretWhereInput): BatchPayload!
+  upsertSecret(where: SecretWhereUniqueInput!, create: SecretCreateInput!, update: SecretUpdateInput!): Secret!
+  deleteSecret(where: SecretWhereUniqueInput!): Secret
+  deleteManySecrets(where: SecretWhereInput): BatchPayload!
   createTodo(data: TodoCreateInput!): Todo!
   updateTodo(data: TodoUpdateInput!, where: TodoWhereUniqueInput!): Todo
   updateManyTodoes(data: TodoUpdateManyMutationInput!, where: TodoWhereInput): BatchPayload!
@@ -4035,6 +4045,9 @@ type Query {
   purchase(where: PurchaseWhereUniqueInput!): Purchase
   purchases(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Purchase]!
   purchasesConnection(where: PurchaseWhereInput, orderBy: PurchaseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PurchaseConnection!
+  secret(where: SecretWhereUniqueInput!): Secret
+  secrets(where: SecretWhereInput, orderBy: SecretOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Secret]!
+  secretsConnection(where: SecretWhereInput, orderBy: SecretOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SecretConnection!
   todo(where: TodoWhereUniqueInput!): Todo
   todoes(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Todo]!
   todoesConnection(where: TodoWhereInput, orderBy: TodoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoConnection!
@@ -4045,6 +4058,149 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
+}
+
+type Secret {
+  id: ID!
+  title: String!
+  front: String!
+  back: String
+  creator: User!
+}
+
+type SecretConnection {
+  pageInfo: PageInfo!
+  edges: [SecretEdge]!
+  aggregate: AggregateSecret!
+}
+
+input SecretCreateInput {
+  id: ID
+  title: String!
+  front: String!
+  back: String
+  creator: UserCreateOneInput!
+}
+
+type SecretEdge {
+  node: Secret!
+  cursor: String!
+}
+
+enum SecretOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  front_ASC
+  front_DESC
+  back_ASC
+  back_DESC
+}
+
+type SecretPreviousValues {
+  id: ID!
+  title: String!
+  front: String!
+  back: String
+}
+
+type SecretSubscriptionPayload {
+  mutation: MutationType!
+  node: Secret
+  updatedFields: [String!]
+  previousValues: SecretPreviousValues
+}
+
+input SecretSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SecretWhereInput
+  AND: [SecretSubscriptionWhereInput!]
+  OR: [SecretSubscriptionWhereInput!]
+  NOT: [SecretSubscriptionWhereInput!]
+}
+
+input SecretUpdateInput {
+  title: String
+  front: String
+  back: String
+  creator: UserUpdateOneRequiredInput
+}
+
+input SecretUpdateManyMutationInput {
+  title: String
+  front: String
+  back: String
+}
+
+input SecretWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  front: String
+  front_not: String
+  front_in: [String!]
+  front_not_in: [String!]
+  front_lt: String
+  front_lte: String
+  front_gt: String
+  front_gte: String
+  front_contains: String
+  front_not_contains: String
+  front_starts_with: String
+  front_not_starts_with: String
+  front_ends_with: String
+  front_not_ends_with: String
+  back: String
+  back_not: String
+  back_in: [String!]
+  back_not_in: [String!]
+  back_lt: String
+  back_lte: String
+  back_gt: String
+  back_gte: String
+  back_contains: String
+  back_not_contains: String
+  back_starts_with: String
+  back_not_starts_with: String
+  back_ends_with: String
+  back_not_ends_with: String
+  creator: UserWhereInput
+  AND: [SecretWhereInput!]
+  OR: [SecretWhereInput!]
+  NOT: [SecretWhereInput!]
+}
+
+input SecretWhereUniqueInput {
+  id: ID
 }
 
 type Subscription {
@@ -4061,6 +4217,7 @@ type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   purchase(where: PurchaseSubscriptionWhereInput): PurchaseSubscriptionPayload
+  secret(where: SecretSubscriptionWhereInput): SecretSubscriptionPayload
   todo(where: TodoSubscriptionWhereInput): TodoSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload

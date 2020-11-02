@@ -171,6 +171,7 @@ export type EventInput = {
   youtube?: Maybe<Scalars['String']>;
   facebook?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
+  soundcloud?: Maybe<Scalars['String']>;
 };
 
 export type EventsConnection = Connection & {
@@ -287,6 +288,7 @@ export type Mutation = {
   uploadDocument: Document;
   editDocument: Document;
   createNanoCredit: NanoCredit;
+  createSecret: Secret;
 };
 
 
@@ -556,6 +558,11 @@ export type MutationCreateNanoCreditArgs = {
   input: NanoCreditInput;
 };
 
+
+export type MutationCreateSecretArgs = {
+  input: SecretInput;
+};
+
 export enum MutationType {
   Created = 'CREATED',
   Updated = 'UPDATED',
@@ -730,6 +737,7 @@ export type Query = {
   chats: ChatsConnection;
   unreadMessagesCount: Scalars['Int'];
   documents: Array<Document>;
+  secrets: Array<Secret>;
 };
 
 
@@ -889,6 +897,21 @@ export type QueryChatsArgs = {
 export type QueryUnreadMessagesCountArgs = {
   userId: Scalars['ID'];
   chatId: Scalars['ID'];
+};
+
+export type Secret = {
+  __typename?: 'Secret';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  front: Scalars['String'];
+  back?: Maybe<Scalars['String']>;
+  creator: User;
+};
+
+export type SecretInput = {
+  title: Scalars['String'];
+  front: Scalars['String'];
+  back?: Maybe<Scalars['String']>;
 };
 
 export type Subscription = {

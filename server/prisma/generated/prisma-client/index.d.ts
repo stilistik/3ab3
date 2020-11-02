@@ -29,6 +29,7 @@ export interface Exists {
   post: (where?: PostWhereInput) => Promise<boolean>;
   product: (where?: ProductWhereInput) => Promise<boolean>;
   purchase: (where?: PurchaseWhereInput) => Promise<boolean>;
+  secret: (where?: SecretWhereInput) => Promise<boolean>;
   todo: (where?: TodoWhereInput) => Promise<boolean>;
   transaction: (where?: TransactionWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -300,6 +301,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => PurchaseConnectionPromise;
+  secret: (where: SecretWhereUniqueInput) => SecretNullablePromise;
+  secrets: (args?: {
+    where?: SecretWhereInput;
+    orderBy?: SecretOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Secret>;
+  secretsConnection: (args?: {
+    where?: SecretWhereInput;
+    orderBy?: SecretOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => SecretConnectionPromise;
   todo: (where: TodoWhereUniqueInput) => TodoNullablePromise;
   todoes: (args?: {
     where?: TodoWhereInput;
@@ -573,6 +593,22 @@ export interface Prisma {
   }) => PurchasePromise;
   deletePurchase: (where: PurchaseWhereUniqueInput) => PurchasePromise;
   deleteManyPurchases: (where?: PurchaseWhereInput) => BatchPayloadPromise;
+  createSecret: (data: SecretCreateInput) => SecretPromise;
+  updateSecret: (args: {
+    data: SecretUpdateInput;
+    where: SecretWhereUniqueInput;
+  }) => SecretPromise;
+  updateManySecrets: (args: {
+    data: SecretUpdateManyMutationInput;
+    where?: SecretWhereInput;
+  }) => BatchPayloadPromise;
+  upsertSecret: (args: {
+    where: SecretWhereUniqueInput;
+    create: SecretCreateInput;
+    update: SecretUpdateInput;
+  }) => SecretPromise;
+  deleteSecret: (where: SecretWhereUniqueInput) => SecretPromise;
+  deleteManySecrets: (where?: SecretWhereInput) => BatchPayloadPromise;
   createTodo: (data: TodoCreateInput) => TodoPromise;
   updateTodo: (args: {
     data: TodoUpdateInput;
@@ -671,6 +707,9 @@ export interface Subscription {
   purchase: (
     where?: PurchaseSubscriptionWhereInput
   ) => PurchaseSubscriptionPayloadSubscription;
+  secret: (
+    where?: SecretSubscriptionWhereInput
+  ) => SecretSubscriptionPayloadSubscription;
   todo: (
     where?: TodoSubscriptionWhereInput
   ) => TodoSubscriptionPayloadSubscription;
@@ -909,6 +948,16 @@ export type ProductOrderByInput =
   | "thumbnail_DESC"
   | "deleted_ASC"
   | "deleted_DESC";
+
+export type SecretOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "front_ASC"
+  | "front_DESC"
+  | "back_ASC"
+  | "back_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -2175,6 +2224,73 @@ export type ProductWhereUniqueInput = AtLeastOne<{
 export type PurchaseWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export type SecretWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface SecretWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  front?: Maybe<String>;
+  front_not?: Maybe<String>;
+  front_in?: Maybe<String[] | String>;
+  front_not_in?: Maybe<String[] | String>;
+  front_lt?: Maybe<String>;
+  front_lte?: Maybe<String>;
+  front_gt?: Maybe<String>;
+  front_gte?: Maybe<String>;
+  front_contains?: Maybe<String>;
+  front_not_contains?: Maybe<String>;
+  front_starts_with?: Maybe<String>;
+  front_not_starts_with?: Maybe<String>;
+  front_ends_with?: Maybe<String>;
+  front_not_ends_with?: Maybe<String>;
+  back?: Maybe<String>;
+  back_not?: Maybe<String>;
+  back_in?: Maybe<String[] | String>;
+  back_not_in?: Maybe<String[] | String>;
+  back_lt?: Maybe<String>;
+  back_lte?: Maybe<String>;
+  back_gt?: Maybe<String>;
+  back_gte?: Maybe<String>;
+  back_contains?: Maybe<String>;
+  back_not_contains?: Maybe<String>;
+  back_starts_with?: Maybe<String>;
+  back_not_starts_with?: Maybe<String>;
+  back_ends_with?: Maybe<String>;
+  back_not_ends_with?: Maybe<String>;
+  creator?: Maybe<UserWhereInput>;
+  AND?: Maybe<SecretWhereInput[] | SecretWhereInput>;
+  OR?: Maybe<SecretWhereInput[] | SecretWhereInput>;
+  NOT?: Maybe<SecretWhereInput[] | SecretWhereInput>;
+}
 
 export type TodoWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -5913,6 +6029,27 @@ export interface PurchaseUpdateManyMutationInput {
   date?: Maybe<DateTimeInput>;
 }
 
+export interface SecretCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  front: String;
+  back?: Maybe<String>;
+  creator: UserCreateOneInput;
+}
+
+export interface SecretUpdateInput {
+  title?: Maybe<String>;
+  front?: Maybe<String>;
+  back?: Maybe<String>;
+  creator?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface SecretUpdateManyMutationInput {
+  title?: Maybe<String>;
+  front?: Maybe<String>;
+  back?: Maybe<String>;
+}
+
 export interface TodoCreateInput {
   id?: Maybe<ID_Input>;
   due: DateTimeInput;
@@ -6228,6 +6365,17 @@ export interface PurchaseSubscriptionWhereInput {
   NOT?: Maybe<
     PurchaseSubscriptionWhereInput[] | PurchaseSubscriptionWhereInput
   >;
+}
+
+export interface SecretSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SecretWhereInput>;
+  AND?: Maybe<SecretSubscriptionWhereInput[] | SecretSubscriptionWhereInput>;
+  OR?: Maybe<SecretSubscriptionWhereInput[] | SecretSubscriptionWhereInput>;
+  NOT?: Maybe<SecretSubscriptionWhereInput[] | SecretSubscriptionWhereInput>;
 }
 
 export interface TodoSubscriptionWhereInput {
@@ -8324,6 +8472,95 @@ export interface AggregatePurchaseSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface Secret {
+  id: ID_Output;
+  title: String;
+  front: String;
+  back?: String;
+}
+
+export interface SecretPromise extends Promise<Secret>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  front: () => Promise<String>;
+  back: () => Promise<String>;
+  creator: <T = UserPromise>() => T;
+}
+
+export interface SecretSubscription
+  extends Promise<AsyncIterator<Secret>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  front: () => Promise<AsyncIterator<String>>;
+  back: () => Promise<AsyncIterator<String>>;
+  creator: <T = UserSubscription>() => T;
+}
+
+export interface SecretNullablePromise
+  extends Promise<Secret | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  front: () => Promise<String>;
+  back: () => Promise<String>;
+  creator: <T = UserPromise>() => T;
+}
+
+export interface SecretConnection {
+  pageInfo: PageInfo;
+  edges: SecretEdge[];
+}
+
+export interface SecretConnectionPromise
+  extends Promise<SecretConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SecretEdge>>() => T;
+  aggregate: <T = AggregateSecretPromise>() => T;
+}
+
+export interface SecretConnectionSubscription
+  extends Promise<AsyncIterator<SecretConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SecretEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSecretSubscription>() => T;
+}
+
+export interface SecretEdge {
+  node: Secret;
+  cursor: String;
+}
+
+export interface SecretEdgePromise extends Promise<SecretEdge>, Fragmentable {
+  node: <T = SecretPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SecretEdgeSubscription
+  extends Promise<AsyncIterator<SecretEdge>>,
+    Fragmentable {
+  node: <T = SecretSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateSecret {
+  count: Int;
+}
+
+export interface AggregateSecretPromise
+  extends Promise<AggregateSecret>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSecretSubscription
+  extends Promise<AsyncIterator<AggregateSecret>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface TodoConnection {
   pageInfo: PageInfo;
   edges: TodoEdge[];
@@ -9205,6 +9442,56 @@ export interface PurchasePreviousValuesSubscription
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface SecretSubscriptionPayload {
+  mutation: MutationType;
+  node: Secret;
+  updatedFields: String[];
+  previousValues: SecretPreviousValues;
+}
+
+export interface SecretSubscriptionPayloadPromise
+  extends Promise<SecretSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SecretPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SecretPreviousValuesPromise>() => T;
+}
+
+export interface SecretSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SecretSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SecretSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SecretPreviousValuesSubscription>() => T;
+}
+
+export interface SecretPreviousValues {
+  id: ID_Output;
+  title: String;
+  front: String;
+  back?: String;
+}
+
+export interface SecretPreviousValuesPromise
+  extends Promise<SecretPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  front: () => Promise<String>;
+  back: () => Promise<String>;
+}
+
+export interface SecretPreviousValuesSubscription
+  extends Promise<AsyncIterator<SecretPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  front: () => Promise<AsyncIterator<String>>;
+  back: () => Promise<AsyncIterator<String>>;
+}
+
 export interface TodoSubscriptionPayload {
   mutation: MutationType;
   node: Todo;
@@ -9503,6 +9790,10 @@ export const models: Model[] = [
   },
   {
     name: "NanoCredit",
+    embedded: false
+  },
+  {
+    name: "Secret",
     embedded: false
   }
 ];
