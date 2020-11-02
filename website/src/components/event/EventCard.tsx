@@ -1,6 +1,7 @@
 import React from 'react';
 import { AspectRatioBox, Container } from 'Components/utility';
 import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
+import clx from 'classnames';
 import { Event } from 'App/prisma';
 
 import styles from './EventCard.module.css';
