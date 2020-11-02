@@ -25,3 +25,11 @@
     font-size: 32px;
   }
 }
+
+@media screen and (max-width: 640px) {
+  .logo h1 {
+    font-size: 22px;
+    -webkit-text-stroke: 1px whitesmoke;
+    filter: drop-shadow(2px 2px 0px var(--color-primary));
+  }
+}

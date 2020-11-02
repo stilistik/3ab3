@@ -125,10 +125,10 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = (props) => {
   return (
     <React.Fragment>
-      <Hidden smUp>
+      <Hidden lgUp>
         <MobileHeader {...props} />
       </Hidden>
-      <Hidden xsDn>
+      <Hidden mdDn>
         <DesktopHeader {...props} />
       </Hidden>
     </React.Fragment>
