@@ -37,44 +37,43 @@
   }
 }
 
-.link {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 24px;
-  color: #8c8c8c;
-  padding: 0px 20px;
-  text-shadow: -1.5px -1.5px 0 whitesmoke, 0 -1.5px 0 whitesmoke,
-    1.5px -1.5px 0 whitesmoke, 1.5px 0 0 whitesmoke, 1.5px 1.5px 0 whitesmoke,
-    0 1.5px 0 whitesmoke, -1.5px 1.5px 0 whitesmoke, -1.5px 0 0 whitesmoke;
-  text-transform: uppercase;
+.link h1 {
+  font-size: 95px;
+  -webkit-text-stroke: 2px whitesmoke;
 }
 
-.link.active {
-  color: black;
+@media screen and (max-width: 960px) {
+  .link h1 {
+    font-size: 64px;
+  }
 }
 
-a.link:link {
-  text-decoration: none;
+.link.events svg {
+  color: var(--color-events);
+  filter: drop-shadow(7px 0px 0px black);
 }
-a.link:active {
-  text-decoration: none;
+
+.link.archive svg {
+  color: var(--color-archive);
+  filter: drop-shadow(7px 0px 0px black);
 }
-a.link:hover {
-  text-decoration: none;
+
+.link.about svg {
+  color: var(--color-about);
+  filter: drop-shadow(7px 0px 0px black);
 }
-a.link:visited {
-  text-decoration: none;
+
+.link.contact svg {
+  color: var(--color-contact);
+  filter: drop-shadow(7px 0px 0px black);
 }
 
 .left {
   position: absolute;
-  margin-top: 24px;
-  right: 60%;
+  left: 30px;
 }
 
 .right {
   position: absolute;
-  margin-top: 24px;
-  left: 60%;
+  right: 30px;
 }
