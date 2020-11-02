@@ -96,6 +96,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import SettingsIcon from '@material-ui/icons/Settings';
 import UndoIcon from '@material-ui/icons/Undo';
+import StyleIcon from '@material-ui/icons/Style';
 
 const customIconTypes = {
   loading: LoadingIcon,
@@ -182,6 +183,7 @@ const muiIconTypes = {
   sort: SortIcon,
   storage: StorageIcon,
   straighten: StraightenIcon,
+  style: StyleIcon,
   team: PeopleIcon,
   tiltShift: TiltShiftIcon,
   timeline: TimelineIcon,

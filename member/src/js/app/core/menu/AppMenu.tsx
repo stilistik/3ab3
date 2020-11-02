@@ -88,6 +88,11 @@ export const AppMenu: React.FC<AppMenuProps> = ({
                 icon="localBar"
                 onClick={() => onClick('/products')}
               />
+              <MenuItem
+                text={t('Secrets')}
+                icon="style"
+                onClick={() => onClick('/secrets')}
+              />
             </List>
           </React.Fragment>
         )}
