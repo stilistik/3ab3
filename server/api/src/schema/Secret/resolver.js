@@ -1,6 +1,4 @@
-const { uploadFile, deleteFile } = require('../../helper/file.helper.js');
 const { verifyAndDecodeToken } = require('../../auth/verify');
-const { canUserModifyEvent } = require('../../helper/authorization.helper');
 
 module.exports = {
   Query: {
@@ -8,7 +6,15 @@ module.exports = {
       return context.prisma.secrets();
     },
   },
-  Mutation: {},
+  Mutation: {
+    createSecret: (root, args, context) => {
+      const { id } = verifyAndDecodeToken(context);
+      return context.prisma.createSecret({
+        creator: { connect: { id: id } },
+        ...args.input,
+      });
+    },
+  },
   Secret: {
     creator: (root, args, context) => {
       return context.prisma.secret({ id: root.id }).creator();
