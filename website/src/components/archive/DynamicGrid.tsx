@@ -86,8 +86,6 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
         const columnWidth = item.selected ? width : width / columnCount;
         const xy = [columnWidth * column, currentY];
 
-        console.log(index % columnCount);
-
         // at the end of each row, increment the current y position
         if (hasFullWidth && item.selected) currentY += expandedRowHeight;
         else if (index % columnCount === columnCount - 1) currentY += rowHeight;
