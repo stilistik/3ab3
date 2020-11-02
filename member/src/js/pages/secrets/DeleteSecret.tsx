@@ -1,19 +1,19 @@
 import React from 'react';
 import { IconButton, Typography } from '@material-ui/core';
 import { Icon, ConfirmationDialog, Message } from 'Components/index';
-import { Product } from 'Graphql/types';
+import { Secret } from 'Graphql/types';
 import { useMutation } from 'react-apollo';
-import { DELETE_PRODUCT } from 'Graphql/mutations';
-import { PRODUCT_LIST } from 'Graphql/queries';
+import { DELETE_SECRET } from 'Graphql/mutations';
+import { SECRETS } from 'Graphql/queries';
 import { Trans, useTranslation } from 'react-i18next';
 
-interface DeleteProductProps {
-  product: Product;
+interface DeleteSecretProps {
+  secret: Secret;
 }
 
-export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
+export const DeleteSecret: React.FC<DeleteSecretProps> = ({ secret }) => {
   const [showDialog, setShowDialog] = React.useState(false);
-  const [deleteProduct] = useMutation(DELETE_PRODUCT);
+  const [deleteSecret] = useMutation(DELETE_SECRET);
   const { t } = useTranslation();
 
   const handleClick = () => setShowDialog(true);
@@ -21,16 +21,16 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
   const handleCancel = () => setShowDialog(false);
 
   const handleDelete = () => {
-    deleteProduct({
-      variables: { productId: product.id },
-      refetchQueries: () => [{ query: PRODUCT_LIST }],
+    deleteSecret({
+      variables: { secretId: secret.id },
+      refetchQueries: () => [{ query: SECRETS }],
     })
-      .then(() => Message.success(t('Product successfully deleted')))
+      .then(() => Message.success(t('Secret successfully deleted')))
       .catch((error) => Message.error(error.message));
     setShowDialog(false);
   };
 
-  const name = product.name;
+  const name = secret.title;
   return (
     <React.Fragment>
       <IconButton onClick={handleClick}>
@@ -40,12 +40,12 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ product }) => {
         show={showDialog}
         onConfirm={handleDelete}
         onCancel={handleCancel}
-        title={t('Delete Product')}
+        title={t('Delete Secret')}
       >
         <Typography variant="body2">
-          <Trans i18nKey="deleteProductConfirm">
-            Do you really want to delete the product <strong>{{ name }}</strong>
-            ? This is an irreversible action, all data related to the product
+          <Trans i18nKey="deleteSecretConfirm">
+            Do you really want to delete the secret <strong>{{ name }}</strong>
+            ? This is an irreversible action, all data related to the secret
             will be lost. Continue?
           </Trans>
         </Typography>
