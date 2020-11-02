@@ -7,3 +7,4 @@ export * from './PostMutations';
 export * from './CommentMutations';
 export * from './DocumentMutations';
 export * from './ProfileMutations';
+export * from './SecretMutations';
