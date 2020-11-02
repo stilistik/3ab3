@@ -25,7 +25,6 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ pathname, children }) => {
   );
 };
 
-
 const DesktopHeader: React.FC = () => {
   return (
     <header className={styles.header}>
@@ -58,31 +57,35 @@ const MobileHeader: React.FC<HeaderProps> = ({ routes }) => {
   const prevRoute = routes[prevIndex];
   const nextRoute = routes[nextIndex];
 
-  function getDirection() {
-    return -1;
-  }
+  const items = [prevRoute, nextRoute].map((el, idx) => ({
+    ...el,
+    direction: idx === 0 ? -1 : 1,
+    className: idx === 0 ? styles.left : styles.right,
+  }));
 
-  const direction = getDirection();
-
-  const transitions = useTransition(
-    [prevRoute, nextRoute],
-    (item) => item.pathname,
-    {
-      from: { opacity: 0, transform: `translate3d(${direction * 100}%,0,0)` },
-      enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
-      leave: { opacity: 0, transform: `translate3d(${-direction * 50}%,0,0)` },
-    }
-  );
+  const transitions = useTransition<any, any>(items, (item) => item.pathname, {
+    from: (item) => ({ x: item.direction * window.innerWidth }),
+    enter: { x: 0, opacity: 1 },
+    leave: { opacity: 0 },
+    config: { mass: 5, tension: 150, friction: 40 },
+  });
 
   return (
     <header className={styles.header}>
       <div className="relative w-full h-full">
         {transitions.map(({ item, key, props }) => {
-          const cls =
-            item.pathname === prevRoute.pathname ? styles.left : styles.right;
-
+          const { x, ...rest } = props;
           return (
-            <animated.div className={cls} style={props}>
+            <animated.div
+              key={item.pathname + key}
+              className={item.className}
+              style={{
+                transform: x.interpolate(
+                  (x: number) => `translate3d(${x}px, 0px, 0px)`
+                ),
+                ...rest,
+              }}
+            >
               <HeaderLink pathname={item.pathname}>{item.label}</HeaderLink>
             </animated.div>
           );
