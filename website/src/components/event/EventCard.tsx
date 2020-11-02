@@ -17,16 +17,16 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
           className={styles.wrapper + ' shadow-2xl'}
         >
           <div className={styles.top}>
-            <h3 className={styles.date}>
+            <h2 className={styles.date}>
               {new Date(event.date).toLocaleDateString()}
-            </h3>
+            </h2>
             <h4 className={styles.time}>
               {'Doors: ' + new Date(event.date).toLocaleTimeString()}
             </h4>
           </div>
           <div className={styles.bottom}>
             <h1 className={styles.title}>{event.title}</h1>
-            <h2 className={styles.subtitle}>{event.subtitle}</h2>
+            <h4 className={styles.subtitle}>{event.subtitle}</h4>
           </div>
         </LazyLoadingImageDiv>
       </AspectRatioBox>

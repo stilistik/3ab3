@@ -2,10 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clx from 'classnames';
-
-import styles from './Header.module.css';
 import { Hidden } from 'Components/utility';
 import { RouteDefinition } from './Layout';
+import { useTransition, animated } from 'react-spring';
+
+import styles from './Header.module.css';
+import { Logo } from './Logo';
 
 interface HeaderLinkProps {
   pathname: string;
@@ -23,26 +25,16 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ pathname, children }) => {
   );
 };
 
-const Logo: React.FC = () => {
-  return (
-    <Link href="/">
-      <div className={styles.logo}>
-        <h1 className="shadow-2xl">3A</h1>
-        <h1 className="shadow-2xl">B3</h1>
-      </div>
-    </Link>
-  );
-};
 
 const DesktopHeader: React.FC = () => {
   return (
     <header className={styles.header}>
-      <div className="mx-10">
+      <div className={styles.left}>
         <HeaderLink pathname="/">Events</HeaderLink>
         <HeaderLink pathname="/contact">Kontakt</HeaderLink>
       </div>
       <Logo />
-      <div className="mx-10">
+      <div className={styles.right}>
         <HeaderLink pathname="/about">About</HeaderLink>
         <HeaderLink pathname="/archive">Archiv</HeaderLink>
       </div>
@@ -66,14 +58,36 @@ const MobileHeader: React.FC<HeaderProps> = ({ routes }) => {
   const prevRoute = routes[prevIndex];
   const nextRoute = routes[nextIndex];
 
+  function getDirection() {
+    return -1;
+  }
+
+  const direction = getDirection();
+
+  const transitions = useTransition(
+    [prevRoute, nextRoute],
+    (item) => item.pathname,
+    {
+      from: { opacity: 0, transform: `translate3d(${direction * 100}%,0,0)` },
+      enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+      leave: { opacity: 0, transform: `translate3d(${-direction * 50}%,0,0)` },
+    }
+  );
+
   return (
     <header className={styles.header}>
-      <div className="mx-10">
-        <HeaderLink pathname={prevRoute.pathname}>{prevRoute.label}</HeaderLink>
-      </div>
-      <Logo />
-      <div className="mx-10">
-        <HeaderLink pathname={nextRoute.pathname}>{nextRoute.label}</HeaderLink>
+      <div className="relative w-full h-full">
+        {transitions.map(({ item, key, props }) => {
+          const cls =
+            item.pathname === prevRoute.pathname ? styles.left : styles.right;
+
+          return (
+            <animated.div className={cls} style={props}>
+              <HeaderLink pathname={item.pathname}>{item.label}</HeaderLink>
+            </animated.div>
+          );
+        })}
+        <Logo />
       </div>
     </header>
   );

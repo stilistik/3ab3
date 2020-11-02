@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTransition, animated, AnimatedValue } from 'react-spring';
+import { useTransition, animated } from 'react-spring';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import styles from './DynamicGrid.module.css';

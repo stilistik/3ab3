@@ -9,7 +9,7 @@ import styles from './RouteCarousel.module.css';
 import { useMedia } from 'Components/utility';
 
 const useMobileRouteSwipe = (router: NextRouter, routes: RouteDefinition[]) => {
-  const isMobile = useMedia(['(max-width: 600px)'], [true], false);
+  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
   const hasChangedRef = React.useRef(false);
 
   const [{ x }, set] = useSpring(() => ({ x: 0 }));

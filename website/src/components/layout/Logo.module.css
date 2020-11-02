@@ -1,0 +1,32 @@
+
+.logo {
+  margin-top: 8px;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  font-family: Montserrat;
+  user-select: none;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.logo h1 {
+  font-size: 60px;
+  line-height: 0.78em;
+  -webkit-text-stroke: 2px whitesmoke;
+  filter: drop-shadow(3px 3px 0px var(--color-primary));
+}
+
+@media screen and (max-width: 960px) {
+  .logo {
+    height: 70px;
+    width: 70px;
+    font-size: 45px;
+  }
+}
+

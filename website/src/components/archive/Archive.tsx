@@ -44,7 +44,7 @@ const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
       <div className="absolute top-0 right-0 mt-1 mr-1">
         <CloseButton onClick={handleClose} />
       </div>
-      <h1 className={styles.title}>{event.title}</h1>
+      <h2 className={styles.title}>{event.title}</h2>
       <p className={styles.description}>{event.description}</p>
       <div className={styles.social}>
         <SocialLink url={event.spotify} icon={spotifyIcon} />

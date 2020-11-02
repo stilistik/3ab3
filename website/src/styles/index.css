@@ -29,6 +29,82 @@ body {
   overflow-y: scroll;
 }
 
+h1 {
+  font-size: 95px;
+  font-weight: 900;
+  line-height: 1em;
+}
+
+h2 {
+  font-size: 75px;
+  font-weight: 900;
+  line-height: 1em;
+
+}
+
+h3 {
+  font-size: 45px;
+  font-weight: 900;
+  line-height: 1em;
+
+}
+
+h4 {
+  font-size: 35px;
+  font-weight: 900;
+  line-height: 1em;
+}
+
+p, div, span {
+  font-size: 20px;
+  line-height: 1em;
+  text-transform: none;
+}
+
+@media screen and (max-width: 960px) {
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+  }
+
+  h2 {
+    font-size: 50px;
+    font-weight: 900;
+  }
+
+  h3 {
+    font-weight: 900;
+    font-size: 30px;
+  }
+
+  h4 {
+    font-weight: 900;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  h1 {
+    font-weight: 900;
+    font-size: 45px;
+  }
+
+  h2 {
+    font-weight: 900;
+    font-size: 35px;
+  }
+
+  h3 {
+    font-weight: 900;
+    font-size: 24px;
+  }
+
+  h4 {
+    font-weight: 900;
+    font-size: 18px;
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 4px;

@@ -13,8 +13,8 @@ export const Contact: React.FC = () => {
           <ContactForm />
         </div>
         <div className="w-full sm:w-1/2 px-4">
+          <Map />
           <div className={styles.location}>
-            <Map />
             <div className="mt-10">
               <p>Kulturverein 3AB3</p>
               <p>Kalchackerstrasse 104</p>

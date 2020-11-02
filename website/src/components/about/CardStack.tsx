@@ -36,7 +36,14 @@ export const CardStack: React.FC<CardStackProps> = ({ cards }) => {
   }));
 
   const bind = useGesture(
-    ({ args: [index], down, delta: [xDelta], direction: [xDir], velocity, event }) => {
+    ({
+      args: [index],
+      down,
+      delta: [xDelta],
+      direction: [xDir],
+      velocity,
+      event,
+    }) => {
       event.stopPropagation();
       const trigger = velocity > 0.2;
       const dir = xDir < 0 ? -1 : 1;
@@ -60,7 +67,7 @@ export const CardStack: React.FC<CardStackProps> = ({ cards }) => {
       if (!down && gone.size === cards.length)
         // @ts-ignore
         setTimeout(() => gone.clear() || set((i) => to(i)), 600);
-    }
+    },
   );
 
   const [flipProps, setFlipProps] = useSprings(cards.length, (i) => ({

@@ -82,19 +82,13 @@
 }
 
 .title {
-  font-size: 64px;
-  font-weight: 900;
   padding: 20px;
-  line-height: 1em;
   text-align: center;
   filter: drop-shadow(4px 4px 0px var(--color-primary));
   user-select: none;
 }
 
 .description {
-  font-size: 20px;
-  line-height: 1em;
-  text-transform: none;
   padding: 0px 20px;
 }
 
