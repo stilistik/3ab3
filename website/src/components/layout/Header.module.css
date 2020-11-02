@@ -1,22 +1,40 @@
 .header {
   width: 100vw;
-  height: 60px;
+  height: 100px;
   position: fixed;
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: transparent;
   padding-top: 10px;
   z-index: 100;
-  transform: translateY(-120px);
-  opacity: 0;
   transition: 0.3s ease;
   transform-origin: top center;
 }
 
-.show {
+.header:not(.show) {
+  transform: translateY(-120px);
+  opacity: 0;
+}
+
+.header.show {
   opacity: 1;
   transform: translateY(0%);
   transition: 0.3s ease;
+}
+
+.currentRoute h1 {
+  font-size: 95px;
+  text-transform: uppercase;
+  color: #000000;
+  text-shadow: 5px 5px 0px var(--color-primary);
+  -webkit-text-stroke: 2px whitesmoke;
+}
+
+@media screen and (max-width: 960px) {
+  .currentRoute h1 {
+    font-size: 64px;
+  }
 }
 
 .link {

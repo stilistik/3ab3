@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useTransition, useSpring, animated } from 'react-spring';
 import Link from 'next/link';
+import clx from 'classnames';
 
 import styles from './BodyLink.module.css';
 
@@ -86,6 +87,8 @@ export const BodyLink: React.FC<BodyLinkProps> = ({
   pathname,
   children,
 }) => {
+  const styleName = pathname.replace('/', '') || 'events';
+
   return (
     <div
       className={`fixed inset-y-0 ${side}-0 flex items-center justify-center z-10 pointer-events-none`}
@@ -101,7 +104,9 @@ export const BodyLink: React.FC<BodyLinkProps> = ({
           >
             <HorizontalSpring side={side}>
               <div className="font-black uppercase leading-none select-none">
-                <span className={styles.bodyLink}>{children}</span>
+                <span className={clx(styles.bodyLink, styles[styleName])}>
+                  {children}
+                </span>
               </div>
             </HorizontalSpring>
           </div>

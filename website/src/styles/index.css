@@ -5,23 +5,27 @@
 @tailwind utilities;
 
 :root {
+  --color-events: #feb200;
+  --color-about: #12e61c;
+  --color-archive: #e62979;
+  --color-contact: #1e5ce6;
   @apply events;
 }
 
 .events {
-  --color-primary: #feb200;
+  --color-primary: var(--color-events);
 }
 
 .about {
-  --color-primary: #12e61c;
+  --color-primary: var(--color-about);
 }
 
 .archive {
-  --color-primary: #e62979;
+  --color-primary: var(--color-archive);
 }
 
 .contact {
-  --color-primary: #1e5ce6;
+  --color-primary: var(--color-contact);
 }
 
 body {
@@ -39,14 +43,12 @@ h2 {
   font-size: 75px;
   font-weight: 900;
   line-height: 1em;
-
 }
 
 h3 {
   font-size: 45px;
   font-weight: 900;
   line-height: 1em;
-
 }
 
 h4 {
@@ -55,7 +57,9 @@ h4 {
   line-height: 1em;
 }
 
-p, div, span {
+p,
+div,
+span {
   font-size: 20px;
   line-height: 1em;
   text-transform: none;
