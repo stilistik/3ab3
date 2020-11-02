@@ -72,15 +72,19 @@
   font-style: normal;
   font-weight: 900;
   font-size: 64px;
-  line-height: 78px;
-
+  width: 1em;
+  height: 1em;
   color: #000000;
-
   border: 1px solid #ffffff;
   text-shadow: 2px 2px 0px #feb200;
+  transition: transform 300ms ease;
+  border: none
+}
+
+.more:focus {
+  outline: none;
 }
 
 .more.slanted {
   transform: rotate(45deg);
-  transition: transform 300ms ease;
 }

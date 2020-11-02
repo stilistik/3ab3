@@ -6,19 +6,18 @@ import { Event } from 'App/prisma';
 
 import styles from './EventCard.module.css';
 
-const ShowMore: React.FC = () => {
+interface ShowMoreProps {
+  className: string;
+}
+
+const ShowMore: React.FC<ShowMoreProps> = ({ className }) => {
   const [isActive, setActive] = React.useState(false);
 
-  console.log(isActive);
-
   const handleClick = () => {
-    if (isActive == true) {
-      setActive(false);
-    }
-    setActive(true);
+    setActive((isActive) => !isActive);
   };
 
-  const moreBtn = clx(styles.topright, styles.more, {
+  const moreBtn = clx(className, styles.more, {
     [styles.slanted]: isActive,
   });
   return (
@@ -40,6 +39,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
           src={event.image}
           className={styles.wrapper + ' shadow-2xl'}
         >
+          <ShowMore className="absolute top-0 right-0 mr-3 mt-3" />
           <div className={styles.top}>
             <h2 className={styles.date}>
               {new Date(event.date).toLocaleDateString()}
