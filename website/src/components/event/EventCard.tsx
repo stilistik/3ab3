@@ -8,24 +8,18 @@ import styles from './EventCard.module.css';
 
 interface ShowMoreButtonProps {
   onClick: (event: React.MouseEvent) => void;
-  className: string;
   btnText: string;
   isActive: boolean;
 }
 
 const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   onClick,
-  className,
   btnText,
   isActive,
 }) => {
-  const moreBtn = clx(className, styles.topRight, styles.more, {
+  const moreBtn = clx(styles.topRight, styles.more, {
     [styles.slanted]: isActive,
   });
-
-  const moreWrapper = clx(styles.fillRight);
-
-  console.log(moreWrapper);
 
   return (
     <button onClick={onClick} className={moreBtn}>
@@ -50,9 +44,11 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <AspectRatioBox ratio={16 / 10} className="mb-10">
         <LazyLoadingImageDiv
           src={event.image}
-          className={styles.wrapper + ' shadow-2xl'}
+          className={
+            styles.wrapper + ' shadow-2xl '
+          }
         >
-          <div className={styles.topLeft}>
+          <div className={styles.left}>
             <h2 className={styles.date}>
               {new Date(event.date).toLocaleDateString()}
             </h2>
@@ -60,20 +56,24 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               {'Doors: ' + new Date(event.date).toLocaleTimeString()}
             </h4>
           </div>
-          <div className={styles.topRight}>
-            <ShowMoreButton
-              onClick={handleClick}
-              className="absolute top-0 right-0 mr-3 mt-3"
-              btnText="+"
-              isActive={isActive}
-            />
-          </div>
-          <div className="midRight">
-            {isActive ? <p>es ist aktiv</p> : <p>es ist nicht aktiv</p>}
-          </div>
-          <div className={styles.bottomRight}>
-            <h1 className={styles.title}>{event.title}</h1>
-            <h4 className={styles.subtitle}>{event.subtitle}</h4>
+          <div className={styles.right + ' ' + (isActive ? styles.isActive : '')}>
+            <div className={styles.topRight}>
+              <ShowMoreButton
+                onClick={handleClick}
+                btnText="+"
+                isActive={isActive}
+              />
+            </div>
+            <div className={styles.midRight}>
+              {isActive ? (
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, mollitia. Corporis ipsa dolorem itaque aperiam? Doloribus maiores cupiditate rerum enim sapiente, sed optio quia repellat. Iusto sapiente doloribus illo quidem maiores eius alias explicabo? Quae odit eius quidem corrupti excepturi iure totam, architecto consequuntur dolores, blanditiis exercitationem veritatis, a eos.
+                </p>
+              ) : null}
+            </div>
+            <div className={styles.bottomRight}>
+              <h1 className={styles.title}>{event.title}</h1>
+              <h4 className={styles.subtitle}>{event.subtitle}</h4>
+            </div>
           </div>
         </LazyLoadingImageDiv>
       </AspectRatioBox>
