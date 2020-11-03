@@ -5,8 +5,8 @@
   padding: 15px;
   margin-bottom: 50px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1fr);
+  grid-template-rows: auto 1fr auto;
   border: 2px solid black;
   background-color: whitesmoke;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
@@ -29,10 +29,17 @@
   align-self: start;
   justify-self: end;
 }
-.bottomRight {
+
+.midRight {
   grid-column: 2;
   grid-row: 2;
-  align-self: start;
+  align-self: center;
+  justify-self: center;
+}
+.bottomRight {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: end;
   justify-self: end;
 }
 
