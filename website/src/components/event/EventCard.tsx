@@ -66,8 +66,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
             </div>
             <div className={styles.midRight}>
               {isActive ? (
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, mollitia. Corporis ipsa dolorem itaque aperiam? Doloribus maiores cupiditate rerum enim sapiente, sed optio quia repellat. Iusto sapiente doloribus illo quidem maiores eius alias explicabo? Quae odit eius quidem corrupti excepturi iure totam, architecto consequuntur dolores, blanditiis exercitationem veritatis, a eos.
-                </p>
+                <p>{event.description}</p>
               ) : null}
             </div>
             <div className={styles.bottomRight}>
