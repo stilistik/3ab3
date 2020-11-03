@@ -5,8 +5,8 @@
   padding: 15px;
   margin-bottom: 50px;
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border: 2px solid black;
   background-color: whitesmoke;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
@@ -16,16 +16,22 @@
   filter: none;
 }
 
-.topleft {
+.left {
   grid-column: 1;
   grid-row: 1;
   align-self: start;
   justify-self: start;
 }
 
-.topright {
+.topRight {
   grid-column: 2;
   grid-row: 1;
+  align-self: start;
+  justify-self: end;
+}
+.bottomRight {
+  grid-column: 2;
+  grid-row: 2;
   align-self: start;
   justify-self: end;
 }
@@ -35,6 +41,14 @@
   grid-row: 2;
   justify-self: end;
   align-self: end;
+}
+
+.fillRight {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
+  background-color: #feb200;
 }
 
 .date {
@@ -78,7 +92,7 @@
   border: 1px solid #ffffff;
   text-shadow: 2px 2px 0px #feb200;
   transition: transform 300ms ease;
-  border: none
+  border: none;
 }
 
 .more:focus {
