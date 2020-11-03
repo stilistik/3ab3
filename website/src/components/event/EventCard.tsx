@@ -6,17 +6,14 @@ import { Event } from 'App/prisma';
 
 import styles from './EventCard.module.css';
 
-interface ShowMoreProps {
+interface ShowMoreButtonProps {
+  onClick: (event: React.MouseEvent) => void;
   className: string;
   btnText: string;
+  isActive: boolean;
 }
 
-const ShowMoreButton: React.FC<ShowMoreProps> = ({ className, btnText }) => {
-  const [isActive, setActive] = React.useState(false);
-
-  const handleClick = () => {
-    setActive((isActive) => !isActive);
-  };
+const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({ onClick, className, btnText, isActive }) => {
 
   const moreBtn = clx(className, styles.topRight, styles.more, {
     [styles.slanted]: isActive,
@@ -27,7 +24,7 @@ const ShowMoreButton: React.FC<ShowMoreProps> = ({ className, btnText }) => {
   console.log(moreWrapper);
 
   return (
-    <button onClick={handleClick} className={moreBtn}>
+    <button onClick={onClick} className={moreBtn}>
       {btnText}
     </button>
   );
@@ -38,6 +35,14 @@ interface EventCardProps {
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
+
+  const [isActive, setActive] = React.useState(false);
+
+  const handleClick = () => {
+    setActive((isActive) => !isActive);
+  };
+  
+
   return (
     <Container>
       <AspectRatioBox ratio={16 / 10} className="mb-10">
@@ -53,8 +58,10 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               {'Doors: ' + new Date(event.date).toLocaleTimeString()}
             </h4>
             <ShowMoreButton
+              onClick={handleClick}
               className="absolute top-0 right-0 mr-3 mt-3"
               btnText="+"
+              isActive={isActive}
             />
             <div className={styles.bottomRight}>
               <h1 className={styles.title}>{event.title}</h1>
