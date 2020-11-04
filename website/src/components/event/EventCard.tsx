@@ -13,9 +13,12 @@ interface ShowMoreButtonProps {
 }
 
 interface DetailCardProps {
-  onClick: (event: React.MouseEvent) => void;
-  btnText: string;
   isActive: boolean;
+  event: Event;
+}
+
+interface EventCardTitleProps {
+    event: Event;
 }
 
 interface EventCardProps {
@@ -38,11 +41,21 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   );
 };
 
-const DetailCard: React.FC<DetailCardProps> = ({ }) => {
+const EventCardTitle: React.FC<EventCardTitleProps> = ({ event }) => {
   return (
-    <div>
-      hello world
-    </div>
+    <div>hallo</div>
+  )
+};
+
+const DetailCard: React.FC<DetailCardProps> = ({ isActive, event }) => {
+  return (
+          <div className={styles.right + ' ' + (isActive ? styles.isActive : '')}>
+            <div className={styles.midRight}>
+              {isActive ? (
+                <p>{event.description}</p>
+              ) : null}
+            </div>
+          </div>
   )
 }
 
@@ -71,17 +84,12 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
             </h4>
           </div>
           <div className={styles.right + ' ' + (isActive ? styles.isActive : '')}>
-            <div className={styles.topRight}>
+            <div className="absolute top-0 right-0 mr-3 mt-3">
               <ShowMoreButton
                 onClick={handleClick}
                 btnText="+"
                 isActive={isActive}
               />
-            </div>
-            <div className={styles.midRight}>
-              {isActive ? (
-                <p>{event.description}</p>
-              ) : null}
             </div>
             <div className={styles.bottomRight}>
               <h1 className={styles.title}>{event.title}</h1>
