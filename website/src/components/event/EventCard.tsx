@@ -52,12 +52,11 @@ const EventTitle: React.FC<EventTitleProps> = ({ event }) => {
 
 const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
   return (
-    <div className={styles.right}>
-      <div className={styles.midRight}>
+    <div className={styles.details}>
+      <div className={styles.description}>
         <p>{event.description}</p>
       </div>
-            <h1 className={styles.title}>{event.title}</h1>
-      <h4 className={styles.subtitle}>{event.subtitle}</h4>
+      <EventTitle event={event} />
     </div>
   );
 };
@@ -84,17 +83,21 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               {'Doors: ' + new Date(event.date).toLocaleTimeString()}
             </h4>
           </div>
+          <div className="absolute top-0 right-0 mr-3 mt-3">
+            <ShowMoreButton
+              onClick={handleClick}
+              btnText="+"
+              isActive={isActive}
+            />
+          </div>
           <div
             className={styles.right + ' ' + (isActive ? styles.isActive : '')}
           >
-            <div className="absolute top-0 right-0 mr-3 mt-3">
-              <ShowMoreButton
-                onClick={handleClick}
-                btnText="+"
-                isActive={isActive}
-              />
-            </div>
-            {isActive ? <EventDetails isActive={isActive} event={event} /> : <EventTitle event={event} />}
+            {isActive ? (
+              <EventDetails isActive={isActive} event={event} />
+            ) : (
+              <EventTitle event={event} />
+            )}
           </div>
         </LazyLoadingImageDiv>
       </AspectRatioBox>
