@@ -30,7 +30,7 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   btnText,
   isActive,
 }) => {
-  const moreBtn = clx(styles.topRight, styles.more, {
+  const moreBtn = clx(styles.moreButton, {
     [styles.slanted]: isActive,
   });
 
@@ -43,7 +43,7 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
 
 const EventTitle: React.FC<EventTitleProps> = ({ event }) => {
   return (
-    <div className={styles.bottomRight}>
+    <div>
       <h1 className={styles.title}>{event.title}</h1>
       <h4 className={styles.subtitle}>{event.subtitle}</h4>
     </div>
@@ -75,7 +75,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
           src={event.image}
           className={styles.wrapper + ' shadow-2xl '}
         >
-          <div className={styles.left}>
+          <div>
             <h2 className={styles.date}>
               {new Date(event.date).toLocaleDateString()}
             </h2>
@@ -90,9 +90,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               isActive={isActive}
             />
           </div>
-          <div
-            className={styles.right + ' ' + (isActive ? styles.isActive : '')}
-          >
+          <div className={(isActive ? styles.isActive : '')}>
             {isActive ? (
               <EventDetails isActive={isActive} event={event} />
             ) : (
