@@ -43,21 +43,21 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
 
 const EventTitle: React.FC<EventTitleProps> = ({ event }) => {
   return (
-    <div>
+    <React.Fragment>
       <h1 className={styles.title}>{event.title}</h1>
       <h4 className={styles.subtitle}>{event.subtitle}</h4>
-    </div>
+    </React.Fragment>
   );
 };
 
 const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
   return (
-    <div className={styles.details}>
+    <React.Fragment>
       <div className={styles.description}>
         <p>{event.description}</p>
       </div>
       <EventTitle event={event} />
-    </div>
+    </React.Fragment>
   );
 };
 
@@ -90,7 +90,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               isActive={isActive}
             />
           </div>
-          <div className={(isActive ? styles.isActive : '')}>
+          <div className={styles.flexColumn}>
             {isActive ? (
               <EventDetails isActive={isActive} event={event} />
             ) : (
