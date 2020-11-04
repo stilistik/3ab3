@@ -10,20 +10,20 @@ interface ShowMoreButtonProps {
   onClick: (event: React.MouseEvent) => void;
   btnText: string;
   isActive: boolean;
-};
+}
 
-interface DetailCardProps {
+interface EventDetailsProps {
   isActive: boolean;
   event: Event;
-};
+}
 
-interface EventCardTitleProps {
-    event: Event;
-};
+interface EventTitleProps {
+  event: Event;
+}
 
 interface EventCardProps {
   event: Event;
-};
+}
 
 const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   onClick,
@@ -41,22 +41,25 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   );
 };
 
-const EventCardTitle: React.FC<EventCardTitleProps> = ({ event }) => {
+const EventTitle: React.FC<EventTitleProps> = ({ event }) => {
   return (
-    <div>hallo</div>
-  )
+    <div className={styles.bottomRight}>
+      <h1 className={styles.title}>{event.title}</h1>
+      <h4 className={styles.subtitle}>{event.subtitle}</h4>
+    </div>
+  );
 };
 
-const DetailCard: React.FC<DetailCardProps> = ({ isActive, event }) => {
+const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
   return (
-    <div className={styles.right + ' ' + (isActive ? styles.isActive : '')}>
+    <div className={styles.right}>
       <div className={styles.midRight}>
-        {isActive ? (
-          <p>{event.description}</p>
-        ) : null}
+        <p>{event.description}</p>
       </div>
+            <h1 className={styles.title}>{event.title}</h1>
+      <h4 className={styles.subtitle}>{event.subtitle}</h4>
     </div>
-  )
+  );
 };
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
@@ -71,9 +74,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <AspectRatioBox ratio={16 / 10} className="mb-10">
         <LazyLoadingImageDiv
           src={event.image}
-          className={
-            styles.wrapper + ' shadow-2xl '
-          }
+          className={styles.wrapper + ' shadow-2xl '}
         >
           <div className={styles.left}>
             <h2 className={styles.date}>
@@ -83,7 +84,9 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               {'Doors: ' + new Date(event.date).toLocaleTimeString()}
             </h4>
           </div>
-          <div className={styles.right + ' ' + (isActive ? styles.isActive : '')}>
+          <div
+            className={styles.right + ' ' + (isActive ? styles.isActive : '')}
+          >
             <div className="absolute top-0 right-0 mr-3 mt-3">
               <ShowMoreButton
                 onClick={handleClick}
@@ -91,10 +94,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
                 isActive={isActive}
               />
             </div>
-            <div className={styles.bottomRight}>
-              <h1 className={styles.title}>{event.title}</h1>
-              <h4 className={styles.subtitle}>{event.subtitle}</h4>
-            </div>
+            {isActive ? <EventDetails isActive={isActive} event={event} /> : <EventTitle event={event} />}
           </div>
         </LazyLoadingImageDiv>
       </AspectRatioBox>
