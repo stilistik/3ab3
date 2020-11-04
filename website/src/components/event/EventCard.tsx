@@ -12,6 +12,16 @@ interface ShowMoreButtonProps {
   isActive: boolean;
 }
 
+interface DetailCardProps {
+  onClick: (event: React.MouseEvent) => void;
+  btnText: string;
+  isActive: boolean;
+}
+
+interface EventCardProps {
+  event: Event;
+}
+
 const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   onClick,
   btnText,
@@ -28,8 +38,12 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   );
 };
 
-interface EventCardProps {
-  event: Event;
+const DetailCard: React.FC<DetailCardProps> = ({ }) => {
+  return (
+    <div>
+      hello world
+    </div>
+  )
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
