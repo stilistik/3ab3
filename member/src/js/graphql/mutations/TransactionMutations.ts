@@ -21,8 +21,8 @@ export const EDIT_NANOCREDIT = gql`
 `;
 
 export const EDIT_PAYMENT = gql`
-  mutation($userId: ID!, $input: PaymentInput!) {
-    editPayment(userId: $userId, input: $input) {
+  mutation($paymentId: ID!, $input: PaymentInput!) {
+    editPayment(paymentId: $paymentId, input: $input) {
       id
     }
   }

@@ -19,6 +19,7 @@ export const TRANSACTIONS = gql`
             description
           }
           payment {
+            id
             amount
           }
           purchase {

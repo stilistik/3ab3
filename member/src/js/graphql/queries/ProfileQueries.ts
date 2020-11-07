@@ -18,6 +18,7 @@ export const CURRENT_USER_TRANSACTIONS = gql`
               description
             }
             payment {
+              id
               amount
             }
             purchase {
