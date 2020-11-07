@@ -1,7 +1,7 @@
-**/node_modules/
-**/dist/
-**/build/
-**/generated/
+**/node_modules/*
+**/dist/*
+**/build/*
+**/generated/*
 
 .env
 .env.dev
