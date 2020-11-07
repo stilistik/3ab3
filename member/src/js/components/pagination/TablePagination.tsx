@@ -1,5 +1,12 @@
 import React from 'react';
-import { Hidden, IconButton, MenuItem, Select, TableRow, Typography } from '@material-ui/core';
+import {
+  Hidden,
+  IconButton,
+  MenuItem,
+  Select,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -93,9 +100,11 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
               {t('Per page')}:
             </Typography>
             <Select onChange={handlePageSizeChange} value={pageSize}>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
+              {rest.rowsPerPageOptions.map((value: number) => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
             </Select>
           </Hidden>
         </div>
