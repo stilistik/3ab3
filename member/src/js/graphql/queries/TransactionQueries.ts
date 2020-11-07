@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const TRANSACTIONS = gql`
-  query($first: Int!, $skip: Int) {
-    transactions(first: $first, skip: $skip) {
+  query($first: Int!, $skip: Int, $orderBy: String) {
+    transactions(first: $first, skip: $skip, orderBy: $orderBy) {
       edges {
         node {
           id

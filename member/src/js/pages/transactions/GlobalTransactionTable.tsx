@@ -10,12 +10,14 @@ import {
   IconButton,
   makeStyles,
   TableContainer,
+  TableSortLabel,
 } from '@material-ui/core';
-import { TablePagination, Tag, Box, Icon } from 'Components/index';
-import { useQuery } from '@apollo/react-hooks';
+import { TablePagination, Tag, Box, Icon, Message } from 'Components/index';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { TRANSACTIONS } from 'Graphql/queries';
 import { Transaction, TransactionEdge } from 'Graphql/types';
 import { useTranslation } from 'react-i18next';
+import { DELETE_TRANSACTION } from 'Graphql/mutations';
 
 interface AmountCellProps {
   transaction: Transaction;
@@ -38,18 +40,22 @@ interface ActionCellProps {
 }
 
 const ActionCell: React.FC<ActionCellProps> = ({ transaction }) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [deleteTransaction] = useMutation(DELETE_TRANSACTION);
+  const handleDelete = () => {
+    deleteTransaction({
+      variables: { transactionId: transaction.id },
+    })
+      .then(() => Message.success('Transaction deleted.'))
+      .catch((error) => Message.error(error.message));
+  };
 
   return (
     <TableCell align="right">
       <Box.Row h="30px">
-        <IconButton onClick={handleOpen}>
+        <IconButton onClick={() => {}}>
           <Icon type="edit" />
         </IconButton>
-        <IconButton onClick={handleOpen}>
+        <IconButton onClick={handleDelete}>
           <Icon type="delete" />
         </IconButton>
       </Box.Row>
@@ -68,15 +74,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface SortableHeaderCellProps {
+  id: string;
+  sortId: string;
+  label: string;
+  order: 'ASC' | 'DESC';
+  onClick: (id: string) => void;
+}
+
+const SortableHeaderCell: React.FC<SortableHeaderCellProps> = ({
+  id,
+  sortId,
+  order,
+  label,
+  onClick,
+}) => {
+  const styles = useStyles();
+  return (
+    <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
+      <TableSortLabel
+        active={sortId === id}
+        direction={order.toLowerCase() as 'asc' | 'desc'}
+        onClick={() => onClick(id)}
+      >
+        {label}
+      </TableSortLabel>
+    </TableCell>
+  );
+};
+
 export const GlobalTransactionTable: React.FC = () => {
-  const [pageSize, setPageSize] = React.useState(10);
+  const [pageSize, setPageSize] = React.useState(30);
   const [page, setPage] = React.useState(0);
+  const [sortId, setSortId] = React.useState('date');
+  const [order, setOrder] = React.useState<'ASC' | 'DESC'>('DESC');
   const styles = useStyles();
   const { t } = useTranslation();
 
   const skip = page * pageSize;
   const { loading, error, data } = useQuery(TRANSACTIONS, {
-    variables: { first: pageSize, skip: skip },
+    variables: { first: pageSize, skip: skip, orderBy: `${sortId}_${order}` },
   });
 
   const onChangePage = (page: number) => {
@@ -86,6 +123,12 @@ export const GlobalTransactionTable: React.FC = () => {
   const onChangePageSize = (pageSize: number) => {
     setPage(0);
     setPageSize(pageSize);
+  };
+
+  const onClickHeader = (id: string) => {
+    const isDesc = sortId === id && order === 'DESC';
+    setOrder(isDesc ? 'ASC' : 'DESC');
+    setSortId(id);
   };
 
   if (data) {
@@ -99,18 +142,23 @@ export const GlobalTransactionTable: React.FC = () => {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
-                  {t('Date')}
-                </TableCell>
+                <SortableHeaderCell
+                  id="date"
+                  label={t('Date')}
+                  onClick={onClickHeader}
+                  sortId={sortId}
+                  order={order}
+                />
                 <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
                   {t('Member')}
                 </TableCell>
-                <TableCell
-                  classes={{ stickyHeader: styles.stickyHeader }}
-                  align="left"
-                >
-                  {t('Amount')}
-                </TableCell>
+                <SortableHeaderCell
+                  label={t('Amount')}
+                  id="change"
+                  sortId={sortId}
+                  order={order}
+                  onClick={onClickHeader}
+                />
                 <TableCell
                   classes={{ stickyHeader: styles.stickyHeader }}
                   align="left"

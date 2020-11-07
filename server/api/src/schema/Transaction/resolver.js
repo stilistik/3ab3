@@ -3,7 +3,7 @@ module.exports = {
     transactions(root, args, context) {
       return context.prisma.transactionsConnection({
         where: { type: args.type },
-        orderBy: 'date_DESC',
+        orderBy: args.orderBy || 'date_DESC',
         first: args.first,
         skip: args.skip,
         after: args.after,
@@ -11,6 +11,11 @@ module.exports = {
     },
     transaction(root, args, context) {
       return context.prisma.transaction({ id: args.transactionId });
+    },
+  },
+  Mutation: {
+    deleteTransaction(root, args, context) {
+      return context.prisma.deleteTransaction({ id: args.transactionId });
     },
   },
   Transaction: {
