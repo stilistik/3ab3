@@ -11,13 +11,13 @@ dev/server.run:		## Runs the development server
 	docker-compose -f docker-compose.dev.yml up --build
 	
 dev/server.reset:		## Resets the database and starts from scratch
-	cd server/prisma && prisma reset -f && prisma deploy && prisma seed && cp -r ./generated/ ../api/src/ && cp -r ./generated/ ../../website/
+	cd server/prisma && prisma reset -f && prisma deploy && prisma seed && cp -r ./generated/ ../api/src && cp -r ./generated/ ../../website
 
 dev/server.migrate:		## Deploys the latest changes to the database
-	cd server/prisma && prisma deploy && cp -r ./generated/ ../api/src/ && cp -r ./generated/ ../../website/
+	cd server/prisma && prisma deploy && cp -r ./generated/ ../api/src && cp -r ./generated/ ../../website
 
 dev/server.force-migrate:		## Forces a migration of changes to the database
-	cd server/prisma && prisma deploy --force && cp -r ./generated/ ../api/src/ && cp -r ./generated/ ../../website/
+	cd server/prisma && prisma deploy --force && cp -r ./generated/ ../api/src && cp -r ./generated/ ../../website
 
 ###@ Member
 dev/member.run: 	## Runs the development client for the interal member app
