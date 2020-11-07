@@ -23,5 +23,8 @@ module.exports = {
     nanocredit(root, args, context) {
       return context.prisma.transaction({ id: root.id }).nanocredit();
     },
+    user(root, args, context) {
+      return context.prisma.transaction({ id: root.id }).user();
+    },
   },
 };

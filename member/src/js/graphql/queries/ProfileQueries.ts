@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const TRANSACTIONS = gql`
+export const CURRENT_USER_TRANSACTIONS = gql`
   query($first: Int!, $skip: Int) {
     currentUser {
       id
@@ -65,5 +65,3 @@ export const PURCHASE_RECEIPT = gql`
     }
   }
 `;
-
-

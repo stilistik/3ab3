@@ -7,109 +7,22 @@ import {
   TableRow,
   TableCell,
   TableFooter,
-  Typography,
   IconButton,
-  Hidden,
-  Select,
-  MenuItem,
   makeStyles,
   TableContainer,
 } from '@material-ui/core';
-import { Tag, Box, Icon } from 'Components';
+import { TablePagination, Tag, Box, Icon } from 'Components/index';
 import { useQuery } from '@apollo/react-hooks';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import { CURRENT_USER_TRANSACTIONS } from 'Graphql/queries';
+import { Transaction, TransactionEdge } from 'Graphql/types';
 import { PurchaseReceipt } from './PurchaseReceipt';
 import { NanoCreditReceipt } from './NanoCreditReceipt';
-import { useTranslation } from 'react-i18next';
-import { TRANSACTIONS } from 'Graphql/queries';
 
-const TablePagination = ({ page, count, pageSize, ...rest }) => {
-  const { t } = useTranslation();
+interface AmountCellProps {
+  transaction: Transaction;
+}
 
-  const handleFirstPageButtonClick = () => {
-    rest.onChangePage(0);
-  };
-
-  const handleBackButtonClick = () => {
-    rest.onChangePage(page - 1);
-  };
-
-  const handleNextButtonClick = () => {
-    rest.onChangePage(page + 1);
-  };
-
-  const handleLastPageButtonClick = () => {
-    rest.onChangePage(Math.max(0, Math.ceil(count / pageSize) - 1));
-  };
-
-  const handlePageSizeChange = (e) => {
-    rest.onChangePageSize(e.target.value);
-  };
-
-  const pageCount = Math.ceil(count / pageSize) - 1;
-
-  return (
-    <TableRow>
-      <td colSpan={rest.colSpan}>
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <IconButton
-            onClick={handleFirstPageButtonClick}
-            disabled={page === 0}
-            aria-label="First Page"
-          >
-            <FirstPageIcon />
-          </IconButton>
-          <IconButton
-            onClick={handleBackButtonClick}
-            disabled={page === 0}
-            aria-label="Previous Page"
-          >
-            <KeyboardArrowLeft />
-          </IconButton>
-          <Typography style={{ margin: '0px 15px' }}>
-            {page} | {pageCount}
-          </Typography>
-          <IconButton
-            onClick={handleNextButtonClick}
-            disabled={page >= pageCount}
-            aria-label="Next Page"
-          >
-            <KeyboardArrowRight />
-          </IconButton>
-          <IconButton
-            onClick={handleLastPageButtonClick}
-            disabled={page >= pageCount}
-            aria-label="Last Page"
-          >
-            <LastPageIcon />
-          </IconButton>
-          <Hidden xsDown>
-            <Typography style={{ marginRight: 10 }}>
-              {t('Per page')}:
-            </Typography>
-            <Select onChange={handlePageSizeChange} value={pageSize}>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-            </Select>
-          </Hidden>
-        </div>
-      </td>
-    </TableRow>
-  );
-};
-
-const AmountCell = ({ transaction }) => {
+const AmountCell: React.FC<AmountCellProps> = ({ transaction }) => {
   const color = transaction.change > 0 ? '#43a047' : '#f5222d';
   const prefix = transaction.change > 0 ? '+' : '';
   return (
@@ -121,7 +34,11 @@ const AmountCell = ({ transaction }) => {
   );
 };
 
-const ReceiptCell = ({ transaction }) => {
+interface ReceiptCellProps {
+  transaction: Transaction;
+}
+
+const ReceiptCell: React.FC<ReceiptCellProps> = ({ transaction }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -173,21 +90,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TransactionTable = () => {
+const TransactionTable: React.FC = () => {
   const [pageSize, setPageSize] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const styles = useStyles();
 
   const skip = page * pageSize;
-  const { loading, error, data } = useQuery(TRANSACTIONS, {
+  const { loading, error, data } = useQuery(CURRENT_USER_TRANSACTIONS, {
     variables: { first: pageSize, skip: skip },
   });
 
-  const onChangePage = (page) => {
+  const onChangePage = (page: number) => {
     setPage(page);
   };
 
-  const onChangePageSize = (pageSize) => {
+  const onChangePageSize = (pageSize: number) => {
     setPage(0);
     setPageSize(pageSize);
   };
@@ -197,7 +114,7 @@ const TransactionTable = () => {
       transactionCount,
       transactions: { edges },
     } = data.currentUser;
-    const transactions = edges.map((el) => el.node);
+    const transactions = edges.map((el: TransactionEdge) => el.node);
     return (
       <Paper className={styles.paper}>
         <TableContainer className={styles.container}>
@@ -222,7 +139,7 @@ const TransactionTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {transactions.map((transaction) => (
+              {transactions.map((transaction: Transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell component="th" scope="row">
                     {new Date(transaction.date).toDateString()}

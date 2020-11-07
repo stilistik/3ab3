@@ -15,4 +15,4 @@ export * from './post';
 export * from './social';
 export * from './tag';
 export * from './user';
-
+export * from './pagination';

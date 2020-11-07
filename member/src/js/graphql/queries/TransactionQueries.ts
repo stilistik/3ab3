@@ -1,0 +1,30 @@
+import gql from 'graphql-tag';
+
+export const TRANSACTIONS = gql`
+  query($first: Int!, $skip: Int) {
+    transactions(first: $first, skip: $skip) {
+      edges {
+        node {
+          id
+          date
+          type
+          change
+          user {
+            name
+          }
+          nanocredit {
+            amount
+            description
+          }
+          payment {
+            amount
+          }
+          purchase {
+            id
+            total
+          }
+        }
+      }
+    }
+  }
+`;
