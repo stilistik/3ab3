@@ -13,6 +13,7 @@ export const CURRENT_USER_TRANSACTIONS = gql`
             type
             change
             nanocredit {
+              id
               amount
               description
             }

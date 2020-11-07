@@ -28,6 +28,28 @@ module.exports = {
 
       return nanocredit;
     },
+    async editNanoCredit(root, args, context) {
+      const user = await context.prisma.user({ id: args.userId });
+      const nanocredit = await context.prisma.nanoCredit({
+        id: args.nanoCreditId,
+      });
+      const balance = user.balance + nanocredit.amount - args.input.amount;
+      await context.prisma.updateUser({
+        where: { id: user.id },
+        data: { balance: balance },
+      });
+      return context.prisma.updateNanoCredit({
+        where: { id: args.nanoCreditId },
+        data: {
+          ...args.input,
+          transaction: {
+            update: {
+              change: -args.input.amount,
+            },
+          },
+        },
+      });
+    },
   },
   NanoCredit: {
     transaction(root, args, context) {

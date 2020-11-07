@@ -32,10 +32,12 @@ import {
   CURRENT_USER_TRANSACTIONS,
   TRANSACTIONS,
 } from 'Graphql/queries';
-import { Transaction, TransactionEdge } from 'Graphql/types';
+import { Transaction, TransactionEdge, TransactionType } from 'Graphql/types';
 import { useTranslation } from 'react-i18next';
 import { DELETE_TRANSACTION } from 'Graphql/mutations';
 import { FieldChangeEvent } from 'Components/form/types';
+import { EditNanoCredit } from './EditNanoCredit';
+import { EditPayment } from './EditPayment';
 
 interface AmountCellProps {
   transaction: Transaction;
@@ -90,9 +92,12 @@ const ActionCell: React.FC<ActionCellProps> = (props) => {
   return (
     <TableCell align="right">
       <Box.Row h="30px">
-        <IconButton onClick={() => {}}>
-          <Icon type="edit" />
-        </IconButton>
+        {props.transaction.type === TransactionType.Nanocredit && (
+          <EditNanoCredit {...props} />
+        )}
+        {props.transaction.type === TransactionType.Payment && (
+          <EditPayment {...props} />
+        )}
         <DeleteTransaction {...props} />
       </Box.Row>
     </TableCell>

@@ -10,9 +10,11 @@ export const TRANSACTIONS = gql`
           type
           change
           user {
+            id
             name
           }
           nanocredit {
+            id
             amount
             description
           }
