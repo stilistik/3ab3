@@ -29,6 +29,7 @@ extend type Query {
   transaction(transactionId: ID!): Transaction!
   transactions(
     type: TransactionType
+    where: JSON
     orderBy: String
     first: Int!
     skip: Int

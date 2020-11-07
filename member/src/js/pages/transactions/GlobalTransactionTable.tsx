@@ -11,13 +11,31 @@ import {
   makeStyles,
   TableContainer,
   TableSortLabel,
+  Typography,
 } from '@material-ui/core';
-import { TablePagination, Tag, Box, Icon, Message } from 'Components/index';
+import {
+  TablePagination,
+  Tag,
+  Box,
+  Icon,
+  Message,
+  UserSelectField,
+  Form,
+  Grid,
+  DateField,
+  DeleteConfirmPopover,
+} from 'Components/index';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { TRANSACTIONS } from 'Graphql/queries';
+import {
+  BALANCE_TABLE,
+  CURRENT_USER_BALANCE,
+  CURRENT_USER_TRANSACTIONS,
+  TRANSACTIONS,
+} from 'Graphql/queries';
 import { Transaction, TransactionEdge } from 'Graphql/types';
 import { useTranslation } from 'react-i18next';
 import { DELETE_TRANSACTION } from 'Graphql/mutations';
+import { FieldChangeEvent } from 'Components/form/types';
 
 interface AmountCellProps {
   transaction: Transaction;
@@ -35,29 +53,47 @@ const AmountCell: React.FC<AmountCellProps> = ({ transaction }) => {
   );
 };
 
-interface ActionCellProps {
-  transaction: Transaction;
-}
-
-const ActionCell: React.FC<ActionCellProps> = ({ transaction }) => {
+const DeleteTransaction: React.FC<ActionCellProps> = ({
+  transaction,
+  refetch,
+}) => {
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION);
+
   const handleDelete = () => {
     deleteTransaction({
       variables: { transactionId: transaction.id },
+      refetchQueries: () => [
+        { query: CURRENT_USER_BALANCE },
+        { query: BALANCE_TABLE },
+        { query: CURRENT_USER_TRANSACTIONS, variables: { first: 10, skip: 0 } },
+      ],
     })
+      .then(() => refetch())
       .then(() => Message.success('Transaction deleted.'))
       .catch((error) => Message.error(error.message));
   };
+  return (
+    <DeleteConfirmPopover>
+      <IconButton onClick={handleDelete}>
+        <Icon type="delete" />
+      </IconButton>
+    </DeleteConfirmPopover>
+  );
+};
 
+interface ActionCellProps {
+  transaction: Transaction;
+  refetch: () => Promise<any>;
+}
+
+const ActionCell: React.FC<ActionCellProps> = (props) => {
   return (
     <TableCell align="right">
       <Box.Row h="30px">
         <IconButton onClick={() => {}}>
           <Icon type="edit" />
         </IconButton>
-        <IconButton onClick={handleDelete}>
-          <Icon type="delete" />
-        </IconButton>
+        <DeleteTransaction {...props} />
       </Box.Row>
     </TableCell>
   );
@@ -66,6 +102,7 @@ const ActionCell: React.FC<ActionCellProps> = ({ transaction }) => {
 const useStyles = makeStyles((theme) => ({
   paper: {
     overflow: 'hidden',
+    marginTop: theme.spacing(3),
   },
   stickyHeader: {
     backgroundColor: theme.palette.background.paper,
@@ -106,14 +143,36 @@ const SortableHeaderCell: React.FC<SortableHeaderCellProps> = ({
 export const GlobalTransactionTable: React.FC = () => {
   const [pageSize, setPageSize] = React.useState(30);
   const [page, setPage] = React.useState(0);
+  const [userId, setUserId] = React.useState<string>(null);
+  const [beforeDate, setBeforeDate] = React.useState<string>(null);
+  const [afterDate, setAfterDate] = React.useState<string>(null);
   const [sortId, setSortId] = React.useState('date');
   const [order, setOrder] = React.useState<'ASC' | 'DESC'>('DESC');
   const styles = useStyles();
   const { t } = useTranslation();
 
+  function buildWhere() {
+    const where: any = {};
+    if (userId) {
+      where.user = { id: userId };
+    }
+    if (beforeDate) {
+      where.date_lt = beforeDate;
+    }
+    if (afterDate) {
+      where.date_gte = afterDate;
+    }
+    return where;
+  }
+
   const skip = page * pageSize;
-  const { loading, error, data } = useQuery(TRANSACTIONS, {
-    variables: { first: pageSize, skip: skip, orderBy: `${sortId}_${order}` },
+  const { loading, error, data, refetch } = useQuery(TRANSACTIONS, {
+    variables: {
+      first: pageSize,
+      skip: skip,
+      orderBy: `${sortId}_${order}`,
+      where: buildWhere(),
+    },
   });
 
   const onChangePage = (page: number) => {
@@ -131,70 +190,94 @@ export const GlobalTransactionTable: React.FC = () => {
     setSortId(id);
   };
 
+  const handleFieldChange = (event: FieldChangeEvent) => {
+    if (event.id === 'user') setUserId(event.value as string);
+    if (event.id === 'before') setBeforeDate(event.value as string);
+    if (event.id === 'after') setAfterDate(event.value as string);
+  };
+
   if (data) {
     const {
       transactions: { edges },
     } = data;
     const transactions = edges.map((el: TransactionEdge) => el.node);
     return (
-      <Paper className={styles.paper}>
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <SortableHeaderCell
-                  id="date"
-                  label={t('Date')}
-                  onClick={onClickHeader}
-                  sortId={sortId}
-                  order={order}
-                />
-                <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
-                  {t('Member')}
-                </TableCell>
-                <SortableHeaderCell
-                  label={t('Amount')}
-                  id="change"
-                  sortId={sortId}
-                  order={order}
-                  onClick={onClickHeader}
-                />
-                <TableCell
-                  classes={{ stickyHeader: styles.stickyHeader }}
-                  align="left"
-                >
-                  {t('Action')}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {transactions.map((transaction: Transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell component="th" scope="row">
-                    {new Date(transaction.date).toDateString()}
+      <React.Fragment>
+        <Typography variant="subtitle1" color="textPrimary">
+          {t('Filters')}
+        </Typography>
+        <Form onFieldChange={handleFieldChange} onSubmit={() => {}}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={4}>
+              <UserSelectField id="user" label={t('Member')} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <DateField id="before" label={t('Before')} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <DateField id="after" label={t('After')} />
+            </Grid>
+          </Grid>
+        </Form>
+        <Paper className={styles.paper}>
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <SortableHeaderCell
+                    id="date"
+                    label={t('Date')}
+                    onClick={onClickHeader}
+                    sortId={sortId}
+                    order={order}
+                  />
+                  <TableCell classes={{ stickyHeader: styles.stickyHeader }}>
+                    {t('Member')}
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    {transaction.user.name}
+                  <SortableHeaderCell
+                    label={t('Amount')}
+                    id="change"
+                    sortId={sortId}
+                    order={order}
+                    onClick={onClickHeader}
+                  />
+                  <TableCell
+                    classes={{ stickyHeader: styles.stickyHeader }}
+                    align="left"
+                  >
+                    {t('Action')}
                   </TableCell>
-                  <AmountCell transaction={transaction} />
-                  <ActionCell transaction={transaction} />
                 </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TablePagination
-                rowsPerPageOptions={[30, 60, 90]}
-                colSpan={4}
-                count={100}
-                pageSize={pageSize}
-                page={page}
-                onChangePage={onChangePage}
-                onChangePageSize={onChangePageSize}
-              />
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Paper>
+              </TableHead>
+              <TableBody>
+                {transactions.map((transaction: Transaction) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell component="th" scope="row">
+                      {new Date(transaction.date).toDateString()}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {transaction.user.name}
+                    </TableCell>
+                    <AmountCell transaction={transaction} />
+                    <ActionCell transaction={transaction} refetch={refetch} />
+                  </TableRow>
+                ))}
+              </TableBody>
+              <TableFooter>
+                <TablePagination
+                  rowsPerPageOptions={[30, 60, 90]}
+                  colSpan={4}
+                  count={100}
+                  pageSize={pageSize}
+                  page={page}
+                  onChangePage={onChangePage}
+                  onChangePageSize={onChangePageSize}
+                />
+              </TableFooter>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </React.Fragment>
     );
   }
 

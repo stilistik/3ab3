@@ -1,8 +1,9 @@
 module.exports = {
   Query: {
     transactions(root, args, context) {
+      console.log(args);
       return context.prisma.transactionsConnection({
-        where: { type: args.type },
+        where: { type: args.type, ...args.where },
         orderBy: args.orderBy || 'date_DESC',
         first: args.first,
         skip: args.skip,
@@ -14,7 +15,22 @@ module.exports = {
     },
   },
   Mutation: {
-    deleteTransaction(root, args, context) {
+    async deleteTransaction(root, args, context) {
+      const transaction = await context.prisma.transaction({
+        id: args.transactionId,
+      });
+
+      const user = await context.prisma
+        .transaction({
+          id: args.transactionId,
+        })
+        .user();
+
+      await context.prisma.updateUser({
+        where: { id: user.id },
+        data: { balance: user.balance - transaction.change },
+      });
+
       return context.prisma.deleteTransaction({ id: args.transactionId });
     },
   },
