@@ -31,3 +31,21 @@ export const TRANSACTIONS = gql`
     }
   }
 `;
+
+export const PURCHASE = gql`
+  query($purchaseId: ID!) {
+    purchase(purchaseId: $purchaseId) {
+      id
+      items {
+        id
+        price
+        amount
+        product {
+          id
+          name
+          thumbnail
+        }
+      }
+    }
+  }
+`;

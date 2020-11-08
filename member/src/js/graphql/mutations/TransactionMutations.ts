@@ -27,3 +27,11 @@ export const EDIT_PAYMENT = gql`
     }
   }
 `;
+
+export const EDIT_PURCHASE = gql`
+  mutation($purchaseId: ID!, $input: PurchaseInput!) {
+    editPurchase(purchaseId: $purchaseId, input: $input) {
+      id
+    }
+  }
+`;

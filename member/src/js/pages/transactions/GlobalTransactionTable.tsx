@@ -38,6 +38,7 @@ import { DELETE_TRANSACTION } from 'Graphql/mutations';
 import { FieldChangeEvent } from 'Components/form/types';
 import { EditNanoCredit } from './EditNanoCredit';
 import { EditPayment } from './EditPayment';
+import { EditPurchase } from './EditPurchase';
 
 interface AmountCellProps {
   transaction: Transaction;
@@ -97,6 +98,9 @@ const ActionCell: React.FC<ActionCellProps> = (props) => {
         )}
         {props.transaction.type === TransactionType.Payment && (
           <EditPayment {...props} />
+        )}
+        {props.transaction.type === TransactionType.Purchase && (
+          <EditPurchase {...props} />
         )}
         <DeleteTransaction {...props} />
       </Box.Row>
