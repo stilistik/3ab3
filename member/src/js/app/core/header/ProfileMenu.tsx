@@ -3,7 +3,7 @@ import { Menu, MenuItem, IconButton, Typography } from '@material-ui/core';
 import { requestRoute } from 'App/router/History';
 import { Box, Icon, useCurrentUser, UserAvatar } from 'Components/index';
 import { useTranslation } from 'react-i18next';
-import { setIsAuthenticated, useStore } from 'App/store';
+import { useAuth } from 'Auth/index';
 
 interface ProfileMenuItemProps {
   label: string;
@@ -32,9 +32,9 @@ const ProfileMenuItem = React.forwardRef(
 
 export const ProfileMenu: React.FC = () => {
   const [anchor, setAnchor] = React.useState(null);
-  const { dispatch } = useStore();
   const user = useCurrentUser();
   const { t } = useTranslation();
+  const { logout } = useAuth();
 
   const handleMenuOpen = (e: React.MouseEvent) => {
     setAnchor(e.currentTarget);
@@ -42,11 +42,6 @@ export const ProfileMenu: React.FC = () => {
 
   const handleClose = () => {
     setAnchor(null);
-  };
-
-  const handleLogout = () => {
-    window.localStorage.removeItem('access_token');
-    dispatch(setIsAuthenticated(false));
   };
 
   const handleClick = (action: string) => {
@@ -58,7 +53,7 @@ export const ProfileMenu: React.FC = () => {
         requestRoute('/account');
         break;
       case 'logout':
-        handleLogout();
+        logout();
         break;
       default:
         break;

@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Loading } from 'Components/index';
 import { CURRENT_USER_QUERY } from 'Graphql/queries';
 import { User } from 'Graphql/types';
+import { useAuth } from 'Auth/index';
 
 export const UserContext = React.createContext<User | undefined>(undefined);
 
@@ -15,9 +16,14 @@ export const useCurrentUser = (): User => {
 };
 
 export const UserProvider: React.FC = ({ children }) => {
+  const { logout } = useAuth();
   const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
 
-  if (error) return <Loading type="absolute" />;
+  React.useEffect(() => {
+    if (error) logout();
+  }, [error]);
+
+  if (error) return null;
   if (loading) return <Loading type="absolute" />;
 
   return (
