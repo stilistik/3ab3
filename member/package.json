@@ -9,6 +9,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --mode development --hot --inline",
     "build": "webpack --config webpack.prod.js -p",
+    "serve": "serve -p 8080 /dist",
     "generate": "graphql-codegen"
   },
   "devDependencies": {
@@ -123,6 +124,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "resize-observer-polyfill": "^1.5.1",
+    "serve": "^11.3.2",
     "styled-components": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
     "tinycolor2": "^1.4.1",
