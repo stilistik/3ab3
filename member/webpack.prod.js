@@ -7,7 +7,7 @@ const createWebpackConfig = require('./webpack.utils');
 const common = require('./webpack.common');
 
 module.exports = createWebpackConfig(common, {
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -36,7 +36,7 @@ module.exports = createWebpackConfig(common, {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
 });

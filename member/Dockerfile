@@ -1,8 +1,7 @@
-FROM node:erbium
+FROM nginx:alpine
 
 # Setting working directory. All the path will be relative to WORKDIR
 WORKDIR /usr/src/app
 
-# Installing dependencies
-COPY package*.json ./
-RUN yarn
+COPY ./dist ./dist
+COPY ./public ./public

@@ -9,7 +9,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --mode development --hot --inline",
     "build": "webpack --config webpack.prod.js -p",
-    "serve": "serve -p 8080 /dist",
+    "serve": "serve -p 3001 .",
     "generate": "graphql-codegen"
   },
   "devDependencies": {

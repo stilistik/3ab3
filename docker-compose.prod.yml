@@ -5,11 +5,11 @@ services:
     build: ./website
     restart: unless-stopped
     volumes:
-      - ./member/src:/usr/src/app/src
+      - ./website:/usr/src/app
     expose:
-      - '8080'
+      - '3000'
     env_file: .env
-    command: next build && next start
+    command: bash -c "yarn build && yarn start"
     networks:
       - 3ab3
 
@@ -17,12 +17,11 @@ services:
     container_name: member
     build: ./member
     restart: unless-stopped
-    volumes:
-      - ./website:/usr/src/app/
+    volumes: 
+      - ./member/nginx.conf:/etc/nginx/nginx.conf
     expose:
-      - '8000'
+      - '3001'
     env_file: .env
-    command: yarn build && yarn server
     networks:
       - 3ab3
 
@@ -79,10 +78,13 @@ services:
   proxy:
     container_name: proxy
     image: nginx:alpine
+    restart: unless-stopped
     ports:
       - '4000:4000'
+      - '3000:3000'
+      - '3001:3001'
     volumes:
-      - ./server/proxy/nginx.dev.conf:/etc/nginx/nginx.conf
+      - ./server/proxy/nginx.prod.conf:/etc/nginx/nginx.conf
       - /var/local/3ab3/storage/:/usr/src/app/storage
     networks:
       - 3ab3
