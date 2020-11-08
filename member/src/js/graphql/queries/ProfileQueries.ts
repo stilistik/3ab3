@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const TRANSACTIONS = gql`
+export const CURRENT_USER_TRANSACTIONS = gql`
   query($first: Int!, $skip: Int) {
     currentUser {
       id
@@ -13,10 +13,12 @@ export const TRANSACTIONS = gql`
             type
             change
             nanocredit {
+              id
               amount
               description
             }
             payment {
+              id
               amount
             }
             purchase {
@@ -65,5 +67,3 @@ export const PURCHASE_RECEIPT = gql`
     }
   }
 `;
-
-

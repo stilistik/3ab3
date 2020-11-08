@@ -31,7 +31,6 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
   if (loading || error) return null;
 
   const onSubmit = (values) => {
-    console.log(values);
     const { date, user, ...products } = values;
     const items = Object.keys(products).map((key) => ({
       productId: key,

@@ -9,7 +9,7 @@ type Purchase {
 
 input PurchaseInput {
   userId: ID!
-  date: DateTime!
+  date: DateTime
   items: [PurchaseItemInput!]!
 }
 
@@ -26,5 +26,6 @@ extend type Query {
 
 extend type Mutation {
   createPurchase(input: PurchaseInput!): Purchase! @hasRole
+  editPurchase(purchaseId: ID!, input: PurchaseInput!): Purchase! @hasRole
   deletePurchase(purchaseId: ID!): Purchase! @hasRole
 }

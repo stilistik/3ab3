@@ -119,6 +119,7 @@
     "Edit Secret": "Geheimnis bearbeiten",
     "Create Secret": "Geheimnis erstellen",
     "Delete Secret": "Geheimnis löschen",
-    "deleteSecretConfirm": "Willst du wirklich das Geheimnis <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Geheimnis verbundenen Daten gehen verloren. Weitermachen?"
+    "deleteSecretConfirm": "Willst du wirklich das Geheimnis <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Geheimnis verbundenen Daten gehen verloren. Weitermachen?",
+    "Transactions": "Transaktionen"
   }
 }

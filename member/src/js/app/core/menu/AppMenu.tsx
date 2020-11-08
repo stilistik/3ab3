@@ -79,6 +79,11 @@ export const AppMenu: React.FC<AppMenuProps> = ({
                 onClick={() => onClick('/checklist')}
               />
               <MenuItem
+                text={t('Transactions')}
+                icon="creditCard"
+                onClick={() => onClick('/transactions')}
+              />
+              <MenuItem
                 text={t('Members')}
                 icon="group"
                 onClick={() => onClick('/members')}

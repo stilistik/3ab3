@@ -2,6 +2,7 @@ import React from 'react';
 
 import LoadingIcon from './LoadingIcon';
 
+import CreditCardIcon from '@material-ui/icons/CreditCard';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -125,6 +126,7 @@ const muiIconTypes = {
   comment: CommentIcon,
   compass: ExploreIcon,
   createFolder: CreateNewFolderIcon,
+  creditCard: CreditCardIcon,
   dashboard: DashboardIcon,
   delete: DeleteIcon,
   description: DescriptionIcon,

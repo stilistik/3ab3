@@ -29,8 +29,14 @@ extend type Query {
   transaction(transactionId: ID!): Transaction!
   transactions(
     type: TransactionType
+    where: JSON
+    orderBy: String
     first: Int!
     skip: Int
     after: String
   ): TransactionConnection
+}
+
+extend type Mutation {
+  deleteTransaction(transactionId: ID!): Transaction! @hasRole
 }

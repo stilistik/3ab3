@@ -74,6 +74,64 @@ module.exports = {
 
       return purchase;
     },
+    async editPurchase(root, args, context) {
+      const { userId, date, items } = args.input;
+      const purchase = await context.prisma.purchase({ id: args.purchaseId });
+      const user = await context.prisma.user({ id: userId });
+
+      const oldItems = await context.prisma
+        .purchase({ id: args.purchaseId })
+        .items();
+
+      await Promise.all(
+        oldItems.map((item) => context.prisma.deleteItem({ id: item.id }))
+      );
+
+      // cart associates items and corresponding products
+      const cart = await Promise.all(
+        items.map(async (item) => {
+          const product = await context.prisma.product({ id: item.productId });
+          return { product, item };
+        })
+      );
+
+      // compute total of this purchase
+      const total = cart.reduce(
+        (t, el) => t + el.product.price * el.item.amount,
+        0
+      );
+      const balance = user.balance + purchase.total - total;
+
+      await context.prisma.updateUser({
+        where: { id: userId },
+        data: { balance: balance },
+      });
+
+      // create input for the item nodes
+      const itemInput = cart.map((el) => {
+        return {
+          price: el.product.price,
+          product: { connect: { id: el.product.id } },
+          amount: el.item.amount,
+          user: { connect: { id: userId } },
+        };
+      });
+
+      return context.prisma.updatePurchase({
+        where: { id: args.purchaseId },
+        data: {
+          total,
+          transaction: {
+            update: {
+              change: -total,
+            },
+          },
+          items: {
+            create: itemInput,
+          },
+        },
+      });
+    },
     async deletePurchase(root, args, context) {
       const purchase = await context.prisma.purchase({ id: args.purchaseId });
       const user = await context.prisma

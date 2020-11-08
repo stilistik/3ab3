@@ -69,11 +69,15 @@ export const SearchSelectField: React.FC<SearchSelectFieldProps> = ({
   ) {
     if (selectedOption && selectedOption.persistent)
       handlePersistentOption(selectedOption);
-    else {
+    else if (selectedOption) {
       // store the selected option's value in the form state
       field.onChange(selectedOption.value);
       field.onFieldCommit(id, selectedOption.value);
       field.onFieldOptionSelected(id, selectedOption);
+    } else {
+      field.onChange(null);
+      field.onFieldCommit(id, null);
+      field.onFieldOptionSelected(id, null);
     }
   }
 

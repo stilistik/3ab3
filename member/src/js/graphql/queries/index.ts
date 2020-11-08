@@ -9,3 +9,4 @@ export * from './CommentQueries';
 export * from './DocumentQueries';
 export * from './ProfileQueries';
 export * from './SecretQueries';
+export * from './TransactionQueries';

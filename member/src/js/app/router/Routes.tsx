@@ -14,6 +14,7 @@ import { ProductList } from 'Pages/products';
 import { MemberList } from 'Pages/members';
 import { Documents } from 'Pages/documents';
 import { Secrets } from 'Pages/secrets';
+import { Transactions } from 'Pages/transactions';
 
 export const UnauthenticatedRoutes: React.FC = () => {
   return (
@@ -54,6 +55,9 @@ export const AuthenticatedRoutes: React.FC = () => {
       </Route>
       <Route path="/checklist">
         <Checklist />
+      </Route>
+      <Route path="/transactions">
+        <Transactions />
       </Route>
       <Route path="/account">
         <Account />

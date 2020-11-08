@@ -39,6 +39,28 @@ module.exports = {
 
       return payment;
     },
+    async editPayment(root, args, context) {
+      const { userId, amount, date } = args.input;
+      const user = await context.prisma.user({ id: userId });
+      const payment = await context.prisma.payment({ id: args.paymentId });
+      const balance = user.balance - payment.amount + amount;
+      await context.prisma.updateUser({
+        where: { id: user.id },
+        data: { balance: balance },
+      });
+      return context.prisma.updatePayment({
+        where: { id: args.paymentId },
+        data: {
+          amount: amount,
+          date: date,
+          transaction: {
+            update: {
+              change: amount,
+            },
+          },
+        },
+      });
+    },
     async deletePayment(root, args, context) {
       const payment = await context.prisma.payment({ id: args.paymentId });
       const user = await context.prisma.payment({ id: args.paymentId }).user();
