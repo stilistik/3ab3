@@ -1,6 +1,8 @@
 import React from 'react';
 import { AspectRatioBox, Container } from 'Components/utility';
 import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
+
+import { SocialButtons } from 'Components/buttons';
 import clx from 'classnames';
 import { Event } from 'App/prisma';
 
@@ -57,8 +59,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
         <p>{event.description}</p>
       </div>
       <div className={styles.detailLinks}>
-        <a href={event.spotify}>Spotifüdu</a>
-        <a href={event.instagram}>Instagrämmu</a>
+        <SocialButtons event={event} />
       </div>
       <EventTitle event={event} />
     </React.Fragment>
