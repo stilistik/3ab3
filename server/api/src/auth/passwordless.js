@@ -23,38 +23,45 @@ const mailgun = require('mailgun-js')({
 
 const logoPath = path.join(__dirname, '../resources/favicon.png');
 
+const getLoginToken = async (req, res) => {
+  const user = await prisma.user({ email: req.body.email });
+
+  if (!user) {
+    // if there is no user with the provided email, we still return 200 but
+    // do nothing. this prevents informing potential attackers about the validity
+    // of entered email adresses.
+    Logger.log(`User with ${req.body.email} not found.`);
+    return res.sendStatus(200);
+  }
+
+  console.log(user);
+
+  // generate token
+  const loginToken = jwt.sign(
+    {
+      id: user.id,
+      timestamp: +new Date(),
+    },
+    LOGIN_TOKEN_SECRET,
+    { expiresIn: LOGIN_TOKEN_EXPIRATION }
+  );
+
+  const updatedUser = await prisma.updateUser({
+    where: { id: user.id },
+    data: { loginToken: loginToken },
+  });
+
+  if (!updatedUser) {
+    throw new Error('Could not update user with login token');
+  }
+
+  return [updatedUser, loginToken];
+};
+
 const requestEmail = async (req, res) => {
   try {
-    const user = await prisma.user({ email: req.body.email });
-
-    if (!user) {
-      // if there is no user with the provided email, we still return 200 but
-      // do nothing. this prevents informing potential attackers about the validity
-      // of entered email adresses.
-      Logger.log(`User with ${req.body.email} not found.`);
-      return res.sendStatus(200);
-    }
-
-    // generate token
-    const loginToken = jwt.sign(
-      {
-        id: user.id,
-        timestamp: +new Date(),
-      },
-      LOGIN_TOKEN_SECRET,
-      { expiresIn: LOGIN_TOKEN_EXPIRATION }
-    );
-
-    const updatedUser = await prisma.updateUser({
-      where: { id: user.id },
-      data: { loginToken: loginToken },
-    });
-
-    if (!updatedUser) {
-      throw new Error('Could not update user with login token');
-    }
-
-    const langSlug = updatedUser.language.replace('-', '').toLowerCase();
+    const [user, loginToken] = await getLoginToken(req, res);
+    const langSlug = user.language.replace('-', '').toLowerCase();
     const template = `request_login_${langSlug}`;
     const data = {
       from: '3ab3 Member Admin <admin@3ab3.ch>',
@@ -65,8 +72,8 @@ const requestEmail = async (req, res) => {
       'v:link': `${MEMBER_CLIENT_HOST}:${MEMBER_CLIENT_PORT}/auth?token=${loginToken}`,
       inline: logoPath,
     };
-    Logger.log(`Login email sent to ${user.email}`);
     mailgun.messages().send(data);
+    Logger.log(`Login email sent to ${user.email}`);
     res.sendStatus(200);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -75,7 +82,9 @@ const requestEmail = async (req, res) => {
 
 const requestToken = async (req, res) => {
   try {
+    Logger.log('Login request received.');
     const { token } = req.body;
+    console.log(token);
     const { id } = jwt.verify(token, LOGIN_TOKEN_SECRET);
     const user = await prisma.user({ id });
 
@@ -113,29 +122,16 @@ const refreshToken = async (req, res) => {};
 const debugSession = async (req, res) => {
   try {
     if (req.body.password !== API_MAINTENANCE_PASSWORD) {
-      throw new Error('Invalid api maintencance password supplied.');
+      throw new Error('Unauthorized');
     }
 
-    const user = await prisma.user({ email: req.body.email });
-
-    if (!user) {
-      throw new Error('User not found.');
-    }
-
-    const accessToken = jwt.sign(
-      {
-        id: user.id,
-        timestamp: +new Date(),
-      },
-      ACCESS_TOKEN_SECRET,
-      { expiresIn: ACCESS_TOKEN_EXPIRATION }
-    );
-
-    res.status(200).send({
-      access_token: accessToken,
-    });
+    const [user, loginToken] = await getLoginToken(req, res);
+    console.log(user);
+    Logger.log(`Debug session created for ${user.name}`);
+    const link = `${MEMBER_CLIENT_HOST}:${MEMBER_CLIENT_PORT}/auth?token=${loginToken}`;
+    res.status(200).send(link);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: err.message });
   }
 };
 

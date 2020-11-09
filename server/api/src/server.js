@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 if (MODE === 'development') {
-  app.post('/auth/passwordless/debugsession', auth.passwordless.debugSession);
+  app.post('/auth/session', auth.passwordless.debugSession);
 }
 
 app.post(
