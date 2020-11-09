@@ -30,6 +30,7 @@
   height: 100%;
   width: 100%;
   justify-content: flex-end;
+  overflow: hidden;
 }
 
 .details {
@@ -39,7 +40,6 @@
 
 .description {
   overflow-y: auto;
-  overflow: hidden;
   text-align: left;
   padding: 10% 7.5% 5% 7.5%;
   flex-grow: 1;
