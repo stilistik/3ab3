@@ -5,10 +5,18 @@ import { InferGetStaticPropsType } from 'next';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {
-  const secrets = await prisma.secrets();
+  try {
+    const secrets = await prisma.secrets();
+    return {
+      props: { secrets },
+      revalidate: 1,
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
 
   return {
-    props: { secrets },
+    props: { secrets: [] },
     revalidate: 1,
   };
 };

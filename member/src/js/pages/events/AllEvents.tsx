@@ -34,3 +34,5 @@ export const AllEvents = () => {
     </Grid.Default>
   );
 };
+
+export default AllEvents;

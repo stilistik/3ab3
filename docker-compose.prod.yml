@@ -9,7 +9,7 @@ services:
     expose:
       - '3000'
     env_file: .env
-    command: bash -c "yarn build && yarn start"
+    command: yarn start
     networks:
       - 3ab3
 

@@ -31,3 +31,5 @@ export const MemberList: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default MemberList;

@@ -145,3 +145,5 @@ export const Messenger = () => {
     </React.Fragment>
   );
 };
+
+export default Messenger;

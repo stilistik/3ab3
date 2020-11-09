@@ -31,3 +31,5 @@ export const ProductList: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default ProductList;

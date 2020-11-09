@@ -93,3 +93,5 @@ export const Home: React.FC = () => {
     </React.Fragment>
   );
 };
+
+export default Home

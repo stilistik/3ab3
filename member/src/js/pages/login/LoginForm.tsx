@@ -70,3 +70,5 @@ export const LoginForm = () => {
     </LoginPageLayout>
   );
 };
+
+export default LoginForm;

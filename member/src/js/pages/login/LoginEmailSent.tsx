@@ -33,3 +33,5 @@ export const LoginEmailSent = () => {
     </LoginPageLayout>
   );
 };
+
+export default LoginEmailSent;

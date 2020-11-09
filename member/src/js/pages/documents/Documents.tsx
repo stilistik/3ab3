@@ -34,3 +34,5 @@ export const Documents: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default Documents;

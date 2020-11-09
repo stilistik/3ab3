@@ -5,14 +5,21 @@ import { InferGetStaticPropsType } from 'next';
 import { Footer, Archive, Body } from 'Components/index';
 
 export const getStaticProps = async () => {
-  const events = await prisma.events({
-    where: {
-      published: true,
-    },
-  });
-
+  try {
+    const events = await prisma.events({
+      where: {
+        published: true,
+      },
+    });
+    return {
+      props: { events },
+      revalidate: 1,
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
   return {
-    props: { events },
+    props: { events: [] },
     revalidate: 1,
   };
 };

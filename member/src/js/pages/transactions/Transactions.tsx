@@ -24,3 +24,5 @@ export const Transactions: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default Transactions;

@@ -79,3 +79,5 @@ export const SingleEvent: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default SingleEvent;

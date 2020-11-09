@@ -52,3 +52,5 @@ export const Authenticating: React.FC = () => {
     </LoginPageLayout>
   );
 };
+
+export default Authenticating;

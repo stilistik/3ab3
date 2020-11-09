@@ -31,3 +31,5 @@ export const Secrets: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default Secrets;

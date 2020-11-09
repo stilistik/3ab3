@@ -40,3 +40,5 @@ export const Account: React.FC = () => {
     </Grid.Default>
   );
 };
+
+export default Account;

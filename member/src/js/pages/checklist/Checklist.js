@@ -51,3 +51,5 @@ export const Checklist = ({ initValues = {} }) => {
     </Grid.Default>
   );
 };
+
+export default Checklist;
