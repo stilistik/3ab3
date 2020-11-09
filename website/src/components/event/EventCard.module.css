@@ -64,13 +64,6 @@
   -webkit-text-stroke: 2px black;
 }
 
-.detailLinks {
-  padding-top: 2.5%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
 /*More Button*/
 
 .moreButton {

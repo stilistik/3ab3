@@ -58,9 +58,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
       <div className={styles.description}>
         <p>{event.description}</p>
       </div>
-      <div className={styles.detailLinks}>
         <SocialButtons event={event} />
-      </div>
       <EventTitle event={event} />
     </React.Fragment>
   );
