@@ -10,14 +10,23 @@ init:
 dev/server.run:		## Runs the development server
 	docker-compose -f docker-compose.dev.yml up --build
 	
-dev/server.reset:		## Resets the database and starts from scratch
-	cd server/prisma && prisma reset -f && prisma deploy && prisma seed && cp -r ./generated/ ../api/src && cp -r ./generated/ ../../website
+dev/server.reset:	dev/prisma.reset dev/prisma.distribute
 
-dev/server.migrate:		## Deploys the latest changes to the database
-	cd server/prisma && prisma deploy && cp -r ./generated/ ../api/src && cp -r ./generated/ ../../website
+dev/server.migrate: dev/prisma.deploy dev/prisma.distribute
 
-dev/server.force-migrate:		## Forces a migration of changes to the database
-	cd server/prisma && prisma deploy --force && cp -r ./generated/ ../api/src && cp -r ./generated/ ../../website
+dev/server.force-migrate: dev/prisma.deploy-forced dev/prisma.distribute
+
+dev/prisma.deploy:
+	cd server/prisma && prisma deploy
+
+dev/prisma.deploy-forced:
+	cd server/prisma && prisma deploy --force
+
+dev/prisma.reset:
+	cd server/prisma && prisma reset -f && prisma deploy && prisma seed
+
+dev/prisma.distribute:
+	cd server/prisma && cp -r ./generated ../api/src && cp -r ./generated ../../website
 
 ###@ Member
 dev/member.run: 	## Runs the development client for the interal member app
@@ -29,7 +38,6 @@ dev/member.codegen:		## Runs the codegen for frontend graphql schema types
 ###@ Server
 dev/website.run: 	## Runs the development client for the interal member app
 	cd website && yarn dev
-
 
 ##@ Production
 
