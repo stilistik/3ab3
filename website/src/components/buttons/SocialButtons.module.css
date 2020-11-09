@@ -1,0 +1,7 @@
+.social {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 60px;
+    margin-top: 20px;
+    filter: drop-shadow(2px 2px 0px var(--color-primary));
+  }
