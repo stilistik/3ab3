@@ -19,7 +19,7 @@
 /*Style when details are shown*/
 
 .isActive {
-  background-color: cornflowerblue;
+  background-color:rgba(255,255,255,0.90);
 }
 
 /*EventCard elements - right column*/
@@ -44,6 +44,7 @@
   padding: 10% 7.5% 5% 7.5%;
   flex-grow: 1;
   flex-basis: 200px;
+
 }
 
 .title {
@@ -54,6 +55,7 @@
   -webkit-text-stroke: 2px whitesmoke;
   text-align: right;
   hyphens: auto;
+
 }
 
 .subtitle {
