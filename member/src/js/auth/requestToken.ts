@@ -9,7 +9,7 @@ export const requestToken = async (emailToken: string) => {
     const payload = {
       token: emailToken,
     };
-    const response = await fetch(getBackendUrl() + '/auth/passwordless/login', {
+    const response = await fetch(getBackendUrl() + '/auth/login', {
       headers: {
         Authorization: 'Basic ' + auth_details,
         'Content-Type': 'application/json',

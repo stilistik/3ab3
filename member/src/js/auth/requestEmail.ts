@@ -10,7 +10,7 @@ export const requestEmail = async (email: string) => {
       email: email,
     };
     await fetch(
-      getBackendUrl() + '/auth/passwordless/request',
+      getBackendUrl() + '/auth/request',
       {
         headers: {
           Authorization: 'Basic ' + auth_details,

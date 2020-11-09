@@ -9,6 +9,7 @@ const auth = require('./auth');
 const cors = require('cors');
 const { verifyTokenInConnection } = require('./auth/verify');
 const prisma = require('./prisma');
+const Logger = require('./helper/logger');
 
 const { MODE, API_PATH, API_SUB_PATH, API_PORT } = process.env;
 
@@ -30,14 +31,19 @@ if (MODE === 'development') {
 }
 
 app.post(
-  '/auth/passwordless/request',
+  '/auth/request',
   passport.authenticate('basic', { session: false }),
   auth.passwordless.requestEmail
 );
 app.post(
-  '/auth/passwordless/login',
+  '/auth/login',
   passport.authenticate('basic', { session: false }),
   auth.passwordless.requestToken
+);
+app.post(
+  '/auth/token',
+  passport.authenticate('basic', { session: false }),
+  auth.passwordless.refreshToken
 );
 
 app.use(API_PATH, passport.authenticate('bearer', { session: false }));
@@ -67,7 +73,7 @@ const apollo = new ApolloServer({
           where: { id },
           data: { isOnline: true },
         });
-        console.log('User CONNECT: ' + user.name);
+        Logger.log('User CONNECT: ' + user.name);
         if (user)
           return {
             currentUser: user,
@@ -76,11 +82,11 @@ const apollo = new ApolloServer({
       throw new Error('Missing auth token!');
     },
     onOperation: async (connectionParams) => {
-      console.log('operation', connectionParams);
+      Logger.log('operation', connectionParams);
     },
     onDisconnect: async (_, context) => {
       const initialContext = await context.initPromise;
-      console.log('User DISCONNECT: ' + initialContext.currentUser.name);
+      Logger.log('User DISCONNECT: ' + initialContext.currentUser.name);
       await prisma.updateUser({
         where: { id: initialContext.currentUser.id },
         data: {
@@ -112,10 +118,10 @@ const httpServer = http.createServer(app);
 apollo.installSubscriptionHandlers(httpServer);
 
 httpServer.listen(API_PORT, () => {
-  console.log(
+  Logger.log(
     `🚀 Server ready at http://localhost:${API_PORT}${apollo.graphqlPath}`
   );
-  console.log(
+  Logger.log(
     `🚀 Subscriptions ready at ws://localhost:${API_PORT}${
       apollo.subscriptionsPath
     }`

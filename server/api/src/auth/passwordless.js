@@ -1,6 +1,7 @@
 const prisma = require('../prisma');
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const Logger = require('../helper/logger');
 
 const {
   LOGIN_TOKEN_SECRET,
@@ -30,6 +31,7 @@ const requestEmail = async (req, res) => {
       // if there is no user with the provided email, we still return 200 but
       // do nothing. this prevents informing potential attackers about the validity
       // of entered email adresses.
+      Logger.log(`User with ${req.body.email} not found.`);
       return res.sendStatus(200);
     }
 
@@ -63,6 +65,7 @@ const requestEmail = async (req, res) => {
       'v:link': `${MEMBER_CLIENT_HOST}:${MEMBER_CLIENT_PORT}/auth?token=${loginToken}`,
       inline: logoPath,
     };
+    Logger.log(`Login email sent to ${user.email}`);
     mailgun.messages().send(data);
     res.sendStatus(200);
   } catch (err) {
@@ -105,6 +108,8 @@ const requestToken = async (req, res) => {
   }
 };
 
+const refreshToken = async (req, res) => {};
+
 const debugSession = async (req, res) => {
   try {
     if (req.body.password !== API_MAINTENANCE_PASSWORD) {
@@ -137,5 +142,6 @@ const debugSession = async (req, res) => {
 module.exports = {
   requestEmail,
   requestToken,
+  refreshToken,
   debugSession,
 };
