@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormContext } from './FormContext';
 import Validator from './Validator';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import {
   FieldOptions,
   FormInstance,

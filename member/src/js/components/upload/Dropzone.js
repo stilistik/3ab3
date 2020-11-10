@@ -1,6 +1,6 @@
 import React from 'react';
 import uuid from 'uuid/v4';
-import { flowRight as compose } from 'lodash';
+import compose from 'lodash/flowRight';
 import { connect } from 'react-redux';
 import { Icon } from '../icon';
 import classnames from 'classnames';
