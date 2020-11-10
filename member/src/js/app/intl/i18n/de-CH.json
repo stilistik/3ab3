@@ -120,6 +120,15 @@
     "Create Secret": "Gheimnis ersteuä",
     "Delete Secret": "Gheimnis löschä",
     "deleteSecretConfirm": "Wosch du würklech z Gheimnis <1>{{title}}</1> löschä? Di Handlig isch unwiderrueflech und aui mitem Gheimnis verbundene Datä gö verlore. Witermache?",
-    "Transactions": "Transaktionä"
+    "Transactions": "Transaktionä",
+    "Filters": "Fiuter",
+    "Before Date": "Vorem Datum",
+    "After Date": "Nachem Datum",
+    "Action": "Handlig",
+    "Transaction deleted": "Transaktion glöscht",
+    "Edit successful": "Erfougrich bearbeitet",
+    "Edit Nanocredit": "Nanokredit bearbeitä",
+    "Edit Purchase": "Ychouf bearbeitä",
+    "Edit Payment": "Zahlig bearbeitä"
   }
 }

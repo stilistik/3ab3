@@ -60,6 +60,7 @@ const DeleteTransaction: React.FC<ActionCellProps> = ({
   transaction,
   refetch,
 }) => {
+  const { t } = useTranslation();
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION);
 
   const handleDelete = () => {
@@ -72,7 +73,7 @@ const DeleteTransaction: React.FC<ActionCellProps> = ({
       ],
     })
       .then(() => refetch())
-      .then(() => Message.success('Transaction deleted.'))
+      .then(() => Message.success(t('Transaction deleted')))
       .catch((error) => Message.error(error.message));
   };
   return (
@@ -221,10 +222,10 @@ export const GlobalTransactionTable: React.FC = () => {
               <UserSelectField id="user" label={t('Member')} />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <DateField id="before" label={t('Before')} />
+              <DateField id="before" label={t('Before Date')} />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <DateField id="after" label={t('After')} />
+              <DateField id="after" label={t('After Date')} />
             </Grid>
           </Grid>
         </Form>

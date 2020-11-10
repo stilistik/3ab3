@@ -120,6 +120,15 @@
     "Create Secret": "Geheimnis erstellen",
     "Delete Secret": "Geheimnis löschen",
     "deleteSecretConfirm": "Willst du wirklich das Geheimnis <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Geheimnis verbundenen Daten gehen verloren. Weitermachen?",
-    "Transactions": "Transaktionen"
+    "Transactions": "Transaktionen",
+    "Filters": "Filtern",
+    "Before Date": "Vor Datum",
+    "After Date": "Nach Datum",
+    "Action": "Handlung",
+    "Transaction deleted": "Transaktion gelöscht",
+    "Edit successful": "Erfolgreich bearbeitet",
+    "Edit Nanocredit": "Nanokredit bearbeiten",
+    "Edit Purchase": "Einkauf bearbeiten",
+    "Edit Payment": "Zahlung bearbeiten"
   }
 }

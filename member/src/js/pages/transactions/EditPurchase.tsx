@@ -10,7 +10,7 @@ import {
 } from 'Components/index';
 import { Item, Product, Transaction } from 'Graphql/types';
 import { useTranslation } from 'react-i18next';
-import { useLazyQuery, useMutation, useQuery } from 'react-apollo';
+import { useLazyQuery, useMutation } from 'react-apollo';
 import { EDIT_PURCHASE } from 'Graphql/mutations';
 import {
   BALANCE_TABLE,
