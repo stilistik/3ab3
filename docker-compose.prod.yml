@@ -86,6 +86,7 @@ services:
     volumes:
       - ./server/proxy/nginx.prod.conf:/etc/nginx/nginx.conf
       - /var/local/3ab3/storage/:/usr/src/app/storage
+      - /etc/letsencrypt:/etc/letsencrypt
     networks:
       - 3ab3
 
