@@ -60,7 +60,6 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
   );
 };
 
-
 interface EventCardProps {
   event: Event;
 }
