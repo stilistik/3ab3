@@ -22,8 +22,10 @@ const uploadLink = createUploadLink({
   uri: getBackendUrl() + '/api',
 });
 
+const websockedProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+
 const wsLink = new WebSocketLink({
-  uri: `ws://${window.location.hostname}:4000/graphql`,
+  uri: `${websocketProtocol}://${window.location.hostname}:4000/graphql`,
   options: {
     reconnect: true,
     connectionParams: async () => {
