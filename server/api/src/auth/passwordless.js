@@ -10,8 +10,7 @@ const {
   ACCESS_TOKEN_EXPIRATION,
   MAILGUN_API_SECRET,
   MAILGUN_DOMAIN,
-  MEMBER_CLIENT_HOST,
-  MEMBER_CLIENT_PORT,
+  MEMBER_PUBLIC_URL,
   API_MAINTENANCE_PASSWORD,
 } = process.env;
 
@@ -69,7 +68,7 @@ const requestEmail = async (req, res) => {
       subject: 'Request Login',
       template: template,
       'v:username': user.name,
-      'v:link': `${MEMBER_CLIENT_HOST}:${MEMBER_CLIENT_PORT}/auth?token=${loginToken}`,
+      'v:link': `${MEMBER_PUBLIC_URL}/auth?token=${loginToken}`,
       inline: logoPath,
     };
     mailgun.messages().send(data);
@@ -128,7 +127,7 @@ const debugSession = async (req, res) => {
     const [user, loginToken] = await getLoginToken(req, res);
     console.log(user);
     Logger.log(`Debug session created for ${user.name}`);
-    const link = `${MEMBER_CLIENT_HOST}:${MEMBER_CLIENT_PORT}/auth?token=${loginToken}`;
+    const link = `${MEMBER_PUBLIC_URL}/auth?token=${loginToken}`;
     res.status(200).send(link);
   } catch (error) {
     res.status(500).json({ message: err.message });
