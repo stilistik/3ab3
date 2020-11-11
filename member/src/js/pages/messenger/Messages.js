@@ -90,6 +90,10 @@ export const Messages = ({
     setDisableAnim(false);
   }, [messageGroups]);
 
+  React.useEffect(() => {
+    if (down && unreadCount > 0) onUserLastSeen();
+  }, [unreadCount, down]);
+
   const onDown = () => {
     scrollApi.current.scrollToBottom();
     onUserLastSeen();
