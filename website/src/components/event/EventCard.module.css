@@ -10,6 +10,7 @@
   border: 2px solid black;
   background-color: whitesmoke;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
+  grid-column-gap: 1%;
 }
 
 .wrapper > * {
