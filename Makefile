@@ -44,7 +44,7 @@ dev/website.run: 	## Runs the development client for the interal member app
 ###@ Fullstack
 prod/all.run-rebuild: prod/all.build prod/all.package prod/all.run
 
-prod/all.build: prod/member.build
+prod/all.build: prod/member.build prod/website.build
 
 prod/all.package:
 	docker-compose -f docker-compose.prod.yml build
