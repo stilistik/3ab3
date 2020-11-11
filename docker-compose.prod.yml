@@ -81,8 +81,8 @@ services:
     restart: unless-stopped
     ports:
       - '4000:4000'
-      - '3000:3000'
-      - '3001:3001'
+      - '80:80'
+      - '443:443'
     volumes:
       - ./server/proxy/nginx.prod.conf:/etc/nginx/nginx.conf
       - /var/local/3ab3/storage/:/usr/src/app/storage
