@@ -14,19 +14,6 @@ interface ShowMoreButtonProps {
   isActive: boolean;
 }
 
-interface EventDetailsProps {
-  isActive: boolean;
-  event: Event;
-}
-
-interface EventTitleProps {
-  event: Event;
-}
-
-interface EventCardProps {
-  event: Event;
-}
-
 const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   onClick,
   btnText,
@@ -43,6 +30,10 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
   );
 };
 
+interface EventTitleProps {
+  event: Event;
+}
+
 const EventTitle: React.FC<EventTitleProps> = ({ event }) => {
   return (
     <React.Fragment>
@@ -51,6 +42,11 @@ const EventTitle: React.FC<EventTitleProps> = ({ event }) => {
     </React.Fragment>
   );
 };
+
+interface EventDetailsProps {
+  isActive: boolean;
+  event: Event;
+}
 
 const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
   return (
@@ -63,6 +59,11 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
     </React.Fragment>
   );
 };
+
+
+interface EventCardProps {
+  event: Event;
+}
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const [isActive, setActive] = React.useState(false);
