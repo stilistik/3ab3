@@ -28,7 +28,7 @@ const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
       </div>
       <h2 className={styles.title}>{event.title}</h2>
       <p className={styles.description}>{event.description}</p>
-      <SocialButtons event={event} />
+      <SocialButtons event={event} size="big"/>
     </div>
   );
 };

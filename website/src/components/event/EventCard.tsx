@@ -54,7 +54,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
       <div className={styles.description}>
         <p>{event.description}</p>
       </div>
-        <SocialButtons event={event} />
+        <SocialButtons event={event} size="small" />
       <EventTitle event={event} />
     </React.Fragment>
   );
@@ -76,7 +76,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <AspectRatioBox ratio={16 / 10} className="mb-10">
         <LazyLoadingImageDiv
           src={event.image}
-          className={styles.wrapper + ' shadow-2xl '}
+          className={styles.wrapper + ' shadow-2xl'}
         >
           <div>
             <h2 className={styles.date}>

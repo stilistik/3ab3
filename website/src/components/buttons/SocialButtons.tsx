@@ -7,6 +7,7 @@ import instagramIcon from '@iconify/icons-mdi/instagram';
 import facebookIcon from '@iconify/icons-mdi/facebook';
 import youtubeIcon from '@iconify/icons-mdi/youtube';
 import soundCloudIcon from '@iconify/icons-mdi/soundcloud';
+import clx from 'classnames';
 
 interface SocialLinkProps {
     icon: object;
@@ -24,14 +25,19 @@ interface SocialLinkProps {
 
   interface SocialButtonsProps {
     event: Event;
+    size: string;
   };
 
   export const SocialButtons: React.FC<SocialButtonsProps> = ({
-    event
+    event,
+    size
   }) => {
 
+    const socialStyles = clx(styles.social, styles[size]);
+
+    console.log(size);
     return (
-        <div className={styles.social}>
+        <div className={socialStyles}>
           <SocialLink url={event.spotify} icon={spotifyIcon} />
           <SocialLink url={event.soundcloud} icon={soundCloudIcon} />
           <SocialLink url={event.youtube} icon={youtubeIcon} />
