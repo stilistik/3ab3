@@ -1,30 +1,13 @@
 import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clx from 'classnames';
 import { Container, Hidden } from 'Components/utility';
 import { RouteDefinition } from './Layout';
 import { Logo } from './Logo';
 import { HamburgerButton } from './HamburgerButton';
+import { MobileMenu } from './MobileMenu';
 
 import styles from './Header.module.css';
-
-interface HeaderLinkProps {
-  pathname: string;
-}
-
-const HeaderLink: React.FC<HeaderLinkProps> = ({ pathname, children }) => {
-  const router = useRouter();
-  const styleName = pathname.replace('/', '') || 'events';
-  const cls = clx(styles.link, styles[styleName]);
-  return (
-    <Link href={pathname}>
-      <a className={cls}>
-        <h1>{children}</h1>
-      </a>
-    </Link>
-  );
-};
 
 const DesktopHeader: React.FC<HeaderProps> = ({ routes, show }) => {
   const router = useRouter();
@@ -57,6 +40,7 @@ const MobileHeader: React.FC<HeaderProps> = ({ routes, show }) => {
             active={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
           />
+          {menuOpen && <MobileMenu />}
         </div>
       </Container>
     </header>

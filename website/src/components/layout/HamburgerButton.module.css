@@ -44,7 +44,7 @@
 .inner::before,
 .inner::after {
   width: 40px;
-  height: 4px;
+  height: 5px;
   background-color: #000;
   position: absolute;
   transition-property: transform;
