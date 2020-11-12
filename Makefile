@@ -42,9 +42,12 @@ dev/website.run: 	## Runs the development client for the interal member app
 ##@ Production
 
 ###@ Fullstack
-prod/all.run-rebuild: prod/all.build prod/all.package prod/all.run
+prod/env.export: 
+	export $$(grep -v '^#' .env | xargs)
 
-prod/all.build: prod/member.build
+prod/all.run-rebuild: prod/env.export prod/all.build prod/all.package prod/all.run
+
+prod/all.build: prod/env.export prod/member.build
 
 prod/all.package:
 	docker-compose -f docker-compose.prod.yml build
@@ -57,7 +60,7 @@ prod/member.build:
 
 prod/website.build:
 	cd website && yarn build
-	
+
 prod/all.stop:
 	docker-compose -f docker-compose.prod.yml down
 
