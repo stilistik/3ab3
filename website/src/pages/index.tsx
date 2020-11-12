@@ -1,7 +1,7 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { Body, EventCard, Footer } from 'Components/index';
+import { Body, Container, EventCard, Footer } from 'Components/index';
 import { prisma } from 'App/prisma';
 
 export const getStaticProps = async () => {

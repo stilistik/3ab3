@@ -33,7 +33,7 @@ interface EventCardProps {
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
   return (
-    <Container>
+    <Container className="px-4">
       <AspectRatioBox ratio={16 / 10} className="mb-10">
         <LazyLoadingImageDiv
           src={event.image}
