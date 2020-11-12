@@ -1,54 +1,50 @@
+/* Eventcard Wrapper */
 .wrapper {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  padding: 15px;
   margin-bottom: 50px;
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-columns: auto 1fr;
   border: 2px solid black;
   background-color: whitesmoke;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
+  grid-column-gap: 5%;
 }
 
 .wrapper > * {
   filter: none;
 }
 
-.topleft {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: start;
-  justify-self: start;
+/*Style when details are shown*/
+
+.isActive {
+  background-color:rgba(255,255,255,0.90);
 }
 
-.topright {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: start;
-  justify-self: end;
+/*EventCard elements - right column*/
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: flex-end;
+  overflow: hidden;
 }
 
-.bottom {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-  justify-self: end;
-  align-self: end;
+.details {
+  display: flex;
+  flex-direction: column;
 }
 
-.date {
-  font-family: Montserrat;
-  margin: 0;
-  text-shadow: 5px 5px 0px var(--color-primary);
-  -webkit-text-stroke: 2px whitesmoke;
-}
+.description {
+  overflow-y: auto;
+  text-align: left;
+  padding: 12% 7.5% 5% 7.5%;
+  flex-grow: 1;
+  flex-basis: 200px;
 
-.time {
-  font-family: Montserrat;
-  margin: 0;
-  color: var(--color-primary);
-  -webkit-text-stroke: 2px black;
 }
 
 .title {
@@ -56,7 +52,11 @@
   margin: 0;
   color: #000000;
   text-shadow: 5px 5px 0px var(--color-primary);
+  padding-bottom:2.5%;
+  padding-right: 5%;
   -webkit-text-stroke: 2px whitesmoke;
+  text-align: right;
+  hyphens: auto;
 }
 
 .subtitle {
@@ -64,10 +64,14 @@
   margin: 0;
   text-align: right;
   color: var(--color-primary);
-  -webkit-text-stroke: 2px black;
+  -webkit-text-stroke: 2px black;  
+  padding-bottom:2.5%;
+  padding-right: 5%;
 }
 
-.more {
+/*More Button*/
+
+.moreButton {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
@@ -78,13 +82,33 @@
   border: 1px solid #ffffff;
   text-shadow: 2px 2px 0px #feb200;
   transition: transform 300ms ease;
-  border: none
+  border: none;
 }
 
-.more:focus {
+.moreButton:focus {
   outline: none;
 }
 
-.more.slanted {
+.moreButton.slanted {
   transform: rotate(45deg);
+}
+
+/*EventCard elements - left column*/
+
+.date {
+  font-family: Montserrat;
+  margin: 0;
+  text-shadow: 5px 5px 0px var(--color-primary);
+  padding-top:2.5%;
+  padding-left: 7.5%;
+  -webkit-text-stroke: 2px whitesmoke;
+}
+
+.time {
+  font-family: Montserrat;
+  margin: 0;
+  color: var(--color-primary);
+  -webkit-text-stroke: 2px black;
+  padding-top:2.5%;
+  padding-left: 7.5%;
 }
