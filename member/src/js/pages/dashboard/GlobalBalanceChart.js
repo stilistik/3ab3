@@ -25,14 +25,14 @@ export const GlobalBalanceChart = () => {
       balance -= transaction.change;
     });
 
-    const lastValue = data[0];
+    const lastValue = data[0] || { y: 0 };
     const { color } = getBalanceColorClass(lastValue.y);
 
     return [{ id: 'balance', color: color, data: data }];
   };
 
   const chartData = createChartData(transactions, totalBalance);
-
+  console.log(chartData);
   return (
     <Paper style={{ width: '100%', height: '300px', color: 'white' }}>
       <TimeLineChart data={chartData} />
