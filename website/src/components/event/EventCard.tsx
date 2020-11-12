@@ -54,7 +54,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
       <div className={styles.description}>
         <p>{event.description}</p>
       </div>
-        <SocialButtons event={event} size="small" />
+      <SocialButtons event={event} size="small" />
       <EventTitle event={event} />
     </React.Fragment>
   );
@@ -93,7 +93,11 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               isActive={isActive}
             />
           </div>
-          <div className={styles.flexColumn + ' ' + (isActive ? styles.isActive : '')}>
+          <div
+            className={
+              styles.flexColumn + ' ' + (isActive ? styles.isActive : '')
+            }
+          >
             {isActive ? (
               <EventDetails isActive={isActive} event={event} />
             ) : (

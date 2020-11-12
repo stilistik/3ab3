@@ -9,7 +9,6 @@ import clx from 'classnames';
 import styles from './Archive.module.css';
 import { Container, useMedia } from 'Components/utility';
 
-
 interface ArchiveItemDetailsProps {
   event: Event;
   onClick: (eventId: string) => void;
@@ -28,7 +27,7 @@ const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
       </div>
       <h2 className={styles.title}>{event.title}</h2>
       <p className={styles.description}>{event.description}</p>
-      <SocialButtons event={event} size="big"/>
+      <SocialButtons event={event} size="big" />
     </div>
   );
 };

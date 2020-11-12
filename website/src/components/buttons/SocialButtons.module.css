@@ -1,14 +1,14 @@
 .social {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
-    filter: drop-shadow(2px 2px 0px var(--color-primary));
-  }
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  filter: drop-shadow(2px 2px 0px var(--color-primary));
+}
 
-.big{
+.big {
   font-size: 60px;
 }
 
-.small{
+.small {
   font-size: 40px;
 }

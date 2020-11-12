@@ -19,7 +19,7 @@
 /*Style when details are shown*/
 
 .isActive {
-  background-color:rgba(255,255,255,0.90);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 /*EventCard elements - right column*/
@@ -44,7 +44,6 @@
   padding: 12% 7.5% 5% 7.5%;
   flex-grow: 1;
   flex-basis: 200px;
-
 }
 
 .title {
@@ -52,7 +51,7 @@
   margin: 0;
   color: #000000;
   text-shadow: 5px 5px 0px var(--color-primary);
-  padding-bottom:2.5%;
+  padding-bottom: 2.5%;
   padding-right: 5%;
   -webkit-text-stroke: 2px whitesmoke;
   text-align: right;
@@ -64,8 +63,8 @@
   margin: 0;
   text-align: right;
   color: var(--color-primary);
-  -webkit-text-stroke: 2px black;  
-  padding-bottom:2.5%;
+  -webkit-text-stroke: 2px black;
+  padding-bottom: 2.5%;
   padding-right: 5%;
 }
 
@@ -99,7 +98,7 @@
   font-family: Montserrat;
   margin: 0;
   text-shadow: 5px 5px 0px var(--color-primary);
-  padding-top:2.5%;
+  padding-top: 2.5%;
   padding-left: 7.5%;
   -webkit-text-stroke: 2px whitesmoke;
 }
@@ -109,6 +108,6 @@
   margin: 0;
   color: var(--color-primary);
   -webkit-text-stroke: 2px black;
-  padding-top:2.5%;
+  padding-top: 2.5%;
   padding-left: 7.5%;
 }
