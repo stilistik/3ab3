@@ -31,7 +31,10 @@ async function migrateUsers(prisma, oldUsers) {
 
     const user = await prisma.createUser({
       name: oldUser.first_name,
-      email: `${oldUser.username}@gmail.com`,
+      email:
+        oldUser.username === 'philipp.gerber'
+          ? 'philipp@rundumeli.ch'
+          : `${oldUser.username}@gmail.com`,
       role: oldUser.is_staff ? 'ADMIN' : 'MEMBER',
     });
 
