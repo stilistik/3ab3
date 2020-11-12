@@ -1,0 +1,43 @@
+.container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.menu {
+  width: 100vw;
+  height: 100vh;
+  background: whitesmoke;
+  position: fixed;
+  pointer-events: auto;
+}
+
+.link {
+  font-weight: bold;
+  font-size: 64px;
+  font-family: Montserrat;
+  margin: 0;
+  color: #000000;
+  -webkit-text-stroke: 2px whitesmoke;
+  text-transform: uppercase;
+}
+
+.link.events {
+  text-shadow: 5px 5px 0px var(--color-events);
+}
+
+.link.archive {
+  text-shadow: 5px 5px 0px var(--color-archive);
+}
+
+.link.about {
+  text-shadow: 5px 5px 0px var(--color-about);
+}
+
+.link.contact {
+  text-shadow: 5px 5px 0px var(--color-contact);
+}

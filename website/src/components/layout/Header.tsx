@@ -40,7 +40,7 @@ const MobileHeader: React.FC<HeaderProps> = ({ routes, show }) => {
             active={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
           />
-          {menuOpen && <MobileMenu />}
+          <MobileMenu show={menuOpen} setShow={setMenuOpen} routes={routes} />
         </div>
       </Container>
     </header>
