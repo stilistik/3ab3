@@ -1,0 +1,96 @@
+.hamburger {
+  padding: 15px 15px;
+  display: flex;
+  justify-content: 'center';
+  align-items: center;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+  filter: drop-shadow(2.5px 2.5px 0px var(--color-primary));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hamburger:focus {
+  outline: 0;
+}
+
+.hamburger.active .inner,
+.hamburger.active .inner::before,
+.hamburger.active .inner::after {
+  background-color: #000;
+}
+
+.box {
+  width: 40px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+.inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px;
+}
+.inner,
+.inner::before,
+.inner::after {
+  width: 40px;
+  height: 4px;
+  background-color: #000;
+  position: absolute;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+.inner::before,
+.inner::after {
+  content: '';
+  display: block;
+}
+.inner::before {
+  top: -10px;
+}
+.inner::after {
+  bottom: -10px;
+}
+
+/*
+   * Spin
+   */
+.spin .inner {
+  transition-duration: 0.22s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.spin .inner::before {
+  transition: top 0.1s 0.25s ease-in, opacity 0.1s ease-in;
+}
+.spin .inner::after {
+  transition: bottom 0.1s 0.25s ease-in,
+    transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.spin.active .inner {
+  transform: rotate(225deg);
+  transition-delay: 0.12s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.spin.active .inner::before {
+  top: 0;
+  opacity: 0;
+  transition: top 0.1s ease-out, opacity 0.1s 0.12s ease-out;
+}
+.spin.active .inner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+  transition: bottom 0.1s ease-out,
+    transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
