@@ -21,7 +21,12 @@ const InfoItem: React.FC<InfoItemProps> = ({ label, content }) => {
       </Typography>
       <Typography
         variant="body1"
-        style={{ wordWrap: 'break-word', overflow: 'hidden' }}
+        style={{
+          wordWrap: 'break-word',
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          maxHeight: 200,
+        }}
       >
         {content || '-'}
       </Typography>

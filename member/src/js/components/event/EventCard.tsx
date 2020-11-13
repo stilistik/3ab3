@@ -87,6 +87,10 @@ const useEventCardStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${theme.palette.divider}`,
     cursor: 'pointer',
   },
+  description: {
+    maxHeight: '300px',
+    overflow: 'auto',
+  },
 }));
 
 interface EventCardProps {
@@ -118,7 +122,9 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
             date={event.date}
             place={event.place}
           />
-          <Typography component="p">{event.description}</Typography>
+          <Typography component="p" className={styles.description}>
+            {event.description}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <Box pos="absolute" top={250} right={0} margin={2} h="50px" w="60px">
@@ -128,7 +134,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <CardActions>
         <LikeEvent event={event} />
         <Button size="small" onClick={onComment}>
-          <Icon type="addComment" style={{ marginRight: '5px' }} /> {t('Comment')}
+          <Icon type="addComment" style={{ marginRight: '5px' }} />{' '}
+          {t('Comment')}
         </Button>
       </CardActions>
       {show && <EventComments eventId={event.id} />}
