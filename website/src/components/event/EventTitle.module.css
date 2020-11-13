@@ -1,0 +1,110 @@
+.title {
+  width: 100%;
+  padding-bottom: 2.5%;
+  padding-right: 5%;
+  font-family: Montserrat;
+  margin: 0;
+  color: #000000;
+  text-shadow: 5px 5px 0px var(--color-primary);
+  -webkit-text-stroke: 2px whitesmoke;
+  text-align: left;
+  hyphens: auto;
+}
+
+.subtitle {
+  font-family: Montserrat;
+  margin: 0;
+  text-align: right;
+  color: var(--color-primary);
+  -webkit-text-stroke: 2px black;
+  padding-bottom: 2.5%;
+  padding-right: 5%;
+}
+
+.lgTitle {
+  font-size: 125px;
+}
+
+.mdTitle {
+  font-size: 95px;
+}
+
+.smTitle {
+  font-size: 65px;
+}
+
+.xsTitle {
+  font-size: 45px;
+}
+
+@media screen and (max-width: 1920px) {
+  .lgTitle {
+    font-size: 95px;
+  }
+
+  .mdTitle {
+    font-size: 80px;
+  }
+
+  .smTitle {
+    font-size: 65px;
+  }
+
+  .xsTitle {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .lgTitle {
+    font-size: 60px;
+  }
+
+  .mdTitle {
+    font-size: 50px;
+  }
+
+  .smTitle {
+    font-size: 40px;
+  }
+
+  .xsTitle {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .lgTitle {
+    font-size: 60px;
+  }
+
+  .mdTitle {
+    font-size: 50px;
+  }
+
+  .smTitle {
+    font-size: 40px;
+  }
+
+  .xsTitle {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .lgTitle {
+    font-size: 50px;
+  }
+
+  .mdTitle {
+    font-size: 40px;
+  }
+
+  .smTitle {
+    font-size: 30px;
+  }
+
+  .xsTitle {
+    font-size: 20px;
+  }
+}

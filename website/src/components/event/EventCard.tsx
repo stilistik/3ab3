@@ -7,6 +7,31 @@ import { useSpring, animated } from 'react-spring';
 import clx from 'classnames';
 
 import styles from './EventCard.module.css';
+import { EventTitle } from './EventTitle';
+
+interface ShowMoreButtonProps {
+  onClick: (event: React.MouseEvent) => void;
+  btnText: string;
+  isActive: boolean;
+  className?: string;
+}
+
+const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({
+  onClick,
+  btnText,
+  isActive,
+  className,
+}) => {
+  const moreBtn = clx(styles.moreButton, className, {
+    [styles.slanted]: isActive,
+  });
+
+  return (
+    <button onClick={onClick} className={moreBtn}>
+      {btnText}
+    </button>
+  );
+};
 
 interface GrowProps {
   show: boolean;
@@ -29,31 +54,6 @@ const Grow: React.FC<GrowProps> = ({ children, show }) => {
     </div>
   );
 };
-
-interface EventTitleProps {
-  event: Event;
-}
-
-const EventTitle = React.forwardRef(
-  (
-    { event }: EventTitleProps,
-    ref: React.MutableRefObject<HTMLDivElement>
-  ): JSX.Element => {
-    const titleCls = clx(styles.title, {
-      [styles.lgTitle]: event.title.length >= 0,
-      [styles.mdTitle]: event.title.length >= 9,
-      [styles.smTitle]: event.title.length >= 18,
-      [styles.xsTitle]: event.title.length >= 22,
-    });
-
-    return (
-      <div ref={ref} className="absolute bottom-0 right-0 w-full">
-        <h1 className={titleCls}>{event.title}</h1>
-        <h4 className={styles.subtitle}>{event.subtitle}</h4>
-      </div>
-    );
-  }
-);
 
 interface EventDetailsProps {
   isActive: boolean;
@@ -104,6 +104,12 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
               {'Doors: ' + new Date(event.date).toLocaleTimeString()}
             </h4>
           </div>
+          <ShowMoreButton
+            className="absolute top-0 right-0 pointer-events-none z-10"
+            onClick={handleClick}
+            btnText="+"
+            isActive={isActive}
+          />
           <Grow show={isActive}>
             <EventDetails
               isActive={isActive}
