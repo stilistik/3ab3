@@ -48,6 +48,7 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
       ref={divRef}
       className={className}
       style={{
+        position: 'relative',
         backgroundSize,
         backgroundPosition,
       }}
