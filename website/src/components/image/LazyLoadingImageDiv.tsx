@@ -54,13 +54,13 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
       onClick={onClick}
     >
       {!src ? (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center">
           <div className="w-full h-56 flex flex-col justify-center items-center">
             <span>{alt}</span>
           </div>
         </div>
       ) : error ? (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-full h-full flex absolute top-0 left-0 justify-center items-center">
           <div className="w-full h-56 flex flex-col justify-center items-center">
             <span>{alt}</span>
           </div>
