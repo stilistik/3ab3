@@ -1,33 +1,8 @@
 import React from 'react';
 import { useTransition, animated } from 'react-spring';
-import ResizeObserver from 'resize-observer-polyfill';
+import { useMeasure } from 'Components/utility';
 
 import styles from './DynamicGrid.module.css';
-
-interface Bounds {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-const useMeasure = (): [React.MutableRefObject<HTMLDivElement>, Bounds] => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [bounds, set] = React.useState({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
-  });
-  const [ro] = React.useState(
-    () => new ResizeObserver(([entry]) => set(entry.contentRect))
-  );
-  React.useEffect(() => {
-    ro.observe(ref.current);
-    return () => ro.disconnect();
-  }, []);
-  return [ref, bounds];
-};
 
 function swapElements<T>(arr: T[], a: number, b: number): T[] {
   if (a === -1 || b === -1) return arr;

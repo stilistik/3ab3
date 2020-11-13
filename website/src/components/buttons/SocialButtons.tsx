@@ -33,8 +33,6 @@ export const SocialButtons: React.FC<SocialButtonsProps> = ({
   size,
 }) => {
   const socialStyles = clx(styles.social, styles[size]);
-
-  console.log(size);
   return (
     <div className={socialStyles}>
       <SocialLink url={event.spotify} icon={spotifyIcon} />

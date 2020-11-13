@@ -7,6 +7,8 @@ interface LazyLoadingImageDivProps {
   alt?: string;
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
+  onMouseEnter?: (e: React.MouseEvent) => void;
+  onMouseLeave?: (e: React.MouseEvent) => void;
   backgroundSize?: React.CSSProperties['backgroundSize'];
   backgroundPosition?: React.CSSProperties['backgroundPosition'];
   width?: number;
@@ -19,6 +21,8 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
   backgroundPosition = 'center',
   className,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   children,
   width,
 }) => {
@@ -53,6 +57,8 @@ export const LazyLoadingImageDiv: React.FC<LazyLoadingImageDivProps> = ({
         backgroundPosition,
       }}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {!src ? (
         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center">
