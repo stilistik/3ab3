@@ -11,19 +11,13 @@ import { Container, useMedia } from 'Components/utility';
 
 interface ArchiveItemDetailsProps {
   event: Event;
-  onClick: (eventId: string) => void;
 }
 
-const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
-  event,
-  onClick,
-}) => {
-  const handleClose = () => onClick(null);
-
+const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({ event }) => {
   return (
     <div className={styles.details}>
-      <div className="absolute top-0 right-0 mt-1 mr-1">
-        <CloseButton onClick={handleClose} />
+      <div className="absolute top-0 right-0 mt-1 mr-1 pointer-events-none">
+        <CloseButton onClick={() => {}} />
       </div>
       <h2 className={styles.title}>{event.title}</h2>
       <p className={styles.description}>{event.description}</p>
@@ -43,23 +37,22 @@ const ArchiveItem: React.FC<ArchiveItemProps> = ({
   onClick,
   expanded,
 }) => {
-  const handleClick = () => onClick(event.id);
+  const handleClick = () => onClick(expanded ? null : event.id);
 
   const cls = clx(styles.archiveItem, 'shadow-2xl', {
     [styles.expanded]: expanded,
   });
 
   return (
-    <div className={cls}>
+    <div className={cls} onClick={handleClick}>
       <div className={styles.image}>
         <LazyLoadingImageDiv
           src={event.image}
           className="w-full h-full"
-          onClick={handleClick}
           width={1200}
         />
       </div>
-      {expanded && <ArchiveItemDetails event={event} onClick={onClick} />}
+      {expanded && <ArchiveItemDetails event={event} />}
     </div>
   );
 };
