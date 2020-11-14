@@ -37,7 +37,8 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
     const hasFullWidth = items.some((el) => el.selected);
     const fullWidthIndex = items.findIndex((el) => el.selected);
 
-    const rowCount = Math.ceil(items.length / columnCount);
+    const rowCount =
+      Math.ceil(items.length / columnCount) + 1;
     const containerHeight = (rowCount - 1) * rowHeight + expandedRowHeight + 50;
 
     const swapIndex = Math.max(
