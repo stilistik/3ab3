@@ -48,7 +48,9 @@ const EventPage = ({
             );
           })
         ) : (
-          <EventPlaceholder />
+          <EventPlaceholder>
+            Zurzeit sind keine Events geplant.
+          </EventPlaceholder>
         )}
       </Body>
       <Footer />

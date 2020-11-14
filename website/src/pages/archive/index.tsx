@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { prisma } from 'App/prisma';
 import { InferGetStaticPropsType } from 'next';
-import { Footer, Archive, Body } from 'Components/index';
+import { Footer, Archive, Body, EventPlaceholder } from 'Components/index';
 
 export const getStaticProps = async () => {
   try {
@@ -35,7 +35,11 @@ const ArchivePage = ({
         <title>3ab3 - Archiv</title>
       </Head>
       <Body>
-        <Archive events={events} />
+        {events.length ? (
+          <Archive events={events} />
+        ) : (
+          <EventPlaceholder>Das Archiv ist leer.</EventPlaceholder>
+        )}
       </Body>
       <Footer />
     </React.Fragment>
