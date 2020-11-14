@@ -12,3 +12,12 @@
 .small {
   font-size: 40px;
 }
+
+.link {
+  transform: scale(1);
+  transition: transform 0.1s ease;
+}
+
+.link:hover {
+  transform: scale(1.3);
+}

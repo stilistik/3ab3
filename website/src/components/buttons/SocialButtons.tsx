@@ -16,8 +16,20 @@ interface SocialLinkProps {
 
 const SocialLink: React.FC<SocialLinkProps> = ({ icon, url }) => {
   if (!url) return null;
+
+  const http_pattern = /^https?:\/{2}\w/i;
+  let linkUrl = url;
+  if (!url.match(http_pattern)) {
+    linkUrl = 'http://' + url;
+  }
+
   return (
-    <a href={url} target="_blank" onClick={(e) => e.preventDefault()}>
+    <a
+      className={styles.link}
+      href={linkUrl}
+      target="_blank"
+      onClick={(e) => e.stopPropagation()}
+    >
       <Icon icon={icon} />
     </a>
   );
