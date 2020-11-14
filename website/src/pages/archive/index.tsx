@@ -9,7 +9,9 @@ export const getStaticProps = async () => {
     const events = await prisma.events({
       where: {
         published: true,
+        date_lt: new Date().toISOString(),
       },
+      orderBy: 'date_ASC',
     });
     return {
       props: { events },
