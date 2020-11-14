@@ -2,6 +2,7 @@
   width: 100%;
   padding-bottom: 2.5%;
   padding-right: 5%;
+  padding-left: 7.5%;
   font-family: Montserrat;
   margin: 0;
   color: #000000;
@@ -19,35 +20,36 @@
   -webkit-text-stroke: 2px black;
   padding-bottom: 2.5%;
   padding-right: 5%;
+  padding-left: 7.5%;
 }
 
 .lgTitle {
-  font-size: 125px;
+  font-size: 120px;
 }
 
 .mdTitle {
-  font-size: 95px;
+  font-size: 90px;
 }
 
 .smTitle {
-  font-size: 65px;
+  font-size: 70px;
 }
 
 .xsTitle {
-  font-size: 45px;
+  font-size: 60px;
 }
 
 @media screen and (max-width: 1920px) {
   .lgTitle {
-    font-size: 95px;
+    font-size: 90px;
   }
 
   .mdTitle {
-    font-size: 80px;
+    font-size: 70px;
   }
 
   .smTitle {
-    font-size: 65px;
+    font-size: 60px;
   }
 
   .xsTitle {
@@ -79,11 +81,11 @@
   }
 
   .mdTitle {
-    font-size: 50px;
+    font-size: 45px;
   }
 
   .smTitle {
-    font-size: 40px;
+    font-size: 35px;
   }
 
   .xsTitle {

@@ -4,11 +4,10 @@
   margin: 0 auto;
   margin-bottom: 50px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr 1fr;
   border: 2px solid black;
   background-color: whitesmoke;
   filter: drop-shadow(7.5px 7.5px 0px var(--color-primary));
-  grid-column-gap: 5%;
   -webkit-tap-highlight-color: transparent;
 }
 

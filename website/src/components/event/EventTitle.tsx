@@ -15,9 +15,9 @@ export const EventTitle = React.forwardRef(
   ): JSX.Element => {
     const titleCls = clx(styles.title, {
       [styles.lgTitle]: event.title.length >= 0,
-      [styles.mdTitle]: event.title.length >= 9,
-      [styles.smTitle]: event.title.length >= 18,
-      [styles.xsTitle]: event.title.length >= 32,
+      [styles.mdTitle]: event.title.length >= 10,
+      [styles.smTitle]: event.title.length >= 20,
+      [styles.xsTitle]: event.title.length >= 30,
     });
 
     return (
