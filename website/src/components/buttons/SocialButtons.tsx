@@ -17,7 +17,7 @@ interface SocialLinkProps {
 const SocialLink: React.FC<SocialLinkProps> = ({ icon, url }) => {
   if (!url) return null;
   return (
-    <a href={url} target="_blank">
+    <a href={url} target="_blank" onClick={(e) => e.preventDefault()}>
       <Icon icon={icon} />
     </a>
   );
