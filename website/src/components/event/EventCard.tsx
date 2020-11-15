@@ -1,5 +1,10 @@
 import React from 'react';
-import { AspectRatioBox, Container, useMeasure } from 'Components/utility';
+import {
+  AspectRatioBox,
+  Container,
+  Hidden,
+  useMeasure,
+} from 'Components/utility';
 import { LazyLoadingImageDiv } from 'Components/image/LazyLoadingImageDiv';
 import { SocialButtons } from 'Components/buttons';
 import { Event } from 'App/prisma';
@@ -8,6 +13,7 @@ import clx from 'classnames';
 
 import styles from './EventCard.module.css';
 import { EventTitle } from './EventTitle';
+import { MobileEventCard } from './MobileEventCard';
 
 interface ShowMoreButtonProps {
   onClick: (event: React.MouseEvent) => void;
@@ -78,7 +84,7 @@ interface EventCardProps {
   event: Event;
 }
 
-export const EventCard: React.FC<EventCardProps> = ({ event }) => {
+const DesktopEventCard: React.FC<EventCardProps> = ({ event }) => {
   const [isActive, setActive] = React.useState(false);
   const [titleRef, { height: titleHeight }] = useMeasure();
   const [boxRef, { height: boxHeight }] = useMeasure();
@@ -121,5 +127,18 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
         </LazyLoadingImageDiv>
       </AspectRatioBox>
     </Container>
+  );
+};
+
+export const EventCard: React.FC<EventCardProps> = (props) => {
+  return (
+    <React.Fragment>
+      <Hidden lgUp>
+        <MobileEventCard {...props} />
+      </Hidden>
+      <Hidden mdDn>
+        <DesktopEventCard {...props} />
+      </Hidden>
+    </React.Fragment>
   );
 };

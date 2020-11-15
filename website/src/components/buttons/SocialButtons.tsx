@@ -38,15 +38,17 @@ const SocialLink: React.FC<SocialLinkProps> = ({ icon, url }) => {
 interface SocialButtonsProps {
   event: Event;
   size: string;
+  className?: string;
 }
 
 export const SocialButtons: React.FC<SocialButtonsProps> = ({
   event,
   size,
+  className,
 }) => {
-  const socialStyles = clx(styles.social, styles[size]);
+  const cls = clx(styles.social, styles[size], className);
   return (
-    <div className={socialStyles}>
+    <div className={cls}>
       <SocialLink url={event.spotify} icon={spotifyIcon} />
       <SocialLink url={event.soundcloud} icon={soundCloudIcon} />
       <SocialLink url={event.youtube} icon={youtubeIcon} />
