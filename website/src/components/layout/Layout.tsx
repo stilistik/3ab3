@@ -49,6 +49,11 @@ export const Layout: React.FC<LayoutProps> = ({ items }) => {
   const router = useRouter();
   const [showHeader, setShowHeader] = React.useState(true);
 
+  React.useEffect(() => {
+    // when the route changes, always show header
+    setShowHeader(true);
+  }, [router.asPath]);
+
   function clampIndex(value: number): number {
     if (value < 0) value = routes.length - 1;
     if (value > routes.length - 1) value = 0;
