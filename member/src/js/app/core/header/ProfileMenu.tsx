@@ -89,7 +89,7 @@ export const ProfileMenu: React.FC = () => {
           onClick={handleClick}
         />
         <ProfileMenuItem
-          label={t('Account')}
+          label={t('Settings')}
           action="account"
           icon="settings"
           onClick={handleClick}

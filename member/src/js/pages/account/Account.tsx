@@ -15,7 +15,7 @@ export const Account: React.FC = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h5" color="textPrimary">
-              {t('Account').toUpperCase()}
+              {t('Settings').toUpperCase()}
             </Typography>
             <Divider />
           </Grid>

@@ -74,7 +74,7 @@ export const AppMenu: React.FC<AppMenuProps> = ({
             onClick={() => onClick('/profile')}
           />
           <MenuItem
-            text={t('Account')}
+            text={t('Settings')}
             icon="settings"
             onClick={() => onClick('/account')}
           />
