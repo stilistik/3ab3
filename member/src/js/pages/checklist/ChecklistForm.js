@@ -10,8 +10,8 @@ import {
 } from 'Components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { getBackendUrl } from 'App/network/Utils';
 import { useTranslation } from 'react-i18next';
+import { getResponsiveSrc } from 'Components/image/utils';
 
 const QUERY = gql`
   query {
@@ -60,7 +60,7 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
               <Grid key={product.id} item xs={12} sm={6} md={4}>
                 <Box.Row cmrnl={1}>
                   <Avatar
-                    src={getBackendUrl() + product.thumbnail}
+                    src={getResponsiveSrc(product.thumbnail, 200)}
                     style={{
                       width: 70,
                       height: 70,
