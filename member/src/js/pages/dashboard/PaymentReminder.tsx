@@ -45,15 +45,17 @@ const AffectedUserList: React.FC<AffectedUserListProps> = ({ threshold }) => {
     return (
       <Box cmb={1}>
         <Typography variant="body1">{t('Affected Members')}</Typography>
-        {usersWithDebt.map((user: any) => (
-          <Box.Row key={user.id} cmrnl={1} mb={1}>
-            <UserAvatar user={user} classes={{}} className="" style={{}} />
-            <Typography variant="h6">{user.name}</Typography>
-            <Tag outlined color="#f5222d">
-              {user.balance.toFixed(2) + 'CHF'}
-            </Tag>
-          </Box.Row>
-        ))}
+        <Box overflow="auto" maxHeight="300px">
+          {usersWithDebt.map((user: any) => (
+            <Box.Row key={user.id} cmrnl={1} mb={1}>
+              <UserAvatar user={user} classes={{}} className="" style={{}} />
+              <Typography variant="h6">{user.name}</Typography>
+              <Tag outlined color="#f5222d">
+                {user.balance.toFixed(2) + 'CHF'}
+              </Tag>
+            </Box.Row>
+          ))}
+        </Box>
         <br />
         <Button
           variant="contained"
