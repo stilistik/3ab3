@@ -101,6 +101,7 @@
     "Delete Event": "Event löschen",
     "deleteEventHelpText": "Diess wird den Event unwiderruflich löschen. Alle damit verbundenen Daten gehen dabei verloren. Nur ein Administrator kann Events löschen",
     "deleteEventConfirm": "Willst du wirklich den Event <1>{{title}}</1> löschen? Diese Handlung ist unwiderruflich und alle mit dem Event verbundenen Daten gehen verloren. Weitermachen?",
+    "Chat": "Chat",
     "Chats": "Chats",
     "Search chat": "Chat suchen",
     "Language": "Sprache",

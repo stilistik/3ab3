@@ -63,6 +63,21 @@ export const AppMenu: React.FC<AppMenuProps> = ({
             icon="description"
             onClick={() => onClick('/documents')}
           />
+          <MenuItem
+            text={t('Chat')}
+            icon="mail"
+            onClick={() => onClick('/messenger')}
+          />
+          <MenuItem
+            text={t('Profile')}
+            icon="accountCircle"
+            onClick={() => onClick('/profile')}
+          />
+          <MenuItem
+            text={t('Account')}
+            icon="settings"
+            onClick={() => onClick('/account')}
+          />
         </List>
         {hasAccess && (
           <React.Fragment>
