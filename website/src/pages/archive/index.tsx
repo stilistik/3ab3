@@ -11,7 +11,7 @@ export const getStaticProps = async () => {
         published: true,
         date_lt: new Date().toISOString(),
       },
-      orderBy: 'date_ASC',
+      orderBy: 'date_DESC',
     });
     return {
       props: { events },
