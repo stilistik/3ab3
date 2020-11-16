@@ -83,7 +83,6 @@ export const DynamicGrid: React.FC<DynamicGridProps> = ({
     update: ({ xy, width, height }) => ({ xy, width, height }),
     leave: { height: 0, opacity: 0 },
     config: { mass: 5, tension: 500, friction: 100 },
-    trail: 25,
   });
 
   return (
