@@ -1,9 +1,7 @@
 #! /bin/bash
 
-echo "Connecting to server..."
-ssh root@newpage.3ab3.ch
-
 echo "Pulling latest changes from master..."
+cd 3ab3
 git checkout master && git pull origin master
 
 echo "Stopping container..."
