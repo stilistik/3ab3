@@ -1,5 +1,4 @@
 #! /bin/bash
-
 echo "Pulling latest changes from master..."
 cd 3ab3
 git checkout master && git pull origin master

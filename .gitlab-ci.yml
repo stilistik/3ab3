@@ -13,6 +13,6 @@ deploy_staging:
     name: staging
     url: newpage.3ab3.ch
   script:
-    - sh scripts/ci-deploy.sh
+    - sh scripts/ci.sh
   only:
     - master
