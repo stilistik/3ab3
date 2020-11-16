@@ -2,7 +2,7 @@ import React from 'react';
 import { EventFeed } from './EventFeed';
 import { usePaginatedQuery } from 'Components/utility/usePaginatedQuery';
 import { Event } from 'Graphql/types';
-import { FUTURE_EVENT_FEED } from 'Graphql/queries';
+import { ALL_EVENTS_FEED } from 'Graphql/queries';
 
 export const EventFeedManager: React.FC = () => {
   const {
@@ -13,7 +13,7 @@ export const EventFeedManager: React.FC = () => {
     hasNext,
     cursor,
     refetch,
-  } = usePaginatedQuery<Event>(FUTURE_EVENT_FEED, 3);
+  } = usePaginatedQuery<Event>(ALL_EVENTS_FEED, 3);
 
   if (loading || error) return null;
 
