@@ -53,7 +53,7 @@ prod/all.package:
 	docker-compose -f docker-compose.prod.yml build
 
 prod/all.run:
-	docker-compose -f docker-compose.prod.yml up
+	docker-compose -f docker-compose.prod.yml up -d
 
 prod/member.build:
 	cd member && yarn build
