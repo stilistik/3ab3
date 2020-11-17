@@ -16,7 +16,7 @@ echo "Building member client"
 cd member && yarn build && cd ..
 
 echo "Building public website"
-cd website && yarn build && cd ..
+cd website && rm -rf .next && yarn build && cd ..
 
 echo "Packaging and starting clients"
 docker-compose -f docker-compose.prod.yml build member website
