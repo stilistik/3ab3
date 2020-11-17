@@ -1,4 +1,6 @@
 #! /bin/bash
+set -e
+
 echo "Pulling latest changes from master..."
 git checkout master && git reset --hard && git pull origin master
 
@@ -12,14 +14,14 @@ echo "Packaging and starting services..."
 docker-compose -f docker-compose.prod.yml build postgres prisma proxy api
 docker-compose -f docker-compose.prod.yml up -d postgres prisma proxy api 
 
-echo "Building member client"
-cd member
+echo "Building public website"
+cd website
 yarn
 yarn build
 cd ..
 
-echo "Building public website"
-cd website
+echo "Building member client"
+cd member
 yarn
 yarn build
 cd ..
