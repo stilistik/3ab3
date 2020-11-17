@@ -13,10 +13,10 @@ docker-compose -f docker-compose.prod.yml build postgres prisma proxy api
 docker-compose -f docker-compose.prod.yml up -d postgres prisma proxy api 
 
 echo "Building member client"
-cd member && yarn build 
+cd member && yarn build && cd ..
 
 echo "Building public website"
-cd website && yarn build 
+cd website && yarn build && cd ..
 
 echo "Packaging and starting clients"
 docker-compose -f docker-compose.prod.yml build member website
