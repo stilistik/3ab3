@@ -5,22 +5,27 @@ import { CloseButton } from 'Components/buttons';
 import { SocialButtons } from 'Components/buttons';
 import { DynamicGrid } from './DynamicGrid';
 import clx from 'classnames';
+import { Container, useMedia } from 'Components/utility';
+import { Description } from 'Components/layout/Description';
 
 import styles from './Archive.module.css';
-import { Container, useMedia } from 'Components/utility';
 
 interface ArchiveItemDetailsProps {
   event: Event;
+  onClick: (e: React.MouseEvent) => void;
 }
 
-const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({ event }) => {
+const ArchiveItemDetails: React.FC<ArchiveItemDetailsProps> = ({
+  event,
+  onClick,
+}) => {
   return (
     <div className={styles.details}>
-      <div className="absolute top-0 right-0 mt-1 mr-1 pointer-events-none">
-        <CloseButton onClick={() => {}} />
+      <div className="absolute top-0 right-0 mt-1 mr-1 z-10">
+        <CloseButton onClick={onClick} />
       </div>
       <h2 className={styles.title}>{event.title}</h2>
-      <p className={styles.description}>{event.description}</p>
+      <Description text={event.description} />
       <SocialButtons event={event} size="big" />
     </div>
   );
@@ -37,22 +42,28 @@ const ArchiveItem: React.FC<ArchiveItemProps> = ({
   onClick,
   expanded,
 }) => {
-  const handleClick = () => onClick(expanded ? null : event.id);
+  const handleClick = (e: React.MouseEvent) => {
+    console.log('test');
+
+    e.stopPropagation();
+    onClick(expanded ? null : event.id);
+  };
 
   const cls = clx(styles.archiveItem, 'shadow-2xl', {
     [styles.expanded]: expanded,
   });
 
   return (
-    <div className={cls} onClick={handleClick}>
+    <div className={cls}>
       <div className={styles.image}>
         <LazyLoadingImageDiv
           src={event.image}
           className="w-full h-full"
           width={1200}
+          onClick={handleClick}
         />
       </div>
-      {expanded && <ArchiveItemDetails event={event} />}
+      {expanded && <ArchiveItemDetails event={event} onClick={handleClick} />}
     </div>
   );
 };

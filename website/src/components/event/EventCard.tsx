@@ -14,6 +14,7 @@ import clx from 'classnames';
 import styles from './EventCard.module.css';
 import { EventTitle } from './EventTitle';
 import { MobileEventCard } from './MobileEventCard';
+import { Description } from 'Components/layout/Description';
 
 interface ShowMoreButtonProps {
   onClick: (event: React.MouseEvent) => void;
@@ -72,7 +73,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event, height }) => {
     <div className={styles.detailsContainer}>
       <div className={styles.details} style={{ height }}>
         <div className={styles.description}>
-          <p>{event.description}</p>
+          <Description text={event.description} />
         </div>
         <SocialButtons event={event} size="small" />
       </div>
@@ -89,7 +90,8 @@ const DesktopEventCard: React.FC<EventCardProps> = ({ event }) => {
   const [titleRef, { height: titleHeight }] = useMeasure();
   const [boxRef, { height: boxHeight }] = useMeasure();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setActive((isActive) => !isActive);
   };
 
@@ -111,7 +113,7 @@ const DesktopEventCard: React.FC<EventCardProps> = ({ event }) => {
             </h4>
           </div>
           <ShowMoreButton
-            className="absolute top-0 right-0 pointer-events-none z-10"
+            className="absolute top-0 right-0 z-10"
             onClick={handleClick}
             btnText="+"
             isActive={isActive}
