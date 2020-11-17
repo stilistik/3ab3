@@ -1,6 +1,6 @@
 #! /bin/bash
 set -e
-
+source ~/.nvm/nvm.sh
 echo $(node --version)
 
 echo "Pulling latest changes from master..."
