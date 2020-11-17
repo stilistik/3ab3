@@ -1,6 +1,6 @@
 #! /bin/bash
 echo "Pulling latest changes from master..."
-git checkout master && git pull origin master
+git checkout master && git reset --hard && git pull origin master
 
 echo "Stopping containers..."
 docker-compose -f docker-compose.prod.yml down
