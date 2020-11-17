@@ -35,6 +35,7 @@
   border-left: 2px solid black;
   overflow-y: auto;
   overflow-x: hidden;
+  cursor: default;
 }
 
 @media screen and (max-width: 1280px) {

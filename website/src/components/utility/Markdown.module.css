@@ -1,0 +1,17 @@
+.md p,
+.md h1,
+.md h2,
+.md h3,
+.md h4,
+.md h5,
+.md h6 {
+  margin-bottom: 20px;
+}
+
+.md a {
+  color: var(--color-primary);
+}
+
+.md a:hover {
+  text-decoration: underline;
+}
