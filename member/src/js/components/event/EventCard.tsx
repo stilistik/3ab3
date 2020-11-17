@@ -8,7 +8,7 @@ import {
   Button,
   makeStyles,
 } from '@material-ui/core';
-import { Icon, LazyLoadingImageDiv } from 'Components/index';
+import { Icon, LazyLoadingImageDiv, Markdown } from 'Components/index';
 import { LikeEvent } from './LikeEvent';
 import EventComments from './EventComments';
 import { EventStats } from './EventStats';
@@ -123,7 +123,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
             place={event.place}
           />
           <Typography component="p" className={styles.description}>
-            {event.description}
+            <Markdown text={event.description} />
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -16,3 +16,4 @@ export * from './social';
 export * from './tag';
 export * from './user';
 export * from './pagination';
+export * from './markdown';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from 'Components/index';
+import { Box, Markdown } from 'Components/index';
 import { SINGLE_EVENT } from 'Graphql/queries';
 import { Event } from 'Graphql/types';
 import { Paper, Typography } from '@material-ui/core';
@@ -10,7 +10,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 interface InfoItemProps {
   label: string;
-  content: string;
+  content: React.ReactNode;
 }
 
 const InfoItem: React.FC<InfoItemProps> = ({ label, content }) => {
@@ -68,7 +68,10 @@ export const EventInfo: React.FC<EventInfoProps> = ({ event }) => {
           label={t('Time')}
           content={new Date(event.date).toLocaleTimeString()}
         />
-        <InfoItem label={t('Description')} content={event.description} />
+        <InfoItem
+          label={t('Description')}
+          content={<Markdown text={event.description} />}
+        />
         <InfoItem label={t('Spotify')} content={event.spotify} />
         <InfoItem label={t('Soundcloud')} content={event.soundcloud} />
         <InfoItem label={t('Youtube')} content={event.youtube} />
