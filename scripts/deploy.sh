@@ -1,6 +1,8 @@
 #! /bin/bash
 set -e
 
+echo node --version
+
 echo "Pulling latest changes from master..."
 git checkout master && git reset --hard && git pull origin master
 
