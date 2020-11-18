@@ -16,6 +16,12 @@ echo "Packaging and starting services..."
 docker-compose -f docker-compose.prod.yml build postgres prisma proxy api
 docker-compose -f docker-compose.prod.yml up -d postgres prisma proxy api 
 
+echo "Running migrations..."
+cd server/prisma
+prisma deploy
+cp -r ./generated ../api/src && cp -r ./generated ../../website
+cd ../../
+
 echo "Building public website"
 cd website
 yarn
