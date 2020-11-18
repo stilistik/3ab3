@@ -15,6 +15,7 @@ export $(grep -v '^#' .env | xargs)
 echo "Packaging and starting services..."
 docker-compose -f docker-compose.prod.yml build postgres prisma proxy api
 docker-compose -f docker-compose.prod.yml up -d postgres prisma proxy api 
+sleep 10
 
 echo "Running migrations..."
 cd server/prisma
