@@ -249,10 +249,13 @@ export type Mutation = {
   updateProduct: Product;
   deleteProduct: Product;
   createPurchase: Purchase;
+  editPurchase: Purchase;
   deletePurchase: Purchase;
   createPayment: Payment;
+  editPayment: Payment;
   deletePayment: Payment;
   verifyPayment: Payment;
+  deleteTransaction: Transaction;
   createEvent: Event;
   editEvent: Event;
   addCommitteeMembers: Event;
@@ -288,7 +291,10 @@ export type Mutation = {
   uploadDocument: Document;
   editDocument: Document;
   createNanoCredit: NanoCredit;
+  editNanoCredit: NanoCredit;
   createSecret: Secret;
+  editSecret: Secret;
+  deleteSecret: Secret;
 };
 
 
@@ -345,12 +351,24 @@ export type MutationCreatePurchaseArgs = {
 };
 
 
+export type MutationEditPurchaseArgs = {
+  purchaseId: Scalars['ID'];
+  input: PurchaseInput;
+};
+
+
 export type MutationDeletePurchaseArgs = {
   purchaseId: Scalars['ID'];
 };
 
 
 export type MutationCreatePaymentArgs = {
+  input: PaymentInput;
+};
+
+
+export type MutationEditPaymentArgs = {
+  paymentId: Scalars['ID'];
   input: PaymentInput;
 };
 
@@ -362,6 +380,11 @@ export type MutationDeletePaymentArgs = {
 
 export type MutationVerifyPaymentArgs = {
   paymentId: Scalars['ID'];
+};
+
+
+export type MutationDeleteTransactionArgs = {
+  transactionId: Scalars['ID'];
 };
 
 
@@ -555,12 +578,31 @@ export type MutationEditDocumentArgs = {
 
 
 export type MutationCreateNanoCreditArgs = {
+  userId: Scalars['ID'];
+  input: NanoCreditInput;
+};
+
+
+export type MutationEditNanoCreditArgs = {
+  userId: Scalars['ID'];
+  nanoCreditId: Scalars['ID'];
   input: NanoCreditInput;
 };
 
 
 export type MutationCreateSecretArgs = {
   input: SecretInput;
+};
+
+
+export type MutationEditSecretArgs = {
+  secretId: Scalars['ID'];
+  input: SecretInput;
+};
+
+
+export type MutationDeleteSecretArgs = {
+  secretId: Scalars['ID'];
 };
 
 export enum MutationType {
@@ -606,7 +648,7 @@ export type Payment = {
 
 export type PaymentInput = {
   userId: Scalars['ID'];
-  date: Scalars['DateTime'];
+  date?: Maybe<Scalars['DateTime']>;
   amount: Scalars['Float'];
 };
 
@@ -683,7 +725,7 @@ export type Purchase = {
 
 export type PurchaseInput = {
   userId: Scalars['ID'];
-  date: Scalars['DateTime'];
+  date?: Maybe<Scalars['DateTime']>;
   items: Array<PurchaseItemInput>;
 };
 
@@ -793,6 +835,8 @@ export type QueryTransactionArgs = {
 
 export type QueryTransactionsArgs = {
   type?: Maybe<TransactionType>;
+  where?: Maybe<Scalars['JSON']>;
+  orderBy?: Maybe<Scalars['String']>;
   first: Scalars['Int'];
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
@@ -909,8 +953,8 @@ export type Secret = {
 };
 
 export type SecretInput = {
-  title: Scalars['String'];
-  front: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  front?: Maybe<Scalars['String']>;
   back?: Maybe<Scalars['String']>;
 };
 
@@ -987,6 +1031,8 @@ export type User = {
   id: Scalars['ID'];
   email: Scalars['String'];
   name: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   birthdate?: Maybe<Scalars['DateTime']>;
   language?: Maybe<Scalars['String']>;
@@ -1027,6 +1073,8 @@ export type UserInput = {
   role?: Maybe<UserRole>;
   phone?: Maybe<Scalars['String']>;
   birthdate?: Maybe<Scalars['DateTime']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
 };
 
 export enum UserRole {
