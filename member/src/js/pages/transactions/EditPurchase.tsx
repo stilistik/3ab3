@@ -107,25 +107,27 @@ export const EditPurchase: React.FC<ActionCellProps> = ({
       >
         {show &&
           productsData &&
-          productsData.products.map((product: Product) => {
-            return (
-              <Box.Row key={product.id} cmrnl={1} cmb={1}>
-                <Avatar
-                  src={getBackendUrl() + product.thumbnail}
-                  style={{
-                    width: 70,
-                    height: 70,
-                  }}
-                />
-                <QuickNumberField
-                  id={product.id}
-                  label={product.name}
-                  required={false}
-                  defaultValue={0}
-                />
-              </Box.Row>
-            );
-          })}
+          productsData.products
+            .sort((a: Product, b: Product) => a.index - b.index)
+            .map((product: Product) => {
+              return (
+                <Box.Row key={product.id} cmrnl={1} cmb={1}>
+                  <Avatar
+                    src={getBackendUrl() + product.thumbnail}
+                    style={{
+                      width: 70,
+                      height: 70,
+                    }}
+                  />
+                  <QuickNumberField
+                    id={product.id}
+                    label={product.name}
+                    required={false}
+                    defaultValue={0}
+                  />
+                </Box.Row>
+              );
+            })}
       </FormDialog>
     </React.Fragment>
   );
