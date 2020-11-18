@@ -6,9 +6,13 @@ import { User } from 'Graphql/types';
 import { USER_LIST } from 'Graphql/queries';
 
 function getOptionFromUser(user: User): SelectOption {
+  let label = user.name;
+  if (user.firstName && user.lastName) {
+    label += ` (${user.firstName} ${user.lastName})`;
+  }
   return {
     value: user.id,
-    label: user.name,
+    label: label,
     item: user,
   };
 }
