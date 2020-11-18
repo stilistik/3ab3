@@ -53,6 +53,8 @@ export const EditMember: React.FC<EditMemberProps> = ({ user }) => {
       >
         <Box cmb={2}>
           <TextField id="name" label={t('Name')} />
+          <TextField id="firstName" label={t('First Name')} />
+          <TextField id="lastName" label={t('Last Name')} />
           <TextField id="email" label={t('Email')} type="email" />
           <UserRoleField id="role" label={t('Role')} />
           <TextField id="phone" label={t('Phone')} />
