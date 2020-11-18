@@ -4,6 +4,8 @@ const USER_FIELDS = gql`
   fragment UserFields on User {
     id
     name
+    firstName
+    lastName
     role
     email
     avatar
