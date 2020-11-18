@@ -47,6 +47,12 @@ export const MemberItem: React.FC<MemberItemProps> = ({ user }) => {
         </Box.Row>
         <Box pt={2} cmb={1}>
           <Typography variant="body2">
+            {t('First Name')}: {user.firstName || null}
+          </Typography>
+          <Typography variant="body2">
+            {t('Last Name')}: {user.lastName || null}
+          </Typography>
+          <Typography variant="body2">
             {t('Email')}:{' '}
             <Link color="secondary" href={`mailto:${user.email}`}>
               {user.email}
