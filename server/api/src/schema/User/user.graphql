@@ -2,6 +2,8 @@ type User {
   id: ID!
   email: String!
   name: String!
+  firstName: String
+  lastName: String
   phone: String
   birthdate: DateTime
   language: String
@@ -45,6 +47,8 @@ input UserInput {
   role: UserRole
   phone: String
   birthdate: DateTime
+  firstName: String
+  lastName: String
 }
 
 input EditSelfInput {
