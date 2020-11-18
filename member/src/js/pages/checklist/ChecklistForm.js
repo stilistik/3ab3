@@ -39,10 +39,10 @@ export const ChecklistForm = ({ initValues, ...rest }) => {
     rest.onSubmit({ date, userId: user, items });
   };
 
-  const { products } = data;
+  const products = data.products.sort((a, b) => a.index - b.index);
   return (
     <Box py="20px">
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} initAfterSubmit={true}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <DateField
