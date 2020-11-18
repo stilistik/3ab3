@@ -59,7 +59,6 @@ export const EditProduct: React.FC<EditProductProps> = ({ product }) => {
         <Box cmb={2}>
           <ImageField
             id="thumbnail"
-            required={true}
             label={t('Product Image')}
           />
           <TextField id="name" label={t('Name')} required={true} />
