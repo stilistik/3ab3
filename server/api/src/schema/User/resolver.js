@@ -3,6 +3,22 @@ const { AuthenticationError } = require('../../auth/errors');
 const { uploadFile, deleteFile } = require('../../helper/file.helper');
 const { canUserModifyUser } = require('../../helper/authorization.helper');
 
+async function authorizeUserModification(context, args) {
+  const { id } = verifyAndDecodeToken(context);
+
+  const currentUser = await context.prisma.user({ id });
+  const userToUpdate = await context.prisma.user({ id: args.userId });
+
+  if (!canUserModifyUser(currentUser, userToUpdate)) {
+    throw new Error(
+      `User with role ${currentUser.role} cannot modify user with role ${
+        userToUpdate.role
+      }`
+    );
+  }
+  return [currentUser, userToUpdate];
+}
+
 module.exports = {
   Query: {
     users(root, args, context) {
@@ -43,45 +59,29 @@ module.exports = {
       return context.prisma.createUser(args.input);
     },
     async editUser(root, args, context) {
-      const { id } = verifyAndDecodeToken(context);
-
-      const currentUser = await context.prisma.user({ id });
-      const userToUpdate = await context.prisma.user({ id: args.userId });
-
-      if (!canUserModifyUser(currentUser, userToUpdate)) {
-        throw new Error(
-          `User with role ${currentUser.role} cannot modify user with role ${
-            userToUpdate.role
-          }`
-        );
-      }
-
+      await authorizeUserModification(context, args);
       return context.prisma.updateUser({
         where: { id: args.userId },
         data: args.input,
       });
     },
     async deleteUser(root, args, context) {
-      const { id } = verifyAndDecodeToken(context);
-
-      if (id === args.userId) {
+      const [currentUser] = await authorizeUserModification(context, args);
+      
+      if (currentUser.id === args.userId) {
         throw new Error('You cannot delete yourself.');
-      }
-
-      const currentUser = await context.prisma.user({ id });
-      const userToUpdate = await context.prisma.user({ id: args.userId });
-
-      if (!canUserModifyUser(currentUser, userToUpdate)) {
-        throw new Error(
-          `User with role ${currentUser.role} cannot modify user with role ${
-            userToUpdate.role
-          }`
-        );
       }
 
       return context.prisma.updateUser({
         where: { id: args.userId },
         data: { deleted: true },
+      });
+    },
+    async restoreUser(root, args, context) {
+      await authorizeUserModification(context, args);
+      return context.prisma.updateUser({
+        where: { id: args.userId },
+        data: { deleted: false },
       });
     },
     async editSelf(root, args, context) {

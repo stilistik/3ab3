@@ -70,10 +70,11 @@ extend type Query {
 }
 
 extend type Mutation {
-  createUser(input: UserInput!): User! @hasRole
-  editUser(userId: ID!, input: UserInput!): User! @hasRole
   editSelf(input: EditSelfInput!): User!
-  deleteUser(userId: ID!): User! @hasRole
   uploadAvatar(file: Upload!): User!
   setOnlineStatus(userId: ID!, isOnline: Boolean!): User!
+  createUser(input: UserInput!): User! @hasRole
+  editUser(userId: ID!, input: UserInput!): User! @hasRole
+  deleteUser(userId: ID!): User! @hasRole
+  restoreUser(userId: ID!): User! @hasRole
 }
