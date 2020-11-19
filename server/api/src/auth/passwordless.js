@@ -25,15 +25,18 @@ const logoPath = path.join(__dirname, '../resources/favicon.png');
 const getLoginToken = async (req, res) => {
   const user = await prisma.user({ email: req.body.email });
 
+  if (user.deleted) {
+    Logger.log(`User with email ${req.body.email} has been deleted.`);
+    return res.sendStatus(200);
+  }
+
   if (!user) {
     // if there is no user with the provided email, we still return 200 but
     // do nothing. this prevents informing potential attackers about the validity
     // of entered email adresses.
-    Logger.log(`User with ${req.body.email} not found.`);
+    Logger.log(`User with email ${req.body.email} not found.`);
     return res.sendStatus(200);
   }
-
-  console.log(user);
 
   // generate token
   const loginToken = jwt.sign(
@@ -126,6 +129,9 @@ const debugSession = async (req, res) => {
 
     const [user, loginToken] = await getLoginToken(req, res);
     console.log(user);
+    if (user.deleted)
+      throw new Error(`User with email ${req.body.email} has been deleted.`);
+
     Logger.log(`Debug session created for ${user.name}`);
     const link = `${MEMBER_PUBLIC_URL}/auth?token=${loginToken}`;
     res.status(200).send(link);
