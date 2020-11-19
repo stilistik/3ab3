@@ -34,6 +34,9 @@ module.exports = {
         where: { balance_lte: args.threshold },
       });
     },
+    deletedUsers(root, args, context) {
+      return context.prisma.users({ where: { deleted: true } });
+    },
   },
   Mutation: {
     createUser(root, args, context) {

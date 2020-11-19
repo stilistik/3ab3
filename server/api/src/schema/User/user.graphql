@@ -66,6 +66,7 @@ extend type Query {
   user(userId: ID!): User!
   currentUser: User!
   usersWithDebt(threshold: Int!): [User!]! @hasRole
+  deletedUsers: [User!]!
 }
 
 extend type Mutation {
