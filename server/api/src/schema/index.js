@@ -25,7 +25,6 @@ const Todo = require('./Todo');
 const Message = require('./Message');
 const Chat = require('./Chat');
 const Document = require('./Document');
-const NanoCredit = require('./NanoCredit');
 const Debt = require('./Debt');
 const Secret = require('./Secret');
 
@@ -94,7 +93,6 @@ module.exports = makeExecutableSchema({
     Message.typeDef,
     Chat.typeDef,
     Document.typeDef,
-    NanoCredit.typeDef,
     Debt.typeDef,
     Secret.typeDef,
   ],
@@ -116,7 +114,6 @@ module.exports = makeExecutableSchema({
     Message.resolvers,
     Chat.resolvers,
     Document.resolvers,
-    NanoCredit.resolvers,
     Debt.resolvers,
     Secret.resolvers
   ),

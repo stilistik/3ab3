@@ -15,7 +15,6 @@ datamodel:
   - models/Message.graphql
   - models/Chat.graphql
   - models/Document.graphql
-  - models/NanoCredit.graphql
   - models/Debt.graphql
   - models/Secret.graphql
 generate:
