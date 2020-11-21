@@ -114,8 +114,8 @@
     "Edit Document": "Dokument bearbeiten",
     "Document Title": "Dokument Name",
     "Subtitle": "Untertitel",
-    "Nano Credit": "Nanokredit",
-    "Take out credit": "Kredit aufnehmen",
+    "Debt": "Schulden",
+    "Register Debt": "Schulden erfassen",
     "Secret": "Geheimnis",
     "Front": "Frontseite",
     "Back": "Rückseite",
@@ -130,7 +130,7 @@
     "Action": "Handlung",
     "Transaction deleted": "Transaktion gelöscht",
     "Edit successful": "Erfolgreich bearbeitet",
-    "Edit Nanocredit": "Nanokredit bearbeiten",
+    "Edit Debt": "Schulden bearbeiten",
     "Edit Purchase": "Einkauf bearbeiten",
     "Edit Payment": "Zahlung bearbeiten"
   }

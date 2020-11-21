@@ -39,7 +39,7 @@ const DebtForm: React.FC<DebtProps> = ({ onSubmit }) => {
           type="submit"
           style={{ marginTop: 10 }}
         >
-          {t('Take out credit')}
+          {t('Register Debt')}
         </Button>
       </Box>
     </Form>

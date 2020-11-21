@@ -114,8 +114,8 @@
     "Edit Document": "Dokumänt bearbeitä",
     "Document Title": "Dokumänt Namä",
     "Subtitle": "Ungertitu",
-    "Nano Credit": "Nanokredit",
-    "Take out credit": "Kredit ufnäh",
+    "Debt": "Schuldä",
+    "Register Debt": "Schuldä erfassä",
     "Secret": "Gheimnis",
     "Front": "Frontsitä",
     "Back": "Rücksitä",
@@ -130,7 +130,7 @@
     "Action": "Handlig",
     "Transaction deleted": "Transaktion glöscht",
     "Edit successful": "Erfougrich bearbeitet",
-    "Edit Nanocredit": "Nanokredit bearbeitä",
+    "Edit Debt": "Schuldä bearbeitä",
     "Edit Purchase": "Ychouf bearbeitä",
     "Edit Payment": "Zahlig bearbeitä"
   }
