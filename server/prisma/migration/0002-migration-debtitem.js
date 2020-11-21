@@ -16,13 +16,13 @@ async function main() {
           .user()
           .then((user) => {
             prisma
-              .createDebtItem({
+              .createDebt({
                 ...nanocredit,
                 transaction: {
                   create: {
                     user: { connect: { id: user.id } },
                     date: nanocredit.date,
-                    type: 'DEBTITEM',
+                    type: 'DEBT',
                     change: -nanocredit.amount,
                   },
                 },

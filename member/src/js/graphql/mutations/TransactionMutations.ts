@@ -8,13 +8,9 @@ export const DELETE_TRANSACTION = gql`
   }
 `;
 
-export const EDIT_NANOCREDIT = gql`
-  mutation($userId: ID!, $nanoCreditId: ID!, $input: NanoCreditInput!) {
-    editNanoCredit(
-      userId: $userId
-      nanoCreditId: $nanoCreditId
-      input: $input
-    ) {
+export const EDIT_DEBT = gql`
+  mutation($userId: ID!, $debtId: ID!, $input: DebtInput!) {
+    editDebt(userId: $userId, debtId: $debtId, input: $input) {
       id
     }
   }

@@ -17,6 +17,11 @@ export const CURRENT_USER_TRANSACTIONS = gql`
               amount
               description
             }
+            debt {
+              id
+              amount
+              description
+            }
             payment {
               id
               amount

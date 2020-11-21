@@ -14,9 +14,10 @@ import {
 import { TablePagination, Tag, Box, Icon } from 'Components/index';
 import { useQuery } from '@apollo/react-hooks';
 import { CURRENT_USER_TRANSACTIONS } from 'Graphql/queries';
-import { Transaction, TransactionEdge } from 'Graphql/types';
+import { Transaction, TransactionEdge, TransactionType } from 'Graphql/types';
 import { PurchaseReceipt } from './PurchaseReceipt';
 import { NanoCreditReceipt } from './NanoCreditReceipt';
+import { DebtReceipt } from './DebtReceipt';
 
 interface AmountCellProps {
   transaction: Transaction;
@@ -47,7 +48,7 @@ const ReceiptCell: React.FC<ReceiptCellProps> = ({ transaction }) => {
   return (
     <TableCell align="left">
       <Box.Row h="30px">
-        {transaction.type === 'PURCHASE' && (
+        {transaction.type === TransactionType.Purchase && (
           <React.Fragment>
             <IconButton onClick={handleOpen}>
               <Icon type="assignment" />
@@ -59,7 +60,7 @@ const ReceiptCell: React.FC<ReceiptCellProps> = ({ transaction }) => {
             />
           </React.Fragment>
         )}
-        {transaction.type === 'NANOCREDIT' && (
+        {transaction.type === TransactionType.Nanocredit && (
           <React.Fragment>
             <IconButton onClick={handleOpen}>
               <Icon type="assignment" />
@@ -68,6 +69,18 @@ const ReceiptCell: React.FC<ReceiptCellProps> = ({ transaction }) => {
               open={open}
               handleClose={handleClose}
               nanocredit={transaction.nanocredit}
+            />
+          </React.Fragment>
+        )}
+        {transaction.type === TransactionType.Debt && (
+          <React.Fragment>
+            <IconButton onClick={handleOpen}>
+              <Icon type="assignment" />
+            </IconButton>
+            <DebtReceipt
+              open={open}
+              handleClose={handleClose}
+              debt={transaction.debt}
             />
           </React.Fragment>
         )}

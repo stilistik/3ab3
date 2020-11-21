@@ -18,6 +18,11 @@ export const TRANSACTIONS = gql`
             amount
             description
           }
+          debt {
+            id
+            amount
+            description
+          }
           payment {
             id
             amount

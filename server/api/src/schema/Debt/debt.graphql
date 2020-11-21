@@ -14,5 +14,5 @@ input DebtInput {
 
 extend type Mutation {
   createDebt(userId: ID!, input: DebtInput!): Debt! @hasRole
-  editDebt(userId: ID!, debtItemId: ID!, input: DebtInput!): Debt! @hasRole
+  editDebt(userId: ID!, debtId: ID!, input: DebtInput!): Debt! @hasRole
 }

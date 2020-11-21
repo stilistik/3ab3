@@ -12,7 +12,7 @@ import {
 import { Transaction } from 'Graphql/types';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-apollo';
-import { EDIT_NANOCREDIT } from 'Graphql/mutations';
+import { EDIT_DEBT } from 'Graphql/mutations';
 import {
   BALANCE_TABLE,
   CURRENT_USER_BALANCE,
