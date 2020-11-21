@@ -13,11 +13,6 @@ export const TRANSACTIONS = gql`
             id
             name
           }
-          nanocredit {
-            id
-            amount
-            description
-          }
           debt {
             id
             amount

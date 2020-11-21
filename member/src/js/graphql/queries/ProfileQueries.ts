@@ -12,11 +12,6 @@ export const CURRENT_USER_TRANSACTIONS = gql`
             date
             type
             change
-            nanocredit {
-              id
-              amount
-              description
-            }
             debt {
               id
               amount

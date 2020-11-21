@@ -16,7 +16,6 @@ import { useQuery } from '@apollo/react-hooks';
 import { CURRENT_USER_TRANSACTIONS } from 'Graphql/queries';
 import { Transaction, TransactionEdge, TransactionType } from 'Graphql/types';
 import { PurchaseReceipt } from './PurchaseReceipt';
-import { NanoCreditReceipt } from './NanoCreditReceipt';
 import { DebtReceipt } from './DebtReceipt';
 
 interface AmountCellProps {
@@ -57,18 +56,6 @@ const ReceiptCell: React.FC<ReceiptCellProps> = ({ transaction }) => {
               open={open}
               handleClose={handleClose}
               purchaseId={transaction.purchase.id}
-            />
-          </React.Fragment>
-        )}
-        {transaction.type === TransactionType.Nanocredit && (
-          <React.Fragment>
-            <IconButton onClick={handleOpen}>
-              <Icon type="assignment" />
-            </IconButton>
-            <NanoCreditReceipt
-              open={open}
-              handleClose={handleClose}
-              nanocredit={transaction.nanocredit}
             />
           </React.Fragment>
         )}
