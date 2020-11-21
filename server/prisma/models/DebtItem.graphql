@@ -1,0 +1,9 @@
+type DebtItem {
+  id: ID! @unique @id
+  transaction: Transaction!
+    @relation(link: TABLE, name: "DebtItemTransaction", onDelete: CASCADE)
+  amount: Float!
+  user: User!
+  description: String!
+  date: DateTime!
+}
