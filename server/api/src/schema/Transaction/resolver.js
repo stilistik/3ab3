@@ -41,8 +41,8 @@ module.exports = {
     purchase(root, args, context) {
       return context.prisma.transaction({ id: root.id }).purchase();
     },
-    nanocredit(root, args, context) {
-      return context.prisma.transaction({ id: root.id }).nanocredit();
+    debt(root, args, context) {
+      return context.prisma.transaction({ id: root.id }).debt();
     },
     user(root, args, context) {
       return context.prisma.transaction({ id: root.id }).user();

@@ -6,7 +6,7 @@ type Transaction implements Node {
   type: TransactionType!
   purchase: Purchase
   payment: Payment
-  nanocredit: NanoCredit
+  debt: Debt
   debt: Debt
 }
 
@@ -23,7 +23,6 @@ type TransactionConnection implements Connection {
 enum TransactionType {
   PAYMENT
   PURCHASE
-  NANOCREDIT
   DEBT
 }
 
