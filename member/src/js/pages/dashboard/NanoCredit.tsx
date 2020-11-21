@@ -28,7 +28,7 @@ interface NanoCreditProps {
 const NanoCreditForm: React.FC<NanoCreditProps> = ({ onSubmit }) => {
   const { t } = useTranslation();
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} initAfterSubmit={true}>
       <Box cmb={1}>
         <UserSelectField id="user" label={t('Member')} required={true} />
         <TextField id="description" label={t('Description')} required={true} />
