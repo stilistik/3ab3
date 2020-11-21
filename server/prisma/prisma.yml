@@ -16,6 +16,7 @@ datamodel:
   - models/Chat.graphql
   - models/Document.graphql
   - models/NanoCredit.graphql
+  - models/DebtItem.graphql
   - models/Secret.graphql
 generate:
   - generator: javascript-client
