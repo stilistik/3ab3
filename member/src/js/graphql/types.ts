@@ -306,8 +306,6 @@ export type Mutation = {
   userLastSeen: Chat;
   uploadDocument: Document;
   editDocument: Document;
-  createNanoCredit: NanoCredit;
-  editNanoCredit: NanoCredit;
   createDebt: Debt;
   editDebt: Debt;
   createSecret: Secret;
@@ -600,19 +598,6 @@ export type MutationEditDocumentArgs = {
 };
 
 
-export type MutationCreateNanoCreditArgs = {
-  userId: Scalars['ID'];
-  input: NanoCreditInput;
-};
-
-
-export type MutationEditNanoCreditArgs = {
-  userId: Scalars['ID'];
-  nanoCreditId: Scalars['ID'];
-  input: NanoCreditInput;
-};
-
-
 export type MutationCreateDebtArgs = {
   userId: Scalars['ID'];
   input: DebtInput;
@@ -621,7 +606,7 @@ export type MutationCreateDebtArgs = {
 
 export type MutationEditDebtArgs = {
   userId: Scalars['ID'];
-  debtItemId: Scalars['ID'];
+  debtId: Scalars['ID'];
   input: DebtInput;
 };
 
@@ -646,21 +631,6 @@ export enum MutationType {
   Updated = 'UPDATED',
   Deleted = 'DELETED'
 }
-
-export type NanoCredit = {
-  __typename?: 'NanoCredit';
-  id: Scalars['ID'];
-  transaction: Transaction;
-  amount: Scalars['Float'];
-  user: User;
-  description: Scalars['String'];
-  date: Scalars['DateTime'];
-};
-
-export type NanoCreditInput = {
-  amount: Scalars['Float'];
-  description: Scalars['String'];
-};
 
 export type Node = {
   id?: Maybe<Scalars['ID']>;
@@ -1037,7 +1007,6 @@ export type Transaction = Node & {
   type: TransactionType;
   purchase?: Maybe<Purchase>;
   payment?: Maybe<Payment>;
-  nanocredit?: Maybe<NanoCredit>;
   debt?: Maybe<Debt>;
 };
 
@@ -1056,7 +1025,6 @@ export type TransactionEdge = Edge & {
 export enum TransactionType {
   Payment = 'PAYMENT',
   Purchase = 'PURCHASE',
-  Nanocredit = 'NANOCREDIT',
   Debt = 'DEBT'
 }
 
