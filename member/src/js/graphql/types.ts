@@ -94,6 +94,21 @@ export type Connection = {
 
 
 
+export type Debt = {
+  __typename?: 'Debt';
+  id: Scalars['ID'];
+  transaction: Transaction;
+  amount: Scalars['Float'];
+  user: User;
+  description: Scalars['String'];
+  date: Scalars['DateTime'];
+};
+
+export type DebtInput = {
+  amount: Scalars['Float'];
+  description: Scalars['String'];
+};
+
 export type Document = {
   __typename?: 'Document';
   id: Scalars['ID'];
@@ -239,12 +254,13 @@ export type MessageSubscriptionPayload = {
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']>;
-  createUser: User;
-  editUser: User;
   editSelf: User;
-  deleteUser: User;
   uploadAvatar: User;
   setOnlineStatus: User;
+  createUser: User;
+  editUser: User;
+  deleteUser: User;
+  restoreUser: User;
   createProduct: Product;
   updateProduct: Product;
   deleteProduct: Product;
@@ -292,9 +308,27 @@ export type Mutation = {
   editDocument: Document;
   createNanoCredit: NanoCredit;
   editNanoCredit: NanoCredit;
+  createDebt: Debt;
+  editDebt: Debt;
   createSecret: Secret;
   editSecret: Secret;
   deleteSecret: Secret;
+};
+
+
+export type MutationEditSelfArgs = {
+  input: EditSelfInput;
+};
+
+
+export type MutationUploadAvatarArgs = {
+  file: Scalars['Upload'];
+};
+
+
+export type MutationSetOnlineStatusArgs = {
+  userId: Scalars['ID'];
+  isOnline: Scalars['Boolean'];
 };
 
 
@@ -309,24 +343,13 @@ export type MutationEditUserArgs = {
 };
 
 
-export type MutationEditSelfArgs = {
-  input: EditSelfInput;
-};
-
-
 export type MutationDeleteUserArgs = {
   userId: Scalars['ID'];
 };
 
 
-export type MutationUploadAvatarArgs = {
-  file: Scalars['Upload'];
-};
-
-
-export type MutationSetOnlineStatusArgs = {
+export type MutationRestoreUserArgs = {
   userId: Scalars['ID'];
-  isOnline: Scalars['Boolean'];
 };
 
 
@@ -590,6 +613,19 @@ export type MutationEditNanoCreditArgs = {
 };
 
 
+export type MutationCreateDebtArgs = {
+  userId: Scalars['ID'];
+  input: DebtInput;
+};
+
+
+export type MutationEditDebtArgs = {
+  userId: Scalars['ID'];
+  debtItemId: Scalars['ID'];
+  input: DebtInput;
+};
+
+
 export type MutationCreateSecretArgs = {
   input: SecretInput;
 };
@@ -742,6 +778,7 @@ export type Query = {
   user: User;
   currentUser: User;
   usersWithDebt: Array<User>;
+  deletedUsers: Array<User>;
   clients: Array<Client>;
   client: Client;
   products: Array<Product>;
@@ -1001,6 +1038,7 @@ export type Transaction = Node & {
   purchase?: Maybe<Purchase>;
   payment?: Maybe<Payment>;
   nanocredit?: Maybe<NanoCredit>;
+  debt?: Maybe<Debt>;
 };
 
 export type TransactionConnection = Connection & {
@@ -1018,7 +1056,8 @@ export type TransactionEdge = Edge & {
 export enum TransactionType {
   Payment = 'PAYMENT',
   Purchase = 'PURCHASE',
-  Nanocredit = 'NANOCREDIT'
+  Nanocredit = 'NANOCREDIT',
+  Debt = 'DEBT'
 }
 
 
@@ -1068,8 +1107,8 @@ export type UserTransactionsArgs = {
 };
 
 export type UserInput = {
-  name: Scalars['String'];
-  email: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   role?: Maybe<UserRole>;
   phone?: Maybe<Scalars['String']>;
   birthdate?: Maybe<Scalars['DateTime']>;
