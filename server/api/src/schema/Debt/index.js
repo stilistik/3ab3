@@ -2,7 +2,7 @@ const path = require('path');
 const { importSchema } = require('../helper.graphql');
 
 // Import graphql schema
-const typeDef = importSchema(path.join(__dirname, 'debtItem.graphql'));
+const typeDef = importSchema(path.join(__dirname, 'debt.graphql'));
 const resolver = require('./resolver');
 
 // Module exports

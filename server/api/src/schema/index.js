@@ -26,7 +26,7 @@ const Message = require('./Message');
 const Chat = require('./Chat');
 const Document = require('./Document');
 const NanoCredit = require('./NanoCredit');
-const DebtItem = require('./DebtItem');
+const Debt = require('./Debt');
 const Secret = require('./Secret');
 
 const { HasRoleDirective } = require('./Directives');
@@ -95,7 +95,7 @@ module.exports = makeExecutableSchema({
     Chat.typeDef,
     Document.typeDef,
     NanoCredit.typeDef,
-    DebtItem.typeDef,
+    Debt.typeDef,
     Secret.typeDef,
   ],
   resolvers: merge(
@@ -117,7 +117,7 @@ module.exports = makeExecutableSchema({
     Chat.resolvers,
     Document.resolvers,
     NanoCredit.resolvers,
-    DebtItem.resolvers,
+    Debt.resolvers,
     Secret.resolvers
   ),
   schemaDirectives: {

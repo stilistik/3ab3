@@ -7,7 +7,7 @@ import BalanceTable from './BalanceTable';
 import { PaymentReminder } from './PaymentReminder';
 import { RegisterPayment } from './RegisterPayment';
 import { useTranslation } from 'react-i18next';
-import { NanoCredit } from 'Pages/dashboard/NanoCredit';
+import { Debt } from 'Pages/dashboard/Debt';
 
 export const Dashboard = () => {
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ export const Dashboard = () => {
             <Box cmbnl={3}>
               <GlobalConsumptionChart />
               <RegisterPayment />
-              <NanoCredit />
+              <Debt />
             </Box>
           </Grid>
         </Grid>

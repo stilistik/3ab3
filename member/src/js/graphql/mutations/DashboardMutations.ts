@@ -14,9 +14,9 @@ export const CREATE_PAYMENT = gql`
   }
 `;
 
-export const CREATE_NANOCREDIT = gql`
-  mutation($userId: ID!, $input: NanoCreditInput!) {
-    createNanoCredit(userId: $userId, input: $input) {
+export const CREATE_DEBT = gql`
+  mutation($userId: ID!, $input: DebtInput!) {
+    createDebt(userId: $userId, input: $input) {
       id
     }
   }

@@ -1,0 +1,18 @@
+type Debt {
+  id: ID!
+  transaction: Transaction!
+  amount: Float!
+  user: User!
+  description: String!
+  date: DateTime!
+}
+
+input DebtInput {
+  amount: Float!
+  description: String!
+}
+
+extend type Mutation {
+  createDebt(userId: ID!, input: DebtInput!): Debt! @hasRole
+  editDebt(userId: ID!, debtItemId: ID!, input: DebtInput!): Debt! @hasRole
+}

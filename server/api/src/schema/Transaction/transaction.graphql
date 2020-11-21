@@ -7,7 +7,7 @@ type Transaction implements Node {
   purchase: Purchase
   payment: Payment
   nanocredit: NanoCredit
-  debtItem: DebtItem
+  debt: Debt
 }
 
 type TransactionEdge implements Edge {
@@ -24,7 +24,7 @@ enum TransactionType {
   PAYMENT
   PURCHASE
   NANOCREDIT
-  DEBTITEM
+  DEBT
 }
 
 extend type Query {

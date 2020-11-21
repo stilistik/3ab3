@@ -19,26 +19,26 @@ import {
   CURRENT_USER_TRANSACTIONS,
 } from 'Graphql/queries';
 
-interface ActionCellProps {
+interface EditDebtProps {
   transaction: Transaction;
   refetch: () => Promise<any>;
 }
 
-export const EditNanoCredit: React.FC<ActionCellProps> = ({
+export const EditDebt: React.FC<EditDebtProps> = ({
   transaction,
   refetch,
 }) => {
   const { t } = useTranslation();
-  const [editNanoCredit] = useMutation(EDIT_NANOCREDIT);
+  const [editDebt] = useMutation(EDIT_DEBT);
   const [show, setShow] = React.useState(false);
 
   const handleClick = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleSubmit = (values: NestedRecord<Serializable>) => {
-    editNanoCredit({
+    editDebt({
       variables: {
         userId: transaction.user.id,
-        nanoCreditId: transaction.nanocredit.id,
+        debtId: transaction.debt.id,
         input: values,
       },
       refetchQueries: () => [
@@ -60,11 +60,11 @@ export const EditNanoCredit: React.FC<ActionCellProps> = ({
         <Icon type="edit" />
       </IconButton>
       <FormDialog
-        title={t('Edit Nanocredit')}
+        title={t('Edit Debt')}
         show={show}
         onCancel={handleClose}
         onSubmit={handleSubmit}
-        initValues={transaction.nanocredit}
+        initValues={transaction.debt}
       >
         <Box cmb={1}>
           <TextField

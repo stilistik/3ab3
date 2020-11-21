@@ -8,24 +8,24 @@ import {
   UserSelectField,
 } from 'Components/index';
 import { Paper, Typography, Button } from '@material-ui/core';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Serializable, FieldOptions } from 'Components/form/types';
 import { useMutation } from 'react-apollo';
-import { CREATE_NANOCREDIT } from 'Graphql/mutations';
+import { CREATE_DEBT } from 'Graphql/mutations';
 import {
   BALANCE_TABLE,
   CURRENT_USER_BALANCE,
   GLOBAL_BALANCE_CHART,
 } from 'Graphql/queries';
 
-interface NanoCreditProps {
+interface DebtProps {
   onSubmit: (
     values: NestedRecord<Serializable>,
     options: NestedRecord<FieldOptions>
   ) => void;
 }
 
-const NanoCreditForm: React.FC<NanoCreditProps> = ({ onSubmit }) => {
+const DebtForm: React.FC<DebtProps> = ({ onSubmit }) => {
   const { t } = useTranslation();
   return (
     <Form onSubmit={onSubmit} initAfterSubmit={true}>
@@ -46,13 +46,13 @@ const NanoCreditForm: React.FC<NanoCreditProps> = ({ onSubmit }) => {
   );
 };
 
-export const NanoCredit: React.FC = () => {
+export const Debt: React.FC = () => {
   const { t } = useTranslation();
-  const [createNanoCredit] = useMutation(CREATE_NANOCREDIT);
+  const [createDebtItem] = useMutation(CREATE_DEBT);
 
   const handleSubmit = (values: NestedRecord<Serializable>) => {
     const { user, ...rest } = values;
-    createNanoCredit({
+    createDebtItem({
       variables: {
         userId: user,
         input: rest,
@@ -74,9 +74,9 @@ export const NanoCredit: React.FC = () => {
   return (
     <Paper>
       <Box p={2}>
-        <Typography variant="h6">{t('Nano Credit')}</Typography>
+        <Typography variant="h6">{t('Register Debt')}</Typography>
         <Typography variant="body2"></Typography>
-        <NanoCreditForm onSubmit={handleSubmit} />
+        <DebtForm onSubmit={handleSubmit} />
       </Box>
     </Paper>
   );

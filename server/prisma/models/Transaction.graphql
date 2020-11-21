@@ -5,7 +5,7 @@ type Transaction {
   type: TransactionType!
   change: Float!
   nanocredit: NanoCredit @relation(name: "NanoCreditTransaction", onDelete: CASCADE)
-  debtitem: DebtItem @relation(name: "DebtItemTransaction", onDelete: CASCADE)
+  debt: Debt @relation(name: "DebtTransaction", onDelete: CASCADE)
   payment: Payment @relation(name: "PaymentTransaction", onDelete: CASCADE)
   purchase: Purchase @relation(name: "PurchaseTransaction", onDelete: CASCADE)
 }
@@ -14,5 +14,5 @@ enum TransactionType {
   PAYMENT
   PURCHASE
   NANOCREDIT
-  DEBTITEM
+  DEBT
 }
