@@ -49,7 +49,7 @@ export const RegisterPayment: React.FC = () => {
       variables: {
         input: {
           userId: values.user,
-          amount: parseInt(values.amount),
+          amount: values.amount,
           date: new Date().toISOString(),
         },
       },
