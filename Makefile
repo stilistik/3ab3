@@ -64,3 +64,8 @@ prod/website.build:
 prod/all.stop:
 	docker-compose -f docker-compose.prod.yml down
 
+prod/certbot.renew: 
+	certbot renew
+
+prod/cert.renew: prod/all.stop prod/certbot.renew prod/all.run
+
