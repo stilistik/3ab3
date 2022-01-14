@@ -22,4 +22,5 @@ extend type Query {
 extend type Mutation {
   uploadDocument(input: UploadDocumentInput!): Document! @hasRole
   editDocument(documentId: ID!, input: EditDocumentInput!): Document! @hasRole
+  deleteDocument(documentId: ID!): Boolean! @hasRole
 }
