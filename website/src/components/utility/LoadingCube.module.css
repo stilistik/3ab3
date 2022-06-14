@@ -45,7 +45,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  -webkit-text-stroke: 2px white;
   -webkit-font-smoothing: antialised;
   box-shadow: inset 8px 8px 8px 0 rgba(0, 0, 0, 0.06);
 }

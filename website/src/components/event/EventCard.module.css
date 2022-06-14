@@ -24,7 +24,6 @@
   height: 1em;
   color: #000000;
   text-shadow: 4.5px 4.5px 0px #feb200;
-  -webkit-text-stroke: 2px white;
   transition: transform 300ms ease;
   border: none;
   -webkit-tap-highlight-color: transparent;
@@ -70,14 +69,12 @@
   text-shadow: 5px 5px 0px var(--color-primary);
   padding-top: 2.5%;
   padding-left: 7.5%;
-  -webkit-text-stroke: 2px whitesmoke;
 }
 
 .time {
   font-family: Montserrat;
   margin: 0;
   color: var(--color-primary);
-  -webkit-text-stroke: 2px black;
   padding-top: 2.5%;
   padding-left: 7.5%;
 }
